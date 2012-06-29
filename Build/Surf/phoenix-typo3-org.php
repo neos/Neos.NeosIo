@@ -32,10 +32,10 @@ $deployment->onInitialize(function() use ($workflow, $application) {
 	$workflow->removeTask('typo3.surf:flow3:copyconfiguration');
 });
 
-$workflow->defineTask('x:renderdocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:render', 'arguments' => '--bundle PhoenixDocumentation'));
-$workflow->defineTask('x:importdocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:import', 'arguments' => '--bundle PhoenixGettingStarted'));
-$workflow->defineTask('x:importdocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:import', 'arguments' => '--bundle PhoenixFeatures'));
-$workflow->afterTask('typo3.surf:typo3:importsite', array('x:renderdocumentation', 'x:importdocumentation'));
+$workflow->defineTask('x:renderdocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:render --bundle PhoenixDocumentation'));
+$workflow->defineTask('x:importgettingstarteddocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:import --bundle PhoenixGettingStarted'));
+$workflow->defineTask('x:importfeaturedocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:import --bundle PhoenixFeatures'));
+$workflow->afterTask('typo3.surf:typo3:importsite', array('x:renderdocumentation', 'x:importgettingstarteddocumentation', 'x:importfeaturedocumentation'));
 
 #$workflow->afterTask('typo3.surf:symlinkrelease', array('typo3.surf:varnishpurge'), $application);
 
