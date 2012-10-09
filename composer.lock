@@ -1,5 +1,5 @@
 {
-    "hash": "73787658903c4e0bc1390ffea38b7f5d",
+    "hash": "c05509faf4adb06cea91523fb5744993",
     "packages": [
         {
             "name": "doctrine/common",
@@ -424,6 +424,27 @@
                 }
             },
             "description": "A packaged version of Aloha for TYPO3 Phoenix."
+        },
+        {
+            "name": "typo3/doctools",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.DocTools.git",
+                "reference": "16e684fe968a5c91cb0aa24eb1fb207a8ae599ae"
+            },
+            "require": {
+                "typo3/flow": "*",
+                "typo3/phoenix": "*"
+            },
+            "time": "1349771118",
+            "type": "typo3-flow-package",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\DocTools": "Classes"
+                }
+            }
         },
         {
             "name": "typo3/eel",
@@ -946,6 +967,7 @@
         "typo3/phoenix": 20,
         "typo3/phoenixtypo3org": 20,
         "typo3/release": 20,
+        "typo3/doctools": 20,
         "typo3/buildessentials": 20
     }
 }
