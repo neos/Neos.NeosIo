@@ -452,12 +452,12 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.Eel.git",
-                "reference": "e22fc1aa7dc198b31abfc29f47e7a92b36bd2f33"
+                "reference": "3c92516a303bea9a368c31dbd566481a1f364ab5"
             },
             "require": {
                 "typo3/flow": "*"
             },
-            "time": "1349121276",
+            "time": "1350462923",
             "type": "typo3-flow-package",
             "installation-source": "source",
             "autoload": {
@@ -493,7 +493,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.FLOW3.git",
-                "reference": "0fe86547de56cf42e2cab85346d6a02feb8d4db3"
+                "reference": "81a506011016e2d5091022800c9a509e6c0ac79e"
             },
             "require": {
                 "php": ">=5.3.2",
@@ -509,7 +509,7 @@
                 "symfony/dom-crawler": ">2.0.16",
                 "typo3/flow-composer-installers": "*"
             },
-            "time": "1350373033",
+            "time": "1350477540",
             "type": "typo3-flow-framework",
             "installation-source": "source",
             "autoload": {
@@ -733,7 +733,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.TYPO3.git",
-                "reference": "bf5e6ca6be2edfc49ecca0f2083427e0e9977843"
+                "reference": "af1c79226becbaca6069c4a4c4eb321f53639426"
             },
             "require": {
                 "typo3/flow": "*",
@@ -742,12 +742,12 @@
                 "typo3/media": "*",
                 "typo3/phoenix-contenttypes": "*",
                 "typo3/setup": "*",
-                "twitter/bootstrap": "*",
+                "typo3/twitter-bootstrap": "*",
                 "typo3/typo3cr": "*",
                 "typo3/typoscript": "*",
                 "typo3/sitekickstarter": "*"
             },
-            "time": "1350401890",
+            "time": "1350484665",
             "type": "typo3-flow-package",
             "installation-source": "source",
             "autoload": {
@@ -828,14 +828,14 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.Setup.git",
-                "reference": "a4d179796d363a3baeed32aca31bb57480fa103a"
+                "reference": "eac4c967e5ad41d6d8ff209732fbae01bc2c52b4"
             },
             "require": {
                 "typo3/flow": "*",
                 "typo3/form": "*",
-                "twitter/bootstrap": "*"
+                "typo3/twitter-bootstrap": "*"
             },
-            "time": "1349447938",
+            "time": "1350484590",
             "type": "typo3-flow-package",
             "installation-source": "source",
             "autoload": {
@@ -891,13 +891,13 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.TypoScript.git",
-                "reference": "a5f2488c660065c316c06d2dde912500c1fcb456"
+                "reference": "8fd5640bb12199c86f03df7f5962eefad71d8f98"
             },
             "require": {
                 "typo3/flow": "*",
                 "typo3/eel": "*"
             },
-            "time": "1349122770",
+            "time": "1350462960",
             "type": "typo3-flow-package",
             "installation-source": "source",
             "autoload": {
@@ -957,6 +957,27 @@
                 "LGPL-3.0+"
             ],
             "description": "TYPO3 Flow Build Toolchain Essentials"
+        },
+        {
+            "name": "typo3/twitter-bootstrap",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://git.typo3.org/FLOW3/Packages/Twitter.Bootstrap.git",
+                "reference": "514322c57533f3eb0590e464f3f369df55b76937"
+            },
+            "require": {
+                "typo3/flow": "*"
+            },
+            "time": "1350483987",
+            "type": "typo3-flow-package",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\Twitter\\Bootstrap": "Classes"
+                }
+            },
+            "description": "Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions. Packaged for use with TYPO3 Flow"
         }
     ],
     "aliases": [
