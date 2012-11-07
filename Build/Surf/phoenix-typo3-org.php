@@ -18,7 +18,7 @@ if (getenv('DEPLOYMENT_PATH')) {
 }
 
 $application->setOption('repositoryUrl', 'git://git.typo3.org/Sites/PhoenixTypo3Org.git');
-$application->setOption('sitePackageKey', 'TYPO3.PhoenixTypo3Org');
+$application->setOption('sitePackageKey', 'TYPO3.NeosTypo3Org');
 $application->setOption('keepReleases', 20);
 
 $deployment->addApplication($application);
@@ -32,9 +32,9 @@ $deployment->onInitialize(function() use ($workflow, $application) {
 	$workflow->removeTask('typo3.surf:flow3:copyconfiguration');
 });
 
-$workflow->defineTask('x:renderdocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:render --bundle PhoenixDocumentation'));
-$workflow->defineTask('x:importgettingstarteddocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:import --bundle PhoenixGettingStarted'));
-$workflow->defineTask('x:importfeaturedocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:import --bundle PhoenixFeatures'));
+$workflow->defineTask('x:renderdocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:render --bundle NeosDocumentation'));
+$workflow->defineTask('x:importgettingstarteddocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:import --bundle NeosGettingStarted'));
+$workflow->defineTask('x:importfeaturedocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:import --bundle NeosFeatures'));
 $workflow->afterTask('typo3.surf:typo3:importsite', array('x:renderdocumentation', 'x:importgettingstarteddocumentation', 'x:importfeaturedocumentation'));
 
 #$workflow->afterTask('typo3.surf:symlinkrelease', array('typo3.surf:varnishpurge'), $application);
