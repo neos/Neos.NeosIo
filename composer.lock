@@ -2,23 +2,86 @@
     "hash": "ef4f48ed5ef4b686475b7ecc0b9da4be",
     "packages": [
         {
-            "name": "doctrine/common",
-            "version": "dev-master",
+            "name": "doctrine/cache",
+            "version": "v1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/doctrine/common",
-                "reference": "bc6bc47132613b28a58b7293dfd7872d9e3bcff3"
+                "url": "https://github.com/doctrine/cache.git",
+                "reference": "v1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/common/archive/bc6bc47132613b28a58b7293dfd7872d9e3bcff3.zip",
-                "reference": "bc6bc47132613b28a58b7293dfd7872d9e3bcff3",
+                "url": "https://github.com/doctrine/cache/archive/v1.0.zip",
+                "reference": "v1.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
-            "time": "2013-01-08 17:20:32",
+            "time": "2013-01-10 22:43:46",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Common\\Cache\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com",
+                    "homepage": "http://www.jwage.com/"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com",
+                    "homepage": "http://www.instaclick.com"
+                },
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com",
+                    "homepage": "https://github.com/schmittjoh",
+                    "role": "Developer of wrapped JMSSerializerBundle"
+                }
+            ],
+            "description": "Caching library offering an object-oriented API for many cache backends",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "cache",
+                "caching"
+            ]
+        },
+        {
+            "name": "doctrine/common",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/common",
+                "reference": "db064f44a9a2ea0062f00bc3d6c7827e9696b9f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/doctrine/common/archive/db064f44a9a2ea0062f00bc3d6c7827e9696b9f2.zip",
+                "reference": "db064f44a9a2ea0062f00bc3d6c7827e9696b9f2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "doctrine/inflector": "1.*",
+                "doctrine/cache": "1.*"
+            },
+            "time": "2013-01-10 23:05:37",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -54,7 +117,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -189,6 +252,69 @@
             ]
         },
         {
+            "name": "doctrine/inflector",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/inflector.git",
+                "reference": "v1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/doctrine/inflector/archive/v1.0.zip",
+                "reference": "v1.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "time": "2013-01-10 21:49:15",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Common\\Inflector\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com",
+                    "homepage": "http://www.jwage.com/"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com",
+                    "homepage": "http://www.instaclick.com"
+                },
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com",
+                    "homepage": "https://github.com/schmittjoh",
+                    "role": "Developer of wrapped JMSSerializerBundle"
+                }
+            ],
+            "description": "Common String Manipulations with regard to casing and singular/plural rules.",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "string",
+                "inflection",
+                "singuarlize",
+                "pluarlize"
+            ]
+        },
+        {
             "name": "doctrine/migrations",
             "version": "dev-master",
             "source": {
@@ -248,12 +374,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/doctrine2.git",
-                "reference": "0b2d3d4f5d41c56fa07ff8d7ada406ec8bb34046"
+                "reference": "71efe2109aafc3c5ef81d5d5285f3b81e4de3bef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/doctrine2/archive/0b2d3d4f5d41c56fa07ff8d7ada406ec8bb34046.zip",
-                "reference": "0b2d3d4f5d41c56fa07ff8d7ada406ec8bb34046",
+                "url": "https://github.com/doctrine/doctrine2/archive/71efe2109aafc3c5ef81d5d5285f3b81e4de3bef.zip",
+                "reference": "71efe2109aafc3c5ef81d5d5285f3b81e4de3bef",
                 "shasum": ""
             },
             "require": {
@@ -265,7 +391,7 @@
             "suggest": {
                 "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
             },
-            "time": "2013-01-06 18:16:12",
+            "time": "2013-01-10 19:13:18",
             "bin": [
                 "bin/doctrine",
                 "bin/doctrine.php"
@@ -553,12 +679,12 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.Eel.git",
-                "reference": "9e5272794cfba86d9c70aa4a8f9b9f8042f659e1"
+                "reference": "ac4b36c3856c5c88d9ab6150aec27cd17a618c2f"
             },
             "require": {
                 "typo3/flow": "*"
             },
-            "time": "2013-01-08 13:55:59",
+            "time": "2013-01-09 15:35:56",
             "type": "typo3-flow-package",
             "autoload": {
                 "psr-0": {
@@ -795,7 +921,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.TYPO3.git",
-                "reference": "6ae42f4a3733b7ddf67b72234a7bc7c84985cca0"
+                "reference": "d54021028d97966654c80046e504c9de619e0447"
             },
             "require": {
                 "typo3/flow": "*",
@@ -809,7 +935,7 @@
                 "typo3/typoscript": "*",
                 "typo3/sitekickstarter": "*"
             },
-            "time": "2013-01-09 22:11:10",
+            "time": "2013-01-10 08:34:53",
             "type": "typo3-flow-package",
             "autoload": {
                 "psr-0": {
@@ -824,13 +950,13 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.Phoenix.ContentTypes.git",
-                "reference": "9b8993cc756111ccf939935249fed27644a867f1"
+                "reference": "09e8ba361acaa442077a125c41d8fe602404e7f0"
             },
             "require": {
                 "typo3/flow": "*",
                 "typo3/typoscript": "*"
             },
-            "time": "2012-12-17 13:31:08",
+            "time": "2013-01-10 17:27:23",
             "type": "typo3-flow-package",
             "autoload": {
                 "psr-0": {
