@@ -325,19 +325,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal",
-                "reference": "2f3377c0f28b276655a11ed54d0b2ac7ba5ad2d3"
+                "reference": "328d8a5387be1fc365f3bba27327023afdee30c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/dbal/archive/2f3377c0f28b276655a11ed54d0b2ac7ba5ad2d3.zip",
-                "reference": "2f3377c0f28b276655a11ed54d0b2ac7ba5ad2d3",
+                "url": "https://github.com/doctrine/dbal/archive/328d8a5387be1fc365f3bba27327023afdee30c5.zip",
+                "reference": "328d8a5387be1fc365f3bba27327023afdee30c5",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "doctrine/common": ">=2.3-dev,<2.5-dev"
+                "doctrine/common": "2.4.x-dev"
             },
-            "time": "2013-01-08 15:37:28",
+            "require-dev": {
+                "symfony/console": "2.*"
+            },
+            "suggest": {
+                "symfony/console": "For helpful console commands such as SQL execution and import of files."
+            },
+            "time": "2013-01-13 08:47:01",
             "type": "library",
             "extra": {
                 "branch-alias": {
