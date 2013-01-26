@@ -196,12 +196,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common",
-                "reference": "db84fc111652774f22b72a916aef40ce3f584e45"
+                "reference": "0cd52ed7f131b6d964ff188e11d52905d7833981"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/common/archive/db84fc111652774f22b72a916aef40ce3f584e45.zip",
-                "reference": "db84fc111652774f22b72a916aef40ce3f584e45",
+                "url": "https://github.com/doctrine/common/archive/0cd52ed7f131b6d964ff188e11d52905d7833981.zip",
+                "reference": "0cd52ed7f131b6d964ff188e11d52905d7833981",
                 "shasum": ""
             },
             "require": {
@@ -212,7 +212,7 @@
                 "doctrine/lexer": "1.*",
                 "doctrine/annotations": "1.*"
             },
-            "time": "2013-01-25 05:59:24",
+            "time": "2013-01-26 16:04:42",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1061,29 +1061,6 @@
             }
         },
         {
-            "name": "typo3/kickstart",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.Kickstart.git",
-                "reference": "3c7e9c54b2eb2b4cdf91bd9da86755bc1c89b1c8"
-            },
-            "require": {
-                "typo3/flow": "*"
-            },
-            "time": "2012-12-10 11:04:08",
-            "type": "typo3-flow-framework",
-            "autoload": {
-                "psr-0": {
-                    "TYPO3\\Kickstart": "Classes"
-                }
-            },
-            "license": [
-                "LGPL-3.0+"
-            ],
-            "description": "A simple generator for controller and views."
-        },
-        {
             "name": "typo3/media",
             "version": "dev-master",
             "source": {
@@ -1110,7 +1087,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.TYPO3.git",
-                "reference": "2d9fc25a322c4c2aed8a995c0ffd135a23415e40"
+                "reference": "fb21ec853dc14d1bf42bcb8c7b898feb2eff4ddb"
             },
             "require": {
                 "typo3/flow": "*",
@@ -1121,10 +1098,12 @@
                 "typo3/setup": "*",
                 "typo3/twitter-bootstrap": "*",
                 "typo3/typo3cr": "*",
-                "typo3/typoscript": "*",
+                "typo3/typoscript": "*"
+            },
+            "require-dev": {
                 "typo3/sitekickstarter": "*"
             },
-            "time": "2013-01-25 07:20:27",
+            "time": "2013-01-25 11:59:05",
             "type": "typo3-flow-package",
             "autoload": {
                 "psr-0": {
@@ -1237,26 +1216,6 @@
             "autoload": {
                 "psr-0": {
                     "TYPO3\\Setup": "Classes"
-                }
-            }
-        },
-        {
-            "name": "typo3/sitekickstarter",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.SiteKickstarter.git",
-                "reference": "47d14991f69b228f6a0aee9b0d7c0a57cb9450ba"
-            },
-            "require": {
-                "typo3/flow": "*",
-                "typo3/kickstart": "*"
-            },
-            "time": "2012-10-31 08:11:58",
-            "type": "typo3-flow-package",
-            "autoload": {
-                "psr-0": {
-                    "TYPO3\\SiteKickstarter": "Classes"
                 }
             }
         },
