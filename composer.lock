@@ -2,6 +2,78 @@
     "hash": "ef4f48ed5ef4b686475b7ecc0b9da4be",
     "packages": [
         {
+            "name": "composer/installers",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "v1.0.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/v1.0.3",
+                "reference": "v1.0.3",
+                "shasum": ""
+            },
+            "replace": {
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Composer\\Installers\\Installer",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Composer\\Installers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "http://composer.github.com/installers/",
+            "keywords": [
+                "TYPO3 Flow",
+                "TYPO3 Neos",
+                "agl",
+                "cakephp",
+                "codeigniter",
+                "drupal",
+                "fuelphp",
+                "installer",
+                "joomla",
+                "kohana",
+                "laravel",
+                "li3",
+                "lithium",
+                "mako",
+                "phpbb",
+                "ppi",
+                "silverstripe",
+                "symfony",
+                "wordpress",
+                "yii",
+                "zend"
+            ],
+            "time": "2013-03-02 22:45:58"
+        },
+        {
             "name": "doctrine/annotations",
             "version": "v1.1",
             "source": {
@@ -745,12 +817,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DomCrawler.git",
-                "reference": "09f1c2512873cea65045db48076cf363920fb819"
+                "reference": "569d6800f15045c0377ca280b54ce39a7ea124f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/09f1c2512873cea65045db48076cf363920fb819",
-                "reference": "09f1c2512873cea65045db48076cf363920fb819",
+                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/569d6800f15045c0377ca280b54ce39a7ea124f3",
+                "reference": "569d6800f15045c0377ca280b54ce39a7ea124f3",
                 "shasum": ""
             },
             "require": {
@@ -789,7 +861,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "http://symfony.com",
-            "time": "2013-03-20 13:55:39"
+            "time": "2013-04-01 08:05:23"
         },
         {
             "name": "symfony/yaml",
@@ -921,9 +993,10 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.FLOW3.git",
-                "reference": "ae8eb5e397c17f30fcea2f2fe1882b825d345a90"
+                "reference": "fb4a7cd14eab68428534f936f31d59a5ae7f7617"
             },
             "require": {
+                "composer/installers": ">=1.0.2,<1.1",
                 "doctrine/data-fixtures": "*",
                 "doctrine/migrations": "*",
                 "doctrine/orm": "2.3.*",
@@ -934,7 +1007,6 @@
                 "php": ">=5.3.2",
                 "symfony/dom-crawler": "2.2.*",
                 "symfony/yaml": "2.1.*",
-                "typo3/flow-composer-installers": "*",
                 "typo3/fluid": "*",
                 "typo3/party": "*"
             },
@@ -950,74 +1022,7 @@
             ],
             "description": "TYPO3 Flow Application Framework",
             "homepage": "http://flow.typo3.org",
-            "time": "2013-03-28 15:45:00"
-        },
-        {
-            "name": "typo3/flow-composer-installers",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git://github.com/christianjul/installers.git",
-                "reference": "bf887890333e8c73a93701ffb09f71c914b8be35"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/christianjul/installers/zipball/bf887890333e8c73a93701ffb09f71c914b8be35",
-                "reference": "bf887890333e8c73a93701ffb09f71c914b8be35",
-                "shasum": ""
-            },
-            "replace": {
-                "shama/baton": "*"
-            },
-            "require-dev": {
-                "composer/composer": "1.0.*@dev"
-            },
-            "type": "composer-installer",
-            "extra": {
-                "class": "Composer\\Installers\\Installer"
-            },
-            "autoload": {
-                "psr-0": {
-                    "Composer\\Installers\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kyle Robinson Young",
-                    "email": "kyle@dontkry.com",
-                    "homepage": "https://github.com/shama",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A multi-framework Composer library installer",
-            "homepage": "http://composer.github.com/installers/",
-            "keywords": [
-                "TYPO3 Flow",
-                "TYPO3 Neos",
-                "agl",
-                "cakephp",
-                "codeigniter",
-                "drupal",
-                "fuelphp",
-                "installer",
-                "joomla",
-                "kohana",
-                "laravel",
-                "li3",
-                "lithium",
-                "mako",
-                "phpbb",
-                "ppi",
-                "silverstripe",
-                "symfony",
-                "wordpress",
-                "zend"
-            ],
-            "time": "2012-12-19 10:08:40"
+            "time": "2013-04-02 18:12:32"
         },
         {
             "name": "typo3/fluid",
@@ -1025,11 +1030,10 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.Fluid.git",
-                "reference": "b2153d8801ec0d9795c445b8fabe5fe5a52c874e"
+                "reference": "1b035a2beeeddf010a1f081c2493cfceea21d8f2"
             },
             "require": {
-                "typo3/flow": "*",
-                "typo3/flow-composer-installers": "*"
+                "typo3/flow": "*"
             },
             "type": "typo3-flow-framework",
             "autoload": {
@@ -1042,7 +1046,7 @@
                 "LGPL-3.0+"
             ],
             "description": "Next-Generation Templating Framework for TYPO3 Flow and TYPO3 Neos, also backported to TYPO3 CMS",
-            "time": "2013-03-28 11:31:22"
+            "time": "2013-04-02 18:12:51"
         },
         {
             "name": "typo3/form",
@@ -1188,11 +1192,10 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.Party.git",
-                "reference": "4ac813ef2f011280ccd67854df05a6baa3e457b0"
+                "reference": "9a182f598ca63b7ca6a04eb3fe4051775de54d79"
             },
             "require": {
-                "typo3/flow": "*",
-                "typo3/flow-composer-installers": "*"
+                "typo3/flow": "*"
             },
             "type": "typo3-flow-framework",
             "autoload": {
@@ -1205,7 +1208,7 @@
                 "LGPL-3.0+"
             ],
             "description": "A PHP implementation of the OASIS Customer Information Quality (CIQ) XML Standard.",
-            "time": "2013-03-26 13:35:39"
+            "time": "2013-04-02 18:12:58"
         },
         {
             "name": "typo3/release",
@@ -1276,7 +1279,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.TYPO3CR.git",
-                "reference": "d52636530baff7353acc3616d8cbe07f52685e54"
+                "reference": "d7a6995cad5b079e6102a6cd18b6e5414466ea04"
             },
             "require": {
                 "typo3/flow": "*"
@@ -1288,7 +1291,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2013-03-29 10:01:49"
+            "time": "2013-04-03 15:06:24"
         },
         {
             "name": "typo3/typoscript",
@@ -1349,11 +1352,11 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/BuildEssentials.git",
-                "reference": "6d94ba8ff0dd361e2684847fd41c03bfd8734ee8"
+                "reference": "dbf32f0f17cd38457afbe7d95afd7ecaa2d21286"
             },
             "require": {
-                "php": ">=5.3.2",
-                "typo3/flow-composer-installers": "*"
+                "composer/installers": ">=1.0.2,<1.1",
+                "php": ">=5.3.2"
             },
             "type": "typo3-flow-build",
             "extra": {
@@ -1364,7 +1367,7 @@
                 "LGPL-3.0+"
             ],
             "description": "TYPO3 Flow Build Toolchain Essentials",
-            "time": "2013-02-26 17:13:50"
+            "time": "2013-02-28 13:52:06"
         }
     ],
     "aliases": [
