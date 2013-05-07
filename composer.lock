@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "6c23b07b3d07e392a1769110d2a910ab269aaa3d"
+                "reference": "48a6227dfac4e51233a2fae5d5085db9655209f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/6c23b07b3d07e392a1769110d2a910ab269aaa3d",
-                "reference": "6c23b07b3d07e392a1769110d2a910ab269aaa3d",
+                "url": "https://api.github.com/repos/composer/installers/zipball/48a6227dfac4e51233a2fae5d5085db9655209f0",
+                "reference": "48a6227dfac4e51233a2fae5d5085db9655209f0",
                 "shasum": ""
             },
             "replace": {
@@ -72,10 +72,9 @@
                 "silverstripe",
                 "symfony",
                 "wordpress",
-                "yii",
                 "zend"
             ],
-            "time": "2013-04-22 16:11:49"
+            "time": "2013-05-07 19:50:30"
         },
         {
             "name": "doctrine/annotations",
@@ -354,61 +353,6 @@
                 "spl"
             ],
             "time": "2013-04-16 21:50:30"
-        },
-        {
-            "name": "doctrine/data-fixtures",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/data-fixtures.git",
-                "reference": "6924952026b77ff492da559b04ad166d25c611cb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/data-fixtures/zipball/6924952026b77ff492da559b04ad166d25c611cb",
-                "reference": "6924952026b77ff492da559b04ad166d25c611cb",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/common": ">=2.2,<2.5-dev",
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "doctrine/orm": ">=2.2,<2.5-dev"
-            },
-            "suggest": {
-                "doctrine/mongodb-odm": "For loading MongoDB ODM fixtures",
-                "doctrine/orm": "For loading ORM fixtures",
-                "doctrine/phpcr-odm": "For loading PHPCR ODM fixtures"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Doctrine\\Common\\DataFixtures": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/"
-                }
-            ],
-            "description": "Data Fixtures for all Doctrine Object Managers",
-            "homepage": "http://www.doctrine-project.org",
-            "keywords": [
-                "database"
-            ],
-            "time": "2013-04-11 23:14:04"
         },
         {
             "name": "doctrine/dbal",
@@ -1008,12 +952,11 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.FLOW3.git",
-                "reference": "9de555c532673deb5924916bf7acad55709393b4"
+                "reference": "e06e0f2dd6eb565f00ae535c780ab13b74de8f92"
             },
             "require": {
                 "composer/installers": ">=1.0.2,<1.1",
-                "doctrine/data-fixtures": "*",
-                "doctrine/migrations": "*",
+                "doctrine/migrations": "dev-master",
                 "doctrine/orm": "2.3.*",
                 "ext-json": ">=1.2.0",
                 "ext-session": "*",
@@ -1024,6 +967,9 @@
                 "symfony/yaml": "2.1.*",
                 "typo3/fluid": "*",
                 "typo3/party": "*"
+            },
+            "suggest": {
+                "doctrine/data-fixtures": "To manage and execute the loading of data fixtures for the Doctrine ORM or ODM"
             },
             "type": "typo3-flow-framework",
             "autoload": {
@@ -1037,7 +983,7 @@
             ],
             "description": "TYPO3 Flow Application Framework",
             "homepage": "http://flow.typo3.org",
-            "time": "2013-05-02 15:12:11"
+            "time": "2013-05-07 15:42:18"
         },
         {
             "name": "typo3/fluid",
@@ -1045,7 +991,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.Fluid.git",
-                "reference": "480bbefbe7d77233e9e2df821b4a55d266b6665d"
+                "reference": "1779aeb9d2cdfa58ce322b724ef82fe6dfacc04a"
             },
             "require": {
                 "typo3/flow": "*"
@@ -1061,7 +1007,7 @@
                 "LGPL-3.0+"
             ],
             "description": "Next-Generation Templating Framework for TYPO3 Flow and TYPO3 Neos, also backported to TYPO3 CMS",
-            "time": "2013-04-22 07:47:38"
+            "time": "2013-05-06 07:06:29"
         },
         {
             "name": "typo3/form",
@@ -1164,7 +1110,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.Phoenix.ContentTypes.git",
-                "reference": "b706039339bf6126f8ea0730592bea45b6906074"
+                "reference": "97ba584248b2891d27f81136511c3ca3f207f90d"
             },
             "require": {
                 "typo3/flow": "*",
@@ -1178,7 +1124,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Node type configuration for TYPO3 Neos",
-            "time": "2013-04-30 17:19:09"
+            "time": "2013-05-07 11:36:20"
         },
         {
             "name": "typo3/neostypo3org",
@@ -1314,7 +1260,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/FLOW3/Packages/TYPO3.TypoScript.git",
-                "reference": "a6352fb5d6efd55cca45eaf1612f7c8c26ac3e76"
+                "reference": "c24d753372b18a71a23bb59c4482d3583b2ba5a7"
             },
             "require": {
                 "typo3/eel": "*",
@@ -1327,7 +1273,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2013-05-01 08:49:15"
+            "time": "2013-05-07 15:00:10"
         }
     ],
     "packages-dev": [
