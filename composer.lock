@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "860bc7471604b5864db804ed16f6ee17",
+    "hash": "56de32770b34e804a3e17e46bc674f09",
     "packages": [
         {
             "name": "composer/installers",
@@ -722,6 +722,125 @@
                 "image processing"
             ],
             "time": "2013-07-10 17:25:36"
+        },
+        {
+            "name": "robertlemke/akismet",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robertlemke/RobertLemke.Akismet.git",
+                "reference": "8a9a1d47b1a10d18e2ade451c735917d39834734"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robertlemke/RobertLemke.Akismet/zipball/8a9a1d47b1a10d18e2ade451c735917d39834734",
+                "reference": "8a9a1d47b1a10d18e2ade451c735917d39834734",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/flow": ">=2.0.0-beta1"
+            },
+            "type": "typo3-flow-plugin",
+            "autoload": {
+                "psr-0": {
+                    "RobertLemke\\Akismet": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Lemke",
+                    "email": "rl@robertlemke.com",
+                    "homepage": "http://robertlemke.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Integration of Akismet, an intelligent comment spam detector, for TYPO3 Flow",
+            "time": "2013-02-26 09:28:46"
+        },
+        {
+            "name": "robertlemke/plugin-blog",
+            "version": "dev-neos-alpha-6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chlu/RobertLemke.Plugin.Blog.git",
+                "reference": "3548f7f615b605b822c263328eebbf4106232e11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chlu/RobertLemke.Plugin.Blog/zipball/3548f7f615b605b822c263328eebbf4106232e11",
+                "reference": "3548f7f615b605b822c263328eebbf4106232e11",
+                "shasum": ""
+            },
+            "require": {
+                "robertlemke/akismet": "~1.0",
+                "robertlemke/rss": "dev-master",
+                "typo3/flow": ">=2.0.0-beta1",
+                "typo3/neos": ">=1.0.0-alpha3"
+            },
+            "suggest": {
+                "typo3/swiftmailer": "Allows sending notification emails on new comments"
+            },
+            "type": "typo3-flow-plugin",
+            "autoload": {
+                "psr-0": {
+                    "RobertLemke\\Plugin\\Blog": "Classes"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Lemke",
+                    "email": "rl@robertlemke.com",
+                    "homepage": "http://robertlemke.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A blog plugin for TYPO3 Neos",
+            "support": {
+                "source": "https://github.com/chlu/RobertLemke.Plugin.Blog/tree/neos-alpha-6"
+            },
+            "time": "2013-10-25 12:51:53"
+        },
+        {
+            "name": "robertlemke/rss",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robertlemke/RobertLemke.Rss.git",
+                "reference": "b4d70a475eeffbd648798b0f27113d604fbad714"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robertlemke/RobertLemke.Rss/zipball/b4d70a475eeffbd648798b0f27113d604fbad714",
+                "reference": "b4d70a475eeffbd648798b0f27113d604fbad714",
+                "shasum": ""
+            },
+            "type": "typo3-flow-plugin",
+            "autoload": {
+                "psr-0": {
+                    "RobertLemke\\Rss": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Lemke",
+                    "email": "rl@robertlemke.com",
+                    "homepage": "http://robertlemke.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A multi-purpose RSS library",
+            "time": "2013-04-02 09:13:54"
         },
         {
             "name": "symfony/console",
@@ -1781,6 +1900,7 @@
         "typo3/neos": 20,
         "typo3/neosdemotypo3org": 20,
         "typo3/sitekickstarter": 20,
+        "robertlemke/plugin-blog": 20,
         "typo3/buildessentials": 20,
         "flowpack/behat": 20
     },

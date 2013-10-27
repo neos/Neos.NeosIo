@@ -1,11 +1,12 @@
-#                                                                        #
-# Routes configuration                                                   #
-#                                                                        #
-# This file contains the configuration for the MVC router.               #
-# Just add your own modifications as necessary.                          #
-#                                                                        #
-# Please refer to the FLOW3 manual for possible configuration options.   #
-#                                                                        #
+##
+# RobertLemke Blog plugin
+
+-
+  name: 'RobertLemkeBlogPlugin'
+  uriPattern: 'news/<RobertLemkeBlogPluginSubroutes>'
+  subRoutes:
+    RobertLemkeBlogPluginSubroutes:
+      package: RobertLemke.Plugin.Blog
 
 ##
 # TYPO3 Neos subroutes
