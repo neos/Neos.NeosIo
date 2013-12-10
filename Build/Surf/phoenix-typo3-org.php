@@ -18,9 +18,9 @@ if (getenv('DEPLOYMENT_PATH')) {
 	throw new \Exception('Deployment path must be set in the DEPLOYMENT_PATH env variable.');
 }
 
-$application->setOption('repositoryUrl', 'git://git.typo3.org/Sites/PhoenixTypo3Org.git');
+$application->setOption('repositoryUrl', 'git://git.typo3.org/Sites/NeosTypo3Org.git');
 $application->setOption('sitePackageKey', 'TYPO3.NeosTypo3Org');
-$application->setOption('keepReleases', 20);
+$application->setOption('keepReleases', 50);
 $application->setOption('composerCommandPath', 'php /var/www/vhosts/neos.typo3.org/home/composer.phar');
 
 
@@ -35,12 +35,6 @@ $deployment->onInitialize(function() use ($workflow, $application) {
 	$workflow->removeTask('typo3.surf:flow3:copyconfiguration');
 	$workflow->removeTask('typo3.surf:typo3:importsite');
 });
-
-$workflow->defineTask('x:renderdocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:render --bundle NeosDocumentation'));
-$workflow->defineTask('x:importgettingstarteddocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:import --bundle NeosGettingStarted'));
-$workflow->defineTask('x:importfeaturedocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:import --bundle NeosFeatures'));
-$workflow->defineTask('x:importchangesdocumentation', 'typo3.surf:flow3:runcommand', array('command' => 'documentation:import --bundle NeosChanges'));
-$workflow->afterTask('typo3.surf:symlinkrelease', array('x:renderdocumentation', 'x:importgettingstarteddocumentation', 'x:importfeaturedocumentation', 'x:importchangesdocumentation'));
 
 #$workflow->afterTask('typo3.surf:symlinkrelease', array('typo3.surf:varnishpurge'), $application);
 
