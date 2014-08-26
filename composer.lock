@@ -932,17 +932,17 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "2.2.x-dev",
+            "version": "2.5.x-dev",
             "target-dir": "Symfony/Component/DomCrawler",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DomCrawler.git",
-                "reference": "64d6ffc84d8c9dd7673539f9e3c6c9b5521a497e"
+                "reference": "27499e5951ef3d5731efe4db7481f26a68d75258"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/64d6ffc84d8c9dd7673539f9e3c6c9b5521a497e",
-                "reference": "64d6ffc84d8c9dd7673539f9e3c6c9b5521a497e",
+                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/27499e5951ef3d5731efe4db7481f26a68d75258",
+                "reference": "27499e5951ef3d5731efe4db7481f26a68d75258",
                 "shasum": ""
             },
             "require": {
@@ -952,12 +952,12 @@
                 "symfony/css-selector": "~2.0"
             },
             "suggest": {
-                "symfony/css-selector": "2.2.*"
+                "symfony/css-selector": ""
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -971,42 +971,45 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "http://symfony.com",
-            "time": "2013-11-29 05:58:12"
+            "time": "2014-08-26 14:16:33"
         },
         {
             "name": "symfony/yaml",
-            "version": "2.1.x-dev",
+            "version": "2.5.x-dev",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "347a7a02204433c6926ecc3f13e805bdc30e8f9f"
+                "reference": "5a75366ae9ca8b4792cd0083e4ca4dff9fe96f1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/347a7a02204433c6926ecc3f13e805bdc30e8f9f",
-                "reference": "347a7a02204433c6926ecc3f13e805bdc30e8f9f",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/5a75366ae9ca8b4792cd0083e4ca4dff9fe96f1f",
+                "reference": "5a75366ae9ca8b4792cd0083e4ca4dff9fe96f1f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
-                    "Symfony\\Component\\Yaml": ""
+                    "Symfony\\Component\\Yaml\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1015,19 +1018,17 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2013-05-10 00:09:46"
+            "time": "2014-08-05 09:00:40"
         },
         {
             "name": "timkandel/packagistfe",
@@ -1061,7 +1062,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/TYPO3.DocTools.git",
-                "reference": "521528486d89a1d939bd62d7707e46673a5e23d8"
+                "reference": "d531612f80000125a0fce28f789b8bce392823e1"
             },
             "require": {
                 "typo3/flow": "*"
@@ -1080,7 +1081,7 @@
                 "LGPL-3.0+"
             ],
             "description": "Tools for generating and rendering TYPO3 Flow documentation",
-            "time": "2014-07-17 08:54:19"
+            "time": "2014-08-26 10:04:53"
         },
         {
             "name": "typo3/eel",
@@ -1112,7 +1113,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/TYPO3.Flow.git",
-                "reference": "12f4a4c2ba032b205ec610a49e78fb984da52f23"
+                "reference": "655349661f56ca3cfd501ca2f8dbae8e5817175e"
             },
             "require": {
                 "composer/installers": "~1.0.2",
@@ -1124,8 +1125,8 @@
                 "ext-zlib": "*",
                 "php": ">=5.3.2",
                 "symfony/console": "2.*",
-                "symfony/dom-crawler": "2.2.*",
-                "symfony/yaml": "2.1.*",
+                "symfony/dom-crawler": "2.5.*",
+                "symfony/yaml": "2.5.*",
                 "typo3/eel": "*",
                 "typo3/fluid": "*",
                 "typo3/party": "*"
@@ -1145,7 +1146,7 @@
             ],
             "description": "TYPO3 Flow Application Framework",
             "homepage": "http://flow.typo3.org",
-            "time": "2014-08-20 18:42:12"
+            "time": "2014-08-26 13:28:36"
         },
         {
             "name": "typo3/fluid",
@@ -1153,7 +1154,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/TYPO3.Fluid.git",
-                "reference": "6859bd7c52ea08a51b648627b54765a43c94d3d1"
+                "reference": "e275eeb8fcb06f6b17599632358112f50fd95b06"
             },
             "require": {
                 "typo3/flow": "*"
@@ -1169,7 +1170,7 @@
                 "LGPL-3.0+"
             ],
             "description": "Next-Generation Templating Framework for TYPO3 Flow and TYPO3 Neos, also backported to TYPO3 CMS",
-            "time": "2014-08-20 15:51:01"
+            "time": "2014-08-26 14:36:15"
         },
         {
             "name": "typo3/form",
@@ -1250,7 +1251,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/TYPO3.Neos.git",
-                "reference": "42b960309c1b4304d5a81e18b972fa5e0ad841b2"
+                "reference": "8c32c47f89554f9b3c589d3ab2209a6b924d0aa8"
             },
             "require": {
                 "typo3/flow": "*",
@@ -1279,7 +1280,7 @@
                 "GPL-3.0+"
             ],
             "description": "The next generation of the popular open-source CMS.",
-            "time": "2014-08-25 18:22:26"
+            "time": "2014-08-26 16:43:12"
         },
         {
             "name": "typo3/neos-nodetypes",
@@ -1287,7 +1288,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/TYPO3.Neos.NodeTypes.git",
-                "reference": "1c361e28088a278a174c3bbfcfa31b181edfee6a"
+                "reference": "c69607a9e6adefaabd27a7f1ed2b5f3d9e81e599"
             },
             "require": {
                 "typo3/neos": "*"
@@ -1303,7 +1304,7 @@
                 "GPL-3.0+"
             ],
             "description": "Node type configuration for TYPO3 Neos",
-            "time": "2014-08-22 05:06:27"
+            "time": "2014-08-26 11:55:03"
         },
         {
             "name": "typo3/neostypo3org",
@@ -1311,7 +1312,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/NeosTypo3Org.git",
-                "reference": "a0307826e7b4dcf3b409f64e9b621ba8e5ccd858"
+                "reference": "5e4e33b2051b6c29b8f6f3e8116fa75ca4680f10"
             },
             "require": {
                 "typo3/neos": "*",
@@ -1327,7 +1328,7 @@
                 "GPL-3.0+"
             ],
             "description": "neos.typo3.org site package",
-            "time": "2014-06-20 20:30:36"
+            "time": "2014-08-26 16:11:49"
         },
         {
             "name": "typo3/party",
@@ -1430,7 +1431,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/TYPO3.TYPO3CR.git",
-                "reference": "6b1cffed4a9b3b002a34fd6a65aa3ba0861a22ad"
+                "reference": "8967748a12de6b73299361b3ae870a5f772fae45"
             },
             "require": {
                 "typo3/flow": "*"
@@ -1445,7 +1446,7 @@
             "license": [
                 "GPL-3.0+"
             ],
-            "time": "2014-08-21 21:53:25"
+            "time": "2014-08-26 12:55:07"
         },
         {
             "name": "typo3/typoscript",
