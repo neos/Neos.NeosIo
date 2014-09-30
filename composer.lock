@@ -696,6 +696,67 @@
             "time": "2014-06-03 19:53:45"
         },
         {
+            "name": "flowpack/elasticsearch",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Flowpack/Flowpack.ElasticSearch.git",
+                "reference": "c73bfaae2c4530b9b73f343bfc6aa465b70a2788"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Flowpack/Flowpack.ElasticSearch/zipball/c73bfaae2c4530b9b73f343bfc6aa465b70a2788",
+                "reference": "c73bfaae2c4530b9b73f343bfc6aa465b70a2788",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/flow": "*"
+            },
+            "type": "typo3-flow-package",
+            "autoload": {
+                "psr-0": {
+                    "Flowpack\\ElasticSearch": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "This package provides wrapper functionality for the elasticsearch engine.",
+            "time": "2014-08-29 12:46:22"
+        },
+        {
+            "name": "flowpack/elasticsearch-contentrepositoryadaptor",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Flowpack/Flowpack.ElasticSearch.ContentRepositoryAdaptor.git",
+                "reference": "3fe0f4551ee1a8781a4cbd1c63c9d2428ede7217"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Flowpack/Flowpack.ElasticSearch.ContentRepositoryAdaptor/zipball/3fe0f4551ee1a8781a4cbd1c63c9d2428ede7217",
+                "reference": "3fe0f4551ee1a8781a4cbd1c63c9d2428ede7217",
+                "shasum": ""
+            },
+            "require": {
+                "flowpack/elasticsearch": "*",
+                "typo3/eel": "*",
+                "typo3/typo3cr": "*",
+                "typo3/typo3cr-search": "*"
+            },
+            "type": "typo3-flow-package",
+            "autoload": {
+                "psr-0": {
+                    "Flowpack\\ElasticSearch\\ContentRepositoryAdaptor": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0+"
+            ],
+            "description": "This package provides functionality for the interaction of elasticsearch engine and TYPO3CR.",
+            "homepage": "http://flowpack.org/",
+            "time": "2014-09-16 14:26:07"
+        },
+        {
             "name": "imagine/imagine",
             "version": "v0.6.1",
             "source": {
@@ -1222,7 +1283,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/TYPO3.Media.git",
-                "reference": "b47111a9bb9d3a81c0493a94d83b1a9367fb504d"
+                "reference": "6e846c7b74eff9435e127621808cedf2efbc693e"
             },
             "require": {
                 "typo3/flow": "*",
@@ -1239,7 +1300,7 @@
                 "GPL-3.0+"
             ],
             "description": "The Media package",
-            "time": "2014-09-18 22:06:37"
+            "time": "2014-09-29 19:37:33"
         },
         {
             "name": "typo3/neos",
@@ -1247,7 +1308,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/TYPO3.Neos.git",
-                "reference": "256062b3ffcba7fc4f956e81da7012f4b58f29ee"
+                "reference": "69b1b4361f2c4416823ecd32f37b3fdd98503cf9"
             },
             "require": {
                 "typo3/flow": "*",
@@ -1276,7 +1337,7 @@
                 "GPL-3.0+"
             ],
             "description": "The next generation of the popular open-source CMS.",
-            "time": "2014-09-29 17:53:15"
+            "time": "2014-09-30 15:36:01"
         },
         {
             "name": "typo3/neos-nodetypes",
@@ -1284,7 +1345,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/TYPO3.Neos.NodeTypes.git",
-                "reference": "2e7a1d48edf116f04e5594597e88f656531c6ff3"
+                "reference": "7e0d051fede2e34a9225fc8ae334aa46b62e15bf"
             },
             "require": {
                 "typo3/neos": "*"
@@ -1300,7 +1361,7 @@
                 "GPL-3.0+"
             ],
             "description": "Node type configuration for TYPO3 Neos",
-            "time": "2014-09-29 16:12:50"
+            "time": "2014-09-30 12:16:13"
         },
         {
             "name": "typo3/neostypo3org",
@@ -1308,9 +1369,10 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/NeosTypo3Org.git",
-                "reference": "4605089cb9c96ff53cbad14c7bc2fa1e20087629"
+                "reference": "04082eb4a024da85b64a1dfdfceb9686b11216fb"
             },
             "require": {
+                "flowpack/elasticsearch-contentrepositoryadaptor": "dev-master",
                 "typo3/neos": "*",
                 "typo3/release": "*"
             },
@@ -1324,7 +1386,7 @@
                 "GPL-3.0+"
             ],
             "description": "neos.typo3.org site package",
-            "time": "2014-08-31 10:04:23"
+            "time": "2014-09-30 16:36:43"
         },
         {
             "name": "typo3/party",
@@ -1427,7 +1489,7 @@
             "source": {
                 "type": "git",
                 "url": "git://git.typo3.org/Packages/TYPO3.TYPO3CR.git",
-                "reference": "ee62a41eb718b7b9935f4585fcb6d0ca89489bad"
+                "reference": "9775024e72b88376824d78f9158935efb8cecdd8"
             },
             "require": {
                 "typo3/flow": "*"
@@ -1442,7 +1504,35 @@
             "license": [
                 "GPL-3.0+"
             ],
-            "time": "2014-09-18 08:35:47"
+            "time": "2014-09-30 11:25:37"
+        },
+        {
+            "name": "typo3/typo3cr-search",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TYPO3-Neos/TYPO3.TYPO3CR.Search.git",
+                "reference": "66e4eda818809c539b1d6d4a4409c0d22ad9ee4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TYPO3-Neos/TYPO3.TYPO3CR.Search/zipball/66e4eda818809c539b1d6d4a4409c0d22ad9ee4a",
+                "reference": "66e4eda818809c539b1d6d4a4409c0d22ad9ee4a",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/flow": "*",
+                "typo3/typo3cr": "*"
+            },
+            "type": "typo3-flow-package",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\TYPO3CR\\Search": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Common code and interface for a TYPO3CR search implementation",
+            "time": "2014-09-11 15:37:48"
         },
         {
             "name": "typo3/typoscript",
