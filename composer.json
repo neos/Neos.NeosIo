@@ -13,9 +13,9 @@
         "bin-dir": "bin"
     },
     "require": {
-        "typo3/neos": "dev-master",
+        "typo3/neos": "1.2.*@beta",
         "typo3/neostypo3org": "@dev",
-        "typo3/neos-nodetypes": "dev-master",
+        "typo3/neos-nodetypes": "1.2.*@beta",
 
         "typo3/doctools": "dev-master",
         "robertlemke/plugin-blog": "dev-master",
@@ -23,14 +23,24 @@
 
         "robertlemke/rss": "@dev",
         "doctrine/migrations": "@dev",
-        "typo3/release": "dev-master"
+        "typo3/release": "dev-master",
+        "typo3/neosdemotypo3org": "1.2.*@beta",
+        "typo3/neos-kickstarter": "1.2.*@beta",
+        "typo3/flow": "2.3.*@beta",
+        "typo3/typoscript": "@beta",
+        "typo3/typo3cr": "@beta",
+        "typo3/media": "@beta",
+        "typo3/eel": "@beta",
+        "typo3/fluid": "@beta",
+        "typo3/party": "@beta",
+        "typo3/kickstart": "@beta",
+        "flowpack/elasticsearch-contentrepositoryadaptor": "@dev"
     },
     "require-dev": {
         "typo3/buildessentials": "2.1.*",
         "mikey179/vfsstream": "1.2.*",
         "phpunit/phpunit": "3.7.*"
     },
-    "minimum-stability": "dev",
     "scripts": {
         "post-update-cmd": "TYPO3\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
         "post-install-cmd": "TYPO3\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
