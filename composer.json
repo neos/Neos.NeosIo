@@ -1,49 +1,54 @@
 {
-    "name": "typo3/neos-typo3-org-distribution",
-    "description" : "neos.typo3.org Distribution",
+    "name": "neos/neos-io-distribution",
+    "description" : "neos.io website distribution",
     "license": "GPL-3.0+",
     "repositories": [
         {
             "type": "git",
-            "url": "git://git.typo3.org/Packages/NeosTypo3Org.git"
-        }
+            "url": "git@github.com:neos/Neos.NeosIo.git"
+        },
+      {
+        "type": "git",
+        "url": "git@gitlab.com:flownative/flow-aws-s3.git"
+      }
     ],
     "config": {
         "vendor-dir": "Packages/Libraries",
         "bin-dir": "bin"
     },
     "require": {
-        "typo3/neos": "2.0.*@beta",
-        "typo3/neostypo3org": "@dev",
-        "typo3/neos-nodetypes": "2.0.*@beta",
+      "typo3/neos": "~2.0@beta",
+      "typo3/neos-nodetypes": "~2.0@beta",
+      "doctrine/migrations": "@dev",
+      "typo3/swiftmailer": "~5.3",
 
-        "typo3/doctools": "dev-master",
-        "robertlemke/plugin-blog": "dev-master",
+      "typo3/doctools": "dev-master",
+      "robertlemke/plugin-blog": "dev-master",
+      "robertlemke/rss": "dev-master",
+      "typo3/release": "dev-master",
+      "flowpack/elasticsearch-contentrepositoryadaptor": "dev-master",
 
-        "robertlemke/rss": "@dev",
-        "doctrine/migrations": "@dev",
-        "typo3/release": "dev-master",
-        "typo3/flow": "3.0.*@beta",
-        "typo3/typoscript": "2.0.*@beta",
-        "typo3/typo3cr": "2.0.*@beta",
-        "typo3/media": "2.0.*@beta",
-        "typo3/eel": "3.0.*@beta",
-        "typo3/fluid": "3.0.*@beta",
-        "typo3/party": "3.0.*@beta",
-        "typo3/setup": "~2.0",
-        "typo3/kickstart": "3.0.*@beta",
-        "typo3/typo3cr-search": "dev-master",
-        "flowpack/elasticsearch-contentrepositoryadaptor": "dev-master",
-        "typo3/neos-kickstarter": "2.0.*@beta",
-        "typo3/neos-seo": "~1.0",
-        "typo3/imagine": "~2.0",
-        "typo3/twitter-bootstrap": "~2.0",
-        "typo3/form": "~2.0"
+      "typo3/flow": "@beta",
+      "typo3/fluid": "@beta",
+      "typo3/eel": "@beta",
+      "typo3/party": "@beta",
+      "typo3/typoscript": "@beta",
+      "typo3/typo3cr": "@beta",
+      "typo3/media": "@beta",
+
+      "typo3/form": "~2.0",
+      "typo3/imagine": "~2.0",
+      "typo3/twitter-bootstrap": "~2.0",
+      "typo3/neos-seo": "~1.0",
+      "typo3/neos-googleanalytics": "dev-master",
+      "google/apiclient": "@beta",
+
+      "flownative/aws-s3": "~1.0@alpha"
     },
     "require-dev": {
-        "typo3/buildessentials": "3.0.*@beta",
-        "mikey179/vfsstream": "1.4.*",
-        "phpunit/phpunit": "4.3.*"
+       "typo3/buildessentials": "~3.0@beta",
+       "mikey179/vfsstream": "1.5.*",
+       "phpunit/phpunit": "4.6.*"
     },
     "scripts": {
         "post-update-cmd": "TYPO3\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
