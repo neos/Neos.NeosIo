@@ -1,7 +1,7 @@
 // Override default node types
 
 prototype(TYPO3.Neos.NodeTypes:Image) {
-	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Image.html'
+	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Image.html'
 }
 
 // Individual node types
@@ -66,7 +66,7 @@ prototype(TYPO3.NeosTypo3Org:NewsTeaser) {
 	posts = ${q(site).find(q(node).property('blogNodePath')).children('[instanceof RobertLemke.Plugin.Blog:Post]').slice(0, 2)}
 
 	postRenderer = TYPO3.TypoScript:Template {
-		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/NewsTeaser.html'
+		templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/NewsTeaser.html'
 		sectionName = 'post'
 
 		node = ${node}
@@ -77,22 +77,22 @@ prototype(TYPO3.NeosTypo3Org:NewsTeaser) {
 }
 
 prototype(RobertLemke.Plugin.Blog:Post) < prototype(TYPO3.Neos:Content) {
-	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/NewsPost.html'
+	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/NewsPost.html'
 }
 
 prototype(RobertLemke.Plugin.Blog:Comment) < prototype(TYPO3.Neos:Content) {
-	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Comment.html'
+	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Comment.html'
 }
 
 prototype(RobertLemke.Plugin.Blog:Quote) < prototype(TYPO3.Neos:Content) {
-	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Quote.html'
+	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Quote.html'
 }
 
 
 // Quote element
 
 prototype(TYPO3.NeosTypo3Org:Blockquote) {
-	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Blockquote.html'
+	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Blockquote.html'
 }
 
 // Youtube element
@@ -105,7 +105,7 @@ prototype(TYPO3.NeosDemoTypo3Org:Youtube) < prototype(TYPO3.Neos:Content) {
 
 prototype(TYPO3.NeosTypo3Org:Reference) {
 	image = TYPO3.Neos.NodeTypes:Image {
-		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Image.html'
+		templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Image.html'
 		@process.contentElementWrapping >
 	}
 
@@ -122,7 +122,7 @@ prototype(TYPO3.Neos:PrimaryContent).referenceType {
 }
 
 prototype(TYPO3.NeosTypo3Org:ReferenceType) < prototype(TYPO3.TypoScript:Template) {
-	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/ReferenceType.html'
+	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/ReferenceType.html'
 }
 
 // ReferenceList - shows all references in alphabetical order
@@ -139,7 +139,7 @@ prototype(TYPO3.NeosTypo3Org:ReferenceList) {
 	}
 
 	prototype(TYPO3.Neos.NodeTypes:Image) {
-		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Image.html'
+		templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Image.html'
 	}
 
 	@cache {

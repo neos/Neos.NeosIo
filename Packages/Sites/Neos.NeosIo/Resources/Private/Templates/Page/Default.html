@@ -13,12 +13,12 @@
 	</f:section>
 
 	<f:section name="stylesheets">
-		<link rel="stylesheet" href="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Stylesheets/app.css')}" />
-		<link rel="stylesheet" href="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Stylesheets/neos.css')}" />
+		<link rel="stylesheet" href="{f:uri.resource(package: 'Neos.NeosIo', path: 'Stylesheets/app.css')}" />
+		<link rel="stylesheet" href="{f:uri.resource(package: 'Neos.NeosIo', path: 'Stylesheets/neos.css')}" />
 	</f:section>
 
 	<f:section name="scripts">
-		<script src="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/vendor/custom.modernizr.js')}"></script>
+		<script src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/vendor/custom.modernizr.js')}"></script>
 	</f:section>
 
 </head>
@@ -104,14 +104,14 @@
 		<f:security.ifAccess privilegeTarget="TYPO3.Neos:Backend.GeneralAccess">
 			<f:then>
 				<f:comment>A "document.write" causes problems when loading the page via AJAX in the Neos backend, so we just include jQuery here. Can be removed again if Iee2247c6ad0c64b98e71ba9a4b767ef0507c7dba is merged.</f:comment>
-				<script src="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/vendor/jquery.min.js')}"></script>
-				<script src="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/app.min.js')}"></script>
+				<script src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/vendor/jquery.min.js')}"></script>
+				<script src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/app.min.js')}"></script>
 			</f:then>
 			<f:else>
 				<script>
-					document.write('<script src=' + ('__proto__' in {} ? '{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/vendor/zepto.min.js')}' : '{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/vendor/jquery.min.js')}') + '><\/script>')
+					document.write('<script src=' + ('__proto__' in {} ? '{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/vendor/zepto.min.js')}' : '{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/vendor/jquery.min.js')}') + '><\/script>')
 				</script>
-				<script src="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/app.min.js')}"></script>
+				<script src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/app.min.js')}"></script>
 				<!-- Piwik -->
 				<script type="text/javascript">
 				var _paq = _paq || [];

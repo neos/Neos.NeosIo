@@ -10,17 +10,17 @@ page = Page
 
 page.head {
 	stylesheets.site = TYPO3.TypoScript:Template {
-		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/Page/Default.html'
+		templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
 		sectionName = 'stylesheets'
 	}
 
 	javascripts.site = TYPO3.TypoScript:Template {
-		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/Page/Default.html'
+		templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
 		sectionName = 'scripts'
 	}
 
 	meta = TYPO3.TypoScript:Template {
-		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/Page/Default.html'
+		templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
 		sectionName = 'meta'
 
 		node = ${documentNode}
@@ -37,12 +37,12 @@ page.head {
 }
 
 page.body {
-	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/Page/Default.html'
+	templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
 	sectionName = 'body'
 
 	parts {
 		menu = Menu {
-			templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/TypoScriptObjects/Menu.html'
+			templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/Menu.html'
 			maximumLevels = 2
 			entryLevel = 1
 		}
@@ -60,7 +60,7 @@ page.body {
 		}
 
 		subMenu = Menu {
-			templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/TypoScriptObjects/SubMenu.html'
+			templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/SubMenu.html'
 			maximumLevels = 1
 			entryLevel = 2
 
@@ -68,7 +68,7 @@ page.body {
 		}
 
 		footerMenuNeos = Menu {
-			templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/TypoScriptObjects/FooterMenu.html'
+			templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/FooterMenu.html'
 			maximumLevels = 1
 			startingPoint = ${q(site).find('footer-typo3-neos').get(0)}
 			attributes.class = 'no-bullet'
@@ -76,7 +76,7 @@ page.body {
 		}
 
 		footerContribute = Menu {
-			templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/TypoScriptObjects/FooterMenu.html'
+			templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/FooterMenu.html'
 			maximumLevels = 1
 			startingPoint = ${q(site).find('footer-contribute').get(0)}
 			attributes.class = 'no-bullet'
@@ -88,7 +88,7 @@ page.body {
 
 	// Add JS includes for the site before the closing body tag
 	javascripts.site = TYPO3.TypoScript:Template {
-		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/Page/Default.html'
+		templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
 		sectionName = 'footerScripts'
 	}
 }
