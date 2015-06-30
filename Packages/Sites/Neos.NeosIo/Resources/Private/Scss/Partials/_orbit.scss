@@ -1,0 +1,56 @@
+[data-role=main] .slideshow-wrapper {
+	padding: 0px;
+
+	@media #{$small} {
+		padding: 2em 0 1.5em 0;
+	}
+
+	h1 {
+		margin-bottom: 25px;
+	}
+
+	li {
+		background: transparent;
+		padding-left: 0px;
+	}
+
+	.orbit-bullets {
+		display: inline-block;
+		margin: 0 auto 0px auto;
+
+		@media #{$small} {
+			margin: 0 auto 30px auto;
+		}
+
+		li {
+			border-color: $middle-blue;
+			background: transparent;
+			padding: 0px;
+
+			&:before {
+				content: '';
+			}
+
+			&.active,
+			&:hover {
+				background: $middle-blue;
+				cursor: pointer;
+			}
+		}
+	}
+}
+.orbit-container {
+	text-align: center;
+	.orbit-slides-container {
+		text-align: left;
+		li {
+			background: transparent;
+			img {
+				float: right;
+			}
+		}
+	}
+	.orbit-timer {
+		display: none;
+	}
+}

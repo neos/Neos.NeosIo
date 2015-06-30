@@ -1,0 +1,178 @@
+// Override default node types
+
+prototype(TYPO3.Neos.NodeTypes:Image) {
+	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Image.html'
+}
+
+// Individual node types
+
+prototype(TYPO3.NeosTypo3Org:Section) {
+    // give the layout property from the current node to my template as "layout" right side yaml, left side fluid
+	attributes.class = ${q(node).property('color') + ' ' + (q(node).property('overflowHidden') ? 'overflow-hidden' : '') + (q(node).property('noPaddingTop') ? ' no-padding-top' : '') + (q(node).property('overflowHidden') ? ' no-padding-bottom' : '')}
+	attributes.data-magellan-destination = ${'c' + q(node).property('_identifier')}
+
+	attributes.id = ${'c' + q(node).property('_identifier')}
+
+	column0 = TYPO3.Neos:ContentCollection {
+		nodePath = 'column0'
+	}
+
+}
+
+prototype(TYPO3.NeosTypo3Org:DynamicColumns) {
+	column0 = TYPO3.Neos:ContentCollection {
+		nodePath = 'column0'
+	}
+}
+
+prototype(TYPO3.NeosTypo3Org:Row) {
+	column0 = TYPO3.Neos:ContentCollection {
+		nodePath = 'column0'
+	}
+}
+
+prototype(TYPO3.NeosTypo3Org:TwoColumns) {
+	column0 = TYPO3.Neos:ContentCollection {
+		nodePath = 'column0'
+	}
+	column1 = TYPO3.Neos:ContentCollection {
+		nodePath = 'column1'
+	}
+}
+
+prototype(TYPO3.NeosTypo3Org:ThreeColumns) {
+	column0 = TYPO3.Neos:ContentCollection {
+		nodePath = 'column0'
+	}
+	column1 = TYPO3.Neos:ContentCollection {
+		nodePath = 'column1'
+	}
+	column2 = TYPO3.Neos:ContentCollection {
+		nodePath = 'column2'
+	}
+}
+
+prototype(TYPO3.NeosTypo3Org:SliderContainer) {
+	column0 = TYPO3.Neos:ContentCollection {
+		nodePath = 'column0'
+	}
+}
+
+// News configuration
+
+prototype(TYPO3.NeosTypo3Org:NewsTeaser) {
+
+	# TODO Use .slice() FlowQuery operator if available
+	posts = ${q(site).find(q(node).property('blogNodePath')).children('[instanceof RobertLemke.Plugin.Blog:Post]').slice(0, 2)}
+
+	postRenderer = TYPO3.TypoScript:Template {
+		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/NewsTeaser.html'
+		sectionName = 'post'
+
+		node = ${node}
+		title = ${q(node).property('title')}
+		detailLinkLabel = ${q(node).property('detailLinkLabel')}
+		teaserText = ${q(node).property('teaserText')}
+	}
+}
+
+prototype(RobertLemke.Plugin.Blog:Post) < prototype(TYPO3.Neos:Content) {
+	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/NewsPost.html'
+}
+
+prototype(RobertLemke.Plugin.Blog:Comment) < prototype(TYPO3.Neos:Content) {
+	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Comment.html'
+}
+
+prototype(RobertLemke.Plugin.Blog:Quote) < prototype(TYPO3.Neos:Content) {
+	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Quote.html'
+}
+
+
+// Quote element
+
+prototype(TYPO3.NeosTypo3Org:Blockquote) {
+	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Blockquote.html'
+}
+
+// Youtube element
+
+prototype(TYPO3.NeosDemoTypo3Org:Youtube) < prototype(TYPO3.Neos:Content) {
+	attributes.class = 'responsive-video'
+}
+
+// Reference
+
+prototype(TYPO3.NeosTypo3Org:Reference) {
+	image = TYPO3.Neos.NodeTypes:Image {
+		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Image.html'
+		@process.contentElementWrapping >
+	}
+
+	attributes {
+		class = 'neos-reference'
+	}
+}
+
+// ReferenceType DocumentNodeType
+
+prototype(TYPO3.Neos:PrimaryContent).referenceType {
+	condition = ${q(documentNode).is('[instanceof TYPO3.NeosTypo3Org:ReferenceType]')}
+	type = 'TYPO3.NeosTypo3Org:ReferenceType'
+}
+
+prototype(TYPO3.NeosTypo3Org:ReferenceType) < prototype(TYPO3.TypoScript:Template) {
+	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/ReferenceType.html'
+}
+
+// ReferenceList - shows all references in alphabetical order
+
+prototype(TYPO3.NeosTypo3Org:ReferenceList) {
+	references = TYPO3.TypoScript:Collection {
+		collection = ${Search.query(site).nodeType('TYPO3.NeosTypo3Org:Reference').sortAsc('caption').exactMatch('projectType', q(node).property('projectType')).limit(100).execute()}
+		itemName = 'node'
+		itemRenderer = TYPO3.Neos.NodeTypes:Image
+	}
+
+	attributes {
+		class = 'neos-reference-list'
+	}
+
+	prototype(TYPO3.Neos.NodeTypes:Image) {
+		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/NodeTypes/Image.html'
+	}
+
+	@cache {
+		mode = 'cached'
+		entryIdentifier {
+			node = ${node}
+		}
+		entryTags {
+			references = 'NodeType_TYPO3.NeosTypo3Org:Reference'
+		}
+	}
+}
+
+// Download List
+prototype(TYPO3.NeosTypo3Org:Download) {
+	attributes {
+		class = 'neos-download-list'
+	}
+}
+
+// Special Images with optional classes and/or inline styles
+prototype(TYPO3.NeosTypo3Org:SpecialImage) {
+	attributes {
+		class = TYPO3.TypoScript:RawArray {
+			classes = ${q(node).property('classes')}
+
+			@process.nodeType >
+
+			// Don't render the class attribute if all values are empty
+			@process.notEmpty = ${Array.join(value, '') || false}
+		}
+
+		// Render the style attribute only if not empty
+		style = ${q(node).property('styles') || false}
+	}
+}

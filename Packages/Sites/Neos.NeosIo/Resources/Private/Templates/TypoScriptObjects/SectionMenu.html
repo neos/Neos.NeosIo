@@ -1,0 +1,10 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<div data-magellan-expedition="fixed" class="section-menu">
+	<ul>
+		<f:for each="{items}" as="item">
+			<li data-magellan-arrival="c{item.identifier}">
+				<a href="#c{item.identifier}" class="scrollTo">{item.properties.title}</a>
+			</li>
+		</f:for>
+	</ul>
+</div>

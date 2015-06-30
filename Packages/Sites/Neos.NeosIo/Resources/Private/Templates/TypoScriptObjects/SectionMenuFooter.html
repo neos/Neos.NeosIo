@@ -1,0 +1,10 @@
+{namespace ts=TYPO3\TypoScript\ViewHelpers}
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<ul class="no-bullet">
+	<li><neos:link.node node="~/homepage">Home</neos:link.node></li>
+	<f:for each="{items}" as="item">
+		<li>
+			<a href="{neos:uri.node(node: documentNode)}#c{item.identifier}">{item.properties.title}</a>
+		</li>
+	</f:for>
+</ul>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace ts=TYPO3\TypoScript\ViewHelpers}
+{namespace site=TYPO3\NeosTypo3Org\ViewHelpers}
+<html>
+<head>
+
+	<f:section name="meta">
+		<meta name="viewport" content="width=device-width" />
+		<f:if condition="{node.properties.indexNoFollow}">
+			<meta name="robots" content="index, nofollow">
+		</f:if>
+	</f:section>
+
+	<f:section name="stylesheets">
+		<link rel="stylesheet" href="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Stylesheets/app.css')}" />
+		<link rel="stylesheet" href="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Stylesheets/neos.css')}" />
+	</f:section>
+
+	<f:section name="scripts">
+		<script src="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/vendor/custom.modernizr.js')}"></script>
+	</f:section>
+
+</head>
+<body>
+<f:section name="body">
+	<header class="darkest-gray">
+		<div class="row collapse">
+			<div class="columns small12">
+				<nav class="top-bar alternative">
+					<ul class="title-area">
+						<!-- Title Area -->
+						<li class="name"><neos:link.node node="~/homepage" class="svg"><object data="Public/Images/neos-logo.svg" type="image/svg+xml"><img src="Public/Images/neos-200px-transparent.png" alt="Neos" /></object></neos:link.node></li>
+					</ul>
+					<section class="top-bar-section">
+						<ul class="right">
+							<li><neos:link.node node="~/homepage">Home</neos:link.node>|</li>
+							<li><neos:link.node node="~/homepage/contact">Stay up to date</neos:link.node>|</li>
+							<li class="has-dropdown not-click external">
+								<neos:link.node node="~">neos.typo3.org</neos:link.node>
+								<ul class="dropdown">
+									<li><a href="http://flow.typo3.org">flow.typo3.org</a></li>
+									<li><a href="http://jira.typo3.org">jira.typo3.org</a></li>
+									<li><a href="http://git.typo3.org">git.typo3.org</a></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+				</nav>
+			</div>
+		</div>
+		<ts:render path="parts.menu" />
+		<ts:render path="content.subMenu" />
+	</header>
+	<div data-role="main">
+		<ts:render path="content.main" />
+		<ts:render path="content.sectionMenu" />
+	</div>
+	<footer class="dark-gray">
+		<div class="row links">
+			<div class="columns small-12 large-4">
+				<h4>Neos</h4>
+				{content.footerMenuNeos -> f:format.raw()}
+			</div>
+			<div class="columns small-12 large-4">
+				<h4>Contribute</h4>
+				{content.footerContribute -> f:format.raw()}
+			</div>
+			<div class="columns small-12 large-4">
+				<h4>Links</h4>
+				<ul class="no-bullet">
+					<li><a href="http://flow.typo3.org">flow.typo3.org</a></li>
+					<li><a href="http://jira.typo3.org">jira.typo3.org</a></li>
+					<li><a href="http://git.typo3.org">git.typo3.org</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="columns small-12">
+				<hr>
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-12 large-6 columns follow-us">
+				<ul class="inline-list">
+					<li><a href="https://www.facebook.com/typo3neos" class="ss-facebook"><span>Neos on Facebook</span></a></li>
+					<li><a href="https://twitter.com/TYPO3Neos" class="ss-twitter"><span>Neos on Twitter</span></a></li>
+					<li><a href="https://www.youtube.com/channel/UCQndryIh2s9i3htDrpb6tiw" class="ss-youtube"><span>Neos Youtube Channel</span></a></li>
+				</ul>
+			</div>
+			<div class="small-12 large-6 columns typo3-family">
+				<div class="row">
+					<div class="small-6 columns">
+						<a href="/" class="svg"><object data="Public/Images/neos-logo.svg" type="image/svg+xml"><img src="Public/Images/products/typo3-neos.png" alt="Neos"></object></a>
+					</div>
+					<div class="small-6 columns">
+						<a href="http://flow.typo3.org" class="svg"><object data="Public/Images/flow-logo.svg" type="image/svg+xml"><img src="Public/Images/products/typo3-flow.png" alt="Flow"></object></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<f:section name="footerScripts">
+		<f:security.ifAccess privilegeTarget="TYPO3.Neos:Backend.GeneralAccess">
+			<f:then>
+				<f:comment>A "document.write" causes problems when loading the page via AJAX in the Neos backend, so we just include jQuery here. Can be removed again if Iee2247c6ad0c64b98e71ba9a4b767ef0507c7dba is merged.</f:comment>
+				<script src="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/vendor/jquery.min.js')}"></script>
+				<script src="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/app.min.js')}"></script>
+			</f:then>
+			<f:else>
+				<script>
+					document.write('<script src=' + ('__proto__' in {} ? '{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/vendor/zepto.min.js')}' : '{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/vendor/jquery.min.js')}') + '><\/script>')
+				</script>
+				<script src="{f:uri.resource(package: 'TYPO3.NeosTypo3Org', path: 'Javascripts/app.min.js')}"></script>
+				<!-- Piwik -->
+				<script type="text/javascript">
+				var _paq = _paq || [];
+				_paq.push(["trackPageView"]);
+				_paq.push(["enableLinkTracking"]);
+
+				(function() {
+					var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.typo3.org/";
+					_paq.push(["setTrackerUrl", u+"piwik.php"]);
+					_paq.push(["setSiteId", "22"]);
+					var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+					g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+				})();
+				</script>
+				<!-- End Piwik Code -->
+			</f:else>
+		</f:security.ifAccess>
+	</f:section>
+</f:section>
+</body>
+</html>

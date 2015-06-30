@@ -1,0 +1,104 @@
+/**
+ * Root TypoScript template for the Neos Website Site
+ */
+
+# Include plugins
+include: resource://RobertLemke.Plugin.Blog/Private/TypoScript/Root.ts2
+#include: resource://TimKandel.PackagistFE/Private/TypoScripts/Library/NodeTypes.ts2
+
+page = Page
+
+page.head {
+	stylesheets.site = TYPO3.TypoScript:Template {
+		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/Page/Default.html'
+		sectionName = 'stylesheets'
+	}
+
+	javascripts.site = TYPO3.TypoScript:Template {
+		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/Page/Default.html'
+		sectionName = 'scripts'
+	}
+
+	meta = TYPO3.TypoScript:Template {
+		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/Page/Default.html'
+		sectionName = 'meta'
+
+		node = ${documentNode}
+	}
+
+	titleTag.content = TYPO3.TypoScript:Collection {
+		collection = ${Array.reverse(Array.slice(q(node).add(q(node).parents()).get(),0, -1))}
+		itemName = 'node'
+		iterationName = 'iterator'
+		itemRenderer = ${q(node).property('title') + ' - '}
+
+		@process.suffix = ${value + 'Neos'}
+	}
+}
+
+page.body {
+	templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/Page/Default.html'
+	sectionName = 'body'
+
+	parts {
+		menu = Menu {
+			templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/TypoScriptObjects/Menu.html'
+			maximumLevels = 2
+			entryLevel = 1
+		}
+	}
+
+	// These are your content areas, you can define as many as you want, just name them and the nodePath.
+	content {
+		main = PrimaryContent {
+			nodePath = 'main'
+		}
+
+		sectionMenu = TYPO3.TypoScript:Value {
+			sectionMenu = TYPO3.NeosTypo3Org:SectionMenu
+			value = ${q(documentNode).property('showSectionMenu') ? this.sectionMenu : ''}
+		}
+
+		subMenu = Menu {
+			templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/TypoScriptObjects/SubMenu.html'
+			maximumLevels = 1
+			entryLevel = 2
+
+			@process.hideForBlogPost = ${q(documentNode).is('[instanceof RobertLemke.Plugin.Blog:Post]') ? '' : value}
+		}
+
+		footerMenuNeos = Menu {
+			templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/TypoScriptObjects/FooterMenu.html'
+			maximumLevels = 1
+			startingPoint = ${q(site).find('footer-typo3-neos').get(0)}
+			attributes.class = 'no-bullet'
+			entryLevel = 0
+		}
+
+		footerContribute = Menu {
+			templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/TypoScriptObjects/FooterMenu.html'
+			maximumLevels = 1
+			startingPoint = ${q(site).find('footer-contribute').get(0)}
+			attributes.class = 'no-bullet'
+			entryLevel = 0
+		}
+	}
+
+	hasDocumentChildNode = ${q(documentNode).children('[instanceof TYPO3.Neos:Document]').count() > 0}
+
+	// Add JS includes for the site before the closing body tag
+	javascripts.site = TYPO3.TypoScript:Template {
+		templatePath = 'resource://TYPO3.NeosTypo3Org/Private/Templates/Page/Default.html'
+		sectionName = 'footerScripts'
+	}
+}
+
+prototype(RobertLemke.Plugin.Blog:Post) {
+	main.@cache {
+		# Make sure the cached ContentCollection has no empty tags, workaround for NEOS-378
+		entryTags.2 = ${'DescendantOf_' + documentNode.identifier}
+	}
+}
+
+include: TypoScriptObjects.ts2
+include: NodeTypes.ts2

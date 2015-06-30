@@ -1,0 +1,23 @@
+.news-teaser {
+	margin-top: 12px;
+
+	h2 {
+		margin-bottom: $paragraph-margin-bottom;
+	}
+}
+
+section.news-head {
+	.teaser-text {
+		font-family: $font-share;
+		font-size: $h6-font-size + em-calc(2);
+
+		strong {
+			font-weight: normal;
+			font-family: $font-share-bold;
+		}
+
+		@media #{$small} {
+			font-size: $h5-font-size;
+		}
+	}
+}

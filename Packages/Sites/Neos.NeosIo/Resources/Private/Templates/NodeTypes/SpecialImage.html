@@ -1,0 +1,14 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace media=TYPO3\Media\ViewHelpers}
+<div{attributes -> f:format.raw()}>
+	<f:if condition="{image}">
+		<f:then>
+			<media:image asset="{image}" alt="{alternativeText}" title="{title}" maximumWidth="{maximumWidth}" maximumHeight="{maximumHeight}" />
+		</f:then>
+		<f:else>
+			<f:if condition="{node.context.workspace.name} != 'live'">
+				<img src="{f:uri.resource(package: 'TYPO3.Neos', path: 'Images/dummy-image.svg')}" title="Dummy image" alt="Dummy image" class="neos-handle" />
+			</f:if>
+		</f:else>
+	</f:if>
+</div>

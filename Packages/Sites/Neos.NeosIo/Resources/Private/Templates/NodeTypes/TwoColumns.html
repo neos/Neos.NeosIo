@@ -1,0 +1,80 @@
+<div{attributes -> f:format.raw()}>
+	<f:if condition="{noRow}">
+		<f:then>
+			<li class="row two-cols">
+		</f:then>
+		<f:else>
+			<div class="row two-cols{f:if(condition: '{marginTop}', then: ' margin-top')}{f:if(condition: '{marginBottom}', then: ' margin-bottom')}">
+		</f:else>
+	</f:if>
+	<f:if condition="{0: layout} == {0: '75-25'}">
+		<f:then>
+			<div class="large-9 small-12 columns">
+		</f:then>
+		<f:else>
+			<f:if condition="{0: layout} == {0: '25-75'}">
+				<f:then>
+					<div class="large-3 small-12 columns">
+				</f:then>
+				<f:else>
+					<f:if condition="{0: layout} == {0: '66-33'}">
+						<f:then>
+							<div class="large-7 small-12 columns">
+						</f:then>
+						<f:else>
+							<f:if condition="{0: layout} == {0: '33-66'}">
+								<f:then>
+									<div class="large-5 small-12 columns">
+								</f:then>
+								<f:else>
+									<div class="large-6 small-12 columns">
+								</f:else>
+							</f:if>
+						</f:else>
+					</f:if>
+				</f:else>
+			</f:if>
+		</f:else>
+	</f:if>
+	{column0 -> f:format.raw()}
+	</div>
+	<f:if condition="{0: layout} == {0: '75-25'}">
+		<f:then>
+			<div class="large-3 small-12 columns">
+		</f:then>
+		<f:else>
+			<f:if condition="{0: layout} == {0: '25-75'}">
+				<f:then>
+					<div class="large-9 small-12 columns">
+				</f:then>
+				<f:else>
+					<f:if condition="{0: layout} == {0: '66-33'}">
+						<f:then>
+							<div class="large-5 small-12 columns">
+						</f:then>
+						<f:else>
+							<f:if condition="{0: layout} == {0: '33-66'}">
+								<f:then>
+									<div class="large-7 small-12 columns">
+								</f:then>
+								<f:else>
+									<div class="large-6 small-12 columns">
+								</f:else>
+							</f:if>
+						</f:else>
+					</f:if>
+				</f:else>
+			</f:if>
+		</f:else>
+	</f:if>
+	{column1 -> f:format.raw()}
+	</div>
+	<f:if condition="{noRow}">
+		<f:then>
+			</li>
+		</f:then>
+		<f:else>
+			</div>
+		</f:else>
+	</f:if>
+</div>
