@@ -31,7 +31,7 @@
         inspector:
           group: 'image'
 
-'TYPO3.NeosTypo3Org:Section':
+'Neos.NeosIo:Section':
   superTypes: ['TYPO3.Neos.NodeTypes:Column']
   ui:
     label: 'Section'
@@ -103,7 +103,7 @@
         inspector:
           group: 'column'
 
-'TYPO3.NeosTypo3Org:DynamicColumns':
+'Neos.NeosIo:DynamicColumns':
   superTypes: ['TYPO3.Neos.NodeTypes:Column']
   ui:
     label: 'Dynamic Columns'
@@ -160,7 +160,7 @@
         inspector:
           group: 'layout'
 
-'TYPO3.NeosTypo3Org:Row':
+'Neos.NeosIo:Row':
   superTypes: ['TYPO3.Neos.NodeTypes:Column']
   ui:
     label: 'Row (full content width)'
@@ -169,7 +169,7 @@
     column0:
       type: 'TYPO3.Neos:ContentCollection'
 
-'TYPO3.NeosTypo3Org:TwoColumns':
+'Neos.NeosIo:TwoColumns':
   superTypes: ['TYPO3.Neos.NodeTypes:Column']
   ui:
     label: 'neos.typo3.org Two Columns'
@@ -224,7 +224,7 @@
         inspector:
           group: 'column'
 
-'TYPO3.NeosTypo3Org:ThreeColumns':
+'Neos.NeosIo:ThreeColumns':
   superTypes: ['TYPO3.Neos.NodeTypes:Column']
   ui:
     label: 'neos.typo3.org Three Columns'
@@ -261,7 +261,7 @@
         inspector:
           group: 'column'
 
-'TYPO3.NeosTypo3Org:Headline':
+'Neos.NeosIo:Headline':
   superTypes: ['TYPO3.Neos:Content']
   ui:
     label: 'Headline with special styles'
@@ -343,13 +343,13 @@
         inspector:
           group: 'headline'
 
-'TYPO3.NeosTypo3Org:Divider':
+'Neos.NeosIo:Divider':
   superTypes: ['TYPO3.Neos:Content']
   ui:
     label: 'Divider'
     group: 'general'
 
-'TYPO3.NeosTypo3Org:SliderContainer':
+'Neos.NeosIo:SliderContainer':
   superTypes: ['TYPO3.Neos.NodeTypes:Column']
   ui:
     label: 'Slider Container'
@@ -358,13 +358,13 @@
     column0:
       type: 'TYPO3.Neos:ContentCollection'
 
-'TYPO3.NeosTypo3Org:SectionMenu':
+'Neos.NeosIo:SectionMenu':
   superTypes: ['TYPO3.Neos:Content']
   ui:
     label: 'Section menu'
     group: 'general'
 
-'TYPO3.NeosTypo3Org:Button':
+'Neos.NeosIo:Button':
   superTypes: ['TYPO3.Neos:Content']
   ui:
     label: 'Button'
@@ -418,7 +418,7 @@
         inspector:
           group: 'config'
 
-'TYPO3.NeosTypo3Org:NewsTeaser':
+'Neos.NeosIo:NewsTeaser':
   superTypes: ['TYPO3.Neos:Content']
   ui:
     label: 'News teaser'
@@ -453,7 +453,7 @@
           editor: Content/Inspector/Editors/CodeEditor
           group: moreinfo
 
-'TYPO3.NeosTypo3Org:Blockquote':
+'Neos.NeosIo:Blockquote':
   superTypes: ['TYPO3.Neos:Content']
   ui:
     label: 'Blockquote'
@@ -474,7 +474,7 @@
             'h4': TRUE
             'h5': TRUE
 
-'TYPO3.NeosTypo3Org:Youtube':
+'Neos.NeosIo:Youtube':
   superTypes: ['TYPO3.Neos:Content']
   ui:
     label: Youtube
@@ -530,13 +530,13 @@
       ui:
         inlineEditable: TRUE
 
-'TYPO3.NeosTypo3Org:ReferenceType':
+'Neos.NeosIo:ReferenceType':
   superTypes: ['TYPO3.Neos:Document']
   ui:
     label: 'Reference Type'
     icon: 'icon-tag'
 
-'TYPO3.NeosTypo3Org:Reference':
+'Neos.NeosIo:Reference':
   superTypes: ['TYPO3.Neos:Content', 'TYPO3.Neos.NodeTypes:Image']
   ui:
     label: 'Reference'
@@ -573,7 +573,7 @@
         inspector:
           group: 'properties'
           editorOptions:
-            nodeTypes: ['TYPO3.NeosTypo3Org:ReferenceType']
+            nodeTypes: ['Neos.NeosIo:ReferenceType']
     'launchDate':
       type: DateTime
       ui:
@@ -613,7 +613,7 @@
               '25':
                 label: '> 300.000 €'
 
-'TYPO3.NeosTypo3Org:ReferenceList':
+'Neos.NeosIo:ReferenceList':
   superTypes: ['TYPO3.Neos:Content']
   ui:
     label: 'Reference List'
@@ -647,9 +647,9 @@
         inspector:
           group: 'properties'
           editorOptions:
-            nodeTypes: ['TYPO3.NeosTypo3Org:ReferenceType']
+            nodeTypes: ['Neos.NeosIo:ReferenceType']
 
-'TYPO3.NeosTypo3Org:Download':
+'Neos.NeosIo:Download':
   superTypes: ['TYPO3.Neos:Content', 'TYPO3.Neos.NodeTypes:AssetList']
   ui:
     label: 'Download'
@@ -686,7 +686,7 @@
         aloha:
           format: ['b', 'i', 'u', 'span']
 
-'TYPO3.NeosTypo3Org:SpecialImage':
+'Neos.NeosIo:SpecialImage':
   superTypes: ['TYPO3.Neos:Content', 'TYPO3.Neos.NodeTypes:ImageMixin']
   ui:
     label: 'Special Image'
