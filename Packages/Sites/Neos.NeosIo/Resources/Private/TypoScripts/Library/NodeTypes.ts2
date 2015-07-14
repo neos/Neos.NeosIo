@@ -181,6 +181,19 @@ prototype(Neos.NeosIo:RtdLibrary) {
 	@class = 'Neos\\NeosIo\\TypoScript\\RtdLibraryImplementation'
 	username = ${q(node).property('username')}
 	excludedprojects = ${q(node).property('excludedprojectlugs')}
+
+	@cache {
+		mode = 'cached'
+		maximumLifetime = '43200'
+
+		entryIdentifier {
+			node = ${node}
+		}
+
+		entryTags {
+			1 = ${'Node_' + node.identifier}
+		}
+	}
 }
 
 prototype(Neos.NeosIo:RtdProject) {
