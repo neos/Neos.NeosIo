@@ -30,9 +30,9 @@ page.head {
 		collection = ${Array.reverse(Array.slice(q(node).add(q(node).parents()).get(),0, -1))}
 		itemName = 'node'
 		iterationName = 'iterator'
-		itemRenderer = ${q(node).property('title') + ' - '}
+		itemRenderer = ${q(node).property('title') + (iterator.isLast ? '' : ' - ')}
 
-		@process.suffix = ${value + 'Neos'}
+		@process.prefix = ${'Neos CMS' + (value ? ': ' + value : '')}
 	}
 }
 
