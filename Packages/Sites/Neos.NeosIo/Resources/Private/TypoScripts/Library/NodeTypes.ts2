@@ -176,3 +176,14 @@ prototype(Neos.NeosIo:SpecialImage) {
 		style = ${q(node).property('styles') || false}
 	}
 }
+
+prototype(Neos.NeosIo:RtdLibrary) {
+	@class = 'Neos\\NeosIo\\TypoScript\\RtdLibraryImplementation'
+	username = ${q(node).property('username')}
+	excludedprojects = ${q(node).property('excludedprojectlugs')}
+}
+
+prototype(Neos.NeosIo:RtdProject) {
+	@class = 'Neos\\NeosIo\\TypoScript\\RtdProjectImplementation'
+	project = ${q(node).property('projectslug')}
+}

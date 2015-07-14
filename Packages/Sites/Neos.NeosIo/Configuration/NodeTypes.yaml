@@ -713,3 +713,51 @@
         reloadIfChanged: TRUE
         inspector:
           group: 'properties'
+
+'Neos.NeosIo:RtdLibrary':
+  superTypes: ['TYPO3.Neos:Content']
+  ui:
+    label: 'Documentation Library'
+    icon: 'icon-book'
+    inspector:
+      groups:
+        'rtfdorg':
+          label: 'rtfd.org'
+          position: 5
+  properties:
+    'username':
+      type: string
+      defaultValue: 'neos'
+      ui:
+        label: 'Username'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'rtfdorg'
+    'excludedprojectlugs':
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Excluded projects (slugs)'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'rtfdorg'
+
+'Neos.NeosIo:RtdProject':
+  superTypes: ['TYPO3.Neos:Content']
+  ui:
+    label: 'Project Documentation'
+    icon: 'icon-book'
+    inspector:
+      groups:
+        'rtfdorg':
+          label: 'rtfd.org'
+          position: 5
+  properties:
+    'projectslug':
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Project slug'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'rtfdorg'
