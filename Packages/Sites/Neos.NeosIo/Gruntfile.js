@@ -1,66 +1,42 @@
 module.exports = function(grunt) {
-
-	// Project configuration.
-	grunt.initConfig({
+	grunt.config.init({
 		pkg: grunt.file.readJSON('package.json'),
-		uglify: {
-			jquery: {
-				files: {
-					'Resources/Public/Javascripts/vendor/jquery.min.js': ['Resources/Public/Javascripts/vendor/jquery.js']
-				}
+
+		files: {
+			// All our own sources for linting and code style checking
+			src: {
+				js: 'Resources/Public/Scripts/Custom/*.js'
 			},
-			zepto: {
-				files: {
-					'Resources/Public/Javascripts/vendor/zepto.min.js': ['Resources/Public/Javascripts/vendor/zepto.js']
-				}
+			cacheBuster: {
+				src: '.grunt_cache/css/',
+				dest: 'Resources/Public/Css/'
 			},
-			app: {
-				options: {
-					sourceMap: 'Resources/Public/Javascripts/source-map.js',
-					sourceMapPrefix: 3,
-					sourceMappingURL: 'source-map.js'
-				},
-				files: {
-					'Resources/Public/Javascripts/app.min.js': [
-						'Resources/Public/Javascripts/foundation/foundation.js',
-						'Resources/Public/Javascripts/foundation/foundation.orbit.js',
-						'Resources/Public/Javascripts/vendor/zepto.smoothScroll.js',
-						'Resources/Public/Javascripts/custommagellan.js',
-						'Resources/Public/Javascripts/customtopbar.js',
-						'Resources/Public/Javascripts/app.js'
+			// Individual include definitions for JS and CSS
+			includes: {
+				js: {
+					// Ordered list of scripts for header inclusion
+					header: [
+						// 'Resources/Public/Scripts/Vendor/modernizr.custom.js'
+					],
+					// Ordered list of scripts for footer inclusion
+					footer: [
+						// jQuery will be loaded from a CDN
+
+						// Bower resources
+						// 'Resources/Bower/flexslider/jquery.flexslider.js',
+						// 'Resources/Bower/fastclick/lib/fastclick.js',
+						// 'Resources/Bower/jquery-mediaready/dist/jquery.mediaready.js'
+
+						// Custom scripts
 					]
-				}
-			}
-		},
-		compass: {
-			dist: {
-				options: {
-					config: 'config.rb'
-				}
-			}
-		},
-		watch: {
-			scripts: {
-				files: ['Resources/**/*.js'],
-				tasks: ['uglify'],
-				options: {
-					spawn: false
-				}
-			},
-			stylesheets: {
-				files: ['Resources/**/*.scss', 'config.rb'],
-				tasks: ['compass'],
-				options: {
-					spawn: false
 				}
 			}
 		}
 	});
 
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-compass');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-
-	// Default task(s).
-	grunt.registerTask('default', ['compass', 'uglify']);
+	grunt.loadTasks('Build/Grunt/Tasks');
+	grunt.registerTask('default', ['build', 'compress']);
+	grunt.registerTask('build', ['compass:compile']);
+	grunt.registerTask('compress', ['uglify']);
+	grunt.registerTask('dowatch', ['default','browserSync','concurrent:watch']);
 };

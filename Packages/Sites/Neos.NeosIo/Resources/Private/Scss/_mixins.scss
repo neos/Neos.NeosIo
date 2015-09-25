@@ -1,0 +1,151 @@
+// ------------ Individual mixins ------------ //
+
+// This is a svg background fallback solution based on css
+// Src: http://pauginer.tumblr.com/post/36614680636/invisible-gradient-technique
+@mixin svgBackground($svg-file, $fallback-file, $position: 0 0, $background-repeat: no-repeat){
+	background: transparent url($fallback-file) $position $background-repeat;
+	background-image: -webkit-linear-gradient(transparent, transparent), url($svg-file);
+	background-image: linear-gradient(transparent, transparent), url($svg-file);
+}
+
+@mixin vendor-prefix($prop, $val) {
+	-webkit-#{$prop}: $val;
+	-moz-#{$prop}: $val;
+	-ms-#{$prop}: $val;
+	-o-#{$prop}: $val;
+	#{$prop}: $val;
+}
+
+@mixin ellipsis {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+// -- animation & transform mixins -- //
+@mixin transition-base($properties...) {
+	@if (length($properties) > 0) {
+		@include transition-property($properties);
+		@include transition-duration($transition-duration-base);
+		@include transition-timing-function($transition-easing);
+	}
+	@else {
+		@include transition($properties $transition-duration-base $transition-easing);
+	}
+}
+
+@mixin transition-fast($properties...) {
+	@if (length($properties) > 0) {
+		@include transition-property($properties);
+		@include transition-duration($transition-duration-fast);
+		@include transition-timing-function($transition-easing);
+	}
+	@else {
+		@include transition($properties $transition-duration-fast $transition-easing);
+	}
+}
+
+@mixin transition-slow($properties...) {
+	@if (length($properties) > 0) {
+		@include transition-property($properties);
+		@include transition-duration($transition-duration-slow);
+		@include transition-timing-function($transition-easing);
+	}
+	@else {
+		@include transition($properties $transition-duration-slow $transition-easing);
+	}
+}
+
+@mixin transition-swift($properties...) {
+	@if (length($properties) > 0) {
+		@include transition-property($properties);
+		@include transition-duration(0.3s);
+		@include transition-timing-function($transition-easing-swift);
+	}
+	@else {
+		@include transition($properties $transition-duration-base $transition-easing-swift);
+	}
+}
+
+// -- Reset-Mixins -- //
+@mixin reset-ul($li-position: static) {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+
+	li {
+		padding: 0;
+		margin: 0;
+		position: $li-position;
+
+		&:before {
+			display: none;
+			content: '';
+		}
+	}
+}
+
+@mixin reset-li {
+	padding: 0;
+	margin: 0;
+
+	&:before {
+		display: none;
+		content: '';
+	}
+}
+
+@mixin reset-anchor {
+	text-decoration: none;
+
+	&:focus,
+	&:hover,
+	&.is-hovered {
+		color: inherit;
+		text-decoration: none;
+	}
+}
+
+@mixin reset-btn {
+	background: none transparent;
+	border: 0 none;
+	padding: 0;
+	margin: 0;
+
+	&:focus {
+		outline: 0 none;
+	}
+}
+
+// -- Images -- //
+@mixin imagecaption {
+	color: $gray11;
+	line-height: 1.6em;
+	font-style: italic;
+	margin-top: $padding-small-vertical;
+}
+
+// -- Headings -- //
+@mixin set-on-all-headings() {
+	@for $i from 1 through 6 {
+		h#{$i} {
+			@content
+		}
+	}
+}
+
+// -- sharp text rendering -- //
+@mixin sharp-text {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@mixin box-corner-arrow {
+	font-family: $icon-font;
+	content: $icon-corner-arrow-left;
+	position: absolute;
+	bottom: -1px;
+	font-size: 52px;
+	line-height: 1em;
+	color: $gray20;
+}

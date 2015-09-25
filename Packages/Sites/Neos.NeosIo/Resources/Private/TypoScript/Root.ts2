@@ -1,0 +1,101 @@
+/**
+* Root TypoScript template for the Neos_io site
+* Also includes basic DocumentNodeTypes
+*/
+
+root {
+	// Override the default root matcher to render document nodes with a prototype of the same name
+	default {
+		type = ${q(node).property('_nodeType') + '.Document'}
+		renderPath >
+	}
+}
+
+prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
+	head {
+		meta-viewport = '<meta name="viewport" content="width=device-width, initial-scale=1" />'
+
+		titleTag {
+			//content = Ttree.Plugin.Seo:RawPageTitle
+			//@position = 'after characterSetMetaTag'
+		}
+
+		stylesheets.site = TYPO3.TypoScript:Template {
+			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
+			sectionName = 'stylesheets'
+		}
+
+		javascripts.site = TYPO3.TypoScript:Template {
+			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
+			sectionName = 'headScripts'
+		}
+	}
+
+	htmlTag {
+		//attributes.class = 'no-js'
+	}
+
+	body {
+		templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
+		sectionName = 'body'
+		parts {
+			menu = Menu {
+				//templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/Menu.html'
+				entryLevel = 1
+				//normal.attributes.class =
+				//current.attributes.class =
+				//active.attributes.class =
+				maximumLevels = 2
+				filter = 'TYPO3.Neos:Document, !Neos.NeosIo:Reference'
+			}
+		}
+
+		footer {
+			links = Menu {
+				//templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/MenuFooterLinks.html'
+				startingPoint = ${q(site).property('footerLinkNode')}
+				current.attributes.class = 'active'
+				maximumLevels = 1
+			}
+		}
+
+		homepage = ${site}
+
+		javascripts.site = TYPO3.TypoScript:Template {
+			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
+			sectionName = 'bodyScripts'
+		}
+	}
+	@cache.entryTags.site = ${'Node_' + site.identifier}
+}
+
+prototype(TYPO3.Neos.NodeTypes:Page.Document) < prototype(Neos.NeosIo:DefaultPage) {
+	body {
+		content {
+			// The default content section
+			main = PrimaryContent {
+				nodePath = 'main'
+			}
+		}
+	}
+
+	/*
+	googleAnalytics = TYPO3.TypoScript:Template {
+		templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Tracking.html'
+		@if.enabled = ${Configuration.setting('Neos.NeosIo.enableTracking')}
+		@position = 'before body'
+
+		trackingCode = ${q(site).property('trackingCode')}
+	}
+	*/
+}
+
+##################################
+# Includes
+##################################
+
+#
+# TypoScript includes for node types
+#
+
+include: NodeTypes/*

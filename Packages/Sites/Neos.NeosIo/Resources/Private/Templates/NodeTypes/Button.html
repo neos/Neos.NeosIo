@@ -1,9 +1,0 @@
-{namespace neos=TYPO3\Neos\ViewHelpers}
-<f:if condition="{linkType} == 'external'">
-	<f:then>
-		<a href="{link}" class="button medium {layout} {f:if(condition: '{marginTop}', then: 'margin-top')} {f:if(condition: '{marginBottom}', then: 'margin-bottom')}" target="_blank">{text}</a>
-	</f:then>
-	<f:else>
-		<a href="{neos:uri.node(node: link)}" class="button medium {layout} {f:if(condition: '{marginTop}', then: 'margin-top')} {f:if(condition: '{marginBottom}', then: 'margin-bottom')}">{text}</a>
-	</f:else>
-</f:if>

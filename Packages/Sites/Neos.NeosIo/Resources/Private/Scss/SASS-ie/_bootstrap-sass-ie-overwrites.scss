@@ -1,0 +1,290 @@
+// This file should be included *after* all of bootstrap's
+// components to overwrite plain media-queries with
+// media-queries based on the respond-min and respond-max
+// mixins from SASS-ie.
+//
+// This is an easy approach to make bootstrap compatible with the
+// SASS-ie technique.
+//
+// Important: This file only redefines the most basic components
+// from bootstrap and therefore doesn't replace all media-queries
+// used in bootstrap components.
+
+// -- Adding a new viewport size and their corresponding classes:
+//    this MUST happen after the utility classes include! -- //
+.visible-xxs,
+.visible-xxs-block,
+.visible-xxs-inline,
+.visible-xxs-inline-block {
+	display: none !important;
+}
+
+@media screen and (min-width: $screen-xs-min) and (max-width: $screen-xs-max) {
+	.visible-xs {
+		display: block !important;
+	}
+
+	table.visible-xs {
+		display: table;
+	}
+
+	tr.visible-xs {
+		display: table-row !important;
+	}
+
+	th.visible-xs,
+	td.visible-xs {
+		display: table-cell !important;
+	}
+}
+
+@media screen and (max-width: $screen-xxs-max) {
+	@include responsive-visibility('.visible-xxs');
+
+	.visible-xxs-block {
+		display: block !important;
+	}
+
+	.visible-xxs-inline {
+		display: inline !important;
+	}
+
+	.visible-xxs-inline-block {
+		display: inline-block !important;
+	}
+
+	.visible-xs,
+	.visible-xs-block,
+	.visible-xs-inline,
+	.visible-xs-inline-block {
+		display: none !important;
+	}
+}
+
+@media screen and (min-width: $screen-xs-min) and (max-width: $screen-xs-max) {
+	@include responsive-invisibility('.hidden-xs');
+}
+
+@media screen and (max-width: $screen-xxs-max) {
+	@include responsive-invisibility('.hidden-xxs');
+}
+
+// Since these overrides are only necessary in IE-stylesheets,
+// don't output anything if this file is not parsed for IE.
+@if ($old-ie) {
+
+	// -- _type.scss -- //
+	// adapted elements:
+	//      .lead
+	//      .dl-horizontal
+	.lead {
+		@include respond-min($screen-sm-min) {
+			font-size: ($font-size-base * 1.5);
+		}
+	}
+
+	.dl-horizontal {
+		@include respond-min($grid-float-breakpoint) {
+			dt {
+				float: left;
+				width: ($dl-horizontal-offset - 20);
+				clear: left;
+				text-align: right;
+				@include text-overflow;
+			}
+			dd {
+				margin-left: $dl-horizontal-offset;
+			}
+		}
+	}
+
+	// -- _tables.scss -- //
+	// don't override .table-responsive since it only uses styling for
+	// max-width: $screen-xs-max which will never be generated for any
+	// IE-only stylesheet.
+
+	// -- _forms.scss -- //
+	// adapted elements:
+	//      .form-inline
+	//      .form-horizontal
+	.form-inline {
+		@include respond-min($screen-sm-min) {
+			.form-group {
+				display: inline-block;
+				margin-bottom: 0;
+				vertical-align: middle;
+			}
+
+			.form-control {
+				display: inline-block;
+				width: auto;
+				vertical-align: middle;
+			}
+
+			.form-control-static {
+				display: inline-block;
+			}
+
+			.input-group {
+				display: inline-table;
+				vertical-align: middle;
+
+				.input-group-addon,
+				.input-group-btn,
+				.form-control {
+					width: auto;
+				}
+			}
+
+			.input-group > .form-control {
+				width: 100%;
+			}
+
+			.control-label {
+				margin-bottom: 0;
+				vertical-align: middle;
+			}
+
+			.radio,
+			.checkbox {
+				display: inline-block;
+				margin-top: 0;
+				margin-bottom: 0;
+				vertical-align: middle;
+
+				label {
+					padding-left: 0;
+				}
+			}
+			.radio input[type="radio"],
+			.checkbox input[type="checkbox"] {
+				position: relative;
+				margin-left: 0;
+			}
+
+			.has-feedback .form-control-feedback {
+				top: 0;
+			}
+		}
+	}
+
+	.form-horizontal {
+		@include respond-min($screen-sm-min) {
+			.control-label {
+				text-align: right;
+				margin-bottom: 0;
+				padding-top: ($padding-base-vertical + 1);
+			}
+		}
+		.form-group-lg {
+			@include respond-min($screen-sm-min) {
+				.control-label {
+					padding-top: (($padding-large-vertical * $line-height-large) + 1);
+				}
+			}
+		}
+		.form-group-sm {
+			@include respond-min($screen-sm-min) {
+				.control-label {
+					padding-top: ($padding-small-vertical + 1);
+				}
+			}
+		}
+	}
+
+	// -- _responsive-utilities.scss -- //	//
+	// Bootstrap uses (min-width: ) and (max-width: ) media-queries for
+	// most responsive utilities which can't be rebuild with respond-min
+	// and respond-max. Those classes are thefore rebuild with normal
+	// CSS cascade (which is way more verbose).
+	//
+	// adapted elements:
+	//      .visible-sm-block / -inline / -inline-block
+	//      .visible-md-block / -inline / -inline-block
+	//      .visible-lg-block / -inline / -inline-block
+	//      .hidden-xs
+	//      .hidden-sm
+	//      .hidden-md
+	//      .hidden-lg
+	@include respond-min($screen-sm-min) {
+		@include responsive-visibility('.visible-sm');
+
+		.visible-sm-block {
+			display: block !important;
+		}
+		.visible-sm-inline {
+			display: inline !important;
+		}
+		.visible-sm-inline-block {
+			display: inline-block !important;
+		}
+	}
+
+	@include respond-min($screen-md-min) {
+		@include responsive-visibility('.visible-md');
+
+		.visible-md-block {
+			display: block !important;
+		}
+		.visible-md-inline {
+			display: inline !important;
+		}
+		.visible-md-inline-block {
+			display: inline-block !important;
+		}
+
+		// overwride .visible-sm
+		.visible-sm,
+		.visible-sm-block,
+		.visible-sm-inline ,
+		.visible-sm-inline-block {
+			display: none !important;
+		}
+	}
+
+	@include respond-min($screen-lg-min) {
+		@include responsive-visibility('.visible-lg');
+
+		.visible-lg-block {
+				display: block !important;
+		}
+		.visible-lg-inline {
+				display: inline !important;
+		}
+		.visible-lg-inline-block {
+				display: inline-block !important;
+		}
+
+		// overwride .visible-md
+		.visible-md,
+		.visible-md-block,
+		.visible-md-inline ,
+		.visible-md-inline-block {
+			display: none !important;
+		}
+	}
+
+	@include respond-max($screen-sm-max) {
+		@include responsive-invisibility('.hidden-sm');
+
+		.hidden-xs {
+			display: block !important;
+		}
+	}
+
+	@include respond-max($screen-md-max) {
+		@include responsive-invisibility('.hidden-md');
+
+		.hidden-sm {
+			display: block !important;
+		}
+	}
+
+	@include respond-min($screen-lg-min) {
+		@include responsive-invisibility('.hidden-lg');
+
+		.hidden-md {
+			display: block !important;
+		}
+	}
+}

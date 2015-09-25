@@ -1,0 +1,93 @@
+// ------------ Includes ------------ //
+
+// -- add compass support -- //
+@import "compass";
+
+// -- Variables and mixins -- //
+@import "variables";
+@import "mixins";
+
+// -- Styles for printable output -- //
+
+// Font settings
+
+body {
+	font: Georgia, "Times New Roman", Times, serif;
+	color: #000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	color: #000;
+}
+
+h1 {
+	font-size: 250%;
+}
+
+h2 {
+	font-size: 175%;
+}
+
+h3 {
+	font-size: 135%;
+}
+
+h4 {
+	font-size: 100%;
+}
+
+h5 {
+	font-size: 100%;
+}
+
+h6 {
+	font-size: 90%;
+}
+
+table {
+	border: 0 none !important;
+
+	th,
+	td {
+		border: 1px solid #000 !important;
+	}
+}
+
+// Layout
+body {
+	width: 100%;
+	margin: 0;
+	float: none;
+	background: #fff url(none);
+}
+
+// Hide layout areas
+#header,
+#footer {
+	display: none;
+}
+
+// Hide elements
+span[class*=icon-],
+.f3-widget-paginator,
+#TSFE_ADMIN_PANEL_FORM,
+.nav {
+	display: none !important;
+}
+
+// Show interactive elements
+.collapse,
+.tab-content > .tab-pane {
+	display: block;
+	height: auto;
+	visibility: visible;
+	margin-bottom: 20px;
+}
+
+// Disable printing urls with links (only add where useful)
+a:link:after {
+	content: '';
+}
+
+// -- element specific styling -- //

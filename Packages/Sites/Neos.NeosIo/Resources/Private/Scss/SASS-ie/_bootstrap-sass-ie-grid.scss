@@ -1,0 +1,98 @@
+// This file should be included *instead of* bootstrap's _grid.scss
+// to replace plain media-queries with media-queries based on the respond-min
+// and respond-max mixins from SASS-ie and therefore provide a
+// fallback for all grid classes for IE8.
+//
+// The following lines are taken directly from bootstrap's _grid.scss
+// and only replace any @media.. with @include respond-min.
+
+//
+// Grid system
+// --------------------------------------------------
+
+
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+
+.container {
+	@include container-fixed;
+
+	@include respond-min($screen-sm-min) {
+		width: $container-sm;
+	}
+	@include respond-min($screen-md-min) {
+		width: $container-md;
+	}
+	@include respond-min($screen-lg-min) {
+		width: $container-lg;
+	}
+}
+
+
+// Fluid container
+//
+// Utilizes the mixin meant for fixed width containers, but without any defined
+// width for fluid, full width layouts.
+
+.container-fluid {
+	@include container-fixed;
+}
+
+
+// Row
+//
+// Rows contain and clear the floats of your columns.
+
+.row {
+	@include make-row;
+}
+
+
+// Columns
+//
+// Common styles for small and large grid columns
+
+@include make-grid-columns-extended-by-xxs;
+
+// Extra, extra small grid
+//
+// Columns, offsets, pushes, and pulls for extra, extra small devices like the iPhone 4/5.
+
+@include make-grid(xxs);
+
+// Extra small grid
+//
+// Columns, offsets, pushes, and pulls for extra small devices like
+// smartphones.
+
+@include respond-min($screen-xs-min) {
+	@include make-grid(xs);
+}
+
+// Small grid
+//
+// Columns, offsets, pushes, and pulls for the small device range, from phones
+// to tablets.
+
+@include respond-min($screen-sm-min) {
+	@include make-grid(sm);
+}
+
+
+// Medium grid
+//
+// Columns, offsets, pushes, and pulls for the desktop device range.
+
+@include respond-min($screen-md-min) {
+	@include make-grid(md);
+}
+
+
+// Large grid
+//
+// Columns, offsets, pushes, and pulls for the large desktop device range.
+
+@include respond-min($screen-lg-min) {
+	@include make-grid(lg);
+}
