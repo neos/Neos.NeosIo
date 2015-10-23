@@ -1,0 +1,33 @@
+{namespace blog=RobertLemke\Plugin\Blog\ViewHelpers}
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace typo3cr=TYPO3\TYPO3CR\ViewHelpers}
+<div class="robertlemke-plugin-blog" id="scrolling-container">
+	<f:if condition="{hasPostNodes}">
+		<f:then>
+			<typo3cr:widget.paginate widgetId="posts-paginator" parentNode="{postsNode}" nodeTypeFilter="RobertLemke.Plugin.Blog:Post" as="paginatedPosts" configuration="{itemsPerPage: 10, insertBelow: 1, maximumNumberOfLinks: 15}">
+				<f:for each="{paginatedPosts}" as="post">
+					<h2 class="h4">
+						<neos:link.node node="{post}">{post.properties.title}</neos:link.node>
+						<small>
+							<f:if condition="{post.properties.datePublished}">
+								<time datetime="{f:format.date(date: post.properties.datePublished, format: 'c')}" itemprop="datePublished"><f:format.date format="F jS, Y">{post.properties.datePublished}</f:format.date></time>
+							</f:if>
+						</small>
+					</h2>
+					<f:if condition="{post.properties.metaDescription}">
+						<p>
+							{post.properties.metaDescription -> f:format.raw()}
+							<br /><br />
+
+							<neos:link.node node="{post}">{f:if(condition: post.properties.detailLinkLabel, then: post.properties.detailLinkLabel, else: 'Read more')}</neos:link.node>
+						</p>
+					</f:if>
+					<br /><br />
+				</f:for>
+			</typo3cr:widget.paginate>
+		</f:then>
+		<f:else>
+			<p><f:translate package="RobertLemke.Plugin.Blog">This blog currently doesn't contain any posts.</f:translate></p>
+		</f:else>
+	</f:if>
+</div>

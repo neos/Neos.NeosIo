@@ -76,18 +76,13 @@ prototype(Neos.NeosIo:NewsTeaser) {
 	}
 }
 
-prototype(RobertLemke.Plugin.Blog:Post) < prototype(TYPO3.Neos:Content) {
-	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/NewsPost.html'
-}
+prototype(RobertLemke.Plugin.Blog:Post).templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/NewsPost.html'
 
-prototype(RobertLemke.Plugin.Blog:Comment) < prototype(TYPO3.Neos:Content) {
-	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Comment.html'
-}
+prototype(RobertLemke.Plugin.Blog:Comment).templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Comment.html'
 
-prototype(RobertLemke.Plugin.Blog:Quote) < prototype(TYPO3.Neos:Content) {
-	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Quote.html'
-}
+prototype(RobertLemke.Plugin.Blog:Quote).templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Quote.html'
 
+prototype(RobertLemke.Plugin.Blog:PostsOverview).templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/PostsOverview.html'
 
 // Quote element
 
