@@ -4,7 +4,7 @@ css_dir = "Resources/Public/Stylesheets"
 sass_dir = "Resources/Private/Scss"
 images_dir = "Resources/Public/Images"
 javascripts_dir = "Resources/Public/Javascripts"
-fonts_dir = "Resources/Public/fonts"
+fonts_dir = "Resources/Public/Fonts"
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed
 output_style = :compressed
