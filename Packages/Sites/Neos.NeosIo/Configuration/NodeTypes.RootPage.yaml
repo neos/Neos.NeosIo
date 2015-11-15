@@ -1,0 +1,22 @@
+###########################################
+# Basic Root NodeType
+###########################################
+
+'Neos.NeosIo:RootPage':
+  superTypes: ['TYPO3.Neos.NodeTypes:Page']
+  ui:
+    label: 'Root Page'
+    icon: 'icon-home'
+    inspector:
+      groups:
+        'additional':
+          label: 'Additional'
+          position: 20
+  properties:
+    'titlePostfix':
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Website Title Postfix'
+        inspector:
+          group: 'additional'
