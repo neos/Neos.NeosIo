@@ -1,0 +1,18 @@
+prototype(TYPO3.Neos.NodeTypes:MultiColumn) {
+	attributes = TYPO3.TypoScript:Attributes {
+		class = TYPO3.TypoScript:RawArray {
+			row = 'row'
+
+			@process.nodeType >
+		}
+	}
+	columns.iterationName = 'multiColumnIteration'
+}
+
+prototype(TYPO3.Neos.NodeTypes:MultiColumnItem) {
+	@override {
+		columnWidth = ${String.split(q(node).parent().property('layout'), '-')[multiColumnIteration.index]}
+		desktopColumnWidth = ${String.split(q(node).parent().property('desktopLayout'), '-')[multiColumnIteration.index]}
+	}
+	attributes.class = ${'col-sm-' + columnWidth + ' col-md-' + desktopColumnWidth}
+}

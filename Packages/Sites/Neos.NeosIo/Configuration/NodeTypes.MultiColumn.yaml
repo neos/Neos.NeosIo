@@ -1,0 +1,108 @@
+##################################
+# MultiColumn NodeType Adjustments
+##################################
+
+'TYPO3.Neos.NodeTypes:TwoColumn':
+  properties:
+    'layout':
+      defaultValue: '6-6'
+      ui:
+        inspector:
+          editorOptions:
+            values:
+              '50-50': ~
+              '75-25': ~
+              '25-75': ~
+              '66-33': ~
+              '33-66': ~
+              '6-6':
+                label: '50% / 50%'
+              '8-4':
+                label: '66% / 33%'
+              '4-8':
+                label: '33% / 66%'
+              '12-12':
+                label: '100% + 100%'
+    'desktopLayout':
+      type: string
+      defaultValue: '6-6'
+      ui:
+        label: 'Layout for wide screens'
+        reloadIfChanged: true
+        inspector:
+          group: 'column'
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            placeholder: 'Choose Layout'
+            values:
+              '6-6':
+                label: '50% / 50%'
+              '8-4':
+                label: '66% / 33%'
+              '4-8':
+                label: '33% / 66%'
+
+'TYPO3.Neos.NodeTypes:ThreeColumn':
+  properties:
+    'layout':
+      defaultValue: '4-4-4'
+      ui:
+        inspector:
+          editorOptions:
+            values:
+              '33-33-33': ~
+              '50-25-25': ~
+              '25-50-25': ~
+              '25-25-50': ~
+              '4-4-4':
+                label: '33% / 33% / 33%'
+              '6-6-12':
+                label: '50% / 50% + 100%'
+              '12-6-6':
+                label: '100% + 50% / 50%'
+              '12-12-12':
+                label: '100% + 100% + 100%'
+    'desktopLayout':
+      type: string
+      defaultValue: '4-4-4'
+      ui:
+        label: 'Layout for wide screens'
+        reloadIfChanged: true
+        inspector:
+          group: 'column'
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            placeholder: 'Choose Layout'
+            values:
+              '4-4-4':
+                label: '33% / 33% / 33%'
+
+'TYPO3.Neos.NodeTypes:FourColumn':
+  properties:
+    'layout':
+      defaultValue: '3-3-3-3'
+      ui:
+        inspector:
+          editorOptions:
+            values:
+              '25-25-25-25': ~
+              '3-3-3-3':
+                label: '25% / 25% / 25% / 25%'
+              '6-6-6-6':
+                label: '50 % / 50% + 50% / 50%'
+              '12-12-12-12':
+                label: '100 % + 100% + 100% + 100%'
+    'desktopLayout':
+      type: string
+      defaultValue: '3-3-3-3'
+      ui:
+        label: 'Layout for wide screens'
+        reloadIfChanged: true
+        inspector:
+          group: 'column'
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            placeholder: 'Choose Layout'
+            values:
+              '3-3-3-3':
+                label: '25% / 25% / 25% / 25%'

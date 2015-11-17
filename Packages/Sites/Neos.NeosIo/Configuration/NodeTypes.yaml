@@ -1,12 +1,5 @@
 'TYPO3.Neos.NodeTypes:Page':
   properties:
-    showSectionMenu:
-      type: boolean
-      ui:
-        label: 'Show section menu'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'layout'
     indexNoFollow:
       type: boolean
       ui:
@@ -14,88 +7,6 @@
         reloadIfChanged: TRUE
         inspector:
           group: 'layout'
-
-'TYPO3.Neos.NodeTypes:Image':
-  properties:
-    linkCaption:
-      type: boolean
-      ui:
-        label: 'Link the caption'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'image'
-
-'Neos.NeosIo:Section':
-  superTypes: ['TYPO3.Neos.NodeTypes:Column']
-  ui:
-    label: 'Section'
-    group: 'structure'
-    inspector:
-      groups:
-        headline:
-          label: 'Headline'
-          position: 5
-  childNodes:
-    column0:
-      type: 'TYPO3.Neos:ContentCollection'
-  properties:
-    title:
-      type: string
-      ui:
-        label: 'Title'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'headline'
-    color:
-      type: string
-      defaultValue: 'gray'
-      ui:
-        label: 'Container Color'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'column'
-          editor: Content/Inspector/Editors/SelectBoxEditor
-          editorOptions:
-            placeholder: 'Default'
-            values:
-              'gray':
-                label: 'Gray'
-              'light-gray':
-                label: 'Light Gray'
-              'dark-gray':
-                label: 'Dark Gray'
-              'blue':
-                label: 'Blue'
-              'white-bg':
-                label: 'White'
-    showInSectionMenu:
-      type: boolean
-      ui:
-        label: 'Show in section menu'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'column'
-    overflowHidden:
-      type: boolean
-      ui:
-        label: 'Activate Overflow Hidden'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'column'
-    noPaddingTop:
-      type: boolean
-      ui:
-        label: 'No Padding Top'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'column'
-    noPaddingBottom:
-      type: boolean
-      ui:
-        label: 'No Padding Bottom'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'column'
 
 'TYPO3.Neos.NodeTypes:Text':
   properties:
@@ -106,58 +17,3 @@
             'h4': TRUE
             'h5': TRUE
 
-'Neos.NeosIo:Youtube':
-  superTypes: ['TYPO3.Neos:Content']
-  ui:
-    label: Youtube
-    icon: 'icon-youtube'
-    inspector:
-      groups:
-        'video':
-          label: Video
-  properties:
-    'video':
-      type: string
-      defaultValue: ''
-      ui:
-        label: 'Youtube video ID'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'video'
-    'width':
-      type: integer
-      defaultValue: 400
-      ui:
-        label: 'Width'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'video'
-    'height':
-      type: integer
-      defaultValue: 300
-      ui:
-        label: 'Height'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'video'
-
-'TYPO3.Neos.NodeTypes:ImageCaptionMixin':
-  abstract: TRUE
-  properties:
-    hasCaption:
-      type: boolean
-      ui:
-        label: 'Enable caption'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'image'
-    caption:
-      type: string
-      defaultValue: '<p>Enter caption here</p>'
-      search:
-        elasticSearchMapping:
-          type: string
-          index: not_analyzed
-        indexing: '${value}'
-      ui:
-        inlineEditable: TRUE
