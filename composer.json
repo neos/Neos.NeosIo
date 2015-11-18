@@ -7,22 +7,23 @@
         "bin-dir": "bin"
     },
     "require": {
-      "typo3/neos": "~2.0",
-      "typo3/neos-nodetypes": "~2.0",
-      "doctrine/migrations": "~1.0",
-      "typo3/swiftmailer": "~5.3",
+      "neos/neos-development-collection": "2.0.x-dev",
+      "neos/flow-development-collection": "3.0.x-dev",
 
+      "typo3/neos-seo": "~1.0",
+      "typo3/neos-googleanalytics": "~1.0",
+      "typo3/imagine": "~2.0",
+      "typo3/twitter-bootstrap": "~2.0",
+      "typo3/form": "~2.0",
+
+      "typo3/swiftmailer": "~5.3",
       "typo3/doctools": "dev-master",
       "robertlemke/plugin-blog": "1.0",
 
       "typo3/release": "dev-master",
       "flowpack/elasticsearch-contentrepositoryadaptor": "dev-master",
 
-      "typo3/neos-seo": "~1.0",
-      "typo3/neos-googleanalytics": "~1.0",
-      "google/apiclient": "@beta",
-
-      "flownative/aws-s3": "~1.0@beta"
+      "flownative/google-cloudstorage": "dev-master"
     },
     "scripts": {
         "post-update-cmd": "TYPO3\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
