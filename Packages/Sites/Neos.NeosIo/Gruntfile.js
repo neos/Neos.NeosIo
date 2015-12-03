@@ -35,8 +35,9 @@ module.exports = function(grunt) {
 	});
 
 	grunt.loadTasks('Build/Grunt/Tasks');
-	grunt.registerTask('default', ['build', 'compress']);
-	grunt.registerTask('build', ['compass:compile']);
+
+	grunt.registerTask('default', ['compass:compile', 'cacheBust', 'compress']);
 	grunt.registerTask('compress', ['uglify']);
-	grunt.registerTask('dowatch', ['default','browserSync','concurrent:watch']);
+	grunt.registerTask('checkstyle', ['jshint', 'jscs']);
+	grunt.registerTask('dowatch', ['default', 'browserSync', 'concurrent:watch']);
 };
