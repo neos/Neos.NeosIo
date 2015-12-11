@@ -4,8 +4,8 @@
 <html>
 <head>
 	<f:section name="stylesheets">
-		<link href='//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="{f:uri.resource(package: 'Neos.NeosIo', path: 'Css/main.css')}" />
+		<link rel="stylesheet" href="../../Public/Css/main.css" />
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 	</f:section>
 	<f:section name="headScripts">
 		<!-- Put your scripts inclusions for the head here, they will be included in your website by TypoScript -->
@@ -13,20 +13,82 @@
 </head>
 <body>
 <f:section name="body">
-	<nav class="menu">
-		{parts.menu -> f:format.raw()}
-	</nav>
-	<nav class="breadcrumb">
-		{parts.breadcrumb -> f:format.raw()}
-	</nav>
-	<div class="content">
+	<nav class="navbar navbar-light navbar-static-top">
 		<div class="container">
-			{content.main -> f:format.raw()}
+			<neos:link.node node="~" class="navbar-brand">Neos</neos:link.node>
+
+			<div class="collapse navbar-toggleable-xs">
+				{parts.menu -> f:format.raw()}
+				<ul class="nav navbar-nav pull-right">
+					<li class="dropdown">
+						<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">neos.io <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-item"><a class="nav-link" href="https://discuss.neos.io">discuss.neos.io</a></li>
+							<li class="dropdown-item"><a class="nav-link" href="https://id.neos.io">id.neos.io</a></li>
+							<li class="dropdown-item"><a class="nav-link" href="https://jira.neos.io">jira.neos.io</a></li>
+							<li class="dropdown-item"><a class="nav-link" href="http://slack.neos.io">slack.neos.io</a></li>
+							<li class="dropdown-item"><a class="nav-link" href="https://translate.neos.io">translate.neos.io</a></li>
+							<li role="separator" class="dropdown-divider"></li>
+							<li class="dropdown-item"><a class="nav-link" href="https://github.com/neos"><i class="fa fa-fw fa-github text-inverse"></i> github.com/neos</a></li>
+							<li class="dropdown-item"><a class="nav-link" href="https://twitter.com/NeosCMS"><i class="fa fa-fw fa-twitter text-inverse"></i> twitter.com/NeosCMS</a></li>
+							<li class="dropdown-item"><a class="nav-link" href="https://www.facebook.com/NeosCMS"><i class="fa fa-fw fa-facebook text-inverse"></i> facebook.com/NeosCMS</a></li>
+							<li class="dropdown-item"><a class="nav-link" href="https://google.com/+NeosCMS"><i class="fa fa-fw fa-google-plus text-inverse"></i> google.com/+NeosCMS</a></li>
+							<li class="dropdown-item"><a class="nav-link" href="https://youtube.com/c/NeosCMS"><i class="fa fa-fw fa-youtube text-inverse"></i> youtube.com/c/NeosCMS</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="bg-white">
+		<div class="container p-b-md p-t-md">
+			<div class="row">
+				<div class="col-md-9">
+					<nav>
+						{parts.breadcrumb -> f:format.raw()}
+					</nav>
+					<main class="content" role="main">
+						<section>
+							{content.main -> f:format.raw()}
+						</section>
+					</main>
+				</div>
+				<aside class="col-md-3">
+					<nav>
+						<div class="h5">{parts.sectionTitle}</div>
+						{parts.subMenu -> f:format.raw()}
+					</nav>
+				</aside>
+			</div>
 		</div>
 	</div>
+
+	<footer class="m-t-md">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					<h1>Neos CMS</h1>
+				</div>
+				<div class="col-sm-6">
+					<div class="row">
+						<div class="col-md-12 hidden-xs text-right">
+							<a href="https://github.com/neos" title="github.com/neos"><i class="fa fa-2x fa-fw fa-github text-inverse" alt="Github" ></i></a>
+							<a href="https://twitter.com/NeosCMS" title="twitter.com/NeosCMS"><i class="fa fa-2x fa-fw fa-twitter text-inverse" alt="Twitter"></i></a>
+							<a href="https://www.facebook.com/NeosCMS" title="facebook.com/NeosCMS"><i class="fa fa-2x fa-fw fa-facebook text-inverse" alt="Facebook"></i></a>
+							<a href="https://google.com/+NeosCMS" title="google.com/+NeosCMS"><i class="fa fa-2x fa-fw fa-google-plus text-inverse" alt="Google+"></i></a>
+							<a href="https://youtube.com/c/NeosCMS" title="youtube.com/c/NeosCMS"><i class="fa fa-2x fa-fw fa-youtube text-inverse" alt="YouTube"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 </f:section>
 <f:section name="bodyScripts">
-	<!-- Put your scripts inclusions for the end of the body here, they will be included in your website by TypoScript -->
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../Public/Scripts/Custom/hovernav.js"></script>
 </f:section>
 </body>
 </html>

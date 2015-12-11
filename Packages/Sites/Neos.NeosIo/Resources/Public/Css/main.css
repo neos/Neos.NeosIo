@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 /* line 9, ../../Resources/Bower/bootstrap/scss/_normalize.scss */
 html {
@@ -384,7 +385,7 @@ html {
 /* line 67, ../../Resources/Bower/bootstrap/scss/_reboot.scss */
 body {
   font-family: "Noto Sans", sans-serif;
-  font-size: 0.8rem;
+  font-size: 1rem;
   line-height: 1.5;
   color: #373a3c;
   background-color: #fff;
@@ -702,7 +703,7 @@ mark,
 .blockquote {
   padding: 0.5rem 1rem;
   margin-bottom: 1rem;
-  font-size: 1rem;
+  font-size: 1.25rem;
   border-left: 0.25rem solid #eceeef;
 }
 /* line 135, ../../Resources/Bower/bootstrap/scss/_type.scss */
@@ -2227,6 +2228,990 @@ pre code {
     margin-left: 100%;
   }
 }
+/* line 5, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+}
+/* line 10, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table th,
+.table td {
+  padding: 0.75rem;
+  line-height: 1.5;
+  vertical-align: top;
+  border-top: 1px solid #eceeef;
+}
+/* line 18, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #eceeef;
+}
+/* line 23, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table tbody + tbody {
+  border-top: 2px solid #eceeef;
+}
+/* line 27, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table .table {
+  background-color: #fff;
+}
+
+/* line 38, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-sm th,
+.table-sm td {
+  padding: 0.3rem;
+}
+
+/* line 49, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-bordered {
+  border: 1px solid #eceeef;
+}
+/* line 52, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #eceeef;
+}
+/* line 58, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-bordered thead th,
+.table-bordered thead td {
+  border-bottom-width: 2px;
+}
+
+/* line 71, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+/* line 10, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* line 7, ../../Resources/Bower/bootstrap/scss/mixins/_table-row.scss */
+.table-active,
+.table-active > th,
+.table-active > td {
+  background-color: #f5f5f5;
+}
+
+/* line 10, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.table-hover .table-active:hover {
+  background-color: #e8e8e8;
+}
+/* line 23, ../../Resources/Bower/bootstrap/scss/mixins/_table-row.scss */
+.table-hover .table-active:hover > td,
+.table-hover .table-active:hover > th {
+  background-color: #e8e8e8;
+}
+
+/* line 7, ../../Resources/Bower/bootstrap/scss/mixins/_table-row.scss */
+.table-success,
+.table-success > th,
+.table-success > td {
+  background-color: #dff0d8;
+}
+
+/* line 10, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.table-hover .table-success:hover {
+  background-color: #d0e9c6;
+}
+/* line 23, ../../Resources/Bower/bootstrap/scss/mixins/_table-row.scss */
+.table-hover .table-success:hover > td,
+.table-hover .table-success:hover > th {
+  background-color: #d0e9c6;
+}
+
+/* line 7, ../../Resources/Bower/bootstrap/scss/mixins/_table-row.scss */
+.table-info,
+.table-info > th,
+.table-info > td {
+  background-color: #d9edf7;
+}
+
+/* line 10, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.table-hover .table-info:hover {
+  background-color: #c4e3f3;
+}
+/* line 23, ../../Resources/Bower/bootstrap/scss/mixins/_table-row.scss */
+.table-hover .table-info:hover > td,
+.table-hover .table-info:hover > th {
+  background-color: #c4e3f3;
+}
+
+/* line 7, ../../Resources/Bower/bootstrap/scss/mixins/_table-row.scss */
+.table-warning,
+.table-warning > th,
+.table-warning > td {
+  background-color: #fcf8e3;
+}
+
+/* line 10, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.table-hover .table-warning:hover {
+  background-color: #faf2cc;
+}
+/* line 23, ../../Resources/Bower/bootstrap/scss/mixins/_table-row.scss */
+.table-hover .table-warning:hover > td,
+.table-hover .table-warning:hover > th {
+  background-color: #faf2cc;
+}
+
+/* line 7, ../../Resources/Bower/bootstrap/scss/mixins/_table-row.scss */
+.table-danger,
+.table-danger > th,
+.table-danger > td {
+  background-color: #f2dede;
+}
+
+/* line 10, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.table-hover .table-danger:hover {
+  background-color: #ebcccc;
+}
+/* line 23, ../../Resources/Bower/bootstrap/scss/mixins/_table-row.scss */
+.table-hover .table-danger:hover > td,
+.table-hover .table-danger:hover > th {
+  background-color: #ebcccc;
+}
+
+/* line 109, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* line 123, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.thead-inverse th {
+  color: #fff;
+  background-color: #373a3c;
+}
+
+/* line 129, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.thead-default th {
+  color: #55595c;
+  background-color: #eceeef;
+}
+
+/* line 135, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-inverse {
+  color: #eceeef;
+  background-color: #373a3c;
+}
+/* line 139, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-inverse.table-bordered {
+  border: 0;
+}
+/* line 143, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-inverse th,
+.table-inverse td,
+.table-inverse thead th {
+  border-color: #55595c;
+}
+
+/* line 152, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-reflow thead {
+  float: left;
+}
+/* line 156, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-reflow tbody {
+  display: block;
+  white-space: nowrap;
+}
+/* line 161, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-reflow th,
+.table-reflow td {
+  border-top: 1px solid #eceeef;
+  border-left: 1px solid #eceeef;
+}
+/* line 166, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-reflow th:last-child,
+.table-reflow td:last-child {
+  border-right: 1px solid #eceeef;
+}
+/* line 176, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-reflow thead:last-child tr:last-child th,
+.table-reflow thead:last-child tr:last-child td,
+.table-reflow tbody:last-child tr:last-child th,
+.table-reflow tbody:last-child tr:last-child td,
+.table-reflow tfoot:last-child tr:last-child th,
+.table-reflow tfoot:last-child tr:last-child td {
+  border-bottom: 1px solid #eceeef;
+}
+/* line 184, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-reflow tr {
+  float: left;
+}
+/* line 187, ../../Resources/Bower/bootstrap/scss/_tables.scss */
+.table-reflow tr th,
+.table-reflow tr td {
+  display: block !important;
+  border: 1px solid #eceeef;
+}
+
+/* line 2, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropup,
+.dropdown {
+  position: relative;
+}
+
+/* line 9, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropdown-toggle:after {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: .25rem;
+  vertical-align: middle;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-left: 0.3em solid transparent;
+}
+/* line 22, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropdown-toggle:focus {
+  outline: 0;
+}
+
+/* line 28, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  font-size: 1rem;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+
+/* line 49, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropdown-divider {
+  height: 1px;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+
+/* line 54, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropdown-item {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.5;
+  color: #373a3c;
+  white-space: nowrap;
+  text-align: inherit;
+  width: 100%;
+  background: none;
+  border: 0;
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.dropdown-item:focus, .dropdown-item:hover {
+  color: #2b2d2f;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+/* line 36, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.dropdown-item.active, .dropdown-item.active:focus, .dropdown-item.active:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: #00b5ff;
+  outline: 0;
+}
+/* line 36, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.dropdown-item.disabled, .dropdown-item.disabled:focus, .dropdown-item.disabled:hover {
+  color: #818a91;
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.dropdown-item.disabled:focus, .dropdown-item.disabled:hover {
+  text-decoration: none;
+  cursor: not-allowed;
+  background-color: transparent;
+  background-image: none;
+  filter: "progid:DXImageTransform.Microsoft.gradient(enabled = false)";
+}
+
+/* line 107, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.open > .dropdown-menu {
+  display: block;
+}
+/* line 112, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.open > a {
+  outline: 0;
+}
+
+/* line 121, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropdown-menu-right {
+  right: 0;
+  left: auto;
+}
+
+/* line 131, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropdown-menu-left {
+  right: auto;
+  left: 0;
+}
+
+/* line 137, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropdown-header {
+  display: block;
+  padding: 3px 20px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #818a91;
+  white-space: nowrap;
+}
+
+/* line 147, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropdown-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 990;
+}
+
+/* line 157, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.pull-right > .dropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+/* line 170, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropup .caret,
+.navbar-fixed-bottom .dropdown .caret {
+  content: "";
+  border-top: 0;
+  border-bottom: 0.3em solid;
+}
+/* line 177, ../../Resources/Bower/bootstrap/scss/_dropdown.scss */
+.dropup .dropdown-menu,
+.navbar-fixed-bottom .dropdown .dropdown-menu {
+  top: auto;
+  bottom: 100%;
+  margin-bottom: 2px;
+}
+
+/* line 6, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+/* line 12, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-link {
+  display: inline-block;
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.nav-link:focus, .nav-link:hover {
+  text-decoration: none;
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-link.disabled {
+  color: #818a91;
+}
+/* line 36, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.nav-link.disabled, .nav-link.disabled:focus, .nav-link.disabled:hover {
+  color: #818a91;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+/* line 35, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-inline .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+
+/* line 45, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-tabs {
+  border-bottom: 1px solid #ddd;
+}
+/* line 14, ../../Resources/Bower/bootstrap/scss/mixins/_clearfix.scss */
+.nav-tabs:before, .nav-tabs:after {
+  content: " ";
+  display: table;
+}
+/* line 19, ../../Resources/Bower/bootstrap/scss/mixins/_clearfix.scss */
+.nav-tabs:after {
+  clear: both;
+}
+/* line 49, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-tabs .nav-item {
+  float: left;
+  margin-bottom: -1px;
+}
+/* line 54, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-tabs .nav-item + .nav-item {
+  margin-left: .2rem;
+}
+/* line 59, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-tabs .nav-link {
+  display: block;
+  padding: 0.5em 1em;
+  border: 1px solid transparent;
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+  border-color: #eceeef #eceeef #ddd;
+}
+/* line 36, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.nav-tabs .nav-link.disabled, .nav-tabs .nav-link.disabled:focus, .nav-tabs .nav-link.disabled:hover {
+  color: #818a91;
+  background-color: transparent;
+  border-color: transparent;
+}
+/* line 36, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.nav-tabs .nav-link.active, .nav-tabs .nav-link.active:focus, .nav-tabs .nav-link.active:hover,
+.nav-tabs .nav-item.open .nav-link,
+.nav-tabs .nav-item.open .nav-link:focus,
+.nav-tabs .nav-item.open .nav-link:hover {
+  color: #55595c;
+  background-color: #fff;
+  border-color: #ddd #ddd transparent;
+}
+
+/* line 94, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-pills .nav-item {
+  float: left;
+}
+/* line 97, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-pills .nav-item + .nav-item {
+  margin-left: .2rem;
+}
+/* line 102, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-pills .nav-link {
+  display: block;
+  padding: 0.5em 1em;
+  border-radius: 0.25rem;
+}
+/* line 36, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.nav-pills .nav-link.active, .nav-pills .nav-link.active:focus, .nav-pills .nav-link.active:hover,
+.nav-pills .nav-item.open .nav-link,
+.nav-pills .nav-item.open .nav-link:focus,
+.nav-pills .nav-item.open .nav-link:hover {
+  color: #fff;
+  cursor: default;
+  background-color: #00b5ff;
+}
+
+/* line 119, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-stacked .nav-item {
+  display: block;
+  float: none;
+}
+/* line 123, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-stacked .nav-item + .nav-item {
+  margin-top: .2rem;
+  margin-left: 0;
+}
+
+/* line 137, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.tab-content > .tab-pane {
+  display: none;
+}
+/* line 140, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.tab-content > .active {
+  display: block;
+}
+
+/* line 150, ../../Resources/Bower/bootstrap/scss/_nav.scss */
+.nav-tabs .dropdown-menu {
+  margin-top: -1px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+/* line 6, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar {
+  position: relative;
+  padding: 0.5rem 1rem;
+}
+/* line 14, ../../Resources/Bower/bootstrap/scss/mixins/_clearfix.scss */
+.navbar:before, .navbar:after {
+  content: " ";
+  display: table;
+}
+/* line 19, ../../Resources/Bower/bootstrap/scss/mixins/_clearfix.scss */
+.navbar:after {
+  clear: both;
+}
+@media (min-width: 34em) {
+  /* line 6, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+  .navbar {
+    border-radius: 0.25rem;
+  }
+}
+
+/* line 23, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-static-top {
+  z-index: 1000;
+}
+@media (min-width: 34em) {
+  /* line 23, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+  .navbar-static-top {
+    border-radius: 0;
+  }
+}
+
+/* line 32, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  margin-bottom: 0;
+}
+@media (min-width: 34em) {
+  /* line 32, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+  .navbar-fixed-top,
+  .navbar-fixed-bottom {
+    border-radius: 0;
+  }
+}
+
+/* line 46, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-fixed-top {
+  top: 0;
+}
+
+/* line 50, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-fixed-bottom {
+  bottom: 0;
+}
+
+/* line 54, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  width: 100%;
+}
+@media (min-width: 34em) {
+  /* line 54, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+  .navbar-sticky-top {
+    border-radius: 0;
+  }
+}
+
+/* line 71, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-brand {
+  float: left;
+  margin-right: 1rem;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 1.25rem;
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.navbar-brand:focus, .navbar-brand:hover {
+  text-decoration: none;
+}
+/* line 82, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-brand > img {
+  display: block;
+}
+
+/* line 88, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-divider {
+  float: left;
+  width: 1px;
+  padding-top: .425rem;
+  padding-bottom: .425rem;
+  overflow: hidden;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+/* line 97, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-divider:before {
+  content: '\00a0';
+}
+
+/* line 108, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-toggler {
+  padding: .5rem .75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background: none;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.25rem;
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.navbar-toggler:focus, .navbar-toggler:hover {
+  text-decoration: none;
+}
+
+@media (min-width: 34em) {
+  /* line 123, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+  .navbar-toggleable-xs {
+    display: block !important;
+  }
+}
+@media (min-width: 48em) {
+  /* line 128, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+  .navbar-toggleable-sm {
+    display: block !important;
+  }
+}
+
+/* line 141, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-nav .nav-item {
+  float: left;
+}
+/* line 145, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-nav .nav-link {
+  display: block;
+  padding-top: .425rem;
+  padding-bottom: .425rem;
+}
+/* line 150, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-nav .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+/* line 155, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-nav .nav-item + .nav-item {
+  margin-left: 1rem;
+}
+
+/* line 162, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-light .navbar-brand {
+  color: rgba(0, 0, 0, 0.8);
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover {
+  color: rgba(0, 0, 0, 0.8);
+}
+/* line 171, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-light .navbar-nav .nav-link {
+  color: rgba(0, 0, 0, 0.3);
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+  color: rgba(0, 0, 0, 0.6);
+}
+/* line 36, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.navbar-light .navbar-nav .open > .nav-link, .navbar-light .navbar-nav .open > .nav-link:focus, .navbar-light .navbar-nav .open > .nav-link:hover,
+.navbar-light .navbar-nav .active > .nav-link,
+.navbar-light .navbar-nav .active > .nav-link:focus,
+.navbar-light .navbar-nav .active > .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.open,
+.navbar-light .navbar-nav .nav-link.open:focus,
+.navbar-light .navbar-nav .nav-link.open:hover,
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .nav-link.active:focus,
+.navbar-light .navbar-nav .nav-link.active:hover {
+  color: rgba(0, 0, 0, 0.8);
+}
+/* line 189, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-light .navbar-divider {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+/* line 196, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-dark .navbar-brand {
+  color: white;
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.navbar-dark .navbar-brand:focus, .navbar-dark .navbar-brand:hover {
+  color: white;
+}
+/* line 205, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.5);
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+/* line 36, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.navbar-dark .navbar-nav .open > .nav-link, .navbar-dark .navbar-nav .open > .nav-link:focus, .navbar-dark .navbar-nav .open > .nav-link:hover,
+.navbar-dark .navbar-nav .active > .nav-link,
+.navbar-dark .navbar-nav .active > .nav-link:focus,
+.navbar-dark .navbar-nav .active > .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.open,
+.navbar-dark .navbar-nav .nav-link.open:focus,
+.navbar-dark .navbar-nav .nav-link.open:hover,
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link.active:focus,
+.navbar-dark .navbar-nav .nav-link.active:hover {
+  color: white;
+}
+/* line 223, ../../Resources/Bower/bootstrap/scss/_navbar.scss */
+.navbar-dark .navbar-divider {
+  background-color: rgba(255, 255, 255, 0.075);
+}
+
+/* line 1, ../../Resources/Bower/bootstrap/scss/_breadcrumb.scss */
+.breadcrumb {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  background-color: #eceeef;
+  border-radius: 0.25rem;
+}
+/* line 8, ../../Resources/Bower/bootstrap/scss/_breadcrumb.scss */
+.breadcrumb > li {
+  display: inline-block;
+}
+/* line 11, ../../Resources/Bower/bootstrap/scss/_breadcrumb.scss */
+.breadcrumb > li + li:before {
+  padding-right: .5rem;
+  padding-left: .5rem;
+  color: #818a91;
+  content: "/ ";
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/_breadcrumb.scss */
+.breadcrumb > .active {
+  color: #818a91;
+}
+
+/* line 1, ../../Resources/Bower/bootstrap/scss/_pagination.scss */
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+}
+/* line 8, ../../Resources/Bower/bootstrap/scss/_pagination.scss */
+.pagination > li {
+  display: inline;
+}
+/* line 11, ../../Resources/Bower/bootstrap/scss/_pagination.scss */
+.pagination > li > a,
+.pagination > li > span {
+  position: relative;
+  float: left;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.5;
+  color: #00b5ff;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+/* line 24, ../../Resources/Bower/bootstrap/scss/_pagination.scss */
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  margin-left: 0;
+  border-bottom-left-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+}
+/* line 31, ../../Resources/Bower/bootstrap/scss/_pagination.scss */
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-bottom-right-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.pagination > li > a:focus, .pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+  color: #007fb3;
+  background-color: #eceeef;
+  border-color: #ddd;
+}
+/* line 36, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+  z-index: 2;
+  color: #fff;
+  cursor: default;
+  background-color: #00b5ff;
+  border-color: #00b5ff;
+}
+/* line 36, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span:hover,
+.pagination > .disabled > a,
+.pagination > .disabled > a:focus,
+.pagination > .disabled > a:hover {
+  color: #818a91;
+  cursor: not-allowed;
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+/* line 5, ../../Resources/Bower/bootstrap/scss/mixins/_pagination.scss */
+.pagination-lg > li > a,
+.pagination-lg > li > span {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.25rem;
+  line-height: 1.33333;
+}
+/* line 12, ../../Resources/Bower/bootstrap/scss/mixins/_pagination.scss */
+.pagination-lg > li:first-child > a,
+.pagination-lg > li:first-child > span {
+  border-bottom-left-radius: 0.3rem;
+  border-top-left-radius: 0.3rem;
+}
+/* line 18, ../../Resources/Bower/bootstrap/scss/mixins/_pagination.scss */
+.pagination-lg > li:last-child > a,
+.pagination-lg > li:last-child > span {
+  border-bottom-right-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+}
+
+/* line 5, ../../Resources/Bower/bootstrap/scss/mixins/_pagination.scss */
+.pagination-sm > li > a,
+.pagination-sm > li > span {
+  padding: 0.275rem 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+/* line 12, ../../Resources/Bower/bootstrap/scss/mixins/_pagination.scss */
+.pagination-sm > li:first-child > a,
+.pagination-sm > li:first-child > span {
+  border-bottom-left-radius: 0.2rem;
+  border-top-left-radius: 0.2rem;
+}
+/* line 18, ../../Resources/Bower/bootstrap/scss/mixins/_pagination.scss */
+.pagination-sm > li:last-child > a,
+.pagination-sm > li:last-child > span {
+  border-bottom-right-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+}
+
+/* line 1, ../../Resources/Bower/bootstrap/scss/_pager.scss */
+.pager {
+  padding-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  list-style: none;
+}
+/* line 14, ../../Resources/Bower/bootstrap/scss/mixins/_clearfix.scss */
+.pager:before, .pager:after {
+  content: " ";
+  display: table;
+}
+/* line 19, ../../Resources/Bower/bootstrap/scss/mixins/_clearfix.scss */
+.pager:after {
+  clear: both;
+}
+/* line 9, ../../Resources/Bower/bootstrap/scss/_pager.scss */
+.pager li {
+  display: inline;
+}
+/* line 12, ../../Resources/Bower/bootstrap/scss/_pager.scss */
+.pager li > a,
+.pager li > span {
+  display: inline-block;
+  padding: 5px 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+}
+/* line 20, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.pager li > a:focus, .pager li > a:hover {
+  text-decoration: none;
+  background-color: #eceeef;
+}
+/* line 36, ../../Resources/Bower/bootstrap/scss/mixins/_hover.scss */
+.pager .disabled > a, .pager .disabled > a:focus, .pager .disabled > a:hover {
+  color: #818a91;
+  cursor: not-allowed;
+  background-color: #fff;
+}
+/* line 37, ../../Resources/Bower/bootstrap/scss/_pager.scss */
+.pager .disabled > span {
+  color: #818a91;
+  cursor: not-allowed;
+  background-color: #fff;
+}
+
+/* line 46, ../../Resources/Bower/bootstrap/scss/_pager.scss */
+.pager-next > a,
+.pager-next > span {
+  float: right;
+}
+
+/* line 53, ../../Resources/Bower/bootstrap/scss/_pager.scss */
+.pager-prev > a,
+.pager-prev > span {
+  float: left;
+}
+
+/* line 10, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media {
+  margin-top: 15px;
+}
+/* line 13, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media:first-child {
+  margin-top: 0;
+}
+
+/* line 17, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media,
+.media-body {
+  overflow: hidden;
+  zoom: 1;
+}
+
+/* line 22, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media-body {
+  width: 10000px;
+}
+
+/* line 25, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media-left,
+.media-right,
+.media-body {
+  display: table-cell;
+  vertical-align: top;
+}
+
+/* line 31, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media-middle {
+  vertical-align: middle;
+}
+
+/* line 34, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media-bottom {
+  vertical-align: bottom;
+}
+
+/* line 44, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media-object {
+  display: block;
+}
+/* line 48, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media-object.img-thumbnail {
+  max-width: none;
+}
+
+/* line 58, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media-right {
+  padding-left: 10px;
+}
+
+/* line 62, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media-left {
+  padding-right: 10px;
+}
+
+/* line 71, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media-heading {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+/* line 81, ../../Resources/Bower/bootstrap/scss/_media.scss */
+.media-list {
+  padding-left: 0;
+  list-style: none;
+}
+
 /* line 14, ../../Resources/Bower/bootstrap/scss/mixins/_clearfix.scss */
 .clearfix:before, .clearfix:after {
   content: " ";
@@ -2971,12 +3956,17 @@ a.bg-danger:focus, a.bg-danger:hover {
   overflow: hidden;
 }
 
-/* line 18, ../../Resources/Private/Scss/_globalClasses.scss */
+/* line 17, ../../Resources/Private/Scss/_globalClasses.scss */
+.bg-white {
+  background-color: #fff;
+}
+
+/* line 22, ../../Resources/Private/Scss/_globalClasses.scss */
 .link-svg {
   position: relative;
   text-decoration: none;
 }
-/* line 22, ../../Resources/Private/Scss/_globalClasses.scss */
+/* line 26, ../../Resources/Private/Scss/_globalClasses.scss */
 .link-svg:after {
   position: absolute;
   content: "";
@@ -2986,12 +3976,12 @@ a.bg-danger:focus, a.bg-danger:hover {
   left: 0;
 }
 
-/* line 33, ../../Resources/Private/Scss/_globalClasses.scss */
+/* line 37, ../../Resources/Private/Scss/_globalClasses.scss */
 div.indent {
   padding-left: 2em;
 }
 
-/* line 37, ../../Resources/Private/Scss/_globalClasses.scss */
+/* line 41, ../../Resources/Private/Scss/_globalClasses.scss */
 p.align-right,
 h2.align-right,
 h3.align-right,
@@ -3002,7 +3992,7 @@ ol.align-right {
   text-align: right;
 }
 
-/* line 47, ../../Resources/Private/Scss/_globalClasses.scss */
+/* line 51, ../../Resources/Private/Scss/_globalClasses.scss */
 p.align-center,
 h2.align-center,
 h3.align-center,
@@ -3013,7 +4003,7 @@ ol.align-center {
   text-align: center;
 }
 
-/* line 57, ../../Resources/Private/Scss/_globalClasses.scss */
+/* line 61, ../../Resources/Private/Scss/_globalClasses.scss */
 p.align-left,
 h2.align-left,
 h3.align-left,
@@ -3024,98 +4014,23 @@ ol.align-left {
   text-align: left;
 }
 
-/* line 131, ../../Resources/Private/Scss/_mixins.scss */
-h1 {
-  color: #00b5ff;
-  font-family: "Noto Sans", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/*
+Navbar "hovernav" dropdown menu - this works only for screen sizes larger than phones.
+The Bootstrap CSS is unchanged.
+*/
+@media (min-width: 768px) {
+  /* line 6, ../../Resources/Private/Scss/_navigation.scss */
+  .navbar-nav .open ul {
+    display: none;
+  }
 
-/* line 131, ../../Resources/Private/Scss/_mixins.scss */
-h2 {
-  color: #00b5ff;
-  font-family: "Noto Sans", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  /* line 9, ../../Resources/Private/Scss/_navigation.scss */
+  .navbar-nav .hovernav:hover > .dropdown-menu {
+    display: block;
+  }
 
-/* line 131, ../../Resources/Private/Scss/_mixins.scss */
-h3 {
-  color: #00b5ff;
-  font-family: "Noto Sans", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* line 131, ../../Resources/Private/Scss/_mixins.scss */
-h4 {
-  color: #00b5ff;
-  font-family: "Noto Sans", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* line 131, ../../Resources/Private/Scss/_mixins.scss */
-h5 {
-  color: #00b5ff;
-  font-family: "Noto Sans", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* line 131, ../../Resources/Private/Scss/_mixins.scss */
-h6 {
-  color: #00b5ff;
-  font-family: "Noto Sans", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* line 11, ../../Resources/Private/Scss/_type.scss */
-h1 {
-  font-size: 2rem;
-}
-/* line 14, ../../Resources/Private/Scss/_type.scss */
-h1 + h2 {
-  margin-top: -0.6rem;
-}
-
-/* line 19, ../../Resources/Private/Scss/_type.scss */
-h2 {
-  font-size: 1.8rem;
-}
-/* line 22, ../../Resources/Private/Scss/_type.scss */
-h2 + h3 {
-  margin-top: -0.6rem;
-}
-
-/* line 27, ../../Resources/Private/Scss/_type.scss */
-h3 {
-  font-size: 1.6rem;
-}
-/* line 30, ../../Resources/Private/Scss/_type.scss */
-h3 + h4 {
-  margin-top: -0.6rem;
-}
-
-/* line 35, ../../Resources/Private/Scss/_type.scss */
-h4 {
-  font-size: 1.4rem;
-}
-
-/* line 39, ../../Resources/Private/Scss/_type.scss */
-a {
-  color: #00b5ff;
-}
-
-/* line 43, ../../Resources/Private/Scss/_type.scss */
-p {
-  line-height: 1.6rem;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-/* line 47, ../../Resources/Private/Scss/_type.scss */
-p a {
-  text-decoration: underline;
+  /* line 12, ../../Resources/Private/Scss/_navigation.scss */
+  .navbar-nav .dropdown-menu {
+    margin-top: 0;
+  }
 }

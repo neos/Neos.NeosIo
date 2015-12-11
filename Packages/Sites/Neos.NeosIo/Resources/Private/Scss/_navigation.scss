@@ -1,0 +1,15 @@
+/*
+Navbar "hovernav" dropdown menu - this works only for screen sizes larger than phones.
+The Bootstrap CSS is unchanged.
+*/
+@media (min-width: 768px) {
+	.navbar-nav .open ul {
+		display: none;
+	}
+	.navbar-nav .hovernav:hover > .dropdown-menu {
+		display: block;
+	}
+	.navbar-nav .dropdown-menu {
+		margin-top: 0;
+	}
+}

@@ -33,31 +33,32 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
 		}
 	}
 
-	htmlTag {
-		//attributes.class = 'no-js'
-	}
+	bodyTag.attributes.class = 'bg-faded'
 
 	body {
 		templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
 		sectionName = 'body'
 		parts {
 			menu = Menu {
-				//templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/Menu.html'
+				templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/Menu.html'
 				entryLevel = 1
-				//normal.attributes.class =
-				//current.attributes.class =
-				//active.attributes.class =
 				maximumLevels = 2
+				attributes.class = 'nav navbar-nav'
 				filter = 'TYPO3.Neos:Document, !Neos.NeosIo:Reference'
 			}
-		}
-
-		footer {
-			links = Menu {
-				//templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/MenuFooterLinks.html'
-				startingPoint = ${q(site).property('footerLinkNode')}
-				current.attributes.class = 'active'
-				maximumLevels = 1
+			sectionTitle = ${q(node).closest('[_depth=3]').property('_label')}
+			subMenu = Menu {
+				templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/SubMenu.html'
+				entryLevel = 2
+				maximumLevels = 2
+				attributes.class = 'nav'
+				normal.attributes.class = 'nav-item'
+				active.attributes.class = 'nav-item active'
+				current.attributes.class = 'nav-item active'
+				filter = 'TYPO3.Neos:Document, !Neos.NeosIo:Reference'
+			}
+			breadcrumb = BreadcrumbMenu {
+				attributes.class = 'breadcrumb bg-faded'
 			}
 		}
 
