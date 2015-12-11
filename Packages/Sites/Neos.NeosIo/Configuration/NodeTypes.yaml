@@ -1,3 +1,8 @@
+'TYPO3.Neos.NodeTypes:ImageCaptionMixin':
+  properties:
+    hasCaption: ~
+    alignment: ~
+
 'TYPO3.Neos.NodeTypes:Text':
   properties:
     text:
@@ -8,6 +13,8 @@
             'h5': TRUE
 
 'TYPO3.Neos.NodeTypes:TextWithImage':
+  superTypes:
+    'TYPO3.Neos.NodeTypes:ImageAlignmentMixin': FALSE
   properties:
     text:
       ui:
@@ -15,3 +22,7 @@
           'format':
             'h4': TRUE
             'h5': TRUE
+
+'TYPO3.Neos.NodeTypes:Image':
+  superTypes:
+    'TYPO3.Neos.NodeTypes:ImageAlignmentMixin': FALSE
