@@ -1,13 +1,3 @@
-'TYPO3.Neos.NodeTypes:Page':
-  properties:
-    indexNoFollow:
-      type: boolean
-      ui:
-        label: 'Set index, no-follow meta tag'
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'layout'
-
 'TYPO3.Neos.NodeTypes:Text':
   properties:
     text:
@@ -17,3 +7,11 @@
             'h4': TRUE
             'h5': TRUE
 
+'TYPO3.Neos.NodeTypes:TextWithImage':
+  properties:
+    text:
+      ui:
+        aloha:
+          'format':
+            'h4': TRUE
+            'h5': TRUE
