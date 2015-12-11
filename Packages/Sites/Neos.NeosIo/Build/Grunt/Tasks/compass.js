@@ -24,7 +24,7 @@ function getCompassOptions(isWatching) {
 	options.sassDir = 'Private/Scss';
 	options.imagesDir = 'Public/Images';
 	options.javascriptsDir = 'Public/Scripts';
-	options.cssDir = '../.grunt_cache/css'
+	options.cssDir = '../.grunt_cache/css';
 	options.watch = isWatching;
 
 	return options;
