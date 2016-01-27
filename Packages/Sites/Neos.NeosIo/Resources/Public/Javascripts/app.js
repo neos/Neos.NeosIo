@@ -23,4 +23,42 @@ $(document).ready(function(){
 		});
 		//$('.top-bar.alternative li:last-child.has-dropdown > ul').css({'right':0}).addClass('sites');
 	}
+
+	// Init tiles plugins
+	imagesLoaded(document.querySelectorAll('.tiles'), function () {
+		$('.tiles').each(function () {
+			var $that = $(this),
+				$filters = $that.find('.tiles--filters'),
+				$tilesWrap = $that.find('.tiles--inner-wrap');
+
+			var wookmark = new Wookmark($tilesWrap[0], {
+				itemWidth: 300,
+				offset: 10,
+				ignoreInactiveItems: false,
+				comparator: function (a, b) {
+					var aInactive = $(a).hasClass('wookmark-inactive'),
+						bInactive = $(b).hasClass('wookmark-inactive');
+
+					if (aInactive == bInactive) {
+						return $(a).data('name') < $(b).data('name') ? -1 : 1;
+					}
+					return aInactive && !bInactive ? 1 : -1;
+				}
+			});
+
+			$filters.on('click.wookmark-filter', 'li', function (e) {
+				var $item = $(e.currentTarget), itemActive = $item.hasClass('active');
+
+				if (!itemActive) {
+					$filters.children().removeClass('active');
+				}
+				itemActive = !itemActive;
+				$item.toggleClass('active');
+
+				// Filter by the currently selected filter
+				wookmark.filter(itemActive ? [$item.data('filter')] : []);
+			});
+		});
+	});
 });
+
