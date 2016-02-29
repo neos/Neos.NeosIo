@@ -1,0 +1,17 @@
+prototype(Neos.NeosIo:FundingBadges) < prototype(TYPO3.Neos:Content) {
+    sectionName = 'Main'
+    attributes.class = 'tiles'
+
+    badges = ${q(site).fundingBadges().get()}
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            documentNode = ${documentNode}
+            node = ${node}
+        }
+        entryTags {
+            1 = ${'Node_' + node.identifier}
+        }
+    }
+}
