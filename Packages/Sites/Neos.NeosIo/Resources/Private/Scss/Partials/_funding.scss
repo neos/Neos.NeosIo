@@ -4,6 +4,19 @@
   }
 }
 
+.funding-badge--item {
+  border-bottom: 1px solid #555;
+  padding: .5em 0;
+
+  &:last-of-type {
+    border-bottom: 0;
+  }
+}
+
+.funding-badge--customer-name {
+  font-size: 110%;
+}
+
 .tiles--inner-wrap {
   position: relative; /** Needed to ensure items are laid out relative to this container **/
   margin: 10px 0;
@@ -11,7 +24,8 @@
   list-style-type: none;
   display: none;
 
-  &.wookmark-initialised  li {
+  &.wookmark-initialised li {
+    opacity: 1;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
@@ -20,19 +34,19 @@
 
   li {
     background-color: #444;
-    border: 1px solid #dedede;
+    border: 1px solid #333;
     color: #fff;
     display: block;
     float: left;
     list-style-type: none;
-    opacity: 1;
+    opacity: 0;
     padding: 10px 10px;
     text-align: center;
-    width: 300px;
+    width: 308px;
 
-    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
+    -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
 
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -40,12 +54,7 @@
 
     &.wookmark-inactive {
       visibility: visible;
-      opacity: .2;
-      filter: alpha(opacity=20); /* IE 7 and Earlier */
-      /* Next 2 lines IE8 */
-      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-      filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
-
+      opacity: .1;
       -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
       -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
       box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
@@ -54,16 +63,17 @@
     img {
       display: block;
       height: auto;
-      margin-bottom: 10px;
+      margin: 0 auto 10px;
       max-width: 100%;
     }
   }
 }
 
 .tiles--filters {
+  display: none;
   list-style-type: none;
-  text-align: center;
   margin: 0;
+  text-align: center;
 
   &:after {
     content: ".";
@@ -75,11 +85,13 @@
   }
 
   li {
+    background: #444;
+    color: #ffffff;
+    cursor: pointer;
     font-size: 12px;
     float: left;
     padding: 6px 8px 4px;
-    cursor: pointer;
-    margin: 0 10px;
+    margin: 5px 10px 5px 0;
     -webkit-transition: all 0.15s ease-out;
     -moz-transition: all 0.15s ease-out;
     -o-transition: all 0.15s ease-out;
@@ -90,12 +102,10 @@
 
     &:hover {
       background: #93B7F5;
-      color: #ffffff;
     }
 
     &.active {
       background: #4281f5;
-      color: #ffffff;
     }
   }
 }

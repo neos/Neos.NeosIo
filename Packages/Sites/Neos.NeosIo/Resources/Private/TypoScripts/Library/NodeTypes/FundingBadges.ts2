@@ -2,7 +2,7 @@ prototype(Neos.NeosIo:FundingBadges) < prototype(TYPO3.Neos:Content) {
     sectionName = 'Main'
     attributes.class = 'tiles'
 
-    badges = ${q(site).fundingBadges().get()}
+    badgeData = ${q(site).fundingBadges().get()}
 
     @cache {
         mode = 'cached'
