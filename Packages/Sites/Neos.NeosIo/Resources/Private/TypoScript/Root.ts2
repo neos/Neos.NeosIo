@@ -43,7 +43,7 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
 				templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/Menu.html'
 				entryLevel = 1
 				maximumLevels = 2
-				attributes.class = 'nav navbar-nav'
+				attributes.class = 'nav siteHeader__nav'
 				filter = 'TYPO3.Neos:Document, !Neos.NeosIo:Reference'
 			}
 			sectionTitle = ${q(node).closest('[_depth=3]').property('_label')}

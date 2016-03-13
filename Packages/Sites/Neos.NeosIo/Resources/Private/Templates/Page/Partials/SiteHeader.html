@@ -1,0 +1,14 @@
+<header
+    class="siteHeader"
+    role="banner"
+    data-component="ScrollClassToggler"
+    data-scrollPoint="200"
+    data-className="siteHeader--hidden"
+    data-removeClassOnScrollDecrease="true"
+    >
+    <a class="siteHeader__brandLogo" href="/" title="Home">
+        <f:render partial="BrandLogo.html" />
+    </a>
+
+    {parts.menu -> f:format.raw()}
+</header>

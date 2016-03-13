@@ -1,23 +1,90 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
 {namespace ts=TYPO3\TypoScript\ViewHelpers}
-<ul{attributes -> f:format.raw()}>
-	<f:for each="{items}" as="item">
-		<li class="nav-item{f:if(condition: '{item.state} != \'normal\'', then: ' active')}{f:if(condition: item.subItems, then: ' dropdown')}">
-			<f:if condition="{item.subItems}">
-				<f:then>
-					<neos:link.node node="{item.node}" class="nav-link dropdown-toggle" data="{toggle: 'dropdown'}" additionalAttributes="{role: 'button', aria-haspopup: 'true', aria-expanded: 'false'}">{item.node.label} <span class="caret"></span></neos:link.node>
-					<ul class="dropdown-menu">
-						<f:for each="{item.subItems}" as="subItem">
-							<li class="dropdown-item{f:if(condition: '{subItem.state} != \'normal\'', then: ' active')}">
-								<neos:link.node node="{subItem.node}" class="nav-link">{subItem.node.label}<f:if condition="{subItem.state} == 'current'"> <span class="sr-only">(current)</span></f:if></neos:link.node>
-							</li>
-						</f:for>
-					</ul>
-				</f:then>
-				<f:else>
-					<neos:link.node node="{item.node}" class="nav-link">{item.node.label}<f:if condition="{item.state} == 'current'"> <span class="sr-only">(current)</span></f:if></neos:link.node>
-				</f:else>
-			</f:if>
+
+<nav role="navigation">
+	<ul {attributes -> f:format.raw()}>
+		<f:for each="{items}" as="item">
+			<li class="{f:if(condition: '{item.state} != \'normal\'', then: ' active')}">
+				<f:if condition="{item.subItems}">
+					<f:then>
+						<neos:link.node node="{item.node}" additionalAttributes="{role: 'button', aria-haspopup: 'true', aria-expanded: 'false'}">
+							{item.node.label}
+						</neos:link.node>
+						<ul class="nav nav--stacked siteHeader__dropDownNav">
+							<f:for each="{item.subItems}" as="subItem">
+								<li class="{f:if(condition: '{subItem.state} != \'normal\'', then: ' active')}">
+									<neos:link.node node="{subItem.node}">{subItem.node.label}</neos:link.node>
+								</li>
+							</f:for>
+						</ul>
+					</f:then>
+					<f:else>
+						<neos:link.node node="{item.node}">{item.node.label}</neos:link.node>
+					</f:else>
+				</f:if>
+			</li>
+		</f:for>
+		<li>
+			<a href="#">Features</a>
+			<ul class="nav nav--stacked siteHeader__dropDownNav">
+				<li><a href="#">Learn / Tour (Getting started)</a></li>
+				<li><a href="#">Detailed product information</a></li>
+				<li><a href="#">Roadmap</a></li>
+				<li><a href="#">Case studies</a></li>
+			</ul>
 		</li>
-	</f:for>
-</ul>
+		<li>
+			<a href="#">Download & Extend</a>
+			<ul class="nav nav--stacked siteHeader__dropDownNav">
+				<li><a href="#">Download</a></li>
+				<li><a href="#">Previous releases</a></li>
+				<li><a href="#">Packages</a></li>
+				<li><a href="#">Marketplace</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#">Docs</a>
+			<ul class="nav nav--stacked siteHeader__dropDownNav">
+				<li><a href="#">FAQ</a></li>
+				<li><a href="#">Installation guide</a></li>
+				<li><a href="#">Developers guide</a></li>
+				<li><a href="#">Editors guide</a></li>
+				<li><a href="#">Contribution guideline</a></li>
+				<li><a href="#">Videos</a></li>
+				<li><a href="#">Wiki</a></li>
+				<li><a href="#">Resources</a></li>
+				<li><a href="#">API</a></li>
+				<li><a href="#">Snippets</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#">Support</a>
+			<ul class="nav nav--stacked siteHeader__dropDownNav">
+				<li><a href="#">Issues</a></li>
+				<li><a href="#">Professional services</a></li>
+				<li><a href="#">Feedback</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#">Community</a>
+			<ul class="nav nav--stacked siteHeader__dropDownNav">
+				<li><a href="#">Team</a></li>
+				<li><a href="#">User profiles</a></li>
+				<li><a href="#">Local groups</a></li>
+				<li><a href="#">Values</a></li>
+				<li><a href="#">Events</a></li>
+				<li><a href="#">Reach out to Neos on Social Networks</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#">About</a>
+			<ul class="nav nav--stacked siteHeader__dropDownNav">
+				<li><a href="#">News</a></li>
+				<li><a href="#">Blog</a></li>
+				<li><a href="#">Newsletter</a></li>
+				<li><a href="#">Donate</a></li>
+				<li><a href="#">Marketing material</a></li>
+			</ul>
+		</li>
+	</ul>
+</nav>

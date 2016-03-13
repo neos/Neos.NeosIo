@@ -14,45 +14,7 @@
 </head>
 <body>
 <f:section name="body">
-	<header
-		class="siteHeader"
-		role="banner"
-		data-component="ScrollClassToggler"
-		data-scrollPoint="200"
-		data-className="siteHeader--hidden"
-		data-removeClassOnScrollDecrease="true"
-		>
-		<a class="siteHeader__brandLogo" href="/" title="Home">
-			<f:render partial="BrandLogo.html" />
-		</a>
-	</header>
-	<nav class="navbar navbar-light navbar-static-top">
-		<div class="container">
-			<neos:link.node node="~" class="navbar-brand">Neos</neos:link.node>
-
-			<div class="collapse navbar-toggleable-xs">
-				{parts.menu -> f:format.raw()}
-				<ul class="nav navbar-nav pull-right">
-					<li class="dropdown">
-						<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">neos.io <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li class="dropdown-item"><a class="nav-link" href="https://discuss.neos.io">discuss.neos.io</a></li>
-							<li class="dropdown-item"><a class="nav-link" href="https://id.neos.io">id.neos.io</a></li>
-							<li class="dropdown-item"><a class="nav-link" href="https://jira.neos.io">jira.neos.io</a></li>
-							<li class="dropdown-item"><a class="nav-link" href="http://slack.neos.io">slack.neos.io</a></li>
-							<li class="dropdown-item"><a class="nav-link" href="https://translate.neos.io">translate.neos.io</a></li>
-							<li role="separator" class="dropdown-divider"></li>
-							<li class="dropdown-item"><a class="nav-link" href="https://github.com/neos"><i class="fa fa-fw fa-github text-inverse"></i> github.com/neos</a></li>
-							<li class="dropdown-item"><a class="nav-link" href="https://twitter.com/NeosCMS"><i class="fa fa-fw fa-twitter text-inverse"></i> twitter.com/NeosCMS</a></li>
-							<li class="dropdown-item"><a class="nav-link" href="https://www.facebook.com/NeosCMS"><i class="fa fa-fw fa-facebook text-inverse"></i> facebook.com/NeosCMS</a></li>
-							<li class="dropdown-item"><a class="nav-link" href="https://google.com/+NeosCMS"><i class="fa fa-fw fa-google-plus text-inverse"></i> google.com/+NeosCMS</a></li>
-							<li class="dropdown-item"><a class="nav-link" href="https://youtube.com/c/NeosCMS"><i class="fa fa-fw fa-youtube text-inverse"></i> youtube.com/c/NeosCMS</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<f:render partial="SiteHeader.html" arguments="{_all}" />
 
 	<div class="bg-white">
 		<div class="container p-b-md p-t-md">
