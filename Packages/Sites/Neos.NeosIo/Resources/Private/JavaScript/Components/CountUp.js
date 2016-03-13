@@ -8,8 +8,14 @@ import raf from 'raf';
 export default class CountUpComponent {
 	constructor() {
 		raf(function tick() {
-			this.evaluateViewState();
-			raf(tick.bind(this));
+			const isInViewPort = this.isElementInViewport();
+			const {isAnimating} = this.state;
+
+			if (isInViewPort && !isAnimating) {
+				this.animate();
+			} else {
+				raf(tick.bind(this));
+			}
 		}.bind(this));
 	}
 
@@ -17,15 +23,6 @@ export default class CountUpComponent {
 		return {
 			isAnimating: false
 		};
-	}
-
-	evaluateViewState() {
-		const isInViewPort = this.isElementInViewport();
-		const {isAnimating} = this.state;
-
-		if (isInViewPort && !isAnimating) {
-			this.animate();
-		}
 	}
 
 	isElementInViewport() {
