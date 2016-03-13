@@ -1,36 +1,36 @@
 .stage {
-    position: relative;
-    overflow: hidden;
-    background: #000;
+	position: relative;
+	overflow: hidden;
+	background: #000;
 }
 .stage--bright {
-    background: #FFF;
+	background: #FFF;
 }
 .stage--primary {
-    background: brand('primary');
+	background: brand('primary');
 }
 .stage__bg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 0;
-    min-width: 100%;
-    min-height: 100%;
-    max-width: none;
-    max-height: none;
-    opacity: .8;
-    transform: translateX(-50%) translateY(-50%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 0;
+	min-width: 100%;
+	min-height: 100%;
+	max-width: none;
+	max-height: none;
+	opacity: .8;
+	transform: translateX(-50%) translateY(-50%);
 }
 .stage__contents {
-    position: relative;
-    z-index: 1;
-    padding: $double-spacing+px;
+	position: relative;
+	z-index: 1;
+	padding: $double-spacing+px;
 
-    > :last-child {
-        margin-bottom: 0;
-    }
+	> :last-child {
+		margin-bottom: 0;
+	}
 }
 .stage__contents--extraPadding {
-    padding-top: 25vh;
-    padding-bottom: 25vh;
+	padding-top: 25vh;
+	padding-bottom: 25vh;
 }

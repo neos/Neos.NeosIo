@@ -3,7 +3,24 @@
  */
 
 .siteFooter {
-    padding: $double-spacing+px;
-    background: brand('teritary');
+	padding: $double-spacing+px;
+	background: brand('teritary');
+	font-size: rs(14);
+
+	@include u-invertText();
+
+	> :last-child {
+		margin-bottom: 0;
+	}
 }
-.siteFooter__brandLogo { }
+.siteFooter__heading {
+	margin-bottom: ($half-spacing / 2)+px;
+}
+.siteFooter__nav {
+	line-height: $basic-spacing+px;
+	color: lighten(brand('teritary'), 40%);
+
+	a:hover {
+		color: #FFF;
+	}
+}
