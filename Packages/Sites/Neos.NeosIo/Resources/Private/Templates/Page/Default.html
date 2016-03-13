@@ -4,15 +4,32 @@
 <html>
 <head>
 	<f:section name="stylesheets">
-		<link rel="stylesheet" href="../../Public/Css/main.css" />
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+		<link href="{f:uri.resource(path: 'Styles/Main.css', package: 'Neos.NeosIo')}" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	</f:section>
 	<f:section name="headScripts">
-		<!-- Put your scripts inclusions for the head here, they will be included in your website by TypoScript -->
+		<script src="{f:uri.resource(path: 'JavaScript/Modernizr.min.js', package: 'Neos.NeosIo')}"></script>
 	</f:section>
 </head>
 <body>
 <f:section name="body">
+	<header
+		class="siteHeader"
+		role="banner"
+		data-component="ScrollClassToggler"
+		data-scrollPoint="200"
+		data-className="siteHeader--hidden"
+		data-removeClassOnScrollDecrease="true"
+		>
+		<a class="siteHeader__brandLogo" href="/" title="Home">
+			<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				 width="65.15px" height="30.573px" viewBox="0 0 65.15 30.573" enable-background="new 0 0 65.15 30.573" xml:space="preserve">
+				<text transform="matrix(1 0 0 1 0 23.1875)" font-family="'NotoSans'" font-size="27.0588">Neos</text>
+			</svg>
+			<img itemprop="logo" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Neos" class="u-brandLogo u-brandLogo--white u-brandLogo--small">
+		</a>
+	</header>
 	<nav class="navbar navbar-light navbar-static-top">
 		<div class="container">
 			<neos:link.node node="~" class="navbar-brand">Neos</neos:link.node>
@@ -86,9 +103,7 @@
 	</footer>
 </f:section>
 <f:section name="bodyScripts">
-	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../../Public/Scripts/Custom/hovernav.js"></script>
+	<script src="{f:uri.resource(path: 'JavaScript/Bundle.min.js', package: 'Neos.NeosIo')}" async></script>
 </f:section>
 </body>
 </html>

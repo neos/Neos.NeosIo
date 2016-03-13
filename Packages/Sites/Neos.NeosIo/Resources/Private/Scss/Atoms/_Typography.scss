@@ -1,0 +1,54 @@
+/**
+ * Typographic elements
+ */
+
+p {
+	margin: 0 0 rs($basic-spacing);
+}
+
+b,
+strong {
+	// Addresses style set to `bolder` in FF3+, S4/5, Chrome.
+	font-weight: $bold;
+}
+
+small {
+	font-size: 80%;
+}
+
+abbr[title] {
+	// Addresses styling not present in IE7/8/9, S5, Chrome.
+	border-bottom: 1px dotted;
+	cursor: help;
+}
+
+mark {
+	padding-left: .2em;
+	padding-right: .2em;
+
+	// Addresses styling not present in IE6/7/8/9.
+	background: map-get($brand-colors, primary);
+	color: color-adjust(map-get($brand-colors, primary), 100%);
+}
+
+dfn {
+	// Addresses styling not present in S5, Chrome.
+	font-style: italic;
+}
+
+sub,
+sup {
+	// Prevents `sub` and `sup` affecting `line-height` in all browsers. gist.github.com/413930
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+sup {
+	top: -0.5em;
+}
+
+sub {
+	bottom: -0.25em;
+}

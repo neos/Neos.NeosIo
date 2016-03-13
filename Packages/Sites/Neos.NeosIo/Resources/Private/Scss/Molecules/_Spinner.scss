@@ -1,0 +1,35 @@
+/**
+ * Spinner (Displays a loading animation)
+ */
+
+.spinner {
+	position: relative;
+	display: inline-block;
+	width: 31px;
+	height: 7px;
+	vertical-align: middle;
+	text-align: center;
+}
+.spinner--invert {}
+
+.spinner__dot {
+	display: inline-block;
+	width: 7px;
+	height: 7px;
+	vertical-align: top;
+	border-radius: 50%;
+	background: color-adjust($content-background, 20%);
+
+	animation: Pulsate 1s infinite ease-in-out;
+
+	&:first-child {
+		animation-delay: -0.16s;
+	}
+	&:last-child {
+		animation-delay: .16s;
+	}
+
+	.spinner--invert > & {
+		background: color-adjust($base-text-color, 100%);
+	}
+}

@@ -1,0 +1,111 @@
+/**
+ * Typographic utilities
+ */
+
+/*
+ * Centers the text.
+ */
+@mixin u-alignCenter() {
+	text-align: center;
+}
+.u-alignCenter {
+	@include u-alignCenter();
+}
+
+/*
+ * Aligns the text to the right boundary.
+ */
+@mixin u-alignRight() {
+	text-align: $end;
+}
+.u-alignRight {
+	@include u-alignRight();
+}
+
+/*
+ * Aligns the text to the left boundary.
+ */
+@mixin u-alignLeft() {
+	text-align: $start;
+}
+.u-alignLeft {
+	@include u-alignLeft();
+}
+
+/*
+ * Reduces the font-size to the smallest value.
+ */
+@mixin u-tinyText() {
+	font-size: rs($base-font-size - 3, $unit: rem);
+}
+.u-tinyText {
+	@include u-tinyText();
+}
+
+/*
+ * Enlarges the font-size to the smallest value.
+ */
+@mixin u-largeText() {
+	font-size: rs($base-font-size + 6, $unit: rem);
+}
+.u-largeText {
+	@include u-largeText();
+}
+
+/*
+ * Break strings/text if it exceeds the boundaries of their container.
+ */
+@mixin u-textBreak() {
+	word-wrap: break-word;
+	hyphens: auto;
+}
+.u-textBreak {
+	@include u-textBreak();
+}
+
+/*
+ * Inverts the text on the element and it's siblings.
+ */
+@mixin u-invertText() {
+	&,
+	h1, h2, h3,
+	h4, h5, h6 {
+		color: color-adjust($base-text-color, 100%);
+	}
+}
+.u-invertText {
+	@include u-invertText();
+}
+
+/*
+ * Removes all standard stylings for a list element and it's siblings.
+ */
+@mixin u-resetList() {
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+}
+.u-resetList {
+	@include u-resetList();
+}
+
+/*
+ * Removes all standard stylings for an anchor/link element.
+ */
+@mixin u-linkReset() {
+	color: currentColor;
+
+	&:hover,
+	&:active,
+	&:focus {
+		text-decoration: none;
+	}
+
+	p & {
+		padding: 0;
+		margin: 0;
+	}
+}
+.u-linkReset {
+	@include u-linkReset();
+}

@@ -1,0 +1,41 @@
+/**
+ * Layout utilities
+ */
+
+/*
+ * Floats the element to the right boundary.
+ */
+@mixin u-floatRight() {
+	float: $end;
+}
+.u-floatRight {
+	@include u-floatRight();
+}
+
+/*
+ * Floats the element to the left boundary.
+ */
+@mixin u-floatLeft() {
+	float: $start;
+}
+.u-floatLeft {
+	@include u-floatLeft();
+}
+
+/*
+ * Clearfix for floated elements.
+ */
+@mixin u-cf() {
+	&:before,
+	&:after {
+		content: '';
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+}
+.u-cf,
+.u-clearfix {
+	@include u-cf();
+}

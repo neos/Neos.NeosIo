@@ -1,0 +1,28 @@
+/**
+ * Form elements
+ */
+
+/*
+ * Base styling for all labels.
+ */
+label {
+	display: block;
+	font-weight: $regular;
+	font-size: rs(14, $unit: rem);
+
+	&[for] {
+		cursor: pointer;
+	}
+}
+
+/*
+ * Base styling for all legends.
+ */
+legend {
+	display: block;
+	width: 100%;
+	padding: 0;
+	margin-bottom: rs($basic-spacing);
+	border-bottom: 1px $basic-border-style $basic-border-color;
+	font-size: rs($base-font-size + 4, $unit: rem);
+}

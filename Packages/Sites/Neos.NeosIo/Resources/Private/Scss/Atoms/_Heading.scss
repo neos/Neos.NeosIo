@@ -1,0 +1,87 @@
+/**
+ * Headings
+ */
+
+/*
+ * The base class for all headings.
+ */
+@mixin h() {
+	margin: 0;
+	color: #3b444f;
+	font-weight: $bold;
+
+	// Optimized kerning for large font sizes.
+	// Use this only on large font-sizes (f.e. headings) to avoid performance issues.
+	text-rendering: optimizeLegibility;
+}
+.h, %h {
+	@include h();
+}
+
+/*
+ * Heading modifiers
+ * Styles the heading without changing it's importance for SEO robots etc.
+ */
+@mixin h1() {
+	font-size: 3em;
+	font-weight: $thin;
+	margin-bottom: rs($half-spacing);
+
+	@extend %h;
+}
+@mixin h2() {
+	margin-top: $half-spacing+px;
+	margin-bottom: $half-spacing+px !important; // !important because of substitute teacher.
+	font-size: 2em;
+	font-weight: $thin;
+
+	// In case the h2 is a sub-heading align it to it's parent heading
+	h1 + & {
+		margin-top: -($double-spacing)+px;
+		margin-bottom: $double-spacing+px !important;
+	}
+
+	@extend %h;
+}
+@mixin h3() {
+	margin-bottom: $half-spacing+px;
+	font-size: 1.5em;
+
+	@extend %h;
+}
+@mixin h4() {
+	margin-bottom: ($basic-spacing * 0.25)+px;
+	margin-bottom: ($basic-spacing * 0.5)+px;
+	font-size: 1.25em;
+
+	@extend %h;
+}
+@mixin h5() {
+	font-size: 1em;
+
+	@extend %h;
+}
+@mixin h6() {
+	font-size: 1em;
+
+	@extend %h;
+}
+
+h1, .h1 {
+	@include h1();
+}
+h2, .h2 {
+	@include h2();
+}
+h3, .h3 {
+	@include h3();
+}
+h4, .h4 {
+	@include h4();
+}
+h5, .h5 {
+	@include h5();
+}
+h6, .h6 {
+	@include h6();
+}

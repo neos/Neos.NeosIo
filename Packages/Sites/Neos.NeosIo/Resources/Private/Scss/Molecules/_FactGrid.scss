@@ -1,0 +1,26 @@
+.factsGrid {
+    padding: 0 2em;
+    margin-bottom: $double-spacing+px;
+    background: #FFF;
+    border-bottom: 1px solid $basic-border-color;
+}
+.factsGrid__item {
+    display: block;
+    color: currentColor;
+    cursor: pointer;
+    padding: $basic-spacing+px 0;
+    transition: all .3s ease;
+
+    &:hover {
+        text-decoration: none;
+        background: rgba(#000, .05);
+    }
+
+    &:first-child:hover {
+        background: linear-gradient(to left, rgba(0,0,0,0.05) 75%,rgba(0,0,0,0) 100%);
+    }
+
+    &:last-child:hover {
+        background: linear-gradient(to right, rgba(0,0,0,0.05) 75%,rgba(0,0,0,0) 100%);
+    }
+}

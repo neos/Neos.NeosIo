@@ -1,0 +1,56 @@
+/**
+ * Media
+ */
+
+/*
+ * The base class for all media elements.
+ */
+.media {
+	display: block;
+
+	@include u-cf();
+}
+
+/*
+ * The class for the floated media element.
+ */
+.media__img {
+	float: left;
+	margin-right: $double-spacing+px;
+
+	> img {
+		display: block;
+	}
+}
+
+/*
+ * Reverts the order of the elements.
+ */
+.media__img--rev {
+	float: right;
+	margin-left: $double-spacing+px;
+	margin-right: 0;
+}
+.media__img--compact {
+	margin-right: $basic-spacing+px;
+
+	&.media__img--rev {
+		margin-left: $basic-spacing+px;
+		margin-right: 0;
+	}
+}
+
+
+/*
+ * The class for the content beside the media element.
+ */
+.media__body {
+	overflow: hidden;
+	display: block;
+
+	// Removes the bottom margin of the last element.
+	&,
+	> :last-child {
+		margin-bottom: 0;
+	}
+}

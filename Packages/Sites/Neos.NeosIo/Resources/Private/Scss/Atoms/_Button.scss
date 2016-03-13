@@ -1,0 +1,90 @@
+/**
+ * Buttons
+*/
+
+/*
+ * The base class for all buttons.
+ */
+@mixin btn() {
+	display: inline-block;
+
+	// Set in em's so we can change the size of the button depending on the font-size.
+	padding: 1.3em 2.5em;
+	border: 0;
+	border-radius: $brand-border-radius;
+	cursor: pointer;
+
+	// Normalize some rules across the targeted elements (<input>, <button> and the .btn class).
+	font-weight: normal;
+	line-height: 1;
+	color: #FFF;
+	vertical-align: top;
+	transition: all $transition-duration ease;
+
+	& + & {
+		margin-left: 1em;
+	}
+
+	&,
+	&:hover,
+	&:active,
+	&:focus {
+		text-decoration: none;
+	}
+
+	&:active,
+	&:focus {
+		transform: translateY(3px);
+	}
+}
+.btn {
+	@include btn();
+}
+
+/*
+ * Set the button width to the width of it's parent element.
+ */
+@mixin btn--full() {
+	display: block;
+	text-align: center;
+
+	// The following is so that this class works properly on inputs as well as anchor tags.
+	padding-right: 0;
+	padding-left: 0;
+	width: 100%;
+}
+.btn--full {
+	@include btn--full();
+}
+
+@mixin btn--primary() {
+	background: brand('primary');
+
+	&:hover {
+		background: lighten(brand('primary'), 5%);
+	}
+}
+.btn--primary {
+	@include btn--primary();
+}
+@mixin btn--secondary() {
+	background: brand('secondary');
+
+	&:hover {
+		background: lighten(brand('secondary'), 5%);
+	}
+}
+.btn--secondary {
+	@include btn--secondary();
+}
+@mixin btn--bright() {
+	background: #FFF;
+	color: brand('primary');
+
+	&:hover {
+		opacity: .8;
+	}
+}
+.btn--bright {
+	@include btn--bright();
+}
