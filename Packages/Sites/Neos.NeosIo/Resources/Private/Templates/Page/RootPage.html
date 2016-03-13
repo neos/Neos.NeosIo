@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace ts=TYPO3\TypoScript\ViewHelpers}
+<html>
+<head>
+	<f:section name="stylesheets">
+		<link href="{f:uri.resource(path: 'Styles/Main.css', package: 'Neos.NeosIo')}" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	</f:section>
+	<f:section name="headScripts">
+		<script src="{f:uri.resource(path: 'JavaScript/Modernizr.min.js', package: 'Neos.NeosIo')}"></script>
+	</f:section>
+</head>
+<body>
+<f:section name="body">
+	<f:render partial="SiteHeader.html" arguments="{_all}" />
+
+	<section class="keyVisual">
+		<div class="keyVisual__contents u-alignCenter u-invertText">
+			<f:render partial="BrandLogo.html" />
+			<br />
+
+			<div data-component="SentenceSwitcher" data-id="sub" style="height: 65px;">
+				<h2 id="sub"></h1>
+				<div style="display: none;" data-sentenceSwitcher__sentence>A content editing platform for professionals.</div>
+				<div style="display: none;" data-sentenceSwitcher__sentence>A extensible editing platform for awesome people.</div>
+				<div style="display: none;" data-sentenceSwitcher__sentence>Content editing like you've never seen before.</div>
+				<div style="display: none;" data-sentenceSwitcher__sentence>Cloud ready out of the box.</div>
+			</div>
+			<a href="" class="btn btn--primary">Take the tour</a>
+			<span class="textCircle">or</span>
+			<a href="" class="btn btn--secondary">Explore the demo now!</a>
+			<br />
+
+			<span class="keyVisual__microText">Read the <a href="">Documentation</a> of the current version 2.1</span>
+		</div>
+		<img src="{f:uri.resource(path: 'DummyContents/Keyvisual.jpg', package: 'Neos.NeosIo')}" class="keyVisual__img" alt="">
+	</section>
+
+	<main class="content" role="main">
+		{content.main -> f:format.raw()}
+	</main>
+</f:section>
+<f:section name="bodyScripts">
+	<script src="{f:uri.resource(path: 'JavaScript/Bundle.min.js', package: 'Neos.NeosIo')}" async></script>
+</f:section>
+</body>
+</html>
