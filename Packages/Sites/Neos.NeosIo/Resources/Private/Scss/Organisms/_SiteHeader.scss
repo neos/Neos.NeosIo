@@ -69,6 +69,21 @@
 		pointer-events: all;
 	}
 
+	// Adjust the position for the last item.
+	li:last-child > & {
+		right: 0;
+		left: auto;
+		transform: translateY(-10px);
+
+		&:after {
+			left: 92%;
+		}
+	}
+
+	li:last-child:hover > & {
+		transform: translateY(0);
+	}
+
 	> li {
 		> a {
 			&:hover {
