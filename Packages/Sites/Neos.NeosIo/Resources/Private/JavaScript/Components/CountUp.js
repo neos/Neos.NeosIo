@@ -1,33 +1,72 @@
 import {component} from '@reduct/component';
 import propTypes from '@reduct/nitpick';
-import CountUp from 'countup';
-
-const easingFn = function (t, b, c, d) {
-	const ts = (t /= d) * t;
-	const tc = ts * t;
-
-	return b + c * (tc * ts + -5 * ts * ts + 10 * tc + -10 * ts + 5 * t);
-};
+import raf from 'raf';
 
 @component({
-	from: propTypes.number.isRequired,
-	to: propTypes.number.isRequired,
-	id: propTypes.string.isRequired
+	to: propTypes.number.isRequired
 })
 export default class CountUpComponent {
 	constructor() {
-		const {id, to} = this.props;
-		const options = {
-			useEasing: true,
-			easingFn,
-			useGrouping: true,
-			separator: ',',
-			decimal: '.',
-			prefix: '',
-			suffix: ''
-		};
-		const instance = new CountUp(id, this.props.from, to, 0, 12, options);
+		raf(function tick() {
+			this.evaluateViewState();
+			raf(tick.bind(this));
+		}.bind(this));
+	}
 
-		setTimeout(() => instance.start(), 200);
+	getInitialState() {
+		return {
+			isAnimating: false
+		};
+	}
+
+	evaluateViewState() {
+		const isInViewPort = this.isElementInViewport();
+		const {isAnimating} = this.state;
+
+		if (isInViewPort && !isAnimating) {
+			this.animate();
+		}
+	}
+
+	isElementInViewport() {
+		const el = this.el;
+		const rect = el.getBoundingClientRect();
+
+		return (
+			rect.top >= 0 &&
+			rect.left >= 0 &&
+			rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+			rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+		);
+	}
+
+	animate() {
+		const {to} = this.props;
+		const {el} = this;
+
+		// Prevent the loops in the rAF.
+		this.setState({
+			isAnimating: true
+		});
+
+		let delay = 0;
+		let count = to * 0.5;
+
+		function ease() {
+			count += 1;
+
+			if (count > 30) {
+				delay += 5;
+			}
+
+			if (count < to) {
+				el.innerHTML = count;
+				setTimeout(ease, delay);
+			} else {
+				el.innerHTML = to;
+			}
+		}
+
+		ease();
 	}
 }
