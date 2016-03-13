@@ -79,7 +79,11 @@
 }
 @mixin btn--bright() {
 	background: #FFF;
-	color: brand('primary');
+	color: currentColor;
+
+	.u-invertText & {
+		color: $base-text-color;
+	}
 
 	&:hover {
 		opacity: .8;
