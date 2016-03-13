@@ -3,13 +3,11 @@ import propTypes from '@reduct/nitpick';
 import debounce from 'lodash.debounce';
 
 @component({
-	scrollPoint: propTypes.number.isRequired,
-	className: propTypes.string.isRequired,
-	removeClassOnScrollDecrease: propTypes.bool.isRequired
+	scrollClasses: propTypes.object.isRequired
 })
 export default class ScrollClassToggler {
 	constructor() {
-		const {removeClassOnScrollDecrease} = this.props;
+
 		const handler = debounce(() => {
 			const currentScrollPos = window.scrollY;
 			const lastScrollPos = this.state.currentScrollPos;
@@ -18,11 +16,7 @@ export default class ScrollClassToggler {
 				currentScrollPos
 			});
 
-			if (currentScrollPos < lastScrollPos && removeClassOnScrollDecrease) {
-				this.setClassName('remove');
-			} else {
-				this.evaluateState();
-			}
+			this.evaluateState(currentScrollPos, lastScrollPos);
 		});
 
 		window.addEventListener('scroll', handler);
@@ -40,14 +34,22 @@ export default class ScrollClassToggler {
 		};
 	}
 
-	evaluateState() {
-		const {currentScrollPos} = this.state;
-		const method = currentScrollPos > this.props.scrollPoint ? 'add' : 'remove';
+	evaluateState(currentScrollPos = 0, lastScrollPos = 0) {
+		const {scrollClasses} = this.props;
 
-		this.setClassName(method);
-	}
+		Object.keys(scrollClasses).forEach(key => {
+			const targetScrollPoint = Math.abs(key);
+			const data = scrollClasses[key];
+			const {className, removeOnScrollDecrease} = data;
+			const method = (
+				// General check and add / remove logic.
+				currentScrollPos > targetScrollPoint &&
 
-	setClassName(method = 'add') {
-		this.el.classList[method](this.props.className);
+				// In case `removeOnScrollDecrease` was set to `true`, remove the class on scroll up.
+				!(currentScrollPos < lastScrollPos && removeOnScrollDecrease === true)
+			) ? 'add' : 'remove';
+
+			this.el.classList[method](className);
+		});
 	}
 }

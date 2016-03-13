@@ -13,6 +13,7 @@
 
 		> a {
 			display: block;
+			transition: all .3s ease;
 
 			@include u-linkReset();
 		}
@@ -61,6 +62,10 @@
 
 		> a {
 			display: inline-block;
+
+			&:hover {
+				color: brand('primary');
+			}
 		}
 	}
 }

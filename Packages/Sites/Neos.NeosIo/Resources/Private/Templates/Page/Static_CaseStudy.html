@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace ts=TYPO3\TypoScript\ViewHelpers}
+<html>
+<body>
+<f:section name="body">
+	<f:render partial="SiteHeader.html" arguments="{_all}" />
+
+	<section class="keyVisual" style="background: #f30;">
+		<img src="https://www.optivo.com/_Resources/Static/Packages/Espi.Optivo/images/infographics/customer-intelligence--animated.svg" class="keyVisual__bg">
+	</section>
+
+	<main class="content" role="main">
+		<f:render partial="Breadcrumb.html" arguments="{_all}" />
+
+		<section class="stage stage--bright">
+			<div class="stage__contents">
+				<div class="u-alignCenter">
+					<h1>Optivo</h1>
+					<h2>Professional content management for<br />professional email marketeers.</h2>
+
+					<hr>
+
+					<h2>About the company</h2>
+					<p>
+						Yota came to us to design an innovative and efficient way of talking to their customers.<br />
+						The Yota app will ship pre-installed on their devices and will provide access to all services the company offers to their customers on the go,<br />
+						from checking an account balance and data usage to constructing custom plans and chatting with support.
+					</p>
+
+					<hr>
+
+					<img src="https://sfcd.com/assets/img/yota/target.jpg" alt="">
+				</div>
+			</div>
+		</section>
+		<section class="stage stage--bright">
+			<div class="stage__contents">
+				<h4>Features</h4>
+				<p>
+					We wanted to design an app that closed followed the Material Design guidelines, but at the same time belonged to the Yota family.<br />
+					We decided to combine Yota’s iconic look with the bright, cheerful appearance of Android Lollipop.<br />
+					At the time, Material Design had just been announced and we couldn’t wait to apply its novel and purposeful iconography,<br />
+					animation, and interface design principles on a real project.
+				</p>
+			</div>
+		</section>
+
+		<!-- {content.main -> f:format.raw()} -->
+	</main>
+
+	<f:render partial="SiteFooter.html" arguments="{_all}" />
+</f:section>
+</body>
+</html>

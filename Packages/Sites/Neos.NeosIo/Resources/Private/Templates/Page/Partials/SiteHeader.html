@@ -2,12 +2,10 @@
 	class="siteHeader"
 	role="banner"
 	data-component="ScrollClassToggler"
-	data-scrollPoint="200"
-	data-className="siteHeader--hidden"
-	data-removeClassOnScrollDecrease="true"
+	data-scrollClasses='{"200":{"className": "siteHeader--hidden","removeOnScrollDecrease": true}, "350":{"className": "siteHeader--shaded"}}'
 	>
-	<a class="siteHeader__brandLogo" href="/" title="Home">
-		<f:render partial="BrandLogo.html" arguments="{size: 'small'}" />
+	<a href="/" title="Home" style="color: currentColor;">
+		<f:render partial="BrandLogo.html" arguments="{size: 'small' className: 'siteHeader__brandLogo'}" />
 	</a>
 
 	{parts.menu -> f:format.raw()}

@@ -11,15 +11,26 @@
 	height: 80px;
 	transition: all .5s ease;
 	background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
+	color: #FFF;
 }
 .siteHeader--hidden {
 	transform: translateY(-100%);
+}
+.siteHeader--shaded {
+	height: 55px;
+	background: brand('primary');
 }
 .siteHeader__brandLogo {
 	position: absolute;
 	top: 50%;
 	left: $double-spacing+px;
 	transform: translateY(-50%);
+	fill: currentColor;
+	transition: all .3s ease;
+
+	.siteHeader--shaded & {
+		height: 35px;
+	}
 }
 .siteHeader__nav {
 	position: absolute;
@@ -35,7 +46,6 @@
 		margin-left: $double-spacing+px;
 
 		> a {
-			color: #FFF;
 			padding: 5px 0;
 		}
 	}
@@ -54,6 +64,8 @@
 	opacity: 0;
 	transition: all .3s ease;
 	pointer-events: none;
+	color: $base-text-color;
+	box-shadow: 0 0 3px rgba(#000, .2);
 
 	&:after {
 		position: absolute;
