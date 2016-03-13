@@ -35,10 +35,15 @@
 	font-size: 2em;
 	font-weight: $thin;
 
-	// In case the h2 is a sub-heading align it to it's parent heading
+	// In case the h2 is a sub-heading align it to the heading before.
 	h1 + & {
 		margin-top: -($double-spacing)+px;
 		margin-bottom: $double-spacing+px !important;
+	}
+
+	// In case the h2 has a pre sub-heading attached to it, align it to the heading after.
+	.h--introSub + & {
+		margin-top: 0;
 	}
 
 	@extend %h;
@@ -58,6 +63,7 @@
 }
 @mixin h5() {
 	font-size: 1em;
+	font-weight: $thin;
 
 	@extend %h;
 }
@@ -84,4 +90,12 @@ h5, .h5 {
 }
 h6, .h6 {
 	@include h6();
+}
+
+// Intro sub-headline
+.h--introSub {
+	margin-bottom: -4px;
+	margin-top: 4px;
+	font-size: 14px;
+	opacity: .6;
 }

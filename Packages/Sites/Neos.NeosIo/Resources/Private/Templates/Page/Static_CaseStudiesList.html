@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace ts=TYPO3\TypoScript\ViewHelpers}
+<html>
+<body>
+<f:section name="body">
+	<f:render partial="SiteHeader.html" arguments="{_all}" />
+
+	<section class="keyVisual">
+		<img src="{f:uri.resource(path: 'DummyContents/Keyvisual.jpg', package: 'Neos.NeosIo')}" class="keyVisual__img" alt="">
+	</section>
+
+	<main class="content" role="main">
+		<f:render partial="Breadcrumb.html" arguments="{_all}" />
+
+		<section class="stage stage--bright">
+			<div class="stage__contents">
+				<div class="u-alignCenter">
+					<h1>Case studies</h1>
+					<p>
+						Over 50 million users visit websites made with Neos each month.<br />
+						Below you can find a broad range of case studies of companies and sites having trust in Neos.<br />
+						Do you have a case study to share? Send us your materials to <a href="">cases@neos.io</a>.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<a class="stage" href="#">
+			<span class="stage__contents u-invertText">
+				<h5 class="h--introSub">Sports & E-Commerce</h5>
+				<h2>Corekites</h2>
+				<p>
+					Core kites sells kites and accessoires to professionals around the globe. <br />
+					This multi-language site includes highly customized product pages, a store locator and <br />a representation of the corporate sponsored team.
+				</p>
+				<span href="" class="btn btn--primary">See what happened behind the scenes</span>
+			</span>
+			<img src="http://corekites-302e.kxcdn.com/_Resources/Persistent/f21614bce8c1659e8cf6041050ba7484e7dd94a4/Ripper2_Home-Header_2560x1600_neu.jpg" class="stage__bg">
+		</a>
+		<a class="stage" href="#">
+			<span class="stage__contents u-invertText">
+				<h5 class="h--introSub">Sports</h5>
+				<h2>BVB - Fanabteilung Buchung</h2>
+				<p>
+					The german first division (Bundesliga) football club's fan department created their booking site with Neos.<br />
+					With a total of 81.359 fans visiting their stadium for each game, they have one of the largest fan bases in western germany.
+				</p>
+				<span href="" class="btn btn--primary">See what happened behind the scenes</span>
+			</span>
+			<img src="https://images.unsplash.com/photo-1452778374718-046c69a5c02f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=710e421bd824db30f8437313a4d86009" class="stage__bg">
+		</a>
+		<a class="stage" href="#">
+			<span class="stage__contents u-invertText">
+				<h5 class="h--introSub">Telecommunication</h5>
+				<h2>1&amp;1 corporate website</h2>
+				<p>
+					One of europes largest telecommunication and network companies build their site with Neos.<br />
+					See how they developed it and how choosing Neos helped their business.
+				</p>
+				<span href="" class="btn btn--primary">See what happened behind the scenes</span>
+			</span>
+			<img src="{f:uri.resource(path: 'DummyContents/Livingroom.jpg', package: 'Neos.NeosIo')}" class="stage__bg">
+		</a>
+		<a class="stage" href="#">
+			<span class="stage__contents u-invertText">
+				<h5 class="h--introSub">Tourism & Traveling</h5>
+				<h2>Hospitality Alliance</h2>
+				<p>
+					The international hotel brand Hospitality Alliance includes more than 60 hotels germany, austria and swiss.
+					The site includes a user focused booking integration and prices and contents which are sourced from the official Hospitality Alliance API.
+				</p>
+				<span href="" class="btn btn--primary">See what happened behind the scenes</span>
+			</span>
+			<img src="https://images.unsplash.com/photo-1442406964439-e46ab8eff7c4?crop=entropy&fit=crop&fm=jpg&h=975&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1925" class="stage__bg">
+		</a>
+
+
+
+		<section class="stage stage--bright">
+			<div class="stage__contents">
+				<div class="g">
+					<div class="gi u-w1/2">
+						<h3>Download Neos now →</h3>
+						<p>
+							Using and developing Neos is easier than ever! <br />Get started now!
+						</p>
+
+						<a href="" class="btn btn--primary">Get started with neos</a>
+					</div>
+						<div class="gi u-w1/2">
+							<h3>Share your case study →</h3>
+							<p>
+								Do you have a case study to share? <br />Send us your materials to <a href="">cases@neos.io</a>.
+							</p>
+
+							<a href="" class="btn btn--primary">Share your case study now</a>
+						</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- {content.main -> f:format.raw()} -->
+	</main>
+
+	<f:render partial="SiteFooter.html" arguments="{_all}" />
+</f:section>
+</body>
+</html>

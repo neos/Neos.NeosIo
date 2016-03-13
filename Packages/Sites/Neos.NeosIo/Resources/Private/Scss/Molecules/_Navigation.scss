@@ -13,7 +13,7 @@
 
 		> a {
 			display: block;
-			
+
 			@include u-linkReset();
 		}
 	}
@@ -34,8 +34,33 @@
 .nav--fit {
 	display: table;
 	width: 100%;
-	
+
 	> li {
 		display: table-cell;
+	}
+}
+
+.nav--breadcrumb {
+	font-size: rs(14);
+	line-height: $basic-spacing+px;
+	padding: $half-spacing+px $double-spacing+px;
+
+	> li {
+		&:first-child {
+			font-weight: $bold;
+		}
+
+		&:after {
+			content: ' » ';
+			padding: 0 3px;
+			font-weight: $regular;
+		}
+		&:last-child:after {
+			display: none;
+		}
+
+		> a {
+			display: inline-block;
+		}
 	}
 }

@@ -1,7 +1,10 @@
 .stage {
+	display: block;
 	position: relative;
 	overflow: hidden;
 	background: #000;
+
+	@include u-linkReset();
 }
 .stage--bright {
 	background: #FFF;
@@ -20,8 +23,19 @@
 	max-height: none;
 	opacity: .8;
 	transform: translateX(-50%) translateY(-50%);
+	transition: opacity .8s ease, transform 1s ease;
+
+	// In case the whole stage is a link (f.e. in the case study list), adjust it's background.
+	a.stage > & {
+		opacity: .3;
+	}
+	a.stage:hover > & {
+		opacity: .5;
+		transform: translateX(-50%) translateY(-50%) scale(1.01);
+	}
 }
 .stage__contents {
+	display: block;
 	position: relative;
 	z-index: 1;
 	padding: 7.5vw $double-spacing+px;
