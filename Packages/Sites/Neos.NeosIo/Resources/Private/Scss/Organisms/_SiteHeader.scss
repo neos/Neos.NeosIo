@@ -8,46 +8,110 @@
 	left: 0;
 	z-index: z('siteHeader');
 	width: 100%;
-	height: 80px;
+	height: 45px;
 	transition: all .5s ease;
 	background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
 	color: #FFF;
+
+	@include mq('medium') {
+		height: 80px;
+	}
 }
 .siteHeader--hidden {
-	transform: translateY(-100%);
+	//
+	// Currently disabled on small screens since the opened state for the siteNav
+	// is breaking when hiding the siteHeader.
+	//
+	@include mq('medium') {
+		transform: translateY(-100%);
+	}
 }
 .siteHeader--shaded {
-	height: 55px;
-	background: brand('primary');
+	@include mq('medium') {
+		height: 55px;
+		background: brand('primary');
+	}
 }
 .siteHeader__brandLogo {
 	position: absolute;
 	top: 50%;
-	left: $double-spacing+px;
+	left: 1.5em;
 	transform: translateY(-50%);
+	height: 30px;
+	width: auto;
 	fill: currentColor;
 	transition: all .3s ease;
 
-	.siteHeader--shaded & {
-		height: 35px;
+	@include mq('medium') {
+		left: $double-spacing+px;
+		height: 50px;
+
+		.siteHeader--shaded & {
+			height: 35px;
+		}
+	}
+}
+.siteHeader__navToggler {
+	position: absolute;
+	top: 50%;
+	right: 1.5em;
+	z-index: 1;
+	transform: translateY(-50%);
+
+	@include mq('medium') {
+		display: none;
+		visibility: hidden;
 	}
 }
 .siteHeader__nav {
-	position: absolute;
-	top: 50%;
-	right: 3em;
-	transform: translateY(-50%);
+	position: fixed;
+	top: 0;
+	right: 0;
+	transform: translateX(100%);
+	width: 300px;
+	height: 100%;
+	background: #FFF;
 	font-weight: $bold;
 	font-size: .95em;
 	line-height: $basic-spacing+px;
+	color: $base-text-color;
+	transition: .5s ease all;
+
+	@include mq('medium') {
+		position: absolute;
+		top: 50%;
+		right: 3em;
+		transform: translateY(-50%);
+		width: auto;
+		height: auto;
+		color: currentColor;
+		background: 0;
+	}
 
 	> li {
 		position: relative;
-		margin-left: $double-spacing+px;
+		width: 100%;
+		border-bottom: 1px solid $basic-border-color;
+
+		@include mq('medium') {
+			display: inline-block;
+			margin-left: $double-spacing+px;
+			border: 0;
+			width: auto;
+		}
 
 		> a {
-			padding: 5px 0;
+			padding: $half-spacing+px $basic-spacing+px;
+
+			@include mq('medium') {
+				padding: 5px 0;
+			}
 		}
+	}
+}
+.siteNav--visible {
+	@include mq('small') {
+		transform: translateX(0);
 	}
 }
 .siteHeader__dropDownNav {

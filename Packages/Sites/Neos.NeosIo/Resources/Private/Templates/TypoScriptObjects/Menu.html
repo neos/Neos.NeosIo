@@ -2,7 +2,7 @@
 {namespace ts=TYPO3\TypoScript\ViewHelpers}
 
 <nav role="navigation">
-	<ul {attributes -> f:format.raw()}>
+	<ul {attributes -> f:format.raw()} id="siteNav">
 		<f:for each="{items}" as="item">
 			<li class="{f:if(condition: '{item.state} != \'normal\'', then: ' active')}">
 				<f:if condition="{item.subItems}">

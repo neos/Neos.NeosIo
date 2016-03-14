@@ -80,6 +80,7 @@ $half-spacing: $basic-spacing / 2 !default;
 // Basic layout width (in pixels) - will be set on the '.siteWrapper' class
 // The value is wrapped in the relative-size function which converts pixels into em's.
 $layout-width: 80% !default;
+$layout-min-width: rs(320) !default;
 $layout-max-width: rs(1200) !default;
 
 // If this boolean is set to 'true' the '.siteWrapper' class will be horizontally centered.
@@ -111,6 +112,10 @@ $is-responsive: true !default;
 // Breakpoints, each breakpoint is accessible via the mq('myKey') @mixin
 // and will output the written rules inside a media-query declaration.
 $mq-breakpoints: (
+	small: (
+		query: 'screen and (max-width: 599px)',
+		classNameShorthand: 's'
+	),
 	medium: (
 		query: 'screen and (min-width: 600px)',
 		classNameShorthand: 'm'

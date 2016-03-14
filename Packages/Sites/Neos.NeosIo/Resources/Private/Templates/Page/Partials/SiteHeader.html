@@ -8,5 +8,15 @@
 		<f:render partial="BrandLogo.html" arguments="{size: 'small' className: 'siteHeader__brandLogo'}" />
 	</a>
 
+	<a class="hamburger siteHeader__navToggler"
+		href="#siteNav"
+		data-component="ClassToggler"
+		data-activeClass="hamburger--active"
+		data-targetSelector="#siteNav"
+		data-targetActiveClass="siteNav--visible">
+		<div class="hamburger__line hamburger__line--top"></div>
+		<div class="hamburger__line"></div>
+		<div class="hamburger__line hamburger__line--bottom"></div>
+	</a>
 	{parts.menu -> f:format.raw()}
 </header>

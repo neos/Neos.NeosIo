@@ -9,6 +9,13 @@
 
 	@include u-invertText();
 
+	@include mq('small') {
+		.gi {
+			text-align: center;
+			margin-bottom: 2em;
+		}
+	}
+
 	> :last-child {
 		margin-bottom: 0;
 	}
