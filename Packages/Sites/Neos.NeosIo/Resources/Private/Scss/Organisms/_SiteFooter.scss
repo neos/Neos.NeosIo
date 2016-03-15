@@ -4,10 +4,15 @@
 
 .siteFooter {
 	padding: $double-spacing+px;
-	background: brand('teritary');
+	background: brand('primary');
 	font-size: rs(14);
 
-	@include u-invertText();
+	p a {
+		color: currentColor;
+	}
+	hr {
+		background: linear-gradient(to right, rgba(#FFF, 0) 0%, rgba(#FFF, .25) 50%, rgba(#FFF, 0) 100%);
+	}
 
 	@include mq('small') {
 		.gi {
@@ -25,7 +30,7 @@
 }
 .siteFooter__nav {
 	line-height: $basic-spacing+px;
-	color: lighten(brand('teritary'), 40%);
+	color: lighten(brand('primary'), 40%);
 
 	a:hover {
 		color: #FFF;
