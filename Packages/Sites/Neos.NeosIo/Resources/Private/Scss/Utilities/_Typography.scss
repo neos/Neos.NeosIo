@@ -43,6 +43,16 @@
 }
 
 /*
+ * Less important text.
+ */
+@mixin u-microCopy() {
+	opacity: .5;
+}
+.u-microCopy {
+	@include u-microCopy();
+}
+
+/*
  * Enlarges the font-size to the smallest value.
  */
 @mixin u-largeText() {

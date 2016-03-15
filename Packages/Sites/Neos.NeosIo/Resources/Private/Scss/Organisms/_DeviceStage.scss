@@ -4,11 +4,25 @@
 	background: #FFF;
 }
 .deviceStage__device {
-	display: block;
-	margin: 0 auto -6em;
+	position: relative;
+	width: 80%;
+	height: 40vw;
+	margin: 0 auto;
+	padding: 4vw 2.9vw 0;
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	> img,
+	> video,
+	> iframe {
+		width: 100%;
+		height: 100%;
+		margin-bottom: 0;
+	}
 }
 .deviceStage__contents {
-	padding: $double-spacing+px;
+	padding: $double-spacing+px $double-spacing+px 0;
 
 	> :last-child {
 		margin-bottom: 0;
