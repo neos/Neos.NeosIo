@@ -7,12 +7,16 @@ import raf from 'raf';
 })
 export default class CountUpComponent {
 	constructor() {
+		let isAnimating = false;
+
 		raf(function tick() {
 			const isInViewPort = this.isElementInViewport();
-			const {isAnimating} = this.state;
 
-			if (isInViewPort && !isAnimating) {
-				this.animate();
+			if (isInViewPort && isAnimating === false) {
+				// Prevent loops in the rAF.
+				isAnimating = true;
+
+				setTimeout(() => this.animate(), 300);
 			} else {
 				raf(tick.bind(this));
 			}
@@ -40,12 +44,6 @@ export default class CountUpComponent {
 	animate() {
 		const {to} = this.props;
 		const {el} = this;
-
-		// Prevent the loops in the rAF.
-		this.setState({
-			isAnimating: true
-		});
-
 		let delay = 0;
 		let count = to * 0.5;
 
