@@ -8,8 +8,7 @@
 
 	<section class="keyVisual keyVisual--large">
 		<div class="keyVisual__contents u-alignCenter u-invertText">
-			<f:render partial="BrandLogo.html" />
-			<br />
+			{content.keyVisual -> f:format.raw()}
 
 			<div data-component="SentenceSwitcher" data-id="sub" style="height: 65px;">
 				<h2 id="sub"></h1>

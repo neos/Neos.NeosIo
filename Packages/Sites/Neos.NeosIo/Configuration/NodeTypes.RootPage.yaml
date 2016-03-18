@@ -1,9 +1,17 @@
 ###########################################
-# Basic Root NodeType
+# The root page should ideally only be used
+# on 1st level pages.
 ###########################################
 
 'Neos.NeosIo:RootPage':
-  superTypes: ['TYPO3.Neos.NodeTypes:Page']
+  superTypes:
+      'TYPO3.Neos.NodeTypes:Page': TRUE
+  childNodes:
+    keyVisual:
+      position: 'before main'
+      type: 'TYPO3.Neos:ContentCollection'
+    main:
+      type: 'TYPO3.Neos:ContentCollection'
   ui:
     label: 'Root Page'
     icon: 'icon-home'

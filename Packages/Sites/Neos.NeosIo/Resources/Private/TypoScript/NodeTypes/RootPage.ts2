@@ -2,8 +2,18 @@
  * DocumentNodeTypes around the Root
  */
 
-prototype(Neos.NeosIo:RootPage.Document) < prototype(TYPO3.Neos.NodeTypes:Page.Document) {
+prototype(Neos.NeosIo:RootPage.Document) < prototype(Neos.NeosIo:DefaultPage) {
 	body {
 		templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/RootPage.html'
+
+		content {
+			keyVisual = PrimaryContent {
+				nodePath = 'keyVisual'
+			}
+
+			main = PrimaryContent {
+				nodePath = 'main'
+			}
+		}
 	}
 }
