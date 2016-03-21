@@ -1,0 +1,210 @@
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script src="https://www.amcharts.com/lib/3/gantt.js"></script>
+
+<div class="amChart" id="release-plan-chart"></div>
+<script>
+AmCharts.useUTC = true;
+var today = new Date();
+var chart = AmCharts.makeChart("release-plan-chart", {
+    "type": "gantt",
+    "theme": "light",
+    "period": "YYYY",
+    "dataDateFormat": "YYYY-MM",
+    "columnWidth": 0.65,
+    "precision": 1,
+    "valueAxis": {
+        "type": "date",
+        "autoGridCount": false,
+        "gridCount": 24,
+        "guides": [{
+            "value": today,
+            "toValue": today,
+            "lineAlpha": 1,
+            "lineThickness": 1,
+            "inside": true,
+            "labelRotation": 90,
+            "label": "Today",
+            "above": true
+        }]
+    },
+    "graph": {
+        "fillAlphas": 1,
+        "balloonText": "<b>[[task]]</b>: [[open]]-[[value]]"
+    },
+    "rotate": true,
+    "categoryField": "version",
+    "segmentsField": "segments",
+    "colorField": "color",
+    "startDateField": "start",
+    "endDateField": "end",
+    "dataProvider": [
+        {
+            "version": "Neos 2.0",
+            "segments": [{
+                "start": "2015-08",
+                "end": "2016-08",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2016-08",
+                "end": "2017-08",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }, {
+            "version": "Neos 2.1",
+            "segments": [{
+                "start": "2015-12",
+                "end": "2016-12",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2016-12",
+                "end": "2017-11",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }, {
+            "version": "Neos 2.2",
+            "segments": [{
+                "start": "2016-04",
+                "end": "2017-04",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2017-04",
+                "end": "2018-04",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }, {
+            "version": "Neos 2.3 LTS",
+            "segments": [{
+                "start": "2016-08",
+                "end": "2018-08",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2018-08",
+                "end": "2019-08",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }, {
+            "version": "Neos 3.0",
+            "segments": [{
+                "start": "2016-12",
+                "end": "2017-12",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2017-12",
+                "end": "2018-12",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }, {
+            "version": "Neos 3.1",
+            "segments": [{
+                "start": "2017-04",
+                "end": "2018-04",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2018-04",
+                "end": "2019-04",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }, {
+            "version": "Neos 3.2",
+            "segments": [{
+                "start": "2017-08",
+                "end": "2018-08",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2018-08",
+                "end": "2019-08",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }, {
+            "version": "Neos 3.3 LTS",
+            "segments": [{
+                "start": "2017-12",
+                "end": "2019-12",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2019-12",
+                "end": "2020-12",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }, {
+            "version": "Neos 4.0",
+            "segments": [{
+                "start": "2018-04",
+                "end": "2019-04",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2019-04",
+                "end": "2020-04",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }, {
+            "version": "Neos 4.1",
+            "segments": [{
+                "start": "2018-08",
+                "end": "2019-08",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2019-08",
+                "end": "2020-08",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }, {
+            "version": "Neos 4.2",
+            "segments": [{
+                "start": "2018-12",
+                "end": "2019-12",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2019-12",
+                "end": "2020-12",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }
+    ],
+    "valueScrollbar": {
+        "autoGridCount": true,
+        "color": "#555555"
+    },
+    "chartCursor": {
+        "cursorColor": "#00b5ff",
+        "valueBalloonsEnabled": false,
+        "cursorAlpha": 0,
+        "valueLineAlpha": 0.5,
+        "valueLineBalloonEnabled": true,
+        "valueLineEnabled": true,
+        "zoomable": false,
+        "valueZoomable": true
+    },
+    "export": {
+        "enabled": true,
+        "divId": "exportContainer",
+        "position": "bottom-right",
+        "fileName": "typo3-support-times",
+        "menu": ["PNG", "PDF", "SVG"]
+    }
+});
+</script>
