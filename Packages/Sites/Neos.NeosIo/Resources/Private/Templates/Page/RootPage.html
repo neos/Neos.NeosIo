@@ -14,26 +14,9 @@
 	}" />
 
 	<main class="content" role="main">
-		<div class="factsGrid">
-			<a class="factsGrid__item u-w1/2 u-wm1/4">
-				Installations<br>
-				<b class="u-brandColor-primary" data-component="CountUp" data-to="1230081">
-					1,230,081
-				</b>
-			</a>
-			<a class="factsGrid__item u-w1/2 u-wm1/4">
-				Contributers<br>
-				<b class="u-brandColor-primary">100</b>
-			</a>
-			<a class="factsGrid__item u-w1/2 u-wm1/4">
-				Last Commit<br>
-				<b class="u-brandColor-primary">Today 11:03</b>
-			</a>
-			<a class="factsGrid__item u-w1/2 u-wm1/4">
-				Next Event<br>
-				<b class="u-brandColor-primary">Codesprint Frankfurt 12. - 16.09</b>
-			</a>
-		</div>
+		<f:render partial="FactsGrid.html" arguments="{_all}" />
+
+		{content.main -> f:format.raw()}
 
 		<section class="stage stage--bright">
 			<div class="stage__contents">
@@ -204,8 +187,6 @@
 				</div>
 			</div>
 		</section>
-
-		<!-- {content.main -> f:format.raw()} -->
 	</main>
 
 	<f:render partial="SiteFooter.html" arguments="{_all}" />

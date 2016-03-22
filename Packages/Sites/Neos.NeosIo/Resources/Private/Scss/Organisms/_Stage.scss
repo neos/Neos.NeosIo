@@ -24,11 +24,10 @@
 	min-height: 100%;
 	max-width: none;
 	max-height: none;
-	opacity: .8;
 	transform: translateX(-50%) translateY(-50%);
 	transition: opacity .8s ease, transform 1s ease;
 
-	// In case the whole stage is a link (f.e. in the case study list), adjust it's background.
+	// In case the whole stage is a link (f.e. in the case study list), adjust it's background to create a minimal hover effect.
 	a.stage > & {
 		opacity: .4;
 	}
@@ -36,6 +35,18 @@
 		opacity: .7;
 		transform: translateX(-50%) translateY(-50%) scale(1.01);
 	}
+}
+.stage__bg--shade-20 {
+	opacity: .8;
+}
+.stage__bg--shade-40 {
+	opacity: .6;
+}
+.stage__bg--shade-60 {
+	opacity: .4;
+}
+.stage__bg--shade-80 {
+	opacity: .2;
 }
 .stage__contents {
 	display: block;

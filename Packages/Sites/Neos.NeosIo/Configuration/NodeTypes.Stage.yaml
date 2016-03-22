@@ -1,0 +1,74 @@
+###########################################
+# Mixin which is responsible for all options
+# regarding the document keyvisual.
+###########################################
+
+'Neos.NeosIo:Stage':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+  childNodes:
+    'contents':
+      type: 'TYPO3.Neos:ContentCollection'
+  ui:
+    label: 'Stage'
+    icon: 'icon-tasks'
+    inlineEditable: TRUE
+    inspector:
+      groups:
+        content:
+          label: 'Content'
+          position: 1
+        background:
+          label: 'Background'
+          position: 2
+  properties:
+    'isContentTextInverted':
+      type: boolean
+      defaultValue: false
+      ui:
+        reloadIfChanged: TRUE
+        label: 'Invert Text-Color'
+        inspector:
+          group: 'content'
+    'backgroundColor':
+      type: string
+      defaultValue: 'bright'
+      ui:
+        label: 'Background color'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'background'
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              'bright':
+                label: 'Bright'
+              'primary':
+                label: 'Primary'
+    'backgroundImage':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Background image'
+        inspector:
+          group: 'background'
+    'backgroundShadePercentage':
+      type: string
+      defaultValue: '0'
+      ui:
+        label: 'Background shading'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'background'
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              '0':
+                label: 'None'
+              '20':
+                label: '20%'
+              '40':
+                label: '40%'
+              '60':
+                label: '60%'
+              '80':
+                label: '80%'
