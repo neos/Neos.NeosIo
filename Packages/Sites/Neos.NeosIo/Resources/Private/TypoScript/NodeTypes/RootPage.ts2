@@ -1,7 +1,3 @@
-/**
- * DocumentNodeTypes around the Root
- */
-
 prototype(Neos.NeosIo:RootPage.Document) < prototype(Neos.NeosIo:DefaultPage) {
 	body {
 		templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/RootPage.html'
@@ -15,5 +11,13 @@ prototype(Neos.NeosIo:RootPage.Document) < prototype(Neos.NeosIo:DefaultPage) {
 				nodePath = 'main'
 			}
 		}
+
+		keyVisualImage = ${q(documentNode).property('keyVisualImage')}
+		keyVisualImageSrcSet = TYPO3.TypoScript:Template {
+			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Partials/KeyVisual.html'
+			sectionName = 'imageSrcSet'
+			keyVisualImage = ${q(documentNode).property('keyVisualImage')}
+		}
+		isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
 	}
 }

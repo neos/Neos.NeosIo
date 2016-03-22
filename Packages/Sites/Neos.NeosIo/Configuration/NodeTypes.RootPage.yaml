@@ -6,10 +6,8 @@
 'Neos.NeosIo:RootPage':
   superTypes:
       'TYPO3.Neos.NodeTypes:Page': TRUE
+      'Neos.NeosIo:KeyVisualMixin': TRUE
   childNodes:
-    'keyVisual':
-      position: 'before main'
-      type: 'TYPO3.Neos:ContentCollection'
     'main':
       type: 'TYPO3.Neos:ContentCollection'
   ui:

@@ -5,13 +5,13 @@
 <body>
 <f:section name="body">
 	<f:render partial="SiteHeader.html" arguments="{_all}" />
-
-	<section class="keyVisual keyVisual--large">
-		<div class="keyVisual__contents u-alignCenter u-invertText">
-			{content.keyVisual -> f:format.raw()}
-		</div>
-		<img src="{f:uri.resource(path: 'DummyContents/Keyvisual.jpg', package: 'Neos.NeosIo')}" class="keyVisual__bg" alt="">
-	</section>
+	<f:render partial="KeyVisual.html" arguments="{
+		contents: content.keyVisual,
+		isKeyVisualContentsInverted: isKeyVisualContentsInverted,
+		keyVisualImage: keyVisualImage,
+		keyVisualImageSrcSet: keyVisualImageSrcSet
+		size: 'large'
+	}" />
 
 	<main class="content" role="main">
 		<div class="factsGrid">
