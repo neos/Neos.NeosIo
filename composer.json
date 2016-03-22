@@ -6,6 +6,12 @@
         "vendor-dir": "Packages/Libraries",
         "bin-dir": "bin"
     },
+    "repositories": [
+      {
+        "type": "git",
+        "url": "ssh://git@github.com/dfeyer/Neos.MarketPlace.git"
+      }
+    ],
     "require": {
       "typo3/neos": "~2.1.0",
       "typo3/neos-nodetypes": "~2.1.0",
@@ -21,7 +27,8 @@
 
       "flowpack/elasticsearch-contentrepositoryadaptor": "dev-master#aa93f190a3df01d4358a287a50204eb5bd98330e",
 
-      "flownative/google-cloudstorage": "dev-master"
+      "flownative/google-cloudstorage": "dev-master",
+      "neos/marketplace": "dev-master"
     },
     "require-dev": {
        "typo3/buildessentials": "~3.0",
