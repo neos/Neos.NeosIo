@@ -1,10 +1,10 @@
 {namespace media=TYPO3\Media\ViewHelpers}
 
-<section class="keyVisual {f:if(condition: size, then: 'keyVisual--{size}' , else: '')} ">
+<section class="keyVisual {f:if(condition: size, then: 'keyVisual--{size}')} ">
 	<div class="
 	keyVisual__contents
 	u-alignCenter
-	{f:if(condition: isKeyVisualContentsInverted, then: 'u-invertText' , else: '')}
+	{f:if(condition: isKeyVisualContentsInverted, then: 'u-invertText')}
 	">
 		{contents -> f:format.raw()}
 	</div>
