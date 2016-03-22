@@ -1,11 +1,12 @@
-#
-# Mixin which is responsible for all options regarding the document keyvisual.
-#
+###########################################
+# Mixin which is responsible for all options
+# regarding the document keyvisual.
+###########################################
+
 'Neos.NeosIo:KeyVisualMixin':
   abstract: TRUE
   childNodes:
     'keyVisual':
-      position: 'before main'
       type: 'TYPO3.Neos:ContentCollection'
       constraints:
         nodeTypes:
