@@ -37,6 +37,11 @@
 	&:focus {
 		transform: translateY(3px);
 	}
+
+	//
+	// Edge case for the neos backend.
+	//
+	a { color: currentColor; }
 }
 .btn {
 	@include btn();
