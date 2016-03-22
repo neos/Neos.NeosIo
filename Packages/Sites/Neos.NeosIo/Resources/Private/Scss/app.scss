@@ -8,7 +8,7 @@
 // Foundation Components
 @import "../Requirements/Foundation/scss/normalize", "foundation", "Partials/orbit";
 
-@import "Partials/AmChart", 
+@import "Partials/AmChart",
 "Partials/submenu",
 "Partials/section-menu",
 "Partials/mailchimp",
@@ -672,5 +672,22 @@ body {
 			display: inline-block;
 			font-style: italic;
 		}
+	}
+}
+
+// -- Discourse Topic List Plugin -- //
+
+.discourse-connector.topic-list {
+	width: 100%;
+
+	th[data-sort] {
+		cursor:pointer;
+	}
+
+	th.sorting-asc:after {
+		content: " \2191";
+	}
+	th.sorting-desc:after {
+		content: " \2193";
 	}
 }

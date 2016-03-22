@@ -100,6 +100,10 @@ prototype(RobertLemke.Plugin.Blog:Post) {
 	}
 }
 
+prototype(KDambekalns.Neos.DiscourseConnector:TopicsList) {
+	templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/DiscourseTopicsList.html'
+}
+
 include: TypoScriptObjects.ts2
 include: NodeTypes.ts2
 include: NodeTypes/*.ts2
