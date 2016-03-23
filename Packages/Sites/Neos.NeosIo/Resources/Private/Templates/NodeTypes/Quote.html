@@ -1,0 +1,28 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace media=TYPO3\Media\ViewHelpers}
+
+<div class="flag" itemscope itemtype="http://schema.org/Person">
+	<div class="flag__image">
+		<f:if condition="{authorAvatar}">
+			<f:then>
+				<img src="{media:uri.image(asset: authorAvatar, maximumWidth: 128, maximumHeight: 128)}" itemprop="image" class="avatar">
+			</f:then>
+			<f:else>
+				<f:if condition="{neos:rendering.inBackend()}">
+					<img src="{f:uri.resource(package: 'TYPO3.Neos', path: 'Images/dummy-image.svg')}" itemprop="image" class="avatar" style="width: 128px; height:128px;">
+				</f:if>
+			</f:else>
+		</f:if>
+	</div>
+	<div class="flag__body">
+		<h2>
+			„
+			{neos:contentElement.editable(property: 'quote', tag: 'span')}
+			“
+		</h2>
+
+		<h5 class="u-microCopy" itemprop="name">
+			{neos:contentElement.editable(property: 'author', tag: 'span')}
+		</h5>
+	</div>
+</div>

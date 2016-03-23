@@ -13,16 +13,14 @@
 		{contents -> f:format.raw()}
 	</div>
 	<f:if condition="{backgroundImage}">
-		<f:then>
-			<img
-				alt=""
-				class="
-					stage__bg
-					{f:if(condition: '{backgroundShadePercentage} != \'0\'', then: 'stage__bg--shade-{backgroundShadePercentage}')}
-				"
-				src="{media:uri.image(asset: backgroundImage, maximumWidth: 1280, maximumHeight: 600)}"
-				srcset="{backgroundImageSrcSet}">
-		</f:then>
+		<img
+			alt=""
+			class="
+				stage__bg
+				{f:if(condition: '{backgroundShadePercentage} != \'0\'', then: 'stage__bg--shade-{backgroundShadePercentage}')}
+			"
+			src="{media:uri.image(asset: backgroundImage, maximumWidth: 1280, maximumHeight: 600)}"
+			srcset="{backgroundImageSrcSet}">
 	</f:if>
 </section>
 
