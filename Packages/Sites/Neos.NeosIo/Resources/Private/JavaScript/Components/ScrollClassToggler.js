@@ -7,7 +7,6 @@ import debounce from 'lodash.debounce';
 })
 export default class ScrollClassToggler {
 	constructor() {
-
 		const handler = debounce(() => {
 			const currentScrollPos = window.scrollY;
 			const lastScrollPos = this.state.currentScrollPos;
