@@ -39,6 +39,14 @@
         label: 'Invert Text-Color'
         inspector:
           group: 'content'
+    'isContentExtraPadded':
+      type: boolean
+      defaultValue: false
+      ui:
+        reloadIfChanged: TRUE
+        label: 'Create more padding around the contents'
+        inspector:
+          group: 'content'
     'backgroundColor':
       type: string
       defaultValue: 'bright'
@@ -56,6 +64,10 @@
                 label: 'Dark'
               'primary':
                 label: 'Primary'
+              'secondary':
+                label: 'Secondary'
+              'teritary':
+                label: 'Teritary'
     'backgroundImage':
       type: TYPO3\Media\Domain\Model\ImageInterface
       ui:
@@ -66,7 +78,7 @@
       type: string
       defaultValue: '0'
       ui:
-        label: 'Background shading'
+        label: 'Background image shading'
         reloadIfChanged: TRUE
         inspector:
           group: 'background'
