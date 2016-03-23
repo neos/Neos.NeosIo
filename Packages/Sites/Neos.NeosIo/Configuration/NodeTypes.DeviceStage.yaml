@@ -9,11 +9,18 @@
   childNodes:
     'contents':
       type: 'TYPO3.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': FALSE
+          'TYPO3.Neos.NodeTypes:Headline': TRUE
+          'TYPO3.Neos.NodeTypes:Text': TRUE
+          'Neos.NeosIo:Button': TRUE
     'deviceContents':
       type: 'TYPO3.Neos:ContentCollection'
       constraints:
-        '*': FALSE
-        'TYPO3.Neos.NodeTypes:Image': FALSE
+        nodeTypes:
+          '*': FALSE
+          'TYPO3.Neos.NodeTypes:Image': TRUE
   ui:
     label: 'Stage (with device media)'
     icon: 'icon-desktop'

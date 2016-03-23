@@ -9,6 +9,14 @@
   childNodes:
     'contents':
       type: 'TYPO3.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': FALSE
+          'TYPO3.Neos.NodeTypes:TwoColumn': TRUE
+          'TYPO3.Neos.NodeTypes:ThreeColumn': TRUE
+          'TYPO3.Neos.NodeTypes:Text': TRUE
+          'TYPO3.Neos.NodeTypes:Headline': TRUE
+          'Neos.NeosIo:Button': TRUE
   ui:
     label: 'Stage'
     icon: 'icon-tasks'
