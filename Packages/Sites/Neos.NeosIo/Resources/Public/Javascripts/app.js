@@ -60,5 +60,8 @@ $(document).ready(function(){
 			});
 		});
 	});
+
+	// Init table sorting if needed
+	$('table.sortable-stupidtable').stupidtable();
 });
 

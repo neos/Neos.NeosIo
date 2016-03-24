@@ -27,6 +27,7 @@ module.exports = function(grunt) {
 						'Resources/Public/Javascripts/vendor/zepto.smoothScroll.js',
 						'Resources/Public/Javascripts/vendor/imagesloaded.pkgd.min.js',
 						'Resources/Public/Javascripts/vendor/wookmark.js',
+						'Resources/Public/Javascripts/vendor/stupidtable.min.js',
 						'Resources/Public/Javascripts/custommagellan.js',
 						'Resources/Public/Javascripts/customtopbar.js',
 						'Resources/Public/Javascripts/app.js'

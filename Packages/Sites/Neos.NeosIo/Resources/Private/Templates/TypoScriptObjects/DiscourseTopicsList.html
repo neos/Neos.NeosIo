@@ -1,0 +1,21 @@
+<table class="discourse-connector topic-list sortable-stupidtable">
+    <thead>
+    <tr>
+        <th data-sort="string-ins">Project Title</th>
+        <th data-sort="int">Views</th>
+        <th data-sort="int">Likes</th>
+        <th data-sort="int">Comments</th>
+    </tr>
+    </thead>
+    <tbody>
+    <f:for each="{topics}" as="topic">
+        <tr>
+            <td><a href="{baseUri}/t/{topic.slug}/{topic.id}" target="_blank">{topic.title}</a></td>
+            <td>{topic.views}</td>
+            <td>{topic.like_count}</td>
+            <td>{topic.posts_count}</td>
+        </tr>
+    </f:for>
+    </tbody>
+</table>
+<p>Projects taken from the <a href="{baseUri}/c/{category.slugPath}">{category.name}</a> category on our <a href="{baseUri}">discussion forum</a>.</p>
