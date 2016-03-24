@@ -10,6 +10,11 @@
   childNodes:
     'main':
       type: 'TYPO3.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': FALSE
+          'Neos.NeosIo:Stage': TRUE
+          'Neos.NeosIo:DeviceStage': TRUE
   ui:
     label: 'Root Page'
     icon: 'icon-home'
