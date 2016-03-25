@@ -49,10 +49,10 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
 				templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/SubMenu.html'
 				entryLevel = 2
 				maximumLevels = 2
-				attributes.class = 'nav'
-				normal.attributes.class = 'nav-item'
-				active.attributes.class = 'nav-item active'
-				current.attributes.class = 'nav-item active'
+				attributes.class = 'nav nav--stacked'
+				normal.attributes.class = ''
+				active.attributes.class = 'active'
+				current.attributes.class = 'active'
 				filter = 'TYPO3.Neos:Document, !Neos.NeosIo:Reference'
 			}
 			breadcrumb = BreadcrumbMenu {

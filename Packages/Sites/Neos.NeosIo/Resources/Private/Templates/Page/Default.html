@@ -15,21 +15,25 @@
 <body>
 <f:section name="body">
 	<f:render partial="SiteHeader.html" arguments="{_all}" />
+	<f:render partial="KeyVisual.html" arguments="{
+		contents: content.keyVisual,
+		isKeyVisualContentsInverted: isKeyVisualContentsInverted,
+		keyVisualImage: keyVisualImage,
+		keyVisualImageSrcSet: keyVisualImageSrcSet
+	}" />
 
-	<div class="bg-white">
-		<div class="container p-b-md p-t-md">
-			<div class="row">
-				<div class="col-md-9">
-					<nav>
-						{parts.breadcrumb -> f:format.raw()}
-					</nav>
-					<main class="content" role="main">
-						<section>
-							{content.main -> f:format.raw()}
-						</section>
-					</main>
-				</div>
-				<aside class="col-md-3">
+	<nav>
+		{parts.breadcrumb -> f:format.raw()}
+	</nav>
+	<div class="stage stage--bright">
+		<div class="stage__contents">
+			<div class="g">
+				<main class="gi u-w9/12" role="main">
+					<section>
+						{content.main -> f:format.raw()}
+					</section>
+				</main>
+				<aside class="gi u-w3/12">
 					<nav>
 						<div class="h5">{parts.sectionTitle}</div>
 						{parts.subMenu -> f:format.raw()}
@@ -39,26 +43,7 @@
 		</div>
 	</div>
 
-	<footer class="m-t-md">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-6">
-					<h1>Neos CMS</h1>
-				</div>
-				<div class="col-sm-6">
-					<div class="row">
-						<div class="col-md-12 hidden-xs text-right">
-							<a href="https://github.com/neos" title="github.com/neos"><i class="fa fa-2x fa-fw fa-github text-inverse" alt="Github" ></i></a>
-							<a href="https://twitter.com/NeosCMS" title="twitter.com/NeosCMS"><i class="fa fa-2x fa-fw fa-twitter text-inverse" alt="Twitter"></i></a>
-							<a href="https://www.facebook.com/NeosCMS" title="facebook.com/NeosCMS"><i class="fa fa-2x fa-fw fa-facebook text-inverse" alt="Facebook"></i></a>
-							<a href="https://google.com/+NeosCMS" title="google.com/+NeosCMS"><i class="fa fa-2x fa-fw fa-google-plus text-inverse" alt="Google+"></i></a>
-							<a href="https://youtube.com/c/NeosCMS" title="youtube.com/c/NeosCMS"><i class="fa fa-2x fa-fw fa-youtube text-inverse" alt="YouTube"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<f:render partial="SiteFooter.html" arguments="{_all}" />
 </f:section>
 <f:section name="bodyScripts">
 	<script src="{f:uri.resource(path: 'JavaScript/Bundle.min.js', package: 'Neos.NeosIo')}" async></script>
