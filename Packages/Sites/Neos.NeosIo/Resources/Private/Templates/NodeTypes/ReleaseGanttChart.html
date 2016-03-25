@@ -41,6 +41,19 @@ var chart = AmCharts.makeChart("release-plan-chart", {
     "endDateField": "end",
     "dataProvider": [
         {
+            "version": "Neos 1.2",
+            "segments": [{
+                "start": "2014-12",
+                "end": "2016-04",
+                "color": "#00b5ff",
+                "task": "Official Release, bugfixes"
+            }, {
+                "start": "2016-04",
+                "end": "2017-04",
+                "color": "#5FD0FF",
+                "task": "Security updates"
+            }]
+        }, {
             "version": "Neos 2.0",
             "segments": [{
                 "start": "2015-08",
@@ -62,7 +75,7 @@ var chart = AmCharts.makeChart("release-plan-chart", {
                 "task": "Official Release, bugfixes"
             }, {
                 "start": "2016-12",
-                "end": "2017-11",
+                "end": "2017-12",
                 "color": "#5FD0FF",
                 "task": "Security updates"
             }]
