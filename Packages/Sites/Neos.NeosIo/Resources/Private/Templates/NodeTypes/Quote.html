@@ -1,7 +1,7 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
 {namespace media=TYPO3\Media\ViewHelpers}
 
-<div class="flag" itemscope itemtype="http://schema.org/Person">
+<blockquote class="flag u-mb0" itemscope itemtype="http://schema.org/Person">
 	<div class="flag__image">
 		<f:if condition="{authorAvatar}">
 			<f:then>
@@ -19,8 +19,8 @@
 			„{neos:contentElement.editable(property: 'quote', tag: 'span')}“
 		</h2>
 
-		<h5 class="u-microCopy" itemprop="name">
-			{neos:contentElement.editable(property: 'author', tag: 'span')}
-		</h5>
+		<footer class="u-microCopy" itemprop="name">
+			{neos:contentElement.editable(property: 'author', tag: 'h5')}
+		</footer>
 	</div>
-</div>
+</blockquote>
