@@ -1,23 +1,28 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
 {namespace ts=TYPO3\TypoScript\ViewHelpers}
-<ul{attributes -> f:format.raw()}>
-	<f:for each="{items}" as="item">
-		<li class="nav-item{f:if(condition: '{item.state} != \'normal\'', then: ' active')}{f:if(condition: item.subItems, then: ' dropdown')}">
-			<f:if condition="{item.subItems}">
-				<f:then>
-					<neos:link.node node="{item.node}" class="nav-link dropdown-toggle" data="{toggle: 'dropdown'}" additionalAttributes="{role: 'button', aria-haspopup: 'true', aria-expanded: 'false'}">{item.node.label} <span class="caret"></span></neos:link.node>
-					<ul class="dropdown-menu">
-						<f:for each="{item.subItems}" as="subItem">
-							<li class="dropdown-item{f:if(condition: '{subItem.state} != \'normal\'', then: ' active')}">
-								<neos:link.node node="{subItem.node}" class="nav-link">{subItem.node.label}<f:if condition="{subItem.state} == 'current'"> <span class="sr-only">(current)</span></f:if></neos:link.node>
-							</li>
-						</f:for>
-					</ul>
-				</f:then>
-				<f:else>
-					<neos:link.node node="{item.node}" class="nav-link">{item.node.label}<f:if condition="{item.state} == 'current'"> <span class="sr-only">(current)</span></f:if></neos:link.node>
-				</f:else>
-			</f:if>
-		</li>
-	</f:for>
-</ul>
+
+<nav role="navigation">
+	<ul {attributes -> f:format.raw()} id="siteNav">
+		<f:for each="{items}" as="item">
+			<li class="{f:if(condition: '{item.state} != \'normal\'', then: ' active')}">
+				<f:if condition="{item.subItems}">
+					<f:then>
+						<neos:link.node node="{item.node}" additionalAttributes="{role: 'button', aria-haspopup: 'true', aria-expanded: 'false'}">
+							{item.node.label}
+						</neos:link.node>
+						<ul class="nav nav--stacked siteHeader__dropDownNav">
+							<f:for each="{item.subItems}" as="subItem">
+								<li class="{f:if(condition: '{subItem.state} != \'normal\'', then: ' active')}">
+									<neos:link.node node="{subItem.node}">{subItem.node.label}</neos:link.node>
+								</li>
+							</f:for>
+						</ul>
+					</f:then>
+					<f:else>
+						<neos:link.node node="{item.node}">{item.node.label}</neos:link.node>
+					</f:else>
+				</f:if>
+			</li>
+		</f:for>
+	</ul>
+</nav>

@@ -1,0 +1,26 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace ts=TYPO3\TypoScript\ViewHelpers}
+
+<!DOCTYPE html>
+<html>
+<body>
+<f:section name="body">
+	<f:render partial="SiteHeader.html" arguments="{_all}" />
+	<f:render partial="KeyVisual.html" arguments="{
+		contents: content.keyVisual,
+		isKeyVisualContentsInverted: isKeyVisualContentsInverted,
+		keyVisualImage: keyVisualImage,
+		keyVisualImageSrcSet: keyVisualImageSrcSet
+		size: 'large'
+	}" />
+
+	<main class="content" role="main">
+		<f:render partial="FactsGrid.html" arguments="{_all}" />
+
+		{content.main -> f:format.raw()}
+	</main>
+
+	<f:render partial="SiteFooter.html" arguments="{_all}" />
+</f:section>
+</body>
+</html>

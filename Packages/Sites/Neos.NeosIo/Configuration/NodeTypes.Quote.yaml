@@ -1,0 +1,32 @@
+###########################################
+# Displays an quote with an avatar of the
+# given author.
+###########################################
+
+'Neos.NeosIo:Quote':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+  ui:
+    label: 'Quote'
+    icon: 'icon-quote-left'
+    inlineEditable: TRUE
+    inspector:
+      groups:
+        'author':
+          label: 'Author'
+  properties:
+    'quote':
+      type: string
+      defaultValue: 'Lorem ipsum dolor sit...'
+      inlineEditable: TRUE
+    'author':
+      type: string
+      defaultValue: 'Max Mustermann, Founder of Neos'
+      inlineEditable: TRUE
+    'authorAvatar':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Author avatar'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'author'

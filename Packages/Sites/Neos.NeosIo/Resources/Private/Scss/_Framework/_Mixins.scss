@@ -1,0 +1,89 @@
+// Creates an css arrow as on http://cssarrowplease.com/.
+//
+// For example:
+// .selector:after {
+// 		position: absolute;
+// 		top: -5px;
+// 		left: 50%;
+// 		margin-left: -2.5px;
+// 		@include cssArrow(5px, #fff, bottom);
+// }
+@mixin cssArrow($triangleSize, $triangleColor, $triangleDirection) {
+	@if (not ($triangleDirection == "top") and not ($triangleDirection == "bottom") and not ($triangleDirection == "left") and not ($triangleDirection == "right")) {
+		@warn 'Argument $triangleDirection	of cssTriangle() should be either "top", "bottom", "left" or "right" to work appropriately';
+	}
+
+	content: "";
+	display: block;
+	width: 0;
+	height: 0;
+	border: solid $triangleSize;
+
+	@if ($triangleDirection == "bottom") {
+		border-color: $triangleColor transparent transparent transparent;
+	}
+	@if ($triangleDirection == "top") {
+		border-color: transparent transparent $triangleColor transparent;
+	}
+	@if ($triangleDirection == "right") {
+		border-color: transparent transparent transparent $triangleColor;
+	}
+	@if ($triangleDirection == "left") {
+		border-color: transparent $triangleColor transparent transparent;
+	}
+}
+
+// Adds vendor prefixed styling for HTML input placeholders.
+//
+// For example:
+// .textInput {
+// 		@include placeholder() {
+//						color: #ccc;
+//			};
+// }
+@mixin placeholder() {
+	&::-webkit-input-placeholder {
+		@content;
+	}
+
+	&:-moz-placeholder {
+		@content;
+	}
+
+	&::-moz-placeholder {
+		@content;
+	}
+
+	&:-ms-input-placeholder {
+		@content;
+	}
+
+	&:placeholder {
+		@content;
+	}
+}
+
+// Shorthand for embedding different webfont families.
+// Useful for webfonts where each weight is delivered under a separate font-family name.
+//
+// For example:
+// .selector {
+// 		@include webFont('ff-din', 'condensed-light');
+// }
+// .selector2 {
+// 		@include webFont('ff-din', 'light-italic');
+// }
+@mixin webFont($group, $id: regular) {
+	@if($webFonts) {
+		@each $font in $webFonts {
+			@if($group == map-get($font, group) and $id == map-get($font, id)) {
+				font-family: map-get($font, font);
+				font-weight: map-get($font, weight);
+
+				@if(map-get($font, style) != normal) {
+					font-style: map-get($font, style);
+				}
+			}
+		}
+	}
+}

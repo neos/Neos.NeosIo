@@ -1,0 +1,152 @@
+// =============================================================================
+// Project settings
+// =============================================================================
+// Reading direction of this project, if set to 'rtl' - texts, labels
+// and the grid will be aligned to the right side of the document.
+$direction: ltr !default;
+
+// Base directory for all images.
+$image-base-path: '../Images/' !default;
+
+// =============================================================================
+// Brand related variables
+// =============================================================================
+// All brand colors, for each of these keys, a utility color-class will be generated.
+// f.e. `.u-brandColor-primary { color: #0097d7; }`
+$brand-colors: (
+	primary: #0097d7,
+	secondary: #15C050,
+	teritary: #34363C
+)	!default;
+
+// The main brand font-family
+$brand-font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !default;
+
+// If the CD makes use of rounded corners, use this variable for consistency.
+$brand-border-radius: 3px !default;
+
+// If you want to use the image-replacement technique for your brand logo,
+// set the 'image' key to the image-name of your brand logo e.g.:
+// $brand-logo: (image: 'logo.png', width: 200px, height: 200px);
+//
+// Be aware that you need to specify the dimensions of your logo, otherwise it won't be displayed.
+$brand-logos: (
+	white: (
+		image: 'neos-logo.png',
+		width: 330px,
+		height: 160px
+	)
+) !default;
+
+// =============================================================================
+// Base Typesetting
+// =============================================================================
+// The webfont font-family stack of the project. Each Sass-Map represents a different font-family with it's unique style and weight.
+// F.e.
+// $webFonts:
+// (group: 'ff-din', id: 'condensed-light', font: ('FF-Din W01 Condensed Light', san-serif ), weight: 200, style: normal),
+// (group: 'ff-din', id: 'light-italic', font: ('FF-Din W01 Light Italic', san-serif ), weight: 200, style: italic);
+// After defining your font-stack, you can access your webfonts via the 'webFont' @mixin.
+$webFonts: false;
+
+// Font-family stack variables to standardize the font-setting
+$sans-font-family: $brand-font-family !default;
+$serif-font-family: Georgia, 'Times New Roman', Times, serif !default;
+$mono-font-family: Menlo, Monaco, Consolas, 'Courier New', monospace !default;
+
+// The font-weights below are used to emphasize written words instead of numbers in your Sass.
+$bold: 700 !default;
+$regular: 400 !default;
+$light: 300 !default;
+$thin: 100 !default;
+
+// Base font settings which will be set on the '<body>' element,
+// '$base-font-size' and '$base-line-height' are pixel values.
+$base-font-size: 16 !default;
+$base-line-height: 26 !default;
+$base-font-family: $sans-font-family !default;
+$base-font-weight: $regular !default;
+$base-text-color: #656a71 !default;
+
+// Typographic spacings (in pixels), these default values will
+// output a basic vertical rythm based on your '$base-line-height'.
+$basic-spacing: $base-line-height !default;
+$double-spacing: $basic-spacing * 2 !default;
+$half-spacing: $basic-spacing / 2 !default;
+
+// =============================================================================
+// Layout
+// =============================================================================
+// Basic layout width (in pixels) - will be set on the '.siteWrapper' class
+// The value is wrapped in the relative-size function which converts pixels into em's.
+$layout-width: 80% !default;
+$layout-min-width: rs(320) !default;
+$layout-max-width: rs(1200) !default;
+
+// If this boolean is set to 'true' the '.siteWrapper' class will be horizontally centered.
+$centered-layout: true !default;
+
+// Inner spacing for all grid-items.
+$column-gutter: 20px !default;
+
+// The background which will be set on the <body> element.
+$body-background: #fff !default;
+
+// Used to generate some colors, this doesn't have any direct effect on
+// the .siteContent container or it's background.
+$content-background: #fff !default;
+
+// Z-Index Masterlist, describe your z-index'es here, and use the z() function in your Sass files.
+// F.e: z-index: z('myElement');
+$zIndexes: (
+	siteHeader: 1000
+) !default;
+
+// =============================================================================
+// Responsive related variables
+// =============================================================================
+// Switching this boolean to 'false' will result in fewer width classes,
+// generated from the following Sass-Map.
+$is-responsive: true !default;
+
+// Breakpoints, each breakpoint is accessible via the mq('myKey') @mixin
+// and will output the written rules inside a media-query declaration.
+$mq-breakpoints: (
+	small: (
+		query: 'screen and (max-width: 599px)',
+		classNameShorthand: 's'
+	),
+	medium: (
+		query: 'screen and (min-width: 650px)',
+		classNameShorthand: 'm'
+	),
+	large: (
+		query: 'screen and (min-width: 1200px)',
+		classNameShorthand: 'l'
+	)
+) !default;
+
+// Default unit for media-query mixins(min-screen(), max-screen(), screen()) - it must include a digit e.g.:
+// $mq-unit: 1em; or $mq-unit: 1px;
+$mq-unit: 1px !default;
+
+// =============================================================================
+// Design related variables
+// =============================================================================
+// Transition duration.
+$transition-duration: .3s;
+
+// Default color for all anchors and links.
+$link-color: map-get($brand-colors, primary) !default;
+
+// Default color for all buttons.
+$btn-color: map-get($brand-colors, primary) !default;
+
+// Mood and action colors used on buttons, alerts and other actions.
+$color-info: map-get($brand-colors, primary) !default;
+$color-positive: #8CD700 !default;
+$color-negative: #D75200 !default;
+
+// Default styling for horizontal rules and bordered elements like tables.
+$basic-border-color: color-adjust($content-background, 10%) !default;
+$basic-border-style: solid !default;

@@ -1,0 +1,93 @@
+// Returns the path of an Image asset.
+//
+// For example:
+// .selector {
+// 		background-image: image-url('logo.png');
+// }
+@function image-url($imagePath) {
+	@if (type-of($imagePath) != 'string') {
+		@warn 'Argument $imagePath of image-url() must be a string';
+	}
+
+	@return url(#{$image-base-path + $imagePath});
+}
+
+// Calculates em's based on pixel values.
+//
+// For example:
+// .selector {
+// 		font-size: rs(19, 16);
+// }
+@function rs($target-size, $context: $base-font-size, $unit: em) {
+	@if (type-of($target-size) != 'number') {
+		@warn 'Argument $target-size of rs() must be a number';
+	}
+
+	@if (type-of($context) != 'number') {
+		@warn 'Argument $context of rs() must be a number';
+	}
+
+	@if (type-of($unit) != 'string') {
+		@warn 'Argument $unit of rs() must be a string';
+	}
+
+	@if (not ($unit == 'em' or $unit == 'rem')) {
+		@warn 'Argument $unit of rs() must be either "em" or "rem"';
+	}
+
+	@return #{$target-size/$context}#{$unit};
+}
+
+// Text direction check
+//
+// Checks the reading-direction of the site based on the '$direction' variable and sets the correct $start and $end variables
+//
+$direction: ltr !default;
+$start: left !default;
+$end: right !default;
+@if $direction == rtl {
+	$start: right;
+	$end: left;
+}
+
+// Adjusts a color based on the lightness which is passed as a second parameter, this function was written by @necolas(https://github.com/necolas/).
+//
+// For example:
+// .selector {
+// 		background: color-adjust(#0097d7, 100%);
+// }
+@function color-adjust($color, $contrast: 100%) {
+	@if (type-of($color) != 'color') {
+		@warn 'Argument $color of color-adjust() must be a color';
+	}
+
+	@if (type-of($contrast) != 'number') {
+		@warn 'Argument $contrast of color-adjust() must be a number';
+	}
+
+	@if (lightness($color) > 50) {
+		@return darken($color, $contrast);
+	} @else {
+		@return lighten($color, $contrast);
+	}
+}
+
+// Returns the z-index value for the given key.
+//
+// For example:
+// .selector {
+// 		z-index: z('myElement');
+// }
+@function z($key) {
+	@return map-get($zIndexes, $key);
+}
+
+// Returns a brand-color for the given key.
+//
+// For example:
+// .selector {
+//		color: brand('myElement');
+// }
+@function brand($key) {
+	@return map-get($brand-colors, $key);
+}

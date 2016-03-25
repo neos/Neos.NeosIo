@@ -1,0 +1,39 @@
+// Wraps rules around the desired media query context.
+//
+// For example:
+// @include min-screen(width) {}						 - shortcut for @media screen and (min-width ...)
+// @include max-screen(width) {}						 - shortcut for @media screen and (max-width ...)
+// @include screen(min-width, max-width) {}	- shortcut for @media screen and (min-width ...) and (max-width ...)
+// @include hdpi {}													- devices with high-density screens
+@mixin screen($res-min, $res-max) {
+	@media screen and (min-width: if(unitless($res-min), $res-min*$mq-unit, $res-min)) and (max-width: if(unitless($res-max), $res-max*$mq-unit, $res-max)) {
+		@content;
+	}
+}
+
+@mixin max-screen($res) {
+	@media screen and (max-width: if(unitless($res), $res*$mq-unit, $res)) {
+		@content;
+	}
+}
+
+@mixin min-screen($res) {
+	@media screen and (min-width: if(unitless($res), $res*$mq-unit, $res)) {
+		@content;
+	}
+}
+
+@mixin hdpi {
+	@media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+		@content;
+	}
+}
+
+// Shorthand to get a media query registered in the $mq-breakpoints sass-map.
+@mixin mq($key) {
+	$mq-definition: map-get($mq-breakpoints, $key);
+
+	@media #{map-get($mq-definition, 'query')} {
+		@content;
+	}
+}

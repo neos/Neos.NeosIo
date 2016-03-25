@@ -1,0 +1,37 @@
+/**
+ * Form
+ */
+
+/*
+ * The base class for all forms.
+ */
+.form {
+	margin-bottom: rs($basic-spacing, $unit: rem);
+}
+.form__item {
+	margin-bottom: rs($half-spacing, $unit: rem);
+}
+
+/*
+ * Display a `<form>` and all it's content in a horizontal order.
+ */
+.form--inline {
+	label,
+	button,
+	input,
+	select,
+	textarea,
+	.form__item {
+		display: inline-block;
+		margin-bottom: 0;
+		vertical-align: middle;
+	}
+
+	.form__item {
+		margin-#{$end}: 1em;
+	}
+
+	label {
+		margin-#{$end}: .3em;
+	}
+}

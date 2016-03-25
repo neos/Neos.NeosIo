@@ -1,0 +1,8 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+
+<div>
+	<h3>{neos:contentElement.editable(property: 'title', tag: 'span')} →</h3>
+	{neos:contentElement.editable(property: 'text')}
+
+	{button -> f:format.raw()}
+</div>

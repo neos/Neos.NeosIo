@@ -1,0 +1,33 @@
+{namespace media=TYPO3\Media\ViewHelpers}
+
+<section class="keyVisual {f:if(condition: size, then: 'keyVisual--{size}')} ">
+	<div class="
+	keyVisual__contents
+	u-alignCenter
+	{f:if(condition: isKeyVisualContentsInverted, then: 'u-invertText')}
+	">
+		{contents -> f:format.raw()}
+	</div>
+
+	<f:if condition="{keyVisualImage}">
+		<f:then>
+			<img
+				alt=""
+				class="keyVisual__bg"
+				src="{media:uri.image(asset: keyVisualImage, maximumWidth: 1700, maximumHeight: 1700)}"
+				srcset="{keyVisualImageSrcSet}">
+		</f:then>
+		<f:else>
+			<img src="{f:uri.resource(path: 'Images/DefaultKeyvisual.jpg', package: 'Neos.NeosIo')}" class="keyVisual__bg">
+		</f:else>
+	</f:if>
+</section>
+
+<f:section name="imageSrcSet">
+	<f:if condition="{keyVisualImage}">
+		<media:uri.image asset="{keyVisualImage}" maximumWidth="1920" maximumHeight="1600" /> 1920w,
+		<media:uri.image asset="{keyVisualImage}" maximumWidth="1280" maximumHeight="1000" /> 1280w,
+		<media:uri.image asset="{keyVisualImage}" maximumWidth="658" maximumHeight="658" allowCropping="1" /> 658w,
+		<media:uri.image asset="{keyVisualImage}" maximumWidth="400" maximumHeight="400" allowCropping="1" /> 280w
+	</f:if>
+</f:section>

@@ -1,0 +1,35 @@
+.hamburger {
+	position: relative;
+	display: inline-block;
+	width: 24px;
+	height: 18px;
+	color: #FFF;
+}
+.hamburger--active {
+	color: $base-text-color;
+}
+
+.hamburger__line {
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	height: 2px;
+	transition: .5s ease transform;
+	border-radius: 4px;
+	background-color: currentColor;
+}
+.hamburger__line--top {
+	top: 2px;
+
+	.hamburger--active & {
+		transform: translate3d(8px, 1px, 0) rotate(45deg) scaleX(.7);
+	}
+}
+.hamburger__line--bottom {
+	top: auto;
+	bottom: 0;
+
+	.hamburger--active & {
+		transform: translate3d(8px, -1px, 0) rotate(-45deg) scaleX(.7);
+	}
+}

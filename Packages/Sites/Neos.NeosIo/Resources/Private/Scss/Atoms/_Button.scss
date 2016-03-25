@@ -1,0 +1,169 @@
+/**
+ * Buttons
+*/
+
+/*
+ * The base class for all buttons.
+ */
+@mixin btn() {
+	display: inline-block;
+
+	// Set in em's so we can change the size of the button depending on the font-size.
+	padding: 1.3em 2.5em;
+	border: 1px solid currentColor;
+	border-radius: 30px;
+	cursor: pointer;
+
+	// Normalize some rules across the targeted elements (<input>, <button> and the .btn class).
+	font-weight: normal;
+	line-height: 1;
+	color: currentColor;
+	vertical-align: top;
+	transition: all $transition-duration ease;
+	text-align: center;
+
+	& + & {
+		margin-left: 1em;
+	}
+
+	&,
+	&:hover,
+	&:active,
+	&:focus {
+		text-decoration: none;
+	}
+
+	&:active,
+	&:focus {
+		transform: translateY(3px);
+	}
+
+	//
+	// Edge case for the neos backend.
+	//
+	a { color: currentColor; }
+}
+.btn {
+	@include btn();
+}
+
+
+/*
+ * Set the button width to the width of it's parent element.
+ */
+@mixin btn--full() {
+	display: block;
+	text-align: center;
+
+	// The following is so that this class works properly on inputs as well as anchor tags.
+	padding-right: 0;
+	padding-left: 0;
+	width: 100%;
+}
+.btn--full {
+	@include btn--full();
+}
+
+/*
+ * Bordered primary button.
+ */
+@mixin btn--primary() {
+	color: brand('primary');
+	box-shadow: 0 0 8px rgba(brand('primary'), 0.15);
+
+	&:hover {
+		$hoverColor: lighten(brand('primary'), 5%);
+
+		color: $hoverColor;
+		box-shadow: 0 0 8px rgba($hoverColor, 0.3);
+	}
+}
+.btn--primary {
+	@include btn--primary();
+}
+
+/*
+ * Solid primary button.
+ */
+@mixin btn--solidPrimary() {
+	background: brand('primary');
+	border-color: brand('primary');
+	color: #FFF;
+
+	&:hover {
+		$hoverColor: lighten(brand('primary'), 5%);
+
+		background: $hoverColor;
+		border-color: $hoverColor;
+	}
+}
+.btn--solidPrimary {
+	@include btn--solidPrimary();
+}
+
+/*
+ * Bordered secondary button.
+ */
+@mixin btn--secondary() {
+	color: brand('secondary');
+	box-shadow: 0 0 8px rgba(brand('secondary'), 0.15);
+
+	&:hover {
+		$hoverColor: lighten(brand('secondary'), 5%);
+
+		color: $hoverColor;
+		box-shadow: 0 0 8px rgba($hoverColor, 0.5);
+	}
+}
+.btn--secondary {
+	@include btn--secondary();
+}
+
+/*
+ * Solid secondary button.
+ */
+@mixin btn--solidSecondary() {
+	background: brand('secondary');
+	border-color: brand('secondary');
+	color: #FFF;
+
+	&:hover {
+		$hoverColor: lighten(brand('secondary'), 5%);
+
+		background: $hoverColor;
+		border-color: $hoverColor;
+	}
+}
+.btn--solidSecondary {
+	@include btn--solidSecondary();
+}
+
+/*
+ * Bordered bright button.
+ */
+@mixin btn--bright() {
+	color: #FFF;
+
+	&:hover {
+		opacity: .8;
+	}
+}
+.btn--bright {
+	@include btn--bright();
+}
+
+/*
+ * Solid secondary button.
+ */
+@mixin btn--solidBright() {
+	background: #FFF;
+	border-color: #FFF;
+	color: currentColor;
+
+	&:hover {
+		opacity: .8;
+	}
+}
+.btn--solidBright {
+	@include btn--solidBright();
+}
