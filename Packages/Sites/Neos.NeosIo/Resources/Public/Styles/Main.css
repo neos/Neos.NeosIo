@@ -1622,6 +1622,10 @@ sub {
   padding-left: 10px;
   padding-right: 10px; }
 
+@media screen and (min-width: 650px) and (max-width: 1200px) {
+  .u-w1\/1.u-wm6\/12.u-wl3\/12.neos-contentcollection:nth-child(odd) {
+    clear: both; } }
+
 /**
  * Media
  */
@@ -2005,12 +2009,11 @@ sub {
   transform: translateX(-50%) translateY(-50%); }
 
 .keyVisual__contents {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: relative;
   z-index: 2;
-  transform: translateX(-50%) translateY(-50%);
-  width: 80%; }
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 20vw; }
 
 .deviceStage {
   position: relative;
