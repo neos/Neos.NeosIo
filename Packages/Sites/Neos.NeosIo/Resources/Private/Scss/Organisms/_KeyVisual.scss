@@ -60,10 +60,11 @@
 	transform: translateX(-50%) translateY(-50%);
 }
 .keyVisual__contents {
-	position: absolute;
-	top: 50%;
-	left: 50%;
+	// Vertical centering disabled; CSS transform blur the text since the elements get
+	// transformed into a material instead of shapes to enable GPU acceleration.
+	position: relative;
 	z-index: 2;
-	transform: translateX(-50%) translateY(-50%);
 	width: 80%;
+	margin: 0 auto;
+	padding-top: 20vw;
 }
