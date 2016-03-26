@@ -906,6 +906,9 @@ body {
     color: currentColor; }
 
 /*
+ * A basic :hover effect for all solid buttons.
+ */
+/*
  * Set the button width to the width of it's parent element.
  */
 .btn--full {
@@ -931,10 +934,24 @@ body {
 .btn--solidPrimary {
   background: #0097d7;
   border-color: #0097d7;
-  color: #FFF; }
-  .btn--solidPrimary:hover {
-    background: #00a9f1;
-    border-color: #00a9f1; }
+  color: #FFF;
+  position: relative; }
+  .btn--solidPrimary:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 60%;
+    height: 100%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1); }
+  .btn--solidPrimary:hover:before {
+    opacity: 1;
+    border-radius: 30px;
+    width: 101%; }
 
 /*
  * Bordered secondary button.
@@ -952,10 +969,24 @@ body {
 .btn--solidSecondary {
   background: #15C050;
   border-color: #15C050;
-  color: #FFF; }
-  .btn--solidSecondary:hover {
-    background: #18d75a;
-    border-color: #18d75a; }
+  color: #FFF;
+  position: relative; }
+  .btn--solidSecondary:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 60%;
+    height: 100%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1); }
+  .btn--solidSecondary:hover:before {
+    opacity: 1;
+    border-radius: 30px;
+    width: 101%; }
 
 /*
  * Bordered bright button.
