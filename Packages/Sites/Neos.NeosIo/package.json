@@ -10,7 +10,7 @@
     "build:scripts": "browserify -t [ babelify ] -p browserify-derequire Resources/Private/JavaScript/index.js > Resources/Private/JavaScript/Bundle.min.js",
     "fix:amd": "fandr Resources/Public/JavaScript/Bundle.min.js '{\"&& define.amd\": \"&& false\"}'",
     "build:sass": "node-sass Resources/Private/Scss/ -o Resources/Public/Styles/",
-    "postbuild:sass": "postcss --use autoprefixer Resources/Public/Styles/*.css -d Resources/Public/Styles/",
+    "postbuild:sass": "postcss --use autoprefixer --autoprefixer.browsers 'last 4 versions' Resources/Public/Styles/*.css -d Resources/Public/Styles/",
     "build": "npm run build:scripts && npm run build:sass && npm run build:modernizr && npm run fix:amd",
     "minify:scritpts": "uglify -s Resources/Public/JavaScript/Bundle.min.js -o Resources/Public/JavaScript/Bundle.min.js",
     "minify:styles": "uglify -s Resources/Public/Styles/Main.css -o Resources/Public/Styles/Main.css -c",
