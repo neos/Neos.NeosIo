@@ -2033,9 +2033,15 @@ sub {
 .keyVisual__contents {
   position: relative;
   z-index: 2;
-  width: 80%;
-  margin: 0 auto;
-  padding-top: 20vw; }
+  display: flex;
+  align-items: center;
+  height: 100%; }
+  .no-flexbox .keyVisual__contents {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 10em; }
+  .keyVisual__contents .neos-contentcollection {
+    width: 100%; }
 
 .deviceStage {
   position: relative;

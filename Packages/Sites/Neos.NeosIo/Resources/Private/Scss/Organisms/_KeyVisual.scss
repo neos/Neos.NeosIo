@@ -33,7 +33,9 @@
 	height: 90vh;
 	min-height: 600px;
 
+	//
 	// Scroll arrow.
+	//
 	&:after {
 		content: '';
 		position: absolute;
@@ -60,11 +62,28 @@
 	transform: translateX(-50%) translateY(-50%);
 }
 .keyVisual__contents {
-	// Vertical centering disabled; CSS transform blur the text since the elements get
-	// transformed into a material instead of shapes to enable GPU acceleration.
 	position: relative;
 	z-index: 2;
-	width: 80%;
-	margin: 0 auto;
-	padding-top: 20vw;
+
+	//
+	// Using flexbox for vertical centering, since CSS transforms blur the inner contents, especially text nodes.
+	// (Nodes with CSS transforms applied get transformed into a material instead of shapes to enable GPU acceleration,
+	// nothing which will change in the future).
+	//
+	display: flex;
+	align-items: center;
+	height: 100%;
+
+	.no-flexbox & {
+		width: 80%;
+		margin: 0 auto;
+		padding-top: 10em;
+	}
+
+	//
+	// Set the correct width for child content collections since flexbox sets the width to it's inline children.
+	//
+	.neos-contentcollection {
+		width: 100%;
+	}
 }
