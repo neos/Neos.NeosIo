@@ -1,0 +1,17 @@
+prototype(Neos.NeosIo:TeamListing) < prototype(TYPO3.Neos:Content) {
+
+    teamListingFilter = ${q(node).property('teamListingFilter')}
+
+    teamMembers = ${q(site).teamListing().get()}
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            documentNode = ${documentNode}
+            node = ${node}
+        }
+        entryTags {
+            1 = ${'Node_' + node.identifier}
+        }
+    }
+}

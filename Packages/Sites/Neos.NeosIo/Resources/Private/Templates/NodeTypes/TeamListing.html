@@ -1,0 +1,24 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace neosio=Neos\NeosIo\ViewHelpers}
+{namespace blog=RobertLemke\Plugin\Blog\ViewHelpers}
+<div class="row vertical-feature-block team-member">
+    <f:if condition="{teamListingFilter}">
+        <f:then>
+            <h3>{teamListingFilter}</h3>
+            <f:if condition="{teamMembers}">
+
+                <f:for each="{teamMembers}" as="member">
+                    <div class="medium-4 columns">
+                        <blog:gravatar email="{member.email}" size="80" default="http://domain.com/gravatar_default.gif" class="gravatar" />
+                        <span>{member.display-name}</span>
+                    </div>
+                </f:for>
+
+            </f:if>
+        </f:then>
+        <f:else>
+            <p>please select a team filter in the inspector</p>
+        </f:else>
+    </f:if>
+    <f:debug>{teamMembers}</f:debug>
+</div>
