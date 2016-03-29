@@ -100,19 +100,8 @@
 		</div>
 	</footer>
 	<f:section name="footerScripts">
-		<f:security.ifAccess privilegeTarget="TYPO3.Neos:Backend.GeneralAccess">
-			<f:then>
-				<f:comment>A "document.write" causes problems when loading the page via AJAX in the Neos backend, so we just include jQuery here. Can be removed again if Iee2247c6ad0c64b98e71ba9a4b767ef0507c7dba is merged.</f:comment>
-				<script src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/vendor/jquery.min.js')}"></script>
-				<script src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/app.min.js')}"></script>
-			</f:then>
-			<f:else>
-				<script>
-					document.write('<script src=' + ('__proto__' in {} ? '{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/vendor/zepto.min.js')}' : '{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/vendor/jquery.min.js')}') + '><\/script>')
-				</script>
-				<script src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/app.min.js')}"></script>
-			</f:else>
-		</f:security.ifAccess>
+		<script src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/vendor/jquery.min.js')}"></script>
+		<script src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Javascripts/app.min.js')}"></script>
 	</f:section>
 </f:section>
 </body>
