@@ -21,7 +21,7 @@ class FundingApiConnector extends AbstractApiConnector
     protected $apiSettings;
 
     /**
-     * Retrieves data for sold badges
+     * Retrieves data for sold badges and returns array with customers and their badges and the funding types
      *
      * Result:
      *  {
@@ -47,17 +47,33 @@ class FundingApiConnector extends AbstractApiConnector
             $this->systemLogger->log(sprintf('Fetching badges from Funding Api'), LOG_INFO, 1453193835);
             $result = $this->fetchJsonData('getBadges');
             if (is_array($result)) {
-                $fundingTypes = array_reduce($result, function ($carry, $item) {
-                    if (!in_array($item['fundingType'], $carry)) {
-                        $carry[]= $item['fundingType'];
-                    }
-                    return $carry;
-                }, []);
+                $fundingData = array_reduce($result, function ($carry, $item) {
+                    $fundingType = $item['fundingType'];
+                    $customerName = strlen($item['customerName']) ? $item['customerName'] : 'Anonymous';
 
-                $this->setItem($cacheKey, [
-                    'entries' => $result,
-                    'types' => $fundingTypes,
+                    // Store all available funding types
+                    $carry['badgeTypes'][$fundingType] = true;
+
+                    // Each customer is a object holding badges and badge types
+                    if (!array_key_exists($customerName, $carry['customers'])) {
+                        $carry['customers'][$customerName] = [
+                            'badges' => [],
+                            'badgeTypes' => [],
+                            'link' => $item['customerLink'],
+                            'logo' => $item['customerLogo']
+                        ];
+                    }
+                    if (!in_array($fundingType, $carry['customers'][$customerName]['badgeTypes'])) {
+                        $carry['customers'][$customerName]['badgeTypes'][] = $fundingType;
+                    }
+                    $carry['customers'][$customerName]['badges'][]= $item;
+                    return $carry;
+                }, [
+                    'customers' => [],
+                    'badgeTypes' => [],
                 ]);
+
+                $this->setItem($cacheKey, $fundingData);
             } else {
                 $this->systemLogger->log(sprintf('Unknown error when fetching badges from Funding Api, see system log'), LOG_ERR, 1453193837);
                 $result = array();

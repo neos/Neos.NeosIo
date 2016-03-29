@@ -3,59 +3,81 @@
       xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 <f:section name="Main">
     <div{attributes -> f:format.raw()}>
+        <div class="tiles--loader">
+            <f:translate id="fundingBadges.loader" package="Neos.NeosIo">Loading funding data</f:translate>
+            <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </div>
+
         <ul class="tiles--filters list-unstyled">
-            <f:for each="{badges.types}" as="type">
-                <li data-filter="{type -> f:format.case(mode: 'lower')}">{type}</li>
+            <f:for each="{badgeData.badgeTypes}" as="type" key="label">
+                <li data-filter="{label -> f:format.case(mode: 'lower')}">
+                    <f:translate id="fundingBadges.filterType.{label -> f:format.case(mode: 'lower')}"
+                                 package="Neos.NeosIo">{label}</f:translate>
+                </li>
             </f:for>
         </ul>
-        <ul class="funding-badges--inner-wrap tiles--inner-wrap list-unstyled">
-            <f:for each="{badges.entries}" as="badge">
-                <li data-name="{badge.customerName -> f:format.case(mode: 'lower')}"
-                    data-filter-class='["{badge.fundingType -> f:format.case(mode: 'lower')}"]'>
 
-                    <f:if condition="{badge.customerLogo}">
-                        <f:if condition="{badge.customerLink}">
-                            <f:then>
-                                <a href="{badge.customerLink}" title="Visit {badge.customerName}" target="_blank">
+        <ul class="funding-badges--inner-wrap tiles--inner-wrap list-unstyled">
+            <f:for each="{badgeData.customers}" as="customer" key="customerName">
+                <li data-name="{customerName -> f:format.case(mode: 'lower')}"
+                    data-filter-class='{customer.badgeTypes -> f:format.json() -> f:format.raw()}'>
+
+                    <f:if condition="{customer.logo}">
+                        <f:then>
+                            <f:if condition="{customer.link}">
+                                <f:then>
+                                    <a href="{customer.link}" title="Visit {customerName}" target="_blank">
+                                        <f:render section="logo" arguments="{_all}"/>
+                                    </a>
+                                </f:then>
+                                <f:else>
                                     <f:render section="logo" arguments="{_all}"/>
-                                </a>
-                            </f:then>
-                            <f:else>
-                                <f:render section="logo" arguments="{_all}"/>
-                            </f:else>
-                        </f:if>
+                                </f:else>
+                            </f:if>
+                        </f:then>
+                        <f:else>
+                            <strong class="funding-badge--customer-name">
+                                <f:if condition="{customer.link}">
+                                    <f:then>
+                                        <a href="{customer.link}" title="Visit {customerName}" target="_blank">
+                                            {customerName}
+                                        </a>
+                                    </f:then>
+                                    <f:else>
+                                        {customerName}
+                                    </f:else>
+                                </f:if>
+                            </strong>
+                        </f:else>
                     </f:if>
 
-                    <strong class="funding-badge--customer-name">
-                        <f:if condition="{badge.customerLink}" >
-                            <f:then>
-                                <a href="{badge.customerLink}" title="Visit {badge.customerName}" target="_blank">
-                                    {badge.customerName}
-                                </a>
-                            </f:then>
-                            <f:else>
-                                {badge.customerName}
-                            </f:else>
-                        </f:if>
-                    </strong>
-
-                    <small class="funding-badge--duration">
-                        {badge.startDate -> f:format.date(localeFormatType: 'date', forceLocale: true)}
-                        <f:if condition="{badge.startDate} != {badge.endDate}">
-                            - {badge.endDate -> f:format.date(localeFormatType: 'date', forceLocale: true)}
-                        </f:if>
-                    </small>
-
-                    <span class="funding-badge--customer-sum">
-                        {badge.customerSum -> f:format.currency(currencySign: '€')}
-                    </span>
-
-                    <small class="funding-badge--funding-type">
-                        {badge.fundingType}
-                        <f:if condition="{badge.badgeType} != {badge.fundingType}">
-                            ({badge.badgeType})
-                        </f:if>
-                    </small>
+                    <f:for each="{customer.badges}" as="badge">
+                        <div class="funding-badge--item">
+                            <strong class="funding-badge--customer-sum">
+                                {badge.customerSum -> f:format.currency(currencySign: '€')}
+                            </strong>
+                            <br>
+                            <small class="funding-badge--duration">
+                                {badge.startDate -> f:format.date(localeFormatType: 'date', forceLocale: true)}
+                                <f:if condition="{badge.startDate} != {badge.endDate}">
+                                    - {badge.endDate -> f:format.date(localeFormatType: 'date', forceLocale: true)}
+                                </f:if>
+                            </small>
+                            &ndash;
+                            <small class="funding-badge--funding-type">
+                                <f:translate id="fundingBadges.filterType.{badge.fundingType -> f:format.case(mode: 'lower')}"
+                                             package="Neos.NeosIo">{badge.fundingType}</f:translate>
+                                <f:if condition="{badge.badgeType} != {badge.fundingType}">
+                                    (<f:translate id="fundingBadges.filterType.{badge.badgeType -> f:format.case(mode: 'lower')}"
+                                                 package="Neos.NeosIo">{badge.badgeType}</f:translate>)
+                                </f:if>
+                            </small>
+                        </div>
+                    </f:for>
                 </li>
             </f:for>
         </ul>
@@ -63,6 +85,6 @@
 </f:section>
 
 <f:section name="logo">
-    <img class="funding-badge--customer-logo" src="{badge.customerLogo}" alt="Logo of {badge.customerName}"/>
+    <img class="funding-badge--customer-logo" src="{customer.logo}" alt="Logo of {customerName}" title="{customerName}"/>
 </f:section>
 </html>

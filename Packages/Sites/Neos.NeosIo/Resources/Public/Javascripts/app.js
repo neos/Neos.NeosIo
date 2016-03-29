@@ -26,13 +26,15 @@ $(document).ready(function(){
 
 	// Init tiles plugins
 	imagesLoaded(document.querySelectorAll('.tiles'), function () {
+		$('.tiles--loader').hide();
+
 		$('.tiles').each(function () {
 			var $that = $(this),
-				$filters = $that.find('.tiles--filters'),
+				$filters = $that.find('.tiles--filters').show(),
 				$tilesWrap = $that.find('.tiles--inner-wrap');
 
 			var wookmark = new Wookmark($tilesWrap[0], {
-				itemWidth: 300,
+				itemWidth: 308,
 				offset: 10,
 				ignoreInactiveItems: false,
 				comparator: function (a, b) {
