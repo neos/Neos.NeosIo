@@ -1,0 +1,45 @@
+###########################################
+# The official Neos Brand logo.
+###########################################
+
+'Neos.NeosIo:BrandLogo':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+  ui:
+    label: 'Brand logo'
+    icon: 'icon-beer'
+    inspector:
+      groups:
+        'appearance':
+          label: 'Appearance'
+  properties:
+    'color':
+      type: string
+      defaultValue: 'white'
+      ui:
+        label: 'Color of the Brand logo'
+        reloadIfChanged: TRUE
+        inspector:
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          group: 'appearance'
+          editorOptions:
+            values:
+              'default':
+                label: 'Default'
+              'bright':
+                label: 'White'
+    'size':
+      type: string
+      defaultValue: 'default'
+      ui:
+        label: 'Size of the Brand logo'
+        reloadIfChanged: TRUE
+        inspector:
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          group: 'appearance'
+          editorOptions:
+            values:
+              'default':
+                label: 'Default'
+              'small':
+                label: 'Small'

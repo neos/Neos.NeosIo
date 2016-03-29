@@ -1,0 +1,32 @@
+{namespace media=TYPO3\Media\ViewHelpers}
+
+<section class="
+		stage
+		{f:if(condition: backgroundColor, then: 'stage--{backgroundColor}' , else: 'stage--bright')}
+	">
+	<div class="
+		stage__contents
+		{f:if(condition: isContentTextInverted, then: 'u-invertText')}
+		{f:if(condition: backgroundImage, then: 'stage__contents--extraPadding')}
+		{f:if(condition: isContentExtraPadded, then: 'stage__contents--extraPadding')}
+		">
+		{contents -> f:format.raw()}
+	</div>
+	<f:if condition="{backgroundImage}">
+		<img
+			alt=""
+			class="
+				stage__bg
+				{f:if(condition: '{backgroundShadePercentage} != \'0\'', then: 'stage__bg--shade-{backgroundShadePercentage}')}
+			"
+			src="{media:uri.image(asset: backgroundImage, maximumWidth: 1280, maximumHeight: 600)}"
+			srcset="{backgroundImageSrcSet}">
+	</f:if>
+</section>
+
+<f:section name="imageSrcSet">
+	<media:uri.image asset="{backgroundImage}" maximumWidth="1920" maximumHeight="1000" /> 1920w,
+	<media:uri.image asset="{backgroundImage}" maximumWidth="1280" maximumHeight="600" /> 1280w,
+	<media:uri.image asset="{backgroundImage}" maximumWidth="658" maximumHeight="658" allowCropping="1" /> 658w,
+	<media:uri.image asset="{backgroundImage}" maximumWidth="400" maximumHeight="400" allowCropping="1" /> 280w
+</f:section>

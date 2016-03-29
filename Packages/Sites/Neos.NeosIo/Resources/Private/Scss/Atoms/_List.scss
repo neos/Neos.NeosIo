@@ -1,0 +1,44 @@
+/**
+ * Lists
+ */
+
+menu,
+ol,
+ul {
+	padding: 0 0 0 rs(40);
+	margin: 0 0 rs($basic-spacing);
+}
+
+li > ul,
+li > ol {
+	// Remove vertical spacing from nested lists.
+	margin-bottom: 0;
+}
+
+/**
+ * Definitions
+ */
+dl {
+	margin: 0 0 rs($basic-spacing);
+}
+
+/*
+ * Displays the definition element in a horizontal order.
+ */
+.dl--horizontal {
+	@include u-cf();
+
+	dt {
+		width: 19%;
+		float: $start;
+		overflow: hidden;
+		clear: $start;
+		text-align: $end;
+
+		@include u-textBreak();
+	}
+
+	dd {
+		margin-#{$start}: 21%;
+	}
+}

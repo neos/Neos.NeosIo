@@ -1,0 +1,22 @@
+<header
+	class="siteHeader"
+	role="banner"
+	data-component="ScrollClassToggler"
+	data-scrollClasses='{"200":{"className": "siteHeader--hidden","removeOnScrollDecrease": true}, "350":{"className": "siteHeader--shaded"}}'
+	>
+	<a href="/" title="Home" style="color: currentColor;">
+		<f:render partial="BrandLogo.html" arguments="{size: 'small' className: 'siteHeader__brandLogo'}" />
+	</a>
+
+	<a class="hamburger siteHeader__navToggler"
+		href="#siteNav"
+		data-component="ClassToggler"
+		data-activeClass="hamburger--active"
+		data-targetSelector="#siteNav"
+		data-targetActiveClass="siteNav--visible">
+		<div class="hamburger__line hamburger__line--top"></div>
+		<div class="hamburger__line"></div>
+		<div class="hamburger__line hamburger__line--bottom"></div>
+	</a>
+	{parts.menu -> f:format.raw()}
+</header>

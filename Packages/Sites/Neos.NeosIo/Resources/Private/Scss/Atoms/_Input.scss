@@ -1,0 +1,97 @@
+/**
+ * Form inputs
+ */
+
+ /*
+ * Base styling for form input fields.
+ */
+textarea {
+	// Resets the height since textareas have the rows="" attribute.
+	height: auto;
+
+	// Sets a min-height for textareas of 3 rows.
+	min-height: ($base-line-height *3) +px;
+
+	// Prevent expanding the textarea over it's horizontal boundaries.
+	resize: vertical;
+
+	// Removes default vertical scrollbar in IE6/7/8/9.
+	overflow: auto;
+
+	// Improves readability and alignment in all browsers.
+	vertical-align: top;
+}
+
+input {
+	// A possible shadow-dom fix for webkit control spacing on input[type="time"].
+	&::-webkit-datetime-edit {
+		margin-top: -.17em;
+		margin-bottom: -.17em;
+	}
+
+	// Base styling for checkboxes and radio buttons.
+	&[type="checkbox"],
+	&[type="radio"] {
+		margin-right: .35em;
+		cursor: pointer;
+	}
+}
+
+// Fix the font-settings for input placeholders since they wont get inherited from parent elements e.g. <body>.
+input, textarea {
+	@include placeholder() {
+		font: $base-font-weight #{$base-font-size/16*100}%/#{$base-line-height/$base-font-size} $base-font-family;
+	}
+}
+
+/*
+ * The base class for all textInputs.
+ */
+@mixin textInput() {
+	height: $base-line-height*1.5 + px;
+	padding: .2em .5em;
+
+	background: $content-background;
+	border: 1px $basic-border-style $basic-border-color;
+	border-radius: $brand-border-radius;
+	box-shadow: inset 0 1px 1px rgba($basic-border-color, 0.4);
+
+	font-size: rs(14, $unit: rem);
+	color: lighten($base-text-color, 5%);
+}
+
+.textInput {
+	@include textInput();
+}
+
+/*
+ * Disabled state for inputs.
+ */
+@mixin textInput--disabled() {
+	opacity: .5;
+	pointer-events: none;
+}
+.textInput[disabled],
+.textInput--disabled {
+	@include textInput--disabled();
+}
+
+/*
+ * Positive validated state for inputs.
+ */
+@mixin textInput--success() {
+	border-color: $color-positive;
+}
+.textInput--success {
+	@include textInput--success();
+}
+
+/*
+ * Negative validated state for inputs.
+ */
+@mixin textInput--failure() {
+	border-color: $color-negative;
+}
+.textInput--failure {
+	@include textInput--failure();
+}

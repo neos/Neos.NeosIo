@@ -1,0 +1,98 @@
+###########################################
+# The general NodeType which is responsible
+# for the layout and structure of the page.
+###########################################
+
+'Neos.NeosIo:Stage':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+  childNodes:
+    'contents':
+      type: 'TYPO3.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': FALSE
+          'TYPO3.Neos.NodeTypes:TwoColumn': TRUE
+          'TYPO3.Neos.NodeTypes:ThreeColumn': TRUE
+          'TYPO3.Neos.NodeTypes:Text': TRUE
+          'TYPO3.Neos.NodeTypes:Headline': TRUE
+          'Neos.NeosIo:Button': TRUE
+          'Neos.NeosIo:Quote': TRUE
+  ui:
+    label: 'Stage'
+    icon: 'icon-tasks'
+    group: 'structure'
+    inlineEditable: TRUE
+    inspector:
+      groups:
+        content:
+          label: 'Content'
+          position: 1
+        background:
+          label: 'Background'
+          position: 2
+  properties:
+    'isContentTextInverted':
+      type: boolean
+      defaultValue: false
+      ui:
+        reloadIfChanged: TRUE
+        label: 'Invert Text-Color'
+        inspector:
+          group: 'content'
+    'isContentExtraPadded':
+      type: boolean
+      defaultValue: false
+      ui:
+        reloadIfChanged: TRUE
+        label: 'Create more padding around the contents'
+        inspector:
+          group: 'content'
+    'backgroundColor':
+      type: string
+      defaultValue: 'bright'
+      ui:
+        label: 'Background color'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'background'
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              'bright':
+                label: 'Bright'
+              'dark':
+                label: 'Dark'
+              'primary':
+                label: 'Primary'
+              'secondary':
+                label: 'Secondary'
+              'teritary':
+                label: 'Teritary'
+    'backgroundImage':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Background image'
+        inspector:
+          group: 'background'
+    'backgroundShadePercentage':
+      type: string
+      defaultValue: '0'
+      ui:
+        label: 'Background image shading'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'background'
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              '0':
+                label: 'None'
+              '20':
+                label: '20%'
+              '40':
+                label: '40%'
+              '60':
+                label: '60%'
+              '80':
+                label: '80%'

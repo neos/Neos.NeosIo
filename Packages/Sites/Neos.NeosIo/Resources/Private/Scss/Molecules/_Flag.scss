@@ -1,0 +1,44 @@
+/**
+ * Flag - Displays text like content vertically centered besides an image.
+ */
+
+/*
+ * The base class for the Flag wrapper.
+ */
+.flag {
+	display: table;
+	width: 100%;
+}
+
+/*
+ * The image wrapper cell.
+ */
+.flag__image {
+	display: table-cell;
+	vertical-align: middle;
+	padding-right: $column-gutter;
+
+	> img {
+		display: block;
+		max-width: none;
+	}
+}
+.flag__image--rev {
+	padding-right: 0;
+	padding-left: $column-gutter;
+}
+
+/*
+ * The content wrapper cell.
+ */
+.flag__body {
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
+
+	// Removes the bottom margin of the last element.
+	&,
+	> :last-child {
+		margin-bottom: 0;
+	}
+}

@@ -1,0 +1,46 @@
+.factsGrid {
+	display: block;
+	width: 100%;
+	padding: 0 $double-spacing+px;
+	margin-bottom: $double-spacing+px;
+	background: #FFF;
+	border-bottom: 1px solid $basic-border-color;
+	text-align: center;
+
+	@include u-cf();
+
+	@include mq('medium') {
+		display: table;
+	}
+}
+.factsGrid__item {
+	display: block;
+	float: left;
+	padding: $basic-spacing+px 10px;
+	color: currentColor;
+	cursor: pointer;
+	transition: all .3s ease;
+
+	@include mq('medium') {
+		display: table-cell;
+		float: none;
+		border-right: 1px solid $basic-border-color;
+
+		&:last-child {
+			border-right: 0;
+		}
+
+		&:first-child:hover {
+			background: linear-gradient(to left, rgba(0,0,0,0.05) 75%,rgba(0,0,0,0) 100%);
+		}
+
+		&:last-child:hover {
+			background: linear-gradient(to right, rgba(0,0,0,0.05) 75%,rgba(0,0,0,0) 100%);
+		}
+	}
+
+	&:hover {
+		text-decoration: none;
+		background: rgba(#000, .05);
+	}
+}

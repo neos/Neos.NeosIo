@@ -1,0 +1,52 @@
+/**
+ * Helper classes for brand related stylings.
+ */
+
+/*
+ * Brand text styles.
+ */
+@mixin u-brand() {
+	font-family: $brand-font-family;
+	color: map-get($brand-colors, primary);
+ }
+.u-brand {
+	@include u-brand();
+}
+
+/*
+ * Brand color helpers.
+ */
+@each $key, $value in $brand-colors {
+	.u-brandColor-#{$key} {
+		color: $value;
+	}
+}
+
+/*
+ * Brand font-family helper.
+ */
+@mixin u-brandFace() {
+	font-family: $brand-font-family;
+}
+.u-brandFace {
+	@include u-brandFace();
+}
+
+/*
+ * Brand logos.
+ */
+.u-brandLogo {
+	display: inline-block;
+	width: 330px;
+	height: 160px;
+	max-width: 100%;
+	fill: brand('primary');
+	vertical-align: top;
+}
+.u-brandLogo--bright {
+	fill: #FFF;
+}
+.u-brandLogo--small {
+	width: 100px;
+	height: 50px;
+}

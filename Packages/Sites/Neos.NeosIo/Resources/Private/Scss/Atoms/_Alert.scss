@@ -1,0 +1,43 @@
+/**
+ * Alert
+*/
+
+/*
+ * The base class for all alerts.
+ */
+@mixin alert() {
+	padding: rs($half-spacing);
+	margin-bottom: rs($basic-spacing);
+	border-radius: $brand-border-radius;
+	background-color: $color-info;
+	color: color-adjust($color-info, 100%);
+
+	:last-child {
+		margin-bottom: 0;
+	}
+}
+.alert {
+	@include alert();
+}
+
+/*
+ * Display a positive / success alert to the user.
+ */
+@mixin alert--success() {
+	background-color: $color-positive;
+	color: color-adjust($color-positive, 100%);
+}
+.alert--success {
+	@include alert--success();
+}
+
+/*
+ * Display a negative / failure alert to the user.
+ */
+@mixin alert--failure() {
+	background-color: $color-negative;
+	color: color-adjust($color-negative, 100%);
+}
+.alert--failure {
+	@include alert--failure();
+}

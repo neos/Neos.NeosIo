@@ -1,0 +1,28 @@
+/**
+ * Base and high-level wrapper elements
+ */
+
+html {
+	min-width: $layout-min-width;
+}
+
+body {
+	// Remove default margin.
+	margin: 0;
+
+	font: $base-font-weight #{$base-font-size/16*100}%/#{$base-line-height/$base-font-size} $base-font-family;
+	text-align: $start;
+	color: $base-text-color;
+	background: $body-background;
+}
+
+.siteWrapper {
+	position: relative;
+	width: $layout-width;
+	max-width: $layout-max-width;
+
+	@if $centered-layout {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}

@@ -1,0 +1,22 @@
+###########################################
+# A basic text based teaser which is best
+# used in grid elements to promote sub-pages.
+###########################################
+
+'Neos.NeosIo:Teaser':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+    'TYPO3.Neos.NodeTypes:TitleMixin': TRUE
+    'TYPO3.Neos.NodeTypes:TextMixin': TRUE
+  ui:
+    label: 'Teaser'
+    icon: 'icon-th-large'
+    inlineEditable: TRUE
+  childNodes:
+    'button':
+      type: 'Neos.NeosIo:Button'
+  properties:
+    'title':
+      type: string
+      defaultValue: 'Headline...'
+      inlineEditable: TRUE

@@ -1,0 +1,20 @@
+###########################################
+# A slider for headlines to be used in
+# the page keyvisual.
+###########################################
+
+'Neos.NeosIo:HeadlineSlider':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+  childNodes:
+    'headlines':
+      position: 'before main'
+      type: 'TYPO3.Neos:ContentCollection'
+      constraints:
+          nodeTypes:
+              '*': FALSE
+              'TYPO3.Neos.NodeTypes:Headline': TRUE
+  ui:
+    label: 'Headline Slider'
+    icon: 'icon-font'
+    inlineEditable: TRUE

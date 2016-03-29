@@ -1,7 +1,7 @@
 prototype(TYPO3.Neos.NodeTypes:MultiColumn) {
 	attributes = TYPO3.TypoScript:Attributes {
 		class = TYPO3.TypoScript:RawArray {
-			row = 'row'
+			row = 'g'
 
 			@process.nodeType >
 		}
@@ -14,5 +14,5 @@ prototype(TYPO3.Neos.NodeTypes:MultiColumnItem) {
 		columnWidth = ${String.split(q(node).parent().property('layout'), '-')[multiColumnIteration.index]}
 		desktopColumnWidth = ${String.split(q(node).parent().property('desktopLayout'), '-')[multiColumnIteration.index]}
 	}
-	attributes.class = ${'col-sm-' + columnWidth + ' col-md-' + desktopColumnWidth}
+	attributes.class = ${'gi u-w1/1 u-wm' + columnWidth + '/12 u-wl' + desktopColumnWidth + '/12'}
 }

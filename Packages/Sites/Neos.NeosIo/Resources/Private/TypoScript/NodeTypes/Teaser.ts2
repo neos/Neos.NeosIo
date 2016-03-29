@@ -1,0 +1,5 @@
+prototype(Neos.NeosIo:Teaser) < prototype(TYPO3.Neos:Content) {
+	button = Neos.NeosIo:Button {
+		@context.node = ${q(node).children('button').get(0)}
+	}
+}
