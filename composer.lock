@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "39380d3d814994a5130c5dee84c44146",
-    "content-hash": "06da1beb3a51c5a806aa489cea7bf2ef",
+    "hash": "5b37190120f160cdb5d2b18189d66c23",
+    "content-hash": "83b4c542fcb1cf8e9ceeb260678e21d2",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -878,7 +878,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skurfuerst/Flowpack.SearchPlugin/zipball/97d8160333bdc6da880fd1706078c2c5be5262f8",
+                "url": "https://api.github.com/repos/skurfuerst/Flowpack.SearchPlugin/zipball/e8ec4f26d4773093106463ff95dd6d111908c840",
                 "reference": "97d8160333bdc6da880fd1706078c2c5be5262f8",
                 "shasum": "",
                 "mirrors": [
@@ -1187,6 +1187,74 @@
             "time": "2015-09-19 16:54:05"
         },
         {
+            "name": "knplabs/github-api",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/php-github-api.git",
+                "reference": "5720f828ea241eded6c6263249fa00b0a37650f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/5720f828ea241eded6c6263249fa00b0a37650f4",
+                "reference": "5720f828ea241eded6c6263249fa00b0a37650f4",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "http://toran-proxy/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-curl": "*",
+                "guzzle/guzzle": "~3.7",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "sllh/php-cs-fixer-styleci-bridge": "~1.3"
+            },
+            "suggest": {
+                "knplabs/gaufrette": "Needed for optional Gaufrette cache"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Github\\": "lib/Github/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thibault Duplessis",
+                    "email": "thibault.duplessis@gmail.com",
+                    "homepage": "http://ornicar.github.com"
+                },
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                }
+            ],
+            "description": "GitHub API v3 client",
+            "homepage": "https://github.com/KnpLabs/php-github-api",
+            "keywords": [
+                "api",
+                "gh",
+                "gist",
+                "github"
+            ],
+            "time": "2016-02-24 05:52:33"
+        },
+        {
             "name": "knplabs/packagist-api",
             "version": "1.3.0",
             "source": {
@@ -1398,17 +1466,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/Neos.MarketPlace.git",
-                "reference": "b3b2c154a5b2cefaf12e95ce0e946bca320be70d"
+                "reference": "2531457d1f7e2ec446bf24f3012d949e1a95f1bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/Neos.MarketPlace/zipball/b3b2c154a5b2cefaf12e95ce0e946bca320be70d",
-                "reference": "b3b2c154a5b2cefaf12e95ce0e946bca320be70d",
-                "shasum": ""
+                "url": "https://api.github.com/repos/neos/Neos.MarketPlace/zipball/2531457d1f7e2ec446bf24f3012d949e1a95f1bc",
+                "reference": "2531457d1f7e2ec446bf24f3012d949e1a95f1bc",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "http://toran-proxy/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "cocur/slugify": "^2.0",
                 "flowpack/searchplugin": "*",
+                "knplabs/github-api": "^1.6",
                 "knplabs/packagist-api": "^1.3",
                 "typo3/flow": "*"
             },
@@ -1425,7 +1500,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Neos Project Marketplace",
-            "time": "2016-03-30 08:26:21"
+            "time": "2016-03-30 14:22:06"
         },
         {
             "name": "ocramius/package-versions",
