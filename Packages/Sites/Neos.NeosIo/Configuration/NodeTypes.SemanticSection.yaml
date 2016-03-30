@@ -1,0 +1,30 @@
+###########################################
+# A purely semantical nodeType which represents a
+# <section> element and which appends a ruler
+# if it is not the last item in the content collection.
+###########################################
+
+'Neos.NeosIo:SemanticSection':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+  childNodes:
+    'contents':
+      type: 'TYPO3.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': FALSE
+          'TYPO3.Neos.NodeTypes:TwoColumn': TRUE
+          'TYPO3.Neos.NodeTypes:ThreeColumn': TRUE
+          'TYPO3.Neos.NodeTypes:FourColumn': TRUE
+          'TYPO3.Neos.NodeTypes:Text': TRUE
+          'TYPO3.Neos.NodeTypes:Image': TRUE
+          'TYPO3.Neos.NodeTypes:TextWithImage': TRUE
+          'TYPO3.Neos.NodeTypes:Headline': TRUE
+          'Neos.NeosIo:Button': TRUE
+          'Neos.NeosIo:ChoiceButtons': TRUE
+          'Neos.NeosIo:Quote': TRUE
+  ui:
+    label: 'Semantic Section'
+    icon: 'icon-tasks'
+    group: 'structure'
+    inlineEditable: TRUE

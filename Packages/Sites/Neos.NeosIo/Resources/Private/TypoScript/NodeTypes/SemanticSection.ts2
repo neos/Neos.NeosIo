@@ -1,0 +1,7 @@
+prototype(Neos.NeosIo:SemanticSection) < prototype(TYPO3.Neos:Content) {
+	contents = PrimaryContent {
+		nodePath = 'contents'
+	}
+
+	isLast = ${iterator.isLast}
+}
