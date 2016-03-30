@@ -12,6 +12,7 @@
             </div>
         </div>
 
+        <span style="display: none">{badgeData.badgeTypes.0}</span>
         <ul class="tiles--filters list-unstyled">
             <f:for each="{badgeData.badgeTypes}" as="type" key="label">
                 <li data-filter="{label -> f:format.case(mode: 'lower')}">
