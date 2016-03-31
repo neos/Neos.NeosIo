@@ -91,12 +91,6 @@ prototype(TYPO3.Neos.NodeTypes:Page.Document) < prototype(Neos.NeosIo:DefaultPag
 	*/
 }
 
-prototype(TYPO3.Neos.NodeTypes:Image) {
-	hasCaption = true
-	imageClassName = ''
-	@process.responsiveImages = ${String.pregReplace(value, '/\<img/', '<img class="img-responsive"')}
-}
-
 ##################################
 # Includes
 ##################################

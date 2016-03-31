@@ -49,6 +49,32 @@
 
 
 /*
+ * A basic :hover effect for all solid buttons.
+ */
+@mixin solidBtnHoverPulse() {
+	position: relative;
+
+	&:before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 50%;
+		width: 60%;
+		height: 100%;
+		transform: translateX(-50%);
+		background: rgba(#FFF, .15);
+		border-radius: 10px;
+		opacity: 0;
+		transition: all .5s cubic-bezier(0.2,1,.3,1);
+	}
+	&:hover:before {
+		opacity: 1;
+		border-radius: 30px;
+		width: 101%;
+	}
+}
+
+/*
  * Set the button width to the width of it's parent element.
  */
 @mixin btn--full() {
@@ -90,12 +116,7 @@
 	border-color: brand('primary');
 	color: #FFF;
 
-	&:hover {
-		$hoverColor: lighten(brand('primary'), 5%);
-
-		background: $hoverColor;
-		border-color: $hoverColor;
-	}
+	@include solidBtnHoverPulse();
 }
 .btn--solidPrimary {
 	@include btn--solidPrimary();
@@ -127,12 +148,7 @@
 	border-color: brand('secondary');
 	color: #FFF;
 
-	&:hover {
-		$hoverColor: lighten(brand('secondary'), 5%);
-
-		background: $hoverColor;
-		border-color: $hoverColor;
-	}
+	@include solidBtnHoverPulse();
 }
 .btn--solidSecondary {
 	@include btn--solidSecondary();

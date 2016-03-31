@@ -24,3 +24,13 @@ $grid-gutter: $column-gutter / 2;
 	padding-left: $grid-gutter;
 	padding-right: $grid-gutter;
 }
+
+//
+// Adjustment for the FourColumn grid element to prevent unwanted
+// float clears due to different content heights.
+//
+.u-w1\/1.u-wm6\/12.u-wl3\/12.neos-contentcollection:nth-child(odd) {
+	@include screen(650, 1200) {
+		clear: both;
+	}
+}

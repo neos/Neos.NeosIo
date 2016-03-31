@@ -825,6 +825,28 @@ input::-moz-focus-inner {
   .u-wl11\/12 {
     width: 91.666%; } }
 
+.typo3-neos-nodetypes-textwithimage:before, .typo3-neos-nodetypes-textwithimage:after,
+.typo3-neos-nodetypes-image:before,
+.typo3-neos-nodetypes-image:after {
+  content: '';
+  display: table; }
+
+.typo3-neos-nodetypes-textwithimage:after,
+.typo3-neos-nodetypes-image:after {
+  clear: both; }
+
+.typo3-neos-alignment-left {
+  float: left; }
+
+.typo3-neos-alignment-center {
+  text-align: center; }
+
+.typo3-neos-alignment-right {
+  float: right; }
+
+.typo3-neos-nodetypes-image {
+  margin-bottom: 1.625rem; }
+
 /**
  * Alert
 */
@@ -906,6 +928,9 @@ body {
     color: currentColor; }
 
 /*
+ * A basic :hover effect for all solid buttons.
+ */
+/*
  * Set the button width to the width of it's parent element.
  */
 .btn--full {
@@ -931,10 +956,24 @@ body {
 .btn--solidPrimary {
   background: #0097d7;
   border-color: #0097d7;
-  color: #FFF; }
-  .btn--solidPrimary:hover {
-    background: #00a9f1;
-    border-color: #00a9f1; }
+  color: #FFF;
+  position: relative; }
+  .btn--solidPrimary:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 60%;
+    height: 100%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1); }
+  .btn--solidPrimary:hover:before {
+    opacity: 1;
+    border-radius: 30px;
+    width: 101%; }
 
 /*
  * Bordered secondary button.
@@ -952,10 +991,24 @@ body {
 .btn--solidSecondary {
   background: #15C050;
   border-color: #15C050;
-  color: #FFF; }
-  .btn--solidSecondary:hover {
-    background: #18d75a;
-    border-color: #18d75a; }
+  color: #FFF;
+  position: relative; }
+  .btn--solidSecondary:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 60%;
+    height: 100%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1); }
+  .btn--solidSecondary:hover:before {
+    opacity: 1;
+    border-radius: 30px;
+    width: 101%; }
 
 /*
  * Bordered bright button.
@@ -1591,6 +1644,10 @@ sub {
   padding-left: 10px;
   padding-right: 10px; }
 
+@media screen and (min-width: 650px) and (max-width: 1200px) {
+  .u-w1\/1.u-wm6\/12.u-wl3\/12.neos-contentcollection:nth-child(odd) {
+    clear: both; } }
+
 /**
  * Media
  */
@@ -1777,6 +1834,7 @@ sub {
   color: currentColor; }
 
 .headlineSlider__word {
+  display: inline-block;
   opacity: 1;
   transition: all .5s ease; }
 
@@ -1931,7 +1989,7 @@ sub {
 
 .keyVisual {
   position: relative;
-  height: 20vw;
+  height: 25vw;
   min-height: 190px;
   overflow: hidden;
   background: #000; }
@@ -1973,12 +2031,17 @@ sub {
   transform: translateX(-50%) translateY(-50%); }
 
 .keyVisual__contents {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: relative;
   z-index: 2;
-  transform: translateX(-50%) translateY(-50%);
-  width: 80%; }
+  display: flex;
+  align-items: center;
+  height: 100%; }
+  .no-flexbox .keyVisual__contents {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 10em; }
+  .keyVisual__contents .neos-contentcollection {
+    width: 100%; }
 
 .deviceStage {
   position: relative;
