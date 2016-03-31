@@ -13,103 +13,6 @@ root {
 
 prototype(TYPO3.Neos:FallbackNode.Document) < prototype(TYPO3.Neos:FallbackNode)
 
-prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
-	head {
-		meta-viewport = '<meta name="viewport" content="width=device-width, initial-scale=1" />'
-
-		titleTag {
-			//content = Ttree.Plugin.Seo:RawPageTitle
-			//@position = 'after characterSetMetaTag'
-		}
-
-		stylesheets.site = TYPO3.TypoScript:Template {
-			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
-			sectionName = 'stylesheets'
-		}
-
-		javascripts.site = TYPO3.TypoScript:Template {
-			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
-			sectionName = 'headScripts'
-		}
-	}
-
-	body {
-		templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
-		sectionName = 'body'
-		parts {
-			menu = Neos.NeosIo:DefaultPage.Menu
-
-			sectionTitle = Neos.NeosIo:DefaultPage.SectionTitle
-
-			subMenu = Neos.NeosIo:DefaultPage.SubMenu
-
-			breadcrumb = Neos.NeosIo:DefaultPage.BreadcrumbMenu
-		}
-
-		homepage = ${site}
-
-		javascripts.site = TYPO3.TypoScript:Template {
-			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
-			sectionName = 'bodyScripts'
-		}
-	}
-	@cache.entryTags.site = ${'Node_' + site.identifier}
-}
-
-prototype(Neos.NeosIo:DefaultPage.SectionTitle) < prototype(TYPO3.TypoScript:Value) {
-	value = ${q(node).closest('[_depth=3]').property('_label')}
-}
-
-prototype(Neos.NeosIo:DefaultPage.BreadcrumbMenu) < prototype(BreadcrumbMenu) {
-	attributes.class = 'nav nav--breadcrumb'
-}
-
-prototype(Neos.NeosIo:DefaultPage.Menu) < prototype(Menu) {
-	templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/Menu.html'
-	entryLevel = 1
-	maximumLevels = 2
-	attributes.class = 'nav siteHeader__nav'
-	filter = 'TYPO3.Neos:Document, !Neos.NeosIo:Reference'
-}
-
-prototype(Neos.NeosIo:DefaultPage.SubMenu) < prototype(Menu) {
-	templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/SubMenu.html'
-	entryLevel = 2
-	maximumLevels = 2
-	attributes.class = 'nav nav--stacked'
-	normal.attributes.class = ''
-	active.attributes.class = 'active'
-	current.attributes.class = 'active'
-	filter = 'TYPO3.Neos:Document, !Neos.NeosIo:Reference, !Neos.MarketPlace:Vendor, !Neos.MarketPlace:Package'
-}
-
-prototype(TYPO3.Neos.NodeTypes:Page.Document) < prototype(Neos.NeosIo:DefaultPage) {
-	body {
-		content {
-			// The default content section
-			main = PrimaryContent {
-				nodePath = 'main'
-			}
-		}
-	}
-
-	/*
-	googleAnalytics = TYPO3.TypoScript:Template {
-		templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Tracking.html'
-		@if.enabled = ${Configuration.setting('Neos.NeosIo.enableTracking')}
-		@position = 'before body'
-
-		trackingCode = ${q(site).property('trackingCode')}
-	}
-	*/
-}
-
-prototype(TYPO3.Neos.NodeTypes:Image) {
-	hasCaption = true
-	imageClassName = ''
-	@process.responsiveImages = ${String.pregReplace(value, '/\<img/', '<img class="img-responsive"')}
-}
-
 ##################################
 # Includes
 ##################################
@@ -118,4 +21,6 @@ prototype(TYPO3.Neos.NodeTypes:Image) {
 # TypoScript includes for node types
 #
 
-include: NodeTypes/*
+include: Documents/**/*
+include: NodeTypes/**/*
+include: TypoScriptObjects/**/*

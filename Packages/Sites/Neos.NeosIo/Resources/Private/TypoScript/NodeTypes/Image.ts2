@@ -1,0 +1,5 @@
+prototype(TYPO3.Neos.NodeTypes:Image) {
+    hasCaption = true
+    imageClassName = ''
+    @process.responsiveImages = ${String.pregReplace(value, '/\<img/', '<img class="img-responsive"')}
+}
