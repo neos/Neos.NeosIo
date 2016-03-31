@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5b37190120f160cdb5d2b18189d66c23",
-    "content-hash": "83b4c542fcb1cf8e9ceeb260678e21d2",
+    "hash": "b6a627da0ae3ab8620b0e8f67e496f5e",
+    "content-hash": "510b11a008bbcd8bbfe25016023a7d7a",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -874,19 +874,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/skurfuerst/Flowpack.SearchPlugin.git",
-                "reference": "97d8160333bdc6da880fd1706078c2c5be5262f8"
+                "reference": "e8ec4f26d4773093106463ff95dd6d111908c840"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/skurfuerst/Flowpack.SearchPlugin/zipball/e8ec4f26d4773093106463ff95dd6d111908c840",
-                "reference": "97d8160333bdc6da880fd1706078c2c5be5262f8",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "http://toran-proxy/repo/packagist/dists/%package%/%version%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "reference": "e8ec4f26d4773093106463ff95dd6d111908c840",
+                "shasum": ""
             },
             "require": {
                 "typo3/flow": "*"
@@ -899,7 +893,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Add description here",
-            "time": "2016-03-23 10:25:33"
+            "time": "2016-03-30 10:56:12"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1466,25 +1460,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/Neos.MarketPlace.git",
-                "reference": "2531457d1f7e2ec446bf24f3012d949e1a95f1bc"
+                "reference": "a7738616952d3644efe85a9ecb025387dbc2af74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/Neos.MarketPlace/zipball/2531457d1f7e2ec446bf24f3012d949e1a95f1bc",
-                "reference": "2531457d1f7e2ec446bf24f3012d949e1a95f1bc",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "http://toran-proxy/repo/packagist/dists/%package%/%version%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/neos/Neos.MarketPlace/zipball/a7738616952d3644efe85a9ecb025387dbc2af74",
+                "reference": "a7738616952d3644efe85a9ecb025387dbc2af74",
+                "shasum": ""
             },
             "require": {
                 "cocur/slugify": "^2.0",
                 "flowpack/searchplugin": "*",
                 "knplabs/github-api": "^1.6",
                 "knplabs/packagist-api": "^1.3",
+                "ttree/script": "^1.0",
+                "ttree/stylesheet": "^1.0",
                 "typo3/flow": "*"
             },
             "type": "typo3-flow-package",
@@ -1500,7 +1490,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Neos Project Marketplace",
-            "time": "2016-03-30 14:22:06"
+            "time": "2016-03-31 15:38:35"
         },
         {
             "name": "ocramius/package-versions",
@@ -2112,6 +2102,87 @@
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
             "time": "2015-01-25 04:37:39"
+        },
+        {
+            "name": "ttree/script",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ttreeagency/Script.git",
+                "reference": "f5d946266146e658ba62e0bf083ba690c0438f73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ttreeagency/Script/zipball/f5d946266146e658ba62e0bf083ba690c0438f73",
+                "reference": "f5d946266146e658ba62e0bf083ba690c0438f73",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/typoscript": "*"
+            },
+            "type": "typo3-flow-package",
+            "extra": {
+                "neos": {
+                    "package-key": "Ttree.Script"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ttree\\Script\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "TypoScript objects to generate a script tag",
+            "keywords": [
+                "TypoScript",
+                "asset",
+                "javascript",
+                "script"
+            ],
+            "time": "2016-03-31 15:14:29"
+        },
+        {
+            "name": "ttree/stylesheet",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ttreeagency/StyleSheet.git",
+                "reference": "a660714ddf427297bf08859dcd112608e69b2136"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ttreeagency/StyleSheet/zipball/a660714ddf427297bf08859dcd112608e69b2136",
+                "reference": "a660714ddf427297bf08859dcd112608e69b2136",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/typoscript": "*"
+            },
+            "type": "typo3-flow-package",
+            "extra": {
+                "neos": {
+                    "package-key": "Ttree.StyleSheet"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ttree\\StyleSheet\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "TypoScript object to generate a link tag",
+            "keywords": [
+                "TypoScript",
+                "asset",
+                "stylesheet"
+            ],
+            "time": "2016-03-31 13:39:44"
         },
         {
             "name": "typo3/eel",
