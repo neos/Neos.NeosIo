@@ -1,0 +1,13 @@
+prototype(Neos.NeosIo:CrowdUser) < prototype(TYPO3.TypoScript:Template) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/CrowdUser.html'
+    sectionName = 'Main'
+
+    attributes = TYPO3.TypoScript:Attributes {
+        class = 'large-6 small-12 columns team-listing__member'
+    }
+
+    gravatarSizePreview = 100
+    gravatarSizeDetail = 160
+
+    user = ${q(site).crowdUser(userName).get()}
+}

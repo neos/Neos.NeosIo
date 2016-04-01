@@ -1,0 +1,16 @@
+prototype(Neos.NeosIo:CrowdGroup) < prototype(TYPO3.TypoScript:Template) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/CrowdGroup.html'
+    sectionName = 'Main'
+    group = ${group}
+    @context.group = ${group}
+
+    attributes = TYPO3.TypoScript:Attributes {
+        class = 'team-listing__group'
+    }
+
+    members = TYPO3.TypoScript:Collection {
+        collection = ${group.members}
+        itemRenderer = Neos.NeosIo:CrowdUser
+        itemName = 'userName'
+    }
+}

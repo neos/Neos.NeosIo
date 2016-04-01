@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns:ts="http://typo3.org/ns/TYPO3/TypoScript/ViewHelpers"
+      xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+<f:section name="Main">
+    <div{attributes -> f:format.raw()}>
+        <header>
+            <h5>{f:if(condition: group.neos_title, then: group.neos_title, else: team.name)}</h5>
+        </header>
+        <f:if condition="{group.neos_summary}">
+            <p>
+                {group.neos_summary}
+            </p>
+        </f:if>
+        <f:if condition="{group.members}">
+            <div class="team-listing__members row">
+                <ts:render path="members" />
+            </div>
+        </f:if>
+    </div>
+</f:section>
+</html>

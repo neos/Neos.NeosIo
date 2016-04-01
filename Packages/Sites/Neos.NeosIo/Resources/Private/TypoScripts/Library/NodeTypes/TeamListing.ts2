@@ -1,8 +1,15 @@
 prototype(Neos.NeosIo:TeamListing) < prototype(TYPO3.Neos:Content) {
+    sectionName = 'Main'
+    attributes.class = 'vertical-feature-block'
 
     teamListingFilter = ${q(node).property('teamListingFilter')}
+    @context.teamListingFilter = ${this.teamListingFilter}
 
-    teamMembers = ${q(site).teamListing().get()}
+    groups = TYPO3.TypoScript:Collection {
+        collection = ${q(site).crowdGroups().filter('[neos_group_type = ' + teamListingFilter + ']').get()}
+        itemRenderer = Neos.NeosIo:CrowdGroup
+        itemName = 'group'
+    }
 
     @cache {
         mode = 'cached'

@@ -1,34 +1,31 @@
 'Neos.NeosIo:TeamListing':
   superTypes:
     'TYPO3.Neos:Content': true
+    'TYPO3.Neos.NodeTypes:TitleMixin': true
   ui:
-    label: 'Team'
+    label: 'Teams & Guilds'
     group: 'plugins'
     icon: 'icon-group'
     inspector:
       groups:
-        teamfilter:
-          label: 'Filtering for Team'
+        options:
+          label: 'Plugin options'
           position: 5
   properties:
     teamListingFilter:
       type: string
       ui:
-        label: 'Team Filter'
+        label: 'What to show'
         reloadIfChanged: TRUE
         inspector:
-          group: 'teamfilter'
+          group: 'options'
           editor: Content/Inspector/Editors/SelectBoxEditor
           editorOptions:
-            placeholder: 'Default'
+            placeholder: 'Select one'
             values:
-              'neos-neos-team-member':
-                label: 'Neos Team Member'
-              'neos-team-minions':
-                label: 'Minions'
-              'neos-team-unicorn':
-                label: 'Unicorn'
-              'neos-team-tiga':
-                label: 'Tiga'
-              'neos-community-member':
-                label: 'Community'
+              '':
+                label: 'None'
+              'team':
+                label: 'Neos teams'
+              'guild':
+                label: 'Neos guilds'

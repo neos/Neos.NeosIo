@@ -1,24 +1,30 @@
-{namespace neos=TYPO3\Neos\ViewHelpers}
-{namespace neosio=Neos\NeosIo\ViewHelpers}
-{namespace blog=RobertLemke\Plugin\Blog\ViewHelpers}
-<div class="row vertical-feature-block team-member">
-    <f:if condition="{teamListingFilter}">
-        <f:then>
-            <h3>{teamListingFilter}</h3>
-            <f:if condition="{teamMembers}">
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+      xmlns:ts="http://typo3.org/ns/TYPO3/TypoScript/ViewHelpers"
+      xmlns:neos="http://typo3.org/ns/TYPO3/Neos/ViewHelpers">
+<f:section name="Main">
+    <div{attributes -> f:format.raw()}>
+        <neos:contentElement.editable property="title"/>
 
-                <f:for each="{teamMembers}" as="member">
-                    <div class="medium-4 columns">
-                        <blog:gravatar email="{member.email}" size="80" default="http://domain.com/gravatar_default.gif" class="gravatar" />
-                        <span>{member.display-name}</span>
-                    </div>
-                </f:for>
-
-            </f:if>
-        </f:then>
-        <f:else>
-            <p>please select a team filter in the inspector</p>
-        </f:else>
-    </f:if>
-    <f:debug>{teamMembers}</f:debug>
-</div>
+        <f:if condition="{teamListingFilter}">
+            <f:then>
+                <f:if condition="{groups}">
+                    <f:then>
+                        <ts:render path="groups" />
+                    </f:then>
+                    <f:else>
+                        <f:if condition="{node.context.workspace.name} != 'live'">
+                            <p>No groups found</p>
+                        </f:if>
+                    </f:else>
+                </f:if>
+            </f:then>
+            <f:else>
+                <f:if condition="{node.context.workspace.name} != 'live'">
+                    <p>Please select a what groups to show in the inspector</p>
+                </f:if>
+            </f:else>
+        </f:if>
+</f:section>
+</html>

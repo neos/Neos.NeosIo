@@ -39,22 +39,7 @@ class CrowdApiConnector extends AbstractApiConnector
             ]);
 
             if (is_array($searchResult) && array_key_exists('groups', $searchResult)) {
-                $groups = array_map(function ($group) {
-                    $groupData = [
-                        'name' => $group['name'],
-                        'description' => array_key_exists('description', $group) ? $group['description'] : '',
-                        'members' => $this->fetchGroupMembers($group['name']),
-                    ];
-
-                    foreach ($group['attributes']['attributes'] as $attribute) {
-                        if (isset($attribute['values'][0])) {
-                            $groupData[$attribute['name']] = $attribute['values'][0];
-                        }
-                    }
-
-                    return $groupData;
-                }, $searchResult['groups']);
-                $this->setItem($cacheKey, $groups);
+               $groups = $this->storeGroups($searchResult['groups']);
             } else {
                 $this->systemLogger->log(sprintf('Unknown error when fetching groups from Crowd Api, see system log'), LOG_ERR, 1456973717);
             }
@@ -115,7 +100,7 @@ class CrowdApiConnector extends AbstractApiConnector
         if (array_key_exists('users', $result)) {
             $groupMembers = array_reduce($result['users'], function ($users, $userData) {
                 if ($userData['active']) {
-                    $users[]= $this->storeUser($userData);
+                    $users[] = $userData['name'];
                 }
                 return $users;
             }, []);
@@ -158,28 +143,30 @@ class CrowdApiConnector extends AbstractApiConnector
      * }
      *
      * @param string $userName
+     * @param bool $useCache
      * @return array|bool The users data or False if no user could be found
      */
-    public function fetchUser($userName)
+    public function fetchUser($userName, $useCache = true)
     {
         $cacheKey = $this->getCacheKey('user__' . $userName);
-        $result = $this->getItem($cacheKey);
+        $user = $useCache ? $this->getItem($cacheKey) : false;
 
-        if ($result === false) {
+        if ($user === false) {
             $this->systemLogger->log('Fetching user from Crowd Api', LOG_INFO, 1456818440);
             $userData = $this->fetchJsonData('getUser', [
                 'username' => $userName,
+                'expand' => 'attributes'
             ]);
 
             if (is_array($userData) && $userData['active']) {
-                $this->storeUser($userData);
+                $user = $this->storeUser($userData);
             } else {
                 $this->systemLogger->log('Unknown error when fetching groups from Crowd Api, see system log',
                     LOG_ERR, 1456973717);
             }
         }
 
-        return $result;
+        return $user;
     }
 
     /**
@@ -189,19 +176,55 @@ class CrowdApiConnector extends AbstractApiConnector
     protected function storeUser(array $userData)
     {
         $cacheKey = $this->getCacheKey('user__' . $userData['name']);
+
         $user = [
             'name' => $userData['name'],
-            'firstName' => $userData['first-name'],
-            'lastName' => $userData['last-name'],
+            'display-name' => $userData['display-name'],
             'email' => $userData['email'],
-            'displayName' => $userData['display-name'],
+            'first-name' => $userData['first-name'],
+            'last-name' => $userData['last-name'],
         ];
+
+        // Add custom attributes
+        foreach ($userData['attributes']['attributes'] as $attribute) {
+            if (isset($attribute['values'][0])) {
+                $user[$attribute['name']] = $attribute['values'][0];
+            }
+        }
+
         $this->setItem($cacheKey, $user);
         return $user;
     }
 
     /**
-     * Remotely sets the given attributes in crowd
+     * @param array $groupsData
+     */
+    protected function storeGroups(array $groupsData)
+    {
+        $groups = array_map(function ($group) {
+            // Add crowd base attributes and members
+            $groupData = [
+                'name' => $group['name'],
+                'description' => array_key_exists('description', $group) ? $group['description'] : '',
+                'members' => $this->fetchGroupMembers($group['name']),
+            ];
+
+            // Add custom attributes
+            foreach ($group['attributes']['attributes'] as $attribute) {
+                if (isset($attribute['values'][0])) {
+                    $groupData[$attribute['name']] = $attribute['values'][0];
+                }
+            }
+
+            return $groupData;
+        }, $groupsData);
+
+        $this->setItem($this->getCacheKey('groups'), $groups);
+        return $groups;
+    }
+
+    /**
+     * Remotely sets the given groups attributes in crowd
      *
      * @param string $groupName
      * @param array $attributes A key value list of attributes and their desired values

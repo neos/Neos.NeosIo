@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+      xmlns:gravatar="http://typo3.org/ns/Flownative/Gravatar/ViewHelpers">
+<f:section name="Main">
+    <div{attributes -> f:format.raw()}>
+        <a href="#" data-reveal-id="member-modal-{user.name}">
+            <gravatar:gravatar email="{user.email}" size="{gravatarSizePreview}" default="retro" class="gravatar"
+                               width="{gravatarSizePreview}" height="{gravatarSizePreview}"/>
+            <strong>{user.display-name}</strong>
+        </a>
+
+        <div class="reveal-modal small" id="member-modal-{user.name}" data-reveal aria-labelledby="{user.display-name}"
+             aria-hidden="true" role="dialog">
+            <div class="team-listing__member-modal">
+                <h4>{user.display-name}</h4>
+
+                <div class="team-listing__portrait">
+                    <gravatar:gravatar email="{user.email}" size="{gravatarSizeDetail}" default="retro" class="gravatar"
+                                       width="{gravatarSizeDetail}" height="{gravatarSizeDetail}" />
+                </div>
+
+                <div class="team-listing__details">
+                    <ul>
+                        <li><b>Slack / Jira:</b> @{user.name}</li>
+                        <f:for each="{user.additionalProperties}" key="property" as="value">
+                            <li><b><f:translate id="attribute.{property}" source="CrowdApi" package="Neos.NeosIo"/></b> {value}</li>
+                        </f:for>
+                    </ul>
+
+                    <f:if condition="{user.memberships}">
+                        <strong>Memberships</strong>
+                        <ul>
+                            <f:for each="{user.memberships}" as="group">
+                                <li>{f:if(condition: group.neos_title, then: group.neos_title, else: group.name)}</li>
+                            </f:for>
+                        </ul>
+                    </f:if>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:section>
+</html>
