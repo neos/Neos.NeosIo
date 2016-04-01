@@ -72,6 +72,14 @@
 		border-radius: 30px;
 		width: 101%;
 	}
+
+	//
+	// Disable the :hover effect while viewing the site in the neos backend since it creates
+	// an overlaying div which would prevent the inline editing of the label.
+	//
+	.neos-backend &:before {
+		display: none;
+	}
 }
 
 /*
