@@ -1,4 +1,0 @@
-prototype(Neos.NeosIo:SectionMenu) < prototype(TYPO3.TypoScript:Template) {
-	templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/SectionMenu.html'
-	items = ${q(documentNode).children('main').children('[instanceof Neos.NeosIo:Section][showInSectionMenu = true]')}
-}
