@@ -1,13 +1,13 @@
 import {component} from '@reduct/component';
 import propTypes from '@reduct/nitpick';
-import debounce from 'lodash.debounce';
+import throttle from 'lodash.throttle';
 
 @component({
 	scrollClasses: propTypes.object.isRequired
 })
 export default class ScrollClassToggler {
 	constructor() {
-		const handler = debounce(() => {
+		const handler = throttle(() => {
 			const currentScrollPos = window.scrollY;
 			const lastScrollPos = this.state.currentScrollPos;
 
@@ -16,7 +16,7 @@ export default class ScrollClassToggler {
 			});
 
 			this.evaluateState(currentScrollPos, lastScrollPos);
-		});
+		}, 250);
 
 		window.addEventListener('scroll', handler);
 	}
@@ -41,7 +41,7 @@ export default class ScrollClassToggler {
 			const data = scrollClasses[key];
 			const {className, removeOnScrollDecrease} = data;
 			const method = (
-				// General check and add / remove logic.
+				// General check if the class should be added or removed.
 				currentScrollPos > targetScrollPoint &&
 
 				// In case `removeOnScrollDecrease` was set to `true`, remove the class on scroll up.
