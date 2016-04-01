@@ -16,15 +16,24 @@ Neos:
       timeout: 30
       actions:
         search: '/search.json'
+
         getGroup: '/group.json'
         getGroupMembers: '/group/user/direct.json'
-        getUser: '/user.json'
         setGroupAttributes: '/group/attribute.json'
+
+        getUser: '/user.json'
+        setUserAttributes: '/user/attribute.json'
+
       parameters:
         active: true # Always search for active records
-      additionalAttributes:
+
+      additionalAttributes: # List of valid additional attributes for crowd entities
         group:
           - neos_group_type # Something like 'team' or 'guild'
           - neos_title # A human readable name for the group
           - neos_summary # A short summary describing the group
-        user: []
+        user:
+          - neos_website
+          - neos_skype
+          - neos_twitter
+          - neos_origin

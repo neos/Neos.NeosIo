@@ -67,6 +67,33 @@ class CrowdCommandController extends CommandController
     }
 
     /**
+     * Retrieves a user from crowd and prints their attributes
+     * @param string $userName
+     */
+    public function showUserCommand($userName)
+    {
+        $validAttributes = $this->settings['additionalAttributes']['user'];
+        $headerRow = ['Name', 'Fullname'];
+
+        foreach ($validAttributes as $attribute) {
+            $headerRow[] = $this->translator->translateById('attribute.' . $attribute, [], null, null, 'CrowdApi',
+                'Neos.NeosIo');
+        }
+
+        $user = $this->crowdApiConnector->fetchUser($userName, false);
+        $attributes = [
+            $user['name'],
+            $user['display-name'],
+        ];
+
+        foreach ($validAttributes as $attribute) {
+            $attributes[] = array_key_exists($attribute, $user) ? $user[$attribute] : '';
+        }
+
+        $this->output->outputTable([$attributes], $headerRow);
+    }
+
+    /**
      * Sets the value of the given attribute in crowd.
      * Only predefined attributes are allowed.
      *
@@ -95,6 +122,39 @@ class CrowdCommandController extends CommandController
             } else {
                 $this->outputFormatted('Failed setting attribute "%s" for group "%s" to "%s". Check the log for errors.',
                     [$attribute, $groupName, $value]);
+            }
+        }
+    }
+
+    /**
+     * Sets the value of the given attribute in crowd.
+     * Only predefined attributes are allowed.
+     *
+     * @param string $userName
+     * @param string $attribute
+     * @param string $value
+     */
+    public function setUserAttributeCommand($userName, $attribute, $value)
+    {
+        $validAttributes = $this->settings['additionalAttributes']['user'];
+
+        if (!in_array($attribute, $validAttributes)) {
+            $this->outputFormatted('The attribute "%s" is not in the list of allowed attributes "%s"', [
+                $attribute,
+                join(', ', $validAttributes),
+            ]);
+        } else if (empty($value)) {
+            $this->outputFormatted('The value for attribute "%s" cannot be empty', [$attribute]);
+        } else if (empty($userName)) {
+            $this->outputLine('The username cannot be empty');
+        } else {
+            $result = $this->crowdApiConnector->setUserAttributes($userName, [$attribute => $value]);
+
+            if ($result) {
+                $this->outputFormatted('Set attribute "%s" for user "%s" to "%s"', [$attribute, $userName, $value]);
+            } else {
+                $this->outputFormatted('Failed setting attribute "%s" for user "%s" to "%s". Check the log for errors.',
+                    [$attribute, $userName, $value]);
             }
         }
     }

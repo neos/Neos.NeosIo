@@ -21,21 +21,7 @@ class CrowdApiConnector extends AbstractApiConnector
     protected $apiSettings;
 
     /**
-     * Retrieves data for sold badges
-     *
-     * Result:
-     *  {
-     *      {
-     *          "customerName": "great company",
-     *          "customerLogo": "http://absolute.link.to/logo-image.png",
-     *          "customerSum": 1200,
-     *          "badgeType": "MonthlyBronze",
-     *          "fundingType": "MonthlyBronze"
-     *          "startDate": "2015-10-08",
-     *          "endDate": "2016-07-08"
-     *      },
-     *      ...
-     *  }
+     * Retrieves the list of groups from crowd
      *
      * @param bool $useCache
      * @return array
@@ -238,5 +224,31 @@ class CrowdApiConnector extends AbstractApiConnector
         $this->unsetItem($this->getCacheKey('groups'));
 
         return $this->postJsonData('setGroupAttributes', ['groupname' => $groupName], $attributesData);
+    }
+
+    /**
+     * Remotely sets the given users attributes in crowd
+     *
+     * @param string $userName
+     * @param array $attributes A key value list of attributes and their desired values
+     * @return bool
+     */
+    public function setUserAttributes($userName, array $attributes)
+    {
+        $attributesData = [
+            'attributes' => []
+        ];
+
+        foreach ($attributes as $attribute => $value) {
+            $attributesData['attributes'][]= [
+                'name' => $attribute,
+                'values' => [$value], // Crowd expects an array here
+            ];
+        }
+
+        // Flush cached user after modifying one of them
+        $this->unsetItem($this->getCacheKey('user__' . $userName));
+
+        return $this->postJsonData('setUserAttributes', ['username' => $userName], $attributesData);
     }
 }
