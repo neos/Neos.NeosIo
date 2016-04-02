@@ -1,10 +1,6 @@
-/**
- * Headings
- */
-
-/*
- * The base class for all headings.
- */
+//
+// The base class for all headings.
+//
 @mixin h() {
 	margin: 0;
 	color: #3b444f;
@@ -23,9 +19,18 @@
 	@include h();
 }
 
-/*
- * Heading modifiers
- * Styles the heading without changing it's importance for SEO robots etc.
+/**
+ * Headings:
+ * Each heading has a duplicate class which can be used to style headings differently from the semantic meaning.
+ * F.e. if you want your `h3` to look like an `h1`, just apply the `.h1` class to it.
+ *
+ *      @example
+ *     h1 This is an first level heading
+ *     h2 This is an second level heading
+ *     h3 This is an third level heading
+ *     h4 This is an fourth level heading
+ *     h5 This is an fifth level heading
+ *     h6 This is an sixth level heading
  */
 @mixin h1() {
 	font-size: 3em;
@@ -68,12 +73,12 @@
 }
 @mixin h5() {
 	font-size: 1em;
-	font-weight: $thin;
 
 	@extend %h;
 }
 @mixin h6() {
 	font-size: 1em;
+	font-weight: $regular;
 
 	@extend %h;
 }
@@ -95,12 +100,4 @@ h5, .h5 {
 }
 h6, .h6 {
 	@include h6();
-}
-
-// Intro sub-headline
-.h--introSub {
-	margin-bottom: -4px;
-	margin-top: 4px;
-	font-size: 14px;
-	font-weight: $bold;
 }

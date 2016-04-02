@@ -1,10 +1,6 @@
-/**
- * Form inputs
- */
-
- /*
- * Base styling for form input fields.
- */
+//
+// Base styling for form input fields.
+//
 textarea {
 	// Resets the height since textareas have the rows="" attribute.
 	height: auto;
@@ -37,15 +33,21 @@ input {
 	}
 }
 
+//
 // Fix the font-settings for input placeholders since they wont get inherited from parent elements e.g. <body>.
+//
 input, textarea {
 	@include placeholder() {
 		font: $base-font-weight #{$base-font-size/16*100}%/#{$base-line-height/$base-font-size} $base-font-family;
 	}
 }
 
-/*
- * The base class for all textInputs.
+/**
+ * Text inputs:
+ * `.textInput`: The base class for all text related input nodes.
+ *
+ *     @example
+ *     <input class="textInput" />
  */
 @mixin textInput() {
 	height: $base-line-height*1.5 + px;
@@ -59,13 +61,16 @@ input, textarea {
 	font-size: rs(14, $unit: rem);
 	color: lighten($base-text-color, 5%);
 }
-
 .textInput {
 	@include textInput();
 }
 
-/*
- * Disabled state for inputs.
+/**
+ * Disabled text inputs:
+ * `.textInput--disabled`: The disabled modifier for all text related input nodes.
+ *
+ *     @example
+ *     <input class="textInput textInput--disabled" value="Foo Bar" />
  */
 @mixin textInput--disabled() {
 	opacity: .5;
@@ -76,8 +81,12 @@ input, textarea {
 	@include textInput--disabled();
 }
 
-/*
- * Positive validated state for inputs.
+/**
+ * Valid text inputs:
+ * `.textInput--success`: The valid modifier for all text related input nodes.
+ *
+ *     @example
+ *     <input class="textInput textInput--success" value="Foo Bar" />
  */
 @mixin textInput--success() {
 	border-color: $color-positive;
@@ -86,8 +95,12 @@ input, textarea {
 	@include textInput--success();
 }
 
-/*
- * Negative validated state for inputs.
+/**
+ * Invalid text inputs:
+ * `.textInput--failure`: The invalid modifier for all text related input nodes.
+ *
+ *     @example
+ *     <input class="textInput textInput--failure" value="Foo Bar" />
  */
 @mixin textInput--failure() {
 	border-color: $color-negative;

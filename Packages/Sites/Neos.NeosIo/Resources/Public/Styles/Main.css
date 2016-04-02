@@ -2,16 +2,8 @@
 @viewport {
   width: device-width; }
 
-/**
- * Brics - A Starter Sass-Kit which embraces OOCSS, BEM and the Atomic Design-Approach.
- * @version 1.3.2
- * @see https://inkdpixels.github.io/Brics/
- */
-/**
- * Declarations which should be put at the top of the document e.g. @font-face declarations and CSS viewports.
- */
 /*
- * Global border-box
+ * Declarations which should be put at the top of the document e.g. @font-face declarations and CSS viewports.
  */
 html {
   box-sizing: border-box; }
@@ -19,7 +11,7 @@ html {
 *, *:before, *:after {
   box-sizing: inherit; }
 
-/**
+/*
  * Normalize
  *
  * A cut-down version of normalize.css
@@ -104,12 +96,6 @@ input::-moz-focus-inner {
   border: 0;
   padding: 0; }
 
-/**
- * Collection of CSS3 Keyframe Animations.
- */
-/*
- * Scales the element up to it's initial proportions and fades it into the viewport.
- */
 @keyframes ScaledUpFadeIn {
   0% {
     transform: scale(0.4);
@@ -121,9 +107,6 @@ input::-moz-focus-inner {
 .u-aniScaledUpFadeIn {
   animation: ScaledUpFadeIn 0.3s both; }
 
-/*
- * Moves the element from the top into the users viewport.
- */
 @keyframes FlyDown {
   0% {
     transform: translateY(-20px);
@@ -135,9 +118,6 @@ input::-moz-focus-inner {
 .u-aniFlyDown {
   animation: FlyDown 0.3s both; }
 
-/*
- * Moves the element from the bottom out of the users viewport.
- */
 @keyframes FlyUpOut {
   0% {
     transform: translateY(0);
@@ -150,9 +130,6 @@ input::-moz-focus-inner {
   pointer-events: none;
   animation: FlyUpOut 0.3s both; }
 
-/*
- * Pulsates(fade out and in) an element.
- */
 @keyframes Pulsate {
   0% {
     opacity: 1; }
@@ -162,21 +139,12 @@ input::-moz-focus-inner {
     opacity: 1; } }
 
 .u-aniPulsate {
-  animation: Pulsate 0.3s infinite both; }
+  animation: Pulsate 0.3s infinite ease-in-out; }
 
-/**
- * Helper classes for brand related stylings.
- */
-/*
- * Brand text styles.
- */
 .u-brand {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #0097d7; }
 
-/*
- * Brand color helpers.
- */
 .u-brandColor-primary {
   color: #0097d7; }
 
@@ -186,15 +154,9 @@ input::-moz-focus-inner {
 .u-brandColor-teritary {
   color: #34363C; }
 
-/*
- * Brand font-family helper.
- */
 .u-brandFace {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
-/*
- * Brand logos.
- */
 .u-brandLogo {
   display: inline-block;
   width: 330px;
@@ -211,44 +173,77 @@ input::-moz-focus-inner {
   height: 50px; }
 
 /**
- * Display utilities
- */
-/*
- * Display the target as an block element.
+ * `u-isBlock`:
+ * Sets the display mode of the given node to `block`.
+ *
+ *     @example
+ *     <div>
+ *       <span class="u-isBlock">This text should occupy the whole row even though it's a span node.</span>
+ *       <span>Lorem ipsum dolor sit...</span>
+ *     </div>
  */
 .u-isBlock {
   display: block !important; }
 
-/*
- * Hide from both screenreaders and browsers: http://www.h5bp.com/u
+/**
+ * `u-isHidden`:
+ * Hides the given node from both screenreaders and browsers.
+ *
+ *     @example
+ *     <div>
+ *       <span class="u-isHidden">This text should not be visible.</span>
+ *       <span>Lorem ipsum dolor sit...</span>
+ *     </div>
  */
 .u-isHidden {
   display: none !important;
   visibility: hidden; }
 
-/*
- * Hide visually and from screenreaders, but maintain layout.
+/**
+ * `u-isInvisible`:
+ * Hides the given node visually and from screenreaders, but maintains the layout.
+ *
+ *     @example
+ *     <div>
+ *       <span class="u-isInvisible">This text should not be visible but should maintain it's layout.</span>
+ *       <span>Lorem ipsum dolor sit...</span>
+ *     </div>
  */
 .u-isInvisible {
   visibility: hidden; }
 
 /**
- * Layout utilities
- */
-/*
- * Floats the element to the right boundary.
+ * `u-floatRight`:
+ * Floats the element to it's right boundary.
+ *
+ *     @example
+ *     <div class="u-cf">
+ *       <div class="u-floatRight">This text should not be visible but should maintain it's layout.</div>
+ *     </div>
  */
 .u-floatRight {
   float: right; }
 
-/*
- * Floats the element to the left boundary.
+/**
+ * `u-floatLeft`:
+ * Floats the element to it's left boundary.
+ *
+ *     @example
+ *     <div class="u-cf">
+ *       <div class="u-floatLeft">This text should not be visible but should maintain it's layout.</div>
+ *     </div>
  */
 .u-floatLeft {
   float: left; }
 
-/*
- * Clearfix for floated elements.
+/**
+ * `u-floatLeft`:
+ * Clearfix for floated elements, which should be applied to the sorrounding element.
+ *
+ *     @example
+ *     <div class="u-cf">
+ *       <div class="u-floatRight">This text should not be visible but should maintain it's layout.</div>
+ *     </div>
  */
 .u-cf:before, .u-cf:after,
 .u-clearfix:before,
@@ -261,7 +256,20 @@ input::-moz-focus-inner {
   clear: both; }
 
 /**
- * Spacing utilities
+ * Spacing utilities:
+ * Short utility classes for applying spacings to nodes. The name scheme is pretty simple.
+ * Each class begins with `u-` followed by either `p` for padding, or `m` for margin, which is
+ * then followed by the optional direction of `t` for a top margin, `r` for a right margin and so on.
+ * After specifying the direction, the unit of spacing needs to be specified.
+ * Since we follow a strict vertical rythm, you have two options available, either `1/2` for half of a
+ * typographic rythm spacing or `1/1` for one whole spacing of the typographic rythm.
+ *
+ * For example, if you want your div to include a whole bottom padding, the class would be `u-pb1/1`.
+ *
+ *     @example
+ *     <div class="u-pb1/1">
+ *       This div should have a bottom padding of one whole typographic row.
+ *     </div>
  */
 .u-m0 {
   margin: 0 !important; }
@@ -354,53 +362,63 @@ input::-moz-focus-inner {
   padding-top: 0.8125rem; }
 
 /**
- * Typographic utilities
- */
-/*
- * Centers the text.
+ * Text alignment utilities:
+ *
+ *     @example
+ *     <div>
+ *       <div class="u-alignRight">This text should be align on the right boundary.</div>
+ *       <div class="u-alignCenter">This text should be center algined.</div>
+ *       <div class="u-alignLeft">This text should be align on the left boundary.</div>
+ *     </div>
  */
 .u-alignCenter {
   text-align: center; }
 
-/*
- * Aligns the text to the right boundary.
- */
 .u-alignRight {
   text-align: right; }
 
-/*
- * Aligns the text to the left boundary.
- */
 .u-alignLeft {
   text-align: left; }
 
-/*
- * Reduces the font-size to the smallest value.
- */
-.u-tinyText {
-  font-size: 0.8125rem; }
-
-/*
- * Less important text.
+/**
+ * Text size utilities:
+ *
+ *     @example
+ *     <div>
+ *       <div>This text should be normal sized.</div>
+ *       <div class="u-microCopy">This text should be micro sized.</div>
+ *       <div class="u-largeText">This text should be large sized.</div>
+ *     </div>
  */
 .u-microCopy {
   font-size: 14px; }
 
-/*
- * Enlarges the font-size to the smallest value.
- */
 .u-largeText {
   font-size: 1.375rem; }
 
-/*
+/**
+ * Text break utility:
  * Break strings/text if it exceeds the boundaries of their container.
+ *
+ *     @example
+ *     <div>
+ *       <div>Thiswordwillexpandtheboundariessssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</div>
+ *       <div class="u-textBreak">Thiswordwontexpandtheboundariessssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</div>
+ *     </div>
  */
 .u-textBreak {
   word-wrap: break-word;
   hyphens: auto; }
 
-/*
+/**
+ * Text invert utility:
  * Inverts the text on the element and it's siblings.
+ *
+ *     @example
+ *     <div style="background: #000;">
+ *       <div>This text should hardly be visible since it has the standard color.</div>
+ *       <div class="u-invertText">This text should be easily visible since it is white coloured.</div>
+ *     </div>
  */
 .u-invertText,
 .u-invertText h1, .u-invertText h2, .u-invertText h3,
@@ -410,16 +428,32 @@ input::-moz-focus-inner {
 .u-invertText .btn--solidBright {
   color: #656a71; }
 
-/*
+/**
+ * List reset utility:
  * Removes all standard stylings for a list element and it's siblings.
+ *
+ *     @example
+ *     <ul>
+ *       <li>This is standard list item.</li>
+ *       <li>This is yet another list item.</li>
+ *     </ul>
+ *     <ul class="u-resetList">
+ *       <li>This is unstyled list item.</li>
+ *       <li>This is yet another list item.</li>
+ *     </ul>
  */
 .u-resetList {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none; }
 
-/*
+/**
+ * Link reset utility:
  * Removes all standard stylings for an anchor/link element.
+ *
+ *     @example
+ *     <a href="#">This is a default styled link</a>
+ *     <a href="#" class="u-linkReset">This is a link without styles</a>
  */
 .u-linkReset {
   color: currentColor; }
@@ -429,6 +463,26 @@ input::-moz-focus-inner {
     padding: 0;
     margin: 0; }
 
+/**
+ * Width utilities:
+ * Short utility width are responsive and mobile first.
+ * As with every utility class, it is namespaced with `u-` and `w` for width.
+ *
+ * Afterwards you can specify the optional breakpoint. Values can be found in the _Variables.scss
+ * in the $mq-breakpoints variable. For demonstration purposes we will use `small` breakpoint which
+ * is referenced by the `s`.
+ *
+ * Now let's specify the target width - Since they are percentage based, we use a fraction number, f.e. `1/1` for one whole,
+ * `1/2` for one half and so on. We provide you with widths up to `1/12´or one twelfths.
+ *
+ * Our finished class could look like `u-ws1/4` - Which applies a one quarter width on the small breakpoint and upwards.
+ *
+ *     @example
+ *     <div class="u-w1/1 u-wm1/2 u-wl1/3" style="background: #ccc;">
+ *       This div should cover the whole width on the small screens, the half on
+ *       medium screens and one third on large screens and upwards.
+ *     </div>
+ */
 /**
  * Sizes which are used in conjunction with other objects and abstractions like the grid system.
  */
@@ -848,10 +902,11 @@ input::-moz-focus-inner {
   margin-bottom: 1.625rem; }
 
 /**
- * Alert
-*/
-/*
- * The base class for all alerts.
+ * Base Alert:
+ * `.alert` - Themes the given node to a system info message.
+ *
+ *     @example
+ *     <div class="alert">Hello world!</div>
  */
 .alert {
   padding: 0.8125em;
@@ -862,20 +917,35 @@ input::-moz-focus-inner {
   .alert :last-child {
     margin-bottom: 0; }
 
-/*
- * Display a positive / success alert to the user.
+/**
+ * Success Alert:
+ * `.alert--success` - Themes the given alert to a successfull system message.
+ *
+ *     @example
+ *     <div class="alert alert--success">Success!</div>
  */
 .alert--success {
   background-color: #8CD700;
   color: white; }
 
-/*
- * Display a negative / failure alert to the user.
+/**
+ * Failure Alert:
+ * `.alert--failure` - Themes the given alert to a failure system message.
+ *
+ *     @example
+ *     <div class="alert alert--failure">Failure!</div>
  */
 .alert--failure {
   background-color: #D75200;
   color: white; }
 
+/**
+ * Avatar:
+ * `.avatar` - Themes the given image to a round avatar with a slight right margin.
+ *
+ *     @example
+ *     <img class="avatar" src="http://placehold.it/125"> Max Mustermann
+ */
 .avatar {
   border-radius: 100%;
   margin-right: 1em; }
@@ -901,10 +971,13 @@ body {
   margin-right: auto; }
 
 /**
- * Buttons
-*/
-/*
- * The base class for all buttons.
+ * Base Button:
+ * `.btn` - The base class for all buttons.
+ * Button styles can be applied to any element. Typically you'll want to use
+ * either a `<button>` or an `<a>` element:
+ *
+ *     @example
+ *     a.btn My Button
  */
 .btn {
   display: inline-block;
@@ -917,7 +990,8 @@ body {
   color: currentColor;
   vertical-align: top;
   transition: all 0.3s ease;
-  text-align: center; }
+  text-align: center;
+  background: 0; }
   .btn + .btn {
     margin-left: 1em; }
   .btn, .btn:hover, .btn:active, .btn:focus {
@@ -930,8 +1004,12 @@ body {
 /*
  * A basic :hover effect for all solid buttons.
  */
-/*
- * Set the button width to the width of it's parent element.
+/**
+ * Full-Width Button:
+ * `.btn--full` - Set the button width to the width of it's parent element.
+ *
+ *     @example
+ *     a.btn.btn--full My Button
  */
 .btn--full {
   display: block;
@@ -940,8 +1018,12 @@ body {
   padding-left: 0;
   width: 100%; }
 
-/*
- * Bordered primary button.
+/**
+ * Bordered Primary Button:
+ * `.btn--primary` - Sets the button to a bordered button which is themed after the primary brand color.
+ *
+ *     @example
+ *     a.btn.btn--primary My Button
  */
 .btn--primary {
   color: #0097d7;
@@ -950,8 +1032,12 @@ body {
     color: #00a9f1;
     box-shadow: 0 0 8px rgba(0, 169, 241, 0.3); }
 
-/*
- * Solid primary button.
+/**
+ * Solid Primary Button:
+ * `.btn--solidPrimary` - Sets the button to a solid button which is themed after the primary brand color.
+ *
+ *     @example
+ *     a.btn.btn--solidPrimary My Button
  */
 .btn--solidPrimary {
   background: #0097d7;
@@ -977,8 +1063,12 @@ body {
   .neos-backend .btn--solidPrimary:before {
     display: none; }
 
-/*
- * Bordered secondary button.
+/**
+ * Bordered Secondary Button:
+ * `.btn--secondary` - Sets the button to a bordered button which is themed after the secondary brand color.
+ *
+ *     @example
+ *     a.btn.btn--secondary My Button
  */
 .btn--secondary {
   color: #15C050;
@@ -987,8 +1077,12 @@ body {
     color: #18d75a;
     box-shadow: 0 0 8px rgba(24, 215, 90, 0.5); }
 
-/*
- * Solid secondary button.
+/**
+ * Solid Secondary Button:
+ * `.btn--solidSecondary` - Sets the button to a solid button which is themed after the secondary brand color.
+ *
+ *     @example
+ *     a.btn.btn--solidSecondary My Button
  */
 .btn--solidSecondary {
   background: #15C050;
@@ -1014,16 +1108,28 @@ body {
   .neos-backend .btn--solidSecondary:before {
     display: none; }
 
-/*
- * Bordered bright button.
+/**
+ * Bordered Bright Button:
+ * `.btn--bright` - Sets the button to a bordered button which is themed in white.
+ *
+ *     @example
+ *     <div style="background:#000;">
+ *       <a class="btn btn--bright">My Button</a>
+ *     </div>
  */
 .btn--bright {
   color: #FFF; }
   .btn--bright:hover {
     opacity: .8; }
 
-/*
- * Solid secondary button.
+/**
+ * Solid Bright Button:
+ * `.btn--solidBright` - Sets the button to a solid button which is themed in white.
+ *
+ *     @example
+ *     <div style="background:#000;">
+ *       <a class="btn btn--solidBright">My Button</a>
+ *     </div>
  */
 .btn--solidBright {
   background: #FFF;
@@ -1032,8 +1138,14 @@ body {
   .btn--solidBright:hover {
     opacity: .8; }
 
-/*
- * A label which can be placed between two buttons to enhance the relation between them.
+/**
+ * Button Choice label:
+ * `.btnChoiceLabel` - Themes the given node to a choice label which ideally should be placed between two `.btn`'s'.
+ *
+ *     @example
+ *     <a href="" class="btn">Do this</a>
+ *     <span class="btnChoiceLabel">or</span>
+ *     <a href="" class="btn">Do that!</a>
  */
 .btnChoiceLabel {
   border-radius: 100%;
@@ -1079,12 +1191,21 @@ fieldset {
   margin: 0;
   padding: 0; }
 
+/**
+ * Hamburger Icon:
+ *
+ *     @example
+ *     span.hamburger
+ *       span.hamburger__line.hamburger__line--top
+ *       span.hamburger__line
+ *       span.hamburger__line.hamburger__line--bottom
+ */
 .hamburger {
   position: relative;
   display: inline-block;
   width: 24px;
   height: 18px;
-  color: #FFF; }
+  color: currentColor; }
 
 .hamburger--active {
   color: #656a71; }
@@ -1109,6 +1230,24 @@ fieldset {
   .hamburger--active .hamburger__line--bottom {
     transform: translate3d(8px, -1px, 0) rotate(-45deg) scaleX(0.7); }
 
+/**
+ * Hamburger Icon (Active):
+ *
+ *     @example
+ *     span.hamburger.hamburger--active
+ *       span.hamburger__line.hamburger__line--top
+ *       span.hamburger__line
+ *       span.hamburger__line.hamburger__line--bottom
+ */
+/**
+ * Icons:
+ * Icons are added via inline svg's. Add the base class `i` to it and you will have a consistent
+ * icon style applied to your icons. The icon itself will always be colored in the current color
+ * of your content node.
+ *
+ *     @example
+ *     <svg class="i" viewBox="0 0 24 24"><path d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L6.04,7.5L12,10.85L17.96,7.5L12,4.15M5,15.91L11,19.29V12.58L5,9.21V15.91M19,15.91V9.21L13,12.58V19.29L19,15.91Z"></path></svg>
+ */
 .i {
   display: inline-block;
   width: 30px;
@@ -1117,27 +1256,37 @@ fieldset {
   vertical-align: middle;
   fill: currentColor; }
 
+/**
+ * Large icon:
+ *
+ *     @example
+ *     <svg class="i i--large" viewBox="0 0 24 24"><path d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L6.04,7.5L12,10.85L17.96,7.5L12,4.15M5,15.91L11,19.29V12.58L5,9.21V15.91M19,15.91V9.21L13,12.58V19.29L19,15.91Z"></path></svg>
+ */
 .i--large {
   width: 60px;
   height: 60px; }
 
+/**
+ * Huge icon:
+ *
+ *     @example
+ *     <svg class="i i--huge" viewBox="0 0 24 24"><path d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L6.04,7.5L12,10.85L17.96,7.5L12,4.15M5,15.91L11,19.29V12.58L5,9.21V15.91M19,15.91V9.21L13,12.58V19.29L19,15.91Z"></path></svg>
+ */
 .i--huge {
   width: 220px;
   height: 220px; }
 
+/**
+ * Padded icon:
+ * Adds a top and bottom margin to the icon.
+ *
+ *     @example
+ *     <svg class="i i--padded" viewBox="0 0 24 24"><path d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L6.04,7.5L12,10.85L17.96,7.5L12,4.15M5,15.91L11,19.29V12.58L5,9.21V15.91M19,15.91V9.21L13,12.58V19.29L19,15.91Z"></path></svg>
+ */
 .i--padded {
   margin-top: 3em !important;
   margin-bottom: 3em !important; }
 
-.i--primary {
-  fill: #0097d7; }
-
-/**
- * Headings
- */
-/*
- * The base class for all headings.
- */
 .h, h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   margin: 0;
   color: #3b444f;
@@ -1146,9 +1295,18 @@ fieldset {
   a .h, a h1, a .h1, a h2, a .h2, a h3, a .h3, a h4, a .h4, a h5, a .h5, a h6, a .h6 {
     color: currentColor; }
 
-/*
- * Heading modifiers
- * Styles the heading without changing it's importance for SEO robots etc.
+/**
+ * Headings:
+ * Each heading has a duplicate class which can be used to style headings differently from the semantic meaning.
+ * F.e. if you want your `h3` to look like an `h1`, just apply the `.h1` class to it.
+ *
+ *      @example
+ *     h1 This is an first level heading
+ *     h2 This is an second level heading
+ *     h3 This is an third level heading
+ *     h4 This is an fourth level heading
+ *     h5 This is an fifth level heading
+ *     h6 This is an sixth level heading
  */
 h1, .h1 {
   font-size: 3em;
@@ -1176,24 +1334,12 @@ h4, .h4 {
   font-size: 1.25em; }
 
 h5, .h5 {
-  font-size: 1em;
-  font-weight: 100; }
-
-h6, .h6 {
   font-size: 1em; }
 
-.h--introSub {
-  margin-bottom: -4px;
-  margin-top: 4px;
-  font-size: 14px;
-  font-weight: 700; }
+h6, .h6 {
+  font-size: 1em;
+  font-weight: 400; }
 
-/**
- * Form inputs
- */
-/*
- * Base styling for form input fields.
- */
 textarea {
   height: auto;
   min-height: 78px;
@@ -1224,8 +1370,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 input:placeholder, textarea:placeholder {
   font: 400 100% / 1.625 "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
-/*
- * The base class for all textInputs.
+/**
+ * Text inputs:
+ * `.textInput`: The base class for all text related input nodes.
+ *
+ *     @example
+ *     <input class="textInput" />
  */
 .textInput {
   height: 39px;
@@ -1237,22 +1387,34 @@ input:placeholder, textarea:placeholder {
   font-size: 0.875rem;
   color: #71777e; }
 
-/*
- * Disabled state for inputs.
+/**
+ * Disabled text inputs:
+ * `.textInput--disabled`: The disabled modifier for all text related input nodes.
+ *
+ *     @example
+ *     <input class="textInput textInput--disabled" value="Foo Bar" />
  */
 .textInput[disabled],
 .textInput--disabled {
   opacity: .5;
   pointer-events: none; }
 
-/*
- * Positive validated state for inputs.
+/**
+ * Valid text inputs:
+ * `.textInput--success`: The valid modifier for all text related input nodes.
+ *
+ *     @example
+ *     <input class="textInput textInput--success" value="Foo Bar" />
  */
 .textInput--success {
   border-color: #8CD700; }
 
-/*
- * Negative validated state for inputs.
+/**
+ * Invalid text inputs:
+ * `.textInput--failure`: The invalid modifier for all text related input nodes.
+ *
+ *     @example
+ *     <input class="textInput textInput--failure" value="Foo Bar" />
  */
 .textInput--failure {
   border-color: #D75200; }
@@ -1387,7 +1549,10 @@ blockquote {
   margin: 0 0 1.625em; }
 
 /**
- * Rulers
+ * Horizontal ruler:
+ *
+ *     @example
+ *     <hr>
  */
 hr {
   -moz-box-sizing: content-box;
@@ -1454,27 +1619,19 @@ sub {
   bottom: -0.25em; }
 
 /**
- * Button group
- * Displays a set of buttons in a group.
+ * Table grid:
+ * Creates a table like grid which should be used with the utility width classes.
+ * Used in the FactsGrid f.e.
+ *
+ *     @example
+ *     <div class="tableGrid">
+ *       <div class="tableGrid__item u-w1/2 u-wm1/4">Item 1</div>
+ *       <div class="tableGrid__item u-w1/2 u-wm1/4">Item 2</div>
+ *       <div class="tableGrid__item u-w1/2 u-wm1/4">Item 3</div>
+ *       <div class="tableGrid__item u-w1/2 u-wm1/4">Item 4</div>
+ *     </div>
  */
-.btnGroup:before, .btnGroup:after {
-  content: '';
-  display: table; }
-
-.btnGroup:after {
-  clear: both; }
-
-.btnGroup__btn {
-  float: left;
-  border-radius: 0;
-  border-right: 0; }
-  .btnGroup__btn:first-child {
-    border-radius: 3px 0 0 3px; }
-  .btnGroup__btn:last-child {
-    border-radius: 0 3px 3px 0;
-    border-right: 1px solid; }
-
-.factsGrid {
+.tableGrid {
   display: block;
   width: 100%;
   padding: 0 52px;
@@ -1482,16 +1639,16 @@ sub {
   background: #FFF;
   border-bottom: 1px solid #e6e6e6;
   text-align: center; }
-  .factsGrid:before, .factsGrid:after {
+  .tableGrid:before, .tableGrid:after {
     content: '';
     display: table; }
-  .factsGrid:after {
+  .tableGrid:after {
     clear: both; }
   @media screen and (min-width: 650px) {
-    .factsGrid {
+    .tableGrid {
       display: table; } }
 
-.factsGrid__item {
+.tableGrid__item {
   display: block;
   float: left;
   padding: 26px 10px;
@@ -1499,48 +1656,39 @@ sub {
   cursor: pointer;
   transition: all .3s ease; }
   @media screen and (min-width: 650px) {
-    .factsGrid__item {
+    .tableGrid__item {
       display: table-cell;
       float: none;
       border-right: 1px solid #e6e6e6; }
-      .factsGrid__item:last-child {
+      .tableGrid__item:last-child {
         border-right: 0; }
-      .factsGrid__item:first-child:hover {
+      .tableGrid__item:first-child:hover {
         background: linear-gradient(to left, rgba(0, 0, 0, 0.05) 75%, transparent 100%); }
-      .factsGrid__item:last-child:hover {
+      .tableGrid__item:last-child:hover {
         background: linear-gradient(to right, rgba(0, 0, 0, 0.05) 75%, transparent 100%); } }
-  .factsGrid__item:hover {
+  .tableGrid__item:hover {
     text-decoration: none;
     background: rgba(0, 0, 0, 0.05); }
 
 /**
- * Flag - Displays text like content vertically centered besides an image.
- */
-/*
- * The base class for the Flag wrapper.
+ * Flag:
+ * Displays text like content vertically centered besides an image.
+ *
+ *     @example
+ *     <div class="flag">
+ *       <div class="flag__image">
+ *         <img src="http://placehold.it/300x200" alt="Media Image">
+ *       </div>
+ *       <div class="flag__body">
+ *         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+ *         <p>Lorem ipsum dolor sit amet.</p>
+ *       </div>
+ *     </div>
  */
 .flag {
   display: table;
   width: 100%; }
 
-/*
- * The image wrapper cell.
- */
-.flag__image {
-  display: table-cell;
-  vertical-align: middle;
-  padding-right: 20px; }
-  .flag__image > img {
-    display: block;
-    max-width: none; }
-
-.flag__image--rev {
-  padding-right: 0;
-  padding-left: 20px; }
-
-/*
- * The content wrapper cell.
- */
 .flag__body {
   display: table-cell;
   vertical-align: middle;
@@ -1549,20 +1697,49 @@ sub {
   .flag__body > :last-child {
     margin-bottom: 0; }
 
+.flag__image {
+  display: table-cell;
+  vertical-align: middle;
+  padding-right: 20px; }
+  .flag__image > img {
+    display: block;
+    max-width: none; }
+
 /**
- * Embed a external iframe or media file with a fluid width/height ratio.
+ * Flag (reverted):
+ * Displays text like content vertically centered besides an image.
+ *
+ *     @example
+ *     <div class="flag">
+ *       <div class="flag__body">
+ *         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+ *         <p>Lorem ipsum dolor sit amet.</p>
+ *       </div>
+ *       <div class="flag__image flag__image--rev">
+ *         <img src="http://placehold.it/300x200" alt="Media Image">
+ *       </div>
+ *     </div>
  */
-/*
- * The base class for all embed containers.
+.flag__image--rev {
+  padding-right: 0;
+  padding-left: 20px; }
+
+/**
+ * Flexible Embed:
+ * Embed a external iframe or media file with a fluid width/height ratio.
+ * Default is a 1:1 ratio, but you can use f.e. the 16:9 ratio as seen in this example.
+ *
+ *     @example
+ *     <div class="flexibleEmbed">
+ *       <iframe class="flexibleEmbed__content" src="https://www.youtube.com/embed/1eLtsKBkVzg" allowfullscreen="" frameborder="0"></iframe>
+ *       <div class="flexibleEmbed__ratio flexibleEmbed__ratio--16/9"></div>
+ *     </div>
  */
 .flexibleEmbed {
   position: relative;
   display: block;
   overflow: hidden; }
 
-/*
- * The class for the embedded content.
- */
 .flexibleEmbed__content {
   position: absolute;
   top: 0;
@@ -1570,9 +1747,6 @@ sub {
   width: 100%;
   height: 100%; }
 
-/*
- * The class for the desired width/height ratio. Default ratio is 1:1.
- */
 .flexibleEmbed__ratio {
   display: block;
   width: 100%;
@@ -1581,20 +1755,32 @@ sub {
 .flexibleEmbed__ratio--16\/9 {
   padding-bottom: 56.25%; }
 
-.flexibleEmbed__ratio--3\/1 {
-  padding-bottom: 33.333%; }
-
-.flexibleEmbed__ratio--2\/1 {
-  padding-bottom: 50%; }
-
-.flexibleEmbed__ratio--4\/3 {
-  padding-bottom: 75%; }
-
 /**
- * Form
- */
-/*
- * The base class for all forms.
+ * Form:
+ *
+ *     @example
+ *     <form class="form">
+ *       <div class="form__item">
+ *         <label for="basic-input">Text input:</label>
+ *         <input id="basic-input" type="text" class="textInput u-w1/1" />
+ *       </div>
+ *       <div class="form__item">
+ *         <label for="basic-disabled-input">Disabled text input:</label>
+ *         <input id="basic-disabled-input" disabled="" type="text" class="textInput u-w1/1">
+ *       </div>
+ *       <div class="form__item">
+ *         <label for="basic-textarea">Description:</label>
+ *         <textarea id="basic-textarea" class="textInput u-w1/1"></textarea>
+ *       </div>
+ *       <div class="form__item">
+ *         <label for="basic-checkox">
+ *           <input type="checkbox" id="basic-checkox"> I am a checkbox - Check me!
+ *         </label>
+ *       </div>
+ *       <div class="form__item u-alignRight">
+ *         <input type="submit" value="submit" class="btn">
+ *       </div>
+ *     </form>
  */
 .form {
   margin-bottom: 1.625rem; }
@@ -1602,8 +1788,29 @@ sub {
 .form__item {
   margin-bottom: 0.8125rem; }
 
-/*
+/**
+ * Inline Form:
  * Display a `<form>` and all it's content in a horizontal order.
+ *
+ *     @example
+ *     <form class="form form--inline">
+ *       <div class="form__item">
+ *         <label>Username: </label>
+ *         <input class="textInput" type="text" placeholder="Username...">
+ *       </div>
+ *       <div class="form__item">
+ *         <label>Password: </label>
+ *         <input class="textInput" type="password" placeholder="Password...">
+ *       </div>
+ *       <div class="form__item">
+ *         <label>
+ *           <input type="checkbox">Remember me
+ *         </label>
+ *       </div>
+ *       <div class="form__item">
+ *         <button type="submit" class="btn">Sign in</button>
+ *       </div>
+ *     </form>
  */
 .form--inline label,
 .form--inline button,
@@ -1622,10 +1829,24 @@ sub {
   margin-right: .3em; }
 
 /**
- * Grids
- */
-/*
- * Grid object which is based on the util width classes.
+ * Grid:
+ * Flexible and responsive grid based on the utility width classes.
+ *
+ *     @example
+ *     <div class="g">
+ *       <div class="gi u-w1/1 u-wm1/2 u-wl1/4">
+ *         column 1
+ *       </div>
+ *       <div class="gi u-w1/1 u-wm1/2 u-wl1/4">
+ *         column 2
+ *       </div>
+ *       <div class="gi u-w1/1 u-wm1/2 u-wl1/4">
+ *         column 3
+ *       </div>
+ *       <div class="gi u-w1/1 u-wm1/2 u-wl1/4">
+ *         column 4
+ *       </div>
+ *     </div>
  */
 .g,
 .grid {
@@ -1640,9 +1861,6 @@ sub {
   .grid:after {
     clear: both; }
 
-/*
- * Grid item, floats itself into the grid and depends on the u-w#/# util classes.
- */
 .gi,
 .grid__item {
   float: left;
@@ -1654,10 +1872,17 @@ sub {
     clear: both; } }
 
 /**
- * Media
- */
-/*
- * The base class for all media elements.
+ * Media:
+ * Displays a contents besides an image/video or another media node.
+ *
+ *     @example
+ *     <div class="media">
+ *       <img class="media__img" src="http://placehold.it/300x200" alt="Media Image">
+ *       <div class="media__content">
+ *         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+ *         <p>Lorem ipsum dolor sit amet.</p>
+ *       </div>
+ *     </div>
  */
 .media {
   display: block; }
@@ -1667,32 +1892,12 @@ sub {
   .media:after {
     clear: both; }
 
-/*
- * The class for the floated media element.
- */
 .media__img {
   float: left;
   margin-right: 52px; }
   .media__img > img {
     display: block; }
 
-/*
- * Reverts the order of the elements.
- */
-.media__img--rev {
-  float: right;
-  margin-left: 52px;
-  margin-right: 0; }
-
-.media__img--compact {
-  margin-right: 26px; }
-  .media__img--compact.media__img--rev {
-    margin-left: 26px;
-    margin-right: 0; }
-
-/*
- * The class for the content beside the media element.
- */
 .media__body {
   overflow: hidden;
   display: block; }
@@ -1701,10 +1906,55 @@ sub {
     margin-bottom: 0; }
 
 /**
- * Navigations
+ * Media (Reverted):
+ * Displays a contents besides an image/video or another media node.
+ *
+ *     @example
+ *     <div class="media">
+ *       <img class="media__img media__img--rev" src="http://placehold.it/300x200" alt="Media Image">
+ *       <div class="media__content">
+ *         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+ *         <p>Lorem ipsum dolor sit amet.</p>
+ *       </div>
+ *     </div>
  */
-/*
- * Throws a list into horizontal mode.
+.media__img--rev {
+  float: right;
+  margin-left: 52px;
+  margin-right: 0; }
+
+/**
+ * Media (Compact):
+ * Reduces the visual space between the media and the contents.
+ *
+ *     @example
+ *     <div class="media">
+ *       <img class="media__img media__img--compact" src="http://placehold.it/300x200" alt="Media Image">
+ *       <div class="media__content">
+ *         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+ *         <p>Lorem ipsum dolor sit amet.</p>
+ *       </div>
+ *     </div>
+ */
+.media__img--compact {
+  margin-right: 26px; }
+  .media__img--compact.media__img--rev {
+    margin-left: 26px;
+    margin-right: 0; }
+
+/**
+ * Navigation:
+ * Resets the styles of an `ul` node and displays all items inline. This is the base class for all navigations.
+ *
+ *     @example
+ *     <nav>
+ *       <ul class="nav">
+ *         <li><a href="">First nav item</a></li>
+ *         <li><a href="">Second nav item</a></li>
+ *         <li><a href="">Third nav item</a></li>
+ *         <li><a href="">Fourth nav item</a></li>
+ *       </ul>
+ *     </nav>
  */
 .nav {
   padding-left: 0;
@@ -1722,14 +1972,36 @@ sub {
         padding: 0;
         margin: 0; }
 
-/*
- * Throws a list into vertical mode.
+/**
+ * Navigation (Stacked):
+ * Sets the visual order of the navigation to vertical.
+ *
+ *     @example
+ *     <nav>
+ *       <ul class="nav nav--stacked">
+ *         <li><a href="">First nav item</a></li>
+ *         <li><a href="">Second nav item</a></li>
+ *         <li><a href="">Third nav item</a></li>
+ *         <li><a href="">Fourth nav item</a></li>
+ *       </ul>
+ *     </nav>
  */
 .nav--stacked > li {
   display: list-item; }
 
-/*
- * Forces a list to occupy 100% of the available width of it's parent.
+/**
+ * Navigation (Fit parent):
+ * Forces the navigation and it's items to occupy 100% of the available width of it's parent.
+ *
+ *     @example
+ *     <nav>
+ *       <ul class="nav nav--fit">
+ *         <li><a href="">First nav item</a></li>
+ *         <li><a href="">Second nav item</a></li>
+ *         <li><a href="">Third nav item</a></li>
+ *         <li><a href="">Fourth nav item</a></li>
+ *       </ul>
+ *     </nav>
  */
 .nav--fit {
   display: table;
@@ -1737,6 +2009,19 @@ sub {
   .nav--fit > li {
     display: table-cell; }
 
+/**
+ * Navigation (Bradcrumb):
+ *
+ *     @example
+ *     <nav>
+ *       <ul class="nav nav--breadcrumb">
+ *         <li><a href="">First nav item</a></li>
+ *         <li><a href="">Second nav item</a></li>
+ *         <li><a href="">Third nav item</a></li>
+ *         <li><a href="">Fourth nav item</a></li>
+ *       </ul>
+ *     </nav>
+ */
 .nav--breadcrumb {
   font-size: 0.875em;
   line-height: 26px;
@@ -1755,7 +2040,15 @@ sub {
       color: #0097d7; }
 
 /**
- * Spinner (Displays a loading animation)
+ * Spinner:
+ * Displays a loading state to the user.
+ *
+ *     @example
+ *     <div class="spinner">
+ *       <i class="spinner__dot"></i>
+ *       <i class="spinner__dot"></i>
+ *       <i class="spinner__dot"></i>
+ *     </div>
  */
 .spinner {
   position: relative;
@@ -1777,14 +2070,53 @@ sub {
     animation-delay: -0.16s; }
   .spinner__dot:last-child {
     animation-delay: .16s; }
-  .spinner--invert > .spinner__dot {
-    background: white; }
 
 /**
- * Table
+ * Spinner (Inverted):
+ *
+ *     @example
+ *     <div style="background: currentColor;padding: 1em;margin-bottom: .75em;">
+ *       <div class="spinner spinner--invert">
+ *         <i class="spinner__dot"></i>
+ *         <i class="spinner__dot"></i>
+ *         <i class="spinner__dot"></i>
+ *       </div>
+ *     </div>
  */
-/*
- * Base class for all table-styles.
+.spinner--invert > .spinner__dot {
+  background: white; }
+
+/**
+ * Table:
+ * Base class for all tables.
+ *
+ *     @example
+ *     <table class="table">
+ *       <thead>
+ *         <tr>
+ *           <th>Name</th>
+ *           <th>Age</th>
+ *           <th>Residence</th>
+ *         </tr>
+ *       </thead>
+ *       <tbody>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *       </tbody>
+ *     </table>
  */
 .table {
   width: 100%;
@@ -1795,8 +2127,37 @@ sub {
   .table th {
     font-weight: 400; }
 
-/*
+/**
+ * Table (Bordered):
  * Adds a border around the table and in between the rows and cells.
+ *
+ *     @example
+ *     <table class="table table--bordered">
+ *       <thead>
+ *         <tr>
+ *           <th>Name</th>
+ *           <th>Age</th>
+ *           <th>Residence</th>
+ *         </tr>
+ *       </thead>
+ *       <tbody>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *       </tbody>
+ *     </table>
  */
 .table--bordered {
   border: 1px solid #e6e6e6;
@@ -1810,8 +2171,37 @@ sub {
   .table--bordered tr:last-child > td {
     border-bottom: 0; }
 
-/*
+/**
+ * Table (Striped):
  * Adds a border below each row.
+ *
+ *     @example
+ *     <table class="table table--striped">
+ *       <thead>
+ *         <tr>
+ *           <th>Name</th>
+ *           <th>Age</th>
+ *           <th>Residence</th>
+ *         </tr>
+ *       </thead>
+ *       <tbody>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *       </tbody>
+ *     </table>
  */
 .table--striped td, .table--striped th {
   border-bottom: 1px solid #e6e6e6; }
@@ -1820,14 +2210,72 @@ sub {
   padding-top: 0;
   box-shadow: 0 1px 0 rgba(231, 231, 236, 0.7), 0 3px 0 rgba(231, 231, 236, 0.3); }
 
-/*
+/**
+ * Table (Condensed):
  * Reduces the visual gap between each table row.
+ *
+ *     @example
+ *     <table class="table table--condensed">
+ *       <thead>
+ *         <tr>
+ *           <th>Name</th>
+ *           <th>Age</th>
+ *           <th>Residence</th>
+ *         </tr>
+ *       </thead>
+ *       <tbody>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *       </tbody>
+ *     </table>
  */
 .table--condensed td, .table--condensed th {
   padding: 0.25em 0.5em 0.25em; }
 
-/*
+/**
+ * Table (Zebra):
  * Displays each odd/even row with a changing background to enhance the visual difference between each row element.
+ *
+ *     @example
+ *     <table class="table table--zebra">
+ *       <thead>
+ *         <tr>
+ *           <th>Name</th>
+ *           <th>Age</th>
+ *           <th>Residence</th>
+ *         </tr>
+ *       </thead>
+ *       <tbody>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *       </tbody>
+ *     </table>
  */
 .table--zebra tbody tr:nth-child(even) {
   background: #fff; }
@@ -1835,6 +2283,21 @@ sub {
 .table--zebra tbody tr:nth-child(odd) {
   background: #f2f2f2; }
 
+/**
+ * Headline Slider:
+ * Substitutes through the given words/sentences with a fine grained word-replace logic.
+ *
+ *     @example
+ *     <div data-component="SentenceSwitcher" class="headlineSlider h2"
+ *          data-wordClassName="headlineSlider__word"
+ *          data-sentenceSelector="span"
+ *          data-animatingWordClassName="headlineSlider__word--isAnimating">
+ *       <span>This is a test</span>
+ *       <span>This is another test</span>
+ *       <span>This is yet another test</span>
+ *       <span>This test is getting out hand</span>
+ *     </div>
+ */
 .headlineSlider {
   color: currentColor; }
 
@@ -1846,9 +2309,6 @@ sub {
 .headlineSlider__word--isAnimating {
   opacity: 0; }
 
-/*
- * Site Header
- */
 .siteHeader {
   position: fixed;
   top: 0;
@@ -2146,13 +2606,22 @@ sub {
   padding-top: 25vh;
   padding-bottom: 25vh; }
 
+/**
+ * Box:
+ * Creates a box around the inner contents.
+ *
+ *     @example
+ *     <div class="box">
+ *       <h4>Hello world!</h4>
+ *       <p>Lorem ipsum dolor sit...</p>
+ *     </div>
+ */
 .box {
   background: #F0F3F5;
   padding: 52px 26px; }
+  .box > :last-child {
+    margin-bottom: 0; }
 
-/**
- * Site Footer
- */
 .siteFooter {
   padding: 52px;
   background: #0097d7;
@@ -2177,7 +2646,7 @@ sub {
   .siteFooter__nav a:hover {
     color: #FFF; }
 
-/**
+/*
  * Print styles - Inlined to avoid another HTTP connection.
  */
 @media print {

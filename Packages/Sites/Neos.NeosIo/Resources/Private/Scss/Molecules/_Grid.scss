@@ -1,11 +1,24 @@
-/**
- * Grids
- */
-
 $grid-gutter: $column-gutter / 2;
 
-/*
- * Grid object which is based on the util width classes.
+/**
+ * Grid:
+ * Flexible and responsive grid based on the utility width classes.
+ *
+ *     @example
+ *     <div class="g">
+ *       <div class="gi u-w1/1 u-wm1/2 u-wl1/4">
+ *         column 1
+ *       </div>
+ *       <div class="gi u-w1/1 u-wm1/2 u-wl1/4">
+ *         column 2
+ *       </div>
+ *       <div class="gi u-w1/1 u-wm1/2 u-wl1/4">
+ *         column 3
+ *       </div>
+ *       <div class="gi u-w1/1 u-wm1/2 u-wl1/4">
+ *         column 4
+ *       </div>
+ *     </div>
  */
 .g,
 .grid {
@@ -14,10 +27,6 @@ $grid-gutter: $column-gutter / 2;
 
 	@include u-cf();
 }
-
-/*
- * Grid item, floats itself into the grid and depends on the u-w#/# util classes.
- */
 .gi,
 .grid__item {
 	float: $start;

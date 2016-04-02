@@ -1,4 +1,23 @@
-// Grid mixin
+/**
+ * Width utilities:
+ * Short utility width are responsive and mobile first.
+ * As with every utility class, it is namespaced with `u-` and `w` for width.
+ *
+ * Afterwards you can specify the optional breakpoint. Values can be found in the _Variables.scss
+ * in the $mq-breakpoints variable. For demonstration purposes we will use `small` breakpoint which
+ * is referenced by the `s`.
+ *
+ * Now let's specify the target width - Since they are percentage based, we use a fraction number, f.e. `1/1` for one whole,
+ * `1/2` for one half and so on. We provide you with widths up to `1/12´or one twelfths.
+ *
+ * Our finished class could look like `u-ws1/4` - Which applies a one quarter width on the small breakpoint and upwards.
+ *
+ *     @example
+ *     <div class="u-w1/1 u-wm1/2 u-wl1/3" style="background: #ccc;">
+ *       This div should cover the whole width on the small screens, the half on
+ *       medium screens and one third on large screens and upwards.
+ *     </div>
+ */
 @mixin grid-setup($namespace: '') {
 	// Whole
 	.u-w#{$namespace}1#{\/}1 {

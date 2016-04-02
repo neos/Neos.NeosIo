@@ -1,9 +1,16 @@
-/**
- * Display utilities
- */
+//
+// Display utilities
+//
 
-/*
- * Display the target as an block element.
+/**
+ * `u-isBlock`:
+ * Sets the display mode of the given node to `block`.
+ *
+ *     @example
+ *     <div>
+ *       <span class="u-isBlock">This text should occupy the whole row even though it's a span node.</span>
+ *       <span>Lorem ipsum dolor sit...</span>
+ *     </div>
  */
 @mixin u-isBlock() {
 	display: block !important;
@@ -12,8 +19,15 @@
 	@include u-isBlock();
 }
 
-/*
- * Hide from both screenreaders and browsers: http://www.h5bp.com/u
+/**
+ * `u-isHidden`:
+ * Hides the given node from both screenreaders and browsers.
+ *
+ *     @example
+ *     <div>
+ *       <span class="u-isHidden">This text should not be visible.</span>
+ *       <span>Lorem ipsum dolor sit...</span>
+ *     </div>
  */
 @mixin u-isHidden() {
 	display: none !important;
@@ -23,8 +37,15 @@
 	@include u-isHidden();
 }
 
-/*
- * Hide visually and from screenreaders, but maintain layout.
+/**
+ * `u-isInvisible`:
+ * Hides the given node visually and from screenreaders, but maintains the layout.
+ *
+ *     @example
+ *     <div>
+ *       <span class="u-isInvisible">This text should not be visible but should maintain it's layout.</span>
+ *       <span>Lorem ipsum dolor sit...</span>
+ *     </div>
  */
 @mixin u-isInvisible() {
 	visibility: hidden;

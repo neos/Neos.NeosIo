@@ -1,10 +1,6 @@
-/**
- * Collection of CSS3 Keyframe Animations.
- */
-
-/*
- * Scales the element up to it's initial proportions and fades it into the viewport.
- */
+//
+// Scales the element up to it's initial proportions and fades it into the viewport.
+//
 @keyframes ScaledUpFadeIn {
 	0% {
 		transform: scale(.4);
@@ -22,9 +18,9 @@
 	@include u-aniScaledUpFadeIn();
 }
 
-/*
- * Moves the element from the top into the users viewport.
- */
+//
+// Moves the element from the top into the users viewport.
+//
 @keyframes FlyDown {
 	0% {
 		transform: translateY(-20px);
@@ -42,9 +38,9 @@
 	@include u-aniFlyDown();
 }
 
-/*
- * Moves the element from the bottom out of the users viewport.
- */
+//
+// Moves the element from the bottom out of the users viewport.
+//
 @keyframes FlyUpOut {
 	0% {
 		transform: translateY(0);
@@ -63,9 +59,9 @@
 	@include u-aniFlyUpOut();
 }
 
-/*
- * Pulsates(fade out and in) an element.
- */
+//
+// Pulsates(fade out and in) an element.
+//
 @keyframes Pulsate {
 	0% {
 		opacity: 1;
@@ -78,7 +74,7 @@
 	}
 }
 @mixin u-aniPulsate($dur: $transition-duration) {
-	animation: Pulsate $dur infinite both;
+	animation: Pulsate $dur infinite ease-in-out;
 }
 .u-aniPulsate {
 	@include u-aniPulsate();

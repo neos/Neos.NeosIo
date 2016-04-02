@@ -1,10 +1,6 @@
-/**
- * Helper classes for brand related stylings.
- */
-
-/*
- * Brand text styles.
- */
+//
+// Helper classes for brand related stylings.
+//
 @mixin u-brand() {
 	font-family: $brand-font-family;
 	color: map-get($brand-colors, primary);
@@ -13,18 +9,18 @@
 	@include u-brand();
 }
 
-/*
- * Brand color helpers.
- */
+//
+// Brand color helpers.
+//
 @each $key, $value in $brand-colors {
 	.u-brandColor-#{$key} {
 		color: $value;
 	}
 }
 
-/*
- * Brand font-family helper.
- */
+//
+// Brand font-family helper.
+//
 @mixin u-brandFace() {
 	font-family: $brand-font-family;
 }
@@ -32,9 +28,9 @@
 	@include u-brandFace();
 }
 
-/*
- * Brand logos.
- */
+//
+// Brand logo helpers.
+//
 .u-brandLogo {
 	display: inline-block;
 	width: 330px;

@@ -1,36 +1,22 @@
 /**
- * Flag - Displays text like content vertically centered besides an image.
- */
-
-/*
- * The base class for the Flag wrapper.
+ * Flag:
+ * Displays text like content vertically centered besides an image.
+ *
+ *     @example
+ *     <div class="flag">
+ *       <div class="flag__image">
+ *         <img src="http://placehold.it/300x200" alt="Media Image">
+ *       </div>
+ *       <div class="flag__body">
+ *         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+ *         <p>Lorem ipsum dolor sit amet.</p>
+ *       </div>
+ *     </div>
  */
 .flag {
 	display: table;
 	width: 100%;
 }
-
-/*
- * The image wrapper cell.
- */
-.flag__image {
-	display: table-cell;
-	vertical-align: middle;
-	padding-right: $column-gutter;
-
-	> img {
-		display: block;
-		max-width: none;
-	}
-}
-.flag__image--rev {
-	padding-right: 0;
-	padding-left: $column-gutter;
-}
-
-/*
- * The content wrapper cell.
- */
 .flag__body {
 	display: table-cell;
 	vertical-align: middle;
@@ -41,4 +27,34 @@
 	> :last-child {
 		margin-bottom: 0;
 	}
+}
+.flag__image {
+	display: table-cell;
+	vertical-align: middle;
+	padding-right: $column-gutter;
+
+	> img {
+		display: block;
+		max-width: none;
+	}
+}
+
+/**
+ * Flag (reverted):
+ * Displays text like content vertically centered besides an image.
+ *
+ *     @example
+ *     <div class="flag">
+ *       <div class="flag__body">
+ *         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+ *         <p>Lorem ipsum dolor sit amet.</p>
+ *       </div>
+ *       <div class="flag__image flag__image--rev">
+ *         <img src="http://placehold.it/300x200" alt="Media Image">
+ *       </div>
+ *     </div>
+ */
+.flag__image--rev {
+	padding-right: 0;
+	padding-left: $column-gutter;
 }
