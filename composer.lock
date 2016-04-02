@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4cf254647e610f4fd9eb4376c067d002",
-    "content-hash": "e69e57be18f61a8ba2adb80e888d6740",
+    "hash": "b6a627da0ae3ab8620b0e8f67e496f5e",
+    "content-hash": "510b11a008bbcd8bbfe25016023a7d7a",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -46,6 +46,74 @@
                 "transliterator"
             ],
             "time": "2015-09-28 16:26:35"
+        },
+        {
+            "name": "cocur/slugify",
+            "version": "v2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cocur/slugify.git",
+                "reference": "912bf41f940f9a4e38ff1284b1841eaa71911d7f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cocur/slugify/zipball/912bf41f940f9a4e38ff1284b1841eaa71911d7f",
+                "reference": "912bf41f940f9a4e38ff1284b1841eaa71911d7f",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "http://toran-proxy/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "laravel/framework": "~5.1",
+                "latte/latte": "~2.2",
+                "mikey179/vfsstream": "~1.6",
+                "mockery/mockery": "~0.9",
+                "nette/di": "~2.2",
+                "phpunit/phpunit": "~4.8|~5.2",
+                "pimple/pimple": "~1.1",
+                "plumphp/plum": "~0.1",
+                "silex/silex": "~1.3",
+                "symfony/dependency-injection": "~2.4|~3.0",
+                "symfony/http-kernel": "~2.4|~3.0",
+                "twig/twig": "~1.12",
+                "zendframework/zend-modulemanager": "~2.2",
+                "zendframework/zend-servicemanager": "~2.2",
+                "zendframework/zend-view": "~2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cocur\\Slugify\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivo Bathke",
+                    "email": "ivo.bathke@gmail.com"
+                },
+                {
+                    "name": "Florian Eckerstorfer",
+                    "email": "florian@eckerstorfer.co",
+                    "homepage": "https://florian.ec"
+                }
+            ],
+            "description": "Converts a string into a slug.",
+            "keywords": [
+                "slug",
+                "slugify"
+            ],
+            "time": "2016-02-24 21:50:50"
         },
         {
             "name": "doctrine/annotations",
@@ -766,19 +834,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Flowpack/Flowpack.ElasticSearch.ContentRepositoryAdaptor.git",
-                "reference": "cd739c73501c2ae034c0f78028b8f402f100df24"
+                "reference": "a19da1089f4dda5e64d15edbec9296f61faacc39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Flowpack/Flowpack.ElasticSearch.ContentRepositoryAdaptor/zipball/cd739c73501c2ae034c0f78028b8f402f100df24",
-                "reference": "cd739c73501c2ae034c0f78028b8f402f100df24",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "http://toran-proxy/repo/packagist/dists/%package%/%version%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/Flowpack/Flowpack.ElasticSearch.ContentRepositoryAdaptor/zipball/a19da1089f4dda5e64d15edbec9296f61faacc39",
+                "reference": "a19da1089f4dda5e64d15edbec9296f61faacc39",
+                "shasum": ""
             },
             "require": {
                 "flowpack/elasticsearch": "*",
@@ -798,7 +860,34 @@
             ],
             "description": "This package provides functionality for using Elasticsearch on top of TYPO3CR.Search",
             "homepage": "http://flowpack.org/",
-            "time": "2016-02-05 15:45:10"
+            "time": "2016-03-31 19:33:29"
+        },
+        {
+            "name": "flowpack/searchplugin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/skurfuerst/Flowpack.SearchPlugin.git",
+                "reference": "e8ec4f26d4773093106463ff95dd6d111908c840"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/skurfuerst/Flowpack.SearchPlugin/zipball/e8ec4f26d4773093106463ff95dd6d111908c840",
+                "reference": "e8ec4f26d4773093106463ff95dd6d111908c840",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/flow": "*"
+            },
+            "type": "typo3-flow-package",
+            "autoload": {
+                "psr-0": {
+                    "Flowpack\\SearchPlugin": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Add description here",
+            "time": "2016-03-30 10:56:12"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -928,6 +1017,107 @@
             "time": "2016-02-02 18:50:42"
         },
         {
+            "name": "guzzle/guzzle",
+            "version": "v3.9.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle3.git",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "http://toran-proxy/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.3",
+                "symfony/event-dispatcher": "~2.1"
+            },
+            "replace": {
+                "guzzle/batch": "self.version",
+                "guzzle/cache": "self.version",
+                "guzzle/common": "self.version",
+                "guzzle/http": "self.version",
+                "guzzle/inflection": "self.version",
+                "guzzle/iterator": "self.version",
+                "guzzle/log": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/plugin": "self.version",
+                "guzzle/plugin-async": "self.version",
+                "guzzle/plugin-backoff": "self.version",
+                "guzzle/plugin-cache": "self.version",
+                "guzzle/plugin-cookie": "self.version",
+                "guzzle/plugin-curlauth": "self.version",
+                "guzzle/plugin-error-response": "self.version",
+                "guzzle/plugin-history": "self.version",
+                "guzzle/plugin-log": "self.version",
+                "guzzle/plugin-md5": "self.version",
+                "guzzle/plugin-mock": "self.version",
+                "guzzle/plugin-oauth": "self.version",
+                "guzzle/service": "self.version",
+                "guzzle/stream": "self.version"
+            },
+            "require-dev": {
+                "doctrine/cache": "~1.3",
+                "monolog/monolog": "~1.0",
+                "phpunit/phpunit": "3.7.*",
+                "psr/log": "~1.0",
+                "symfony/class-loader": "~2.1",
+                "zendframework/zend-cache": "2.*,<2.3",
+                "zendframework/zend-log": "2.*,<2.3"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle": "src/",
+                    "Guzzle\\Tests": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Guzzle Community",
+                    "homepage": "https://github.com/guzzle/guzzle/contributors"
+                }
+            ],
+            "description": "PHP HTTP client. This library is deprecated in favor of https://packagist.org/packages/guzzlehttp/guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "time": "2015-03-18 18:23:50"
+        },
+        {
             "name": "imagine/imagine",
             "version": "v0.6.3",
             "source": {
@@ -983,6 +1173,133 @@
                 "image processing"
             ],
             "time": "2015-09-19 16:54:05"
+        },
+        {
+            "name": "knplabs/github-api",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/php-github-api.git",
+                "reference": "5720f828ea241eded6c6263249fa00b0a37650f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/5720f828ea241eded6c6263249fa00b0a37650f4",
+                "reference": "5720f828ea241eded6c6263249fa00b0a37650f4",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "http://toran-proxy/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-curl": "*",
+                "guzzle/guzzle": "~3.7",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "sllh/php-cs-fixer-styleci-bridge": "~1.3"
+            },
+            "suggest": {
+                "knplabs/gaufrette": "Needed for optional Gaufrette cache"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Github\\": "lib/Github/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thibault Duplessis",
+                    "email": "thibault.duplessis@gmail.com",
+                    "homepage": "http://ornicar.github.com"
+                },
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                }
+            ],
+            "description": "GitHub API v3 client",
+            "homepage": "https://github.com/KnpLabs/php-github-api",
+            "keywords": [
+                "api",
+                "gh",
+                "gist",
+                "github"
+            ],
+            "time": "2016-02-24 05:52:33"
+        },
+        {
+            "name": "knplabs/packagist-api",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/packagist-api.git",
+                "reference": "9aebf8238943289d3bc3ab51e0014ed94a7a266a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/9aebf8238943289d3bc3ab51e0014ed94a7a266a",
+                "reference": "9aebf8238943289d3bc3ab51e0014ed94a7a266a",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "http://toran-proxy/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "doctrine/inflector": "~1.0",
+                "guzzle/guzzle": "~3.0",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpspec/php-diff": "*@dev",
+                "phpspec/phpspec": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Packagist\\Api\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                }
+            ],
+            "description": "Packagist API client.",
+            "homepage": "http://knplabs.com",
+            "keywords": [
+                "api",
+                "composer",
+                "packagist"
+            ],
+            "time": "2015-09-07 14:25:16"
         },
         {
             "name": "league/commonmark",
@@ -1130,6 +1447,44 @@
             ],
             "description": "This is a comprehensive library for generating differences between two strings or arrays",
             "time": "2016-01-06 10:03:10"
+        },
+        {
+            "name": "neos/marketplace",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/Neos.MarketPlace.git",
+                "reference": "f49a05144c272038ef6ed6699a608517fa968a53"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/Neos.MarketPlace/zipball/f49a05144c272038ef6ed6699a608517fa968a53",
+                "reference": "f49a05144c272038ef6ed6699a608517fa968a53",
+                "shasum": ""
+            },
+            "require": {
+                "cocur/slugify": "^2.0",
+                "flowpack/searchplugin": "*",
+                "knplabs/github-api": "^1.6",
+                "knplabs/packagist-api": "^1.3",
+                "ttree/script": "^1.0",
+                "ttree/stylesheet": "^1.0",
+                "typo3/flow": "*"
+            },
+            "type": "typo3-flow-package",
+            "extra": {
+                "neos": {
+                    "package-key": "Neos.MarketPlace"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Neos\\MarketPlace\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Neos Project Marketplace",
+            "time": "2016-04-01 09:14:21"
         },
         {
             "name": "ocramius/package-versions",
@@ -1565,6 +1920,72 @@
             "time": "2015-01-03 08:01:13"
         },
         {
+            "name": "symfony/event-dispatcher",
+            "version": "v2.8.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/event-dispatcher.git",
+                "reference": "47d2d8cade9b1c3987573d2943bb9352536cdb87"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/47d2d8cade9b1c3987573d2943bb9352536cdb87",
+                "reference": "47d2d8cade9b1c3987573d2943bb9352536cdb87",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "http://toran-proxy/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/config": "~2.0,>=2.0.5|~3.0.0",
+                "symfony/dependency-injection": "~2.6|~3.0.0",
+                "symfony/expression-language": "~2.6|~3.0.0",
+                "symfony/stopwatch": "~2.3|~3.0.0"
+            },
+            "suggest": {
+                "symfony/dependency-injection": "",
+                "symfony/http-kernel": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\EventDispatcher\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony EventDispatcher Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-03-07 14:04:32"
+        },
+        {
             "name": "symfony/polyfill-mbstring",
             "version": "v1.1.1",
             "source": {
@@ -1675,6 +2096,87 @@
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
             "time": "2015-01-25 04:37:39"
+        },
+        {
+            "name": "ttree/script",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ttreeagency/Script.git",
+                "reference": "f5d946266146e658ba62e0bf083ba690c0438f73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ttreeagency/Script/zipball/f5d946266146e658ba62e0bf083ba690c0438f73",
+                "reference": "f5d946266146e658ba62e0bf083ba690c0438f73",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/typoscript": "*"
+            },
+            "type": "typo3-flow-package",
+            "extra": {
+                "neos": {
+                    "package-key": "Ttree.Script"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ttree\\Script\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "TypoScript objects to generate a script tag",
+            "keywords": [
+                "TypoScript",
+                "asset",
+                "javascript",
+                "script"
+            ],
+            "time": "2016-03-31 15:14:29"
+        },
+        {
+            "name": "ttree/stylesheet",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ttreeagency/StyleSheet.git",
+                "reference": "a660714ddf427297bf08859dcd112608e69b2136"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ttreeagency/StyleSheet/zipball/a660714ddf427297bf08859dcd112608e69b2136",
+                "reference": "a660714ddf427297bf08859dcd112608e69b2136",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/typoscript": "*"
+            },
+            "type": "typo3-flow-package",
+            "extra": {
+                "neos": {
+                    "package-key": "Ttree.StyleSheet"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ttree\\StyleSheet\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "TypoScript object to generate a link tag",
+            "keywords": [
+                "TypoScript",
+                "asset",
+                "stylesheet"
+            ],
+            "time": "2016-03-31 13:39:44"
         },
         {
             "name": "typo3/eel",
@@ -3432,7 +3934,9 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "flowpack/elasticsearch-contentrepositoryadaptor": 20,
-        "flownative/google-cloudstorage": 20
+        "flownative/google-cloudstorage": 20,
+        "neos/marketplace": 20,
+        "flowpack/searchplugin": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

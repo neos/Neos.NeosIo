@@ -35,7 +35,9 @@
 				</main>
 				<aside class="gi u-w3/12">
 					<nav>
-						<div class="h5">{parts.sectionTitle}</div>
+						<f:if condition="{parts.sectionTitle}">
+							<div class="h5">{parts.sectionTitle}</div>
+						</f:if>
 						{parts.subMenu -> f:format.raw()}
 					</nav>
 				</aside>
