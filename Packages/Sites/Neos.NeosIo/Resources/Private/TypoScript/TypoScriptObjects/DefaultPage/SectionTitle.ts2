@@ -1,0 +1,3 @@
+prototype(Neos.NeosIo:DefaultPage.SectionTitle) < prototype(TYPO3.TypoScript:Value) {
+    value = ${q(node).closest('[_depth=3]').property('_label')}
+}

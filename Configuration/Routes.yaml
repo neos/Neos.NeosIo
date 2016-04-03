@@ -2,6 +2,18 @@
 # Routes configuration                                                   #
 
 ##
+# Flowpack SearchPlugin subroutes
+
+-
+  name: 'FlowpackSearchPlugin'
+  uriPattern: '<FlowpackSearchPluginSubroutes>'
+  subRoutes:
+    FlowpackSearchPluginSubroutes:
+      package: Flowpack.SearchPlugin
+      variables:
+        'defaultUriSuffix': '.html'
+
+##
 # TYPO3 Neos subroutes
 
 -
