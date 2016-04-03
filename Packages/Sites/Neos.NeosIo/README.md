@@ -23,6 +23,7 @@ Afterwards you can run any of the following commands in your favorite shell.
 | `npm run build:scripts` | Builds the JavaScript bundle with browserify and transpiles the ES6/7 code via babel. |
 | `npm run fix:amd` | Fixes issues with the current Neos backend when using CommonJS. |
 | `npm run build:sass` | Builds the Scss bundle with node-sass and autoprefixer. |
+| `npm run build:styleguide` | Builds the living styleguide for all Scss components located in `Resources/Public/Styleguide/`. |
 | `npm run build` | Higher-Order task for all above noted build tasks. |
 | `npm run minify:scritpts` | Minifies all `*.js` files in `Resources/Public/JavaScript/`. |
 | `npm run minify:styles` | Minifies all `*.css` files in `Resources/Public/Styles/`. |
