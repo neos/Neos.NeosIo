@@ -17,4 +17,11 @@
 .neos-neosio-youtube > .flexibleEmbed {
 	max-width: 50em;
 	margin: 0 auto;
+
+	//
+	// Device stage media nodes should always cover the whole screen.
+	//
+	.deviceStage__device & {
+		max-width: none;
+	}
 }
