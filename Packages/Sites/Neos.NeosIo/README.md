@@ -40,7 +40,7 @@ You can find all css related sources in `Resources/Public/Styles/` and JavaScrip
 
 ### (S)CSS guidelines
 We use Atomic Design for structuring our (S)CSS code base. Atomic Design is basically an abstraction layer,
-we do aim at designing pages but components and a design system, which then will be used to create the pages.
+we do not aim at designing pages but components and a design system, which then will be used to create the pages.
 
 If you aren't familiar with the structure, we recommend you to read [Atomic Web Design by Brad Frost](http://bradfrost.com/blog/post/atomic-web-design/).
 
@@ -48,7 +48,7 @@ If you aren't familiar with the structure, we recommend you to read [Atomic Web 
 *ToDo*
 
 ### JavaScript guidelines
-We always strive for the most performant and modern code base, this also reflects in our JavaScript code base.
+We always strive for the most performant and modern code base, this also reflects in our JavaScript.
 We use ES6 and some ES7 features like decorators, in corporation with [@reduct/component](https://github.com/reduct/component) and [@reduct/assembler](https://github.com/reduct/assembler)
 which reduces the overall complexity and creates a lean and flexible system for creating abstract JavaScript components
 with a scent of React's code style and logic.
