@@ -45,7 +45,7 @@ we do not aim at designing pages but components and a design system, which then 
 If you aren't familiar with the structure, we recommend you to read [Atomic Web Design by Brad Frost](http://bradfrost.com/blog/post/atomic-web-design/).
 
 ### (S)CSS Styleguide
-*ToDo*
+You can generate the css styleguide by executing `npm run build:styleguide` in your favorite shell. After the command has successfully finished, you can open `Resources/Public/Styleguide/index.html` in your favorite browser and take a look at all existing components and the respective markup. Documenting your own Atom, Molecule or Organism is pretty straight forward, take a look at their ['documenting css guide'](https://github.com/styledown/styledown/blob/master/docs/Documenting.md)
 
 ### JavaScript guidelines
 We always strive for the most performant and modern code base, this also reflects in our JavaScript.
