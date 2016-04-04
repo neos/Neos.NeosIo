@@ -1,9 +1,12 @@
 /**
- * Typographic utilities
- */
-
-/*
- * Centers the text.
+ * Text alignment utilities:
+ *
+ *     @example
+ *     <div>
+ *       <div class="u-alignRight">This text should be align on the right boundary.</div>
+ *       <div class="u-alignCenter">This text should be center algined.</div>
+ *       <div class="u-alignLeft">This text should be align on the left boundary.</div>
+ *     </div>
  */
 @mixin u-alignCenter() {
 	text-align: center;
@@ -12,9 +15,6 @@
 	@include u-alignCenter();
 }
 
-/*
- * Aligns the text to the right boundary.
- */
 @mixin u-alignRight() {
 	text-align: $end;
 }
@@ -22,9 +22,6 @@
 	@include u-alignRight();
 }
 
-/*
- * Aligns the text to the left boundary.
- */
 @mixin u-alignLeft() {
 	text-align: $start;
 }
@@ -32,18 +29,15 @@
 	@include u-alignLeft();
 }
 
-/*
- * Reduces the font-size to the smallest value.
- */
-@mixin u-tinyText() {
-	font-size: rs($base-font-size - 3, $unit: rem);
-}
-.u-tinyText {
-	@include u-tinyText();
-}
-
-/*
- * Less important text.
+/**
+ * Text size utilities:
+ *
+ *     @example
+ *     <div>
+ *       <div>This text should be normal sized.</div>
+ *       <div class="u-microCopy">This text should be micro sized.</div>
+ *       <div class="u-largeText">This text should be large sized.</div>
+ *     </div>
  */
 @mixin u-microCopy() {
 	font-size: 14px;
@@ -52,9 +46,6 @@
 	@include u-microCopy();
 }
 
-/*
- * Enlarges the font-size to the smallest value.
- */
 @mixin u-largeText() {
 	font-size: rs($base-font-size + 6, $unit: rem);
 }
@@ -62,8 +53,15 @@
 	@include u-largeText();
 }
 
-/*
+/**
+ * Text break utility:
  * Break strings/text if it exceeds the boundaries of their container.
+ *
+ *     @example
+ *     <div>
+ *       <div>Thiswordwillexpandtheboundariessssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</div>
+ *       <div class="u-textBreak">Thiswordwontexpandtheboundariessssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</div>
+ *     </div>
  */
 @mixin u-textBreak() {
 	word-wrap: break-word;
@@ -73,8 +71,15 @@
 	@include u-textBreak();
 }
 
-/*
+/**
+ * Text invert utility:
  * Inverts the text on the element and it's siblings.
+ *
+ *     @example
+ *     <div style="background: #000;">
+ *       <div>This text should hardly be visible since it has the standard color.</div>
+ *       <div class="u-invertText">This text should be easily visible since it is white coloured.</div>
+ *     </div>
  */
 @mixin u-invertText() {
 	&,
@@ -91,8 +96,19 @@
 	@include u-invertText();
 }
 
-/*
+/**
+ * List reset utility:
  * Removes all standard stylings for a list element and it's siblings.
+ *
+ *     @example
+ *     <ul>
+ *       <li>This is standard list item.</li>
+ *       <li>This is yet another list item.</li>
+ *     </ul>
+ *     <ul class="u-resetList">
+ *       <li>This is unstyled list item.</li>
+ *       <li>This is yet another list item.</li>
+ *     </ul>
  */
 @mixin u-resetList() {
 	padding-left: 0;
@@ -103,8 +119,13 @@
 	@include u-resetList();
 }
 
-/*
+/**
+ * Link reset utility:
  * Removes all standard stylings for an anchor/link element.
+ *
+ *     @example
+ *     <a href="#">This is a default styled link</a>
+ *     <a href="#" class="u-linkReset">This is a link without styles</a>
  */
 @mixin u-linkReset() {
 	color: currentColor;

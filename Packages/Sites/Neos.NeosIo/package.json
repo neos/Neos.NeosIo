@@ -10,8 +10,9 @@
     "build:scripts": "browserify -t [ babelify ] -p browserify-derequire Resources/Private/JavaScript/index.js > Resources/Public/JavaScript/Bundle.min.js",
     "fix:amd": "fandr Resources/Public/JavaScript/Bundle.min.js '{\"&& define.amd\": \"&& false\"}'",
     "build:sass": "node-sass Resources/Private/Scss/ -o Resources/Public/Styles/",
+    "build:styleguide": "styledown Resources/Private/Scss/**/*.scss Resources/Private/Scss/Config.md >  Resources/Public/Styleguide/Styleguide.html",
     "postbuild:sass": "postcss --use autoprefixer --autoprefixer.browsers 'last 4 versions' Resources/Public/Styles/*.css -d Resources/Public/Styles/",
-    "build": "npm run build:scripts && npm run build:sass && npm run build:modernizr && npm run fix:amd",
+    "build": "npm run build:scripts && npm run build:sass && npm run build:modernizr && npm run fix:amd && npm run build:styleguide",
     "minify:scripts": "uglify -s Resources/Public/JavaScript/Bundle.min.js -o Resources/Public/JavaScript/Bundle.min.js",
     "minify:styles": "uglify -s Resources/Public/Styles/Main.css -o Resources/Public/Styles/Main.css -c",
     "minify": "npm run minify:scripts && npm run minify:styles",
@@ -39,6 +40,7 @@
     "modernizr": "^3.3.1",
     "node-sass": "^3.4.2",
     "postcss-cli": "^2.5.1",
+    "styledown": "^1.0.2",
     "uglify": "^0.1.5",
     "watchify": "^3.7.0"
   },
@@ -47,7 +49,7 @@
     "@reduct/component": "^4.1.1",
     "@reduct/nitpick": "^3.0.0",
     "babel-polyfill": "^6.5.0",
-    "lodash.debounce": "^4.0.3",
+    "lodash.throttle": "^4.0.1",
     "raf": "^3.2.0"
   }
 }

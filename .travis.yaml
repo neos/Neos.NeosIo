@@ -1,0 +1,44 @@
+sudo: false
+notifications:
+  email: false
+
+#
+# Describe the overall PHP env.
+#
+language: php
+php:
+  - '7.0'
+services:
+  - mysql
+
+#
+# Cache the node_modules directory to speed up the the installation of dependencies.
+#
+cache:
+  directories:
+    - Packages/Sites/Neos.NeosIo/node_modules
+
+install:
+  - composer self-update -q
+  - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com ${GH_TOKEN}; fi;
+  - composer install --no-progress --no-interaction
+  - composer update --no-progress --no-interaction
+
+  # Install `nvm` since we are running in a php infrastructure based VM on TravisCI.
+  - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+  - nvm install v4.2.2
+  - nvm use
+
+  # Install and afterwards prune the node dependencies to remove extranous packages from previous/cached runs.
+  - cd Packages/Sites/Neos.NeosIo
+  - npm install
+  - npm prune
+  - cd ../../..
+before_script:
+  # ToDo: Setup the Neos instance & end-to-end tests
+
+script:
+  - cd Packages/Sites/Neos.NeosIo
+  - npm run build
+  - npm test
+  - cd ../../..

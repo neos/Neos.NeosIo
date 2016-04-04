@@ -1,9 +1,11 @@
 /**
- * Layout utilities
- */
-
-/*
- * Floats the element to the right boundary.
+ * `u-floatRight`:
+ * Floats the element to it's right boundary.
+ *
+ *     @example
+ *     <div class="u-cf">
+ *       <div class="u-floatRight">This text should not be visible but should maintain it's layout.</div>
+ *     </div>
  */
 @mixin u-floatRight() {
 	float: $end;
@@ -12,8 +14,14 @@
 	@include u-floatRight();
 }
 
-/*
- * Floats the element to the left boundary.
+/**
+ * `u-floatLeft`:
+ * Floats the element to it's left boundary.
+ *
+ *     @example
+ *     <div class="u-cf">
+ *       <div class="u-floatLeft">This text should not be visible but should maintain it's layout.</div>
+ *     </div>
  */
 @mixin u-floatLeft() {
 	float: $start;
@@ -22,8 +30,14 @@
 	@include u-floatLeft();
 }
 
-/*
- * Clearfix for floated elements.
+/**
+ * `u-floatLeft`:
+ * Clearfix for floated elements, which should be applied to the sorrounding element.
+ *
+ *     @example
+ *     <div class="u-cf">
+ *       <div class="u-floatRight">This text should not be visible but should maintain it's layout.</div>
+ *     </div>
  */
 @mixin u-cf() {
 	&:before,

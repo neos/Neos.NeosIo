@@ -1,19 +1,21 @@
 /**
- * Media
- */
-
-/*
- * The base class for all media elements.
+ * Media:
+ * Displays a contents besides an image/video or another media node.
+ *
+ *     @example
+ *     <div class="media">
+ *       <img class="media__img" src="http://placehold.it/300x200" alt="Media Image">
+ *       <div class="media__content">
+ *         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+ *         <p>Lorem ipsum dolor sit amet.</p>
+ *       </div>
+ *     </div>
  */
 .media {
 	display: block;
 
 	@include u-cf();
 }
-
-/*
- * The class for the floated media element.
- */
 .media__img {
 	float: left;
 	margin-right: $double-spacing+px;
@@ -22,28 +24,6 @@
 		display: block;
 	}
 }
-
-/*
- * Reverts the order of the elements.
- */
-.media__img--rev {
-	float: right;
-	margin-left: $double-spacing+px;
-	margin-right: 0;
-}
-.media__img--compact {
-	margin-right: $basic-spacing+px;
-
-	&.media__img--rev {
-		margin-left: $basic-spacing+px;
-		margin-right: 0;
-	}
-}
-
-
-/*
- * The class for the content beside the media element.
- */
 .media__body {
 	overflow: hidden;
 	display: block;
@@ -52,5 +32,46 @@
 	&,
 	> :last-child {
 		margin-bottom: 0;
+	}
+}
+
+/**
+ * Media (Reverted):
+ * Displays a contents besides an image/video or another media node.
+ *
+ *     @example
+ *     <div class="media">
+ *       <img class="media__img media__img--rev" src="http://placehold.it/300x200" alt="Media Image">
+ *       <div class="media__content">
+ *         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+ *         <p>Lorem ipsum dolor sit amet.</p>
+ *       </div>
+ *     </div>
+ */
+.media__img--rev {
+	float: right;
+	margin-left: $double-spacing+px;
+	margin-right: 0;
+}
+
+/**
+ * Media (Compact):
+ * Reduces the visual space between the media and the contents.
+ *
+ *     @example
+ *     <div class="media">
+ *       <img class="media__img media__img--compact" src="http://placehold.it/300x200" alt="Media Image">
+ *       <div class="media__content">
+ *         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+ *         <p>Lorem ipsum dolor sit amet.</p>
+ *       </div>
+ *     </div>
+ */
+.media__img--compact {
+	margin-right: $basic-spacing+px;
+
+	&.media__img--rev {
+		margin-left: $basic-spacing+px;
+		margin-right: 0;
 	}
 }

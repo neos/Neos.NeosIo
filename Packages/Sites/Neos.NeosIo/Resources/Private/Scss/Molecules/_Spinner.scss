@@ -1,7 +1,14 @@
 /**
- * Spinner (Displays a loading animation)
+ * Spinner:
+ * Displays a loading state to the user.
+ *
+ *     @example
+ *     <div class="spinner">
+ *       <i class="spinner__dot"></i>
+ *       <i class="spinner__dot"></i>
+ *       <i class="spinner__dot"></i>
+ *     </div>
  */
-
 .spinner {
 	position: relative;
 	display: inline-block;
@@ -10,8 +17,6 @@
 	vertical-align: middle;
 	text-align: center;
 }
-.spinner--invert {}
-
 .spinner__dot {
 	display: inline-block;
 	width: 7px;
@@ -20,7 +25,7 @@
 	border-radius: 50%;
 	background: color-adjust($content-background, 20%);
 
-	animation: Pulsate 1s infinite ease-in-out;
+	@include u-aniPulsate(1s);
 
 	&:first-child {
 		animation-delay: -0.16s;
@@ -28,8 +33,20 @@
 	&:last-child {
 		animation-delay: .16s;
 	}
+}
 
-	.spinner--invert > & {
-		background: color-adjust($base-text-color, 100%);
-	}
+/**
+ * Spinner (Inverted):
+ *
+ *     @example
+ *     <div style="background: currentColor;padding: 1em;margin-bottom: .75em;">
+ *       <div class="spinner spinner--invert">
+ *         <i class="spinner__dot"></i>
+ *         <i class="spinner__dot"></i>
+ *         <i class="spinner__dot"></i>
+ *       </div>
+ *     </div>
+ */
+.spinner--invert > .spinner__dot {
+	background: color-adjust($base-text-color, 100%);
 }

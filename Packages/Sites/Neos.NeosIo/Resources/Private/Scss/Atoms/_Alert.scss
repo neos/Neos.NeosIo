@@ -1,9 +1,9 @@
 /**
- * Alert
-*/
-
-/*
- * The base class for all alerts.
+ * Base Alert:
+ * `.alert` - Themes the given node to a system info message.
+ *
+ *     @example
+ *     <div class="alert">Hello world!</div>
  */
 @mixin alert() {
 	padding: rs($half-spacing);
@@ -20,8 +20,12 @@
 	@include alert();
 }
 
-/*
- * Display a positive / success alert to the user.
+/**
+ * Success Alert:
+ * `.alert--success` - Themes the given alert to a successfull system message.
+ *
+ *     @example
+ *     <div class="alert alert--success">Success!</div>
  */
 @mixin alert--success() {
 	background-color: $color-positive;
@@ -31,8 +35,12 @@
 	@include alert--success();
 }
 
-/*
- * Display a negative / failure alert to the user.
+/**
+ * Failure Alert:
+ * `.alert--failure` - Themes the given alert to a failure system message.
+ *
+ *     @example
+ *     <div class="alert alert--failure">Failure!</div>
  */
 @mixin alert--failure() {
 	background-color: $color-negative;

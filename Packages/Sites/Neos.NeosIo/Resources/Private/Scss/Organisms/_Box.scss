@@ -1,4 +1,18 @@
+/**
+ * Box:
+ * Creates a box around the inner contents.
+ *
+ *     @example
+ *     <div class="box">
+ *       <h4>Hello world!</h4>
+ *       <p>Lorem ipsum dolor sit...</p>
+ *     </div>
+ */
 .box {
 	background: #F0F3F5;
 	padding: $double-spacing+px $basic-spacing+px;
+
+	> :last-child {
+		margin-bottom: 0;
+	}
 }
