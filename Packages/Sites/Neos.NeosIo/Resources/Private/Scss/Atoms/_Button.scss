@@ -1,9 +1,11 @@
 /**
- * Buttons
-*/
-
-/*
- * The base class for all buttons.
+ * Base Button:
+ * `.btn` - The base class for all buttons.
+ * Button styles can be applied to any element. Typically you'll want to use
+ * either a `<button>` or an `<a>` element:
+ *
+ *     @example
+ *     a.btn My Button
  */
 @mixin btn() {
 	display: inline-block;
@@ -21,6 +23,7 @@
 	vertical-align: top;
 	transition: all $transition-duration ease;
 	text-align: center;
+	background: 0;
 
 	& + & {
 		margin-left: 1em;
@@ -82,8 +85,12 @@
 	}
 }
 
-/*
- * Set the button width to the width of it's parent element.
+/**
+ * Full-Width Button:
+ * `.btn--full` - Set the button width to the width of it's parent element.
+ *
+ *     @example
+ *     a.btn.btn--full My Button
  */
 @mixin btn--full() {
 	display: block;
@@ -98,8 +105,12 @@
 	@include btn--full();
 }
 
-/*
- * Bordered primary button.
+/**
+ * Bordered Primary Button:
+ * `.btn--primary` - Sets the button to a bordered button which is themed after the primary brand color.
+ *
+ *     @example
+ *     a.btn.btn--primary My Button
  */
 @mixin btn--primary() {
 	color: brand('primary');
@@ -116,8 +127,12 @@
 	@include btn--primary();
 }
 
-/*
- * Solid primary button.
+/**
+ * Solid Primary Button:
+ * `.btn--solidPrimary` - Sets the button to a solid button which is themed after the primary brand color.
+ *
+ *     @example
+ *     a.btn.btn--solidPrimary My Button
  */
 @mixin btn--solidPrimary() {
 	background: brand('primary');
@@ -130,8 +145,12 @@
 	@include btn--solidPrimary();
 }
 
-/*
- * Bordered secondary button.
+/**
+ * Bordered Secondary Button:
+ * `.btn--secondary` - Sets the button to a bordered button which is themed after the secondary brand color.
+ *
+ *     @example
+ *     a.btn.btn--secondary My Button
  */
 @mixin btn--secondary() {
 	color: brand('secondary');
@@ -148,8 +167,12 @@
 	@include btn--secondary();
 }
 
-/*
- * Solid secondary button.
+/**
+ * Solid Secondary Button:
+ * `.btn--solidSecondary` - Sets the button to a solid button which is themed after the secondary brand color.
+ *
+ *     @example
+ *     a.btn.btn--solidSecondary My Button
  */
 @mixin btn--solidSecondary() {
 	background: brand('secondary');
@@ -162,8 +185,14 @@
 	@include btn--solidSecondary();
 }
 
-/*
- * Bordered bright button.
+/**
+ * Bordered Bright Button:
+ * `.btn--bright` - Sets the button to a bordered button which is themed in white.
+ *
+ *     @example
+ *     <div style="background:#000;">
+ *       <a class="btn btn--bright">My Button</a>
+ *     </div>
  */
 @mixin btn--bright() {
 	color: #FFF;
@@ -176,8 +205,14 @@
 	@include btn--bright();
 }
 
-/*
- * Solid secondary button.
+/**
+ * Solid Bright Button:
+ * `.btn--solidBright` - Sets the button to a solid button which is themed in white.
+ *
+ *     @example
+ *     <div style="background:#000;">
+ *       <a class="btn btn--solidBright">My Button</a>
+ *     </div>
  */
 @mixin btn--solidBright() {
 	background: #FFF;

@@ -41,6 +41,23 @@
                 label: '66% / 33%'
               '4-8':
                 label: '33% / 66%'
+  childNodes:
+    column0:
+      constraints: &twoColumnConstraints
+        nodeTypes:
+          '*': FALSE
+          'TYPO3.Neos.NodeTypes:Text': TRUE
+          'TYPO3.Neos.NodeTypes:Image': TRUE
+          'TYPO3.Neos.NodeTypes:TextWithImage': TRUE
+          'TYPO3.Neos.NodeTypes:Headline': TRUE
+          'Neos.NeosIo:Button': TRUE
+          'Neos.NeosIo:Teaser': TRUE
+          'Neos.NeosIo:ImageTeaser': TRUE
+          'Neos.NeosIo:Icon': TRUE
+          'Neos.NeosIo:Youtube': TRUE
+    column1:
+      constraints: *twoColumnConstraints
+
 
 'TYPO3.Neos.NodeTypes:ThreeColumn':
   properties:
@@ -76,6 +93,24 @@
             values:
               '4-4-4':
                 label: '33% / 33% / 33%'
+  childNodes:
+    column0:
+      constraints: &threeColumnConstraints
+        nodeTypes:
+          '*': FALSE
+          'TYPO3.Neos.NodeTypes:Text': TRUE
+          'TYPO3.Neos.NodeTypes:Image': TRUE
+          'TYPO3.Neos.NodeTypes:TextWithImage': TRUE
+          'TYPO3.Neos.NodeTypes:Headline': TRUE
+          'Neos.NeosIo:Button': TRUE
+          'Neos.NeosIo:Teaser': TRUE
+          'Neos.NeosIo:ImageTeaser': TRUE
+          'Neos.NeosIo:Icon': TRUE
+    column1:
+      constraints: *threeColumnConstraints
+    column2:
+      constraints: *threeColumnConstraints
+
 
 'TYPO3.Neos.NodeTypes:FourColumn':
   properties:
@@ -106,3 +141,20 @@
             values:
               '3-3-3-3':
                 label: '25% / 25% / 25% / 25%'
+  childNodes:
+    column0:
+      constraints: &fourColumnConstraints
+        nodeTypes:
+          '*': FALSE
+          'TYPO3.Neos.NodeTypes:Text': TRUE
+          'TYPO3.Neos.NodeTypes:Image': TRUE
+          'TYPO3.Neos.NodeTypes:TextWithImage': TRUE
+          'TYPO3.Neos.NodeTypes:Headline': TRUE
+          'Neos.NeosIo:Button': TRUE
+          'Neos.NeosIo:Icon': TRUE
+    column1:
+      constraints: *fourColumnConstraints
+    column2:
+      constraints: *fourColumnConstraints
+    column3:
+      constraints: *fourColumnConstraints

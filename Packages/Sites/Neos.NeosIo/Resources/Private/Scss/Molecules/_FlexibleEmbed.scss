@@ -1,19 +1,19 @@
 /**
+ * Flexible Embed:
  * Embed a external iframe or media file with a fluid width/height ratio.
- */
-
-/*
- * The base class for all embed containers.
+ * Default is a 1:1 ratio, but you can use f.e. the 16:9 ratio as seen in this example.
+ *
+ *     @example
+ *     <div class="flexibleEmbed">
+ *       <iframe class="flexibleEmbed__content" src="https://www.youtube.com/embed/1eLtsKBkVzg" allowfullscreen="" frameborder="0"></iframe>
+ *       <div class="flexibleEmbed__ratio flexibleEmbed__ratio--16/9"></div>
+ *     </div>
  */
 .flexibleEmbed {
 	position: relative;
 	display: block;
 	overflow: hidden;
 }
-
-/*
- * The class for the embedded content.
- */
 .flexibleEmbed__content {
 	position: absolute;
 	top: 0;
@@ -21,28 +21,11 @@
 	width: 100%;
 	height: 100%;
 }
-
-/*
- * The class for the desired width/height ratio. Default ratio is 1:1.
- */
 .flexibleEmbed__ratio {
 	display: block;
 	width: 100%;
 	padding-bottom: 100%;
 }
-
 .flexibleEmbed__ratio--16#{\/}9 {
 	padding-bottom: 56.25%;
-}
-
-.flexibleEmbed__ratio--3#{\/}1 {
-	padding-bottom: 33.333%
-}
-
-.flexibleEmbed__ratio--2#{\/}1 {
-	padding-bottom: 50%;
-}
-
-.flexibleEmbed__ratio--4#{\/}3 {
-	padding-bottom: 75%;
 }

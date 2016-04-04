@@ -1,4 +1,17 @@
-.factsGrid {
+/**
+ * Table grid:
+ * Creates a table like grid which should be used with the utility width classes.
+ * Used in the FactsGrid f.e.
+ *
+ *     @example
+ *     <div class="tableGrid">
+ *       <div class="tableGrid__item u-w1/2 u-wm1/4">Item 1</div>
+ *       <div class="tableGrid__item u-w1/2 u-wm1/4">Item 2</div>
+ *       <div class="tableGrid__item u-w1/2 u-wm1/4">Item 3</div>
+ *       <div class="tableGrid__item u-w1/2 u-wm1/4">Item 4</div>
+ *     </div>
+ */
+.tableGrid {
 	display: block;
 	width: 100%;
 	padding: 0 $double-spacing+px;
@@ -13,7 +26,7 @@
 		display: table;
 	}
 }
-.factsGrid__item {
+.tableGrid__item {
 	display: block;
 	float: left;
 	padding: $basic-spacing+px 10px;

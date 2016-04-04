@@ -1,9 +1,34 @@
 /**
- * Table
- */
-
-/*
- * Base class for all table-styles.
+ * Table:
+ * Base class for all tables.
+ *
+ *     @example
+ *     <table class="table">
+ *       <thead>
+ *         <tr>
+ *           <th>Name</th>
+ *           <th>Age</th>
+ *           <th>Residence</th>
+ *         </tr>
+ *       </thead>
+ *       <tbody>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *       </tbody>
+ *     </table>
  */
 .table {
 	width: 100%;
@@ -19,8 +44,37 @@
 	}
 }
 
-/*
+/**
+ * Table (Bordered):
  * Adds a border around the table and in between the rows and cells.
+ *
+ *     @example
+ *     <table class="table table--bordered">
+ *       <thead>
+ *         <tr>
+ *           <th>Name</th>
+ *           <th>Age</th>
+ *           <th>Residence</th>
+ *         </tr>
+ *       </thead>
+ *       <tbody>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *       </tbody>
+ *     </table>
  */
 .table--bordered {
 	border: 1px solid $basic-border-color;
@@ -40,8 +94,37 @@
 	}
 }
 
-/*
+/**
+ * Table (Striped):
  * Adds a border below each row.
+ *
+ *     @example
+ *     <table class="table table--striped">
+ *       <thead>
+ *         <tr>
+ *           <th>Name</th>
+ *           <th>Age</th>
+ *           <th>Residence</th>
+ *         </tr>
+ *       </thead>
+ *       <tbody>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *       </tbody>
+ *     </table>
  */
 .table--striped {
 	td, th {
@@ -54,8 +137,37 @@
 	}
 }
 
-/*
+/**
+ * Table (Condensed):
  * Reduces the visual gap between each table row.
+ *
+ *     @example
+ *     <table class="table table--condensed">
+ *       <thead>
+ *         <tr>
+ *           <th>Name</th>
+ *           <th>Age</th>
+ *           <th>Residence</th>
+ *         </tr>
+ *       </thead>
+ *       <tbody>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *       </tbody>
+ *     </table>
  */
 .table--condensed {
 	td, th {
@@ -63,8 +175,37 @@
 	}
 }
 
-/*
+/**
+ * Table (Zebra):
  * Displays each odd/even row with a changing background to enhance the visual difference between each row element.
+ *
+ *     @example
+ *     <table class="table table--zebra">
+ *       <thead>
+ *         <tr>
+ *           <th>Name</th>
+ *           <th>Age</th>
+ *           <th>Residence</th>
+ *         </tr>
+ *       </thead>
+ *       <tbody>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *         <tr>
+ *           <td>Max Mustermann</td>
+ *           <td>20</td>
+ *           <td>Berlin</td>
+ *         </tr>
+ *       </tbody>
+ *     </table>
  */
 .table--zebra {
 	tbody {

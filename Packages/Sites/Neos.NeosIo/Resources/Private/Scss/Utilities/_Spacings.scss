@@ -1,8 +1,19 @@
 /**
- * Spacing utilities
+ * Spacing utilities:
+ * Short utility classes for applying spacings to nodes. The name scheme is pretty simple.
+ * Each class begins with `u-` followed by either `p` for padding, or `m` for margin, which is
+ * then followed by the optional direction of `t` for a top margin, `r` for a right margin and so on.
+ * After specifying the direction, the unit of spacing needs to be specified.
+ * Since we follow a strict vertical rythm, you have two options available, either `1/2` for half of a
+ * typographic rythm spacing or `1/1` for one whole spacing of the typographic rythm.
+ *
+ * For example, if you want your div to include a whole bottom padding, the class would be `u-pb1/1`.
+ *
+ *     @example
+ *     <div class="u-pb1/1">
+ *       This div should have a bottom padding of one whole typographic row.
+ *     </div>
  */
-
-// Spacings mixin
 @mixin spacings-setup($namespace: '') {
 	// Margin Resets
 	.u-m#{$namespace}0 {

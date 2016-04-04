@@ -1,9 +1,18 @@
+/**
+ * Hamburger Icon:
+ *
+ *     @example
+ *     span.hamburger
+ *       span.hamburger__line.hamburger__line--top
+ *       span.hamburger__line
+ *       span.hamburger__line.hamburger__line--bottom
+ */
 .hamburger {
 	position: relative;
 	display: inline-block;
 	width: 24px;
 	height: 18px;
-	color: #FFF;
+	color: currentColor;
 }
 .hamburger--active {
 	color: $base-text-color;
@@ -33,3 +42,13 @@
 		transform: translate3d(8px, -1px, 0) rotate(-45deg) scaleX(.7);
 	}
 }
+
+/**
+ * Hamburger Icon (Active):
+ *
+ *     @example
+ *     span.hamburger.hamburger--active
+ *       span.hamburger__line.hamburger__line--top
+ *       span.hamburger__line
+ *       span.hamburger__line.hamburger__line--bottom
+ */

@@ -1,9 +1,29 @@
 /**
- * Form
- */
-
-/*
- * The base class for all forms.
+ * Form:
+ *
+ *     @example
+ *     <form class="form">
+ *       <div class="form__item">
+ *         <label for="basic-input">Text input:</label>
+ *         <input id="basic-input" type="text" class="textInput u-w1/1" />
+ *       </div>
+ *       <div class="form__item">
+ *         <label for="basic-disabled-input">Disabled text input:</label>
+ *         <input id="basic-disabled-input" disabled="" type="text" class="textInput u-w1/1">
+ *       </div>
+ *       <div class="form__item">
+ *         <label for="basic-textarea">Description:</label>
+ *         <textarea id="basic-textarea" class="textInput u-w1/1"></textarea>
+ *       </div>
+ *       <div class="form__item">
+ *         <label for="basic-checkox">
+ *           <input type="checkbox" id="basic-checkox"> I am a checkbox - Check me!
+ *         </label>
+ *       </div>
+ *       <div class="form__item u-alignRight">
+ *         <input type="submit" value="submit" class="btn">
+ *       </div>
+ *     </form>
  */
 .form {
 	margin-bottom: rs($basic-spacing, $unit: rem);
@@ -12,8 +32,29 @@
 	margin-bottom: rs($half-spacing, $unit: rem);
 }
 
-/*
+/**
+ * Inline Form:
  * Display a `<form>` and all it's content in a horizontal order.
+ *
+ *     @example
+ *     <form class="form form--inline">
+ *       <div class="form__item">
+ *         <label>Username: </label>
+ *         <input class="textInput" type="text" placeholder="Username...">
+ *       </div>
+ *       <div class="form__item">
+ *         <label>Password: </label>
+ *         <input class="textInput" type="password" placeholder="Password...">
+ *       </div>
+ *       <div class="form__item">
+ *         <label>
+ *           <input type="checkbox">Remember me
+ *         </label>
+ *       </div>
+ *       <div class="form__item">
+ *         <button type="submit" class="btn">Sign in</button>
+ *       </div>
+ *     </form>
  */
 .form--inline {
 	label,
