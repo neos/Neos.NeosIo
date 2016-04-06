@@ -24,6 +24,7 @@ module.exports = function(grunt) {
 					'Resources/Public/Javascripts/app.min.js': [
 						'Resources/Public/Javascripts/foundation/foundation.js',
 						'Resources/Public/Javascripts/foundation/foundation.orbit.js',
+						'Resources/Public/Javascripts/foundation/foundation.reveal.js',
 						'Resources/Public/Javascripts/vendor/zepto.smoothScroll.js',
 						'Resources/Public/Javascripts/vendor/imagesloaded.pkgd.min.js',
 						'Resources/Public/Javascripts/vendor/wookmark.js',

@@ -3,8 +3,37 @@ Neos:
     fundingApi:
       username: ''
       password: ''
-      apiUrl: 'https://neosfunding.sandstorm.de/funding-api-sold-badges'
+      apiUrl: 'https://neosfunding.sandstorm.de'
       timeout: 30
       actions:
         getBadges: '/funding-api-sold-badges'
       parameters: []
+
+    crowdApi:
+      username: ''
+      password: ''
+      apiUrl: 'https://crowd.neos.io/rest/usermanagement/1'
+      timeout: 30
+      actions:
+        search: '/search.json'
+
+        getGroup: '/group.json'
+        getGroupMembers: '/group/user/direct.json'
+        setGroupAttributes: '/group/attribute.json'
+
+        getUser: '/user.json'
+        setUserAttributes: '/user/attribute.json'
+
+      parameters:
+        active: true # Always search for active records
+
+      additionalAttributes: # List of valid additional attributes for crowd entities
+        group:
+          - neos_group_type # Something like 'team' or 'guild'
+          - neos_title # A human readable name for the group
+          - neos_summary # A short summary describing the group
+        user:
+          - neos_website
+          - neos_skype
+          - neos_twitter
+          - neos_origin

@@ -98,13 +98,64 @@ abstract class AbstractApiConnector
     }
 
     /**
+     * @param string $cacheKey
+     */
+    protected function unsetItem($cacheKey)
+    {
+        unset($this->objectCache[$cacheKey]);
+        $this->apiCache->remove($cacheKey);
+    }
+
+    /**
      * Retrieves data from the api.
      *
      * @param string $actionName
      * @param array $additionalParameters
      * @return array
      */
-    protected function fetchJsonData($actionName, $additionalParameters = [])
+    protected function fetchJsonData($actionName, array $additionalParameters = [])
+    {
+        $browser = $this->getBrowser();
+        $requestUri = $this->buildRequestUri($actionName, $additionalParameters);
+        $response = $browser->request($requestUri, 'GET');
+
+        if ($response->getStatusCode() !== 200) {
+            $this->systemLogger->log(sprintf('Get request to Api failed with code "%s"!', $response->getStatus()),
+                LOG_ERR, 1453193835);
+        }
+
+        return $response !== false ? json_decode($response, true) : $response;
+    }
+
+    /**
+     * Json encodes data and posts it to the api
+     *
+     * @param string $actionName
+     * @param array $additionalParameters
+     * @param array $data
+     * @return bool
+     */
+    protected function postJsonData($actionName, array $additionalParameters, array $data)
+    {
+        $browser = $this->getBrowser();
+        $browser->addAutomaticRequestHeader('Content-Type', 'application/json');
+        $requestUri = $this->buildRequestUri($actionName, $additionalParameters);
+        $response = $browser->request($requestUri, 'POST', [], [], [], json_encode($data));
+
+        if (!in_array($response->getStatusCode(), [200, 204])) {
+            $this->systemLogger->log(sprintf('Post request to Api failed with message "%s"!', $response->getStatus()),
+                LOG_ERR, 1457091548);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns a browser instance with curlengine and authentication parameters set
+     *
+     * @return Browser
+     */
+    protected function getBrowser()
     {
         $browser = new Browser();
         $browser->setRequestEngine(new CurlEngine());
@@ -112,17 +163,11 @@ abstract class AbstractApiConnector
         if (array_key_exists('username', $this->apiSettings) && !empty($this->apiSettings['username'])
             && array_key_exists('password', $this->apiSettings) && !empty($this->apiSettings['password'])
         ) {
-            $browser->addAutomaticRequestHeader('Authorization', 'Basic ' . base64_encode($this->apiSettings['username'] . ':' . $this->apiSettings['password']));
+            $browser->addAutomaticRequestHeader('Authorization',
+                'Basic ' . base64_encode($this->apiSettings['username'] . ':' . $this->apiSettings['password']));
         }
 
-        $requestUri = $this->buildRequestUri($actionName, $additionalParameters);
-        $response = $browser->request($requestUri, 'GET');
-
-        if ($response->getStatusCode() !== 200) {
-            $this->systemLogger->log('Request to Api failed!', LOG_ERR, 1453193835);
-        }
-
-        return $response !== false ? json_decode($response, true) : $response;
+        return $browser;
     }
 
     /**
@@ -134,7 +179,7 @@ abstract class AbstractApiConnector
     protected function buildRequestUri($actionName, array $additionalParameters = [])
     {
         $requestUri = new Uri($this->apiSettings['apiUrl']);
-        $requestUri->setPath($this->apiSettings['actions'][$actionName]);
+        $requestUri->setPath($requestUri->getPath() . $this->apiSettings['actions'][$actionName]);
         $requestUri->setQuery(http_build_query(array_merge($this->apiSettings['parameters'], $additionalParameters)));
         return $requestUri;
     }
