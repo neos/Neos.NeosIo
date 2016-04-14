@@ -7,7 +7,9 @@ prototype(Neos.NeosIo:CrowdUser) < prototype(TYPO3.TypoScript:Template) {
     }
 
     gravatarSizePreview = 100
-    gravatarSizeDetail = 160
+    gravatarRenderSizePreview = ${this.gravatarSizePreview * 2}
+    gravatarSizeDetail = 120
+    gravatarRenderSizeDetail = ${this.gravatarSizeDetail * 2}
 
     user = ${q(site).crowdUser(userName).get()}
 }

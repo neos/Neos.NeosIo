@@ -5,31 +5,61 @@
 <f:section name="Main">
     <div{attributes -> f:format.raw()}>
         <a href="#" data-reveal-id="member-modal-{user.name}">
-            <gravatar:gravatar email="{user.email}" size="{gravatarSizePreview}" default="retro" class="gravatar"
+            <gravatar:gravatar email="{user.email}" size="{gravatarRenderSizePreview}" default="retro" class="gravatar"
                                width="{gravatarSizePreview}" height="{gravatarSizePreview}"/>
             <strong>{user.display-name}</strong>
         </a>
 
-        <div class="reveal-modal small" id="member-modal-{user.name}" data-reveal aria-labelledby="{user.display-name}"
+        <div class="reveal-modal tiny" id="member-modal-{user.name}" data-reveal data-reveal-bg-class="foo" aria-labelledby="{user.display-name}"
              aria-hidden="true" role="dialog">
-            <div class="team-listing__member-modal">
-                <h4>{user.display-name}</h4>
+            <div class="team-listing-modal row">
+                <div class="team-listing-modal__portrait columns small-12">
+                    <strong class="team-listing-modal__header">{user.display-name}</strong><br/>
+                    <gravatar:gravatar email="{user.email}" size="{gravatarRenderSizeDetail}" default="retro"
+                                       class="gravatar" width="{gravatarSizeDetail}" height="{gravatarSizeDetail}" />
 
-                <div class="team-listing__portrait">
-                    <gravatar:gravatar email="{user.email}" size="{gravatarSizeDetail}" default="retro" class="gravatar"
-                                       width="{gravatarSizeDetail}" height="{gravatarSizeDetail}" />
-                </div>
-
-                <div class="team-listing__details">
                     <ul>
-                        <li><b>Slack / Jira:</b> @{user.name}</li>
+                        <f:if condition="{user.additionalProperties.neos_bio}">
+                                <li>{user.additionalProperties.neos_bio}</li>
+                        </f:if>
+                        <f:if condition="{user.additionalProperties.neos_origin}">
+                                <li>{user.additionalProperties.neos_origin}</li>
+                        </f:if>
+                    </ul>
+                </div>
+                <div class="team-listing-modal__details columns small-12">
+                    <f:if condition="{user.additionalProperties.neos_contribution}">
+                        <strong class="team-listing-modal__header">
+                            <f:translate id="modal.contribution" source="CrowdApi" package="Neos.NeosIo" arguments="{0: user.first-name}">
+                                What {0} contributes to Neos
+                            </f:translate>
+                        </strong>
+                        <hr>
+                        <p>
+                            {user.additionalProperties.neos_contribution}
+                        </p>
+                    </f:if>
+
+                    <strong class="team-listing-modal__header">
+                        <f:translate id="modal.contact" source="CrowdApi" package="Neos.NeosIo" arguments="{0: user.first-name}">
+                            Contact {0}
+                        </f:translate>
+                    </strong>
+                    <hr>
+                    <ul>
+                        <li><strong>Slack / Jira:</strong> @{user.name}</li>
                         <f:for each="{user.additionalProperties}" key="property" as="value">
-                            <li><b><f:translate id="attribute.{property}" source="CrowdApi" package="Neos.NeosIo"/></b> {value}</li>
+                            <li>
+                                <f:render section="attribute" arguments="{property: property, value: value}"/>
+                            </li>
                         </f:for>
                     </ul>
 
                     <f:if condition="{user.memberships}">
-                        <strong>Memberships</strong>
+                        <strong class="team-listing-modal__header">
+                            <f:translate id="modal.memberships" source="CrowdApi" package="Neos.NeosIo">Memberships</f:translate>                            
+                        </strong>
+                        <hr>
                         <ul>
                             <f:for each="{user.memberships}" as="group">
                                 <li>{f:if(condition: group.neos_title, then: group.neos_title, else: group.name)}</li>
@@ -40,5 +70,29 @@
             </div>
         </div>
     </div>
+</f:section>
+
+<f:section name="attribute">
+    <f:switch expression="{property}">
+        <f:case value="neos_twitter">
+            <f:link.external uri="http://twitter.com/{value}">Twitter</f:link.external>
+        </f:case>
+        <f:case value="neos_googleplus">
+            <f:link.external uri="{value}">Google+</f:link.external>
+        </f:case>
+        <f:case value="neos_skype">
+            <f:link.external uri="skype:{value}?call">Skype</f:link.external>
+        </f:case>
+        <f:case value="neos_email">
+            <f:link.external uri="mailto:{value}">E-Mail</f:link.external>
+        </f:case>
+        <f:case value="neos_origin"></f:case>
+        <f:case value="neos_bio"></f:case>
+        <f:case value="neos_contribution"></f:case>
+        <f:defaultCase>
+            <b><f:translate id="attribute.{property}" source="CrowdApi" package="Neos.NeosIo">{property}</f:translate></b>
+            {value}
+        </f:defaultCase>
+    </f:switch>
 </f:section>
 </html>

@@ -158,4 +158,50 @@ class CrowdCommandController extends CommandController
             }
         }
     }
+
+    /**
+     * Import userdata from a csv file and update crowd
+     *
+     * Structure has to similiar to this:
+     *
+     * username;neos_googleplus;neos_email;neos_twitter;...
+     * xyz;xyz;xyz@example.org;@xyz;...
+     * ...
+     *
+     * "username" is the only required field and has to contain the usernames from crowd.
+     * The other columns are optional and only the ones which match the "additionalAttributes" in the
+     * Settings.yaml are read.
+     *
+     * @param string $csvPath the path to a csv file with userdata
+     */
+    public function importUserAttributesCommand($csvPath, $delimiter = ';')
+    {
+        $validAttributes = $this->settings['additionalAttributes']['user'];
+        $validAttributes[]= 'username';
+        $columns = [];
+        $fieldCount = 0;
+
+        if (($handle = fopen($csvPath, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
+                // First line are the column headers
+                if (empty($columns)) {
+                    $columns = $data;
+                    $fieldCount = count($columns);
+                    echo "Columns: " . join(', ', $columns) . "\n";
+                }
+
+                $attributes = [];
+                for ($i = 0; $i < $fieldCount; $i++) {
+                    $columnName = $columns[$i];
+                    if (in_array($columnName, $validAttributes)) {
+                        $attributes[$columnName] = $data[$i];
+                    }
+                }
+
+                echo "Updating data: " . join(', ', $data) . "\n";
+                $this->crowdApiConnector->setUserAttributes($attributes['username'], $attributes);
+            }
+            fclose($handle);
+        }
+    }
 }
