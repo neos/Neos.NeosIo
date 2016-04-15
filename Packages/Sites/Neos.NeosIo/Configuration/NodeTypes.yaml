@@ -6,6 +6,16 @@
     nodeTypes:
       'Neos.NeosIo:RootPage': false
 
+'TYPO3.Neos.NodeTypes:Page':
+  childNodes:
+    'main':
+      constraints:
+        nodeTypes:
+          'Neos.NeosIo:FactsGrid': false
+          'Neos.NeosIo:Stage': false
+          'Neos.NeosIo:DeviceStage': false
+          'Neos.NeosIo:BrandLogo': false
+
 'TYPO3.Neos.NodeTypes:ImageCaptionMixin':
   properties:
     hasCaption: ~
