@@ -2,11 +2,6 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
     head {
         meta-viewport = '<meta name="viewport" content="width=device-width, initial-scale=1" />'
 
-        titleTag {
-            //content = Ttree.Plugin.Seo:RawPageTitle
-            //@position = 'after characterSetMetaTag'
-        }
-
         stylesheets.site = TYPO3.TypoScript:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
             sectionName = 'stylesheets'

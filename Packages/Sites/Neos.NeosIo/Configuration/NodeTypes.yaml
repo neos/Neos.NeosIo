@@ -1,3 +1,24 @@
+##
+# Modify base types
+#
+'TYPO3.Neos:Document':
+  constraints:
+    nodeTypes:
+      'Neos.NeosIo:RootPage': false
+
+'TYPO3.Neos.NodeTypes:Page':
+  childNodes:
+    'main':
+      constraints:
+        nodeTypes:
+          'Neos.NeosIo:FactsGrid': false
+          'Neos.NeosIo:Stage': false
+          'Neos.NeosIo:DeviceStage': false
+          'Neos.NeosIo:BrandLogo': false
+          'Neos.NeosIo:HeadlineSlider': false
+          'Neos.NeosIo:Button': false
+          'Neos.NeosIo:ChoiceButtons': false
+
 'TYPO3.Neos.NodeTypes:ImageCaptionMixin':
   properties:
     hasCaption: ~
@@ -20,3 +41,15 @@
           'format':
             'h4': TRUE
             'h5': TRUE
+
+'TYPO3.Neos.NodeTypes:AssetList':
+  ui:
+    label: 'File list'
+
+'TYPO3.Neos.NodeTypes:Form':
+  ui:
+    group: 'special'
+
+'TYPO3.Neos.NodeTypes:Html':
+  ui:
+    group: 'special'
