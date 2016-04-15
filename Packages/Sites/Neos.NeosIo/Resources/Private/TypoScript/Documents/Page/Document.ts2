@@ -7,14 +7,4 @@ prototype(TYPO3.Neos.NodeTypes:Page.Document) < prototype(Neos.NeosIo:DefaultPag
             }
         }
     }
-
-    /*
-    googleAnalytics = TYPO3.TypoScript:Template {
-        templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Tracking.html'
-        @if.enabled = ${Configuration.setting('Neos.NeosIo.enableTracking')}
-        @position = 'before body'
-
-        trackingCode = ${q(site).property('trackingCode')}
-    }
-    */
 }

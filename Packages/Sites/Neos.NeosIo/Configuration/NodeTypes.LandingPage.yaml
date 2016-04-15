@@ -1,0 +1,26 @@
+###########################################
+# The landing page behaves like the root page
+# but is available everywhere
+###########################################
+
+'Neos.NeosIo:LandingPage':
+  superTypes:
+    'TYPO3.Neos.NodeTypes:Page': TRUE
+    'Neos.NeosIo:KeyVisualMixin': TRUE
+  childNodes:
+    'main':
+      type: 'TYPO3.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': FALSE
+          'Neos.NeosIo:FactsGrid': TRUE
+          'Neos.NeosIo:Stage': TRUE
+          'Neos.NeosIo:DeviceStage': TRUE
+  ui:
+    label: 'Landing page'
+    icon: 'icon-plane'
+    inspector:
+      groups:
+        'additional':
+          label: 'Additional'
+          position: 20
