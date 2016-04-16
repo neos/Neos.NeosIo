@@ -1,0 +1,20 @@
+###########################################
+# A box to slightly highlight certain contents.
+###########################################
+
+'Neos.NeosIo:Box':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+  childNodes:
+    'contents':
+      type: 'TYPO3.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': FALSE
+          'TYPO3.Neos.NodeTypes:Text': TRUE
+          'Neos.NeosIo:Button': TRUE
+  ui:
+    label: 'Box'
+    icon: 'icon-archive'
+    group: 'structure'
+    inlineEditable: TRUE

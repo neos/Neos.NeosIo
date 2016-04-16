@@ -12,7 +12,9 @@
 	background: #F0F3F5;
 	padding: $double-spacing+px $basic-spacing+px;
 
-	> :last-child {
+	// Since neos inserts a couple of wrapping DIVs around the default NodeTypes,
+	// we reset the bottom spacing for every last child instead of direct ones.
+	:last-child {
 		margin-bottom: 0;
 	}
 }
