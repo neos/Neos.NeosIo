@@ -5,7 +5,11 @@ import moment from 'moment';
 @component({
 	// The GitHub API v3 endpoint to fetch, e.g. `repos/Neos/neos-development-collection/stats/contributors`
 	endpoint: propTypes.string.isRequired,
+
+	// The property of the fetched JSON. Nested properties aren't supported yet.
 	property: propTypes.string.isRequired,
+
+	// If passed a truthy boolean, we will format the property with moment.js.
 	formatDate: propTypes.bool
 })
 export default class GitHubAPI {
@@ -27,8 +31,6 @@ export default class GitHubAPI {
 
 				if (formatDate) {
 					content = moment(content).format('MMMM Do YYYY, hh:mm:ss a');
-
-					console.log(content);
 				}
 
 				return Promise.resolve(content);
