@@ -1,0 +1,31 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+
+<div class="u-alignCenter">
+	<f:if condition="{neos:rendering.inBackend()}">
+		<f:then>
+			<div class="h5 u-mb0">
+				{neos:contentElement.editable(property: 'number', tag: 'span')}
+				{neos:contentElement.editable(property: 'suffix', tag: 'span')}
+			</div>
+		</f:then>
+		<f:else>
+			<div class="h1 u-mb0">
+				<span data-component="CountUp" data-to="{number -> f:format.stripTags()}">{number}</span>
+				{suffix -> f:format.stripTags()}
+			</div>
+		</f:else>
+	</f:if>
+
+	<div class="h5">
+		<f:if condition="{neos:rendering.inBackend()}">
+			<f:then>
+				<span>
+					{neos:contentElement.editable(property: 'text')}
+				</span>
+			</f:then>
+			<f:else>
+				{text -> f:format.stripTags()}
+			</f:else>
+		</f:if>
+	</div>
+</div>

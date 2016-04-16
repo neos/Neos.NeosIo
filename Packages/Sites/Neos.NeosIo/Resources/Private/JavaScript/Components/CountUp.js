@@ -44,14 +44,16 @@ export default class CountUpComponent {
 	animate() {
 		const {to} = this.props;
 		const {el} = this;
-		let delay = 0;
-		let count = to * 0.5;
+		let delay = 2;
+		let count = to - 62 > 0 ? to - 62 : 0;
 
 		function ease() {
 			count += 1;
 
-			if (count > 30) {
+			if (count > to - 40) {
 				delay += 5;
+			} else {
+				delay += 0.3;
 			}
 
 			if (count < to) {

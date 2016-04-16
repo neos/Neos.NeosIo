@@ -1,0 +1,55 @@
+###########################################
+# A number counter which animates to the
+# target number once in the users viewport.
+###########################################
+
+'Neos.NeosIo:CountUp':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+    'TYPO3.Neos.NodeTypes:TextMixin': TRUE
+  ui:
+    label: 'Detail Counter'
+    icon: 'icon-signal'
+    inlineEditable: TRUE
+  properties:
+    'text':
+      ui:
+        aloha:
+          format: []
+          table: []
+          link: []
+          list: []
+          alignment: []
+          formatlesspaste:
+            button: FALSE
+            formatlessPasteOption: TRUE
+    'number':
+      type: string
+      defaultValue: '101'
+      ui:
+        inlineEditable: TRUE
+        aloha:
+          placeholder: 'Enter your Number...'
+          format: []
+          table: []
+          link: []
+          list: []
+          alignment: []
+          formatlesspaste:
+            button: FALSE
+            formatlessPasteOption: TRUE
+    'suffix':
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: TRUE
+        aloha:
+          placeholder: 'Enter the optional suffix...'
+          format: []
+          table: []
+          link: []
+          list: []
+          alignment: []
+          formatlesspaste:
+            button: FALSE
+            formatlessPasteOption: TRUE
