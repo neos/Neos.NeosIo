@@ -29,6 +29,11 @@
 .deviceStage__contents {
 	padding: $double-spacing+px $double-spacing+px 0;
 
+	// In case no content is inserted, reset the top spacing for the `.deviceStage__contents` wrapper.
+	> .neos-contentcollection:empty {
+		margin-top: -52px;
+	}
+
 	> :last-child {
 		margin-bottom: 0;
 	}
