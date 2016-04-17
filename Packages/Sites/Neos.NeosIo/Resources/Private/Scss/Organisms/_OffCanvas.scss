@@ -1,0 +1,84 @@
+//
+// Due to the totally different styles of the OffCanvas and regular site navigation,
+// we added a seperate file to increase the abstract between both states.
+//
+.offCanvas {
+	@include mq('smallerThanLarge') {
+		$bg: brand('secondary');
+
+		position: fixed;
+		top: 0;
+		right: 0;
+		transform: translateY(-100%);
+		width: 100%;
+		height: 100%;
+		padding: 5em 1.5em 1.5em;
+		background: linear-gradient(to bottom, rgba($bg, .75) 0%, rgba($bg, 1) 100%);
+		transition: .5s ease opacity;
+		opacity: 0;
+	}
+}
+.offCanvas--visible {
+	@include mq('smallerThanLarge') {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+.offCanvas__navWrapper {
+	// Hide the scroll bar, but still be able to scroll.
+	@include mq('smallerThanLarge') {
+		height: 100%;
+		overflow: hidden;
+		transform: translateY(-35px);
+		transition: .5s .3s ease all;
+		opacity: 0;
+
+		.offCanvas--visible & {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+}
+.offCanvas__nav {
+	@include mq('smallerThanLarge') {
+		margin-right: -16px;
+
+		// Enable scrolling inside the navigation.
+		overflow-y: scroll;
+		height: 100%;
+
+		@include u-cf();
+	}
+}
+
+// Additional styles for the first level items.
+.offCanvas__category {
+	@include mq('smallerThanLarge') {
+		width: 50%;
+		margin-bottom: $basic-spacing+px;
+		float: left;
+
+		// Needed, otherwise the 50/50 layout would be broken if lists have different heights.
+		&:nth-child(odd) {
+			clear: both;
+		}
+
+		> a {
+			font-size: $base-line-height+px;
+			font-weight: $regular;
+			margin-top: $half-spacing+px;
+			margin-bottom: $half-spacing+px;
+		}
+	}
+	@include mq('small') {
+		width: 100%;
+		float: none;
+	}
+}
+
+// Additional styles for the second level items.
+.offCanvas__categoryList {
+	@include mq('smallerThanLarge') {
+		font-weight: $light;
+	}
+}

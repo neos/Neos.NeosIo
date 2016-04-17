@@ -14,11 +14,13 @@
 		href="#siteNav"
 		data-component="ClassToggler"
 		data-activeClass="hamburger--active"
-		data-targetSelector="#siteNav"
-		data-targetActiveClass="siteNav--visible">
+		data-documentActiveClass="html--scrollDisabled"
+		data-targetSelector="#offCanvas"
+		data-targetActiveClass="offCanvas--visible">
 		<div class="hamburger__line hamburger__line--top"></div>
 		<div class="hamburger__line"></div>
 		<div class="hamburger__line hamburger__line--bottom"></div>
 	</a>
+
 	{parts.menu -> f:format.raw()}
 </header>

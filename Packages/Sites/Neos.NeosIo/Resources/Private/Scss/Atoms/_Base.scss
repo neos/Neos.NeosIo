@@ -16,6 +16,17 @@ body {
 	background: $body-background;
 }
 
+// Disable scroll - Used in the OffCanvas active state.
+.html--scrollDisabled {
+	height: 100%;
+
+	> body {
+		height: 100%;
+		overflow: hidden;
+	}
+}
+
+
 .siteWrapper {
 	position: relative;
 	width: $layout-width;
