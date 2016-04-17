@@ -1,5 +1,6 @@
 import ClassToggler from './ClassToggler.js';
 import CountUp from './CountUp.js';
+import GitHubAPI from './GitHubAPI.js';
 import ScrollTo from './ScrollTo.js';
 import ScrollClassToggler from './ScrollClassToggler.js';
 import SentenceSwitcher from './SentenceSwitcher.js';
@@ -7,7 +8,8 @@ import SentenceSwitcher from './SentenceSwitcher.js';
 export {
 	ClassToggler,
 	CountUp,
-	ScrollClassToggler,
 	ScrollTo,
-	SentenceSwitcher
+	GitHubAPI,
+	SentenceSwitcher,
+	ScrollClassToggler
 };
