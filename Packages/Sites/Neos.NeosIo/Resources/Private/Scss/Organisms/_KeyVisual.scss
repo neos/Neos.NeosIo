@@ -1,15 +1,3 @@
-@keyframes keyVisual__arrow {
-	0% {
-		transform: translateY(0);
-	}
-	50% {
-		transform: translateY(-20px);
-	}
-	100% {
-		transform: translateY(0);
-	}
-}
-
 .keyVisual {
 	position: relative;
 	height: 25vw;
@@ -26,28 +14,11 @@
 		width: 100%;
 		height: 20vh;
 		background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
-
 	}
 }
 .keyVisual--large {
 	height: 90vh;
 	min-height: 600px;
-
-	//
-	// Scroll arrow.
-	//
-	&:after {
-		content: '';
-		position: absolute;
-		bottom: 10px;
-		left: 50%;
-		height: 32px;
-		width: 32px;
-		margin-left: -16px;
-		background: transparent url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTcuNDEsOC41OEwxMiwxMy4xN0wxNi41OSw4LjU4TDE4LDEwTDEyLDE2TDYsMTBMNy40MSw4LjU4WiIgLz48L3N2Zz4=);
-		background-size: 32px;
-		animation: keyVisual__arrow 2s infinite;
-	}
 }
 .keyVisual__bg {
 	position: absolute;
