@@ -1,28 +1,30 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
 {namespace ts=TYPO3\TypoScript\ViewHelpers}
 
-<nav role="navigation">
-	<ul {attributes -> f:format.raw()} id="siteNav">
-		<f:for each="{items}" as="item">
-			<li class="{f:if(condition: '{item.state} != \'normal\'', then: ' active')}">
-				<f:if condition="{item.subItems}">
-					<f:then>
-						<neos:link.node node="{item.node}" additionalAttributes="{role: 'button', aria-haspopup: 'true', aria-expanded: 'false'}">
-							{item.node.label}
-						</neos:link.node>
-						<ul class="nav nav--stacked siteHeader__dropDownNav">
-							<f:for each="{item.subItems}" as="subItem">
-								<li class="{f:if(condition: '{subItem.state} != \'normal\'', then: ' active')}">
-									<neos:link.node node="{subItem.node}">{subItem.node.label}</neos:link.node>
-								</li>
-							</f:for>
-						</ul>
-					</f:then>
-					<f:else>
-						<neos:link.node node="{item.node}">{item.node.label}</neos:link.node>
-					</f:else>
-				</f:if>
-			</li>
-		</f:for>
-	</ul>
+<nav role="navigation" class="offCanvas" id="offCanvas">
+	<div class="offCanvas__navWrapper">
+		<ul {attributes -> f:format.raw()}>
+			<f:for each="{items}" as="item">
+				<li class="offCanvas__category {f:if(condition: '{item.state} != \'normal\'', then: ' active')}">
+					<f:if condition="{item.subItems}">
+						<f:then>
+							<neos:link.node node="{item.node}" additionalAttributes="{role: 'button', aria-haspopup: 'true', aria-expanded: 'false'}">
+								{item.node.label}
+							</neos:link.node>
+							<ul class="nav nav--stacked siteHeader__dropDownNav offCanvas__categoryList">
+								<f:for each="{item.subItems}" as="subItem">
+									<li class="{f:if(condition: '{subItem.state} != \'normal\'', then: ' active')}">
+										<neos:link.node node="{subItem.node}">{subItem.node.label}</neos:link.node>
+									</li>
+								</f:for>
+							</ul>
+						</f:then>
+						<f:else>
+							<neos:link.node node="{item.node}">{item.node.label}</neos:link.node>
+						</f:else>
+					</f:if>
+				</li>
+			</f:for>
+		</ul>
+	</div>
 </nav>
