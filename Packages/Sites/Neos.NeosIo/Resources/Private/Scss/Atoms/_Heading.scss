@@ -33,52 +33,64 @@
  *     h6 This is an sixth level heading
  */
 @mixin h1() {
-	font-size: 3em;
-	font-weight: $thin;
 	margin-bottom: $basic-spacing+px;
+	font-size: $base-font-size*2px;
+	line-height: $base-line-height*2px;
+	font-weight: $thin;
+
+	@include mq('medium') {
+		font-size: $base-font-size*3px;
+		line-height: $base-line-height*3px;
+	}
 
 	@extend %h;
 }
 @mixin h2() {
 	margin-top: $half-spacing+px;
-	margin-bottom: $half-spacing+px !important; // !important because of substitute teacher.
-	font-size: 2em;
-	font-weight: $thin;
+	margin-bottom: $half-spacing+px;
+	font-size: $base-font-size*1.3px;
+	line-height: $base-line-height*1px;
+	font-weight: $regular;
+
+	@include mq('medium') {
+		font-size: $base-font-size*2px;
+		font-weight: $thin;
+	}
 
 	// In case the h2 is a sub-heading align it to the heading before.
 	h1 + & {
 		margin-top: -($basic-spacing)+px;
-		margin-bottom: $basic-spacing+px !important;
-	}
-
-	// In case the h2 has a pre sub-heading attached to it, align it to the heading after.
-	.h--introSub + & {
-		margin-top: 0;
+		margin-bottom: $basic-spacing+px;
 	}
 
 	@extend %h;
 }
 @mixin h3() {
 	margin-bottom: $half-spacing+px;
-	font-size: 1.5em;
+	font-size: $base-font-size*1.3px;
+	line-height: $base-line-height*1px;
+
+	@include mq('medium') {
+		font-size: $base-font-size*1.5px;
+	}
 
 	@extend %h;
 }
 @mixin h4() {
-	margin-bottom: ($basic-spacing * 0.25)+px;
-	margin-bottom: ($basic-spacing * 0.5)+px;
-	font-size: 1.25em;
+	margin-bottom: $basic-spacing*0.25px;
+	margin-bottom: $basic-spacing*0.5px;
+	font-size: $base-font-size*1.25px;
 
 	@extend %h;
 }
 @mixin h5() {
-	font-size: 1em;
+	font-size: $base-font-size*1px;
 	font-weight: $bold;
 
 	@extend %h;
 }
 @mixin h6() {
-	font-size: 1em;
+	font-size: $base-font-size*1px;
 	font-weight: $bold;
 
 	@extend %h;
