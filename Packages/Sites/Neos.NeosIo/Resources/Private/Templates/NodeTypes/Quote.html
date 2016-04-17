@@ -2,18 +2,20 @@
 {namespace media=TYPO3\Media\ViewHelpers}
 
 <blockquote class="flag u-mb0" itemscope itemtype="http://schema.org/Person">
-	<div class="flag__image">
-		<f:if condition="{authorAvatar}">
-			<f:then>
+	<f:if condition="{authorAvatar}">
+		<f:then>
+			<div class="flag__image">
 				<img src="{media:uri.image(asset: authorAvatar, maximumWidth: 128, maximumHeight: 128)}" itemprop="image" class="avatar">
-			</f:then>
-			<f:else>
-				<f:if condition="{neos:rendering.inBackend()}">
+			</div>
+		</f:then>
+		<f:else>
+			<f:if condition="{neos:rendering.inBackend()}">
+				<div class="flag__image">
 					<img src="{f:uri.resource(package: 'TYPO3.Neos', path: 'Images/dummy-image.svg')}" itemprop="image" class="avatar" style="width: 128px; height:128px;">
-				</f:if>
-			</f:else>
-		</f:if>
-	</div>
+				</div>
+			</f:if>
+		</f:else>
+	</f:if>
 	<div class="flag__body">
 		<h2>
 			„{neos:contentElement.editable(property: 'quote', tag: 'span')}“
