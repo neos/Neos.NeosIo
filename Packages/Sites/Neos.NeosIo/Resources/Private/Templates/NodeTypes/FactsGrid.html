@@ -8,11 +8,26 @@
 	</a>
 	<a class="tableGrid__item u-w1/2 u-wm1/4">
 		Contributors<br>
-		<b class="u-brandColor-primary">99</b>
+		<b
+			class="u-brandColor-primary"
+			data-component="GitHubAPI"
+			data-endpoint="repos/Neos/neos-development-collection/stats/contributors"
+			data-property="length"
+		>
+			<f:render partial="Spinner" />
+		</b>
 	</a>
 	<a class="tableGrid__item u-w1/2 u-wm1/4">
 		Last Commit<br>
-		<b class="u-brandColor-primary">Today 11:03</b>
+		<b
+			class="u-brandColor-primary"
+			data-component="GitHubAPI"
+			data-endpoint="repos/Neos/neos-development-collection"
+			data-property="updated_at"
+			data-formatDate="true"
+		>
+			<f:render partial="Spinner" />
+		</b>
 	</a>
 	<a class="tableGrid__item u-w1/2 u-wm1/4">
 		Next Event<br>
