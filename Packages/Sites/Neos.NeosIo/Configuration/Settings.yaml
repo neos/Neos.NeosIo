@@ -4,9 +4,18 @@ TYPO3:
       navigateComponent:
         nodeTree:
           loadingDepth: 1
+      inspector:
+        editors:
+          # by default, only allow to reference Page and its subtypes. Otherwise, all Package Node Types are reachable
+          # as well (which makes it hard for editors to find the correct nodes)
+          'TYPO3.Neos/Inspector/Editors/LinkEditor':
+            editorOptions:
+              nodeTypes: ['TYPO3.Neos.NodeTypes:Page']
 
     nodeTypes:
       groups:
         special:
           position: 'after general'
           label: 'Special'
+
+
