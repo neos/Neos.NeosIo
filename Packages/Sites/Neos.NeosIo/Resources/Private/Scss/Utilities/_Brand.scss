@@ -40,9 +40,17 @@
 	vertical-align: top;
 }
 .u-brandLogo--bright {
-	fill: #FFF;
+	.u-brandLogo__typo { fill: #FFF; }
 }
 .u-brandLogo--small {
-	width: 100px;
+	width: 200px;
 	height: 50px;
+}
+
+.u-brandLogo__primary {
+	fill: brand('primary');
+}
+.u-brandLogo__typo,
+.u-brandLogo__secondary {
+	fill: brand('secondary');
 }
