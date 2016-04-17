@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<f:section name="body">
+	<f:render partial="SiteHeader.html" arguments="{_all}" />
+	<f:render partial="KeyVisual.html" arguments="{_all}" />
+	<div class="stage stage--bright" id="mainContent">
+		<div class="stage__contents">
+			<h3>{explanation}</h3>
+
+			{content.main -> f:format.raw()}
+		</div>
+	</div>
+	<f:render partial="SiteFooter.html" arguments="{_all}" />
+</f:section>
+</body>
+</html>

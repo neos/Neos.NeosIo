@@ -1,0 +1,14 @@
+###########################################
+# The FooterContainer is a document, containing all nodes for the footer menu.
+# It must reside underneath the site node.
+###########################################
+
+'Neos.NeosIo:FooterContainer':
+  superTypes:
+    'TYPO3.Neos:Document': TRUE
+  ui:
+    label: 'Footer Container'
+    icon: 'icon-filter'
+  childNodes:
+    'main':
+      type: 'TYPO3.Neos:ContentCollection'
