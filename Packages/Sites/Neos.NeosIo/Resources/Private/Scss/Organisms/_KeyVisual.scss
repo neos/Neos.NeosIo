@@ -1,6 +1,7 @@
 .keyVisual {
 	position: relative;
-	height: 25vw;
+	display: table;
+	width: 100%;
 	min-height: 190px;
 	overflow: hidden;
 	background: #000;
@@ -16,9 +17,8 @@
 		background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
 	}
 }
-.keyVisual--large {
-	height: 90vh;
-	min-height: 600px;
+.keyVisual--large & {
+	min-height: 400px;
 }
 .keyVisual__bg {
 	position: absolute;
@@ -35,20 +35,12 @@
 .keyVisual__contents {
 	position: relative;
 	z-index: 2;
+	display: table-cell;
+	height: 25vw;
+	vertical-align: middle;
 
-	//
-	// Using flexbox for vertical centering, since CSS transforms blur the inner contents, especially text nodes.
-	// (Nodes with CSS transforms applied get transformed into a material instead of shapes to enable GPU acceleration,
-	// nothing which will change in the future).
-	//
-	display: flex;
-	align-items: center;
-	height: 100%;
-
-	.no-flexbox & {
-		width: 80%;
-		margin: 0 auto;
-		padding-top: 10em;
+	.keyVisual--large & {
+		height: 90vh;
 	}
 
 	@include mq('small') {
@@ -56,12 +48,5 @@
 			padding-left: 1em;
 			padding-right: 1em;
 		}
-	}
-
-	//
-	// Set the correct width for child content collections since flexbox sets the width to it's inline children.
-	//
-	.neos-contentcollection {
-		width: 100%;
 	}
 }
