@@ -16,6 +16,8 @@
 		<f:then>
 			<svg class="
 					i
+
+					{f:if(condition: '{color} != \'inherit\'', then: 'u-brandColor-{color}')}
 					{f:if(condition: '{size} != \'regular\'', then: 'i--{size}')}
 					{f:if(condition: isPadded, then: 'i--padded')}
 				"
