@@ -53,6 +53,23 @@
                 label: 'Big'
               'huge':
                 label: 'Bigger'
+    'color':
+      type: string
+      defaultValue: 'inherit'
+      ui:
+        label: 'Color'
+        reloadIfChanged: TRUE
+        inspector:
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          group: 'appearance'
+          editorOptions:
+            values:
+              'inherit':
+                label: 'Inherit from parent'
+              'primary':
+                label: 'Primary'
+              'secondary':
+                label: 'Secondary'
     'alignment':
       type: string
       defaultValue: 'inline'
