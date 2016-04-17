@@ -1,0 +1,3 @@
+prototype(Neos.NeosIo:DefaultPage.FooterContent) < prototype(TYPO3.Neos:ContentCollectionRenderer) {
+    collection = ${q(site).children('[instanceof Neos.NeosIo:FooterContainer]').children('main').children().get()}
+}

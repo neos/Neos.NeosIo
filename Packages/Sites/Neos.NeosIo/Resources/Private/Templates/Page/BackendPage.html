@@ -7,6 +7,8 @@
 	<div class="stage stage--bright" id="mainContent">
 		<div class="stage__contents">
 			<h3>{explanation}</h3>
+
+			{content.main -> f:format.raw()}
 		</div>
 	</div>
 	<f:render partial="SiteFooter.html" arguments="{_all}" />

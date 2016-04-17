@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo:DefaultPage.FooterMenu) < prototype(Menu) {
     templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/FooterMenu.html'
     attributes.class = 'nav nav--stacked siteFooter__nav'
-    itemCollection = ${q(site).children('[instanceof Neos.NeosIo:FooterContainer]').children().get()}
+    itemCollection = ${q(site).children('[instanceof Neos.NeosIo:FooterContainer]').children('[instanceof TYPO3.Neos:Document]').get()}
 }
