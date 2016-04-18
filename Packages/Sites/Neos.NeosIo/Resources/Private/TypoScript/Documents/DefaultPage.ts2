@@ -31,6 +31,8 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
         javascripts.site = TYPO3.TypoScript:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
             sectionName = 'bodyScripts'
+
+            googleAnalyticsTrackingCode = ${Configuration.setting('Neos.NeosIo.googleAnalyticsTrackingCode')}
         }
     }
 
