@@ -1059,10 +1059,10 @@ body {
  */
 .btn {
   display: inline-block;
-  padding: 1.3em 2.5em;
-  border: 1px solid currentColor;
-  border-radius: 30px;
+  padding: 1.3em 1.5em;
+  border: none;
   cursor: pointer;
+  position: relative;
   font-weight: 300;
   line-height: 1;
   color: currentColor;
@@ -1111,6 +1111,8 @@ body {
   .btn--primary:hover {
     color: #09bcff;
     box-shadow: 0 0 8px rgba(9, 188, 255, 0.3); }
+  .btn--primary svg {
+    display: none; }
 
 /**
  * Solid Primary Button:
@@ -1135,15 +1137,24 @@ body {
         -ms-transform: translateX(-50%);
             transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1); }
+    opacity: 0; }
   .btn--solidPrimary:hover:before {
     opacity: 1;
-    border-radius: 30px;
     width: 101%; }
   .neos-backend .btn--solidPrimary:before {
     display: none; }
+  .btn--solidPrimary svg {
+    position: absolute;
+    top: 0;
+    height: 100%; }
+    .btn--solidPrimary svg polyline {
+      fill: #00ADEE;
+      stroke: #00ADEE;
+      stroke-width: 1px; }
+  .btn--solidPrimary svg.leftBorder {
+    left: -13px; }
+  .btn--solidPrimary svg.rightBorder {
+    right: -13px; }
 
 /**
  * Bordered Secondary Button:
@@ -1154,10 +1165,13 @@ body {
  */
 .btn--secondary {
   color: #26224C;
-  box-shadow: 0 0 8px rgba(38, 34, 76, 0.15); }
+  box-shadow: 0 0 8px rgba(38, 34, 76, 0.15);
+  border: 1px solid currentColor; }
   .btn--secondary:hover {
     color: #2f2a5e;
     box-shadow: 0 0 8px rgba(47, 42, 94, 0.5); }
+  .btn--secondary svg {
+    display: none; }
 
 /**
  * Solid Secondary Button:
@@ -1182,15 +1196,24 @@ body {
         -ms-transform: translateX(-50%);
             transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1); }
+    opacity: 0; }
   .btn--solidSecondary:hover:before {
     opacity: 1;
-    border-radius: 30px;
     width: 101%; }
   .neos-backend .btn--solidSecondary:before {
     display: none; }
+  .btn--solidSecondary svg {
+    position: absolute;
+    top: 0;
+    height: 100%; }
+    .btn--solidSecondary svg polyline {
+      fill: #26224C;
+      stroke: #26224C;
+      stroke-width: 1px; }
+  .btn--solidSecondary svg.leftBorder {
+    left: -13px; }
+  .btn--solidSecondary svg.rightBorder {
+    right: -13px; }
 
 /**
  * Bordered Bright Button:
@@ -1202,7 +1225,10 @@ body {
  *     </div>
  */
 .btn--bright {
-  color: #FFF; }
+  color: #FFF;
+  border: 1px solid currentColor; }
+  .btn--bright svg {
+    display: none; }
   .btn--bright:hover {
     opacity: .8; }
 

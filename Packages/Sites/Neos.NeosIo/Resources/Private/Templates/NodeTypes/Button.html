@@ -24,7 +24,13 @@
 				class="btn{f:if(condition:'{style}', then: ' {style}')}"
 				{f:if(condition: isOpenedInNewTab, then: 'target="_blank" rel="noopener"')}
 				>
-				{buttonLabel ->f:format.stripTags()}
+				<svg xmlns="http://www.w3.org/2000/svg" class="leftBorder" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="60px" viewBox="0 0 14 60" enable-background="new 0 0 14 60" xml:space="preserve">
+	                <polyline fill="none" vector-effect="non-scaling-stroke" stroke="#515151" stroke-miterlimit="10" points="14,0 0,10 0,60 14,60"/>
+	            </svg>
+				<span>{buttonLabel ->f:format.stripTags()}</span>
+				<svg xmlns="http://www.w3.org/2000/svg" class="rightBorder" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="60px" viewBox="0 0 14 60" enable-background="new 0 0 14 60" xml:space="preserve">
+					<polyline fill="none" vector-effect="non-scaling-stroke" stroke="#515151" stroke-miterlimit="10" points="0,60 14,50 14,0 0,0"/>
+				</svg>
 			</a>
 		</f:else>
 	</f:if>
