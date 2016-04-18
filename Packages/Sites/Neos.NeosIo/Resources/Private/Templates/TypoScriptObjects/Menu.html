@@ -13,9 +13,17 @@
 							</neos:link.node>
 							<ul class="nav nav--stacked siteHeader__dropDownNav offCanvas__categoryList">
 								<f:for each="{item.subItems}" as="subItem">
-									<li class="{f:if(condition: '{subItem.state} != \'normal\'', then: ' active')}">
-										<neos:link.node node="{subItem.node}">{subItem.node.label}</neos:link.node>
-									</li>
+									<f:if condition="{subItem.node.nodeType.name} == 'Neos.NeosIo:SpacerPage'">
+										<f:then>
+											<li><hr class="hr__spacing-disabled" /></li>
+										</f:then>
+										<f:else>
+											<li class="{f:if(condition: '{subItem.state} != \'normal\'', then: ' active')}">
+												<neos:link.node node="{subItem.node}">{subItem.node.label}</neos:link.node>
+											</li>
+										</f:else>
+									</f:if>
+
 								</f:for>
 							</ul>
 						</f:then>
