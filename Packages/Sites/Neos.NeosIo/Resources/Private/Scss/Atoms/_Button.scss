@@ -11,10 +11,10 @@
 	display: inline-block;
 
 	// Set in em's so we can change the size of the button depending on the font-size.
-	padding: 1.3em 2.5em;
-	border: 1px solid currentColor;
-	border-radius: 30px;
+	padding: 1.3em 1.5em;
+	border: none;
 	cursor: pointer;
+	position: relative;
 
 	// Normalize some rules across the targeted elements (<input>, <button> and the .btn class).
 	font-weight: $regular;
@@ -50,6 +50,22 @@
 	@include btn();
 }
 
+@mixin btnSvgBorder($strokeColor, $fillColor) {
+	svg {
+		position: absolute;
+		top: 0;
+		height: 100%;
+
+		polyline {
+			fill: $fillColor;
+			stroke: $strokeColor;
+			stroke-width: 1px;
+		}
+	}
+
+	svg.btn__leftBorder { left: -13px; }
+	svg.btn__rightBorder { right: -13px; }
+}
 
 /*
  * A basic :hover effect for all solid buttons.
@@ -66,13 +82,10 @@
 		height: 100%;
 		transform: translateX(-50%);
 		background: rgba(#FFF, .15);
-		border-radius: 10px;
 		opacity: 0;
-		transition: all .5s cubic-bezier(0.2,1,.3,1);
 	}
 	&:hover:before {
 		opacity: 1;
-		border-radius: 30px;
 		width: 101%;
 	}
 
@@ -125,6 +138,9 @@
 }
 .btn--primary {
 	@include btn--primary();
+	svg {
+		display: none;
+	}
 }
 
 /**
@@ -143,6 +159,7 @@
 }
 .btn--solidPrimary {
 	@include btn--solidPrimary();
+	@include btnSvgBorder(brand('primary'), brand('primary'));
 }
 
 /**
@@ -155,6 +172,7 @@
 @mixin btn--secondary() {
 	color: brand('secondary');
 	box-shadow: 0 0 8px rgba(brand('secondary'), 0.15);
+	border: 1px solid currentColor;
 
 	&:hover {
 		$hoverColor: lighten(brand('secondary'), 5%);
@@ -165,6 +183,9 @@
 }
 .btn--secondary {
 	@include btn--secondary();
+	svg {
+		display: none;
+	}
 }
 
 /**
@@ -183,6 +204,7 @@
 }
 .btn--solidSecondary {
 	@include btn--solidSecondary();
+	@include btnSvgBorder(brand('secondary'), brand('secondary'));
 }
 
 /**
@@ -196,6 +218,11 @@
  */
 @mixin btn--bright() {
 	color: #FFF;
+	border: 1px solid currentColor;
+
+	svg {
+		display: none;
+	}
 
 	&:hover {
 		opacity: .8;
