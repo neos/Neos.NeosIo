@@ -29,3 +29,14 @@ TYPO3:
       # We only need searching for the Neos Marketplace; thus disabling the indexing functionality for user workspaces
       # drastically reduces index size and speeds up indexing.
       indexAllWorkspaces: false
+
+Neos:
+  NeosIo:
+    fundingApi:
+      username: ''
+      password: ''
+      apiUrl: 'https://neosfunding.sandstorm.de'
+      timeout: 30
+      actions:
+        getBadges: '/funding-api-sold-badges'
+      parameters: []

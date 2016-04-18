@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+<f:section name="Main">
+	<div{attributes -> f:format.raw()}>
+
+	<div class="fundingBadges__sortingControls">
+		<f:for each="{badgeData.badgeTypes}" as="type" key="label">
+			<span class="fundingBadges__sortingControl" data-filter="{label}">
+				<f:translate id="fundingBadges.filterType.{label -> f:format.case(mode: 'lower')}"
+				             package="Neos.NeosIo">{label}</f:translate>
+			</span>
+		</f:for>
+	</div>
+
+	<ul class="fundingBadges__list">
+		<f:for each="{badgeData.customers}" as="customer" key="customerName">
+			<li class="fundingBadges__singleElement" data-customer-name="{customerName -> f:format.case(mode: 'lower')}"
+			    data-filters='{customer.badgeTypes -> f:format.json() -> f:format.raw()}'>
+
+				<f:if condition="{customer.logo}">
+					<f:then>
+						<f:if condition="{customer.link}">
+							<f:then>
+								<a href="{customer.link}" title="Visit {customerName}" target="_blank">
+									<f:render section="logo" arguments="{_all}"/>
+								</a>
+							</f:then>
+							<f:else>
+								<f:render section="logo" arguments="{_all}"/>
+							</f:else>
+						</f:if>
+					</f:then>
+					<f:else>
+						<strong class="funding-badge--customer-name">
+							<f:if condition="{customer.link}">
+								<f:then>
+									<a href="{customer.link}" title="Visit {customerName}" target="_blank">
+										{customerName}
+									</a>
+								</f:then>
+								<f:else>
+									{customerName}
+								</f:else>
+							</f:if>
+						</strong>
+					</f:else>
+				</f:if>
+
+				<f:for each="{customer.badges}" as="badge">
+					<div class="funding-badge--item">
+						<strong class="funding-badge--customer-sum">
+							{badge.customerSum -> f:format.currency(currencySign: '€')}
+						</strong>
+						<br>
+						<small class="funding-badge--duration">
+							{badge.startDate -> f:format.date(localeFormatType: 'date', forceLocale: true)}
+							<f:if condition="{badge.startDate} != {badge.endDate}">
+								- {badge.endDate -> f:format.date(localeFormatType: 'date', forceLocale: true)}
+							</f:if>
+						</small>
+						&ndash;
+						<small class="funding-badge--funding-type">
+							<f:translate id="fundingBadges.filterType.{badge.fundingType -> f:format.case(mode: 'lower')}"
+							             package="Neos.NeosIo">{badge.fundingType}</f:translate>
+							<f:if condition="{badge.badgeType} != {badge.fundingType}">
+								(<f:translate id="fundingBadges.filterType.{badge.badgeType -> f:format.case(mode: 'lower')}"
+								              package="Neos.NeosIo">{badge.badgeType}</f:translate>)
+							</f:if>
+						</small>
+					</div>
+				</f:for>
+			</li>
+		</f:for>
+	</ul>
+	</div>
+</f:section>
+
+<f:section name="logo">
+	<img class="funding-badge--customer-logo" src="{customer.logo}" alt="Logo of {customerName}" title="{customerName}"/>
+</f:section>
+</html>
