@@ -1,0 +1,42 @@
+/**
+ * Funding Badges:
+ * Layout for the Funding-Display plugin
+ */
+.fundingBadges__sortingControls {
+	padding-bottom: $basic-spacing+px;
+	text-align: center;
+
+}
+
+.fundingBadges__sortingControl {
+	background: map-get($brand-colors, primary);
+	@include btn();
+	color: white;
+
+}
+
+.fundingBadges__sortingControl--isActive {
+	background: map-get($brand-colors, primary);
+	border-color: map-get($brand-colors, primary);
+}
+
+.fundingBadges__list {
+	column-count: 3;
+	-moz-column-count: 3;
+	-webkit-column-count: 3;
+	column-gap: 1em;
+}
+
+.fundingBadges__singleElement {
+	border: 1px solid map-get($brand-colors, primary);
+	padding: 20px;
+	color: white;
+	display: inline-block;
+	margin: 0 0 1em;
+	width: 100%;
+	-webkit-backface-visibility:hidden;
+}
+
+.fundingBadges__singleElement--isInactive {
+	opacity: 0.5;
+}
