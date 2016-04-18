@@ -44,7 +44,7 @@ class FundingApiConnector extends AbstractApiConnector
         $cacheKey = $this->getCacheKey('allBadges');
         $result = $this->getItem($cacheKey);
         if ($result === false) {
-            $this->systemLogger->log(sprintf('Fetching badges from Funding Api'), LOG_INFO, 1453193835);
+            $this->systemLogger->log('Fetching badges from Funding Api', LOG_INFO, 1453193835);
             $result = $this->fetchJsonData('getBadges');
             if (is_array($result)) {
                 $fundingData = array_reduce($result, function ($carry, $item) {
@@ -75,8 +75,8 @@ class FundingApiConnector extends AbstractApiConnector
 
                 $this->setItem($cacheKey, $fundingData);
             } else {
-                $this->systemLogger->log(sprintf('Unknown error when fetching badges from Funding Api, see system log'), LOG_ERR, 1453193837);
-                $result = array();
+                $this->systemLogger->log('Unknown error when fetching badges from Funding Api, see system log', LOG_ERR, 1453193837);
+                $result = [];
             }
         }
 

@@ -19,17 +19,14 @@ function shuffleArray(array) {
 	return array;
 }
 
-@component({})
+@component()
 export default class FundingBadges {
 	constructor() {
 		const list = this.find('.fundingBadges__list');
 		const elements = this.findAll('.fundingBadges__singleElement');
 		const shuffledElements = shuffleArray(elements);
-		shuffledElements.forEach((value) => {
-			list.appendChild(value);
-		});
-
 		shuffledElements.forEach((value, i) => {
+			list.appendChild(value);
 			value.setAttribute('data-index', i);
 		});
 

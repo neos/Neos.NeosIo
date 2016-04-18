@@ -49,7 +49,7 @@ abstract class AbstractApiConnector
     /**
      * @var array
      */
-    protected $objectCache = array();
+    protected $objectCache = [];
 
     /**
      * @Flow\Inject
