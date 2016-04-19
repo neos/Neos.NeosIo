@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+      xmlns:gravatar="http://typo3.org/ns/Flownative/Gravatar/ViewHelpers">
+
+
+<f:section name="listItem">
+    <div{attributes -> f:format.raw()}>
+        <a href="#"
+               data-component="ClassToggler"
+               data-activeClass="member-active"
+               data-documentActiveClass="html-scrollDisabled"
+               data-targetSelector="#member-modal-{user.name}"
+               data-targetActiveClass="teamMemberOffCanvas--visible">
+            <gravatar:gravatar email="{user.email}" size="{gravatarRenderSize}" default="retro" class="gravatar"  width="{gravatarSize}" height="{gravatarSize}"/>
+            <strong>{user.display-name}</strong>
+        </a>
+    </div>
+</f:section>
+
+
+
+<f:section name="overlay">
+    <div{attributes -> f:format.raw()}>
+        <div class="team-overlay"
+             data-component="ClassToggler"
+             data-activeClass="member-active"
+             data-documentActiveClass="html-scrollDisabled"
+             data-targetSelector="#member-modal-{user.name}"
+             data-targetActiveClass="teamMemberOffCanvas--visible">
+            <div class="g memberModal">
+
+                <div class="team-listing-modal__portrait">
+                    <strong class="team-listing-modal__header">{user.display-name}</strong><br/>
+                    <div class="g">
+                        <div class="gi u-w1/1 u-wm6/12 u-wl6/12">
+                            <gravatar:gravatar email="{user.email}" size="{gravatarRenderSize}" default="retro"  class="gravatar" width="{gravatarSize}" height="{gravatarSize}" />
+                        </div>
+                        <div class="gi u-w1/1 u-wm6/12 u-wl6/12">
+                            <ul>
+                                <f:if condition="{user.additionalProperties.neos_bio}">
+                                    <li>{user.additionalProperties.neos_bio}</li>
+                                </f:if>
+                                <f:if condition="{user.additionalProperties.neos_origin}">
+                                    <li>{user.additionalProperties.neos_origin}</li>
+                                </f:if>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-listing-modal__details">
+                    <f:if condition="{user.additionalProperties.neos_contribution}">
+                        <strong class="team-listing-modal__header">
+                            <f:translate id="modal.contribution" source="CrowdApi" package="Neos.NeosIo" arguments="{0: user.first-name}">
+                                What {0} contributes to Neos
+                            </f:translate>
+                        </strong>
+                        <hr>
+                        <p>
+                            {user.additionalProperties.neos_contribution}
+                        </p>
+                    </f:if>
+
+                    <strong class="team-listing-modal__header">
+                        <f:translate id="modal.contact" source="CrowdApi" package="Neos.NeosIo" arguments="{0: user.first-name}">
+                            Contact {0}
+                        </f:translate>
+                    </strong>
+                    <hr>
+                    <ul>
+                        <li><strong>Slack / Jira:</strong> @{user.name}</li>
+                        <f:for each="{user.additionalProperties}" key="property" as="value">
+                            <li>
+                                <f:render section="attribute" arguments="{property: property, value: value}"/>
+                            </li>
+                        </f:for>
+                    </ul>
+
+                    <f:if condition="{user.memberships}">
+                        <strong class="team-listing-modal__header">
+                            <f:translate id="modal.memberships" source="CrowdApi" package="Neos.NeosIo">Memberships</f:translate>
+                        </strong>
+                        <hr>
+                        <ul>
+                            <f:for each="{user.memberships}" as="group">
+                                <li>{f:if(condition: group.neos_title, then: group.neos_title, else: group.name)}</li>
+                            </f:for>
+                        </ul>
+                    </f:if>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:section>
+
+
+
+<f:section name="attribute">
+    <f:switch expression="{property}">
+        <f:case value="neos_twitter">
+            <f:link.external uri="http://twitter.com/{value}">Twitter</f:link.external>
+        </f:case>
+        <f:case value="neos_googleplus">
+            <f:link.external uri="{value}">Google+</f:link.external>
+        </f:case>
+        <f:case value="neos_skype">
+            <f:link.external uri="skype:{value}?call">Skype</f:link.external>
+        </f:case>
+        <f:case value="neos_email">
+            <f:link.external uri="mailto:{value}">E-Mail</f:link.external>
+        </f:case>
+        <f:case value="neos_origin"></f:case>
+        <f:case value="neos_bio"></f:case>
+        <f:case value="neos_contribution"></f:case>
+        <f:defaultCase>
+            <b><f:translate id="attribute.{property}" source="CrowdApi" package="Neos.NeosIo">{property}</f:translate></b>
+            {value}
+        </f:defaultCase>
+    </f:switch>
+</f:section>
+</html>

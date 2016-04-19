@@ -1,0 +1,28 @@
+prototype(Neos.NeosIo:CrowdUserListItem) < prototype(TYPO3.TypoScript:Template) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/CrowdUser.html'
+    sectionName = 'listItem'
+
+    attributes = TYPO3.TypoScript:Attributes {
+        class = 'gi u-w1/1 u-wm6/12 u-wl6/12 team-listing__member'
+    }
+
+    gravatarSize = 100
+    gravatarRenderSize = ${this.gravatarSize * 2}
+
+    user = ${q(site).crowdUser(userName).get()}
+}
+
+
+prototype(Neos.NeosIo:CrowdUserOverlay) < prototype(TYPO3.TypoScript:Template) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/CrowdUser.html'
+    sectionName = 'overlay'
+
+    gravatarSize = 100
+    gravatarRenderSize = ${this.gravatarSize * 2}
+
+    user = ${q(site).crowdUser(userName).get()}
+
+    attributes = TYPO3.TypoScript:Attributes {
+        id = ${'member-modal-' + userName}
+    }
+}

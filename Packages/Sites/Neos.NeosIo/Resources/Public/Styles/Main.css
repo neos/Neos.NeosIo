@@ -3438,6 +3438,71 @@ sub {
   .siteFooter__nav a:hover {
     color: #FFF; }
 
+.reveal-modal.tiny {
+  padding: 0;
+  max-width: 80%;
+  width: 420px; }
+
+.team-listing__group header > * {
+  margin-bottom: 1em; }
+
+.team-listing__member:nth-of-type(2)::after {
+  clear: both; }
+
+.team-listing__member .gravatar {
+  border: 2px solid red;
+  border-radius: 100%;
+  margin-right: 15px;
+  opacity: .85;
+  transition: opacity .1s ease-in, border-color .1s ease-in; }
+
+.team-listing__member a:hover .gravatar {
+  border-color: blue;
+  opacity: 1; }
+
+.team-listing-modal ul {
+  display: block;
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.team-listing-modal li {
+  line-height: 1.2em;
+  margin: .3em 0 0; }
+  .team-listing-modal li:first-child {
+    margin-top: 0; }
+
+.team-listing-modal hr {
+  margin: 0 0 .5em; }
+
+.team-listing-modal__header {
+  display: block;
+  font-size: 110%;
+  margin-bottom: 5px; }
+  ul + .team-listing-modal__header {
+    margin-top: 2em; }
+  .team-listing-modal__header + ul {
+    margin-top: .5em; }
+
+.team-listing-modal__portrait {
+  background-color: white;
+  color: white;
+  padding: 40px;
+  font-weight: bold; }
+  .team-listing-modal__portrait .team-listing-modal__header {
+    font-size: 130%;
+    text-transform: uppercase; }
+  .team-listing-modal__portrait ul {
+    display: block; }
+  .team-listing-modal__portrait .gravatar {
+    border: 2px solid white;
+    border-radius: 100%;
+    margin: 0 0 20px 0;
+    width: 100%; }
+
+.team-listing-modal__details {
+  padding: 40px; }
+
 /*
  * Print styles - Inlined to avoid another HTTP connection.
  */
