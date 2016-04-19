@@ -1,0 +1,59 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace media=TYPO3\Media\ViewHelpers}
+{namespace ts=TYPO3\TypoScript\ViewHelpers}
+
+<!DOCTYPE html>
+<html>
+<body>
+<f:section name="body">
+	<f:render partial="SiteHeader.html" arguments="{_all}" />
+	<f:render partial="KeyVisual.html" arguments="{
+		isKeyVisualContentsInverted: true,
+		keyVisualImage: keyVisualImage,
+		keyVisualImageSrcSet: keyVisualImageSrcSet
+	}" />
+
+	<nav>
+		{parts.breadcrumb -> f:format.raw()}
+	</nav>
+	{content.main -> f:format.raw()}
+
+	<f:render partial="SiteFooter.html" arguments="{_all}" />
+</f:section>
+<f:section name="post">
+	<div class="stage stage--bright" id="mainContent">
+		<div class="stage__contents">
+			<div class="g">
+				<main class="gi u-w1/1 u-wm9/12" role="main">
+					<section>
+						<neos:contentElement.wrap node="{node}">
+							<time datetime="{datePublished -> f:format.date(format: 'c')}" itemprop="datePublished">{datePublished -> media:format.relativeDate()}</time>
+							<f:if condition="{author}">
+								– <span itemprop="author" itemscope="" itemtype="https://schema.org/Person"><span itemprop="name">{author}</span></span>
+							</f:if>
+							<header>
+								<neos:contentElement.editable property="title" tag="h1" additionalAttributes="{itemprop: 'headline'}" />
+								<neos:contentElement.editable property="summary" tag="h2" additionalAttributes="{itemprop: 'description'}" />
+							</header>
+						</neos:contentElement.wrap>
+						{content -> f:format.raw()}
+					</section>
+				</main>
+				<aside class="gi u-w1/1 u-wm3/12 sideBar">
+					<nav>
+						<f:if condition="{relatedDocuments}">
+							<div class="h5">Related</div>
+							<ul>
+							<f:for each="{relatedDocuments}" as="relatedDocument">
+								<li><neos:link.node node="{relatedDocument}" /></li>
+							</f:for>
+							</ul>
+						</f:if>
+					</nav>
+				</aside>
+			</div>
+		</div>
+	</div>
+</f:section>
+</body>
+</html>

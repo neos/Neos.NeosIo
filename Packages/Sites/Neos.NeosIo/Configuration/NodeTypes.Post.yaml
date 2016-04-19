@@ -1,0 +1,144 @@
+'Neos.NeosIo:Post':
+  superTypes:
+    'TYPO3.Neos.NodeTypes:Page': TRUE
+    'TYPO3.Neos.NodeTypes:ImageMixin': TRUE
+    'TYPO3.Neos.NodeTypes:ImageCaptionMixin': TRUE
+    'TYPO3.Neos.Seo:TitleTagMixin': FALSE
+    'TYPO3.Neos.Seo:TwitterCardMixin': FALSE
+    'TYPO3.Neos.Seo:CanonicalLinkMixin': FALSE
+    'TYPO3.Neos.Seo:OpenGraphMixin': FALSE
+    'TYPO3.Neos.Seo:XmlSitemapMixin': FALSE
+  ui:
+    label: 'Post'
+    icon: 'icon-newspaper'
+    inspector:
+      groups:
+        options:
+          label: 'Options'
+          position: 20
+        author:
+          label: 'Author'
+          position: 30
+        image:
+          position: 40
+          collapsed: true
+        seometa:
+          position: 50
+          tab: ~
+  properties:
+    datePublished:
+      type: 'DateTime'
+      defaultValue: 'now'
+      ui:
+        label: 'Publication Date'
+        reloadPageIfChanged: TRUE
+        inspector:
+          group: 'options'
+          editorOptions:
+            format: 'Y-m-d'
+      validation:
+        'TYPO3.Neos/Validation/NotEmptyValidator': []
+        'TYPO3.Neos/Validation/DateTimeValidator': []
+    title:
+      validation: ~
+      ui:
+        inlineEditable: TRUE
+        inspector:
+          group: ~
+        aloha:
+          placeholder: 'Enter title here'
+          'format':
+            'b': TRUE
+            'i': TRUE
+            'u': TRUE
+            'sub': TRUE
+            'sup': TRUE
+            'p': FALSE
+            'h1': FALSE
+            'h2': FALSE
+            'h3': FALSE
+            'pre': FALSE
+            'removeFormat': FALSE
+          'table': []
+          'list': []
+          'link':
+            'a': TRUE
+          'alignment': []
+          'formatlesspaste':
+            'button': FALSE
+            'formatlessPasteOption': TRUE
+    summary:
+      type: 'string'
+      ui:
+        inlineEditable: TRUE
+        aloha:
+          placeholder: 'Enter summary here'
+          format:
+            b: TRUE
+            i: TRUE
+            u: TRUE
+            sub: TRUE
+            sup: TRUE
+            p: TRUE
+            h1: TRUE
+            h2: TRUE
+            h3: TRUE
+            h4: FALSE
+            h5: FALSE
+            h6: FALSE
+            removeFormat: TRUE
+          table:
+            table: TRUE
+          link:
+            a: TRUE
+          list:
+            ul: TRUE
+            ol: TRUE
+          alignment:
+            left: TRUE
+            center: TRUE
+            right: TRUE
+            justify: TRUE
+    featured:
+      type: boolean
+      ui:
+        label: 'Featured'
+        inspector:
+          group: 'options'
+    authors:
+      type: 'array'
+      ui:
+        label: 'Author(s)'
+        position: 10
+        reloadPageIfChanged: TRUE
+        inspector:
+          group: 'author'
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            placeholder: 'Choose'
+            dataSourceIdentifier: 'neos-neosio-editors'
+    authorAlternative:
+      type: 'string'
+      ui:
+        label: 'Author (alt)'
+        position: 20
+        reloadPageIfChanged: TRUE
+        inspector:
+          group: 'author'
+    relatedDocuments:
+      type: 'references'
+      ui:
+        label: 'Related documents'
+        reloadPageIfChanged: TRUE
+        inspector:
+          group: 'options'
+          editorOptions:
+            nodeTypes: ['TYPO3.Neos:Document']
+    metaRobotsNoindex:
+      ui:
+        inspector:
+          group: ~
+    metaRobotsNofollow:
+      ui:
+        inspector:
+          group: ~

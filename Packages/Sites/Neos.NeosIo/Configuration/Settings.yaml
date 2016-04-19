@@ -18,7 +18,6 @@ TYPO3:
           position: 'after general'
           label: 'Special'
 
-
   TYPO3CR:
     Search:
       # disable realtime search-index updating, as many bugs during publishing appear because of Elasticsearch
@@ -29,6 +28,10 @@ TYPO3:
       # We only need searching for the Neos Marketplace; thus disabling the indexing functionality for user workspaces
       # drastically reduces index size and speeds up indexing.
       indexAllWorkspaces: false
+
+  TypoScript:
+    defaultContext:
+      Data: 'Neos\NeosIo\Eel\Helper\DataHelper'
 
 Neos:
   NeosIo:
