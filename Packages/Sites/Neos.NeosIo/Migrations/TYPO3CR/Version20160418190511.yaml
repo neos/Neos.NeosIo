@@ -1,0 +1,112 @@
+up:
+  comments: 'Migrates old structured content to new structure'
+  migration:
+    -
+      filters:
+        -
+          type: 'NodeType'
+          settings:
+            nodeType: 'RobertLemke.Plugin.Blog:Post'
+      transformations:
+        -
+          type: 'ChangeNodeType'
+          settings:
+            newType: 'Neos.NeosIo:Post'
+        -
+          type: 'RenameProperty'
+          settings:
+            from: 'author'
+            to: 'authorAlternative'
+        -
+          type: 'RenameProperty'
+          settings:
+            from: 'teaserText'
+            to: 'summary'
+        -
+          type: 'ChangePropertyValue'
+          settings:
+            property: '_hiddenInIndex'
+            newValue: FALSE
+    -
+      filters:
+        -
+          type: 'NodeType'
+          settings:
+            nodeType: 'Neos.NeosIo:TwoColumns'
+      transformations:
+        -
+          type: 'ChangeNodeType'
+          settings:
+            newType: 'TYPO3.Neos.NodeTypes:TwoColumn'
+        -
+          type: 'RemoveProperty'
+          settings:
+            property: 'noRow'
+        -
+          type: 'RemoveProperty'
+          settings:
+            property: 'marginTop'
+        -
+          type: 'RemoveProperty'
+          settings:
+            property: 'marginBottom'
+    -
+      filters:
+        -
+          type: 'NodeType'
+          settings:
+            nodeType: 'Neos.NeosIo:ThreeColumns'
+      transformations:
+        -
+          type: 'ChangeNodeType'
+          settings:
+            newType: 'TYPO3.Neos.NodeTypes:ThreeColumn'
+        -
+          type: 'RemoveProperty'
+          settings:
+            property: 'noRow'
+        -
+          type: 'RemoveProperty'
+          settings:
+            property: 'marginTop'
+        -
+          type: 'RemoveProperty'
+          settings:
+            property: 'marginBottom'
+    -
+      filters:
+        -
+          type: 'NodeType'
+          settings:
+            nodeType: 'Neos.NeosIo:Headline'
+      transformations:
+        -
+          type: 'ChangeNodeType'
+          settings:
+            newType: 'TYPO3.Neos.NodeTypes:Headline'
+        -
+          type: 'Neos\NeosIo\TYPO3CR\Transformations\HeadlineTransformation'
+          settings: []
+        -
+          type: 'RemoveProperty'
+          settings:
+            property: 'type'
+        -
+          type: 'RemoveProperty'
+          settings:
+            property: 'color'
+        -
+          type: 'RemoveProperty'
+          settings:
+            property: 'border'
+        -
+          type: 'RemoveProperty'
+          settings:
+            property: 'centered'
+        -
+          type: 'RemoveProperty'
+          settings:
+            property: 'marginTop'
+
+down:
+  comments: 'No down migration possible.'
