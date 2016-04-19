@@ -11,7 +11,14 @@
 			style="background-image: url('{media:uri.image(asset: keyVisualImage, maximumWidth: 1500, maximumHeight: 1500)}')"
 		</f:then>
 		<f:else>
-			style="background-image: url('{f:uri.resource(path: 'Images/DefaultKeyvisual.jpg', package: 'Neos.NeosIo')}')"
+			<f:if condition="{size}">
+				<f:then>
+					style="background-image: url('{f:uri.resource(path: 'Images/DefaultKeyvisual.jpg', package: 'Neos.NeosIo')}')"
+				</f:then>
+				<f:else>
+					style="background-image: url('{f:uri.resource(path: 'Images/DefaultSmallKeyvisual.jpg', package: 'Neos.NeosIo')}')"
+				</f:else>
+			</f:if>
 		</f:else>
 	</f:if>
 	>
