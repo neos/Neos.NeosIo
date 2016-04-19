@@ -5,23 +5,18 @@
 	keyVisual__contents
 	u-alignCenter
 	{f:if(condition: isKeyVisualContentsInverted, then: 'u-invertText')}
-	">
-		{contents -> f:format.raw()}
-	</div>
-
+	"
 	<f:if condition="{keyVisualImage}">
 		<f:then>
-			<img
-				alt=""
-				class="keyVisual__bg"
-				src="{media:uri.image(asset: keyVisualImage, maximumWidth: 1700, maximumHeight: 1700)}"
-				srcset="{keyVisualImageSrcSet}">
+			style="background-image: url('{media:uri.image(asset: keyVisualImage, maximumWidth: 1500, maximumHeight: 1500)}')"
 		</f:then>
 		<f:else>
-			<img src="{f:uri.resource(path: 'Images/DefaultKeyvisual.jpg', package: 'Neos.NeosIo')}" class="keyVisual__bg">
+			style="background-image: url('{f:uri.resource(path: 'Images/DefaultKeyvisual.jpg', package: 'Neos.NeosIo')}')"
 		</f:else>
 	</f:if>
-
+	>
+		{contents -> f:format.raw()}
+	</div>
 	<a
 		data-component="ScrollTo"
 		href="#mainContent"

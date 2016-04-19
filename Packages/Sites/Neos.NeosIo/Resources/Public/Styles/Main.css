@@ -222,6 +222,14 @@ input::-moz-focus-inner {
   width: 200px;
   height: 50px; }
 
+.u-brandLogo--huge {
+  width: 250px;
+  height: 250px; }
+  @media screen and (min-width: 650px) {
+    .u-brandLogo--huge {
+      width: 500px;
+      height: 500px; } }
+
 .u-brandLogo__primary {
   fill: #00ADEE; }
 
@@ -3240,9 +3248,11 @@ sub {
   z-index: 2;
   display: table-cell;
   height: 25vw;
-  vertical-align: middle; }
+  vertical-align: middle;
+  background-size: cover;
+  width: 100%; }
   .keyVisual--large .keyVisual__contents {
-    height: 90vh; }
+    height: 70vh; }
   @media screen and (max-width: 649px) {
     .keyVisual__contents .u-brandLogo {
       padding-left: 1em;
