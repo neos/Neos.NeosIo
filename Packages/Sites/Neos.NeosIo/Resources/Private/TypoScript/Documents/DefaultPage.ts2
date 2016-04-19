@@ -33,6 +33,9 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
 
         homepage = ${site}
 
+        keyVisualImage = ${q(documentNode).property('keyVisualImage')}
+        isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
+
         javascripts.site = TYPO3.TypoScript:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
             sectionName = 'bodyScripts'
