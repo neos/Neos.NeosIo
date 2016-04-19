@@ -1,0 +1,19 @@
+up:
+  comments: 'Migrates old structured content to new structure'
+  migration:
+    -
+      filters:
+        -
+          type: 'NodeType'
+          settings:
+            nodeType: 'Neos.NeosIo:DynamicColumns'
+      transformations:
+        -
+          type: 'Neos\NeosIo\TYPO3CR\Transformations\ContainerTransformation'
+          settings: []
+        -
+          type: 'RemoveNode'
+          settings: []
+
+down:
+  comments: 'No down migration possible.'
