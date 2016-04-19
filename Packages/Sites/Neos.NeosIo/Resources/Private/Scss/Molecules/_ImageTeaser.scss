@@ -5,6 +5,23 @@
 	margin-bottom: $base-line-height+px;
 	overflow: hidden;
 	background: #000;
+
+	.imageTeaser__corner {
+		z-index: 2;
+		position: absolute;
+		fill: white;
+	}
+
+	.imageTeaser__corner--topLeft {
+		top: 0;
+		left: 0;
+	}
+
+	.imageTeaser__corner--bottomRight {
+		bottom: 0;
+		right: 0;
+	}
+
 }
 .imageTeaser__image {
 	position: absolute;
