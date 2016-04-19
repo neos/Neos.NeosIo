@@ -1,4 +1,5 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace io=Neos\NeosIo\ViewHelpers}
 
 <f:if condition="{alignment} == 'inline'">
 	<f:then>
@@ -12,44 +13,28 @@
 </f:if>
 
 <f:section name="button">
-	<f:if condition="{neos:rendering.inBackend()}">
-		<f:then>
-			<span class="btn{f:if(condition:'{style}', then: ' {style}')}">
-				<div class="btn__upperCorner">
-					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
-						<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="14,10 0,10 14,0"/>
-						<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"/>
-					</svg>
-				</div>
-				<div class="btn__content">{neos:contentElement.editable(property: 'buttonLabel')}</div>
-				<div class="btn__bottomCorner">
-					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
-						<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="0,0 0,10 14,0"/>
-						<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"/>
-					</svg>
-				</div>
-			</span>
-		</f:then>
-		<f:else>
-			<a
-				href="{f:if(condition: link, then: link, else: '#')}"
-				class="btn{f:if(condition:'{style}', then: ' {style}')}"
-				{f:if(condition: isOpenedInNewTab, then: 'target="_blank" rel="noopener"')}
-				>
-				<div class="btn__upperCorner">
-					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
-						<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="14,10 0,10 14,0"/>
-						<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"/>
-					</svg>
-				</div>
-				<div class="btn__content">{buttonLabel ->f:format.stripTags()}</div>
-				<div class="btn__bottomCorner">
-					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
-						<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="0,0 0,10 14,0"/>
-						<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"/>
-					</svg>
-				</div>
-			</a>
-		</f:else>
-	</f:if>
+	<io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}" class="btn {style}">
+		<div class="btn__upperCorner">
+			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
+				<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="14,10 0,10 14,0"/>
+				<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"/>
+			</svg>
+		</div>
+		<f:if condition="{neos:rendering.inBackend()}">
+			<!-- Hint: Buttons might still contain links (old content); and this breaks the element in the frontend -- that is why we need to strip tags in FE. -->
+			<f:then>
+				<neos:contentElement.editable property="buttonLabel" class="btn__content" />
+			</f:then>
+			<f:else>
+				<div class="btn__content">{buttonLabel -> f:format.stripTags()}</div>
+			</f:else>
+		</f:if>
+
+		<div class="btn__bottomCorner">
+			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
+				<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="0,0 0,10 14,0"/>
+				<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"/>
+			</svg>
+		</div>
+	</io:link.external>
 </f:section>

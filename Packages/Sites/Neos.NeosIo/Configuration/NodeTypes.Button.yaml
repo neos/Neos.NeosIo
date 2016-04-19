@@ -21,16 +21,37 @@
     'buttonLabel':
       type: string
       defaultValue: 'Button label'
-      inlineEditable: TRUE
+      ui:
+        inlineEditable: TRUE
+        aloha:
+          autoparagraph: FALSE
+          'format':
+            'strong': FALSE
+            'em': FALSE
+            'u': FALSE
+            'sub': FALSE
+            'sup': FALSE
+            'del': FALSE
+            'p': FALSE
+            'h1': FALSE
+            'h2': FALSE
+            'h3': FALSE
+            'pre': FALSE
+            'removeFormat': TRUE
+          'table':
+            'table': FALSE
+          'list':
+            'ol': FALSE
+            'ul': FALSE
+          'link':
+            'a': FALSE
     'link':
       ui:
         label: 'Button Link'
         inspector:
           group: 'content'
-    'isOpenedInNewTab':
-      type: boolean
+    'openInNewTab':
       ui:
-        label: 'Open in new Tab'
         inspector:
           group: 'content'
     'alignment':

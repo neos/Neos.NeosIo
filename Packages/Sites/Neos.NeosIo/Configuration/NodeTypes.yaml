@@ -25,6 +25,25 @@
     hasCaption: ~
     alignment: ~
 
+'TYPO3.Neos.NodeTypes:LinkMixin':
+  properties:
+    link:
+      ui:
+        reloadIfChanged: false
+    openInNewTab:
+      type: boolean
+      ui:
+        label: 'Open in new Tab'
+        inspector:
+          position: 310
+
+'TYPO3.Neos.NodeTypes:ContentImageMixin':
+  properties:
+    openInNewTab:
+      ui:
+        inspector:
+          group: 'image'
+
 'TYPO3.Neos.NodeTypes:Text':
   properties:
     text:
