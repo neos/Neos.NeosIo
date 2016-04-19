@@ -13,11 +13,6 @@ prototype(Neos.NeosIo:LandingPage.Document) < prototype(Neos.NeosIo:DefaultPage)
 		}
 
 		keyVisualImage = ${q(documentNode).property('keyVisualImage')}
-		keyVisualImageSrcSet = TYPO3.TypoScript:Template {
-			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Partials/KeyVisual.html'
-			sectionName = 'imageSrcSet'
-			keyVisualImage = ${q(documentNode).property('keyVisualImage')}
-		}
 		isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
 	}
 }
