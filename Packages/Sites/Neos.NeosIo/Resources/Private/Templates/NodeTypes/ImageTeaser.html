@@ -3,6 +3,10 @@
 {namespace io=Neos\NeosIo\ViewHelpers}
 
 <io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}" class="imageTeaser">
+	<svg class="imageTeaser__corner imageTeaser__corner--topLeft" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="28px" height="20px" viewBox="0 0 28 20" enable-background="new 0 0 28 20" xml:space="preserve">
+		<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="20" points="0,0 0,20 28,0"/>
+		<line stroke-miterlimit="20" x1="0" y1="20" x2="28" y2="0"/>
+	</svg>
 	<f:if condition="{image}">
 		<f:then>
 			<media:image
@@ -31,4 +35,9 @@
 		<neos:contentElement.editable property="subTitle" tag="h5" class="imageTeaser__contents__subHeading" />
 		<neos:contentElement.editable property="title" tag="h3" class="imageTeaser__contents__heading" />
 	</div>
+	<svg class="imageTeaser__corner imageTeaser__corner--bottomRight" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="28px" height="20px" viewBox="0 0 28 20" enable-background="new 0 0 28 20" xml:space="preserve">
+		<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="20" points="28,20 0,20 28,0"/>
+		<line stroke-miterlimit="20" x1="0" y1="20" x2="28" y2="0"/>
+	</svg>
+
 </io:link.external>
