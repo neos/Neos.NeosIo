@@ -11,7 +11,7 @@
 	display: inline-block;
 
 	// Set in em's so we can change the size of the button depending on the font-size.
-	padding: 1.3em 1.5em;
+	padding: 0;
 	border: none;
 	cursor: pointer;
 	position: relative;
@@ -50,17 +50,75 @@
 	@include btn();
 }
 
-@mixin btnSvgBorder($strokeColor, $fillColor) {
-	svg {
-		position: absolute;
-		top: 0;
-		height: 100%;
+@mixin btnSvgBorder($strokeColor, $fillColor, $contentPadding: 5px 40px) {
+	$cornerWidth: 14px;
+	$cornerHeight: 10px;
+	$strokeWidth: 1px;
 
-		polyline {
-			fill: $fillColor;
-			stroke: $strokeColor;
-			stroke-width: 1px;
+	> * {
+		position: relative;
+		width: 100%;
+	}
+
+	.btn__upperCorner, .btn__bottomCorner {
+		height: $cornerHeight;
+
+		svg {
+			position: absolute;
+
+			line {
+				stroke: $strokeColor;
+				stroke-width: $strokeWidth;
+			}
+
+			polygon {
+				fill: $fillColor;
+			}
 		}
+
+		&:after {
+			display: block;
+			content: '';
+			overflow-y: hidden;
+			width: 100%;
+			height: $cornerHeight;
+			background: $fillColor;
+		}
+	}
+
+	.btn__upperCorner {
+		padding-left: $cornerWidth;
+		svg {
+			left: 0;
+			top: 0;
+		}
+
+		&:after {
+			border-right: $strokeWidth solid $strokeColor;
+			border-top: $strokeWidth solid $strokeColor;
+		}
+	}
+
+	.btn__bottomCorner {
+		padding-right: $cornerWidth;
+		svg {
+			right: 0;
+			bottom: 0;
+		}
+
+		&:after {
+			border-left: $strokeWidth solid $strokeColor;
+			border-bottom: $strokeWidth solid $strokeColor;
+		}
+	}
+
+	.btn__content {
+		border-left: $strokeWidth solid $strokeColor;
+		border-right: $strokeWidth solid $strokeColor;
+		width: 100%;
+
+		padding: $contentPadding;
+		background: $fillColor;
 	}
 
 	svg.btn__leftBorder { left: -13px; }
@@ -70,31 +128,33 @@
 /*
  * A basic :hover effect for all solid buttons.
  */
-@mixin solidBtnHoverPulse() {
+@mixin solidBtnHoverPulse($baseColor) {
+	$hoverColor: lighten($baseColor, 10);
+	$transition: all .5s;
+
 	position: relative;
 
-	&:before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 50%;
-		width: 60%;
-		height: 100%;
-		transform: translateX(-50%);
-		background: rgba(#FFF, .15);
-		opacity: 0;
-	}
-	&:hover:before {
-		opacity: 1;
-		width: 101%;
-	}
-
-	//
-	// Disable the :hover effect while viewing the site in the neos backend since it creates
-	// an overlaying div which would prevent the inline editing of the label.
-	//
-	.neos-backend &:before {
-		display: none;
+	&:hover {
+		.btn__upperCorner, .btn__bottomCorner {
+			&:after{
+				transition: $transition;
+				background: $hoverColor;
+				border-color: $hoverColor;
+			}
+			polygon {
+				transition: $transition;
+				fill: $hoverColor;
+			}
+			line {
+				transition: all 0.5s;
+				stroke: $hoverColor;
+			}
+		}
+		.btn__content {
+			transition: $transition;
+			border-color: $hoverColor;
+			background: $hoverColor;
+		}
 	}
 }
 
@@ -127,20 +187,14 @@
  */
 @mixin btn--primary() {
 	color: brand('primary');
-	box-shadow: 0 0 8px rgba(brand('primary'), 0.15);
 
 	&:hover {
-		$hoverColor: lighten(brand('primary'), 5%);
-
-		color: $hoverColor;
-		box-shadow: 0 0 8px rgba($hoverColor, 0.3);
+		@include btnSvgBorder(brand('primary'), transparent);
 	}
 }
 .btn--primary {
 	@include btn--primary();
-	svg {
-		display: none;
-	}
+	@include btnSvgBorder(transparentize(brand('primary'), 0.4), transparent);
 }
 
 /**
@@ -150,16 +204,11 @@
  *     @example
  *     a.btn.btn--solidPrimary My Button
  */
-@mixin btn--solidPrimary() {
-	background: brand('primary');
-	border-color: brand('primary');
+.btn--solidPrimary {
 	color: #FFF;
 
-	@include solidBtnHoverPulse();
-}
-.btn--solidPrimary {
-	@include btn--solidPrimary();
 	@include btnSvgBorder(brand('primary'), brand('primary'));
+	@include solidBtnHoverPulse(brand('primary'));
 }
 
 /**
@@ -171,21 +220,14 @@
  */
 @mixin btn--secondary() {
 	color: brand('secondary');
-	box-shadow: 0 0 8px rgba(brand('secondary'), 0.15);
-	border: 1px solid currentColor;
 
 	&:hover {
-		$hoverColor: lighten(brand('secondary'), 5%);
-
-		color: $hoverColor;
-		box-shadow: 0 0 8px rgba($hoverColor, 0.5);
+		@include btnSvgBorder(brand('teritary'), transparent);
 	}
 }
 .btn--secondary {
 	@include btn--secondary();
-	svg {
-		display: none;
-	}
+	@include btnSvgBorder(#ccc, transparent);
 }
 
 /**
@@ -195,16 +237,11 @@
  *     @example
  *     a.btn.btn--solidSecondary My Button
  */
-@mixin btn--solidSecondary() {
-	background: brand('secondary');
-	border-color: brand('secondary');
+.btn--solidSecondary {
 	color: #FFF;
 
-	@include solidBtnHoverPulse();
-}
-.btn--solidSecondary {
-	@include btn--solidSecondary();
 	@include btnSvgBorder(brand('secondary'), brand('secondary'));
+	@include solidBtnHoverPulse(brand('secondary'));
 }
 
 /**
@@ -218,18 +255,14 @@
  */
 @mixin btn--bright() {
 	color: #FFF;
-	border: 1px solid currentColor;
-
-	svg {
-		display: none;
-	}
 
 	&:hover {
-		opacity: .8;
+		@include btnSvgBorder(#fff, transparent);
 	}
 }
 .btn--bright {
 	@include btn--bright();
+	@include btnSvgBorder(transparentize(#fff, 0.4), transparent);
 }
 
 /**
@@ -242,14 +275,13 @@
  *     </div>
  */
 @mixin btn--solidBright() {
-	background: #FFF;
-	border-color: #FFF;
 	color: currentColor;
 
 	&:hover {
-		opacity: .8;
+		@include btnSvgBorder(#fff, #fff);
 	}
 }
 .btn--solidBright {
 	@include btn--solidBright();
+	@include btnSvgBorder(transparentize(#fff, 0.1), transparentize(#fff, 0.1));
 }
