@@ -3229,20 +3229,6 @@ sub {
 .keyVisual--large & {
   min-height: 400px; }
 
-.keyVisual__bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 0;
-  min-width: 100%;
-  min-height: 100%;
-  max-width: none;
-  max-height: none;
-  opacity: .8;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-      -ms-transform: translateX(-50%) translateY(-50%);
-          transform: translateX(-50%) translateY(-50%); }
-
 .keyVisual__contents {
   position: relative;
   z-index: 2;
@@ -3252,6 +3238,21 @@ sub {
   background-size: cover;
   background-position: center center;
   width: 100%; }
+  .keyVisual__contents:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #313131;
+    min-width: 100%;
+    min-height: 100%;
+    max-width: none;
+    max-height: none;
+    opacity: .2;
+    z-index: -1;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%); }
   .keyVisual--large .keyVisual__contents {
     height: 70vh; }
   @media screen and (max-width: 649px) {
