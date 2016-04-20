@@ -11,3 +11,12 @@
       handler: 'TYPO3\Neos\Routing\FrontendNodeRoutePartHandlerInterface'
       options:
         onlyMatchSiteNodes: TRUE
+-
+  name: 'Listable'
+  uriPattern: '<ListableSubroutes>'
+  subRoutes:
+    'ListableSubroutes':
+      package: 'Flowpack.Listable'
+      variables:
+        'defaultUriSuffix': ''
+        'pageSeparator': '~p'
