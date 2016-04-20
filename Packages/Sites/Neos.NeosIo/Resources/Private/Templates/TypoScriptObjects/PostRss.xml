@@ -1,0 +1,17 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+	<channel>
+		<title>Neos - Feed</title>
+		<link><neos:uri.node node="{site}" format="html" absolute="1" /></link>
+		<description>Neos blog posts</description>
+		<language>en</language>
+		<lastBuildDate>{f:format.date(date: 'now', format: 'D, d M Y H:i:s O')}</lastBuildDate>
+		<f:if condition="{f:count(subject: posts)} > 0"><f:for each="{posts}" as="post"><item>
+			<title>{post.properties.title -> f:format.stripTags()}</title>
+			<link><neos:uri.node node="{post}" format="html" absolute="1" /></link>
+			<description><f:format.stripTags value="{post.properties.summary -> f:format.stripTags()}" /></description>
+			<pubDate>{f:format.date(date: post.properties.datePublished, format: 'D, d M Y H:i:s O')}</pubDate>
+			<guid>{post.identifier}</guid>
+		</item></f:for></f:if>
+	</channel>
+</rss>

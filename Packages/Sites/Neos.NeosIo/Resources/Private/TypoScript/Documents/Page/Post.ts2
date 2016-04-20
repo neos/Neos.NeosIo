@@ -59,13 +59,10 @@ prototype(Neos.NeosIo:Post.Document) < prototype(Neos.NeosIo:DefaultPage) {
                 content = PrimaryContent {
                     nodePath = 'main'
                 }
+
+                keyVisualImage = ${q(node).property('image')}
+                latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').slice(0, 6).sort('datePublished', 'DESC').get()}
             }
-        }
-        keyVisualImage = ${q(documentNode).property('image')}
-        keyVisualImageSrcSet = TYPO3.TypoScript:Template {
-            templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Partials/KeyVisual.html'
-            sectionName = 'imageSrcSet'
-            keyVisualImage = ${q(documentNode).property('image')}
         }
     }
 }

@@ -1,0 +1,40 @@
+prototype(Neos.NeosIo:PostFeatured) >
+prototype(Neos.NeosIo:PostFeatured) < prototype(Neos.NeosIo:Stage) {
+    @context.post = ${q(site).find('[instanceof Neos.NeosIo:Post]').filter('[featured][featured=true]').sort('datePublished').get(0)}
+    isContentTextInverted = true
+    backgroundImage = ${q(post).property('image')}
+    backgroundShadePercentage = 60
+    backgroundColor = ${q(post).property('image') ? 'dark' : 'primary'}
+
+    contents = TYPO3.TypoScript:Template {
+        templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/PostFeatured.html'
+        post = ${post}
+        button = Neos.NeosIo:Button {
+            link = TYPO3.Neos:NodeUri {
+                node = ${post}
+                absolute = true
+            }
+            buttonLabel = 'Read more'
+            openInNewTab = true
+            style = 'btn--bright'
+        }
+    }
+
+    backgroundImageSrcSet {
+        backgroundImage = ${q(post).property('image')}
+    }
+
+    @if.hasPost = ${this.post}
+
+    @cache {
+        mode = 'cached'
+
+        entryIdentifier {
+            identifier = 'postFeatured'
+        }
+
+        entryTags {
+            1 = ${'NodeType_Neos.NeosIo:Post'}
+        }
+    }
+}
