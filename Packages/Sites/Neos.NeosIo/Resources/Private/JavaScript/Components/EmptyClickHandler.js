@@ -6,7 +6,6 @@ import {component} from '@reduct/component';
 export default class EmptyClickHandler {
     constructor() {
         this.el.addEventListener('click', e => {
-            e.preventDefault();
             e.stopPropagation();
         });
     }
