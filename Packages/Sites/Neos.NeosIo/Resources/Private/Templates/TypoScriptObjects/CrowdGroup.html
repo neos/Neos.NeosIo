@@ -15,11 +15,11 @@
             <div class="team-listing__members">
                 {memberListItems -> f:format.raw()}
             </div>
+            <div class="team-listing__member-modals">
+                {memberOverlays -> f:format.raw()}
+            </div>
         </f:if>
     </div>
-
-    {memberOverlays -> f:format.raw()}
-
 </f:section>
 
 </html>

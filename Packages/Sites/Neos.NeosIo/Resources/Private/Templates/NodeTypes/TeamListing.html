@@ -4,7 +4,7 @@
       xmlns:ts="http://typo3.org/ns/TYPO3/TypoScript/ViewHelpers"
       xmlns:neos="http://typo3.org/ns/TYPO3/Neos/ViewHelpers">
 <f:section name="Main">
-    <div{attributes -> f:format.raw()}>
+    <div{attributes -> f:format.raw()}
         <neos:contentElement.editable property="title"/>
 
         <f:if condition="{teamListingFilter}">
@@ -26,5 +26,6 @@
                 </f:if>
             </f:else>
         </f:if>
+        <div class="teamOverlay"></div>
 </f:section>
 </html>
