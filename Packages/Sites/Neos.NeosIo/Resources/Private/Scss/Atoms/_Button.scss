@@ -1,3 +1,8 @@
+$btn__cornerWidth: 14px;
+$btn__cornerHeight: 10px;
+$btn__strokeWidth: 1px;
+
+
 /**
  * Base Button:
  * `.btn` - The base class for all buttons.
@@ -73,27 +78,31 @@
 		position: absolute;
 	}
 }
-.btn__corner--top svg {
-	left: 0;
-	top: 0;
+.btn__corner--top {
+	padding-left: $btn__cornerWidth;
+
+	svg {
+		left: 0;
+		top: 0;
+	}
 }
-.btn__corner--bottom svg {
-	right: 0;
-	bottom: 0;
+.btn__corner--bottom {
+	padding-right: $btn__cornerWidth;
+
+	svg {
+		right: 0;
+		bottom: 0;
+	}
 }
 
 @mixin btnSvgBorder($strokeColor, $fillColor) {
-	$cornerWidth: 14px;
-	$cornerHeight: 10px;
-	$strokeWidth: 1px;
-
 	.btn__corner {
-		height: $cornerHeight;
+		height: $btn__cornerHeight;
 
 		svg {
 			line {
 				stroke: $strokeColor;
-				stroke-width: $strokeWidth;
+				stroke-width: $btn__strokeWidth;
 			}
 
 			polygon {
@@ -102,33 +111,24 @@
 		}
 
 		&:after {
-			height: $cornerHeight;
+			height: $btn__cornerHeight;
 			background: $fillColor;
 		}
 	}
 
-	.btn__corner--top {
-		padding-left: $cornerWidth;
-
-
-		&:after {
-			border-right: $strokeWidth solid $strokeColor;
-			border-top: $strokeWidth solid $strokeColor;
-		}
+	.btn__corner--top:after {
+		border-right: $btn__strokeWidth solid $strokeColor;
+		border-top: $btn__strokeWidth solid $strokeColor;
 	}
 
-	.btn__corner--bottom {
-		padding-right: $cornerWidth;
-
-		&:after {
-			border-left: $strokeWidth solid $strokeColor;
-			border-bottom: $strokeWidth solid $strokeColor;
-		}
+	.btn__corner--bottom:after {
+		border-left: $btn__strokeWidth solid $strokeColor;
+		border-bottom: $btn__strokeWidth solid $strokeColor;
 	}
 
 	.btn__content {
-		border-left: $strokeWidth solid $strokeColor;
-		border-right: $strokeWidth solid $strokeColor;
+		border-left: $btn__strokeWidth solid $strokeColor;
+		border-right: $btn__strokeWidth solid $strokeColor;
 		background: $fillColor;
 	}
 }
