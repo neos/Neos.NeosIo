@@ -8,68 +8,118 @@
 <f:section name="body">
 	<f:render partial="SiteHeader.html" arguments="{_all}" />
 
-	<f:if condition="{keyVisualImage}">
-		<f:render partial="KeyVisual.html" arguments="{
-			isKeyVisualContentsInverted: true,
-			keyVisualImage: keyVisualImage
-		}" />
-	</f:if>
 	{content.main -> f:format.raw()}
 
 	<f:render partial="SiteFooter.html" arguments="{_all}" />
 </f:section>
 <f:section name="post">
+	<article>
+		<header class="keyVisual keyVisual--large">
+			<div class="
+			keyVisual__contents
+			u-alignCenter
+			u-invertText
+			{f:if(condition: isKeyVisualContentsInverted, then: 'u-invertText')}
+			"
+			<f:if condition="{keyVisualImage}">
+				<f:then>
+					style="background-image: url('{media:uri.image(asset: keyVisualImage, maximumWidth: 1500, maximumHeight: 1500)}')"
+				</f:then>
+				<f:else>
+					style="background-image: url('{f:uri.resource(path: 'Images/DefaultSmallKeyvisual.jpg', package: 'Neos.NeosIo')}')"
+				</f:else>
+			</f:if>
+			>
+				<div class="siteWrapper siteWrapper--small">
+					<neos:contentElement.wrap node="{node}">
+						<neos:contentElement.editable property="title" tag="h1" additionalAttributes="{itemprop: 'headline'}" />
+					</neos:contentElement.wrap>
+				</div>
+			</div>
+			<a
+				data-component="ScrollTo"
+				href="#mainContent"
+				data-targetSelector="#mainContent"
+				class="scrollHint"></a>
+		</header>
+	</article>
+
 	<div class="stage stage--bright" id="mainContent">
-		<div class="stage__contents{f:if(condition: image, else: ' stage__contents--extraPadding')}">
-			<div class="g">
-				<main class="u-wm7/12 u-pr1/1 u-mr1/1 u-floatLeft" role="main">
-					<section class="post">
-						<neos:contentElement.wrap node="{node}">
-							<time datetime="{datePublished -> f:format.date(format: 'c')}" itemprop="datePublished">{datePublished -> media:format.relativeDate()}</time>
-							<f:if condition="{author}">
-								– <span itemprop="author" itemscope="" itemtype="https://schema.org/Person"><span itemprop="name">{author}</span></span>
-							</f:if>
-							<f:if condition="{image}">
-								<meta itemprop="image" content="{media:uri.image(asset: image, maximumWidth: 720, maximumHeight: 500, allowCropping: 1, allowUpScaling: 1)}" />
-							</f:if>
-							<header>
-								<neos:contentElement.editable property="title" tag="h1" additionalAttributes="{itemprop: 'headline'}" />
-								<f:if condition="{neos:rendering.live()}">
-									<f:then>
-										<f:if condition="{summary}"><h2 itemprop="description" class="h4">{summary}</h2></f:if>
-									</f:then>
-									<f:else>
-										<neos:contentElement.editable property="summary" tag="h2" class="h3" additionalAttributes="{itemprop: 'description'}" />
-									</f:else>
-								</f:if>
-							</header>
-						</neos:contentElement.wrap>
-						<div itemprop="articleBody">
-							{content -> f:format.raw()}
-						</div>
-					</section>
-				</main>
-				<aside class="u-wm4/12 u-pl1/1 u-ml1/1 u-floatLeft sideBar">
-					<nav>
-						<f:if condition="{relatedDocuments}">
-							<div class="h5">Related</div>
-							<ul>
-								<f:for each="{relatedDocuments}" as="relatedDocument">
-									<li><neos:link.node node="{relatedDocument}" /></li>
-								</f:for>
-							</ul>
-						</f:if>
-						<neos:link.node node="{node.parent}" class="h5">Latest posts</neos:link.node>
-						<ul>
-							<f:for each="{latest}" as="post">
-								<f:if condition="{post} != {node}">
-									<li><neos:link.node node="{post}" /><br />{post.properties.datePublished -> media:format.relativeDate()}</li>
-								</f:if>
+		<div class="stage__contents stage__contents--small">
+			<neos:contentElement.wrap node="{node}">
+				<h5 class="h6">
+					<time datetime="{datePublished -> f:format.date(format: 'c')}" itemprop="datePublished">{datePublished -> media:format.relativeDate()}</time>
+					<f:if condition="{author}">
+						– Written by <span itemprop="author" itemscope="" itemtype="https://schema.org/Person"><span itemprop="name">{author}</span></span>
+					</f:if>
+					<f:if condition="{image}">
+						<meta itemprop="image" content="{media:uri.image(asset: image, maximumWidth: 720, maximumHeight: 500, allowCropping: 1, allowUpScaling: 1)}" />
+					</f:if>
+				</h5>
+			</neos:contentElement.wrap>
+
+			<f:if condition="{neos:rendering.live()}">
+				<f:then>
+					<f:if condition="{summary}"><h2 itemprop="description" class="h4 u-mb1/1">{summary}</h2></f:if>
+				</f:then>
+				<f:else>
+					<neos:contentElement.editable property="summary" tag="h2" class="h3 u-mb1/1" additionalAttributes="{itemprop: 'description'}" />
+				</f:else>
+			</f:if>
+
+			<main itemprop="articleBody">
+				{content -> f:format.raw()}
+			</main>
+
+			<section class="u-mt1/1">
+				<f:if condition="{relatedDocuments}">
+					<div class="u-pt1/1">
+						<h3>Related</h3>
+						<ul class="nav nav--stacked u-mb1/2">
+							<f:for each="{relatedDocuments}" as="relatedDocument">
+								<li class="u-mb1/2"><neos:link.node node="{relatedDocument}" /></li>
 							</f:for>
 						</ul>
-					</nav>
-				</aside>
-			</div>
+					</div>
+				</f:if>
+
+				<div class="u-pt1/1">
+					<h3>Latest posts</h3>
+					<ul class="nav nav--stacked u-mb1/2">
+						<f:for each="{latest}" as="post">
+							<f:if condition="{post} != {node}">
+								<li class="u-mb1/2">
+									<div class="h5">
+										{post.properties.datePublished -> media:format.relativeDate()} - <neos:link.node node="{post}" />
+									</div>
+								</li>
+							</f:if>
+						</f:for>
+					</ul>
+
+					<div class="u-alignRight">
+						<neos:link.node node="{node.parent}" class="btn btn--solidPrimary">
+							<div class="btn__upperCorner">
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
+									<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="14,10 0,10 14,0"/>
+									<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"/>
+								</svg>
+							</div>
+
+							<div class="btn__content">
+								See more
+							</div>
+
+							<div class="btn__bottomCorner">
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
+									<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="0,0 0,10 14,0"/>
+									<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"/>
+								</svg>
+							</div>
+						</neos:link.node>
+					</div>
+				</div>
+			</section>
 		</div>
 	</div>
 </f:section>
