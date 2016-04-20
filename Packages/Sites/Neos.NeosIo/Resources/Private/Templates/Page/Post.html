@@ -22,7 +22,7 @@
 	<div class="stage stage--bright" id="mainContent">
 		<div class="stage__contents{f:if(condition: image, else: ' stage__contents--extraPadding')}">
 			<div class="g">
-				<main class="gi u-w1/1 u-wm9/12" role="main">
+				<main class="u-wm7/12 u-pr1/1 u-mr1/1 u-floatLeft" role="main">
 					<section class="post">
 						<neos:contentElement.wrap node="{node}">
 							<time datetime="{datePublished -> f:format.date(format: 'c')}" itemprop="datePublished">{datePublished -> media:format.relativeDate()}</time>
@@ -49,7 +49,7 @@
 						</div>
 					</section>
 				</main>
-				<aside class="gi u-w1/1 u-wm3/12 sideBar">
+				<aside class="u-wm4/12 u-pl1/1 u-ml1/1 u-floatLeft sideBar">
 					<nav>
 						<f:if condition="{relatedDocuments}">
 							<div class="h5">Related</div>
