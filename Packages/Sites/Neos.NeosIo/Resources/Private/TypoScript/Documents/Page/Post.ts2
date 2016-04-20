@@ -59,6 +59,7 @@ prototype(Neos.NeosIo:Post.Document) < prototype(Neos.NeosIo:DefaultPage) {
                 content = PrimaryContent {
                     nodePath = 'main'
                 }
+                latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').slice(0, 6).sort('datePublished', 'DESC').get()}
             }
         }
         keyVisualImage = ${q(node).property('image')}

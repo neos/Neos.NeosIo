@@ -54,11 +54,19 @@
 						<f:if condition="{relatedDocuments}">
 							<div class="h5">Related</div>
 							<ul>
-							<f:for each="{relatedDocuments}" as="relatedDocument">
-								<li><neos:link.node node="{relatedDocument}" /></li>
-							</f:for>
+								<f:for each="{relatedDocuments}" as="relatedDocument">
+									<li><neos:link.node node="{relatedDocument}" /></li>
+								</f:for>
 							</ul>
 						</f:if>
+						<neos:link.node node="{node.parent}" class="h5">Latest posts</neos:link.node>
+						<ul>
+							<f:for each="{latest}" as="post">
+								<f:if condition="{post} != {node}">
+									<li><neos:link.node node="{post}" /><br />{post.properties.datePublished -> media:format.relativeDate()}</li>
+								</f:if>
+							</f:for>
+						</ul>
 					</nav>
 				</aside>
 			</div>
