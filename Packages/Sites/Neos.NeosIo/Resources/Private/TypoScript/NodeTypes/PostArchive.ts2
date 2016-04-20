@@ -1,0 +1,27 @@
+prototype(Neos.NeosIo:PostArchive) >
+prototype(Neos.NeosIo:PostArchive) < prototype(Flowpack.Listable:Listable) {
+    @context.listClass = 'posts'
+    @context.itemClass = 'u-mb1/1'
+    @context.sortProperty = '_index'
+    @context.sortOrder = 'ASC'
+    @context.itemsPerPage = 15
+    collection = ${q(site).find('[instanceof Neos.NeosIo:Post]').get()}
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryTags {
+            1 = ${'NodeType_Neos.NeosIo:Post'}
+            2 = ${'Node_' + node.identifier}
+        }
+        maximumLifetime = 3600
+    }
+}
+
+# Adjust cahces for pagination
+root.@cache.entryIdentifier.pagination = ${request.pluginArguments.listable-paginate.currentPage}
+prototype(TYPO3.Neos:Page).@cache.entryIdentifier.pagination = ${request.pluginArguments.listable-paginate.currentPage}
+prototype(TYPO3.Neos:ContentCollection).@cache.entryIdentifier.pagination = ${request.pluginArguments.listable-paginate.currentPage}
+prototype(Flowpack.Listable:Listable).@cache.entryIdentifier.pagination = ${request.pluginArguments.listable-paginate.currentPage}

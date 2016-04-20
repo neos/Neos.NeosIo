@@ -1,3 +1,7 @@
 prototype(Neos.NeosIo:Post) {
     author = ${this.authors ? Data.users(this.authors) + this.authorAlternative : this.authorAlternative}
 }
+
+prototype(Neos.NeosIo:PostShort) < prototype(Neos.NeosIo:Post) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/PostShort.html'
+}

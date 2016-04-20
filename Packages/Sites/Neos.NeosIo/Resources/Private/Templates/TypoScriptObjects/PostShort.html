@@ -1,0 +1,21 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace media=TYPO3\Media\ViewHelpers}
+<neos:link.node node="{node}">
+    <div>{datePublished -> media:format.relativeDate()}</div>
+    <f:if condition="{image}">
+        <figure>
+            <img
+                alt="{title -> f:format.stripTags()}"
+                class="u-mb1/2"
+                src="{media:uri.image(asset: image, width: 1000, height: 250, allowCropping: true)}"
+                srcset="
+                {media:uri.image(asset: image, width: 1000, height: 250, allowCropping: true)} 1920w,
+                {media:uri.image(asset: image, width: 700, height: 175, allowCropping: true)} 1280w,
+                {media:uri.image(asset: image, width: 400, height: 100, allowCropping: true)} 658w,
+                {media:uri.image(asset: image, width: 200, height: 50, allowCropping: true)}
+                ">
+        </figure>
+    </f:if>
+    <h2 class="u-mt0 u-mb1/2">{title -> f:format.stripTags()}</h2>
+    <p class="u-mb1/2">{summary -> f:format.raw()}</p>
+</neos:link.node>

@@ -23,7 +23,7 @@
 		<div class="stage__contents{f:if(condition: image, else: ' stage__contents--extraPadding')}">
 			<div class="g">
 				<main class="gi u-w1/1 u-wm9/12" role="main">
-					<section>
+					<section class="post">
 						<neos:contentElement.wrap node="{node}">
 							<time datetime="{datePublished -> f:format.date(format: 'c')}" itemprop="datePublished">{datePublished -> media:format.relativeDate()}</time>
 							<f:if condition="{author}">
