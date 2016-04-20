@@ -33,85 +33,103 @@
  *     h6 This is an sixth level heading
  */
 @mixin h1() {
-	margin-bottom: $basic-spacing+px;
+	margin-bottom: $basic-spacing*2px;
 	font-size: $base-font-size*2px;
-	line-height: $base-line-height*2px;
+	line-height: 1.35;
 	font-weight: $thin;
 
 	@include mq('medium') {
 		font-size: $base-font-size*3px;
-		line-height: $base-line-height*3px;
+		line-height: 1.25;
 	}
 
-	@extend %h;
-}
-@mixin h2() {
-	margin-top: $half-spacing+px;
-	margin-bottom: $half-spacing+px;
-	font-size: $base-font-size*1.3px;
-	line-height: $base-line-height*1px;
-	font-weight: $regular;
-
-	@include mq('medium') {
-		font-size: $base-font-size*2px;
-		line-height: $base-line-height*2px;
-		font-weight: $thin;
-	}
-
-	// In case the h2 is a sub-heading align it to the heading before.
-	h1 + & {
+	& + h2,
+	& + .h2,
+	& + h3,
+	& + .h3,
+	& + h4,
+	& + .h4,
+	& + h5,
+	& + .h5,
+	& + h6,
+	& + .h6 {
+		// In case a header is a sub-heading align it to the heading before.
 		margin-top: -($basic-spacing)+px;
 		margin-bottom: $basic-spacing+px;
 	}
 
 	@extend %h;
 }
-@mixin h3() {
-	margin-bottom: $half-spacing+px;
-	font-size: $base-font-size*1.3px;
-	line-height: $base-line-height*1px;
+@mixin h2() {
+	margin-top: $basic-spacing+px;
+	margin-bottom: $basic-spacing+px;
+	font-size: $base-font-size*1.625px;
+	line-height: 1.35;
+	font-weight: $regular;
 
 	@include mq('medium') {
-		font-size: $base-font-size*1.5px;
+		font-size: $base-font-size*2.25px;
+		line-height: 1.25;
+		font-weight: $thin;
+	}
+
+	@extend %h;
+}
+@mixin h3() {
+	margin-bottom: $half-spacing+px;
+	font-size: $base-font-size*1.375px;
+	line-height: 1.35;
+
+	@include mq('medium') {
+		font-size: $base-font-size*1.75px;
+		line-height: 1.25;
 	}
 
 	@extend %h;
 }
 @mixin h4() {
-	margin-bottom: $basic-spacing*0.25px;
-	margin-bottom: $basic-spacing*0.5px;
-	font-size: $base-font-size*1.25px;
+	margin-bottom: $half-spacing+px;
+	font-size: $base-font-size*1.125px;
+	line-height: 1.3;
+
+	@include mq('medium') {
+		font-size: $base-font-size*1.25px;
+		line-height: 1.2;
+	}
 
 	@extend %h;
 }
 @mixin h5() {
-	font-size: $base-font-size*1px;
+	margin-bottom: $half-spacing*0.5px;
+	font-size: $base-font-size*1.1px;
+	line-height: 1.25;
 	font-weight: $bold;
 
 	@extend %h;
 }
 @mixin h6() {
 	font-size: $base-font-size*1px;
+	line-height: 1.15;
 	font-weight: $bold;
 
 	@extend %h;
 }
 
-h1, .h1 {
-	@include h1();
-}
-h2, .h2 {
-	@include h2();
-}
-h3, .h3 {
-	@include h3();
-}
-h4, .h4 {
-	@include h4();
+h6, .h6 {
+	@include h6();
 }
 h5, .h5 {
 	@include h5();
 }
-h6, .h6 {
-	@include h6();
+h4, .h4 {
+	@include h4();
+}
+h3, .h3 {
+	@include h3();
+}
+h2, .h2 {
+	@include h2();
+}
+h1, .h1 {
+	@include h1();
 }
