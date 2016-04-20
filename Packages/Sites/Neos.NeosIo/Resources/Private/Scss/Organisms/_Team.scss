@@ -1,0 +1,144 @@
+$team-modal-padding: 40px;
+
+.team-listing__group {
+  header > * {
+    margin-bottom: 1em;
+  }
+
+  &:after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+}
+
+.team-listing__members {
+  &:after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+}
+
+.team-listing__member {
+  &:nth-of-type(2)::after {
+    clear: both;
+  }
+
+  .gravatar {
+    border: 2px solid brand('primary');
+    border-radius: 100%;
+    margin-right: 15px;
+  }
+
+  a:hover {
+    .gravatar {
+      border-color: brand('primary');
+      opacity: 1;
+    }
+  }
+}
+
+.team-listing-modal__backdrop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: .5s ease opacity;
+  opacity: 0;
+
+  position: fixed;
+  transform: translateY(-100%);
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+
+  $bg: brand('secondary');
+  background: linear-gradient(to bottom, rgba($bg, .75) 0%, rgba($bg, 1) 100%);
+}
+
+.team-listing-modal__backdrop--visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.team-listing-modal {
+  ul {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    line-height: 1.2em;
+    margin: .3em 0 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  hr {
+    margin: 0 0 .5em;
+  }
+}
+
+.team-listing-modal__backdrop--visible .team-listing-modal {
+  padding: 5em 1.5em 1.5em;
+  transform: translateY(0);
+  z-index: 3;
+}
+
+.team-listing-modal__header {
+  display: block;
+  font-size: 110%;
+  margin-bottom: 5px;
+
+  ul + & {
+    margin-top: 2em;
+  }
+
+  + ul {
+    margin-top: .5em;
+  }
+}
+
+.team-listing-modal__portrait {
+  background-color: brand('primary');
+  color: white;
+  padding: $team-modal-padding;
+  padding-bottom: 0;
+  font-weight: bold;
+
+  .team-listing-modal__header {
+    font-size: 130%;
+    text-transform: uppercase;
+  }
+
+  ul {
+    display: block;
+
+  }
+
+  .gravatar {
+    border: 2px solid white;
+    border-radius: 100%;
+    margin: 0 0 20px 0;
+    width: 100%;
+  }
+}
+
+.team-listing-modal__details {
+  padding: $team-modal-padding;
+  background: white;
+}
+
+.team-listing-modal {
+  transition: .5s ease-out transform;
+  transform: translateY(-500%);
+  width: 400px;
+  z-index: 4;
+  align-self: flex-start;
+}
