@@ -88,7 +88,7 @@
 					<ul class="nav nav--stacked u-mb1/2">
 						<f:for each="{latest}" as="post">
 							<f:if condition="{post} != {node}">
-								<li class="u-mb1/2">
+								<li class="u-mb1/2" title="{post.properties.summary -> f:format.stripTags()}">
 									<div class="h5">
 										{post.properties.datePublished -> media:format.relativeDate()} - <neos:link.node node="{post}" />
 									</div>
