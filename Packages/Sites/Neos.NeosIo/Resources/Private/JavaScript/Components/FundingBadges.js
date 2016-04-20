@@ -10,9 +10,10 @@ const isSelected = (domNode, selectedState) => {
  * Using Durstenfeld shuffle algorithm.
  */
 function shuffleArray(array) {
-	for (var i = array.length - 1; i > 0; i--) {
-		var j = Math.floor(Math.random() * (i + 1));
-		var temp = array[i];
+	for (let i = array.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		const temp = array[i];
+
 		array[i] = array[j];
 		array[j] = temp;
 	}
@@ -30,20 +31,22 @@ export default class FundingBadges {
 			value.setAttribute('data-index', i);
 		});
 
-		this.findAll('.fundingBadges__sortingControl').forEach((value) => {
+		this.findAll('.fundingBadges__sortingControl').forEach(value => {
 			value.addEventListener('click', () => {
-
 				delete this.queryCache['.fundingBadges__sortingControl--isActive'];
-				this.findAll('.fundingBadges__sortingControl--isActive').forEach((value) => {
+
+				this.findAll('.fundingBadges__sortingControl--isActive').forEach(value => {
 					value.classList.remove('fundingBadges__sortingControl--isActive');
 				});
 
 				let selected = value.getAttribute('data-filter');
+
 				if (selected === this.state.selected) {
 					selected = '';
 				} else {
 					value.classList.add('fundingBadges__sortingControl--isActive');
 				}
+
 				this.setState({
 					selected
 				});
@@ -52,13 +55,13 @@ export default class FundingBadges {
 
 		this.on('change', () => {
 			const {selected} = this.state;
-
-			let orderingsForEachCustomer = {};
+			const orderingsForEachCustomer = {};
 
 			let newOrdering = this.findAll('.fundingBadges__singleElement');
 
-			newOrdering.forEach((element) => {
+			newOrdering.forEach(element => {
 				orderingsForEachCustomer[element.getAttribute('data-customer-name')] = element.getBoundingClientRect();
+
 				if (isSelected(element, selected) || !selected) {
 					element.classList.remove('fundingBadges__singleElement--isInactive');
 				} else {
@@ -71,20 +74,22 @@ export default class FundingBadges {
 					return 1;
 				} else if (isSelected(a, selected) && !isSelected(b, selected)) {
 					return -1;
-				} else { // both selected or both not selected; so we sort by index
-					return parseInt(a.getAttribute('data-index')) - parseInt(b.getAttribute('data-index'));
 				}
+
+				// both selected or both not selected; so we sort by index
+				return parseInt(a.getAttribute('data-index')) - parseInt(b.getAttribute('data-index'));
 			});
-			newOrdering.forEach((order) => {
+			newOrdering.forEach(order => {
 				order.getBoundingClientRect();
 				list.appendChild(order);
 			});
 
-			newOrdering.forEach((element) => {
+			newOrdering.forEach(element => {
 				const beforeLayoutPosition = orderingsForEachCustomer[element.getAttribute('data-customer-name')];
 				const afterLayoutPosition = element.getBoundingClientRect();
 				const deltaX = beforeLayoutPosition.left - afterLayoutPosition.left;
 				const deltaY = beforeLayoutPosition.top - afterLayoutPosition.top;
+
 				requestAnimationFrame(() => {
 					if (deltaX || deltaY) {
 						// Before the DOM paints, Invert it to its old position
@@ -97,11 +102,10 @@ export default class FundingBadges {
 					requestAnimationFrame(() => {
 						element.style.transition = 'transform 500ms';
 						element.style.transform = '';
-					})
+					});
 				});
 			});
 		});
-
 	}
 
 	getInitialState() {
