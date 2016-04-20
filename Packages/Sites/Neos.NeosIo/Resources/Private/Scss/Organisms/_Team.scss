@@ -1,11 +1,5 @@
 $team-modal-padding: 40px;
 
-.reveal-modal.tiny {
-  padding: 0;
-  max-width: 80%;
-  width: 420px;
-}
-
 .team-listing__group {
   header > * {
     margin-bottom: 1em;
@@ -45,7 +39,7 @@ $team-modal-padding: 40px;
   }
 }
 
-.team-listing-modal-wrapper {
+.team-listing-modal__backdrop {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,7 +58,7 @@ $team-modal-padding: 40px;
   background: linear-gradient(to bottom, rgba($bg, .75) 0%, rgba($bg, 1) 100%);
 }
 
-.team-listing-modal-wrapper--visible {
+.team-listing-modal__backdrop--visible {
   transform: translateX(0);
   opacity: 1;
 }
@@ -91,7 +85,7 @@ $team-modal-padding: 40px;
   }
 }
 
-.team-listing-modal-wrapper--visible .team-listing-modal {
+.team-listing-modal__backdrop--visible .team-listing-modal {
   padding: 5em 1.5em 1.5em;
   transform: translateY(0);
   z-index: 3;

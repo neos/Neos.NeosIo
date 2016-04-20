@@ -9,9 +9,9 @@
         <a href="#"
            data-component="ClassToggler"
            data-activeClass="member-active"
-           data-documentActiveClass="html-scrollDisabled"
+           data-documentActiveClass="html--scrollDisabled"
            data-targetSelector="#member-modal-{user.name}"
-           data-targetActiveClass="team-listing-modal-wrapper--visible">
+           data-targetActiveClass="team-listing-modal__backdrop--visible">
             <gravatar:gravatar email="{user.email}" size="{gravatarRenderSize}" default="retro" class="gravatar"
                                width="{gravatarSize}" height="{gravatarSize}"/>
             <strong>{user.display-name}</strong>
@@ -23,9 +23,9 @@
     <div{attributes -> f:format.raw()}
         data-component="ClassToggler"
         data-activeClass="member-active"
-        data-documentActiveClass="html-scrollDisabled"
+        data-documentActiveClass="html--scrollDisabled"
         data-targetSelector="#member-modal-{user.name}"
-        data-targetActiveClass="team-listing-modal-wrapper--visible"
+        data-targetActiveClass="team-listing-modal__backdrop--visible"
     >
     <div class="g team-listing-modal" data-component="EmptyClickHandler">
         <div class="team-listing-modal__portrait">
