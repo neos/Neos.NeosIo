@@ -1,13 +1,13 @@
 import {component} from '@reduct/component';
 import propTypes from '@reduct/nitpick';
-import throttle from 'lodash.throttle';
+import debounce from 'lodash.debounce';
 
 @component({
 	scrollClasses: propTypes.object.isRequired
 })
 export default class ScrollClassToggler {
 	constructor() {
-		const handler = throttle(() => {
+		const handler = debounce(() => {
 			const currentScrollPos = window.scrollY;
 			const lastScrollPos = this.state.currentScrollPos;
 
@@ -16,7 +16,7 @@ export default class ScrollClassToggler {
 			});
 
 			this.evaluateState(currentScrollPos, lastScrollPos);
-		}, 250);
+		});
 
 		window.addEventListener('scroll', handler);
 	}
