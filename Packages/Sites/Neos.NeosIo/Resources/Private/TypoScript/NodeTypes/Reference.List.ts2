@@ -1,0 +1,23 @@
+prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
+	references = TYPO3.TypoScript:Collection {
+		collection = ${Search.query(site).nodeType('Neos.NeosIo:Reference').sortDesc('datePublished').execute()}
+		itemName = 'node'
+		itemRenderer = Neos.NeosIo:Reference.List.Item
+	}
+
+	attributes {
+		class = TYPO3.TypoScript:RawArray {
+			list = 'reference-list'
+			grid = 'g'
+			@process.nodeType >
+		}
+	}
+}
+
+prototype(Neos.NeosIo:Reference.List.Item) < prototype(TYPO3.TypoScript:Template) {
+	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Reference.List.Item.html'
+	title = ${q(node).property('title')}
+	image = ${q(node).property('image')}
+	url = ${q(node).property('url')}
+	datePublished = ${q(node).property('datePublished')}
+}

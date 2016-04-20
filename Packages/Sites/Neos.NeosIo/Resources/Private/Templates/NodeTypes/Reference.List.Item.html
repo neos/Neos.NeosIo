@@ -1,0 +1,14 @@
+{namespace media=TYPO3\Media\ViewHelpers}
+
+<div class="reference-item gi u-w1/1 u-wm1/2 u-wl1/2">
+	<f:if condition="{url}">
+		<f:then>
+			<a href="{url}">
+				<f:render partial="Reference.List.Item" arguments="{_all}" />
+			</a>
+		</f:then>
+		<f:else>
+			<f:render partial="Reference.List.Item" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</div>

@@ -1,0 +1,30 @@
+'Neos.NeosIo:Reference.List':
+  superTypes: ['TYPO3.Neos:Content']
+  ui:
+    label: 'Reference List'
+    icon: 'icon-globe'
+    group: 'special'
+    inspector:
+      groups:
+        'properties':
+          label: Reference list properties
+          position: 1
+  properties:
+    'projectType':
+      type: references
+      ui:
+        label: 'Project types to show'
+        reloadIfChanged: true
+        inspector:
+          group: 'properties'
+          editorOptions:
+            nodeTypes: ['Neos.NeosIo:ReferenceType']
+    'projectTypeIgnored':
+      type: references
+      ui:
+        label: 'Project types to ignore'
+        reloadIfChanged: true
+        inspector:
+          group: 'properties'
+          editorOptions:
+            nodeTypes: ['Neos.NeosIo:ReferenceType']
