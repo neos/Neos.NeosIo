@@ -1049,6 +1049,35 @@ body {
   .btn a {
     color: currentColor; }
 
+.btn__content {
+  width: 100%;
+  padding: 8px 40px; }
+
+.btn__content,
+.btn__corner {
+  position: relative;
+  width: 100%; }
+
+.btn__corner:after {
+  display: block;
+  content: '';
+  overflow-y: hidden;
+  width: 100%; }
+
+.btn__corner svg {
+  position: absolute; }
+
+.btn__corner line {
+  transition: all 0.5s; }
+
+.btn__corner--top svg {
+  left: 0;
+  top: 0; }
+
+.btn__corner--bottom svg {
+  right: 0;
+  bottom: 0; }
+
 /*
  * A basic :hover effect for all solid buttons.
  */
@@ -1075,96 +1104,54 @@ body {
  */
 .btn--primary {
   color: #00ADEE; }
-  .btn--primary:hover > * {
-    position: relative;
-    width: 100%; }
-  .btn--primary:hover .btn__upperCorner, .btn--primary:hover .btn__bottomCorner {
+  .btn--primary:hover .btn__corner {
     height: 10px; }
-    .btn--primary:hover .btn__upperCorner svg, .btn--primary:hover .btn__bottomCorner svg {
-      position: absolute; }
-      .btn--primary:hover .btn__upperCorner svg line, .btn--primary:hover .btn__bottomCorner svg line {
-        stroke: #00ADEE;
-        stroke-width: 1px; }
-      .btn--primary:hover .btn__upperCorner svg polygon, .btn--primary:hover .btn__bottomCorner svg polygon {
-        fill: transparent; }
-    .btn--primary:hover .btn__upperCorner:after, .btn--primary:hover .btn__bottomCorner:after {
-      display: block;
-      content: '';
-      overflow-y: hidden;
-      width: 100%;
+    .btn--primary:hover .btn__corner svg line {
+      stroke: #00ADEE;
+      stroke-width: 1px; }
+    .btn--primary:hover .btn__corner svg polygon {
+      fill: transparent; }
+    .btn--primary:hover .btn__corner:after {
       height: 10px;
       background: transparent; }
-  .btn--primary:hover .btn__upperCorner {
+  .btn--primary:hover .btn__corner--top {
     padding-left: 14px; }
-    .btn--primary:hover .btn__upperCorner svg {
-      left: 0;
-      top: 0; }
-    .btn--primary:hover .btn__upperCorner:after {
+    .btn--primary:hover .btn__corner--top:after {
       border-right: 1px solid #00ADEE;
       border-top: 1px solid #00ADEE; }
-  .btn--primary:hover .btn__bottomCorner {
+  .btn--primary:hover .btn__corner--bottom {
     padding-right: 14px; }
-    .btn--primary:hover .btn__bottomCorner svg {
-      right: 0;
-      bottom: 0; }
-    .btn--primary:hover .btn__bottomCorner:after {
+    .btn--primary:hover .btn__corner--bottom:after {
       border-left: 1px solid #00ADEE;
       border-bottom: 1px solid #00ADEE; }
   .btn--primary:hover .btn__content {
     border-left: 1px solid #00ADEE;
     border-right: 1px solid #00ADEE;
-    width: 100%;
-    padding: 5px 40px;
     background: transparent; }
-  .btn--primary:hover svg.btn__leftBorder {
-    left: -13px; }
-  .btn--primary:hover svg.btn__rightBorder {
-    right: -13px; }
-  .btn--primary > * {
-    position: relative;
-    width: 100%; }
-  .btn--primary .btn__upperCorner, .btn--primary .btn__bottomCorner {
+  .btn--primary .btn__corner {
     height: 10px; }
-    .btn--primary .btn__upperCorner svg, .btn--primary .btn__bottomCorner svg {
-      position: absolute; }
-      .btn--primary .btn__upperCorner svg line, .btn--primary .btn__bottomCorner svg line {
-        stroke: rgba(0, 173, 238, 0.6);
-        stroke-width: 1px; }
-      .btn--primary .btn__upperCorner svg polygon, .btn--primary .btn__bottomCorner svg polygon {
-        fill: transparent; }
-    .btn--primary .btn__upperCorner:after, .btn--primary .btn__bottomCorner:after {
-      display: block;
-      content: '';
-      overflow-y: hidden;
-      width: 100%;
+    .btn--primary .btn__corner svg line {
+      stroke: rgba(0, 173, 238, 0.6);
+      stroke-width: 1px; }
+    .btn--primary .btn__corner svg polygon {
+      fill: transparent; }
+    .btn--primary .btn__corner:after {
       height: 10px;
       background: transparent; }
-  .btn--primary .btn__upperCorner {
+  .btn--primary .btn__corner--top {
     padding-left: 14px; }
-    .btn--primary .btn__upperCorner svg {
-      left: 0;
-      top: 0; }
-    .btn--primary .btn__upperCorner:after {
+    .btn--primary .btn__corner--top:after {
       border-right: 1px solid rgba(0, 173, 238, 0.6);
       border-top: 1px solid rgba(0, 173, 238, 0.6); }
-  .btn--primary .btn__bottomCorner {
+  .btn--primary .btn__corner--bottom {
     padding-right: 14px; }
-    .btn--primary .btn__bottomCorner svg {
-      right: 0;
-      bottom: 0; }
-    .btn--primary .btn__bottomCorner:after {
+    .btn--primary .btn__corner--bottom:after {
       border-left: 1px solid rgba(0, 173, 238, 0.6);
       border-bottom: 1px solid rgba(0, 173, 238, 0.6); }
   .btn--primary .btn__content {
     border-left: 1px solid rgba(0, 173, 238, 0.6);
     border-right: 1px solid rgba(0, 173, 238, 0.6);
-    width: 100%;
-    padding: 5px 40px;
     background: transparent; }
-  .btn--primary svg.btn__leftBorder {
-    left: -13px; }
-  .btn--primary svg.btn__rightBorder {
-    right: -13px; }
 
 /**
  * Solid Primary Button:
@@ -1176,60 +1163,38 @@ body {
 .btn--solidPrimary {
   color: #FFF;
   position: relative; }
-  .btn--solidPrimary > * {
-    position: relative;
-    width: 100%; }
-  .btn--solidPrimary .btn__upperCorner, .btn--solidPrimary .btn__bottomCorner {
+  .btn--solidPrimary .btn__corner {
     height: 10px; }
-    .btn--solidPrimary .btn__upperCorner svg, .btn--solidPrimary .btn__bottomCorner svg {
-      position: absolute; }
-      .btn--solidPrimary .btn__upperCorner svg line, .btn--solidPrimary .btn__bottomCorner svg line {
-        stroke: #00ADEE;
-        stroke-width: 1px; }
-      .btn--solidPrimary .btn__upperCorner svg polygon, .btn--solidPrimary .btn__bottomCorner svg polygon {
-        fill: #00ADEE; }
-    .btn--solidPrimary .btn__upperCorner:after, .btn--solidPrimary .btn__bottomCorner:after {
-      display: block;
-      content: '';
-      overflow-y: hidden;
-      width: 100%;
+    .btn--solidPrimary .btn__corner svg line {
+      stroke: #00ADEE;
+      stroke-width: 1px; }
+    .btn--solidPrimary .btn__corner svg polygon {
+      fill: #00ADEE; }
+    .btn--solidPrimary .btn__corner:after {
       height: 10px;
       background: #00ADEE; }
-  .btn--solidPrimary .btn__upperCorner {
+  .btn--solidPrimary .btn__corner--top {
     padding-left: 14px; }
-    .btn--solidPrimary .btn__upperCorner svg {
-      left: 0;
-      top: 0; }
-    .btn--solidPrimary .btn__upperCorner:after {
+    .btn--solidPrimary .btn__corner--top:after {
       border-right: 1px solid #00ADEE;
       border-top: 1px solid #00ADEE; }
-  .btn--solidPrimary .btn__bottomCorner {
+  .btn--solidPrimary .btn__corner--bottom {
     padding-right: 14px; }
-    .btn--solidPrimary .btn__bottomCorner svg {
-      right: 0;
-      bottom: 0; }
-    .btn--solidPrimary .btn__bottomCorner:after {
+    .btn--solidPrimary .btn__corner--bottom:after {
       border-left: 1px solid #00ADEE;
       border-bottom: 1px solid #00ADEE; }
   .btn--solidPrimary .btn__content {
     border-left: 1px solid #00ADEE;
     border-right: 1px solid #00ADEE;
-    width: 100%;
-    padding: 5px 40px;
     background: #00ADEE; }
-  .btn--solidPrimary svg.btn__leftBorder {
-    left: -13px; }
-  .btn--solidPrimary svg.btn__rightBorder {
-    right: -13px; }
-  .btn--solidPrimary:hover .btn__upperCorner:after, .btn--solidPrimary:hover .btn__bottomCorner:after {
+  .btn--solidPrimary:hover .btn__corner:after {
     transition: all 0.5s;
     background: #22c3ff;
     border-color: #22c3ff; }
-  .btn--solidPrimary:hover .btn__upperCorner polygon, .btn--solidPrimary:hover .btn__bottomCorner polygon {
+  .btn--solidPrimary:hover .btn__corner polygon {
     transition: all 0.5s;
     fill: #22c3ff; }
-  .btn--solidPrimary:hover .btn__upperCorner line, .btn--solidPrimary:hover .btn__bottomCorner line {
-    transition: all 0.5s;
+  .btn--solidPrimary:hover .btn__corner line {
     stroke: #22c3ff; }
   .btn--solidPrimary:hover .btn__content {
     transition: all 0.5s;
@@ -1245,96 +1210,54 @@ body {
  */
 .btn--secondary {
   color: #26224C; }
-  .btn--secondary:hover > * {
-    position: relative;
-    width: 100%; }
-  .btn--secondary:hover .btn__upperCorner, .btn--secondary:hover .btn__bottomCorner {
+  .btn--secondary:hover .btn__corner {
     height: 10px; }
-    .btn--secondary:hover .btn__upperCorner svg, .btn--secondary:hover .btn__bottomCorner svg {
-      position: absolute; }
-      .btn--secondary:hover .btn__upperCorner svg line, .btn--secondary:hover .btn__bottomCorner svg line {
-        stroke: #34363C;
-        stroke-width: 1px; }
-      .btn--secondary:hover .btn__upperCorner svg polygon, .btn--secondary:hover .btn__bottomCorner svg polygon {
-        fill: transparent; }
-    .btn--secondary:hover .btn__upperCorner:after, .btn--secondary:hover .btn__bottomCorner:after {
-      display: block;
-      content: '';
-      overflow-y: hidden;
-      width: 100%;
+    .btn--secondary:hover .btn__corner svg line {
+      stroke: #34363C;
+      stroke-width: 1px; }
+    .btn--secondary:hover .btn__corner svg polygon {
+      fill: transparent; }
+    .btn--secondary:hover .btn__corner:after {
       height: 10px;
       background: transparent; }
-  .btn--secondary:hover .btn__upperCorner {
+  .btn--secondary:hover .btn__corner--top {
     padding-left: 14px; }
-    .btn--secondary:hover .btn__upperCorner svg {
-      left: 0;
-      top: 0; }
-    .btn--secondary:hover .btn__upperCorner:after {
+    .btn--secondary:hover .btn__corner--top:after {
       border-right: 1px solid #34363C;
       border-top: 1px solid #34363C; }
-  .btn--secondary:hover .btn__bottomCorner {
+  .btn--secondary:hover .btn__corner--bottom {
     padding-right: 14px; }
-    .btn--secondary:hover .btn__bottomCorner svg {
-      right: 0;
-      bottom: 0; }
-    .btn--secondary:hover .btn__bottomCorner:after {
+    .btn--secondary:hover .btn__corner--bottom:after {
       border-left: 1px solid #34363C;
       border-bottom: 1px solid #34363C; }
   .btn--secondary:hover .btn__content {
     border-left: 1px solid #34363C;
     border-right: 1px solid #34363C;
-    width: 100%;
-    padding: 5px 40px;
     background: transparent; }
-  .btn--secondary:hover svg.btn__leftBorder {
-    left: -13px; }
-  .btn--secondary:hover svg.btn__rightBorder {
-    right: -13px; }
-  .btn--secondary > * {
-    position: relative;
-    width: 100%; }
-  .btn--secondary .btn__upperCorner, .btn--secondary .btn__bottomCorner {
+  .btn--secondary .btn__corner {
     height: 10px; }
-    .btn--secondary .btn__upperCorner svg, .btn--secondary .btn__bottomCorner svg {
-      position: absolute; }
-      .btn--secondary .btn__upperCorner svg line, .btn--secondary .btn__bottomCorner svg line {
-        stroke: #ccc;
-        stroke-width: 1px; }
-      .btn--secondary .btn__upperCorner svg polygon, .btn--secondary .btn__bottomCorner svg polygon {
-        fill: transparent; }
-    .btn--secondary .btn__upperCorner:after, .btn--secondary .btn__bottomCorner:after {
-      display: block;
-      content: '';
-      overflow-y: hidden;
-      width: 100%;
+    .btn--secondary .btn__corner svg line {
+      stroke: #ccc;
+      stroke-width: 1px; }
+    .btn--secondary .btn__corner svg polygon {
+      fill: transparent; }
+    .btn--secondary .btn__corner:after {
       height: 10px;
       background: transparent; }
-  .btn--secondary .btn__upperCorner {
+  .btn--secondary .btn__corner--top {
     padding-left: 14px; }
-    .btn--secondary .btn__upperCorner svg {
-      left: 0;
-      top: 0; }
-    .btn--secondary .btn__upperCorner:after {
+    .btn--secondary .btn__corner--top:after {
       border-right: 1px solid #ccc;
       border-top: 1px solid #ccc; }
-  .btn--secondary .btn__bottomCorner {
+  .btn--secondary .btn__corner--bottom {
     padding-right: 14px; }
-    .btn--secondary .btn__bottomCorner svg {
-      right: 0;
-      bottom: 0; }
-    .btn--secondary .btn__bottomCorner:after {
+    .btn--secondary .btn__corner--bottom:after {
       border-left: 1px solid #ccc;
       border-bottom: 1px solid #ccc; }
   .btn--secondary .btn__content {
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
-    width: 100%;
-    padding: 5px 40px;
     background: transparent; }
-  .btn--secondary svg.btn__leftBorder {
-    left: -13px; }
-  .btn--secondary svg.btn__rightBorder {
-    right: -13px; }
 
 /**
  * Solid Secondary Button:
@@ -1346,60 +1269,38 @@ body {
 .btn--solidSecondary {
   color: #FFF;
   position: relative; }
-  .btn--solidSecondary > * {
-    position: relative;
-    width: 100%; }
-  .btn--solidSecondary .btn__upperCorner, .btn--solidSecondary .btn__bottomCorner {
+  .btn--solidSecondary .btn__corner {
     height: 10px; }
-    .btn--solidSecondary .btn__upperCorner svg, .btn--solidSecondary .btn__bottomCorner svg {
-      position: absolute; }
-      .btn--solidSecondary .btn__upperCorner svg line, .btn--solidSecondary .btn__bottomCorner svg line {
-        stroke: #26224C;
-        stroke-width: 1px; }
-      .btn--solidSecondary .btn__upperCorner svg polygon, .btn--solidSecondary .btn__bottomCorner svg polygon {
-        fill: #26224C; }
-    .btn--solidSecondary .btn__upperCorner:after, .btn--solidSecondary .btn__bottomCorner:after {
-      display: block;
-      content: '';
-      overflow-y: hidden;
-      width: 100%;
+    .btn--solidSecondary .btn__corner svg line {
+      stroke: #26224C;
+      stroke-width: 1px; }
+    .btn--solidSecondary .btn__corner svg polygon {
+      fill: #26224C; }
+    .btn--solidSecondary .btn__corner:after {
       height: 10px;
       background: #26224C; }
-  .btn--solidSecondary .btn__upperCorner {
+  .btn--solidSecondary .btn__corner--top {
     padding-left: 14px; }
-    .btn--solidSecondary .btn__upperCorner svg {
-      left: 0;
-      top: 0; }
-    .btn--solidSecondary .btn__upperCorner:after {
+    .btn--solidSecondary .btn__corner--top:after {
       border-right: 1px solid #26224C;
       border-top: 1px solid #26224C; }
-  .btn--solidSecondary .btn__bottomCorner {
+  .btn--solidSecondary .btn__corner--bottom {
     padding-right: 14px; }
-    .btn--solidSecondary .btn__bottomCorner svg {
-      right: 0;
-      bottom: 0; }
-    .btn--solidSecondary .btn__bottomCorner:after {
+    .btn--solidSecondary .btn__corner--bottom:after {
       border-left: 1px solid #26224C;
       border-bottom: 1px solid #26224C; }
   .btn--solidSecondary .btn__content {
     border-left: 1px solid #26224C;
     border-right: 1px solid #26224C;
-    width: 100%;
-    padding: 5px 40px;
     background: #26224C; }
-  .btn--solidSecondary svg.btn__leftBorder {
-    left: -13px; }
-  .btn--solidSecondary svg.btn__rightBorder {
-    right: -13px; }
-  .btn--solidSecondary:hover .btn__upperCorner:after, .btn--solidSecondary:hover .btn__bottomCorner:after {
+  .btn--solidSecondary:hover .btn__corner:after {
     transition: all 0.5s;
     background: #38326f;
     border-color: #38326f; }
-  .btn--solidSecondary:hover .btn__upperCorner polygon, .btn--solidSecondary:hover .btn__bottomCorner polygon {
+  .btn--solidSecondary:hover .btn__corner polygon {
     transition: all 0.5s;
     fill: #38326f; }
-  .btn--solidSecondary:hover .btn__upperCorner line, .btn--solidSecondary:hover .btn__bottomCorner line {
-    transition: all 0.5s;
+  .btn--solidSecondary:hover .btn__corner line {
     stroke: #38326f; }
   .btn--solidSecondary:hover .btn__content {
     transition: all 0.5s;
@@ -1417,96 +1318,54 @@ body {
  */
 .btn--bright {
   color: #FFF; }
-  .btn--bright:hover > * {
-    position: relative;
-    width: 100%; }
-  .btn--bright:hover .btn__upperCorner, .btn--bright:hover .btn__bottomCorner {
+  .btn--bright:hover .btn__corner {
     height: 10px; }
-    .btn--bright:hover .btn__upperCorner svg, .btn--bright:hover .btn__bottomCorner svg {
-      position: absolute; }
-      .btn--bright:hover .btn__upperCorner svg line, .btn--bright:hover .btn__bottomCorner svg line {
-        stroke: #fff;
-        stroke-width: 1px; }
-      .btn--bright:hover .btn__upperCorner svg polygon, .btn--bright:hover .btn__bottomCorner svg polygon {
-        fill: transparent; }
-    .btn--bright:hover .btn__upperCorner:after, .btn--bright:hover .btn__bottomCorner:after {
-      display: block;
-      content: '';
-      overflow-y: hidden;
-      width: 100%;
+    .btn--bright:hover .btn__corner svg line {
+      stroke: #fff;
+      stroke-width: 1px; }
+    .btn--bright:hover .btn__corner svg polygon {
+      fill: transparent; }
+    .btn--bright:hover .btn__corner:after {
       height: 10px;
       background: transparent; }
-  .btn--bright:hover .btn__upperCorner {
+  .btn--bright:hover .btn__corner--top {
     padding-left: 14px; }
-    .btn--bright:hover .btn__upperCorner svg {
-      left: 0;
-      top: 0; }
-    .btn--bright:hover .btn__upperCorner:after {
+    .btn--bright:hover .btn__corner--top:after {
       border-right: 1px solid #fff;
       border-top: 1px solid #fff; }
-  .btn--bright:hover .btn__bottomCorner {
+  .btn--bright:hover .btn__corner--bottom {
     padding-right: 14px; }
-    .btn--bright:hover .btn__bottomCorner svg {
-      right: 0;
-      bottom: 0; }
-    .btn--bright:hover .btn__bottomCorner:after {
+    .btn--bright:hover .btn__corner--bottom:after {
       border-left: 1px solid #fff;
       border-bottom: 1px solid #fff; }
   .btn--bright:hover .btn__content {
     border-left: 1px solid #fff;
     border-right: 1px solid #fff;
-    width: 100%;
-    padding: 5px 40px;
     background: transparent; }
-  .btn--bright:hover svg.btn__leftBorder {
-    left: -13px; }
-  .btn--bright:hover svg.btn__rightBorder {
-    right: -13px; }
-  .btn--bright > * {
-    position: relative;
-    width: 100%; }
-  .btn--bright .btn__upperCorner, .btn--bright .btn__bottomCorner {
+  .btn--bright .btn__corner {
     height: 10px; }
-    .btn--bright .btn__upperCorner svg, .btn--bright .btn__bottomCorner svg {
-      position: absolute; }
-      .btn--bright .btn__upperCorner svg line, .btn--bright .btn__bottomCorner svg line {
-        stroke: rgba(255, 255, 255, 0.6);
-        stroke-width: 1px; }
-      .btn--bright .btn__upperCorner svg polygon, .btn--bright .btn__bottomCorner svg polygon {
-        fill: transparent; }
-    .btn--bright .btn__upperCorner:after, .btn--bright .btn__bottomCorner:after {
-      display: block;
-      content: '';
-      overflow-y: hidden;
-      width: 100%;
+    .btn--bright .btn__corner svg line {
+      stroke: rgba(255, 255, 255, 0.6);
+      stroke-width: 1px; }
+    .btn--bright .btn__corner svg polygon {
+      fill: transparent; }
+    .btn--bright .btn__corner:after {
       height: 10px;
       background: transparent; }
-  .btn--bright .btn__upperCorner {
+  .btn--bright .btn__corner--top {
     padding-left: 14px; }
-    .btn--bright .btn__upperCorner svg {
-      left: 0;
-      top: 0; }
-    .btn--bright .btn__upperCorner:after {
+    .btn--bright .btn__corner--top:after {
       border-right: 1px solid rgba(255, 255, 255, 0.6);
       border-top: 1px solid rgba(255, 255, 255, 0.6); }
-  .btn--bright .btn__bottomCorner {
+  .btn--bright .btn__corner--bottom {
     padding-right: 14px; }
-    .btn--bright .btn__bottomCorner svg {
-      right: 0;
-      bottom: 0; }
-    .btn--bright .btn__bottomCorner:after {
+    .btn--bright .btn__corner--bottom:after {
       border-left: 1px solid rgba(255, 255, 255, 0.6);
       border-bottom: 1px solid rgba(255, 255, 255, 0.6); }
   .btn--bright .btn__content {
     border-left: 1px solid rgba(255, 255, 255, 0.6);
     border-right: 1px solid rgba(255, 255, 255, 0.6);
-    width: 100%;
-    padding: 5px 40px;
     background: transparent; }
-  .btn--bright svg.btn__leftBorder {
-    left: -13px; }
-  .btn--bright svg.btn__rightBorder {
-    right: -13px; }
 
 /**
  * Solid Bright Button:
@@ -1519,96 +1378,54 @@ body {
  */
 .btn--solidBright {
   color: currentColor; }
-  .btn--solidBright:hover > * {
-    position: relative;
-    width: 100%; }
-  .btn--solidBright:hover .btn__upperCorner, .btn--solidBright:hover .btn__bottomCorner {
+  .btn--solidBright:hover .btn__corner {
     height: 10px; }
-    .btn--solidBright:hover .btn__upperCorner svg, .btn--solidBright:hover .btn__bottomCorner svg {
-      position: absolute; }
-      .btn--solidBright:hover .btn__upperCorner svg line, .btn--solidBright:hover .btn__bottomCorner svg line {
-        stroke: #fff;
-        stroke-width: 1px; }
-      .btn--solidBright:hover .btn__upperCorner svg polygon, .btn--solidBright:hover .btn__bottomCorner svg polygon {
-        fill: #fff; }
-    .btn--solidBright:hover .btn__upperCorner:after, .btn--solidBright:hover .btn__bottomCorner:after {
-      display: block;
-      content: '';
-      overflow-y: hidden;
-      width: 100%;
+    .btn--solidBright:hover .btn__corner svg line {
+      stroke: #fff;
+      stroke-width: 1px; }
+    .btn--solidBright:hover .btn__corner svg polygon {
+      fill: #fff; }
+    .btn--solidBright:hover .btn__corner:after {
       height: 10px;
       background: #fff; }
-  .btn--solidBright:hover .btn__upperCorner {
+  .btn--solidBright:hover .btn__corner--top {
     padding-left: 14px; }
-    .btn--solidBright:hover .btn__upperCorner svg {
-      left: 0;
-      top: 0; }
-    .btn--solidBright:hover .btn__upperCorner:after {
+    .btn--solidBright:hover .btn__corner--top:after {
       border-right: 1px solid #fff;
       border-top: 1px solid #fff; }
-  .btn--solidBright:hover .btn__bottomCorner {
+  .btn--solidBright:hover .btn__corner--bottom {
     padding-right: 14px; }
-    .btn--solidBright:hover .btn__bottomCorner svg {
-      right: 0;
-      bottom: 0; }
-    .btn--solidBright:hover .btn__bottomCorner:after {
+    .btn--solidBright:hover .btn__corner--bottom:after {
       border-left: 1px solid #fff;
       border-bottom: 1px solid #fff; }
   .btn--solidBright:hover .btn__content {
     border-left: 1px solid #fff;
     border-right: 1px solid #fff;
-    width: 100%;
-    padding: 5px 40px;
     background: #fff; }
-  .btn--solidBright:hover svg.btn__leftBorder {
-    left: -13px; }
-  .btn--solidBright:hover svg.btn__rightBorder {
-    right: -13px; }
-  .btn--solidBright > * {
-    position: relative;
-    width: 100%; }
-  .btn--solidBright .btn__upperCorner, .btn--solidBright .btn__bottomCorner {
+  .btn--solidBright .btn__corner {
     height: 10px; }
-    .btn--solidBright .btn__upperCorner svg, .btn--solidBright .btn__bottomCorner svg {
-      position: absolute; }
-      .btn--solidBright .btn__upperCorner svg line, .btn--solidBright .btn__bottomCorner svg line {
-        stroke: rgba(255, 255, 255, 0.9);
-        stroke-width: 1px; }
-      .btn--solidBright .btn__upperCorner svg polygon, .btn--solidBright .btn__bottomCorner svg polygon {
-        fill: rgba(255, 255, 255, 0.9); }
-    .btn--solidBright .btn__upperCorner:after, .btn--solidBright .btn__bottomCorner:after {
-      display: block;
-      content: '';
-      overflow-y: hidden;
-      width: 100%;
+    .btn--solidBright .btn__corner svg line {
+      stroke: rgba(255, 255, 255, 0.9);
+      stroke-width: 1px; }
+    .btn--solidBright .btn__corner svg polygon {
+      fill: rgba(255, 255, 255, 0.9); }
+    .btn--solidBright .btn__corner:after {
       height: 10px;
       background: rgba(255, 255, 255, 0.9); }
-  .btn--solidBright .btn__upperCorner {
+  .btn--solidBright .btn__corner--top {
     padding-left: 14px; }
-    .btn--solidBright .btn__upperCorner svg {
-      left: 0;
-      top: 0; }
-    .btn--solidBright .btn__upperCorner:after {
+    .btn--solidBright .btn__corner--top:after {
       border-right: 1px solid rgba(255, 255, 255, 0.9);
       border-top: 1px solid rgba(255, 255, 255, 0.9); }
-  .btn--solidBright .btn__bottomCorner {
+  .btn--solidBright .btn__corner--bottom {
     padding-right: 14px; }
-    .btn--solidBright .btn__bottomCorner svg {
-      right: 0;
-      bottom: 0; }
-    .btn--solidBright .btn__bottomCorner:after {
+    .btn--solidBright .btn__corner--bottom:after {
       border-left: 1px solid rgba(255, 255, 255, 0.9);
       border-bottom: 1px solid rgba(255, 255, 255, 0.9); }
   .btn--solidBright .btn__content {
     border-left: 1px solid rgba(255, 255, 255, 0.9);
     border-right: 1px solid rgba(255, 255, 255, 0.9);
-    width: 100%;
-    padding: 5px 40px;
     background: rgba(255, 255, 255, 0.9); }
-  .btn--solidBright svg.btn__leftBorder {
-    left: -13px; }
-  .btn--solidBright svg.btn__rightBorder {
-    right: -13px; }
 
 /**
  * Button Choice label:
