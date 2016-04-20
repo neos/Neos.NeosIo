@@ -82,3 +82,9 @@
 		font-weight: $light;
 	}
 }
+.offCanvas__categorySeparator {
+	@include mq('smallerThanLarge') {
+		max-width: 220px;
+		background: linear-gradient(to right, rgba(#FFF, 0) 0%, rgba(#FFF, 0.25) 50%, rgba(#FFF, 0) 100%);
+	}
+}

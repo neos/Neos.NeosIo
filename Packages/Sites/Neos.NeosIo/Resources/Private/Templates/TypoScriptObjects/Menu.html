@@ -15,7 +15,7 @@
 								<f:for each="{item.subItems}" as="subItem">
 									<f:if condition="{subItem.node.nodeType.name} == 'Neos.NeosIo:SpacerPage'">
 										<f:then>
-											<li><hr class="hr__spacing-disabled" /></li>
+											<li><hr class="offCanvas__categorySeparator u-mb1/4 u-mt1/4"></li>
 										</f:then>
 										<f:else>
 											<li class="{f:if(condition: '{subItem.state} != \'normal\'', then: ' active')}">
