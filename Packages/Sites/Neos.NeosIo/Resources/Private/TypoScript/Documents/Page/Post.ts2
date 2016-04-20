@@ -48,21 +48,7 @@ prototype(Neos.NeosIo:Post.Document) < prototype(Neos.NeosIo:DefaultPage) {
     }
 
     body {
-        templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Post.html'
-        title = ${q(node).property('title')}
-        image = ${q(node).property('image')}
-        content {
-            // The default content section
-            main = Neos.NeosIo:Post {
-                templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Post.html'
-                sectionName = 'post'
-                content = PrimaryContent {
-                    nodePath = 'main'
-                }
-
-                keyVisualImage = ${q(node).property('image')}
-                latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').slice(0, 6).sort('datePublished', 'DESC').get()}
-            }
-        }
+        content.main = Neos.NeosIo:Post
+        keyVisualImage = ${q(node).property('image')}
     }
 }

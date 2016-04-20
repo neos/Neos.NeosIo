@@ -5,3 +5,19 @@
     label: 'Post featured'
     icon: 'icon-star'
     group: 'plugins'
+    inspector:
+      groups:
+        'properties':
+          label: Featured Post properties
+          position: 1
+
+  properties:
+    'blogPost':
+      type: reference
+      ui:
+        label: 'Choose blog post to link'
+        reloadIfChanged: true
+        inspector:
+          group: 'properties'
+          editorOptions:
+            nodeTypes: ['Neos.NeosIo:Post']
