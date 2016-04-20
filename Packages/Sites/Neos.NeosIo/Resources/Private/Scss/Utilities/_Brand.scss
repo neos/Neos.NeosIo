@@ -63,3 +63,16 @@
 .u-brandLogo__secondary {
 	fill: brand('secondary');
 }
+
+
+// The following lines do not adhere to the BEM styles; but we need to invert the logo in some ways.
+.siteHeader--shaded .siteHeader__brandLogo,
+.siteFooter {
+	.u-brandLogo__primary {
+		fill: #FFFFFF;
+	}
+
+	.u-brandLogo__secondary {
+		fill: brand('primary');
+	}
+}
