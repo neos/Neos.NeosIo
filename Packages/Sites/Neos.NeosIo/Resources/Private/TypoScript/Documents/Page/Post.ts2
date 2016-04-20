@@ -61,11 +61,11 @@ prototype(Neos.NeosIo:Post.Document) < prototype(Neos.NeosIo:DefaultPage) {
                 }
             }
         }
-        keyVisualImage = ${q(documentNode).property('image')}
+        keyVisualImage = ${q(node).property('image')}
         keyVisualImageSrcSet = TYPO3.TypoScript:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Partials/KeyVisual.html'
             sectionName = 'imageSrcSet'
-            keyVisualImage = ${q(documentNode).property('image')}
+            keyVisualImage = ${q(node).property('image')}
         }
     }
 }

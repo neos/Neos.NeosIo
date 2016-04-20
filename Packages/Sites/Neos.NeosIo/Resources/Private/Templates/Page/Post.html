@@ -7,21 +7,20 @@
 <body>
 <f:section name="body">
 	<f:render partial="SiteHeader.html" arguments="{_all}" />
-	<f:render partial="KeyVisual.html" arguments="{
-		isKeyVisualContentsInverted: true,
-		keyVisualImage: keyVisualImage
-	}" />
 
-	<nav>
-		{parts.breadcrumb -> f:format.raw()}
-	</nav>
+	<f:if condition="{keyVisualImage}">
+		<f:render partial="KeyVisual.html" arguments="{
+			isKeyVisualContentsInverted: true,
+			keyVisualImage: keyVisualImage
+		}" />
+	</f:if>
 	{content.main -> f:format.raw()}
 
 	<f:render partial="SiteFooter.html" arguments="{_all}" />
 </f:section>
 <f:section name="post">
 	<div class="stage stage--bright" id="mainContent">
-		<div class="stage__contents">
+		<div class="stage__contents{f:if(condition: image, else: ' stage__contents--extraPadding')}">
 			<div class="g">
 				<main class="gi u-w1/1 u-wm9/12" role="main">
 					<section>
