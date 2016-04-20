@@ -53,17 +53,17 @@
 					<nav>
 						<f:if condition="{relatedDocuments}">
 							<div class="h5">Related</div>
-							<ul>
+							<ul class="u-resetList">
 								<f:for each="{relatedDocuments}" as="relatedDocument">
-									<li><neos:link.node node="{relatedDocument}" /></li>
+									<li class="u-mb1/1"><neos:link.node node="{relatedDocument}" /></li>
 								</f:for>
 							</ul>
 						</f:if>
 						<neos:link.node node="{node.parent}" class="h5">Latest posts</neos:link.node>
-						<ul>
+						<ul class="u-resetList">
 							<f:for each="{latest}" as="post">
 								<f:if condition="{post} != {node}">
-									<li><neos:link.node node="{post}" /><br />{post.properties.datePublished -> media:format.relativeDate()}</li>
+									<li class="u-mb1/1" title="{post.properties.summary -> f:format.stripTags()}"><div>{post.properties.datePublished -> media:format.relativeDate()}</div><neos:link.node node="{post}" /></li>
 								</f:if>
 							</f:for>
 						</ul>
