@@ -1,6 +1,7 @@
 prototype(Neos.NeosIo:PostFeatured) >
 prototype(Neos.NeosIo:PostFeatured) < prototype(Neos.NeosIo:Stage) {
     @context.post = ${q(site).find('[instanceof Neos.NeosIo:Post]').filter('[featured][featured=true]').sort('datePublished').get(0)}
+    isContentTextInverted = true
     backgroundImage = ${q(post).property('image')}
     backgroundShadePercentage = 60
     backgroundColor = ${q(post).property('image') ? 'dark' : 'primary'}

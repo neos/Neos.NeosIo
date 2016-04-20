@@ -1,6 +1,6 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
 {namespace media=TYPO3\Media\ViewHelpers}
-<neos:link.node node="{node}">
+<neos:link.node node="{node}" class="u-linkReset">
     <div>{datePublished -> media:format.relativeDate()}</div>
     <f:if condition="{image}">
         <figure>
@@ -16,6 +16,6 @@
                 ">
         </figure>
     </f:if>
-    <h2 class="u-mt0 u-mb1/2">{title -> f:format.stripTags()}</h2>
+    <h2 class="u-mt0 u-mb1/2 u-brandColor-primary">{title -> f:format.stripTags()}</h2>
     <p class="u-mb1/2">{summary -> f:format.raw()}</p>
 </neos:link.node>

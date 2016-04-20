@@ -1,6 +1,6 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
 {namespace media=TYPO3\Media\ViewHelpers}
-<neos:link.node node="{post}" class="featuredPost u-mb1/1">
+<neos:link.node node="{post}" class="u-linkReset u-mb1/1">
     <div>{post.properties.datePublished -> media:format.relativeDate()}</div>
     <h3 class="h1">{post.properties.title -> f:format.stripTags()}</h3>
     <h4 class="h5">{post.properties.summary -> f:format.raw()}</h4>
