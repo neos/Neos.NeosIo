@@ -1,7 +1,10 @@
 prototype(Neos.NeosIo:PostFeatured) >
 prototype(Neos.NeosIo:PostFeatured) < prototype(Neos.NeosIo:Stage) {
-    @context.post = ${q(site).find('[instanceof Neos.NeosIo:Post]').filter('[featured][featured=true]').sort('datePublished').get(0)}
+    @context.post = ${q(node).property('blogPost')}
+
     isContentTextInverted = true
+    isContentExtraPadded = false
+
     backgroundImage = ${q(post).property('image')}
     backgroundShadePercentage = 60
     backgroundColor = ${q(post).property('image') ? 'dark' : 'primary'}
@@ -24,14 +27,8 @@ prototype(Neos.NeosIo:PostFeatured) < prototype(Neos.NeosIo:Stage) {
         backgroundImage = ${q(post).property('image')}
     }
 
-    @if.hasPost = ${this.post}
-
     @cache {
         mode = 'cached'
-
-        entryIdentifier {
-            identifier = 'postFeatured'
-        }
 
         entryTags {
             1 = ${'NodeType_Neos.NeosIo:Post'}

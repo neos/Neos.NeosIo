@@ -1,5 +1,23 @@
 prototype(Neos.NeosIo:Post) {
     author = ${this.authors ? Data.users(this.authors) + this.authorAlternative : this.authorAlternative}
+
+	content = PrimaryContent {
+		nodePath = 'main'
+	}
+
+	backToListButton = Neos.NeosIo:Button {
+		style = 'btn--solidPrimary'
+		buttonLabel = 'Back to list'
+		alignment = 'Right'
+		link = TYPO3.Neos:NodeUri {
+			node = ${q(node).parents('[instanceof TYPO3.Neos.NodeTypes:Page]').get(0)}
+			absolute = true
+		}
+		@process.contentElementWrapping >
+	}
+
+	keyVisualImage = ${q(node).property('image')}
+	latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').slice(0, 6).sort('datePublished', 'DESC').get()}
 }
 
 prototype(Neos.NeosIo:PostShort) < prototype(Neos.NeosIo:Post) {
