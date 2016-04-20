@@ -56,16 +56,16 @@
 						<meta itemprop="image" content="{media:uri.image(asset: image, maximumWidth: 720, maximumHeight: 500, allowCropping: 1, allowUpScaling: 1)}" />
 					</f:if>
 				</h5>
-			</neos:contentElement.wrap>
 
-			<f:if condition="{neos:rendering.live()}">
-				<f:then>
-					<f:if condition="{summary}"><h2 itemprop="description" class="h4 u-mb1/1">{summary}</h2></f:if>
-				</f:then>
-				<f:else>
-					<neos:contentElement.editable property="summary" tag="h2" class="h3 u-mb1/1" additionalAttributes="{itemprop: 'description'}" />
-				</f:else>
-			</f:if>
+				<f:if condition="{neos:rendering.live()}">
+					<f:then>
+						<f:if condition="{summary}"><h2 itemprop="description" class="h4 u-mb1/1">{summary}</h2></f:if>
+					</f:then>
+					<f:else>
+						<neos:contentElement.editable property="summary" tag="h2" class="h3 u-mb1/1" additionalAttributes="{itemprop: 'description'}" />
+					</f:else>
+				</f:if>
+			</neos:contentElement.wrap>
 
 			<main itemprop="articleBody">
 				{content -> f:format.raw()}
