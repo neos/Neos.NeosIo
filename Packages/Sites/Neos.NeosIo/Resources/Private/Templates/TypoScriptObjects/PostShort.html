@@ -1,12 +1,14 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
 {namespace media=TYPO3\Media\ViewHelpers}
 <neos:link.node node="{node}" class="u-linkReset">
-    <div>{datePublished -> media:format.relativeDate()}</div>
-    <f:if condition="{image}">
-        <figure>
+    <div class="u-microCopy">{datePublished -> media:format.relativeDate()}</div>
+    <h3 class="u-mt0 u-mb1/2 u-brandColor-primary">{title -> f:format.stripTags()}</h3>
+
+    <div class="media">
+        <f:if condition="{image}">
             <img
                 alt="{title -> f:format.stripTags()}"
-                class="u-mb1/2"
+                class="media__img media__img--rev media__img--compact u-mb1/1"
                 src="{media:uri.image(asset: image, width: 1000, height: 250, allowCropping: true)}"
                 srcset="
                 {media:uri.image(asset: image, width: 1000, height: 250, allowCropping: true)} 1920w,
@@ -14,8 +16,11 @@
                 {media:uri.image(asset: image, width: 400, height: 100, allowCropping: true)} 658w,
                 {media:uri.image(asset: image, width: 200, height: 50, allowCropping: true)}
                 ">
-        </figure>
-    </f:if>
-    <h2 class="u-mt0 u-mb1/2 u-brandColor-primary">{title -> f:format.stripTags()}</h2>
-    <p class="u-mb1/2">{summary -> f:format.raw()}</p>
+        </f:if>
+        <div class="media__content">
+            <p>
+                {summary -> f:format.raw()}
+            </p>
+        </div>
+    </div>
 </neos:link.node>
