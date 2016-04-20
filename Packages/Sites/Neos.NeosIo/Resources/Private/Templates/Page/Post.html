@@ -32,7 +32,14 @@
 							</f:if>
 							<header>
 								<neos:contentElement.editable property="title" tag="h1" additionalAttributes="{itemprop: 'headline'}" />
-								<neos:contentElement.editable property="summary" tag="h2" additionalAttributes="{itemprop: 'description'}" />
+								<f:if condition="{neos:rendering.live()}">
+									<f:then>
+										<f:if condition="{summary}"><h2 itemprop="description" class="h4">{summary}</h2></f:if>
+									</f:then>
+									<f:else>
+										<neos:contentElement.editable property="summary" tag="h2" class="h3" additionalAttributes="{itemprop: 'description'}" />
+									</f:else>
+								</f:if>
 							</header>
 						</neos:contentElement.wrap>
 						{content -> f:format.raw()}
