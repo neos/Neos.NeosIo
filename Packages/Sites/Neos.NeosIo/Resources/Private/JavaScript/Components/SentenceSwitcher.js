@@ -18,7 +18,11 @@ function mapSentenceToParts(sentence) {
 		* Characters that remain that remain a part of the word include:
 		*   -#$%^&_`~'
 		*/
-		if (endChar.match(/[\.,"\/!\?\*\+;:{}=()\[\]\s]/g)) {
+		if (endChar == '|') {
+			components.push('');
+			// The start of the next word is the next character to be seen.
+			start = end + 1;
+		} else if (endChar.match(/[\.,"\/!\?\*\+;:{}=()\[\]\s]/g)) {
 			// Append the word we've been building
 			if (end > start) {
 				const part = sentence.slice(start, end);
@@ -118,7 +122,7 @@ export default class SentenceSwitcher {
 			const nextIndex = currentIndex + 2 > sentences.length ? 0 : currentIndex + 1;
 
 			this.animateToIndex(nextIndex);
-		}, 8000);
+		}, 4000);
 	}
 
 	animateToIndex(targetIndex) {
@@ -132,23 +136,42 @@ export default class SentenceSwitcher {
 			const currentText = node.innerHTML;
 			const newPart = targetSentence[index];
 
-			if (!newPart) {
-				node.innerHTML = '';
-				return;
-			}
-
+			// The animation works as follows: (applying the FLIP technique: https://aerotwist.com/blog/flip-your-animations/)
+			//
+			// 0-0.5s: the class .headlineSlider__word--isAnimating is appended to the elements which change.
+			//         This hides the words to be removed via CSS transitions. (0.5 secs)
+			// 0.5s: a JS timeout fires; replacing the text to the new content; but manually sizing the width of the elements
+			//       to the *old* size. Effectively, the DOM changes but the visual representation stays the same.
+			// 0.5s-1s: we animate the sizing change using CSS transitions. (inline styles)
+			// 1.1s: we remove the class .headlineSlider__word--isAnimating, leading to the fade-in of the new word.
+			// 1.1s-1.6s: the word is faded in again.
 			if (currentText !== newPart) {
 				const finishAnimation = () => {
-					node.innerHTML = newPart;
-					node.classList.remove(animatingWordClassName);
+
+					const oldWidth = (currentText ? node.getBoundingClientRect().width : 0);
+					node.innerHTML = (newPart || '');
+					const newWidth = (newPart ? node.getBoundingClientRect().width : 0);
+
+					// This doubly-nested requestAnimationFrame is needed to have the animation run smoothly in firefox.
+					requestAnimationFrame(() => {
+						// Before the DOM paints, Invert it to its old position
+						node.style.width = `${oldWidth}px`;
+						node.style.transition = 'width 0s';
+						requestAnimationFrame(() => {
+							node.style.width = `${newWidth}px`;
+							node.style.transition = 'width 500ms';
+
+							setTimeout(() => {
+								node.style.width = '';
+								node.style.transition = '';
+								node.classList.remove(animatingWordClassName);
+							}, 600);
+						})
+					});
 				};
 				node.classList.add(animatingWordClassName);
 
-				if (currentText) {
-					setTimeout(finishAnimation, 1000);
-				} else {
-					finishAnimation();
-				}
+				setTimeout(finishAnimation, 500);
 			}
 		});
 
