@@ -20,6 +20,7 @@
 	display: inline-block;
 	opacity: 1;
 	transition: all .5s ease;
+	white-space: nowrap; // Crucially important; otherwise text with dashes or others does not work.
 }
 .headlineSlider__word--isAnimating {
 	opacity: 0;

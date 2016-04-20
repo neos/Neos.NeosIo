@@ -18,11 +18,7 @@ function mapSentenceToParts(sentence) {
 		* Characters that remain that remain a part of the word include:
 		*   -#$%^&_`~'
 		*/
-		if (endChar == '|') {
-			components.push('');
-			// The start of the next word is the next character to be seen.
-			start = end + 1;
-		} else if (endChar.match(/[\.,"\/!\?\*\+;:{}=()\[\]\s]/g)) {
+		if (endChar.match(/[\.,"\/!\?\*\+;:{}=()\[\]\s|]/g)) {
 			// Append the word we've been building
 			if (end > start) {
 				const part = sentence.slice(start, end);
@@ -34,9 +30,11 @@ function mapSentenceToParts(sentence) {
 				}
 			}
 
+			if (endChar === '|') {
+				components.push('');
 			// If the character is not whitespace, then it is a special character
 			// and should be split off into its own string
-			if (!endChar.match(/\s/g)) {
+			} else if (!endChar.match(/\s/g)) {
 				if (end + 1 < sentence.length && sentence.charAt(end + 1).match(/\s/g)) {
 					components.push(`${endChar}&nbsp;`);
 				} else {
@@ -128,10 +126,15 @@ export default class SentenceSwitcher {
 	animateToIndex(targetIndex) {
 		const {animatingWordClassName} = this.props;
 		const {sentences, currentIndex} = this.state;
-		const targetSentence = sentences[targetIndex];
-		const currentSentence = sentences[currentIndex] || targetSentence;
+		const targetSentence = sentences[targetIndex] || [];
+		const currentSentence = sentences[currentIndex] || [];
 
-		currentSentence.forEach((part, index) => {
+		let maxLength = targetSentence.length;
+		if (currentSentence.length > maxLength) {
+			maxLength = currentSentence.length;
+		}
+
+		for (var index=0; index < maxLength; index++) {
 			const node = this.el.querySelector(`[data-index="${index}"]`);
 			const currentText = node.innerHTML;
 			const newPart = targetSentence[index];
@@ -173,7 +176,7 @@ export default class SentenceSwitcher {
 
 				setTimeout(finishAnimation, 500);
 			}
-		});
+		}
 
 		this.setState({
 			currentIndex: targetIndex
