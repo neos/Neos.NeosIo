@@ -29,6 +29,9 @@
 							<f:if condition="{author}">
 								– <span itemprop="author" itemscope="" itemtype="https://schema.org/Person"><span itemprop="name">{author}</span></span>
 							</f:if>
+							<f:if condition="{image}">
+								<meta itemprop="image" content="{media:uri.image(asset: image, maximumWidth: 720, maximumHeight: 500, allowCropping: 1, allowUpScaling: 1)}" />
+							</f:if>
 							<header>
 								<neos:contentElement.editable property="title" tag="h1" additionalAttributes="{itemprop: 'headline'}" />
 								<f:if condition="{neos:rendering.live()}">
@@ -41,7 +44,9 @@
 								</f:if>
 							</header>
 						</neos:contentElement.wrap>
-						{content -> f:format.raw()}
+						<div itemprop="articleBody">
+							{content -> f:format.raw()}
+						</div>
 					</section>
 				</main>
 				<aside class="gi u-w1/1 u-wm3/12 sideBar">
