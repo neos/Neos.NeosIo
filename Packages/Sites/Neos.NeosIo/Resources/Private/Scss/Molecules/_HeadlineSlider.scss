@@ -15,6 +15,17 @@
  */
 .headlineSlider {
 	color: currentColor;
+
+	// Hide the inserted contents from neos initially, since they will be re-inserted by JS.
+	.neos-contentcollection > div {
+		display: none;
+
+		// But maintain the layout of the first element, to avoid jumping content.
+		&:first-child {
+			display: block;
+			visibility: hidden;
+		}
+	}
 }
 .headlineSlider__word {
 	display: inline-block;

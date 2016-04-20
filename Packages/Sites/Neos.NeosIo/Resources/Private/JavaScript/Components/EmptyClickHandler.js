@@ -4,9 +4,9 @@ import {component} from '@reduct/component';
 
 })
 export default class EmptyClickHandler {
-    constructor() {
-        this.el.addEventListener('click', e => {
-            e.stopPropagation();
-        });
-    }
+	constructor() {
+		this.el.addEventListener('click', e => {
+			e.stopPropagation();
+		});
+	}
 }

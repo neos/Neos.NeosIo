@@ -134,7 +134,7 @@ export default class SentenceSwitcher {
 			maxLength = currentSentence.length;
 		}
 
-		for (var index=0; index < maxLength; index++) {
+		for (let index = 0; index < maxLength; index++) {
 			const node = this.el.querySelector(`[data-index="${index}"]`);
 			const currentText = node.innerHTML;
 			const newPart = targetSentence[index];
@@ -150,9 +150,10 @@ export default class SentenceSwitcher {
 			// 1.1s-1.6s: the word is faded in again.
 			if (currentText !== newPart) {
 				const finishAnimation = () => {
-
 					const oldWidth = (currentText ? node.getBoundingClientRect().width : 0);
+
 					node.innerHTML = (newPart || '');
+
 					const newWidth = (newPart ? node.getBoundingClientRect().width : 0);
 
 					// This doubly-nested requestAnimationFrame is needed to have the animation run smoothly in firefox.
@@ -169,9 +170,10 @@ export default class SentenceSwitcher {
 								node.style.transition = '';
 								node.classList.remove(animatingWordClassName);
 							}, 600);
-						})
+						});
 					});
 				};
+
 				node.classList.add(animatingWordClassName);
 
 				setTimeout(finishAnimation, 500);

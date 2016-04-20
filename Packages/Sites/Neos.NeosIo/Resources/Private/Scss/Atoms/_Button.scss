@@ -50,22 +50,47 @@
 	@include btn();
 }
 
-@mixin btnSvgBorder($strokeColor, $fillColor, $contentPadding: 5px 40px) {
+//
+// Children, mainly for the edge effect of the button.
+//
+.btn__content {
+	width: 100%;
+	padding: 8px 40px;
+}
+.btn__content,
+.btn__corner {
+	position: relative;
+	width: 100%;
+}
+.btn__corner {
+	&:after {
+		display: block;
+		content: '';
+		overflow-y: hidden;
+		width: 100%;
+	}
+	svg {
+		position: absolute;
+	}
+}
+.btn__corner--top svg {
+	left: 0;
+	top: 0;
+}
+.btn__corner--bottom svg {
+	right: 0;
+	bottom: 0;
+}
+
+@mixin btnSvgBorder($strokeColor, $fillColor) {
 	$cornerWidth: 14px;
 	$cornerHeight: 10px;
 	$strokeWidth: 1px;
 
-	> * {
-		position: relative;
-		width: 100%;
-	}
-
-	.btn__upperCorner, .btn__bottomCorner {
+	.btn__corner {
 		height: $cornerHeight;
 
 		svg {
-			position: absolute;
-
 			line {
 				stroke: $strokeColor;
 				stroke-width: $strokeWidth;
@@ -77,21 +102,14 @@
 		}
 
 		&:after {
-			display: block;
-			content: '';
-			overflow-y: hidden;
-			width: 100%;
 			height: $cornerHeight;
 			background: $fillColor;
 		}
 	}
 
-	.btn__upperCorner {
+	.btn__corner--top {
 		padding-left: $cornerWidth;
-		svg {
-			left: 0;
-			top: 0;
-		}
+
 
 		&:after {
 			border-right: $strokeWidth solid $strokeColor;
@@ -99,12 +117,8 @@
 		}
 	}
 
-	.btn__bottomCorner {
+	.btn__corner--bottom {
 		padding-right: $cornerWidth;
-		svg {
-			right: 0;
-			bottom: 0;
-		}
 
 		&:after {
 			border-left: $strokeWidth solid $strokeColor;
@@ -115,14 +129,8 @@
 	.btn__content {
 		border-left: $strokeWidth solid $strokeColor;
 		border-right: $strokeWidth solid $strokeColor;
-		width: 100%;
-
-		padding: $contentPadding;
 		background: $fillColor;
 	}
-
-	svg.btn__leftBorder { left: -13px; }
-	svg.btn__rightBorder { right: -13px; }
 }
 
 /*
@@ -135,21 +143,23 @@
 	position: relative;
 
 	&:hover {
-		.btn__upperCorner, .btn__bottomCorner {
+		.btn__corner {
 			&:after{
 				transition: $transition;
 				background: $hoverColor;
 				border-color: $hoverColor;
 			}
+
 			polygon {
 				transition: $transition;
 				fill: $hoverColor;
 			}
+
 			line {
-				transition: all 0.5s;
 				stroke: $hoverColor;
 			}
 		}
+
 		.btn__content {
 			transition: $transition;
 			border-color: $hoverColor;
@@ -188,13 +198,14 @@
 @mixin btn--primary() {
 	color: brand('primary');
 
+	@include btnSvgBorder(transparentize(brand('primary'), 0.4), transparent);
+
 	&:hover {
 		@include btnSvgBorder(brand('primary'), transparent);
 	}
 }
 .btn--primary {
 	@include btn--primary();
-	@include btnSvgBorder(transparentize(brand('primary'), 0.4), transparent);
 }
 
 /**
@@ -221,13 +232,14 @@
 @mixin btn--secondary() {
 	color: brand('secondary');
 
+	@include btnSvgBorder(#ccc, transparent);
+
 	&:hover {
 		@include btnSvgBorder(brand('teritary'), transparent);
 	}
 }
 .btn--secondary {
 	@include btn--secondary();
-	@include btnSvgBorder(#ccc, transparent);
 }
 
 /**
@@ -256,13 +268,14 @@
 @mixin btn--bright() {
 	color: #FFF;
 
+	@include btnSvgBorder(transparentize(#fff, 0.4), transparent);
+
 	&:hover {
 		@include btnSvgBorder(#fff, transparent);
 	}
 }
 .btn--bright {
 	@include btn--bright();
-	@include btnSvgBorder(transparentize(#fff, 0.4), transparent);
 }
 
 /**
@@ -277,11 +290,12 @@
 @mixin btn--solidBright() {
 	color: currentColor;
 
+	@include btnSvgBorder(transparentize(#fff, 0.1), transparentize(#fff, 0.1));
+
 	&:hover {
 		@include btnSvgBorder(#fff, #fff);
 	}
 }
 .btn--solidBright {
 	@include btn--solidBright();
-	@include btnSvgBorder(transparentize(#fff, 0.1), transparentize(#fff, 0.1));
 }
