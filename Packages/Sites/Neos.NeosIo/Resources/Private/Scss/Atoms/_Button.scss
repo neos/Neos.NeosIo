@@ -202,13 +202,14 @@
 @mixin btn--primary() {
 	color: brand('primary');
 
+	@include btnSvgBorder(transparentize(brand('primary'), 0.4), transparent);
+
 	&:hover {
 		@include btnSvgBorder(brand('primary'), transparent);
 	}
 }
 .btn--primary {
 	@include btn--primary();
-	@include btnSvgBorder(transparentize(brand('primary'), 0.4), transparent);
 }
 
 /**
@@ -235,13 +236,14 @@
 @mixin btn--secondary() {
 	color: brand('secondary');
 
+	@include btnSvgBorder(#ccc, transparent);
+
 	&:hover {
 		@include btnSvgBorder(brand('teritary'), transparent);
 	}
 }
 .btn--secondary {
 	@include btn--secondary();
-	@include btnSvgBorder(#ccc, transparent);
 }
 
 /**
@@ -270,13 +272,14 @@
 @mixin btn--bright() {
 	color: #FFF;
 
+	@include btnSvgBorder(transparentize(#fff, 0.4), transparent);
+
 	&:hover {
 		@include btnSvgBorder(#fff, transparent);
 	}
 }
 .btn--bright {
 	@include btn--bright();
-	@include btnSvgBorder(transparentize(#fff, 0.4), transparent);
 }
 
 /**
@@ -291,11 +294,12 @@
 @mixin btn--solidBright() {
 	color: currentColor;
 
+	@include btnSvgBorder(transparentize(#fff, 0.1), transparentize(#fff, 0.1));
+
 	&:hover {
 		@include btnSvgBorder(#fff, #fff);
 	}
 }
 .btn--solidBright {
 	@include btn--solidBright();
-	@include btnSvgBorder(transparentize(#fff, 0.1), transparentize(#fff, 0.1));
 }
