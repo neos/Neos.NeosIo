@@ -292,6 +292,42 @@ input::-moz-focus-inner {
 .u-isInvisible {
   visibility: hidden; }
 
+@media screen and (max-width: 649px) {
+  .mOnly {
+    display: block; } }
+
+@media screen and (min-width: 650px) {
+  .mOnly {
+    display: none; } }
+
+@media screen and (min-width: 1200px) {
+  .mOnly {
+    display: none; } }
+
+@media screen and (max-width: 649px) {
+  .lOnly {
+    display: none; } }
+
+@media screen and (min-width: 650px) {
+  .lOnly {
+    display: block; } }
+
+@media screen and (min-width: 1200px) {
+  .lOnly {
+    display: block; } }
+
+@media screen and (max-width: 649px) {
+  .ml {
+    display: block; } }
+
+@media screen and (min-width: 650px) {
+  .ml {
+    display: block; } }
+
+@media screen and (min-width: 1200px) {
+  .ml {
+    display: block; } }
+
 /**
  * `u-floatRight`:
  * Floats the element to it's right boundary.
@@ -996,6 +1032,15 @@ input::-moz-focus-inner {
   .deviceStage__device .neos-neosio-youtube > .flexibleEmbed {
     max-width: none; }
 
+.neos-backend .mOnly {
+  display: block !important; }
+
+.neos-backend .lOnly {
+  display: block !important; }
+
+.neos-backend .ml {
+  display: block !important; }
+
 /**
  * Base Alert:
  * `.alert` - Themes the given node to a system info message.
@@ -1219,7 +1264,8 @@ body {
  */
 .btn--solidPrimary {
   color: #FFF;
-  position: relative; }
+  position: relative;
+  /* Browser fix for solid buttons */ }
   .btn--solidPrimary .btn__corner {
     height: 10px; }
     .btn--solidPrimary .btn__corner svg line {
@@ -1253,6 +1299,12 @@ body {
     transition: all 0.5s;
     border-color: #22c3ff;
     background: #22c3ff; }
+  .btn--solidPrimary .btn__corner--top svg {
+    left: 1px;
+    top: 1px; }
+  .btn--solidPrimary .btn__corner--bottom svg {
+    right: 1px;
+    bottom: 1px; }
 
 /**
  * Bordered Secondary Button:
@@ -1313,7 +1365,8 @@ body {
  */
 .btn--solidSecondary {
   color: #FFF;
-  position: relative; }
+  position: relative;
+  /* Browser fix for solid buttons */ }
   .btn--solidSecondary .btn__corner {
     height: 10px; }
     .btn--solidSecondary .btn__corner svg line {
@@ -1347,6 +1400,12 @@ body {
     transition: all 0.5s;
     border-color: #38326f;
     background: #38326f; }
+  .btn--solidSecondary .btn__corner--top svg {
+    left: 1px;
+    top: 1px; }
+  .btn--solidSecondary .btn__corner--bottom svg {
+    right: 1px;
+    bottom: 1px; }
 
 /**
  * Bordered Bright Button:
@@ -1410,7 +1469,8 @@ body {
  *     </div>
  */
 .btn--solidBright {
-  color: currentColor; }
+  color: currentColor;
+  /* Browser fix for solid buttons */ }
   .btn--solidBright .btn__corner {
     height: 10px; }
     .btn--solidBright .btn__corner svg line {
@@ -2789,6 +2849,7 @@ sub {
   text-align: center; }
 
 .fundingBadges__sortingControl {
+  background: #00ADEE;
   display: inline-block;
   padding: 0;
   border: none;
@@ -2801,7 +2862,7 @@ sub {
   transition: all 0.3s ease;
   text-align: center;
   background: 0;
-  padding-bottom: 26px; }
+  color: white; }
   .fundingBadges__sortingControl + .fundingBadges__sortingControl {
     margin-left: 1em; }
   .fundingBadges__sortingControl, .fundingBadges__sortingControl:hover, .fundingBadges__sortingControl:active, .fundingBadges__sortingControl:focus {
@@ -2813,18 +2874,17 @@ sub {
   .fundingBadges__sortingControl a {
     color: currentColor; }
 
+.fundingBadges__sortingControl--isActive {
+  background: #00ADEE;
+  border-color: #00ADEE; }
+
 .fundingBadges__list {
-  column-count: 1;
-  -moz-column-count: 1;
-  -webkit-column-count: 1;
+  column-count: 3;
+  -moz-column-count: 3;
+  -webkit-column-count: 3;
   -webkit-column-gap: 1em;
      -moz-column-gap: 1em;
           column-gap: 1em; }
-  @media screen and (min-width: 650px) {
-    .fundingBadges__list {
-      column-count: 3;
-      -moz-column-count: 3;
-      -webkit-column-count: 3; } }
 
 .fundingBadges__singleElement {
   border: 1px solid #00ADEE;
@@ -3197,6 +3257,9 @@ sub {
   max-width: 1200px;
   margin: 0 auto;
   padding: 7.5vh 52px; }
+  @media screen and (max-width: 649px) {
+    .stage__contents * {
+      text-align: left !important; } }
   .stage__contents > :last-child {
     margin-bottom: 0; }
 
