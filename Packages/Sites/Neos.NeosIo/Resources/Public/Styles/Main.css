@@ -2789,7 +2789,6 @@ sub {
   text-align: center; }
 
 .fundingBadges__sortingControl {
-  background: #00ADEE;
   display: inline-block;
   padding: 0;
   border: none;
@@ -2802,7 +2801,7 @@ sub {
   transition: all 0.3s ease;
   text-align: center;
   background: 0;
-  color: white; }
+  padding-bottom: 26px; }
   .fundingBadges__sortingControl + .fundingBadges__sortingControl {
     margin-left: 1em; }
   .fundingBadges__sortingControl, .fundingBadges__sortingControl:hover, .fundingBadges__sortingControl:active, .fundingBadges__sortingControl:focus {
@@ -2814,17 +2813,18 @@ sub {
   .fundingBadges__sortingControl a {
     color: currentColor; }
 
-.fundingBadges__sortingControl--isActive {
-  background: #00ADEE;
-  border-color: #00ADEE; }
-
 .fundingBadges__list {
-  column-count: 3;
-  -moz-column-count: 3;
-  -webkit-column-count: 3;
+  column-count: 1;
+  -moz-column-count: 1;
+  -webkit-column-count: 1;
   -webkit-column-gap: 1em;
      -moz-column-gap: 1em;
           column-gap: 1em; }
+  @media screen and (min-width: 650px) {
+    .fundingBadges__list {
+      column-count: 3;
+      -moz-column-count: 3;
+      -webkit-column-count: 3; } }
 
 .fundingBadges__singleElement {
   border: 1px solid #00ADEE;

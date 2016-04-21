@@ -36,6 +36,8 @@ export default class FundingBadges {
 				delete this.queryCache['.fundingBadges__sortingControl--isActive'];
 
 				this.findAll('.fundingBadges__sortingControl--isActive').forEach(value => {
+					value.querySelector('.btn').classList.add('btn--bright');
+					value.querySelector('.btn').classList.remove('btn--solidBright');
 					value.classList.remove('fundingBadges__sortingControl--isActive');
 				});
 
@@ -44,6 +46,8 @@ export default class FundingBadges {
 				if (selected === this.state.selected) {
 					selected = '';
 				} else {
+					value.querySelector('.btn').classList.remove('btn--bright');
+					value.querySelector('.btn').classList.add('btn--solidBright');
 					value.classList.add('fundingBadges__sortingControl--isActive');
 				}
 
