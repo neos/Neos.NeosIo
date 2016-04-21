@@ -54,6 +54,9 @@ function mapSentenceToParts(sentence) {
 	return components;
 }
 
+// We only animate on big-enough screens
+const shouldStartAnimations = (document.body.clientWidth >= 768); // iPad portrait mode
+
 @component({
 	sentenceSelector: propTypes.string.isRequired,
 	wordClassName: propTypes.string.isRequired,
@@ -115,12 +118,14 @@ export default class SentenceSwitcher {
 	startAnimationLoop() {
 		this.animateToIndex(0);
 
-		setInterval(() => {
-			const {currentIndex, sentences} = this.state;
-			const nextIndex = currentIndex + 2 > sentences.length ? 0 : currentIndex + 1;
+		if (shouldStartAnimations) {
+			setInterval(() => {
+				const {currentIndex, sentences} = this.state;
+				const nextIndex = currentIndex + 2 > sentences.length ? 0 : currentIndex + 1;
 
-			this.animateToIndex(nextIndex);
-		}, 4000);
+				this.animateToIndex(nextIndex);
+			}, 4000);
+		}
 	}
 
 	animateToIndex(targetIndex) {
