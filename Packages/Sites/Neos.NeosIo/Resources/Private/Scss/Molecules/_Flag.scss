@@ -33,6 +33,10 @@
 	vertical-align: middle;
 	padding-right: $column-gutter;
 
+	@include mq('small') {
+		display: none;
+	}
+
 	> img {
 		display: block;
 		max-width: none;
