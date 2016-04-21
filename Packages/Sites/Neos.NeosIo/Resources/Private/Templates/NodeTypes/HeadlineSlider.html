@@ -7,7 +7,7 @@
 		</div>
 	</f:then>
 	<f:else>
-		<div data-component="SentenceSwitcher" class="headlineSlider h2"
+		<div data-component="SentenceSwitcher"{attributes -> f:format.raw()}
 			data-wordClassName="headlineSlider__word"
 			data-animatingWordClassName="headlineSlider__word--isAnimating">
 			{headlines -> f:format.raw()}
