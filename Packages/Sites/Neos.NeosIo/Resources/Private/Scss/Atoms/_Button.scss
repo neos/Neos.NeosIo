@@ -220,6 +220,20 @@ $btn__strokeWidth: 1px;
 
 	@include btnSvgBorder(brand('primary'), brand('primary'));
 	@include solidBtnHoverPulse(brand('primary'));
+
+	/* Browser fix for solid buttons */
+	.btn__corner--top {
+		svg {
+			left: 1px;
+			top: 1px;
+		}
+	}
+	.btn__corner--bottom {
+		svg {
+			right: 1px;
+			bottom: 1px;
+		}
+	}
 }
 
 /**
@@ -254,6 +268,20 @@ $btn__strokeWidth: 1px;
 
 	@include btnSvgBorder(brand('secondary'), brand('secondary'));
 	@include solidBtnHoverPulse(brand('secondary'));
+
+	/* Browser fix for solid buttons */
+	.btn__corner--top {
+		svg {
+			left: 1px;
+			top: 1px;
+		}
+	}
+	.btn__corner--bottom {
+		svg {
+			right: 1px;
+			bottom: 1px;
+		}
+	}
 }
 
 /**
@@ -291,6 +319,8 @@ $btn__strokeWidth: 1px;
 	color: currentColor;
 
 	@include btnSvgBorder(transparentize(#fff, 0.1), transparentize(#fff, 0.1));
+
+	/* Browser fix for solid buttons */
 
 	&:hover {
 		@include btnSvgBorder(#fff, #fff);
