@@ -9,21 +9,22 @@
 }
 
 .fundingBadges__sortingControl {
-	background: map-get($brand-colors, primary);
 	@include btn();
-	color: white;
-
+	padding-bottom: $basic-spacing+px;
 }
 
-.fundingBadges__sortingControl--isActive {
-	background: map-get($brand-colors, primary);
-	border-color: map-get($brand-colors, primary);
-}
 
 .fundingBadges__list {
-	column-count: 3;
-	-moz-column-count: 3;
-	-webkit-column-count: 3;
+	column-count: 1;
+	-moz-column-count: 1;
+	-webkit-column-count: 1;
+
+	@include mq('medium') {
+		column-count: 3;
+		-moz-column-count: 3;
+		-webkit-column-count: 3;
+	}
+
 	column-gap: 1em;
 }
 

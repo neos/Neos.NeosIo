@@ -6,6 +6,12 @@ prototype(Neos.NeosIo:FundingBadges) < prototype(TYPO3.Neos:Content) {
 
     badgeData = ${q(site).fundingBadges().get()}
 
+    badgeFilterButton = Neos.NeosIo:Button {
+            style = 'btn--bright'
+            buttonLabel = ${label}
+            @process.contentElementWrapping >
+        }
+
     @cache {
         mode = 'cached'
         entryIdentifier {

@@ -1,14 +1,17 @@
+{namespace ts=TYPO3\TypoScript\ViewHelpers}
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
       xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 <f:section name="Main">
 	<div{attributes -> f:format.raw()}>
 
-	<div class="fundingBadges__sortingControls">
+	<div class="fundingBadges__sortingControls" data-fake="{badgeData.badgeTypes.0}">
 		<f:for each="{badgeData.badgeTypes}" as="type" key="label">
 			<span class="fundingBadges__sortingControl" data-filter="{label}">
-				<f:translate id="fundingBadges.filterType.{label -> f:format.case(mode: 'lower')}"
-				             package="Neos.NeosIo">{label}</f:translate>
+				<ts:render path="badgeFilterButton" context="{
+					filterName: label,
+					label: '{f:translate(package: \"Neos.NeosIo\", id: \"fundingBadges.filterType.{label -> f:format.case(mode: \'lower\')}\")}'
+				}"/>
 			</span>
 		</f:for>
 	</div>
