@@ -63,6 +63,12 @@
 	margin: 0 auto;
 	padding: 7.5vh $double-spacing+px;
 
+	@include mq('small') {
+		* {
+			text-align: left !important;
+		}
+	}
+
 	> :last-child {
 		margin-bottom: 0;
 	}
