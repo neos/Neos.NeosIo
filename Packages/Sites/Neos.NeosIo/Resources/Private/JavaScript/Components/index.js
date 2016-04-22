@@ -5,6 +5,7 @@ import CountUp from './CountUp.js';
 import FundingBadges from './FundingBadges.js';
 import GitHubAPI from './GitHubAPI.js';
 import ScrollTo from './ScrollTo.js';
+import ProgressiveImage from './ProgressiveImage.js';
 import ScrollClassToggler from './ScrollClassToggler.js';
 import SentenceSwitcher from './SentenceSwitcher.js';
 
@@ -16,6 +17,7 @@ export {
 	FundingBadges,
 	GitHubAPI,
 	SentenceSwitcher,
+	ProgressiveImage,
 	ScrollClassToggler,
 	EmptyClickHandler
 };
