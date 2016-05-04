@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6f86ce72c06ac6115b19fa66a76f574b",
-    "content-hash": "465058b6fa817ec1d8fff139010624d5",
+    "hash": "9b5dc31ed7bb6d276607fd443741eb03",
+    "content-hash": "7bbb39cfbdd5851b1d047c4dc55af444",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1445,7 +1445,7 @@
         },
         {
             "name": "neos/diff",
-            "version": "2.1.6",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/diff.git",
@@ -1472,6 +1472,40 @@
             ],
             "description": "This is a comprehensive library for generating differences between two strings or arrays",
             "time": "2016-01-06 10:03:10"
+        },
+        {
+            "name": "neos/error-messages",
+            "version": "3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/error-messages.git",
+                "reference": "38cd43b7d5ec6822daa72650a7c836fa5d9ba6cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/error-messages/zipball/38cd43b7d5ec6822daa72650a7c836fa5d9ba6cf",
+                "reference": "38cd43b7d5ec6822daa72650a7c836fa5d9ba6cf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8 || ~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\Flow\\Error": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Flow error messages",
+            "homepage": "http://flow.typo3.org",
+            "time": "2016-04-20 18:33:46"
         },
         {
             "name": "neos/marketplace",
@@ -1513,17 +1547,443 @@
             "time": "2016-04-24 20:28:38"
         },
         {
-            "name": "ocramius/package-versions",
-            "version": "1.0.3",
+            "name": "neos/redirecthandler",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Ocramius/PackageVersions.git",
-                "reference": "a108adf44c4663bfb72858ea2fcd174acddd317e"
+                "url": "https://github.com/neos/redirecthandler.git",
+                "reference": "abeeadf2e4c13ba6b601fbcca49d1bff66d12c86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/a108adf44c4663bfb72858ea2fcd174acddd317e",
-                "reference": "a108adf44c4663bfb72858ea2fcd174acddd317e",
+                "url": "https://api.github.com/repos/neos/redirecthandler/zipball/abeeadf2e4c13ba6b601fbcca49d1bff66d12c86",
+                "reference": "abeeadf2e4c13ba6b601fbcca49d1bff66d12c86",
+                "shasum": ""
+            },
+            "require": {
+                "neos/redirecthandler-storageimplementation": "~1.0",
+                "typo3/flow": "~3.2 || dev-master"
+            },
+            "suggest": {
+                "league/csv": "Allows import/export based on CSV files",
+                "neos/redirecthandler-databasestorage": "Supports storing redirects in the database"
+            },
+            "type": "neos-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Neos\\RedirectHandler\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Basic API to handle HTTP redirects with the Flow Framework",
+            "time": "2016-05-04 10:30:19"
+        },
+        {
+            "name": "neos/redirecthandler-databasestorage",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/redirecthandler-databasestorage.git",
+                "reference": "d542055622b80780faaeb61dc81c4128a8f53424"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/redirecthandler-databasestorage/zipball/d542055622b80780faaeb61dc81c4128a8f53424",
+                "reference": "d542055622b80780faaeb61dc81c4128a8f53424",
+                "shasum": ""
+            },
+            "require": {
+                "neos/redirecthandler": "~1.0"
+            },
+            "provide": {
+                "neos/redirecthandler-storageimplementation": "1.0"
+            },
+            "type": "neos-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Neos\\RedirectHandler\\DatabaseStorage\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A plugin for neos/redirecthandler to store redirects in the database",
+            "time": "2016-05-04 10:30:22"
+        },
+        {
+            "name": "neos/redirecthandler-neosadapter",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/redirecthandler-neosadapter.git",
+                "reference": "f94535c8c6421ee221ebc729104c78b92c3e3675"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/redirecthandler-neosadapter/zipball/f94535c8c6421ee221ebc729104c78b92c3e3675",
+                "reference": "f94535c8c6421ee221ebc729104c78b92c3e3675",
+                "shasum": ""
+            },
+            "require": {
+                "neos/redirecthandler": "~1.0",
+                "typo3/neos": "~2.2 || dev-master"
+            },
+            "type": "neos-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Neos\\RedirectHandler\\NeosAdapter\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "description": "Neos Redirect Handler",
+            "time": "2016-05-04 10:58:55"
+        },
+        {
+            "name": "neos/utility-arrays",
+            "version": "3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/utility-arrays.git",
+                "reference": "e3c50677448f60d3e68e7bc046ef33eac195f96a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/utility-arrays/zipball/e3c50677448f60d3e68e7bc046ef33eac195f96a",
+                "reference": "e3c50677448f60d3e68e7bc046ef33eac195f96a",
+                "shasum": ""
+            },
+            "require": {
+                "neos/utility-objecthandling": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1.6",
+                "phpunit/phpunit": "~4.8 || ~5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\Flow\\Utility": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Flow Array Utilities",
+            "homepage": "http://flow.typo3.org",
+            "time": "2016-04-07 08:40:10"
+        },
+        {
+            "name": "neos/utility-files",
+            "version": "3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/utility-files.git",
+                "reference": "f49276226b423660054388df93657268e30e202d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/utility-files/zipball/f49276226b423660054388df93657268e30e202d",
+                "reference": "f49276226b423660054388df93657268e30e202d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1.6",
+                "phpunit/phpunit": "~4.8 || ~5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\Flow\\Utility": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Flow Files Utilities",
+            "homepage": "http://flow.typo3.org",
+            "time": "2016-04-07 08:40:10"
+        },
+        {
+            "name": "neos/utility-lock",
+            "version": "3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/utility-lock.git",
+                "reference": "d69f7ad05832397e85fdd9b3491ee4c7ce35fa67"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/utility-lock/zipball/d69f7ad05832397e85fdd9b3491ee4c7ce35fa67",
+                "reference": "d69f7ad05832397e85fdd9b3491ee4c7ce35fa67",
+                "shasum": ""
+            },
+            "require": {
+                "neos/utility-files": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1.6",
+                "phpunit/phpunit": "~4.8 || ~5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\Flow\\Utility\\Lock": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Flow Locking Implementation",
+            "homepage": "http://flow.typo3.org",
+            "time": "2016-04-07 08:40:10"
+        },
+        {
+            "name": "neos/utility-mediatypes",
+            "version": "3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/utility-mediatypes.git",
+                "reference": "656e112a26615922cab0e61ca4bc33dd534123b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/utility-mediatypes/zipball/656e112a26615922cab0e61ca4bc33dd534123b5",
+                "reference": "656e112a26615922cab0e61ca4bc33dd534123b5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1.6",
+                "phpunit/phpunit": "~4.8 || ~5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\Flow\\Utility": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Flow Media Types Utilities",
+            "homepage": "http://flow.typo3.org",
+            "time": "2016-04-07 08:40:10"
+        },
+        {
+            "name": "neos/utility-objecthandling",
+            "version": "3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/utility-objecthandling.git",
+                "reference": "177065ed3f93ebca85dab919751f0463722a7f44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/utility-objecthandling/zipball/177065ed3f93ebca85dab919751f0463722a7f44",
+                "reference": "177065ed3f93ebca85dab919751f0463722a7f44",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "doctrine/orm": "~2.4.0",
+                "phpunit/phpunit": "~4.8 || ~5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\Flow\\Reflection": "Classes",
+                    "TYPO3\\Flow\\Utility": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Flow array/object property and type utilities",
+            "homepage": "http://flow.typo3.org",
+            "time": "2016-04-07 08:40:10"
+        },
+        {
+            "name": "neos/utility-opcodecache",
+            "version": "3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/utility-opcodecache.git",
+                "reference": "e2d3149ff3a8696437187ff509d52d2bcdd0f046"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/utility-opcodecache/zipball/e2d3149ff3a8696437187ff509d52d2bcdd0f046",
+                "reference": "e2d3149ff3a8696437187ff509d52d2bcdd0f046",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\Flow\\Utility": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Flow Opcode Cache Utilities",
+            "homepage": "http://flow.typo3.org",
+            "time": "2016-03-10 20:38:18"
+        },
+        {
+            "name": "neos/utility-pdo",
+            "version": "3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/utility-pdo.git",
+                "reference": "4ba153d6530ad56e1269ed3eddd7d7d00e4776a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/utility-pdo/zipball/4ba153d6530ad56e1269ed3eddd7d7d00e4776a0",
+                "reference": "4ba153d6530ad56e1269ed3eddd7d7d00e4776a0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\Flow\\Utility": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Flow PDO Utilities",
+            "homepage": "http://flow.typo3.org",
+            "time": "2016-03-10 20:38:18"
+        },
+        {
+            "name": "neos/utility-schema",
+            "version": "3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/utility-schema.git",
+                "reference": "0404989565ec4d3e53656f8ea929e9708f630bae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/utility-schema/zipball/0404989565ec4d3e53656f8ea929e9708f630bae",
+                "reference": "0404989565ec4d3e53656f8ea929e9708f630bae",
+                "shasum": ""
+            },
+            "require": {
+                "neos/error-messages": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1.6",
+                "phpunit/phpunit": "~4.8 || ~5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\Flow\\Utility": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Flow Schema Utilities",
+            "homepage": "http://flow.typo3.org",
+            "time": "2016-04-20 18:33:46"
+        },
+        {
+            "name": "neos/utility-unicode",
+            "version": "3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/utility-unicode.git",
+                "reference": "6239c2f9124ad1146df3fda28b557db2f7e3a07b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/utility-unicode/zipball/6239c2f9124ad1146df3fda28b557db2f7e3a07b",
+                "reference": "6239c2f9124ad1146df3fda28b557db2f7e3a07b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1.6",
+                "phpunit/phpunit": "~4.8 || ~5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TYPO3\\Flow\\Utility\\Unicode": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Flow Unicode Utilities",
+            "homepage": "http://flow.typo3.org",
+            "time": "2016-04-07 08:40:10"
+        },
+        {
+            "name": "ocramius/package-versions",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ocramius/PackageVersions.git",
+                "reference": "7e9aa662b8405d6ee09844f66d7f32596902b538"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/7e9aa662b8405d6ee09844f66d7f32596902b538",
+                "reference": "7e9aa662b8405d6ee09844f66d7f32596902b538",
                 "shasum": ""
             },
             "require": {
@@ -1557,7 +2017,7 @@
                 }
             ],
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "time": "2016-02-26 14:00:23"
+            "time": "2016-04-23 17:52:40"
         },
         {
             "name": "ocramius/proxy-manager",
@@ -1673,16 +2133,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.3.0",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "f44f53e5ceb7474a83b6e11e6623ff9d6f6da598"
+                "reference": "b4fe3b7387cb323fd15ad5837cae992422c9fa5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/f44f53e5ceb7474a83b6e11e6623ff9d6f6da598",
-                "reference": "f44f53e5ceb7474a83b6e11e6623ff9d6f6da598",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/b4fe3b7387cb323fd15ad5837cae992422c9fa5c",
+                "reference": "b4fe3b7387cb323fd15ad5837cae992422c9fa5c",
                 "shasum": ""
             },
             "require": {
@@ -1694,6 +2154,8 @@
             },
             "require-dev": {
                 "apigen/apigen": "^4.1",
+                "codeception/aspect-mock": "1.0.0",
+                "goaop/framework": "1.0.0-alpha.2",
                 "ircmaxell/random-lib": "^1.1",
                 "jakub-onderka/php-parallel-lint": "^0.9.0",
                 "mockery/mockery": "^0.9.4",
@@ -1747,7 +2209,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2016-03-22 18:40:53"
+            "time": "2016-04-24 00:30:41"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1804,16 +2266,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.8.4",
+            "version": "v2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "9a5aef5fc0d4eff86853d44202b02be8d5a20154"
+                "reference": "48221d3de4dc22d2cd57c97e8b9361821da86609"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/9a5aef5fc0d4eff86853d44202b02be8d5a20154",
-                "reference": "9a5aef5fc0d4eff86853d44202b02be8d5a20154",
+                "url": "https://api.github.com/repos/symfony/console/zipball/48221d3de4dc22d2cd57c97e8b9361821da86609",
+                "reference": "48221d3de4dc22d2cd57c97e8b9361821da86609",
                 "shasum": ""
             },
             "require": {
@@ -1860,7 +2322,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-17 09:19:04"
+            "time": "2016-04-26 12:00:47"
         },
         {
             "name": "symfony/dom-crawler",
@@ -1917,16 +2379,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.4",
+            "version": "v2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "47d2d8cade9b1c3987573d2943bb9352536cdb87"
+                "reference": "81c4c51f7fd6d0d40961bd53dd60cade32db6ed6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/47d2d8cade9b1c3987573d2943bb9352536cdb87",
-                "reference": "47d2d8cade9b1c3987573d2943bb9352536cdb87",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/81c4c51f7fd6d0d40961bd53dd60cade32db6ed6",
+                "reference": "81c4c51f7fd6d0d40961bd53dd60cade32db6ed6",
                 "shasum": ""
             },
             "require": {
@@ -1973,7 +2435,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-07 14:04:32"
+            "time": "2016-04-05 16:36:54"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2197,20 +2659,20 @@
         },
         {
             "name": "typo3/eel",
-            "version": "3.1.2",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/eel.git",
-                "reference": "3052bcd0cd3743b39aa7503c2be897aad7781f16"
+                "reference": "7c6448b307a015fbe26e9e8e64bc7b29765c08ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/eel/zipball/3052bcd0cd3743b39aa7503c2be897aad7781f16",
-                "reference": "3052bcd0cd3743b39aa7503c2be897aad7781f16",
+                "url": "https://api.github.com/repos/neos/eel/zipball/7c6448b307a015fbe26e9e8e64bc7b29765c08ba",
+                "reference": "7c6448b307a015fbe26e9e8e64bc7b29765c08ba",
                 "shasum": ""
             },
             "require": {
-                "typo3/flow": "~3.1.0"
+                "typo3/flow": "~3.2.0"
             },
             "type": "typo3-flow-framework",
             "autoload": {
@@ -2223,20 +2685,20 @@
                 "MIT"
             ],
             "description": "The Embedded Expression Language (Eel) is a building block for creating Domain Specific Languages",
-            "time": "2016-01-14 15:18:25"
+            "time": "2016-04-28 20:34:57"
         },
         {
             "name": "typo3/flow",
-            "version": "3.1.2",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/flow.git",
-                "reference": "ec344502f04e116282b756c4f3f843668f9227e2"
+                "reference": "84f7ee4053f48dd3d04747521aaa4b0820af9237"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/flow/zipball/ec344502f04e116282b756c4f3f843668f9227e2",
-                "reference": "ec344502f04e116282b756c4f3f843668f9227e2",
+                "url": "https://api.github.com/repos/neos/flow/zipball/84f7ee4053f48dd3d04747521aaa4b0820af9237",
+                "reference": "84f7ee4053f48dd3d04747521aaa4b0820af9237",
                 "shasum": ""
             },
             "require": {
@@ -2244,19 +2706,28 @@
                 "doctrine/migrations": "~1.3.0",
                 "doctrine/orm": "~2.4.0",
                 "ext-json": ">=1.2.0",
-                "ext-mbstring": "*",
                 "ext-reflection": "*",
                 "ext-spl": "*",
                 "ext-zlib": "*",
                 "neos/composer-plugin": "^1.0.1",
+                "neos/error-messages": "~3.2.0",
+                "neos/utility-arrays": "~3.2.0",
+                "neos/utility-files": "~3.2.0",
+                "neos/utility-lock": "~3.2.0",
+                "neos/utility-mediatypes": "~3.2.0",
+                "neos/utility-objecthandling": "~3.2.0",
+                "neos/utility-opcodecache": "~3.2.0",
+                "neos/utility-pdo": "~3.2.0",
+                "neos/utility-schema": "~3.2.0",
+                "neos/utility-unicode": "~3.2.0",
                 "paragonie/random_compat": "^1.0",
                 "php": ">=5.5.0",
                 "ramsey/uuid": "^3.0.0",
                 "symfony/console": "~2.0",
                 "symfony/dom-crawler": "~2.5.0",
                 "symfony/yaml": "~2.5.0",
-                "typo3/eel": "~3.1.0",
-                "typo3/fluid": "~3.1.0"
+                "typo3/eel": "~3.2.0",
+                "typo3/fluid": "~3.2.0"
             },
             "suggest": {
                 "doctrine/data-fixtures": "To manage and execute the loading of data fixtures for the Doctrine ORM or ODM",
@@ -2268,6 +2739,9 @@
             "autoload": {
                 "psr-0": {
                     "TYPO3\\Flow": "Classes"
+                },
+                "psr-4": {
+                    "TYPO3\\Flow\\Core\\Migrations\\": "Scripts/Migrations"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2276,24 +2750,24 @@
             ],
             "description": "Flow Application Framework",
             "homepage": "http://flow.typo3.org",
-            "time": "2016-03-16 07:12:13"
+            "time": "2016-05-04 09:16:47"
         },
         {
             "name": "typo3/fluid",
-            "version": "3.1.2",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/fluid.git",
-                "reference": "13be4c4a9d82d3090374a0330d09e1a381e02579"
+                "reference": "332e0e8dcf28c3226bf35a6ba6b7732e8170bc74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/fluid/zipball/13be4c4a9d82d3090374a0330d09e1a381e02579",
-                "reference": "13be4c4a9d82d3090374a0330d09e1a381e02579",
+                "url": "https://api.github.com/repos/neos/fluid/zipball/332e0e8dcf28c3226bf35a6ba6b7732e8170bc74",
+                "reference": "332e0e8dcf28c3226bf35a6ba6b7732e8170bc74",
                 "shasum": ""
             },
             "require": {
-                "typo3/flow": "~3.1.0"
+                "typo3/flow": "~3.2.0"
             },
             "type": "typo3-flow-framework",
             "autoload": {
@@ -2306,7 +2780,7 @@
                 "MIT"
             ],
             "description": "Next-Generation Templating Framework for Flow and Neos",
-            "time": "2016-03-11 14:54:34"
+            "time": "2016-04-28 20:34:57"
         },
         {
             "name": "typo3/form",
@@ -2365,20 +2839,20 @@
         },
         {
             "name": "typo3/media",
-            "version": "2.1.6",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/media.git",
-                "reference": "d0e58de9957828bb18a5d572ea11cf4538d0781c"
+                "reference": "9f0ed655ace37766bcd4c355f94db5ec83363c2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/media/zipball/d0e58de9957828bb18a5d572ea11cf4538d0781c",
-                "reference": "d0e58de9957828bb18a5d572ea11cf4538d0781c",
+                "url": "https://api.github.com/repos/neos/media/zipball/9f0ed655ace37766bcd4c355f94db5ec83363c2b",
+                "reference": "9f0ed655ace37766bcd4c355f94db5ec83363c2b",
                 "shasum": ""
             },
             "require": {
-                "typo3/flow": "~3.1",
+                "typo3/flow": "~3.2.0",
                 "typo3/imagine": "~2.0"
             },
             "type": "typo3-flow-package",
@@ -2392,35 +2866,36 @@
                 "GPL-3.0+"
             ],
             "description": "The Media package",
-            "time": "2016-04-20 07:20:22"
+            "time": "2016-05-04 11:11:12"
         },
         {
             "name": "typo3/neos",
-            "version": "2.1.6",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/neos.git",
-                "reference": "2209733a9c639c9b59f63fe187497f30c8427a44"
+                "reference": "b6aa6f162d76a97c4a261ba90858d5b036c65f3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/neos/zipball/2209733a9c639c9b59f63fe187497f30c8427a44",
-                "reference": "2209733a9c639c9b59f63fe187497f30c8427a44",
+                "url": "https://api.github.com/repos/neos/neos/zipball/b6aa6f162d76a97c4a261ba90858d5b036c65f3c",
+                "reference": "b6aa6f162d76a97c4a261ba90858d5b036c65f3c",
                 "shasum": ""
             },
             "require": {
                 "behat/transliterator": "~1.0",
                 "league/commonmark": "^0.12.0",
-                "neos/diff": "~2.1.0",
-                "typo3/flow": "~3.1",
-                "typo3/media": "~2.1.0",
+                "neos/diff": "~2.2.0",
+                "typo3/flow": "~3.2.0",
+                "typo3/media": "~2.2.0",
                 "typo3/party": "~3.1",
                 "typo3/setup": "~2.0",
                 "typo3/twitter-bootstrap": "~2.0",
-                "typo3/typo3cr": "~2.1.0",
-                "typo3/typoscript": "~2.1.0"
+                "typo3/typo3cr": "~2.2.0",
+                "typo3/typoscript": "~2.2.0"
             },
             "suggest": {
+                "neos/redirecthandler-neosadapter": "Adds automatic redirects for moved/renamed pages",
                 "typo3/neos-kickstarter": "Helps with creating new site packages for Neos."
             },
             "type": "typo3-flow-package",
@@ -2444,20 +2919,20 @@
                 "GPL-3.0+"
             ],
             "description": "An open source Content Application Platform based on Flow. A set of core Content Management features is resting within a larger context that allows you to build a perfectly customized experience for your users.",
-            "time": "2016-04-20 07:20:47"
+            "time": "2016-05-04 11:13:19"
         },
         {
             "name": "typo3/neos-googleanalytics",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/neos-googleanalytics.git",
-                "reference": "1dbdbcfcbff2c718225160e039a127b499100b5f"
+                "reference": "9f223d220246fe2f46dfc79fac4af774b065d9ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/neos-googleanalytics/zipball/1dbdbcfcbff2c718225160e039a127b499100b5f",
-                "reference": "1dbdbcfcbff2c718225160e039a127b499100b5f",
+                "url": "https://api.github.com/repos/neos/neos-googleanalytics/zipball/9f223d220246fe2f46dfc79fac4af774b065d9ab",
+                "reference": "9f223d220246fe2f46dfc79fac4af774b065d9ab",
                 "shasum": ""
             },
             "require": {
@@ -2475,24 +2950,24 @@
                 "GPL-3.0+"
             ],
             "description": "Google Analytics integration for TYPO3 Neos",
-            "time": "2015-12-17 09:43:26"
+            "time": "2016-04-26 09:25:25"
         },
         {
             "name": "typo3/neos-nodetypes",
-            "version": "2.1.6",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/neos-nodetypes.git",
-                "reference": "877233221bba1b1d00cd7d06349b6228a7b5640e"
+                "reference": "175d0219a6652500c4ba5df3f4bbe8d99ee7631e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/neos-nodetypes/zipball/877233221bba1b1d00cd7d06349b6228a7b5640e",
-                "reference": "877233221bba1b1d00cd7d06349b6228a7b5640e",
+                "url": "https://api.github.com/repos/neos/neos-nodetypes/zipball/175d0219a6652500c4ba5df3f4bbe8d99ee7631e",
+                "reference": "175d0219a6652500c4ba5df3f4bbe8d99ee7631e",
                 "shasum": ""
             },
             "require": {
-                "typo3/neos": "~2.1"
+                "typo3/neos": "~2.2.0"
             },
             "type": "typo3-flow-package",
             "autoload": {
@@ -2505,20 +2980,20 @@
                 "GPL-3.0+"
             ],
             "description": "Node type configuration for TYPO3 Neos",
-            "time": "2016-03-18 09:43:20"
+            "time": "2016-04-29 04:33:00"
         },
         {
             "name": "typo3/neos-seo",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/neos-seo.git",
-                "reference": "b688359355ed97ea317ad53079e49644f4fde3fe"
+                "reference": "22463847f782a42171ce58abfba4e2c6ad547df9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/neos-seo/zipball/b688359355ed97ea317ad53079e49644f4fde3fe",
-                "reference": "b688359355ed97ea317ad53079e49644f4fde3fe",
+                "url": "https://api.github.com/repos/neos/neos-seo/zipball/22463847f782a42171ce58abfba4e2c6ad547df9",
+                "reference": "22463847f782a42171ce58abfba4e2c6ad547df9",
                 "shasum": ""
             },
             "require": {
@@ -2535,7 +3010,7 @@
                 "GPL-3.0+"
             ],
             "description": "SEO configuration and tools for TYPO3 Neos",
-            "time": "2016-03-02 04:53:02"
+            "time": "2016-04-18 06:13:04"
         },
         {
             "name": "typo3/party",
@@ -2657,23 +3132,22 @@
         },
         {
             "name": "typo3/typo3cr",
-            "version": "2.1.6",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/typo3cr.git",
-                "reference": "af284605ed7426fd692bb0c3bd1f121f372c1734"
+                "reference": "852d310c5f84ec7fa79601374fdc9deca7060ed6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/typo3cr/zipball/af284605ed7426fd692bb0c3bd1f121f372c1734",
-                "reference": "af284605ed7426fd692bb0c3bd1f121f372c1734",
+                "url": "https://api.github.com/repos/neos/typo3cr/zipball/852d310c5f84ec7fa79601374fdc9deca7060ed6",
+                "reference": "852d310c5f84ec7fa79601374fdc9deca7060ed6",
                 "shasum": ""
             },
             "require": {
                 "behat/transliterator": "~1.0",
-                "gedmo/doctrine-extensions": "2.3.*",
-                "typo3/eel": "~3.1",
-                "typo3/flow": "~3.1"
+                "gedmo/doctrine-extensions": "~2.3.0",
+                "typo3/flow": "~3.2.0"
             },
             "type": "typo3-flow-package",
             "autoload": {
@@ -2685,21 +3159,21 @@
             "license": [
                 "GPL-3.0+"
             ],
-            "description": "Content repository based on TYPO3 Flow, specifically made for TYPO3 Neos.",
-            "time": "2016-04-13 03:26:55"
+            "description": "Content repository based on Flow, specifically made for Neos.",
+            "time": "2016-05-02 10:19:43"
         },
         {
             "name": "typo3/typo3cr-search",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/typo3cr-search.git",
-                "reference": "3f0145d6975f79a915418881313fee82bc5e2a30"
+                "reference": "a3a2623022be67922c3fb7904d197b206d5ccd05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/typo3cr-search/zipball/3f0145d6975f79a915418881313fee82bc5e2a30",
-                "reference": "3f0145d6975f79a915418881313fee82bc5e2a30",
+                "url": "https://api.github.com/repos/neos/typo3cr-search/zipball/a3a2623022be67922c3fb7904d197b206d5ccd05",
+                "reference": "a3a2623022be67922c3fb7904d197b206d5ccd05",
                 "shasum": ""
             },
             "require": {
@@ -2714,25 +3188,24 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Common code and interface for a TYPO3CR search implementation",
-            "time": "2015-12-16 23:58:33"
+            "time": "2016-03-14 14:50:52"
         },
         {
             "name": "typo3/typoscript",
-            "version": "2.1.6",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/typoscript.git",
-                "reference": "d251c2cacabbd3161744687d4f20284ad050ac19"
+                "reference": "34be054364bbd8032787e944b333786a10c71bd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/typoscript/zipball/d251c2cacabbd3161744687d4f20284ad050ac19",
-                "reference": "d251c2cacabbd3161744687d4f20284ad050ac19",
+                "url": "https://api.github.com/repos/neos/typoscript/zipball/34be054364bbd8032787e944b333786a10c71bd8",
+                "reference": "34be054364bbd8032787e944b333786a10c71bd8",
                 "shasum": ""
             },
             "require": {
-                "typo3/eel": "~3.1",
-                "typo3/flow": "~3.1"
+                "typo3/flow": "~3.2.0"
             },
             "type": "typo3-flow-package",
             "autoload": {
@@ -2745,7 +3218,7 @@
                 "GPL-3.0+"
             ],
             "description": "TypoScript is a hierarchical, prototype based processing language",
-            "time": "2016-03-16 06:32:36"
+            "time": "2016-04-29 04:33:00"
         },
         {
             "name": "zendframework/zend-code",
@@ -2912,16 +3385,16 @@
         },
         {
             "name": "mikey179/vfsStream",
-            "version": "v1.5.0",
+            "version": "v1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mikey179/vfsStream.git",
-                "reference": "4dc0d2f622412f561f5b242b19b98068bbbc883a"
+                "reference": "c19925cd0390d3c436a0203ae859afa460d0474b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/4dc0d2f622412f561f5b242b19b98068bbbc883a",
-                "reference": "4dc0d2f622412f561f5b242b19b98068bbbc883a",
+                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/c19925cd0390d3c436a0203ae859afa460d0474b",
+                "reference": "c19925cd0390d3c436a0203ae859afa460d0474b",
                 "shasum": ""
             },
             "require": {
@@ -2933,7 +3406,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5.x-dev"
+                    "dev-master": "1.6.x-dev"
                 }
             },
             "autoload": {
@@ -2954,7 +3427,49 @@
             ],
             "description": "Virtual file system to mock the real file system in unit tests.",
             "homepage": "http://vfs.bovigo.org/",
-            "time": "2015-03-29 11:19:49"
+            "time": "2016-04-09 09:42:01"
+        },
+        {
+            "name": "myclabs/deep-copy",
+            "version": "1.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/myclabs/DeepCopy.git",
+                "reference": "a8773992b362b58498eed24bf85005f363c34771"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/a8773992b362b58498eed24bf85005f363c34771",
+                "reference": "a8773992b362b58498eed24bf85005f363c34771",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "doctrine/collections": "1.*",
+                "phpunit/phpunit": "~4.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DeepCopy\\": "src/DeepCopy/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Create deep copies (clones) of your objects",
+            "homepage": "https://github.com/myclabs/DeepCopy",
+            "keywords": [
+                "clone",
+                "copy",
+                "duplicate",
+                "object",
+                "object graph"
+            ],
+            "time": "2015-11-20 12:04:31"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -3069,39 +3584,40 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "2.2.4",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "eabf68b476ac7d0f73793aada060f1c1a9bf8979"
+                "reference": "2431befdd451fac43fbcde94d1a92fb3b8b68f86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/eabf68b476ac7d0f73793aada060f1c1a9bf8979",
-                "reference": "eabf68b476ac7d0f73793aada060f1c1a9bf8979",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/2431befdd451fac43fbcde94d1a92fb3b8b68f86",
+                "reference": "2431befdd451fac43fbcde94d1a92fb3b8b68f86",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
+                "php": "^5.6 || ^7.0",
                 "phpunit/php-file-iterator": "~1.3",
                 "phpunit/php-text-template": "~1.2",
-                "phpunit/php-token-stream": "~1.3",
+                "phpunit/php-token-stream": "^1.4.2",
+                "sebastian/code-unit-reverse-lookup": "~1.0",
                 "sebastian/environment": "^1.3.2",
-                "sebastian/version": "~1.0"
+                "sebastian/version": "~1.0|~2.0"
             },
             "require-dev": {
                 "ext-xdebug": ">=2.1.4",
-                "phpunit/phpunit": "~4"
+                "phpunit/phpunit": "~5"
             },
             "suggest": {
                 "ext-dom": "*",
-                "ext-xdebug": ">=2.2.1",
+                "ext-xdebug": ">=2.4.0",
                 "ext-xmlwriter": "*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2.x-dev"
+                    "dev-master": "3.3.x-dev"
                 }
             },
             "autoload": {
@@ -3127,7 +3643,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-10-06 15:47:00"
+            "time": "2016-04-08 08:14:53"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3309,16 +3825,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.6.10",
+            "version": "5.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7b5fe98b28302a8b25693b2298bca74463336975"
+                "reference": "6f0948bab32270352f97d1913d82a49338dcb0da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7b5fe98b28302a8b25693b2298bca74463336975",
-                "reference": "7b5fe98b28302a8b25693b2298bca74463336975",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6f0948bab32270352f97d1913d82a49338dcb0da",
+                "reference": "6f0948bab32270352f97d1913d82a49338dcb0da",
                 "shasum": ""
             },
             "require": {
@@ -3327,19 +3843,21 @@
                 "ext-pcre": "*",
                 "ext-reflection": "*",
                 "ext-spl": "*",
-                "php": ">=5.3.3",
-                "phpspec/prophecy": "~1.3,>=1.3.1",
-                "phpunit/php-code-coverage": "~2.0,>=2.0.11",
+                "myclabs/deep-copy": "~1.3",
+                "php": "^5.6 || ^7.0",
+                "phpspec/prophecy": "^1.3.1",
+                "phpunit/php-code-coverage": "^3.3.0",
                 "phpunit/php-file-iterator": "~1.4",
                 "phpunit/php-text-template": "~1.2",
-                "phpunit/php-timer": "~1.0",
-                "phpunit/phpunit-mock-objects": "~2.3",
+                "phpunit/php-timer": ">=1.0.6",
+                "phpunit/phpunit-mock-objects": ">=3.0.5",
                 "sebastian/comparator": "~1.1",
                 "sebastian/diff": "~1.2",
-                "sebastian/environment": "~1.2",
+                "sebastian/environment": "~1.3",
                 "sebastian/exporter": "~1.2",
                 "sebastian/global-state": "~1.0",
-                "sebastian/version": "~1.0",
+                "sebastian/resource-operations": "~1.0",
+                "sebastian/version": "~1.0|~2.0",
                 "symfony/yaml": "~2.1|~3.0"
             },
             "suggest": {
@@ -3351,7 +3869,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.6.x-dev"
+                    "dev-master": "5.2.x-dev"
                 }
             },
             "autoload": {
@@ -3377,30 +3895,30 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-06-03 05:03:30"
+            "time": "2016-03-15 05:59:58"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.3.8",
+            "version": "3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "ac8e7a3db35738d56ee9a76e78a4e03d97628983"
+                "reference": "151c96874bff6fe61a25039df60e776613a61489"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/ac8e7a3db35738d56ee9a76e78a4e03d97628983",
-                "reference": "ac8e7a3db35738d56ee9a76e78a4e03d97628983",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/151c96874bff6fe61a25039df60e776613a61489",
+                "reference": "151c96874bff6fe61a25039df60e776613a61489",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
-                "php": ">=5.3.3",
+                "php": ">=5.6",
                 "phpunit/php-text-template": "~1.2",
                 "sebastian/exporter": "~1.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.4"
+                "phpunit/phpunit": "~5"
             },
             "suggest": {
                 "ext-soap": "*"
@@ -3408,7 +3926,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3.x-dev"
+                    "dev-master": "3.1.x-dev"
                 }
             },
             "autoload": {
@@ -3433,7 +3951,52 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-10-02 06:51:40"
+            "time": "2016-04-20 14:39:26"
+        },
+        {
+            "name": "sebastian/code-unit-reverse-lookup",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/code-unit-reverse-lookup.git",
+                "reference": "c36f5e7cfce482fde5bf8d10d41a53591e0198fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/code-unit-reverse-lookup/zipball/c36f5e7cfce482fde5bf8d10d41a53591e0198fe",
+                "reference": "c36f5e7cfce482fde5bf8d10d41a53591e0198fe",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                }
+            ],
+            "description": "Looks up which function or method a line of code belongs to",
+            "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
+            "time": "2016-02-13 06:45:14"
         },
         {
             "name": "sebastian/comparator",
@@ -3553,16 +4116,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "1.3.5",
+            "version": "1.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "dc7a29032cf72b54f36dac15a1ca5b3a1b6029bf"
+                "reference": "2292b116f43c272ff4328083096114f84ea46a56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/dc7a29032cf72b54f36dac15a1ca5b3a1b6029bf",
-                "reference": "dc7a29032cf72b54f36dac15a1ca5b3a1b6029bf",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/2292b116f43c272ff4328083096114f84ea46a56",
+                "reference": "2292b116f43c272ff4328083096114f84ea46a56",
                 "shasum": ""
             },
             "require": {
@@ -3599,7 +4162,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-02-26 18:40:46"
+            "time": "2016-05-04 07:59:13"
         },
         {
             "name": "sebastian/exporter",
@@ -3772,20 +4335,70 @@
             "time": "2015-11-11 19:50:13"
         },
         {
-            "name": "sebastian/version",
-            "version": "1.0.6",
+            "name": "sebastian/resource-operations",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sebastianbergmann/version.git",
-                "reference": "58b3a85e7999757d6ad81c787a1fbf5ff6c628c6"
+                "url": "https://github.com/sebastianbergmann/resource-operations.git",
+                "reference": "ce990bb21759f94aeafd30209e8cfcdfa8bc3f52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/58b3a85e7999757d6ad81c787a1fbf5ff6c628c6",
-                "reference": "58b3a85e7999757d6ad81c787a1fbf5ff6c628c6",
+                "url": "https://api.github.com/repos/sebastianbergmann/resource-operations/zipball/ce990bb21759f94aeafd30209e8cfcdfa8bc3f52",
+                "reference": "ce990bb21759f94aeafd30209e8cfcdfa8bc3f52",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=5.6.0"
+            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                }
+            ],
+            "description": "Provides a list of PHP built-in functions that operate on resources",
+            "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
+            "time": "2015-07-28 20:34:47"
+        },
+        {
+            "name": "sebastian/version",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/version.git",
+                "reference": "c829badbd8fdf16a0bad8aa7fa7971c029f1b9c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/c829badbd8fdf16a0bad8aa7fa7971c029f1b9c5",
+                "reference": "c829badbd8fdf16a0bad8aa7fa7971c029f1b9c5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "src/"
@@ -3804,20 +4417,20 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2015-06-21 13:59:46"
+            "time": "2016-02-04 12:56:52"
         },
         {
             "name": "typo3/buildessentials",
-            "version": "3.1.0",
+            "version": "3.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/BuildEssentials.git",
-                "reference": "1d9378be9ca6f811e3c608f8d478e3fac98018a6"
+                "reference": "06ea1c76233cbe7c687e9f89ae36a6e9cc03dd14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/BuildEssentials/zipball/1d9378be9ca6f811e3c608f8d478e3fac98018a6",
-                "reference": "1d9378be9ca6f811e3c608f8d478e3fac98018a6",
+                "url": "https://api.github.com/repos/neos/BuildEssentials/zipball/06ea1c76233cbe7c687e9f89ae36a6e9cc03dd14",
+                "reference": "06ea1c76233cbe7c687e9f89ae36a6e9cc03dd14",
                 "shasum": ""
             },
             "require": {
@@ -3832,7 +4445,7 @@
                 "LGPL-3.0+"
             ],
             "description": "TYPO3 Flow Build Toolchain Essentials",
-            "time": "2015-12-07 10:51:16"
+            "time": "2016-04-11 15:12:47"
         }
     ],
     "aliases": [],
@@ -3840,7 +4453,8 @@
     "stability-flags": {
         "flowpack/elasticsearch-contentrepositoryadaptor": 20,
         "flownative/google-cloudstorage": 20,
-        "flowpack/searchplugin": 20
+        "flowpack/searchplugin": 20,
+        "typo3/buildessentials": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

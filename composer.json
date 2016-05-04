@@ -7,8 +7,8 @@
         "bin-dir": "bin"
     },
     "require": {
-      "typo3/neos": "~2.1.0",
-      "typo3/neos-nodetypes": "~2.1.0",
+      "typo3/neos": "~2.2.0",
+      "typo3/neos-nodetypes": "~2.2.0",
 
       "typo3/neos-seo": "~1.0",
       "typo3/neos-googleanalytics": "~1.0",
@@ -23,12 +23,14 @@
       "flowpack/searchplugin": "dev-master",
       "flownative/gravatar": "^1.0",
       "flowpack/listable": "~0.4.0",
-      "moc/notfound": "~2.0.0"
+      "moc/notfound": "~2.0.0",
+      "neos/redirecthandler-neosadapter": "~1.0",
+      "neos/redirecthandler-databasestorage": "~1.0"
     },
     "require-dev": {
-       "typo3/buildessentials": "~3.0",
-       "mikey179/vfsstream": "1.5.*",
-       "phpunit/phpunit": "4.6.*"
+       "typo3/buildessentials": "3.2.x-dev",
+       "mikey179/vfsstream": "~1.6",
+       "phpunit/phpunit": "~4.8 || ~5.2.0"
     },
     "scripts": {
         "post-update-cmd": "TYPO3\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
