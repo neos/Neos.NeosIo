@@ -16,7 +16,6 @@ prototype(Neos.NeosIo:Post) {
 		@process.contentElementWrapping >
 	}
 
-	keyVisualImage = ${q(node).property('image')}
 	latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').slice(0, 6).sort('datePublished', 'DESC').get()}
 }
 
