@@ -4,4 +4,5 @@ prototype(Neos.NeosIo:DefaultPage.Menu) < prototype(Menu) {
     maximumLevels = 2
     attributes.class = 'nav siteHeader__nav offCanvas__nav'
     filter = 'TYPO3.Neos:Document, !Neos.NeosIo:Reference'
+    @cache.entryIdentifier.documentNode = ${site}
 }
