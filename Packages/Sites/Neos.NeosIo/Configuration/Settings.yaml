@@ -20,10 +20,9 @@ TYPO3:
 
   TYPO3CR:
     Search:
-      # disable realtime search-index updating, as many bugs during publishing appear because of Elasticsearch
-      # being down etc.
+      # Make sure that realtime indexing is on so market place syncs show up in search results
       realtimeIndexing:
-        enabled: false
+        enabled: true
 
       # We only need searching for the Neos Marketplace; thus disabling the indexing functionality for user workspaces
       # drastically reduces index size and speeds up indexing.
