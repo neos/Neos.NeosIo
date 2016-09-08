@@ -531,7 +531,6 @@ input::-moz-focus-inner {
 .u-textBreak {
   word-wrap: break-word;
   -webkit-hyphens: auto;
-     -moz-hyphens: auto;
       -ms-hyphens: auto;
           hyphens: auto; }
 
@@ -1910,7 +1909,6 @@ dl {
   text-align: right;
   word-wrap: break-word;
   -webkit-hyphens: auto;
-     -moz-hyphens: auto;
       -ms-hyphens: auto;
           hyphens: auto; }
 
@@ -2066,6 +2064,18 @@ sup {
 
 sub {
   bottom: -0.25em; }
+
+/**
+ * Meta element:
+ * F.e. footer-like meta information below something with smaller and lighter text
+ *
+ *     @example
+ *     p.meta This is a simple meta data line
+ *
+ */
+.meta {
+  font-size: 14px;
+  color: #898d99; }
 
 /**
  * Table grid:
@@ -2901,6 +2911,34 @@ sub {
 
 .fundingBadges__singleElement--isInactive {
   opacity: 0.5; }
+
+/**
+ * References:
+ * Layout for show cases
+ */
+.references__list .references__item:nth-child(odd) {
+  clear: both; }
+
+.references__list .imageTeaser {
+  min-height: 250px; }
+
+.references__list .references__data {
+  font-size: 14px;
+  color: #898d99;
+  padding-top: 4px; }
+  .references__list .references__data,
+  .references__list .references__data h1, .references__list .references__data h2, .references__list .references__data h3,
+  .references__list .references__data h4, .references__list .references__data h5, .references__list .references__data h6 {
+    color: white; }
+  .references__list .references__data .btn--solidBright {
+    color: #656a71; }
+  .references__list .references__data span {
+    display: block;
+    padding-right: 1em;
+    white-space: nowrap; }
+    @media screen and (min-width: 400px) {
+      .references__list .references__data span {
+        display: inline-block; } }
 
 .siteHeader {
   position: fixed;

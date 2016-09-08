@@ -1,0 +1,32 @@
+/**
+ * References:
+ * Layout for show cases
+ */
+
+.references__list {
+	.references__item {
+		&:nth-child(odd) {
+			clear: both;
+		}
+	}
+
+	.imageTeaser {
+		min-height: 250px;
+	}
+
+	.references__data {
+		@include meta();
+		@include u-invertText();
+		padding-top: 4px;
+
+		span {
+			display: block;
+			padding-right: 1em;
+			white-space: nowrap;
+
+			@include min-screen(400px) {
+				display: inline-block;
+			}
+		}
+	}
+}

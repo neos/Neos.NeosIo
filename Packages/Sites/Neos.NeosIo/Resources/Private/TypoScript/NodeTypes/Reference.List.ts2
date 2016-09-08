@@ -7,7 +7,7 @@ prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
 
 	attributes {
 		class = TYPO3.TypoScript:RawArray {
-			list = 'reference-list'
+			list = 'references__list'
 			grid = 'g'
 			@process.nodeType >
 		}
@@ -20,4 +20,11 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(TYPO3.TypoScript:Template
 	image = ${q(node).property('image')}
 	url = ${q(node).property('url')}
 	datePublished = ${q(node).property('datePublished')}
+	launchDate = ${q(node).property('launchDate')}
+	projectVolume = ${q(node).property('projectVolume')} {
+		@process {
+			isKnown = ${value > 1 ? value : false}
+		}
+	}
+	projectType = ${q(q(node).property('projectType')).property('title')}
 }

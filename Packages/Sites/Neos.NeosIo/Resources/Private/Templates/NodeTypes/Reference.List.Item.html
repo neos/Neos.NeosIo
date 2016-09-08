@@ -1,14 +1,16 @@
-{namespace media=TYPO3\Media\ViewHelpers}
+{namespace io=Neos\NeosIo\ViewHelpers}
 
-<div class="reference-item gi u-w1/1 u-wm1/2 u-wl1/2">
+<div class="references__item gi u-w1/1 u-wm1/2 u-wl1/2">
 	<f:if condition="{url}">
 		<f:then>
-			<a href="{url}">
+			<io:link.external uri="{url}" openInNewTab="{openInNewTab}" class="imageTeaser">
 				<f:render partial="Reference.List.Item" arguments="{_all}" />
-			</a>
+			</io:link.external>
 		</f:then>
 		<f:else>
-			<f:render partial="Reference.List.Item" arguments="{_all}" />
+			<div class="imageTeaser">
+				<f:render partial="Reference.List.Item" arguments="{_all}" />
+			</div>
 		</f:else>
 	</f:if>
 </div>
