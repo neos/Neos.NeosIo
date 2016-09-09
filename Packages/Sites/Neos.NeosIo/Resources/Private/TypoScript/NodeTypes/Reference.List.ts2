@@ -12,6 +12,14 @@ prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
 			@process.nodeType >
 		}
 	}
+
+	@cache {
+		mode = 'cached'
+		entryTags {
+			self = ${'Node_' + node.identifier}
+			reference = 'NodeType_Neos.NeosIo:Reference'
+		}
+    }
 }
 
 prototype(Neos.NeosIo:Reference.List.Item) < prototype(TYPO3.TypoScript:Template) {
