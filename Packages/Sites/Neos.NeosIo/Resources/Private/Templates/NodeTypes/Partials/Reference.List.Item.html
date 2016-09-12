@@ -1,0 +1,46 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace media=TYPO3\Media\ViewHelpers}
+
+<f:render partial="CornerTopLeft" arguments="{_all}" />
+<f:if condition="{image}">
+	<media:image
+		class="imageTeaser__image"
+		asset="{image}"
+		title="{title}"
+		alt="{alternativeText}"
+		maximumWidth="700c"
+		maximumHeight="450c"
+		allowUpScaling="{allowUpScaling}"
+	/>
+</f:if>
+
+<div class="imageTeaser__contents u-invertText">
+	<h3 class="imageTeaser__contents__heading">{title}</h3>
+	<footer class="references__data">
+		<f:if condition="{launchDate}"><span><i class="fa fa-rocket"></i> <f:format.date format="d.m.Y">{launchDate}</f:format.date></span></f:if>
+
+		<f:if condition="{projectVolume}">
+			<span>
+				<i class="fa fa-users"></i>
+				<f:if condition="{projectVolume} == 5">
+					< 100h
+				</f:if>
+				<f:if condition="{projectVolume} == 10">
+					100 - 499h
+				</f:if>
+				<f:if condition="{projectVolume} == 15">
+					500 - 999h
+				</f:if>
+				<f:if condition="{projectVolume} == 20">
+					1000 - 3000h
+				</f:if>
+				<f:if condition="{projectVolume} == 25">
+					> 3000h
+				</f:if>
+			</span>
+		</f:if>
+
+		<f:if condition="{projectType}"><span><i class="fa fa-industry"></i> {projectType}</span></f:if>
+	</footer>
+</div>
+<f:render partial="CornerBottomRight" arguments="{_all}" />

@@ -1,0 +1,21 @@
+//
+// A meta element
+//
+
+
+/**
+ * Meta element:
+ * F.e. footer-like meta information below something with smaller and lighter text
+ *
+ *     @example
+ *     p.meta This is a simple meta data line
+ *
+ */
+@mixin meta() {
+	@include u-microCopy();
+	color: $lighter-text;
+}
+
+.meta {
+	@include meta();
+}
