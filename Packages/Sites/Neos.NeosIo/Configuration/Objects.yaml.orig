@@ -1,0 +1,25 @@
+Neos\NeosIo\Service\FundingApiConnector:
+  properties:
+    apiCache:
+      object:
+        factoryObjectName: TYPO3\Flow\Cache\CacheManager
+        factoryMethodName: getCache
+        arguments:
+          1:
+            value: NeosNeosIo_FundingApiCache
+
+<<<<<<< HEAD
+Neos\NeosIo\Service\CrowdApiConnector:
+  properties:
+    apiCache:
+      object:
+        factoryObjectName: TYPO3\Flow\Cache\CacheManager
+        factoryMethodName: getCache
+        arguments:
+          1:
+            value: NeosNeosIo_CrowdApiCache
+
+=======
+TYPO3\TYPO3CR\Search\Search\QueryBuilderInterface:
+  className: Neos\MarketPlace\Eel\ElasticSearchQueryBuilder
+>>>>>>> 5c8d1ea... FEATURE: Refactor references
