@@ -1,6 +1,6 @@
 prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
 	references = TYPO3.TypoScript:Collection {
-		collection = ${Search.query(site).nodeType('Neos.NeosIo:Reference').sortDesc('datePublished').execute()}
+		collection = ${Search.query(site).nodeType('Neos.NeosIo:Reference').sortDesc('datePublished').limit(500).execute()}
 		itemName = 'node'
 		itemRenderer = Neos.NeosIo:Reference.List.Item
 	}
@@ -19,7 +19,7 @@ prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
 			self = ${'Node_' + node.identifier}
 			reference = 'NodeType_Neos.NeosIo:Reference'
 		}
-    }
+	}
 }
 
 prototype(Neos.NeosIo:Reference.List.Item) < prototype(TYPO3.TypoScript:Template) {
