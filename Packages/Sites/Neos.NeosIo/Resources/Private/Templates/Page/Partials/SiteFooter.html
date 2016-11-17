@@ -1,3 +1,5 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+
 <footer role="contentinfo" class="siteFooter u-invertText">
 	{parts.footerContent -> f:format.raw()}
 	<hr>
@@ -49,6 +51,9 @@
 			</span>
 		</span>
 		contributors around the world.<br />
-		Website hosted by <a href="https://www.flownative.com" target="_blank" rel="noopener">Flownative</a>.
+		Website hosted by <a href="https://www.flownative.com" target="_blank" rel="noopener">Flownative</a>.<br />
+		<f:if condition="{imprintLinkNode}">
+			<neos:link.node node="{imprintLinkNode}">Imprint</neos:link.node>
+		</f:if>
 	</p>
 </footer>

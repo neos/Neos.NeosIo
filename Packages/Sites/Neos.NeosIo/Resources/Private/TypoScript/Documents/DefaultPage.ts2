@@ -65,6 +65,8 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
 
             googleAnalyticsTrackingCode = ${Configuration.setting('Neos.NeosIo.googleAnalyticsTrackingCode')}
         }
+
+		imprintLinkNode = ${q(site).property('imprintLinkNode')}
     }
 
     @cache.entryTags.site = ${'Node_' + site.identifier}
