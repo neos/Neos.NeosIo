@@ -16,14 +16,14 @@
 			</f:if>
 		</f:else>
 	</f:if>
-	<f:if condition="{node.caption}">
+	<f:if condition="{caption}">
 		<f:then>
 			<figcaption>
 				{neos:contentElement.editable(property: 'caption', node: node)}
 			</figcaption>
 		</f:then>
 		<f:else>
-			<f:if condition="{neos:rendering.inBackend()}">
+			<f:if condition="{neos:rendering.inEditMode()}">
 				<figcaption>
 					{neos:contentElement.editable(property: 'caption', node: node)}
 				</figcaption>
