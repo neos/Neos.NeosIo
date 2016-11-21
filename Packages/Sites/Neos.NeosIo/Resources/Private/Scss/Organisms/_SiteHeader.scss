@@ -143,3 +143,30 @@
 		}
 	}
 }
+
+
+
+
+.event-header {
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, transparent 100%);
+	height: 250px;
+
+	.siteHeader__navToggler {
+		top: 20px;
+		transform: translateY(0%);
+	}
+
+	.siteHeader__nav {
+		@include mq('large') {
+			position: absolute;
+			top: 35px;
+		}
+	}
+}
+
+.event-logo {
+	transform: translateY(0%);
+	height: auto;
+	max-width: 230px;
+	top: 15px;
+}

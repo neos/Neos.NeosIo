@@ -1,0 +1,56 @@
+###########################################
+# Person node type
+###########################################
+
+'Neos.NeosIo:Person':
+  superTypes:
+    'TYPO3.Neos:Document': true
+    'Neos.NeosIo:Address': true
+  ui:
+    label: 'Person'
+    icon: 'icon-user'
+    inspector:
+      groups:
+        'person':
+          label: 'Person properties'
+  properties:
+    'photo':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Photo'
+        reloadIfChanged: true
+        inspector:
+          group: 'person'
+          position: 10
+    'gender':
+      type: 'string'
+      ui:
+        label: 'Gender'
+        reloadIfChanged: true
+        inspector:
+          group: 'person'
+          position: 15
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              'female':
+                label: 'Female'
+              'male':
+                label: 'Male'
+    'name':
+      type: string
+      ui:
+        label: i18n
+        inlineEditable: true
+        inspector:
+          group: 'person'
+          position: 20
+    'company':
+      type: string
+      ui:
+        label: i18n
+        inlineEditable: true
+        inspector:
+          group: 'person'
+          group:
+          position: 25

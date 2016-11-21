@@ -1,0 +1,48 @@
+###########################################
+# Sponsor Partner node type
+###########################################
+
+'Neos.NeosIo:Sponsor.Parnter':
+  superTypes:
+    'TYPO3.Neos:Document': true
+  ui:
+    label: 'Sponsor'
+    icon: 'icon-address-card-o'
+    inspector:
+      groups:
+        'sponsor':
+          label: 'Sponsor properties'
+  properties:
+    'logo':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Logo'
+        reloadIfChanged: true
+        inspector:
+          group: 'sponsor'
+          position: 10
+    'description':
+      type: string
+      ui:
+        label: 'Biography'
+        inlineEditable: true
+        inspector:
+          group: 'sponsor'
+          editor: 'TYPO3.Neos/Inspector/Editors/TextAreaEditor'
+          editorOptions:
+            rows: 7
+    'twitterName':
+      type: string
+      ui:
+        label: 'Twitter Name'
+        reloadIfChanged: true
+        inspector:
+          group: 'sponsor'
+    'link':
+      type: string
+      ui:
+        label: 'Link'
+        reloadIfChanged: true
+        inspector:
+          group: 'sponsor'
+          editor: 'TYPO3.Neos/Inspector/Editors/LinkEditor'

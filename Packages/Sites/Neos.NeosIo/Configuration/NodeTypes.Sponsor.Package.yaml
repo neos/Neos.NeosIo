@@ -1,0 +1,67 @@
+###########################################
+# Person node type
+###########################################
+
+'Neos.NeosIo:Sponsor.Package':
+  superTypes:
+    'TYPO3.Neos:Document': true
+  ui:
+    label: 'Sponsor Package'
+    icon: 'icon-credit-card'
+    inspector:
+      groups:
+        'package':
+          label: 'Sponsor package properties'
+  properties:
+    'freeTickets':
+      type: 'integer'
+      ui:
+        label: 'Free tickets included'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          position: 15
+    'costs':
+      type: string
+      ui:
+        label: 'Costs (vat excl.)'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          position: 20
+    'logoOnFrontpage':
+      type: boolean
+      ui:
+        label: 'Logo on frontpage (permanent)'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          group:
+          position: 25
+    'logoOnFrontpage':
+      type: boolean
+      ui:
+        label: 'Logo on frontpage (variable)'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          group:
+          position: 30
+    'logoInFooter':
+      type: boolean
+      ui:
+        label: 'Logo in footer area (permanent)'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          group:
+          position: 35
+    'logoInFooter':
+      type: boolean
+      ui:
+        label: 'Logo in footer area (variable)'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          group:
+          position: 40

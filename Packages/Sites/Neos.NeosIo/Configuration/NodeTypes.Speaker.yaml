@@ -1,0 +1,54 @@
+###########################################
+# Speaker node type
+###########################################
+
+'Neos.NeosIo:Speaker':
+  superTypes:
+    'Neos.NeosIo:Person': true
+  ui:
+    label: 'Person'
+    icon: 'icon-user'
+    inspector:
+      groups:
+        'person':
+          label: 'Speaker properties'
+  properties:
+    'photo':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Photo'
+        reloadIfChanged: true
+        inspector:
+          group: 'person'
+          position: 10
+    'gender':
+      type: 'string'
+      ui:
+        label: 'Gender'
+        reloadIfChanged: true
+        inspector:
+          group: 'person'
+          position: 15
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              'female':
+                label: 'Female'
+              'male':
+                label: 'Male'
+    'twitterName':
+      type: string
+      ui:
+        label: 'Twitter Name'
+        inlineEditable: true
+        inspector:
+          group: 'person'
+    'biography':
+      type: string
+      ui:
+        label: 'Biography'
+        inspector:
+          group: 'person'
+          editor: 'TYPO3.Neos/Inspector/Editors/TextAreaEditor'
+          editorOptions:
+            rows: 7

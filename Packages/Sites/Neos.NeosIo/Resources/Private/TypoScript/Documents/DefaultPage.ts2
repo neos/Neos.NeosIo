@@ -50,6 +50,9 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
         }
 
         homepage = ${site}
+		logo = ${q(node).closest('[instanceof Neos.NeosIo:Event]').property('eventLogo')}
+		startDate = ${q(node).closest('[instanceof Neos.NeosIo:Event]').property('startDate')}
+		endDate = ${q(node).closest('[instanceof Neos.NeosIo:Event]').property('endDate')}
 
         keyVisualImage = ${q(documentNode).property('keyVisualImage')}
         keyVisualImageSrcSet = TYPO3.TypoScript:Template {
