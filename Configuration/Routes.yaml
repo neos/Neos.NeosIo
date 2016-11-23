@@ -14,6 +14,18 @@
         'defaultUriSuffix': '.html'
 
 ##
+# TYPO3 Neos Seo: XML Sitemap
+
+-
+  name: 'TYPO3 Neos Seo'
+  uriPattern: '<TYPO3NeosSeoSubroutes>'
+  subRoutes:
+    'TYPO3NeosSeoSubroutes':
+      package: 'TYPO3.Neos.Seo'
+      variables:
+        'xmlSitemapPath': 'sitemap.xml'
+
+##
 # Ttree OutOfBandRendering subroutes
 -
   name: 'Ttree.OutOfBandRendering'
