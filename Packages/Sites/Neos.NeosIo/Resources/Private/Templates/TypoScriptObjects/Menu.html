@@ -8,7 +8,9 @@
 				<li class="offCanvas__category {f:if(condition: '{item.state} != \'normal\'', then: ' active')}">
 					<f:if condition="{item.subItems}">
 						<f:then>
-							<neos:link.node node="{item.node}" additionalAttributes="{role: 'button', aria-haspopup: 'true', aria-expanded: 'false'}">
+							<neos:link.node node="{item.node}"
+											additionalAttributes="{role: 'button', aria-haspopup: 'true', aria-expanded: 'false'}"
+											title="{item.node.label}">
 								{item.node.label}
 							</neos:link.node>
 							<ul class="nav nav--stacked siteHeader__dropDownNav offCanvas__categoryList">
@@ -19,7 +21,10 @@
 										</f:then>
 										<f:else>
 											<li class="{f:if(condition: '{subItem.state} != \'normal\'', then: ' active')}">
-												<neos:link.node node="{subItem.node}">{subItem.node.label}</neos:link.node>
+												<neos:link.node node="{subItem.node}"
+																title="{subItem.node.label}">
+													{subItem.node.label}
+												</neos:link.node>
 											</li>
 										</f:else>
 									</f:if>
@@ -28,7 +33,7 @@
 							</ul>
 						</f:then>
 						<f:else>
-							<neos:link.node node="{item.node}">{item.node.label}</neos:link.node>
+							<neos:link.node node="{item.node}" title="{item.node.label}">{item.node.label}</neos:link.node>
 						</f:else>
 					</f:if>
 				</li>
