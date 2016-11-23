@@ -1,0 +1,5 @@
+prototype(Neos.NeosIo:Quote) < prototype(TYPO3.Neos:Content) {
+    title = ${node.properties.author}
+    alternativeText = ${String.isBlank(value) ? node.properties.image.label : value}
+    alternativeText.@process.authorNameFallback = ${node.properties.author}
+}

@@ -5,13 +5,15 @@
 	<f:if condition="{authorAvatar}">
 		<f:then>
 			<div class="flag__image">
-				<img src="{media:uri.image(asset: authorAvatar, maximumWidth: 128, maximumHeight: 128)}" itemprop="image" class="avatar">
+				<img src="{media:uri.image(asset: authorAvatar, maximumWidth: 128, maximumHeight: 128)}"
+					 itemprop="image" class="avatar" alt="{alternativeText}" title="{title}">
 			</div>
 		</f:then>
 		<f:else>
 			<f:if condition="{neos:rendering.inBackend()}">
 				<div class="flag__image">
-					<img src="{f:uri.resource(package: 'TYPO3.Neos', path: 'Images/dummy-image.svg')}" itemprop="image" class="avatar" style="width: 128px; height:128px;">
+					<img src="{f:uri.resource(package: 'TYPO3.Neos', path: 'Images/dummy-image.svg')}"
+						 itemprop="image" class="avatar" style="width: 128px; height:128px;">
 				</div>
 			</f:if>
 		</f:else>

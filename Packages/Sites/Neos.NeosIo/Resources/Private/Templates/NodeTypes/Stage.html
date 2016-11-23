@@ -13,7 +13,8 @@
 	</div>
 	<f:if condition="{backgroundImage}">
 		<img
-			alt=""
+			alt="{alternativeText}"
+			title="{title}"
 			class="
 				stage__bg
 				{f:if(condition: '{backgroundShadePercentage} != \'0\'', then: 'stage__bg--shade-{backgroundShadePercentage}')}

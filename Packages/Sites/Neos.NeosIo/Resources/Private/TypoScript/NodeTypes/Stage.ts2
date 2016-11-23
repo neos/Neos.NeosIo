@@ -10,4 +10,7 @@ prototype(Neos.NeosIo:Stage) < prototype(TYPO3.Neos:Content) {
 		sectionName = 'imageSrcSet'
 		backgroundImage = ${q(node).property('backgroundImage')}
 	}
+
+	title = ${node.properties.backgroundImage.label}
+	alternativeText = ${node.properties.backgroundImage.label}
 }
