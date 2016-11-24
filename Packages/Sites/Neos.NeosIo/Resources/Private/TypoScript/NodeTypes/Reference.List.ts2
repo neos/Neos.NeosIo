@@ -1,6 +1,23 @@
 prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
+	referenceType = ${request.arguments.referenceType}
+	@context.referenceType = ${this.referenceType}
+	searchTerm = ${request.arguments.search}
+	@context.searchTerm = ${this.searchTerm}
+	order = ${request.arguments.order}
+	@context.order = ${this.order}
+	limit = ${request.arguments.limit}
+	@context.limit = ${this.limit}
+
+	referenceTypes = ${q(site).find('[instanceof Neos.NeosIo:ReferenceType]').sort('title', 'ASC').get()}
+
 	references = TYPO3.TypoScript:Collection {
-		collection = ${Search.query(site).nodeType('Neos.NeosIo:Reference').sortDesc('datePublished').limit(500).execute()}
+		filterQuery = ${Search.query(site).nodeType('Neos.NeosIo:Reference')}
+		filterQuery.@process.fulltext = ${String.isBlank(searchTerm) ? value : value.fulltext(searchTerm + '*')}
+		filterQuery.@process.referenceType = ${String.isBlank(referenceType) ? value : value.exactMatch('projectType', referenceType)}
+		filterQuery.@process.sort = ${String.isBlank(sort) ? value.sortDesc('datePublished') : value.sortDesc(sort)}
+		filterQuery.@process.limit = ${String.isBlank(limit) ? value.limit(20) : value.limit(limit)}
+
+		collection = ${this.filterQuery.execute()}
 		itemName = 'node'
 		itemRenderer = Neos.NeosIo:Reference.List.Item
 	}
@@ -14,10 +31,11 @@ prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
 	}
 
 	@cache {
-		mode = 'cached'
-		entryTags {
-			self = ${'Node_' + node.identifier}
-			reference = 'NodeType_Neos.NeosIo:Reference'
+		mode = 'uncached'
+			context {
+			1 = 'site'
+			2 = 'node'
+			3 = 'documentNode'
 		}
 	}
 }
