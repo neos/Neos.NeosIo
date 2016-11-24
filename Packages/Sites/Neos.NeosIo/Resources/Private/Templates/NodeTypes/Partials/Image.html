@@ -1,14 +1,11 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
-{namespace media=TYPO3\Media\ViewHelpers}
 {namespace io=Neos\NeosIo\ViewHelpers}
 <figure{f:if(condition: imageClassName, then: ' class="{imageClassName}"')}>
 <f:if condition="{image}">
 	<f:then>
 		<io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}">
-			<img src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Images/Loader.svg')}"
-				 alt="{alternativeText}" title="{title}"
-				 data-image-normal="{media:uri.image(asset: image, width: width, maximumWidth: maximumWidth, height: height, maximumHeight: maximumHeight, allowUpScaling: allowUpScaling)}"
-				/>
+			<f:render partial="LazyLoadImage"
+					  arguments="{title: title, alternativeText: alternativeText, asset: image, width: width, maximumWidth: maximumWidth, height: height, maximumHeight: maximumHeight, allowUpScaling: allowUpScaling}"/>
 		</io:link.external>
 	</f:then>
 	<f:else>
