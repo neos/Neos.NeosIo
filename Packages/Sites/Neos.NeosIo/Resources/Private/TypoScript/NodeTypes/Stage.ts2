@@ -10,4 +10,10 @@ prototype(Neos.NeosIo:Stage) < prototype(TYPO3.Neos:Content) {
 		sectionName = 'imageSrcSet'
 		backgroundImage = ${q(node).property('backgroundImage')}
 	}
+
+	title = ${node.properties.title}
+	title.@process.filenameFallback = ${String.isBlank(value) ? node.properties.backgroundImage.label : value}
+
+	alternativeText = ${node.properties.alternativeText}
+	alternativeText.@process.filenameFallback = ${String.isBlank(value) ? node.properties.backgroundImage.label : value}
 }
