@@ -11,6 +11,9 @@ prototype(Neos.NeosIo:Stage) < prototype(TYPO3.Neos:Content) {
 		backgroundImage = ${q(node).property('backgroundImage')}
 	}
 
-	title = ${node.properties.backgroundImage.label}
-	alternativeText = ${node.properties.backgroundImage.label}
+	title = ${node.properties.title}
+	title.@process.filenameFallback = ${String.isBlank(value) ? node.properties.backgroundImage.label : value}
+
+	alternativeText = ${node.properties.alternativeText}
+	alternativeText.@process.filenameFallback = ${String.isBlank(value) ? node.properties.backgroundImage.label : value}
 }
