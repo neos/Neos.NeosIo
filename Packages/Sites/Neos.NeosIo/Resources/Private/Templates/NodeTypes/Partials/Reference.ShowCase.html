@@ -2,7 +2,10 @@
 
 <h1>{title}</h1>
 <f:if condition="{image}">
-	<media:image image="{image}" alt="{title}" maximumWidth="561" maximumHeight="261" allowCropping="true" allowUpScaling="false" class="u-mb1/2" />
+	<img src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Images/Loader.svg')}"
+		 alt="{alternativeText}" title="{title}" class="u-mb1/2"
+		 data-image-normal="{media:uri.image(asset: image, maximumWidth: 561, maximumHeight: 261, allowUpScaling: false, allowCropping: true)}"
+	/>
 </f:if>
 <ul>
 	<f:if condition="{launchDate}"><li><i class="fa fa-rocket"></i> <f:format.date format="d.m.Y">{launchDate}</f:format.date></li></f:if>
