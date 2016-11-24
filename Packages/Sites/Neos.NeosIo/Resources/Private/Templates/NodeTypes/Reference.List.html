@@ -1,5 +1,5 @@
 {namespace io=Neos\NeosIo\ViewHelpers}<div {attributes -> f:format.raw()}>
-	<io:simpleForm actionUri="" class="form form--inline" method="get">
+	<io:simpleForm actionUri="#reference-filter" class="form form--inline" method="get" id="reference-filter">
 		<fieldset>
 			<legend>Filter</legend>
 			<div class="form__item">
@@ -19,5 +19,7 @@
 			</div>
 		</fieldset>
 	</io:simpleForm>
-	{references -> f:format.raw()}
+	<div class="references__list g">
+		{references -> f:format.raw()}
+	</div>
 </div>
