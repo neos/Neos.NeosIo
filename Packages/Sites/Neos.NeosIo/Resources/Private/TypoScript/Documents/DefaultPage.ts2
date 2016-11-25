@@ -34,6 +34,10 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
                 entryIdentifier.identifier = 'rssLink'
             }
         }
+
+        openGraphMetaTags {
+            @context.openGraphType = 'Website'
+        }
     }
 
     body {
