@@ -1,25 +1,37 @@
-{namespace io=Neos\NeosIo\ViewHelpers}<div {attributes -> f:format.raw()}>
+{namespace io=Neos\NeosIo\ViewHelpers}
+{namespace ts=TYPO3\TypoScript\ViewHelpers}
+{namespace typo3crsearch=TYPO3\TYPO3CR\Search\ViewHelpers}
+<div {attributes -> f:format.raw()}>
 	<io:simpleForm actionUri="#reference-filter" class="form form--inline" method="get" id="reference-filter">
 		<fieldset>
 			<legend>Filter</legend>
+			<div class="form__item">
+				<label for="search" class="search-form__label">
+					<i class="fa fa-search"></i>
+				</label>
+				<input type="search"
+					   id="search"
+					   name="search"
+					   class="search-form__input"
+					   value="{searchTerm}"
+					   placeholder="Search term"
+					   onchange="this.form.submit()"/>
+			</div>
 			<div class="form__item">
 				<label for="referenceType">Type</label>
 				<f:form.select id="referenceType" class="textInput" name="referenceType" options="{referenceTypes}" value="{referenceType}" optionLabelField="label" optionValueField="nodeData.identifier" prependOptionLabel="- all -" additionalAttributes="{onchange: 'this.form.submit()'}" />
 			</div>
 			<div class="form__item">
-				<input class="textInput" type="text" name="search" placeholder="Search term" value="{searchTerm}" onchange="this.form.submit()" />
-			</div>
-			<div class="form__item">
 				<label for="order">Sort by</label>
 				<f:form.select id="order" class="textInput" name="order" options="{datePublished: 'Publish date', launchDate: 'Launch date', projectVolume: 'Project volume'}" value="{order}" additionalAttributes="{onchange: 'this.form.submit()'}" />
-			</div>
-			<div class="form__item">
-				<label for="limit">Number of results</label>
-				<f:form.select id="limit" class="textInput" name="limit" options="{20: '20', 50: '50', 100: '100'}" value="{limit}" additionalAttributes="{onchange: 'this.form.submit()'}" />
 			</div>
 		</fieldset>
 	</io:simpleForm>
 	<div class="references__list g">
-		{references -> f:format.raw()}
+		<typo3crsearch:widget.paginate query="{references}" as="paginatedReferences" widgetId="{node.name}" configuration="{paginationConfiguration}">
+			<f:for each="{paginatedReferences}" as="reference">
+				<ts:render path="itemRenderer" context="{node: reference}" />
+			</f:for>
+		</typo3crsearch:widget.paginate>
 	</div>
 </div>

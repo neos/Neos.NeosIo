@@ -11,21 +11,25 @@ prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
 		limit = ${this.limit}
 	}
 
+	paginationConfiguration = TYPO3.TypoScript:RawArray {
+		itemsPerPage = 25
+		insertAbove = ${true}
+		insertBelow = ${true}
+		maximumNumberOfLinks = 3
+	}
+
 	referenceTypes = ${q(site).find('[instanceof Neos.NeosIo:ReferenceType]').sort('title', 'ASC').get()}
 
-	references = TYPO3.TypoScript:Collection {
-		filterQuery = ${Search.query(site).nodeType('Neos.NeosIo:Reference')}
-		filterQuery.@process {
-			fulltext = ${String.isBlank(searchTerm) ? value : value.fulltext(searchTerm + '*')}
-			referenceType = ${String.isBlank(referenceType) ? value : value.exactMatch('projectType', referenceType)}
-			sort = ${String.isBlank(sort) ? value.sortDesc('datePublished') : value.sortDesc(sort)}
-			limit = ${String.isBlank(limit) ? value.limit(20) : value.limit(limit)}
-		}
 
-		collection = ${this.filterQuery.execute()}
-		itemName = 'node'
-		itemRenderer = Neos.NeosIo:Reference.List.Item
+	references = ${Search.query(site).nodeType('Neos.NeosIo:Reference')}
+	references.@process {
+		fulltext = ${String.isBlank(searchTerm) ? value : value.fulltext(searchTerm + '*')}
+		referenceType = ${String.isBlank(referenceType) ? value : value.exactMatch('projectType', referenceType)}
+		sort = ${String.isBlank(sort) ? value.sortDesc('datePublished') : value.sortDesc(sort)}
+		limit = ${String.isBlank(limit) ? value.limit(20) : value.limit(limit)}
 	}
+
+	itemRenderer = Neos.NeosIo:Reference.List.Item
 
 	@cache {
 		mode = 'uncached'
