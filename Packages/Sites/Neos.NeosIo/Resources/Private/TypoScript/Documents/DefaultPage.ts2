@@ -37,6 +37,10 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
 
         openGraphMetaTags {
             @context.openGraphType = 'Website'
+
+            openGraphImageTag.@context {
+                openGraphImage.@process.keyVisualFallback = ${value == null && q(node).property('keyVisualImage') ? q(node).property('keyVisualImage') : value}
+            }
         }
     }
 

@@ -1,5 +1,12 @@
 prototype(Neos.NeosIo:Post.Document) < prototype(Neos.NeosIo:DefaultPage) {
     head {
+        @context.metaDescription = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 152, '...')}
+
+        metaDescriptionTag {
+            attributes.content = ${metaDescription}
+            @if.isNotBlank = ${!String.isBlank(metaDescription)}
+        }
+
         twitterCard = TYPO3.TypoScript:Array {
             @if.isEnabledBlank = 1
             @if.isEnabled = 1
@@ -30,7 +37,7 @@ prototype(Neos.NeosIo:Post.Document) < prototype(Neos.NeosIo:DefaultPage) {
             }
 
             openGraphDescriptionTag {
-                @context.openGraphDescription = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 152, '...')}
+                @context.openGraphDescription = ${metaDescription}
             }
 
             openGraphImageTag {
