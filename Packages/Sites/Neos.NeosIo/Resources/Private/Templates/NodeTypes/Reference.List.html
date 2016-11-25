@@ -27,11 +27,11 @@
 			</div>
 		</fieldset>
 	</io:simpleForm>
-	<div class="references__list g">
-		<typo3crsearch:widget.paginate query="{references}" as="paginatedReferences" widgetId="{node.name}" configuration="{paginationConfiguration}">
+	<typo3crsearch:widget.paginate query="{references}" as="paginatedReferences" widgetId="{node.name}" configuration="{paginationConfiguration}">
+		<div class="references__list g">
 			<f:for each="{paginatedReferences}" as="reference">
 				<ts:render path="itemRenderer" context="{node: reference}" />
 			</f:for>
-		</typo3crsearch:widget.paginate>
-	</div>
+		</div>
+	</typo3crsearch:widget.paginate>
 </div>
