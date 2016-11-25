@@ -10,7 +10,7 @@
                 <f:then>
                     <img
                             alt="{title -> f:format.stripTags()}"
-                            class="media__img media__img--rev media__img--compact u-mb1/1"
+                            class="media__img media__img--scaled u-mb1/1"
                             src="{media:uri.image(asset: image, width: 1000, height: 250, allowCropping: true)}"
                             srcset="
                                     {media:uri.image(asset: image, width: 1000, height: 250, allowCropping: true)} 1920w,
@@ -22,7 +22,7 @@
                 <f:else>
                     <img
                             alt="{title -> f:format.stripTags()}"
-                            class="media__img media__img--rev media__img--compact u-mb1/1"
+                            class="media__img media__img--scaled u-mb1/1"
                             src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Images/Loader.svg')}"
                             data-image-normal="{media:uri.image(asset: image, width: 1000, height: 250, allowCropping: true)}"
                             data-image-srcset="
