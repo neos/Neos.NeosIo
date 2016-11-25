@@ -1,21 +1,26 @@
 prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
 	referenceType = ${request.arguments.referenceType}
-	@context.referenceType = ${this.referenceType}
 	searchTerm = ${request.arguments.search}
-	@context.searchTerm = ${this.searchTerm}
 	order = ${request.arguments.order}
-	@context.order = ${this.order}
 	limit = ${request.arguments.limit}
-	@context.limit = ${this.limit}
+
+	@context {
+		referenceType = ${this.referenceType}
+		searchTerm = ${this.searchTerm}
+		order = ${this.order}
+		limit = ${this.limit}
+	}
 
 	referenceTypes = ${q(site).find('[instanceof Neos.NeosIo:ReferenceType]').sort('title', 'ASC').get()}
 
 	references = TYPO3.TypoScript:Collection {
 		filterQuery = ${Search.query(site).nodeType('Neos.NeosIo:Reference')}
-		filterQuery.@process.fulltext = ${String.isBlank(searchTerm) ? value : value.fulltext(searchTerm + '*')}
-		filterQuery.@process.referenceType = ${String.isBlank(referenceType) ? value : value.exactMatch('projectType', referenceType)}
-		filterQuery.@process.sort = ${String.isBlank(sort) ? value.sortDesc('datePublished') : value.sortDesc(sort)}
-		filterQuery.@process.limit = ${String.isBlank(limit) ? value.limit(20) : value.limit(limit)}
+		filterQuery.@process {
+			fulltext = ${String.isBlank(searchTerm) ? value : value.fulltext(searchTerm + '*')}
+			referenceType = ${String.isBlank(referenceType) ? value : value.exactMatch('projectType', referenceType)}
+			sort = ${String.isBlank(sort) ? value.sortDesc('datePublished') : value.sortDesc(sort)}
+			limit = ${String.isBlank(limit) ? value.limit(20) : value.limit(limit)}
+		}
 
 		collection = ${this.filterQuery.execute()}
 		itemName = 'node'
@@ -24,7 +29,7 @@ prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
 
 	@cache {
 		mode = 'uncached'
-			context {
+		context {
 			1 = 'site'
 			2 = 'node'
 			3 = 'documentNode'
@@ -45,4 +50,14 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(TYPO3.TypoScript:Template
 		}
 	}
 	projectType = ${q(q(node).property('projectType')).property('title')}
+
+	@cache {
+		mode = 'cached'
+		entryIdentifier {
+			node = ${node}
+		}
+		entryTags {
+			1 = ${'Node_' + node.identifier}
+		}
+    }
 }
