@@ -1,0 +1,19 @@
+/**
+* NodeTypes around Events
+*/
+
+
+prototype(Neos.NeosIo.Event:Location.Document) < prototype(Neos.NeosIo.Event:DefaultPage) {
+	body {
+		content {
+			main = Neos.NeosIo.Event:Location
+		}
+	}
+}
+
+prototype(Neos.NeosIo.Event:Location) < prototype(TYPO3.Neos:Content) {
+	main = ContentCollection {
+		@cache.mode = 'cached'
+		nodePath = 'main'
+	}
+}

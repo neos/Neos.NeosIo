@@ -1,0 +1,46 @@
+###########################################
+# Organizer node type
+###########################################
+
+'Neos.NeosIo.Event:Organizer':
+  superTypes:
+    'TYPO3.Neos:Document': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
+  ui:
+    label: 'Organizer'
+    icon: 'icon-gear'
+    group: 'event'
+    inspector:
+      groups:
+        'organizer':
+          label: 'Organizer properties'
+  properties:
+    'logo':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Logo'
+        reloadIfChanged: true
+        inspector:
+          group: 'organizer'
+          position: 10
+    'description':
+      type: 'string'
+      ui:
+        label: 'Description'
+        inlineEditable: true
+        inspector:
+          group: 'organizer'
+          position: 15
+    'website':
+      type: string
+      ui:
+        label: Website'
+        inspector:
+          group: 'organizer'
+          position: 20
+          editor: 'TYPO3.Neos/Inspector/Editors/LinkEditor'
+          editorOptions:
+            assets: false
+            nodeTypes: false

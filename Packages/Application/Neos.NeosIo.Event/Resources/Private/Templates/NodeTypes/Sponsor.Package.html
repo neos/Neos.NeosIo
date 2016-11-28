@@ -1,0 +1,8 @@
+{namespace media=TYPO3\Media\ViewHelpers}
+
+<div{attributes -> f:format.raw()}>
+	<h1>{title}</h1>
+	<f:if condition="{costs}"><p><strong>Costs: </strong><f:format.currency currencySign="€" decimalSeparator="," thousandsSeparator=".">{costs}</f:format.currency></p></f:if>
+	<f:if condition="{freeTickets}"><p><strong>Free tickets: </strong>{freeTickets}</p></f:if>
+	{main -> f:format.raw()}
+</div>
