@@ -2,12 +2,16 @@
 # Sponsor Partner node type
 ###########################################
 
-'Neos.NeosIo:Sponsor.Parnter':
+'Neos.NeosIo.Event:Sponsor.Partner':
   superTypes:
-    'TYPO3.Neos:Document': true
+    'TYPO3.Neos.NodeTypes:Page': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
   ui:
     label: 'Sponsor'
-    icon: 'icon-address-card-o'
+    icon: 'icon-credit-card-alt'
+    group: 'event'
     inspector:
       groups:
         'sponsor':

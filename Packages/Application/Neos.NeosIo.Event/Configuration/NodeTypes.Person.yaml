@@ -2,13 +2,18 @@
 # Person node type
 ###########################################
 
-'Neos.NeosIo:Person':
+'Neos.NeosIo.Event:Person':
+  abstract: true
   superTypes:
     'TYPO3.Neos:Document': true
     'Neos.NeosIo:Address': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
   ui:
     label: 'Person'
     icon: 'icon-user'
+    group: 'event'
     inspector:
       groups:
         'person':
@@ -40,7 +45,7 @@
     'name':
       type: string
       ui:
-        label: i18n
+        label: 'Name'
         inlineEditable: true
         inspector:
           group: 'person'
@@ -48,7 +53,7 @@
     'company':
       type: string
       ui:
-        label: i18n
+        label: 'Company'
         inlineEditable: true
         inspector:
           group: 'person'

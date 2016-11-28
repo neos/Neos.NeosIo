@@ -2,12 +2,16 @@
 # Person node type
 ###########################################
 
-'Neos.NeosIo:Sponsor.Package':
+'Neos.NeosIo.Event:Sponsor.Package':
   superTypes:
-    'TYPO3.Neos:Document': true
+    'TYPO3.Neos.NodeTypes:Page': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
   ui:
     label: 'Sponsor Package'
     icon: 'icon-credit-card'
+    group: 'event'
     inspector:
       groups:
         'package':
@@ -15,6 +19,7 @@
   properties:
     'freeTickets':
       type: 'integer'
+      defaultValue: '1'
       ui:
         label: 'Free tickets included'
         inlineEditable: true
@@ -29,7 +34,7 @@
         inspector:
           group: 'package'
           position: 20
-    'logoOnFrontpage':
+    'logoOnFrontpageP':
       type: boolean
       ui:
         label: 'Logo on frontpage (permanent)'
@@ -38,7 +43,7 @@
           group: 'package'
           group:
           position: 25
-    'logoOnFrontpage':
+    'logoOnFrontpageV':
       type: boolean
       ui:
         label: 'Logo on frontpage (variable)'
@@ -47,7 +52,7 @@
           group: 'package'
           group:
           position: 30
-    'logoInFooter':
+    'logoInFooterP':
       type: boolean
       ui:
         label: 'Logo in footer area (permanent)'
@@ -56,7 +61,7 @@
           group: 'package'
           group:
           position: 35
-    'logoInFooter':
+    'logoInFooterV':
       type: boolean
       ui:
         label: 'Logo in footer area (variable)'

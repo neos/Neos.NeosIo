@@ -2,14 +2,19 @@
 # Basic event
 ###########################################
 
-'Neos.NeosIo:Event':
+'Neos.NeosIo.Event:Event':
   abstract: true
   superTypes:
     'Neos.NeosIo:LandingPage': true
     'Neos.NeosIo:KeyVisualMixin': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
+      'Neos.NeosIo.Event:Page': true
   ui:
     label: 'Event'
     icon: 'icon-calendar'
+    group: 'event'
     inspector:
       groups:
         'event':
@@ -49,6 +54,13 @@
         inspector:
           group: 'event'
           position: 25
+    'city':
+      type: string
+      ui:
+        label: 'Event City'
+        inspector:
+          group: 'event'
+          position: 30
     'posts':
       type: references
       ui:
@@ -56,6 +68,6 @@
         reloadIfChanged: true
         inspector:
           group: 'event'
-          position: 30
+          position: 35
           editorOptions:
             nodeTypes: ['Neos.NeosIo:Post']

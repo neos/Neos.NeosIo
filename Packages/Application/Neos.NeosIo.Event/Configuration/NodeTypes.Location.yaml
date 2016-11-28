@@ -2,14 +2,18 @@
 # Location node type
 ###########################################
 
-'Neos.NeosIo:Location':
+'Neos.NeosIo.Event:Location':
   abstract: true
   superTypes:
     'TYPO3.Neos:Document': true
     'Neos.NeosIo:Address': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
   ui:
     label: 'Location'
     icon: 'icon-home'
+    group: 'event'
     inspector:
       groups:
         'event':

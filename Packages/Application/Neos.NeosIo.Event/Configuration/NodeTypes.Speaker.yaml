@@ -2,11 +2,14 @@
 # Speaker node type
 ###########################################
 
-'Neos.NeosIo:Speaker':
+'Neos.NeosIo.Event:Speaker':
   superTypes:
-    'Neos.NeosIo:Person': true
+    'Neos.NeosIo.Event:Person': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
   ui:
-    label: 'Person'
+    label: 'Speaker'
     icon: 'icon-user'
     inspector:
       groups:

@@ -2910,14 +2910,17 @@ sub {
   @media screen and (min-width: 1250px) {
     .siteHeader__navToggler {
       display: none;
-      visibility: hidden; } }
+      visibility: hidden; }
+      .eventHeader .siteHeader__navToggler {
+        display: block;
+        visibility: visible; } }
 
 .siteHeader__nav {
   font-weight: 400;
   font-size: .95em;
   line-height: 26px; }
   @media screen and (min-width: 1250px) {
-    .siteHeader__nav {
+    .siteHeader__nav:not(.eventHeader &) {
       position: absolute;
       top: 50%;
       right: 3em;
@@ -2925,14 +2928,14 @@ sub {
   .siteHeader__nav > li {
     position: relative; }
     @media screen and (min-width: 1250px) {
-      .siteHeader__nav > li {
+      .siteHeader__nav > li:not(.eventHeader &) {
         display: inline-block;
         margin-left: 52px; }
-        .siteHeader__nav > li > a {
+        .siteHeader__nav > li:not(.eventHeader &) > a {
           padding: 5px 0; } }
 
 @media screen and (min-width: 1250px) {
-  .siteHeader__dropDownNav {
+  .siteHeader__dropDownNav:not(.eventHeader &) {
     position: absolute;
     top: 100%;
     left: 50%;
@@ -2948,7 +2951,7 @@ sub {
     pointer-events: none;
     color: #656a71;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2); }
-    .siteHeader__dropDownNav:after {
+    .siteHeader__dropDownNav:not(.eventHeader &):after {
       position: absolute;
       top: -10px;
       left: 50%;
@@ -2959,37 +2962,54 @@ sub {
       height: 0;
       border: solid 5px;
       border-color: transparent transparent #fff transparent; }
-    li:hover > .siteHeader__dropDownNav {
+    li:hover > .siteHeader__dropDownNav:not(.eventHeader &) {
       opacity: 1;
       transform: translateX(-50%);
       pointer-events: all; }
-    li:last-child > .siteHeader__dropDownNav {
+    li:last-child > .siteHeader__dropDownNav:not(.eventHeader &) {
       right: 0;
       left: auto;
       transform: translateY(-10px); }
-      li:last-child > .siteHeader__dropDownNav:after {
+      li:last-child > .siteHeader__dropDownNav:not(.eventHeader &):after {
         left: 92%; }
-    li:last-child:hover > .siteHeader__dropDownNav {
+    li:last-child:hover > .siteHeader__dropDownNav:not(.eventHeader &) {
       transform: translateY(0); }
-    .siteHeader__dropDownNav > li > a:hover {
+    .siteHeader__dropDownNav:not(.eventHeader &) > li > a:hover {
       color: #00ADEE; } }
 
-.event-header {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, transparent 100%);
-  height: 250px; }
-  .event-header .siteHeader__navToggler {
+.eventHeader {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, transparent 100%);
+  height: 150px; }
+  .eventHeader .siteHeader__navToggler {
     top: 20px;
     transform: translateY(0%); }
-  @media screen and (min-width: 1250px) {
-    .event-header .siteHeader__nav {
-      position: absolute;
-      top: 35px; } }
+  .eventHeader .hamburger__line {
+    background-color: #3b444f; }
+
+.eventKeyVisual .keyVisual__contents img {
+  padding: 0 1em; }
+  @media screen and (min-width: 650px) {
+    .eventKeyVisual .keyVisual__contents img {
+      padding: 0; } }
 
 .event-logo {
   transform: translateY(0%);
   height: auto;
   max-width: 230px;
-  top: 15px; }
+  top: 13px; }
+
+.eventNav {
+  background: #26224C;
+  text-align: center; }
+  .eventNav li {
+    margin-left: 20px; }
+    @media screen and (min-width: 650px) {
+      .eventNav li {
+        margin-left: 52px; } }
+    .eventNav li > a {
+      display: block;
+      padding: 5px 0;
+      color: #fff; }
 
 @media screen and (max-width: 1249px) {
   .offCanvas {
@@ -3004,10 +3024,28 @@ sub {
     transition: .5s ease opacity;
     opacity: 0; } }
 
+.eventHeader .offCanvas {
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translateY(-100%);
+  width: 100%;
+  height: 100%;
+  padding: 5em 1.5em 1.5em;
+  background: linear-gradient(to bottom, rgba(38, 34, 76, 0.75) 0%, #26224c 100%);
+  transition: .5s ease opacity;
+  opacity: 0;
+  opacity: 0;
+  padding-top: 9em; }
+
 @media screen and (max-width: 1249px) {
   .offCanvas--visible {
     transform: translateX(0);
     opacity: 1; } }
+
+.eventHeader .offCanvas--visible {
+  transform: translateX(0);
+  opacity: 1; }
 
 @media screen and (max-width: 1249px) {
   .offCanvas__navWrapper {
@@ -3020,6 +3058,13 @@ sub {
       transform: translateY(0);
       opacity: 1; } }
 
+.eventHeader .offCanvas__navWrapper {
+  height: 100%;
+  overflow: hidden;
+  transform: translateY(-35px);
+  transition: .5s .3s ease all;
+  opacity: 1; }
+
 @media screen and (max-width: 1249px) {
   .offCanvas__nav {
     margin-right: -16px;
@@ -3030,6 +3075,16 @@ sub {
       display: table; }
     .offCanvas__nav:after {
       clear: both; } }
+
+.eventHeader .offCanvas__nav {
+  margin-right: -16px;
+  overflow-y: scroll;
+  height: 100%; }
+  .eventHeader .offCanvas__nav:before, .eventHeader .offCanvas__nav:after {
+    content: '';
+    display: table; }
+  .eventHeader .offCanvas__nav:after {
+    clear: both; }
 
 @media screen and (max-width: 1249px) {
   .offCanvas__category {
@@ -3044,8 +3099,21 @@ sub {
       margin-top: 13px;
       margin-bottom: 13px; } }
 
+.eventHeader .offCanvas__category {
+  width: 50%;
+  margin-bottom: 26px;
+  float: left; }
+  .eventHeader .offCanvas__category:nth-child(odd) {
+    clear: both; }
+  .eventHeader .offCanvas__category > a {
+    font-size: 26px;
+    font-weight: 300;
+    margin-top: 13px;
+    margin-bottom: 13px; }
+
 @media screen and (max-width: 649px) {
-  .offCanvas__category {
+  .siteHeader .offCanvas__category,
+  .eventHeader .offCanvas__category {
     width: 100%;
     float: none; } }
 
@@ -3053,10 +3121,17 @@ sub {
   .offCanvas__categoryList {
     font-weight: 200; } }
 
+.eventHeader .offCanvas__categoryList {
+  font-weight: 200; }
+
 @media screen and (max-width: 1249px) {
   .offCanvas__categorySeparator {
     max-width: 220px;
     background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0) 100%); } }
+
+.eventHeader .offCanvas__categorySeparator {
+  max-width: 220px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0) 100%); }
 
 .keyVisual {
   position: relative;

@@ -1,0 +1,39 @@
+/**
+* NodeTypes around Events
+*/
+
+
+prototype(Neos.NeosIo.Event:Event.Document) < prototype(Neos.NeosIo:LandingPage.Document) {
+	body {
+		templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/Page/Event.Landingpage.html'
+		content {
+			main = Neos.NeosIo.Event:Event
+		}
+		logo = ${q(site).property('eventLogo')}
+		startDate = ${q(site).property('startDate')}
+		endDate = ${q(site).property('endDate')}
+		city = ${q(site).property('city')}
+
+		parts {
+			eventNav = Neos.NeosIo.Event:Menu
+		}
+	}
+
+	@cache {
+		entryTags {
+			event = 'NodeTypes_Neos.NeosIo.Event:Event'
+		}
+	}
+}
+
+prototype(Neos.NeosIo.Event:Event) < prototype(TYPO3.Neos:Content) {
+	templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/NodeTypes/Event.html'
+	main = ContentCollection {
+		@cache.mode = 'cached'
+		nodePath = 'main'
+	}
+}
+
+prototype(Neos.NeosIo.Event:Conference.Document) < prototype(Neos.NeosIo.Event:Event.Document)
+
+prototype(Neos.NeosIo.Event:Conference) < prototype(Neos.NeosIo.Event:Event)
