@@ -9,8 +9,11 @@
     'Neos.NeosIo:KeyVisualMixin': true
   constraints:
     nodeTypes:
+      'Neos.NeosIo.Event:Event': false
       'TYPO3.Neos.NodeTypes:Page': false
       'Neos.NeosIo.Event:Page': true
+      'Neos.NeosIo.Event:Sponsor.Package': true
+      'Neos.NeosIo.Event:Sponsor.Partner': true
   ui:
     label: 'Event'
     icon: 'icon-calendar'
@@ -28,6 +31,14 @@
         inspector:
           group: 'event'
           position: 10
+    'homepageLogo':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Event homepage Logo (top left)'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          position: 12
     'startDate':
       type: DateTime
       ui:

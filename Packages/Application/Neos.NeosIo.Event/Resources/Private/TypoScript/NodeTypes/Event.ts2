@@ -10,6 +10,7 @@ prototype(Neos.NeosIo.Event:Event.Document) < prototype(Neos.NeosIo:LandingPage.
 			main = Neos.NeosIo.Event:Event
 		}
 		logo = ${q(site).property('eventLogo')}
+		homepageLogo = ${q(site).property('homepageLogo')}
 		startDate = ${q(site).property('startDate')}
 		endDate = ${q(site).property('endDate')}
 		city = ${q(site).property('city')}
@@ -17,6 +18,10 @@ prototype(Neos.NeosIo.Event:Event.Document) < prototype(Neos.NeosIo:LandingPage.
 		parts {
 			eventNav = Neos.NeosIo.Event:Menu
 		}
+	}
+
+	prototype(Neos.NeosIo:DefaultPage.Menu) {
+		subNavClasses = 'nav nav--stacked offCanvas__categoryList'
 	}
 
 	@cache {

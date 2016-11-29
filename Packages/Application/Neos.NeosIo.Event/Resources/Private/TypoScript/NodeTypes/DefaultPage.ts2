@@ -12,4 +12,8 @@ prototype(Neos.NeosIo.Event:DefaultPage) < prototype(Neos.NeosIo:DefaultPage) {
 			eventNav = Neos.NeosIo.Event:Menu
 		}
 	}
+
+	prototype(Neos.NeosIo:DefaultPage.Menu) {
+		subNavClasses = 'nav nav--stacked offCanvas__categoryList'
+	}
 }

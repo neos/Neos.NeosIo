@@ -73,11 +73,16 @@
 	line-height: $basic-spacing+px;
 
 	@include mq('large') {
-		&:not(.eventHeader &) {
-			position: absolute;
-			top: 50%;
-			right: 3em;
-			transform: translateY(-50%);
+		position: absolute;
+		top: 50%;
+		right: 3em;
+		transform: translateY(-50%);
+
+		.eventHeader & {
+			position: relative;
+			top: auto;
+			right: auto;
+			transform: none;
 		}
 	}
 
@@ -85,73 +90,77 @@
 		position: relative;
 
 		@include mq('large') {
-			&:not(.eventHeader &) {
-				display: inline-block;
-				margin-left: $double-spacing+px;
+			display: inline-block;
+			margin-left: $double-spacing+px;
 
-				> a {
-					padding: 5px 0;
-				}
+			.eventHeader & {
+				margin-left: 0;
+			}
+
+			> a {
+				padding: 5px 0;
 			}
 		}
 	}
 }
 .siteHeader__dropDownNav {
 	@include mq('large') {
-		&:not(.eventHeader &) {
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-10px);
+		width: 300px;
+		background: #FFF;
+		border-radius: 3px;
+		padding: 10px 20px;
+		font-weight: $regular;
+		font-size: 14px;
+		opacity: 0;
+		transition: all .3s ease;
+		pointer-events: none;
+		color: $base-text-color;
+		box-shadow: 0 0 3px rgba(#000, .2);
+
+		&:after {
 			position: absolute;
-			top: 100%;
+			top: -10px;
 			left: 50%;
-			transform: translateX(-50%) translateY(-10px);
-			width: 300px;
-			background: #FFF;
-			border-radius: 3px;
-			padding: 10px 20px;
-			font-weight: $regular;
-			font-size: 14px;
-			opacity: 0;
-			transition: all .3s ease;
-			pointer-events: none;
-			color: $base-text-color;
-			box-shadow: 0 0 3px rgba(#000, .2);
+			margin-left: -2.5px;
+			@include cssArrow(5px, #fff, top);
+		}
+
+		li:hover > & {
+			opacity: 1;
+			transform: translateX(-50%);
+			pointer-events: all;
+		}
+
+		// Adjust the position for the last item.
+		li:last-child > & {
+			right: 0;
+			left: auto;
+			transform: translateY(-10px);
 
 			&:after {
-				position: absolute;
-				top: -10px;
-				left: 50%;
-				margin-left: -2.5px;
-				@include cssArrow(5px, #fff, top);
+				left: 92%;
 			}
+		}
 
-			li:hover > & {
-				opacity: 1;
-				transform: translateX(-50%);
-				pointer-events: all;
-			}
+		li:last-child:hover > & {
+			transform: translateY(0);
+		}
 
-			// Adjust the position for the last item.
-			li:last-child > & {
-				right: 0;
-				left: auto;
-				transform: translateY(-10px);
-
-				&:after {
-					left: 92%;
-				}
-			}
-
-			li:last-child:hover > & {
-				transform: translateY(0);
-			}
-
-			> li {
-				> a {
-					&:hover {
-						color: brand('primary');
-					}
+		> li {
+			> a {
+				&:hover {
+					color: brand('primary');
 				}
 			}
 		}
+	}
+
+	.eventHeader & {
+		display: none;
 	}
 }
 
@@ -184,11 +193,19 @@
 	}
 }
 
-.event-logo {
+.event-logo,
+.event-logo-signet {
 	transform: translateY(0%);
 	height: auto;
-	max-width: 230px;
 	top: 13px;
+}
+
+.event-logo {
+	max-width: 230px;
+}
+
+.event-logo-signet {
+	max-width: 47.5px;
 }
 
 .eventNav {

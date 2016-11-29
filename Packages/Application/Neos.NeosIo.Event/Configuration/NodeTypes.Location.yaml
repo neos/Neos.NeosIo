@@ -3,13 +3,13 @@
 ###########################################
 
 'Neos.NeosIo.Event:Location':
-  abstract: true
   superTypes:
     'TYPO3.Neos:Document': true
     'Neos.NeosIo:Address': true
   constraints:
     nodeTypes:
       'TYPO3.Neos.NodeTypes:Page': false
+      'Neos.NeosIo.Event:Event': false
   ui:
     label: 'Location'
     icon: 'icon-home'
