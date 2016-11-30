@@ -25,7 +25,9 @@
 		keyVisualImageSrcSet: keyVisualImageSrcSet
 	}" />
 
-	<nav>{parts.eventNav -> f:format.raw()}</nav>
+	<f:if condition="{parts.eventNav}">
+		<nav>{parts.eventNav -> f:format.raw()}</nav>
+	</f:if>
 	<nav>
 		{parts.breadcrumb -> f:format.raw()}
 	</nav>
