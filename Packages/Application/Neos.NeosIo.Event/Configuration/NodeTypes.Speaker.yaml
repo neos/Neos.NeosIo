@@ -1,0 +1,34 @@
+###########################################
+# Speaker node type
+###########################################
+
+'Neos.NeosIo.Event:Speaker':
+  superTypes:
+    'Neos.NeosIo.Event:Person': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
+  ui:
+    label: 'Speaker'
+    icon: 'icon-user'
+    inspector:
+      groups:
+        'person':
+          label: 'Speaker properties'
+  properties:
+    'twitterName':
+      type: string
+      ui:
+        label: 'Twitter Name'
+        inlineEditable: true
+        inspector:
+          group: 'person'
+    'biography':
+      type: string
+      ui:
+        label: 'Biography'
+        inspector:
+          group: 'person'
+          editor: 'TYPO3.Neos/Inspector/Editors/TextAreaEditor'
+          editorOptions:
+            rows: 7

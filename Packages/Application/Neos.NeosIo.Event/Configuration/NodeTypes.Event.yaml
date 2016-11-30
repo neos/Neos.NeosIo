@@ -1,0 +1,84 @@
+###########################################
+# Basic event
+###########################################
+
+'Neos.NeosIo.Event:Event':
+  abstract: true
+  superTypes:
+    'Neos.NeosIo:LandingPage': true
+    'Neos.NeosIo:KeyVisualMixin': true
+  constraints:
+    nodeTypes:
+      'Neos.NeosIo.Event:Event': false
+      'TYPO3.Neos.NodeTypes:Page': false
+      'Neos.NeosIo.Event:Page': true
+      'Neos.NeosIo.Event:Sponsor.Package': true
+      'Neos.NeosIo.Event:Sponsor.Partner': true
+  ui:
+    label: 'Event'
+    icon: 'icon-calendar'
+    group: 'event'
+    inspector:
+      groups:
+        'event':
+          label: 'Event properties'
+  properties:
+    'eventLogo':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Event Logo'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          position: 10
+    'homepageLogo':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Event homepage Logo (top left)'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          position: 12
+    'startDate':
+      type: DateTime
+      ui:
+        label: 'Start Date'
+        inspector:
+          group: 'event'
+          position: 15
+          editorOptions:
+            format: 'd.m.Y'
+    'endDate':
+      type: DateTime
+      ui:
+        label: 'End Date'
+        inspector:
+          group: 'event'
+          position: 20
+          editorOptions:
+            format: 'd.m.Y'
+    'teaserImage':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Teaser Image'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          position: 25
+    'city':
+      type: string
+      ui:
+        label: 'Event City'
+        inspector:
+          group: 'event'
+          position: 30
+    'posts':
+      type: references
+      ui:
+        label: 'Posts'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          position: 35
+          editorOptions:
+            nodeTypes: ['Neos.NeosIo:Post']

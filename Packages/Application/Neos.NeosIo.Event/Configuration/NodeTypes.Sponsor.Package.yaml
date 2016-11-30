@@ -1,0 +1,73 @@
+###########################################
+# Node type for a sponsor package
+###########################################
+
+'Neos.NeosIo.Event:Sponsor.Package':
+  superTypes:
+    'TYPO3.Neos.NodeTypes:Page': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
+      'Neos.NeosIo.Event:Event': false
+  ui:
+    label: 'Sponsor Package'
+    icon: 'icon-credit-card'
+    group: 'event'
+    inspector:
+      groups:
+        'package':
+          label: 'Sponsor package properties'
+  properties:
+    'freeTickets':
+      type: 'integer'
+      defaultValue: '1'
+      ui:
+        label: 'Free tickets included'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          position: 15
+    'costs':
+      type: string
+      ui:
+        label: 'Costs (vat excl.)'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          position: 20
+    'logoOnFrontpageP':
+      type: boolean
+      ui:
+        label: 'Logo on frontpage (permanent)'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          group:
+          position: 25
+    'logoOnFrontpageV':
+      type: boolean
+      ui:
+        label: 'Logo on frontpage (variable)'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          group:
+          position: 30
+    'logoInFooterP':
+      type: boolean
+      ui:
+        label: 'Logo in footer area (permanent)'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          group:
+          position: 35
+    'logoInFooterV':
+      type: boolean
+      ui:
+        label: 'Logo in footer area (variable)'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          group:
+          position: 40

@@ -1,0 +1,19 @@
+prototype(Neos.NeosIo.Event:DefaultPage) >
+prototype(Neos.NeosIo.Event:DefaultPage) < prototype(Neos.NeosIo:DefaultPage) {
+	body {
+		logo = ${q(site).property('eventLogo')}
+		startDate = ${q(site).property('startDate')}
+		endDate = ${q(site).property('endDate')}
+		city = ${q(site).property('city')}
+
+		headerClasses = 'siteHeader eventHeader'
+		parts {
+			footerContent = Neos.NeosIo.Event:FooterContent
+			eventNav = Neos.NeosIo.Event:Menu
+		}
+	}
+
+	prototype(Neos.NeosIo:DefaultPage.Menu) {
+		subNavClasses = 'nav nav--stacked offCanvas__categoryList'
+	}
+}

@@ -1,0 +1,25 @@
+{namespace media=TYPO3\Media\ViewHelpers}
+<f:for each="{organizersToRender}" as="organizers">
+	<div class="g">
+		<f:if condition="{organizersToRender} > 1">
+			<f:then>
+				<h3 class="h1 typo3-neos-alignment-center">Organizers</h3>
+			</f:then>
+			<f:else>
+				<h3 class="h1 typo3-neos-alignment-center">Organizer</h3>
+			</f:else>
+		</f:if>
+		<div class="gi u-w1/1 u-wm6/12 u-wl6/12">
+			<f:if condition="{organizers.properties.logo}">
+				<figure>
+					<media:image asset="{organizers.properties.logo}" title="{organizers.properties.title}" alt="{organizers.properties.title}" maximumWidth="700" maximumHeight="500" allowUpScaling="false" />
+				</figure>
+			</f:if>
+		</div>
+		<div class="gi u-w1/1 u-wm6/12 u-wl6/12">
+			<f:if condition="{organizers.properties.description}">
+				{organizers.properties.description -> f:format.raw()}
+			</f:if>
+		</div>
+	</div>
+</f:for>

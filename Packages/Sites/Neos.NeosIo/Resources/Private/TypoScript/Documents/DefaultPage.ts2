@@ -58,6 +58,7 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
         }
 
         homepage = ${site}
+		headerClasses = 'siteHeader'
 
         keyVisualImage = ${q(documentNode).property('keyVisualImage')}
         keyVisualImageSrcSet = TYPO3.TypoScript:Template {

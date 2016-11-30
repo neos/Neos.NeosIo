@@ -1,0 +1,29 @@
+###########################################
+# Location node type
+###########################################
+
+'Neos.NeosIo.Event:Location':
+  superTypes:
+    'TYPO3.Neos:Document': true
+    'Neos.NeosIo:Address': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
+      'Neos.NeosIo.Event:Event': false
+  ui:
+    label: 'Location'
+    icon: 'icon-home'
+    group: 'event'
+    inspector:
+      groups:
+        'event':
+          label: 'Location properties'
+  properties:
+    'teaserImage':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Teaser Image'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          position: 10

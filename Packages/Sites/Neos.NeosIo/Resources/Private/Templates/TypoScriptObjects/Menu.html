@@ -13,7 +13,7 @@
 											title="{item.node.label}">
 								{item.node.label}
 							</neos:link.node>
-							<ul class="nav nav--stacked siteHeader__dropDownNav offCanvas__categoryList">
+							<ul class="{subNavClasses}">
 								<f:for each="{item.subItems}" as="subItem">
 									<f:if condition="{subItem.node.nodeType.name} == 'Neos.NeosIo:SpacerPage'">
 										<f:then>

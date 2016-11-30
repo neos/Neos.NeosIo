@@ -1,0 +1,53 @@
+###########################################
+# Sponsor Partner node type
+###########################################
+
+'Neos.NeosIo.Event:Sponsor.Partner':
+  superTypes:
+    'TYPO3.Neos.NodeTypes:Page': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
+      'Neos.NeosIo.Event:Event': false
+  ui:
+    label: 'Sponsor'
+    icon: 'icon-credit-card-alt'
+    group: 'event'
+    inspector:
+      groups:
+        'sponsor':
+          label: 'Sponsor properties'
+  properties:
+    'logo':
+      type: TYPO3\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Logo'
+        reloadIfChanged: true
+        inspector:
+          group: 'sponsor'
+          position: 10
+    'description':
+      type: string
+      ui:
+        label: 'Biography'
+        inlineEditable: true
+        inspector:
+          group: 'sponsor'
+          editor: 'TYPO3.Neos/Inspector/Editors/TextAreaEditor'
+          editorOptions:
+            rows: 7
+    'twitterName':
+      type: string
+      ui:
+        label: 'Twitter Name'
+        reloadIfChanged: true
+        inspector:
+          group: 'sponsor'
+    'link':
+      type: string
+      ui:
+        label: 'Link'
+        reloadIfChanged: true
+        inspector:
+          group: 'sponsor'
+          editor: 'TYPO3.Neos/Inspector/Editors/LinkEditor'

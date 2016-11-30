@@ -1,0 +1,18 @@
+##############################################
+# Special default page for the event page tree
+##############################################
+
+'Neos.NeosIo.Event:Page':
+  superTypes:
+    'TYPO3.Neos.NodeTypes:Page': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
+      'Neos.NeosIo.Event:Event': false
+      'Neos.NeosIo.Event:Sponsor.Partner': true
+  childNodes:
+    'keyvisual': ~
+  ui:
+    label: 'Page'
+    icon: 'icon-file'
+    group: 'general'
