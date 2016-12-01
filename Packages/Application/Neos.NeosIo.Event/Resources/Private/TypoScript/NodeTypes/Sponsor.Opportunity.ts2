@@ -1,0 +1,18 @@
+/**
+* NodeTypes around Sponsor Opportunities
+*/
+
+prototype(Neos.NeosIo.Event:Sponsor.Opportunity.Document) < prototype(Neos.NeosIo.Event:DefaultPage) {
+	body {
+		content {
+			main = Neos.NeosIo.Event:Sponsor.Opportunity
+		}
+	}
+}
+
+prototype(Neos.NeosIo.Event:Sponsor.Opportunity) < prototype(TYPO3.Neos:Content) {
+	main = ContentCollection {
+		@cache.mode = 'cached'
+		nodePath = 'main'
+	}
+}

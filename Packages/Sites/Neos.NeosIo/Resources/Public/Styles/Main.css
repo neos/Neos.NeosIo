@@ -2007,6 +2007,13 @@ sub {
   font-size: 14px;
   color: #898d99; }
 
+.costs {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 20px; }
+
 /**
  * Table grid:
  * Creates a table like grid which should be used with the utility width classes.
@@ -3452,6 +3459,39 @@ sub {
   width: 400px;
   z-index: 4;
   align-self: flex-start; }
+
+.blueBox {
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1); }
+
+.boxHeader {
+  background: #00ADEE;
+  color: #fff;
+  padding: 40px 20px; }
+  .boxHeader h2 {
+    color: #fff;
+    margin-bottom: 0; }
+
+.boxBody {
+  background: #fff;
+  padding: 20px; }
+  .boxBody hr {
+    margin: .5em 0; }
+
+@media screen and (min-width: 650px) {
+  .packageListing.odd {
+    clear: both; } }
+
+@media screen and (min-width: 1250px) {
+  .packageListing.odd {
+    clear: none; } }
+
+@media screen and (min-width: 1250px) {
+  .packageListing.first {
+    clear: both; } }
+
+.packageListing .detailLink {
+  text-align: center;
+  margin-top: 40px; }
 
 /*
  * Print styles - Inlined to avoid another HTTP connection.

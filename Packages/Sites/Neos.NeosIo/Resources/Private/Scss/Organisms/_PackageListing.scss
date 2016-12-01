@@ -1,0 +1,22 @@
+.packageListing {
+	&.odd {
+		@include mq('medium') {
+			clear: both;
+		}
+
+		@include mq('large') {
+			clear: none;
+		}
+	}
+
+	&.first {
+		@include mq('large') {
+			clear: both;
+		}
+	}
+
+	.detailLink {
+		text-align: center;
+		margin-top: 40px;
+	}
+}
