@@ -20,15 +20,17 @@
 			</neos:link.node>
 		</f:then>
 		<f:else>
-			<neos:link.node node="{site}" class="u-linkReset">
-				<media:image
-						class="u-brandLogo u-brandLogo--bright u-brandLogo--small siteHeader__brandLogo event-logo"
-						asset="{logo}"
-						title="{homepage.properties.title}"
-						alt="{homepage.properties.title}"
-						allowUpScaling="false"
-						/>
-			</neos:link.node>
+			<f:if condition="{logo}">
+				<neos:link.node node="{site}" class="u-linkReset">
+					<media:image
+							class="u-brandLogo u-brandLogo--bright u-brandLogo--small siteHeader__brandLogo event-logo"
+							asset="{logo}"
+							title="{homepage.properties.title}"
+							alt="{homepage.properties.title}"
+							allowUpScaling="false"
+							/>
+				</neos:link.node>
+			</f:if>
 		</f:else>
 	</f:if>
 
