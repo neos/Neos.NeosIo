@@ -2866,6 +2866,28 @@ sub {
       .references__list .references__data span {
         display: inline-block; } }
 
+@media (max-width: 979px) and (min-width: 768px) {
+  .boxAside .main {
+    float: left;
+    width: 60%;
+    padding-right: 20px; } }
+
+@media (min-width: 980px) {
+  .boxAside .main {
+    float: left;
+    width: 70%;
+    padding-right: 20px; } }
+
+@media (max-width: 979px) and (min-width: 768px) {
+  .boxAside .aside {
+    float: right;
+    width: 40%; } }
+
+@media (min-width: 980px) {
+  .boxAside .aside {
+    float: right;
+    width: 30%; } }
+
 .siteHeader {
   position: fixed;
   top: 0;
@@ -3462,6 +3484,9 @@ sub {
 
 .blueBox {
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1); }
+  .blueBox .callToAction {
+    text-align: center;
+    margin-top: 40px; }
 
 .boxHeader {
   background: #00ADEE;
@@ -3470,6 +3495,8 @@ sub {
   .boxHeader h2 {
     color: #fff;
     margin-bottom: 0; }
+  .boxHeader.boxHeader {
+    padding: 20px; }
 
 .boxBody {
   background: #fff;
@@ -3488,10 +3515,6 @@ sub {
 @media screen and (min-width: 1250px) {
   .packageListing.first {
     clear: both; } }
-
-.packageListing .detailLink {
-  text-align: center;
-  margin-top: 40px; }
 
 /*
  * Print styles - Inlined to avoid another HTTP connection.

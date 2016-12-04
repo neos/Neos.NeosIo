@@ -1,0 +1,38 @@
+<ul>
+	<f:if condition="{freeTickets}">
+		<li>
+			<f:if condition="{freeTickets} > 1">
+				<f:then>
+					{freeTickets} free tickets
+				</f:then>
+				<f:else>
+					{freeTickets} free ticket
+				</f:else>
+			</f:if>
+		</li>
+	</f:if>
+	<f:if condition="{logoOnFrontpageP}">
+		<li title="Your logo will be permanently shown on the event frontpage.">Permanent logo on frontpage</li>
+	</f:if>
+	<f:if condition="{logoOnFrontpageV}">
+		<li title="Your logo will be shown within an animated element on the event frontpage.">Variable logo on frontpage</li>
+	</f:if>
+	<f:if condition="{logoInFooterP}">
+		<li title="Your logo will be permanently shown inside the event website's footer.">Permanent logo in footer</li>
+	</f:if>
+	<f:if condition="{logoInFooterV}">
+		<li title="Your logo will be shown within an animated element inside the event website's footer.">Variable logo in footer</li>
+	</f:if>
+	<f:for each="{opportunities}" as="opportunity">
+		<li title="{opportunity.properties.description}">
+			<f:if condition="{opportunity.properties.titleLong}">
+				<f:then>
+					{opportunity.properties.titleLong}
+				</f:then>
+				<f:else>
+					{opportunity.properties.title}
+				</f:else>
+			</f:if>
+		</li>
+	</f:for>
+</ul>

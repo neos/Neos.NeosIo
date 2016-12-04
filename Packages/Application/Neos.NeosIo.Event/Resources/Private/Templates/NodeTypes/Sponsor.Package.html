@@ -1,8 +1,42 @@
 {namespace media=TYPO3\Media\ViewHelpers}
 
 <div{attributes -> f:format.raw()}>
-	<h1>{title}</h1>
-	<f:if condition="{costs}"><p><strong>Costs: </strong><f:format.currency currencySign="€" decimalSeparator="," thousandsSeparator=".">{costs}</f:format.currency></p></f:if>
-	<f:if condition="{freeTickets}"><p><strong>Free tickets: </strong>{freeTickets}</p></f:if>
-	{main -> f:format.raw()}
+	<div class="boxAside">
+		<div class="main">
+			<h1>{title}</h1>
+			{main -> f:format.raw()}
+		</div>
+		<div class="aside">
+			<div class="blueBox">
+				<div class="boxHeader smaller">
+					<h2 class="h4">Opportunities</h2>
+				</div>
+				<div class="boxBody">
+					<f:render partial="Opportunities.html" arguments="{freeTickets: freeTickets, logoOnFrontpageP : logoOnFrontpageP, logoOnFrontpageV: logoOnFrontpageV, logoInFooterP : logoInFooterP, logoInFooterV: logoInFooterV, opportunities : opportunities}" />
+
+					<f:if condition="{package.properties.costs}">
+						<span class="costs"><f:format.currency currencySign="€" decimalSeparator="," thousandsSeparator=".">{package.properties.costs}</f:format.currency></span>
+					</f:if>
+
+					<div class="callToAction">
+						<a href="mailto:mailsponsors" class="btn btn--solidSecondary">
+							<div class="btn__corner btn__corner--top">
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
+									<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="14,10 0,10 14,0"></polygon>
+									<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"></line>
+								</svg>
+							</div>
+							<div class="btn__content">Contact Us</div>
+							<div class="btn__corner btn__corner--bottom">
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
+									<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="0,0 0,10 14,0"></polygon>
+									<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"></line>
+								</svg>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
