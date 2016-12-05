@@ -19,12 +19,12 @@
 	// Currently disabled on smallerThanLarge screens since the opened state for the siteNav
 	// is breaking when hiding the siteHeader.
 	//
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		transform: translateY(-100%);
 	}
 }
 .siteHeader--shaded {
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		height: 55px;
 		background: brand('secondary');
 	}
@@ -41,7 +41,7 @@
 	fill: currentColor;
 	transition: all .3s ease;
 
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		left: $double-spacing+px;
 		height: 50px;
 
@@ -57,7 +57,7 @@
 	z-index: 1;
 	transform: translateY(-50%);
 
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		display: none;
 		visibility: hidden;
 
@@ -72,7 +72,7 @@
 	font-size: .95em;
 	line-height: $basic-spacing+px;
 
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		position: absolute;
 		top: 50%;
 		right: 3em;
@@ -89,7 +89,7 @@
 	> li {
 		position: relative;
 
-		@include mq('large') {
+		@media screen and (min-width: 1350px) {
 			display: inline-block;
 			margin-left: $double-spacing+px;
 
@@ -104,7 +104,7 @@
 	}
 }
 .siteHeader__dropDownNav {
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		position: absolute;
 		top: 100%;
 		left: 50%;

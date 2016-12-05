@@ -18,7 +18,7 @@
 	opacity: 0;
 }
 .offCanvas {
-	@include mq('smallerThanLarge') {
+	@media screen and (max-width: 1349px) {
 		@include offCanvas;
 	}
 
@@ -33,7 +33,7 @@
 	opacity: 1;
 }
 .offCanvas--visible {
-	@include mq('smallerThanLarge') {
+	@media screen and (max-width: 1349px) {
 		@include offCanvasVisible;
 	}
 
@@ -49,7 +49,7 @@
 }
 .offCanvas__navWrapper {
 	// Hide the scroll bar, but still be able to scroll.
-	@include mq('smallerThanLarge') {
+	@media screen and (max-width: 1349px) {
 		@include offCanvasNavWrapper;
 		opacity: 0;
 
@@ -74,7 +74,7 @@
 	@include u-cf();
 }
 .offCanvas__nav {
-	@include mq('smallerThanLarge') {
+	@media screen and (max-width: 1349px) {
 		@include offCanvasNav;
 	}
 
@@ -102,7 +102,7 @@
 	}
 }
 .offCanvas__category {
-	@include mq('smallerThanLarge') {
+	@media screen and (max-width: 1349px) {
 		@include offCanvasCategory;
 	}
 
@@ -123,7 +123,7 @@
 	font-weight: $light;
 }
 .offCanvas__categoryList {
-	@include mq('smallerThanLarge') {
+	@media screen and (max-width: 1349px) {
 		@include offCanvasCategoryList;
 	}
 
@@ -136,7 +136,7 @@
 	background: linear-gradient(to right, rgba(#FFF, 0) 0%, rgba(#FFF, 0.25) 50%, rgba(#FFF, 0) 100%);
 }
 .offCanvas__categorySeparator {
-	@include mq('smallerThanLarge') {
+	@media screen and (max-width: 1349px) {
 		@include offCanvasCategorySeperator;
 	}
 
