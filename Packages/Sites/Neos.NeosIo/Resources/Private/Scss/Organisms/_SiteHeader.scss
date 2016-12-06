@@ -197,7 +197,11 @@
 .event-logo-signet {
 	transform: translateY(0%);
 	height: auto;
-	top: 13px;
+	top: 20px;
+
+	@include mq('medium') {
+		top: 13px;
+	}
 }
 
 .event-logo {
@@ -205,7 +209,11 @@
 }
 
 .event-logo-signet {
-	max-width: 47.5px;
+	max-width: 20px;
+
+	@include mq('medium') {
+		max-width: 47.5px;
+	}
 }
 
 .eventNav {

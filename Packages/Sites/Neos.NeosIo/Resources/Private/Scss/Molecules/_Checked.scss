@@ -1,0 +1,22 @@
+ul.checked {
+	padding-left: 0;
+
+	li {
+		list-style: none;
+		position: relative;
+		padding-left: 30px;
+
+		&:before {
+			display: inline-block;
+			font: normal normal normal 14px/1 FontAwesome;
+			font-size: inherit;
+			text-rendering: auto;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			content: "\f00c";
+			position: absolute;
+			left: 0px;
+			top: 2px;
+		}
+	}
+}

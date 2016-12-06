@@ -2875,7 +2875,7 @@ sub {
 @media (min-width: 980px) {
   .boxAside .main {
     float: left;
-    width: 70%;
+    width: 60%;
     padding-right: 20px; } }
 
 @media (max-width: 979px) and (min-width: 768px) {
@@ -2886,7 +2886,25 @@ sub {
 @media (min-width: 980px) {
   .boxAside .aside {
     float: right;
-    width: 30%; } }
+    width: 40%; } }
+
+ul.checked {
+  padding-left: 0; }
+  ul.checked li {
+    list-style: none;
+    position: relative;
+    padding-left: 30px; }
+    ul.checked li:before {
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      content: "\f00c";
+      position: absolute;
+      left: 0px;
+      top: 2px; }
 
 .siteHeader {
   position: fixed;
@@ -3035,13 +3053,20 @@ sub {
 .event-logo-signet {
   transform: translateY(0%);
   height: auto;
-  top: 13px; }
+  top: 20px; }
+  @media screen and (min-width: 650px) {
+    .event-logo,
+    .event-logo-signet {
+      top: 13px; } }
 
 .event-logo {
   max-width: 230px; }
 
 .event-logo-signet {
-  max-width: 47.5px; }
+  max-width: 20px; }
+  @media screen and (min-width: 650px) {
+    .event-logo-signet {
+      max-width: 47.5px; } }
 
 .eventNav {
   background: #26224C;
@@ -3502,7 +3527,17 @@ sub {
   background: #fff;
   padding: 20px; }
   .boxBody hr {
-    margin: .5em 0; }
+    margin: .5em 0 1em 0; }
+  .boxBody h4 {
+    line-height: 1.2em;
+    font-size: 16px;
+    margin-bottom: 4px; }
+  .boxBody p {
+    line-height: 1.3em;
+    margin-bottom: 4px;
+    font-size: 14px; }
+  .boxBody li {
+    margin-bottom: 10px; }
 
 @media screen and (min-width: 650px) {
   .packageListing.odd {
@@ -3515,6 +3550,34 @@ sub {
 @media screen and (min-width: 1250px) {
   .packageListing.first {
     clear: both; } }
+
+.milky {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 378px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, transparent 100%);
+  z-index: 10;
+  width: 100%; }
+
+.eventKeyVisual .keyVisual__contents img.conferenceLogo {
+  position: relative;
+  z-index: 10;
+  padding: 100px 20px 20px 20px;
+  max-width: 350px; }
+  @media screen and (min-width: 650px) {
+    .eventKeyVisual .keyVisual__contents img.conferenceLogo {
+      padding: 120px 20px 20px 20px;
+      max-width: 470px; } }
+  @media (min-width: 980px) {
+    .eventKeyVisual .keyVisual__contents img.conferenceLogo {
+      max-width: 100%; } }
+
+.eventKeyVisual.keyVisual--large .keyVisual__contents {
+  height: auto; }
+  @media screen and (min-width: 650px) {
+    .eventKeyVisual.keyVisual--large .keyVisual__contents p {
+      padding-bottom: 40px; } }
 
 /*
  * Print styles - Inlined to avoid another HTTP connection.
