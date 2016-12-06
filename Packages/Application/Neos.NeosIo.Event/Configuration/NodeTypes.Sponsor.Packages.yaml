@@ -1,0 +1,24 @@
+###########################################
+# Person node type
+###########################################
+
+'Neos.NeosIo.Event:Sponsor.Packages':
+  superTypes:
+    'TYPO3.Neos.NodeTypes:Page': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
+      'Neos.NeosIo.Event:Event': false
+      'Neos.NeosIo.Event:Sponsor.Package': true
+      'Neos.NeosIo.Event:Sponsor.Opportunity': true
+  childNodes:
+    'aboveListing':
+      type: 'TYPO3.Neos:ContentCollection'
+      position: 'before main'
+      constraints:
+        nodeTypes:
+          'Neos.NeosIo:HeadlineSlider': false
+  ui:
+    label: 'Sponsor Packages List'
+    icon: 'icon-credit-card'
+    group: 'event'

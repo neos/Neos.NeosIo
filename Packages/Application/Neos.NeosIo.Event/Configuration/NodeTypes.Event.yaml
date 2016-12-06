@@ -12,8 +12,8 @@
       'Neos.NeosIo.Event:Event': false
       'TYPO3.Neos.NodeTypes:Page': false
       'Neos.NeosIo.Event:Page': true
-      'Neos.NeosIo.Event:Sponsor.Package': true
       'Neos.NeosIo.Event:Sponsor.Partner': true
+      'Neos.NeosIo.Event:Sponsor.Packages': true
   ui:
     label: 'Event'
     icon: 'icon-calendar'
@@ -72,6 +72,30 @@
         inspector:
           group: 'event'
           position: 30
+    'mailGeneral':
+      type: string
+      ui:
+        label: 'Conference email'
+        inlineEditable: true
+        inspector:
+          group: 'event'
+          position: 40
+    'mailPapers':
+      type: string
+      ui:
+        label: 'Call for paper email'
+        inlineEditable: true
+        inspector:
+          group: 'event'
+          position: 45
+    'mailSponsors':
+      type: string
+      ui:
+        label: 'Sponsoring email'
+        inlineEditable: true
+        inspector:
+          group: 'event'
+          position: 50
     'posts':
       type: references
       ui:
@@ -79,6 +103,6 @@
         reloadIfChanged: true
         inspector:
           group: 'event'
-          position: 35
+          position: 100
           editorOptions:
             nodeTypes: ['Neos.NeosIo:Post']

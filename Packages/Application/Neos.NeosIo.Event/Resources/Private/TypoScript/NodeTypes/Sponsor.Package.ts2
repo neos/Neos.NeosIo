@@ -15,4 +15,6 @@ prototype(Neos.NeosIo.Event:Sponsor.Package) < prototype(TYPO3.Neos:Content) {
 		@cache.mode = 'cached'
 		nodePath = 'main'
 	}
+
+	email = ${q(site).property('mailSponsors')}
 }

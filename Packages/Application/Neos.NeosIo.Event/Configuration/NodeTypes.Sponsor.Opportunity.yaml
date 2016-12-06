@@ -1,0 +1,50 @@
+###########################################
+# Person node type
+###########################################
+
+'Neos.NeosIo.Event:Sponsor.Opportunity':
+  superTypes:
+    'TYPO3.Neos.NodeTypes:Page': true
+  constraints:
+    nodeTypes:
+      'TYPO3.Neos.NodeTypes:Page': false
+      'Neos.NeosIo.Event:Event': false
+  ui:
+    label: 'Sponsor Opportunity'
+    icon: 'icon-star-o'
+    group: 'event'
+    inspector:
+      groups:
+        'opportunity':
+          label: 'Opportunity properties'
+  properties:
+    'titleLong':
+      type: string
+      ui:
+        label: 'Long Title'
+        inlineEditable: true
+        aloha:
+          placeholder: 'Add a longer version of the title ...'
+        inspector:
+          group: 'opportunity'
+          position: 10
+    'description':
+      type: string
+      ui:
+        label: 'Short Description'
+        inlineEditable: true
+        aloha:
+          placeholder: 'Add a short description ...'
+        inspector:
+          group: 'opportunity'
+          position: 15
+    'descriptionLong':
+      type: string
+      ui:
+        label: 'Long Description'
+        inlineEditable: true
+        aloha:
+          placeholder: 'Add a long description ...'
+        inspector:
+          group: 'opportunity'
+          position: 20

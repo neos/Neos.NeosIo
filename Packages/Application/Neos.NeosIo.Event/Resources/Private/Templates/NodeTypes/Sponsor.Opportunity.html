@@ -1,0 +1,8 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+
+<div{attributes -> f:format.raw()}>
+	<h1>{title}</h1>
+	{neos:contentElement.editable(property: 'titleLong', tag: 'h2')}
+	{neos:contentElement.editable(property: 'description', tag: 'p')}
+	{neos:contentElement.editable(property: 'descriptionLong', tag: 'p')}
+</div>

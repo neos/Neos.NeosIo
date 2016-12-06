@@ -71,3 +71,13 @@
           group: 'package'
           group:
           position: 40
+    'opportunities':
+      type: references
+      ui:
+        label: 'Opportunities of this package'
+        reloadIfChanged: true
+        inspector:
+          group: 'package'
+          position: 50
+          editorOptions:
+            nodeTypes: ['Neos.NeosIo.Event:Sponsor.Opportunity']
