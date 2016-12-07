@@ -26,10 +26,21 @@
 
 .eventKeyVisual.keyVisual--large .keyVisual__contents {
 	height: auto;
+	padding-bottom: 30px;
+
+	@include mq('medium') {
+		padding-bottom: 66px;
+	}
 
 	p {
-		@include mq('medium') {
-			padding-bottom: 40px;
+		margin-bottom: 0;
+
+		& + p {
+			margin-top: 0.7em;
+
+			@include mq('medium') {
+				margin-top: 1em;
+			}
 		}
 	}
 }
