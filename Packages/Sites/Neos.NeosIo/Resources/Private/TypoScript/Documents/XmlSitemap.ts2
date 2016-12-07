@@ -1,0 +1,11 @@
+prototype(TYPO3.Neos.Seo:XmlSitemap) {
+    body {
+        filter = TYPO3.TypoScript:RawArray {
+            documents = 'TYPO3.Neos:Document'
+            excludeSpacers = '!Neos.NeosIo:SpacerPage'
+            excludeReferences = '!Neos.NeosIo:Reference'
+            excludeFooterContainers = '!Neos.NeosIo:FooterContainer'
+            @process.createFilter = ${Array.join(value, ',')}
+        }
+    }
+}
