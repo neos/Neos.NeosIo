@@ -11,14 +11,25 @@
 		</f:if>
 		<div class="gi u-w1/1 u-wm6/12 u-wl6/12">
 			<f:if condition="{organizers.properties.logo}">
-				<figure>
-					<media:image asset="{organizers.properties.logo}" title="{organizers.properties.title}" alt="{organizers.properties.title}" maximumWidth="700" maximumHeight="500" allowUpScaling="false" />
-				</figure>
+				<f:if condition="{organizers.properties.website}">
+					<f:then>
+						<a href="{organizers.properties.website}">
+							<figure>
+								<media:image asset="{organizers.properties.logo}" title="{organizers.properties.title}" alt="{organizers.properties.title}" maximumWidth="700" maximumHeight="500" allowUpScaling="false" />
+							</figure>
+						</a>
+					</f:then>
+					<f:else>
+						<figure>
+							<media:image asset="{organizers.properties.logo}" title="{organizers.properties.title}" alt="{organizers.properties.title}" maximumWidth="700" maximumHeight="500" allowUpScaling="false" />
+						</figure>
+					</f:else>
+				</f:if>
 			</f:if>
 		</div>
 		<div class="gi u-w1/1 u-wm6/12 u-wl6/12">
 			<f:if condition="{organizers.properties.description}">
-				{organizers.properties.description -> f:format.raw()}
+				<p>{organizers.properties.description -> f:format.raw()}</p>
 			</f:if>
 		</div>
 	</div>

@@ -12,7 +12,7 @@
 					<h2 class="h4">Opportunities</h2>
 				</div>
 				<div class="boxBody">
-					<f:render partial="Opportunities.html" arguments="{freeTickets: freeTickets, logoOnFrontpageP : logoOnFrontpageP, logoOnFrontpageV: logoOnFrontpageV, logoInFooterP : logoInFooterP, logoInFooterV: logoInFooterV, opportunities : opportunities}" />
+					<f:render partial="Opportunities.html" arguments="{freeTickets: freeTickets, logoOnFrontpageP : logoOnFrontpageP, logoOnFrontpageV: logoOnFrontpageV, logoInFooterP : logoInFooterP, logoInFooterV: logoInFooterV, opportunities : opportunities, detail: true}" />
 
 					<f:if condition="{package.properties.costs}">
 						<span class="costs"><f:format.currency currencySign="€" decimalSeparator="," thousandsSeparator=".">{package.properties.costs}</f:format.currency></span>

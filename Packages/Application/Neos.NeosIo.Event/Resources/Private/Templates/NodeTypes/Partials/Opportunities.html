@@ -1,38 +1,71 @@
-<ul>
+<ul class="checked">
 	<f:if condition="{freeTickets}">
 		<li>
 			<f:if condition="{freeTickets} > 1">
 				<f:then>
-					{freeTickets} free tickets
+					<h4>{freeTickets} free tickets</h4>
 				</f:then>
 				<f:else>
-					{freeTickets} free ticket
+					<h4>{freeTickets} free ticket</h4>
 				</f:else>
 			</f:if>
 		</li>
 	</f:if>
 	<f:if condition="{logoOnFrontpageP}">
-		<li title="Your logo will be permanently shown on the event frontpage.">Permanent logo on frontpage</li>
+		<li>
+			<h4>Permanent logo on frontpage</h4>
+			<p>Your logo will be shown on the event frontpage permanently.</p>
+		</li>
 	</f:if>
 	<f:if condition="{logoOnFrontpageV}">
-		<li title="Your logo will be shown within an animated element on the event frontpage.">Variable logo on frontpage</li>
+		<li>
+			<h4>Variable logo on frontpage</h4>
+			<p>Your logo will be shown within an animated element on the event frontpage.</p>
+		</li>
 	</f:if>
 	<f:if condition="{logoInFooterP}">
-		<li title="Your logo will be permanently shown inside the event website's footer.">Permanent logo in footer</li>
+		<li>
+			<h4>Permanent logo in footer</h4>
+			<p>Your logo will be shown inside the event website's footer permanently.</p>
+		</li>
 	</f:if>
 	<f:if condition="{logoInFooterV}">
-		<li title="Your logo will be shown within an animated element inside the event website's footer.">Variable logo in footer</li>
+		<li>
+			<h4>Variable logo in footer</h4>
+			<p>Your logo will be shown within an animated element inside the event website's footer.</p>
+		</li>
 	</f:if>
-	<f:for each="{opportunities}" as="opportunity">
-		<li title="{opportunity.properties.description}">
-			<f:if condition="{opportunity.properties.titleLong}">
+	<f:if condition="{opportunities}">
+		<f:for each="{opportunities}" as="opportunity">
+			<f:if condition="{detail}">
 				<f:then>
-					{opportunity.properties.titleLong}
+					<li>
+						<f:if condition="{opportunity.properties.titleLong}">
+							<f:then>
+								<h4>{opportunity.properties.titleLong -> f:format.raw()}</h4>
+							</f:then>
+							<f:else>
+								<h4>{opportunity.properties.title -> f:format.raw()}</h4>
+							</f:else>
+						</f:if>
+						<f:if condition="{opportunity.properties.description}">
+							<p>{opportunity.properties.description -> f:format.raw()}</p>
+						</f:if>
+					</li>
 				</f:then>
 				<f:else>
-					{opportunity.properties.title}
+					<li title="{opportunity.properties.description}">
+						<f:if condition="{opportunity.properties.titleLong}">
+							<f:then>
+								<h4>{opportunity.properties.titleLong -> f:format.raw()}</h4>
+							</f:then>
+							<f:else>
+								<h4>{opportunity.properties.title -> f:format.raw()}</h4>
+							</f:else>
+						</f:if>
+					</li>
 				</f:else>
 			</f:if>
-		</li>
-	</f:for>
+		</f:for>
+	</f:if>
 </ul>

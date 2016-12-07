@@ -9,7 +9,7 @@
 	{namespace media=TYPO3\Media\ViewHelpers}
 
 	<section class="keyVisual keyVisual--large eventKeyVisual">
-		<div class="
+		<div class="eventVisual
 	keyVisual__contents
 	u-alignCenter
 	{f:if(condition: isKeyVisualContentsInverted, then: 'u-invertText')}
@@ -48,9 +48,10 @@
 			</f:else>
 		</f:if>
 		>
+			<div class="milky"></div>
 			<f:if condition="{logo}">
 				<media:image
-						class=""
+						class="conferenceLogo"
 						asset="{logo}"
 						title="{homepage.properties.title}"
 						alt="{homepage.properties.title}"
