@@ -70,6 +70,9 @@
 					</f:if>
 				</p>
 			</f:if>
+			<f:if condition="{twitterHashTag}">
+				<p class="h3">{twitterHashTag}</p>
+			</f:if>
 			{content.keyVisual -> f:format.raw()}
 		</div>
 		<a
