@@ -4,3 +4,11 @@
       'Neos.NeosIo.Event:Page': false
       'Neos.NeosIo.Event:Sponsor.Package': false
       'Neos.NeosIo.Event:Sponsor.Partner': false
+
+# Fix a problem with sorting by __sortIndex
+'TYPO3.Neos:Node':
+  properties:
+    '__sortIndex':
+      search:
+        elasticSearchMapping:
+          type: long

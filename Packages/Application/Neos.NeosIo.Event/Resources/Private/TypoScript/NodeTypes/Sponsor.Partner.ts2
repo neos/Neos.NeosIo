@@ -1,0 +1,19 @@
+/**
+* NodeTypes around Sponsor Partner
+*/
+
+prototype(Neos.NeosIo.Event:Sponsor.Partner.Document) < prototype(Neos.NeosIo.Event:DefaultPage) {
+	body {
+		content {
+			main = Neos.NeosIo.Event:Sponsor.Partner
+		}
+	}
+}
+
+prototype(Neos.NeosIo.Event:Sponsor.Partner) < prototype(TYPO3.Neos:Content) {
+	attributes.class = 'sponsorPartner'
+	main = ContentCollection {
+		@cache.mode = 'cached'
+		nodePath = 'main'
+	}
+}

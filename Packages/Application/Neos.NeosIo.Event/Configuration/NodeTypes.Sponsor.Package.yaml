@@ -27,6 +27,24 @@
         inspector:
           group: 'package'
           position: 15
+    'packageLimit':
+      type: 'integer'
+      defaultValue: '1'
+      ui:
+        label: 'Package Limit'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          position: 16
+    'packagesAvailable':
+      type: 'integer'
+      defaultValue: '1'
+      ui:
+        label: 'Packages available'
+        inlineEditable: true
+        inspector:
+          group: 'package'
+          position: 17
     'costs':
       type: string
       ui:
@@ -35,42 +53,23 @@
         inspector:
           group: 'package'
           position: 20
-    'logoOnFrontpageP':
+    'logoFixed':
       type: boolean
       ui:
-        label: 'Logo on frontpage (permanent)'
-        inlineEditable: true
+        label: 'Logo on website (permanent)'
         inspector:
           group: 'package'
-          group:
           position: 25
-    'logoOnFrontpageV':
+      # Use the logoFixed field to add offers to camps
+      search:
+        fulltextExtractor: ${Indexing.extractInto('h2', Array.join(q(node).children('[instanceof Neos.NeosIo.Event:Sponsor.Partner]').mapProperty('title'), ', '))}
+    'logoVariable':
       type: boolean
       ui:
-        label: 'Logo on frontpage (variable)'
-        inlineEditable: true
+        label: 'Logo on website (variable)'
         inspector:
           group: 'package'
-          group:
           position: 30
-    'logoInFooterP':
-      type: boolean
-      ui:
-        label: 'Logo in footer area (permanent)'
-        inlineEditable: true
-        inspector:
-          group: 'package'
-          group:
-          position: 35
-    'logoInFooterV':
-      type: boolean
-      ui:
-        label: 'Logo in footer area (variable)'
-        inlineEditable: true
-        inspector:
-          group: 'package'
-          group:
-          position: 40
     'opportunities':
       type: references
       ui:

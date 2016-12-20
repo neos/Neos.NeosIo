@@ -1,0 +1,27 @@
+prototype(Neos.NeosIo.Event:Sponsor.Partners) < prototype(TYPO3.Neos:Content) {
+
+	attributes {
+		class = TYPO3.TypoScript:RawArray {
+		//class = 'class'
+
+		@process.nodeType >
+		}
+	}
+
+	bigSponsorsToRender = ${q(documentNode).find('[instanceof Neos.NeosIo.Event:Sponsor.Partner]').property('')}
+	smallSponsorsToRender = ${Search.query(site).nodeType('Neos.NeosIo.Event:Sponsor.Package').exactMatch('logoVariable', true).sortAsc('__sortIndex').limit(100).execute()}
+
+	@cache {
+		mode = 'cached'
+
+		entryIdentifier {
+			node = ${node}
+		}
+
+		entryTags {
+			# Flush segment if sponsor partners or packages change
+			sponsorPartner = 'NodeType_Neos.NeosIo.Event:Sponsor.Partner'
+			sponsorPackage = 'NodeType_Neos.NeosIo.Event:Sponsor.Package'
+		}
+	}
+}

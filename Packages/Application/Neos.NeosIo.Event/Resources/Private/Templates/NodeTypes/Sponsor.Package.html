@@ -10,12 +10,35 @@
 			<div class="blueBox">
 				<div class="boxHeader smaller">
 					<h2 class="h4">Opportunities</h2>
+					<f:if condition="{packageLimit}">
+						<f:if condition="{packageLimit} > 1">
+							<small>Limit {packageLimit}</small>
+						</f:if>
+					</f:if>
+
 				</div>
 				<div class="boxBody">
-					<f:render partial="Opportunities.html" arguments="{freeTickets: freeTickets, logoOnFrontpageP : logoOnFrontpageP, logoOnFrontpageV: logoOnFrontpageV, logoInFooterP : logoInFooterP, logoInFooterV: logoInFooterV, opportunities : opportunities, detail: true}" />
+					<f:render partial="Opportunities.html" arguments="{freeTickets: freeTickets, logoFixed : logoFixed, logoVariable: logoVariable, opportunities : opportunities, detail: true}" />
 
-					<f:if condition="{package.properties.costs}">
-						<span class="costs"><f:format.currency currencySign="€" decimalSeparator="," thousandsSeparator=".">{package.properties.costs}</f:format.currency></span>
+
+					<f:if condition="{packagesAvailable} > 1">
+						<f:then>
+							<p><i class="fa fa-fw fa-arrow-right"></i>{packagesAvailable} packages available</p>
+						</f:then>
+						<f:else>
+							<f:if condition="{packagesAvailable} == 1">
+								<f:then>
+									<p><i class="fa fa-fw fa-arrow-right"></i>{packagesAvailable} package available</p>
+								</f:then>
+								<f:else>
+									<p><i class="fa fa-fw fa-times"></i><em>Sold out</em></p>
+								</f:else>
+							</f:if>
+						</f:else>
+					</f:if>
+
+					<f:if condition="{costs}">
+						<span class="costs"><f:format.currency currencySign="€" decimalSeparator="," thousandsSeparator=".">{costs}</f:format.currency></span>
 					</f:if>
 
 					<f:if condition="{email}">

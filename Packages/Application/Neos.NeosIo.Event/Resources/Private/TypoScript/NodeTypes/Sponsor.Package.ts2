@@ -11,6 +11,7 @@ prototype(Neos.NeosIo.Event:Sponsor.Package.Document) < prototype(Neos.NeosIo.Ev
 }
 
 prototype(Neos.NeosIo.Event:Sponsor.Package) < prototype(TYPO3.Neos:Content) {
+	attributes.class = 'packageDetails'
 	main = ContentCollection {
 		@cache.mode = 'cached'
 		nodePath = 'main'
