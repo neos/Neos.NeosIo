@@ -2,13 +2,12 @@ prototype(Neos.NeosIo.Event:Sponsor.Partners) < prototype(TYPO3.Neos:Content) {
 
 	attributes {
 		class = TYPO3.TypoScript:RawArray {
-		//class = 'class'
-
-		@process.nodeType >
+			class = 'sponsorPartners stage stage--bright'
+			@process.nodeType >
 		}
 	}
 
-	bigSponsorsToRender = ${q(documentNode).find('[instanceof Neos.NeosIo.Event:Sponsor.Partner]').property('')}
+	bigSponsorsToRender = ${q(documentNode).find('[instanceof Neos.NeosIo.Event:Sponsor.Partner]')}
 	smallSponsorsToRender = ${Search.query(site).nodeType('Neos.NeosIo.Event:Sponsor.Package').exactMatch('logoVariable', true).sortAsc('__sortIndex').limit(100).execute()}
 
 	@cache {

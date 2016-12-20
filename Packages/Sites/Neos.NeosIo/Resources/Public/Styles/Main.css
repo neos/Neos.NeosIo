@@ -3610,6 +3610,35 @@ ul.checked {
         .eventKeyVisual.keyVisual--large .keyVisual__contents p + p {
           margin-top: 1em; } }
 
+.slider {
+  height: 200px;
+  position: relative; }
+  .slider .slide {
+    left: 0;
+    height: 100%;
+    top: 0;
+    opacity: 0;
+    position: absolute;
+    transition: opacity .2s ease-in-out;
+    width: 100%;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; }
+    .slider .slide.active {
+      opacity: 1;
+      z-index: 1; }
+    .slider .slide img {
+      height: auto;
+      max-width: 300px; }
+  .slider .slide__figure {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: center; }
+  .slider .slide--caption {
+    flex: 0 1; }
+
 /*
  * Print styles - Inlined to avoid another HTTP connection.
  */

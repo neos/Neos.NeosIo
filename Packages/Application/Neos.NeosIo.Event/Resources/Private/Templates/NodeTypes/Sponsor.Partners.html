@@ -1,7 +1,42 @@
-<section class="deviceStage">
-	<div class="deviceStage__contents">
-		<f:for each="{smallSponsorsToRender}" as="sponsor">
-			{sponsor.properties.title}
-		</f:for>
+{namespace media=TYPO3\Media\ViewHelpers}
+
+<section{attributes -> f:format.raw()}>
+	<div class="stage__contents">
+		<f:if condition="{bigSponsorsToRender}">
+			<h3>Sponsors</h3>
+			<div class="g" data-component="Slider" data-delay="5000">
+				<f:for each="{bigSponsorsToRender}" as="sponsor">
+					<f:render section="Partner" arguments="{partner: sponsor}"/>
+				</f:for>
+			</div>
+		</f:if>
 	</div>
 </section>
+
+<f:section name="Partner">
+	<div class="sponsorPartner slide gi u-w1/1 u-wm6/12 u-wl6/12 u-alignCenter">
+		<div class="slide__figure">
+			<f:if condition="{partner.properties.logo}">
+				<f:if condition="{partner.properties.link}">
+					<f:then>
+						<a href="{partner.properties.link}" title="{partner.properties.title}">
+							<f:render section="PartnerLogo" arguments="{partner: partner}"/>
+						</a>
+					</f:then>
+					<f:else>
+						<f:render section="PartnerLogo" arguments="{partner: partner}"/>
+					</f:else>
+				</f:if>
+			</f:if>
+		</div>
+		<strong class="slide__caption">{partner.properties.title}</strong>
+	</div>
+</f:section>
+
+<f:section name="PartnerLogo">
+	<figure>
+		<media:image asset="{partner.properties.logo}" title="{partner.properties.title}"
+					 alt="{partner.properties.title}" maximumWidth="300" maximumHeight="300"
+					 allowUpScaling="false" />
+	</figure>
+</f:section>

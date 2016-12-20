@@ -8,6 +8,7 @@ import ScrollTo from './ScrollTo.js';
 import ProgressiveImage from './ProgressiveImage.js';
 import ScrollClassToggler from './ScrollClassToggler.js';
 import SentenceSwitcher from './SentenceSwitcher.js';
+import Slider from './Slider.js';
 
 export {
 	AmChart,
@@ -18,6 +19,7 @@ export {
 	GitHubAPI,
 	SentenceSwitcher,
 	ProgressiveImage,
+	Slider,
 	ScrollClassToggler,
 	EmptyClickHandler
 };
