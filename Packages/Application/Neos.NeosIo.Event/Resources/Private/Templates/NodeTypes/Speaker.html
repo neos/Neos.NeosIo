@@ -1,0 +1,23 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace media=TYPO3\Media\ViewHelpers}
+
+<div{attributes -> f:format.raw()}>
+	<h1>{title}</h1>
+	<div class="g">
+		<div class="gi u-w1/1 u-wm1/2 u-wl1/3">
+			<f:if condition="{photo}">
+				<media:image asset="{photo}" title="{title}" alt="{title}" maximumWidth="545" maximumHeight="800" allowUpScaling="false" />
+			</f:if>
+		</div>
+		<div class="gi u-w1/1 u-wm1/2 u-wl2/3">
+			<f:if condition="{twitterName}">
+				<p class="facts"><i class="fa fa-twitter"></i> <a href="https://twitter.com/{twitterName}">{twitterName}</a></p>
+			</f:if>
+			<f:if condition="{company}">
+				<p class="facts"><i class="fa fa-briefcase"></i> {company}</p>
+			</f:if>
+			{neos:contentElement.editable(property: 'biography', tag: 'p')}
+		</div>
+	</div>
+	{belowFacts -> f:format.raw()}
+</div>

@@ -207,7 +207,8 @@
  *       </tbody>
  *     </table>
  */
-.table--zebra {
+.table--zebra,
+.neos-neosio-event-page table {
 	tbody {
 		tr:nth-child(even) {
 			background: $content-background;
@@ -216,5 +217,15 @@
 		tr:nth-child(odd) {
 			background: color-adjust($content-background, 5%);
 		}
+	}
+}
+
+
+.neos-neosio-event-page table {
+	border-radius: 0;
+
+	td,
+	th {
+		padding: 3px 10px;
 	}
 }
