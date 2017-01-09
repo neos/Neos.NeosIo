@@ -10,7 +10,13 @@ TYPO3:
           # as well (which makes it hard for editors to find the correct nodes)
           'TYPO3.Neos/Inspector/Editors/LinkEditor':
             editorOptions:
-              nodeTypes: ['TYPO3.Neos.NodeTypes:Page', 'Neos.MarketPlace:RepositoryStorage']
+              nodeTypes:
+                - 'TYPO3.Neos.NodeTypes:Page'
+                - 'Neos.MarketPlace:RepositoryStorage'
+                - 'Neos.NeosIo:Reference'
+                - 'Neos.NeosIo.Event:Location'
+                - 'Neos.NeosIo.Event:Organizer'
+                - 'Neos.NeosIo.Event:Person'
 
     nodeTypes:
       groups:
