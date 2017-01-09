@@ -4,13 +4,13 @@
 <figure{f:if(condition: imageClassName, then: ' class="{imageClassName}"')}>
 	<f:if condition="{image}">
 		<f:then>
-			<io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}">
+			<io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}" defaultScheme="">
 				<media:image asset="{image}" alt="{alternativeText}" title="{title}" width="{width}" maximumWidth="{maximumWidth}" height="{height}" maximumHeight="{maximumHeight}" allowUpScaling="{allowUpScaling}" />
 			</io:link.external>
 		</f:then>
 		<f:else>
 			<f:if condition="{neos:rendering.inEditMode()}">
-				<io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}">
+				<io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}" defaultScheme="">
 					<img src="{f:uri.resource(package: 'TYPO3.Neos', path: 'Images/dummy-image.svg')}" title="Dummy image" alt="Dummy image" class="neos-handle" />
 				</io:link.external>
 			</f:if>
