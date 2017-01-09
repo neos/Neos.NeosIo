@@ -8,6 +8,12 @@
   constraints:
     nodeTypes:
       'TYPO3.Neos.NodeTypes:Page': false
+  childNodes:
+    'belowFacts':
+      type: 'TYPO3.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          'Neos.NeosIo:HeadlineSlider': false
   ui:
     label: 'Speaker'
     icon: 'icon-user'

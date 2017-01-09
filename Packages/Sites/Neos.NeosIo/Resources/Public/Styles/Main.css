@@ -2761,11 +2761,19 @@ sub {
  *       </tbody>
  *     </table>
  */
-.table--zebra tbody tr:nth-child(even) {
+.table--zebra tbody tr:nth-child(even),
+.neos-neosio-event-page table tbody tr:nth-child(even) {
   background: #fff; }
 
-.table--zebra tbody tr:nth-child(odd) {
+.table--zebra tbody tr:nth-child(odd),
+.neos-neosio-event-page table tbody tr:nth-child(odd) {
   background: #f2f2f2; }
+
+.neos-neosio-event-page table {
+  border-radius: 0; }
+  .neos-neosio-event-page table td,
+  .neos-neosio-event-page table th {
+    padding: 3px 10px; }
 
 /**
  * Headline Slider:
@@ -3743,6 +3751,13 @@ ul.checked {
       @media screen and (min-width: 650px) {
         .eventKeyVisual.keyVisual--large .keyVisual__contents p + p {
           margin-top: 1em; } }
+
+.facts {
+  margin-bottom: 1em; }
+  .facts .fa {
+    width: 25px; }
+  .facts .fa-twitter {
+    font-size: 20px; }
 
 /*
  * Print styles - Inlined to avoid another HTTP connection.
