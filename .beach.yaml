@@ -1,0 +1,14 @@
+php:
+  version: '7.0'
+build:
+  script:
+    - nvm use 4.4.2
+    - cd $BEACH_BUILD_DIR/Packages/Application/Neos.Marketplace
+    - npm install
+    - cd $BEACH_BUILD_DIR/Packages/Sites/Neos.NeosIo
+    - npm install
+    - npm run build
+run:
+  cronJobs:
+    hourly:
+      - $BEACH_APPLICATION_DIR/flow marketplace:sync > $BEACH_APPLICATION_DIR/Data/Logs/MarketPlaceSync.log
