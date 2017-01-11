@@ -1,0 +1,42 @@
+prototype(Neos.NeosIo.Event:Speaker.List) < prototype(TYPO3.Neos:Content) {
+	attributes {
+		class = TYPO3.TypoScript:RawArray {
+			//class = 'class'
+
+			@process.nodeType >
+		}
+	}
+	speakersToRender = ${q(site).find('[instanceof Neos.NeosIo.Event:Speaker]')}
+	keynoteSpeakersToRender = TYPO3.TypoScript:Collection {
+		collection = ${q(site).find('[instanceof Neos.NeosIo.Event:Speaker]')}
+		itemName = 'speaker'
+		itemRenderer = TYPO3.TypoScript:Template {
+			templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/NodeTypes/Partials/Speaker.List.Item.html'
+			speaker = ${speaker}
+			@if.hasKeynote = ${Array.indexOf(q(speaker).property('typeOfTalk'), 'keynote') >= 0}
+		}
+	}
+
+	otherSpeakersToRender = TYPO3.TypoScript:Collection {
+		collection = ${q(site).find('[instanceof Neos.NeosIo.Event:Speaker]')}
+		itemName = 'speaker'
+		itemRenderer = TYPO3.TypoScript:Template {
+			templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/NodeTypes/Partials/Speaker.List.Item.html'
+			speaker = ${speaker}
+			@if.hasKeynote = ${(Array.indexOf(q(speaker).property('typeOfTalk'), 'talk') >= 0) || (Array.indexOf(q(speaker).property('typeOfTalk'), 'showcase') >= 0)}
+		}
+	}
+
+	@cache {
+		mode = 'cached'
+
+		entryIdentifier {
+			node = ${node}
+		}
+
+		entryTags {
+			# Flush segment if speakers change
+			speaker = 'NodeType_Neos.NeosIo.Event:Speaker'
+		}
+	}
+}
