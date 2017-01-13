@@ -44,6 +44,7 @@ prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
 prototype(Neos.NeosIo:Reference.List.Item) < prototype(TYPO3.TypoScript:Template) {
 	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Reference.List.Item.html'
 	title = ${q(node).property('title')}
+	alternativeText = ${q(node).property('title')}
 	image = ${q(node).property('image')}
 	url = ${q(node).property('url')}
 	datePublished = ${q(node).property('datePublished')}

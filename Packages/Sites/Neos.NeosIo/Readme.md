@@ -25,7 +25,7 @@ Later this will also be made possible with a backend module.
 
 See the list of valid attributes in `Configuration/Settings.yaml` at key `Neos.NeosIo.crowdApi.additionalAttributes.group`.
 
-    :/flow  crowd:setgroupattribute --groupname <CrowdGroupName> --attribute <Attribute> --value <Value>      
+    ./flow  crowd:setgroupattribute --groupname <CrowdGroupName> --attribute <Attribute> --value <Value>      
 
 #### Show user and their attributes
 
