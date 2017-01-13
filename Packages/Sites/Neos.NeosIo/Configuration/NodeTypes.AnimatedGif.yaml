@@ -1,0 +1,35 @@
+###########################################
+# An animated GIF that displays the first
+# frame and loads the rest lazily
+###########################################
+
+'Neos.NeosIo:AnimatedGif':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+    'TYPO3.Neos.NodeTypes:ImageMixin': TRUE
+    'TYPO3.Neos.NodeTypes:ImageCaptionMixin': TRUE
+  ui:
+    label: 'Animated gif'
+    icon: 'icon-file-video-o'
+    inspector:
+      groups:
+        'image':
+          label: i18n
+          position: 5
+          icon: 'icon-image'
+  properties:
+    'image':
+      ui:
+        inspector:
+          editorOptions:
+            features:
+              crop: FALSE
+              resize: FALSE
+    'teaserImage':
+      type: 'TYPO3\Media\Domain\Model\ImageInterface'
+      ui:
+        label: 'Optional teaser image'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'image'
+          position: 70

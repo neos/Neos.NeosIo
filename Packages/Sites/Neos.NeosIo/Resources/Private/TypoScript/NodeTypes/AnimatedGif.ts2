@@ -1,0 +1,7 @@
+prototype(Neos.NeosIo:AnimatedGif) < prototype(TYPO3.Neos.NodeTypes:Image) {
+    attributes.data-original-image = TYPO3.Neos:ImageUri {
+        asset = ${q(node).property('image')}
+    }
+    originalImage = ${q(node).property('image')}
+    image = ${this.teaserImage ? this.teaserImage : Gif.extractFirstFrame(q(node).property('image'))}
+}
