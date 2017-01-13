@@ -36,6 +36,11 @@ body {
 		margin-left: auto;
 		margin-right: auto;
 	}
+
+	@include max-screen(480px) {
+		max-width: 100%;
+		width: 100%;
+	}
 }
 .siteWrapper--small {
 	max-width: $layout-small-width;
