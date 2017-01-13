@@ -1,0 +1,18 @@
+/**
+* Basic page inside the event package
+*/
+
+prototype(Neos.NeosIo.Event:Page.Document) < prototype(Neos.NeosIo.Event:DefaultPage) {
+	body {
+		content {
+			main = Neos.NeosIo.Event:Page
+		}
+	}
+}
+
+prototype(Neos.NeosIo.Event:Page) < prototype(TYPO3.Neos:Content) {
+	main = ContentCollection {
+		@cache.mode = 'cached'
+		nodePath = 'main'
+	}
+}

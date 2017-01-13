@@ -1,0 +1,49 @@
+{namespace media=TYPO3\Media\ViewHelpers}
+{namespace neos=TYPO3\Neos\ViewHelpers}
+
+<div{attributes -> f:format.raw()}>
+	{aboveListing -> f:format.raw()}
+	<f:if condition="{packagesToRender}">
+		<div class="g">
+			<f:for each="{packagesToRender}" as="package" iteration="iterator">
+				<f:cycle values="{0: 'first', 1: 'second', 2: 'third'}" as="cycle">
+					<div class="gi u-w1/1 u-wm6/12 u-wl4/12 packageListing {cycle}{f:if(condition: iterator.isOdd, then: ' odd', else: ' even')}">
+						<div class="blueBox">
+							<div class="boxHeader">
+								<h2 class="h4">{package.properties.title}</h2>
+							</div>
+								<div class="boxBody">
+									<h3 class="h5">Opportunities</h3>
+									<hr>
+									<f:render partial="Opportunities.html" arguments="{freeTickets: package.properties.freeTickets, logoOnFrontpageP : package.properties.logoOnFrontpageP, logoOnFrontpageV: package.properties.logoOnFrontpageV, logoInFooterP : package.properties.logoInFooterP, logoInFooterV: package.properties.logoInFooterV, opportunities : package.properties.opportunities}" />
+
+									<f:if condition="{package.properties.costs}">
+										<span class="costs"><f:format.currency currencySign="€" decimalSeparator="," thousandsSeparator=".">{package.properties.costs}</f:format.currency></span>
+									</f:if>
+
+									<div class="callToAction">
+										<neos:link.node node="{package}" class="btn btn--solidSecondary">
+											<div class="btn__corner btn__corner--top">
+												<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
+													<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="14,10 0,10 14,0"></polygon>
+													<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"></line>
+												</svg>
+											</div>
+											<div class="btn__content">Explore the details</div>
+											<div class="btn__corner btn__corner--bottom">
+												<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" width="14px" height="10px" viewBox="0 0 14 10" enable-background="new 0 0 14 10" xml:space="preserve">
+													<polygon xmlns="http://www.w3.org/2000/svg" stroke-miterlimit="10" points="0,0 0,10 14,0"></polygon>
+													<line stroke-miterlimit="10" x1="0" y1="10" x2="14" y2="0"></line>
+												</svg>
+											</div>
+										</neos:link.node>
+									</div>
+							</div>
+						</div>
+					</div>
+				</f:cycle>
+			</f:for>
+		</div>
+	</f:if>
+	{main -> f:format.raw()}
+</div>

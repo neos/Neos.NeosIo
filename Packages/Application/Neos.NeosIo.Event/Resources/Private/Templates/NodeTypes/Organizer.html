@@ -1,0 +1,19 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace media=TYPO3\Media\ViewHelpers}
+
+<div{attributes -> f:format.raw()}>
+	<h1>{title}</h1>
+	<div class="g">
+		<div class="gi u-w1/1 u-wm1/2 u-wl1/2">
+			<f:if condition="{logo}">
+				<media:image asset="{logo}" title="{title}" alt="{title}" maximumWidth="700" maximumHeight="500" allowUpScaling="false" />
+			</f:if>
+		</div>
+		<div class="gi u-w1/1 u-wm1/2 u-wl1/2">
+			{neos:contentElement.editable(property: 'description', tag: 'p')}
+			<f:if condition="{website}">
+				<p><a href="{website}">{website}</a></p>
+			</f:if>
+		</div>
+	</div>
+</div>

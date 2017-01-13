@@ -1,0 +1,31 @@
+/**
+* NodeTypes around Speakers
+*/
+
+
+prototype(Neos.NeosIo.Event:Speaker.Document) < prototype(Neos.NeosIo.Event:DefaultPage) {
+	body {
+		content {
+			main = Neos.NeosIo.Event:Speaker
+		}
+	}
+}
+
+prototype(Neos.NeosIo.Event:Speaker) < prototype(TYPO3.Neos:Content) {
+	main = ContentCollection {
+		@cache.mode = 'cached'
+		nodePath = 'main'
+	}
+
+	belowFacts = ContentCollection {
+		@cache.mode = 'cached'
+		nodePath = 'belowFacts'
+	}
+
+	attributes {
+		class = TYPO3.TypoScript:RawArray {
+			camp = 'speaker'
+			@process.nodeType >
+		}
+	}
+}

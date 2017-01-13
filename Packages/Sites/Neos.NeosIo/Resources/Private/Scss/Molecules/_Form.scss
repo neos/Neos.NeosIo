@@ -70,6 +70,11 @@
 
 	.form__item {
 		margin-#{$end}: 1em;
+
+		@include max-screen(768px) {
+			margin-bottom: .5em;
+			margin-top: .5em;
+		}
 	}
 
 	label {

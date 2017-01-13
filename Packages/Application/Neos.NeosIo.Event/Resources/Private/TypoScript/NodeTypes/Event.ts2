@@ -1,0 +1,46 @@
+/**
+* NodeTypes around Events
+*/
+
+
+prototype(Neos.NeosIo.Event:Event.Document) < prototype(Neos.NeosIo:LandingPage.Document) {
+	body {
+		templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/Page/Event.Landingpage.html'
+		content {
+			main = Neos.NeosIo.Event:Event
+		}
+		logo = ${q(site).property('eventLogo')}
+		homepageLogo = ${q(site).property('homepageLogo')}
+		startDate = ${q(site).property('startDate')}
+		endDate = ${q(site).property('endDate')}
+		city = ${q(site).property('city')}
+		twitterHashTag = ${q(site).property('twitterHashTag')}
+
+		parts {
+			footerContent = Neos.NeosIo.Event:FooterContent
+			eventNav = Neos.NeosIo.Event:Menu
+		}
+	}
+
+	prototype(Neos.NeosIo:DefaultPage.Menu) {
+		subNavClasses = 'nav nav--stacked offCanvas__categoryList'
+	}
+
+	@cache {
+		entryTags {
+			event = 'NodeTypes_Neos.NeosIo.Event:Event'
+		}
+	}
+}
+
+prototype(Neos.NeosIo.Event:Event) < prototype(TYPO3.Neos:Content) {
+	templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/NodeTypes/Event.html'
+	main = ContentCollection {
+		@cache.mode = 'cached'
+		nodePath = 'main'
+	}
+}
+
+prototype(Neos.NeosIo.Event:Conference.Document) < prototype(Neos.NeosIo.Event:Event.Document)
+
+prototype(Neos.NeosIo.Event:Conference) < prototype(Neos.NeosIo.Event:Event)

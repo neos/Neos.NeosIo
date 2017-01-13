@@ -19,12 +19,12 @@
 	// Currently disabled on smallerThanLarge screens since the opened state for the siteNav
 	// is breaking when hiding the siteHeader.
 	//
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		transform: translateY(-100%);
 	}
 }
 .siteHeader--shaded {
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		height: 55px;
 		background: brand('secondary');
 	}
@@ -41,7 +41,7 @@
 	fill: currentColor;
 	transition: all .3s ease;
 
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		left: $double-spacing+px;
 		height: 50px;
 
@@ -57,9 +57,14 @@
 	z-index: 1;
 	transform: translateY(-50%);
 
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		display: none;
 		visibility: hidden;
+
+		.eventHeader & {
+			display: block;
+			visibility: visible;
+		}
 	}
 }
 .siteHeader__nav {
@@ -67,19 +72,30 @@
 	font-size: .95em;
 	line-height: $basic-spacing+px;
 
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		position: absolute;
 		top: 50%;
 		right: 3em;
 		transform: translateY(-50%);
+
+		.eventHeader & {
+			position: relative;
+			top: auto;
+			right: auto;
+			transform: none;
+		}
 	}
 
 	> li {
 		position: relative;
 
-		@include mq('large') {
+		@media screen and (min-width: 1350px) {
 			display: inline-block;
 			margin-left: $double-spacing+px;
+
+			.eventHeader & {
+				margin-left: 0;
+			}
 
 			> a {
 				padding: 5px 0;
@@ -88,7 +104,7 @@
 	}
 }
 .siteHeader__dropDownNav {
-	@include mq('large') {
+	@media screen and (min-width: 1350px) {
 		position: absolute;
 		top: 100%;
 		left: 50%;
@@ -140,6 +156,81 @@
 					color: brand('primary');
 				}
 			}
+		}
+	}
+
+	.eventHeader & {
+		display: none;
+	}
+}
+
+
+
+
+.eventHeader {
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, transparent 100%);
+	height: 150px;
+
+	.siteHeader__navToggler {
+		top: 20px;
+		transform: translateY(0%);
+	}
+
+	.hamburger__line {
+		background-color: $headingsColor;
+	}
+}
+
+.eventKeyVisual {
+	.keyVisual__contents {
+		img {
+			padding: 0 1em;
+
+			@include mq('medium') {
+				padding: 0;
+			}
+		}
+	}
+}
+
+.event-logo,
+.event-logo-signet {
+	transform: translateY(0%);
+	height: auto;
+	top: 20px;
+
+	@include mq('medium') {
+		top: 13px;
+	}
+}
+
+.event-logo {
+	max-width: 230px;
+}
+
+.event-logo-signet {
+	max-width: 20px;
+
+	@include mq('medium') {
+		max-width: 47.5px;
+	}
+}
+
+.eventNav {
+	background: brand('secondary');
+	text-align: center;
+
+	li {
+		margin-left: 20px;
+
+		@include mq('medium') {
+			margin-left: 52px;
+		}
+
+		& > a {
+			display: block;
+			padding: 5px 0;
+			color: #fff;
 		}
 	}
 }
