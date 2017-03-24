@@ -1,0 +1,33 @@
+TYPO3:
+  SwiftMailer:
+    transport:
+      type: 'Swift_SmtpTransport'
+      options:
+        host: 'smtp.mailgun.org'
+        port: 2525
+        username: '%env:SWIFTMAILER_USERNAME%'
+        password: '%env:SWIFTMAILER_PASSWORD%'
+
+  Neos:
+    GoogleAnalytics:
+      authentication:
+        applicationName: 'Neos'
+        clientId: '%env:GOOGLE_ANALYTICS_CLIENT_ID%'
+        clientSecret: '%env:GOOGLE_ANALYTICS_CLIENT_SECRET%'
+        developerKey: '%env:GOOGLE_ANALYTICS_CLIENT_DEVELOPER_KEY%'
+
+Neos:
+  NeosIo:
+    googleAnalyticsTrackingCode: '%env:GOOGLE_ANALYTICS_TRACKING_CODE%'
+    crowdApi:
+      username: '%env:CROWD_API_USERNAME%'
+      password: '%env:CROWD_API_PASSWORD%'
+
+Flowpack:
+  ElasticSearch:
+    clients:
+      default:
+       - host: 'elasticsearch.default.svc.cluster.local'
+         port: '9200'
+       - host: 'elasticsearch.default.svc.cluster.local'
+         port: '9200'
