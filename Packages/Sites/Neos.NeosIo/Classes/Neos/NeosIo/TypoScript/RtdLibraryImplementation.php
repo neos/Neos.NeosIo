@@ -6,7 +6,7 @@ namespace Neos\NeosIo\TypoScript;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Utility\Arrays;
+use Neos\Utility\Arrays;
 use TYPO3\TypoScript\TypoScriptObjects\Helpers\FluidView;
 
 /**
