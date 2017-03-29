@@ -2,55 +2,54 @@
 # Routes configuration                                                   #
 
 ##
-# Flowpack SearchPlugin subroutes
+# Flowpack SearchPlugin sub routes
 
 -
   name: 'FlowpackSearchPlugin'
-  uriPattern: '<FlowpackSearchPluginSubroutes>'
+  uriPattern: '<FlowpackSearchPluginSubRoutes>'
   subRoutes:
-    FlowpackSearchPluginSubroutes:
+    FlowpackSearchPluginSubRoutes:
       package: Flowpack.SearchPlugin
       variables:
         'defaultUriSuffix': '.html'
 
 ##
-# TYPO3 Neos Seo: XML Sitemap
+# Neos Seo: XML sitemap
 
 -
-  name: 'TYPO3 Neos Seo'
-  uriPattern: '<TYPO3NeosSeoSubroutes>'
+  name: 'Neos Seo'
+  uriPattern: '<NeosSeoSubRoutes>'
   subRoutes:
-    'TYPO3NeosSeoSubroutes':
-      package: 'TYPO3.Neos.Seo'
+    'NeosNeosSeoSubRoutes':
+      package: 'Neos.Seo'
       variables:
         'xmlSitemapPath': 'sitemap.xml'
 
 ##
-# Ttree OutOfBandRendering subroutes
+# Ttree OutOfBandRendering sub routes
 -
   name: 'Ttree.OutOfBandRendering'
-  uriPattern: '<TtreeOutOfBandRenderingSubroutes>'
+  uriPattern: '<TtreeOutOfBandRenderingSubRoutes>'
   subRoutes:
-    'TtreeOutOfBandRenderingSubroutes':
+    'TtreeOutOfBandRenderingSubRoutes':
       package: 'Ttree.OutOfBandRendering'
       variables:
         'defaultUriSuffix': ''
 
 -
   name: 'neos.io'
-  uriPattern: '<NeosIoSubroutes>'
+  uriPattern: '<NeosIoSubRoutes>'
   subRoutes:
-    'NeosIoSubroutes':
+    'NeosIoSubRoutes':
       package: 'Neos.NeosIo'
 
 ##
-# TYPO3 Neos subroutes
-
+# Neos sub routes
 -
-  name: 'TYPO3Neos'
-  uriPattern: '<TYPO3NeosSubroutes>'
+  name: 'NeosNeos'
+  uriPattern: '<NeosNeosSubRoutes>'
   subRoutes:
-    TYPO3NeosSubroutes:
-      package: TYPO3.Neos
+    NeosNeosSubRoutes:
+      package: Neos.Neos
       variables:
         'defaultUriSuffix': '.html'

@@ -12,4 +12,4 @@ docker exec "${BEACH_DEV_PROJECT_NAME}_php_1" /bin/bash -c "chown -R beach:beach
 docker exec "${BEACH_DEV_PROJECT_NAME}_sidecar_1" /bin/bash -c "cd /application; ./flow doctrine:migrate"
 
 
-echo "You can now open ${BEACH_SITE_URI} in a browser. Have a neos day!"
+echo "You can now open ${BEACH_SITE_BASE_URI} in a browser. Have a neos day!"
