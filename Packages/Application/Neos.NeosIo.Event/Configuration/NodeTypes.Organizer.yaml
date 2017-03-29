@@ -4,44 +4,44 @@
 
 'Neos.NeosIo.Event:Organizer':
   superTypes:
-    'TYPO3.Neos:Document': true
+    'TYPO3.Neos:Document': '1'
   constraints:
     nodeTypes:
       'TYPO3.Neos.NodeTypes:Page': false
       'Neos.NeosIo.Event:Event': false
   ui:
-    label: 'Organizer'
-    icon: 'icon-gear'
-    group: 'event'
+    label: Organizer
+    icon: icon-gear
+    group: event
     inspector:
       groups:
-        'organizer':
+        organizer:
           label: 'Organizer properties'
   properties:
-    'logo':
+    logo:
       type: TYPO3\Media\Domain\Model\ImageInterface
       ui:
-        label: 'Logo'
+        label: Logo
         reloadIfChanged: true
         inspector:
-          group: 'organizer'
+          group: organizer
           position: 10
-    'description':
-      type: 'string'
-      ui:
-        label: 'Description'
-        inlineEditable: true
-        inspector:
-          group: 'organizer'
-          position: 15
-    'website':
+    description:
       type: string
       ui:
-        label: Website'
+        label: Description
+        inlineEditable: true
         inspector:
-          group: 'organizer'
+          group: organizer
+          position: 15
+    website:
+      type: string
+      ui:
+        label: 'Website'''
+        inspector:
+          group: organizer
           position: 20
-          editor: 'TYPO3.Neos/Inspector/Editors/LinkEditor'
+          editor: TYPO3.Neos/Inspector/Editors/LinkEditor
           editorOptions:
             assets: false
             nodeTypes: false

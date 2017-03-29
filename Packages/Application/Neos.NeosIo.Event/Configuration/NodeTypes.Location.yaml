@@ -4,26 +4,26 @@
 
 'Neos.NeosIo.Event:Location':
   superTypes:
-    'TYPO3.Neos:Document': true
-    'Neos.NeosIo:Address': true
+    'TYPO3.Neos:Document': '1'
+    'Neos.NeosIo:Address': '1'
   constraints:
     nodeTypes:
       'TYPO3.Neos.NodeTypes:Page': false
       'Neos.NeosIo.Event:Event': false
   ui:
-    label: 'Location'
-    icon: 'icon-home'
-    group: 'event'
+    label: Location
+    icon: icon-home
+    group: event
     inspector:
       groups:
-        'event':
+        event:
           label: 'Location properties'
   properties:
-    'teaserImage':
+    teaserImage:
       type: TYPO3\Media\Domain\Model\ImageInterface
       ui:
         label: 'Teaser Image'
         reloadIfChanged: true
         inspector:
-          group: 'event'
+          group: event
           position: 10

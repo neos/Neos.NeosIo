@@ -4,50 +4,50 @@
 
 'Neos.NeosIo.Event:Sponsor.Partner':
   superTypes:
-    'TYPO3.Neos.NodeTypes:Page': true
+    'TYPO3.Neos.NodeTypes:Page': '1'
   constraints:
     nodeTypes:
       'TYPO3.Neos.NodeTypes:Page': false
       'Neos.NeosIo.Event:Event': false
   ui:
-    label: 'Sponsor'
-    icon: 'icon-credit-card-alt'
-    group: 'event'
+    label: Sponsor
+    icon: icon-credit-card-alt
+    group: event
     inspector:
       groups:
-        'sponsor':
+        sponsor:
           label: 'Sponsor properties'
   properties:
-    'logo':
+    logo:
       type: TYPO3\Media\Domain\Model\ImageInterface
       ui:
-        label: 'Logo'
+        label: Logo
         reloadIfChanged: true
         inspector:
-          group: 'sponsor'
+          group: sponsor
           position: 10
-    'description':
+    description:
       type: string
       ui:
-        label: 'Biography'
+        label: Biography
         inlineEditable: true
         inspector:
-          group: 'sponsor'
-          editor: 'TYPO3.Neos/Inspector/Editors/TextAreaEditor'
+          group: sponsor
+          editor: TYPO3.Neos/Inspector/Editors/TextAreaEditor
           editorOptions:
             rows: 7
-    'twitterName':
+    twitterName:
       type: string
       ui:
         label: 'Twitter Name'
         reloadIfChanged: true
         inspector:
-          group: 'sponsor'
-    'link':
+          group: sponsor
+    link:
       type: string
       ui:
-        label: 'Link'
+        label: Link
         reloadIfChanged: true
         inspector:
-          group: 'sponsor'
-          editor: 'TYPO3.Neos/Inspector/Editors/LinkEditor'
+          group: sponsor
+          editor: TYPO3.Neos/Inspector/Editors/LinkEditor

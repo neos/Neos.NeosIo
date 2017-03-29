@@ -4,55 +4,55 @@
 
 'Neos.NeosIo.Event:Speaker':
   superTypes:
-    'Neos.NeosIo.Event:Person': true
+    'Neos.NeosIo.Event:Person': '1'
   constraints:
     nodeTypes:
       'TYPO3.Neos.NodeTypes:Page': false
   childNodes:
-    'belowFacts':
+    belowFacts:
       type: 'TYPO3.Neos:ContentCollection'
       constraints:
         nodeTypes:
           'Neos.NeosIo:HeadlineSlider': false
   ui:
-    label: 'Speaker'
-    icon: 'icon-user'
+    label: Speaker
+    icon: icon-user
     inspector:
       groups:
-        'person':
+        person:
           label: 'Speaker properties'
   properties:
-    'twitterName':
+    twitterName:
       type: string
       ui:
         label: 'Twitter Name'
         inlineEditable: true
         inspector:
-          group: 'person'
-    'biography':
+          group: person
+    biography:
       type: string
       ui:
-        label: 'Biography'
+        label: Biography
         inspector:
-          group: 'person'
-          editor: 'TYPO3.Neos/Inspector/Editors/TextAreaEditor'
+          group: person
+          editor: TYPO3.Neos/Inspector/Editors/TextAreaEditor
           editorOptions:
             rows: 7
-    'typeOfTalk':
+    typeOfTalk:
       type: array
       ui:
         label: 'Type of talk'
         reloadIfChanged: true
         inspector:
-          group: 'person'
+          group: person
           editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             multiple: true
             allowEmpty: false
             values:
-              'keynote':
-                label: 'Keynote'
-              'talk':
-                label: 'Talk'
-              'showcase':
-                label: 'Showcase'
+              keynote:
+                label: Keynote
+              talk:
+                label: Talk
+              showcase:
+                label: Showcase

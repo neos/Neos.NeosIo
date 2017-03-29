@@ -4,80 +4,77 @@
 
 'Neos.NeosIo.Event:Sponsor.Package':
   superTypes:
-    'TYPO3.Neos.NodeTypes:Page': true
+    'TYPO3.Neos.NodeTypes:Page': '1'
   constraints:
     nodeTypes:
       'TYPO3.Neos.NodeTypes:Page': false
       'Neos.NeosIo.Event:Event': false
   ui:
     label: 'Sponsor Package'
-    icon: 'icon-credit-card'
-    group: 'event'
+    icon: icon-credit-card
+    group: event
     inspector:
       groups:
-        'package':
+        package:
           label: 'Sponsor package properties'
   properties:
-    'freeTickets':
-      type: 'integer'
+    freeTickets:
+      type: integer
       defaultValue: '1'
       ui:
         label: 'Free tickets included'
         inlineEditable: true
         inspector:
-          group: 'package'
+          group: package
           position: 15
-    'costs':
+    costs:
       type: string
       ui:
         label: 'Costs (vat excl.)'
         inlineEditable: true
         inspector:
-          group: 'package'
+          group: package
           position: 20
-    'logoOnFrontpageP':
+    logoOnFrontpageP:
       type: boolean
       ui:
         label: 'Logo on frontpage (permanent)'
         inlineEditable: true
         inspector:
-          group: 'package'
-          group:
+          group: package
           position: 25
-    'logoOnFrontpageV':
+    logoOnFrontpageV:
       type: boolean
       ui:
         label: 'Logo on frontpage (variable)'
         inlineEditable: true
         inspector:
-          group: 'package'
-          group:
+          group: package
           position: 30
-    'logoInFooterP':
+    logoInFooterP:
       type: boolean
       ui:
         label: 'Logo in footer area (permanent)'
         inlineEditable: true
         inspector:
-          group: 'package'
-          group:
+          group: package
           position: 35
-    'logoInFooterV':
+    logoInFooterV:
       type: boolean
       ui:
         label: 'Logo in footer area (variable)'
         inlineEditable: true
         inspector:
-          group: 'package'
-          group:
+          group: package
           position: 40
-    'opportunities':
+    opportunities:
       type: references
       ui:
         label: 'Opportunities of this package'
         reloadIfChanged: true
         inspector:
-          group: 'package'
+          group: package
           position: 50
           editorOptions:
-            nodeTypes: ['Neos.NeosIo.Event:Sponsor.Opportunity']
+            nodeTypes:
+              - 'Neos.NeosIo.Event:Sponsor.Opportunity'
