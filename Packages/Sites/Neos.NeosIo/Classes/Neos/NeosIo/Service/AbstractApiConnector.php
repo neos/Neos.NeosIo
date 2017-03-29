@@ -7,7 +7,7 @@ namespace Neos\NeosIo\Service;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Cache\Frontend\VariableFrontend;
+use Neos\Cache\Frontend\VariableFrontend;
 use Neos\Flow\Http\Client\Browser;
 use Neos\Flow\Http\Client\CurlEngine;
 use Neos\Flow\Http\Uri;
