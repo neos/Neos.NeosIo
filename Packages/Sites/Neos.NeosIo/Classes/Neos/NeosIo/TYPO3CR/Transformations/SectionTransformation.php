@@ -2,9 +2,9 @@
 namespace Neos\NeosIo\TYPO3CR\Transformations;
 
 use Neos\Flow\Annotations as Flow;
-use TYPO3\TYPO3CR\Domain\Factory\NodeFactory;
-use TYPO3\TYPO3CR\Domain\Model\NodeData;
-use TYPO3\TYPO3CR\Migration\Transformations\AbstractTransformation;
+use Neos\ContentRepository\Domain\Factory\NodeFactory;
+use Neos\ContentRepository\Domain\Model\NodeData;
+use Neos\ContentRepository\Migration\Transformations\AbstractTransformation;
 
 class SectionTransformation extends AbstractTransformation
 {

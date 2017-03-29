@@ -1,12 +1,5 @@
 
 TYPO3:
-  TYPO3CR:
-    Search:
-      realtimeIndexing:
-        enabled: true
-      indexAllWorkspaces: false
-      elasticSearch:
-        indexName: wwwneosio
   TypoScript:
     defaultContext:
       Data: Neos\NeosIo\Eel\Helper\DataHelper
@@ -70,3 +63,10 @@ Neos:
         special:
           position: 'after general'
           label: Special
+  ContentRepository:
+    Search:
+      realtimeIndexing:
+        enabled: true
+      indexAllWorkspaces: false
+      elasticSearch:
+        indexName: wwwneosio
