@@ -5,43 +5,43 @@
 
 'Neos.NeosIo:ImageTeaser':
   superTypes:
-    'TYPO3.Neos:Content': TRUE
-    'TYPO3.Neos.NodeTypes:TitleMixin': TRUE
-    'TYPO3.Neos.NodeTypes:ImageMixin': TRUE
-    'TYPO3.Neos.NodeTypes:LinkMixin': TRUE
+    'TYPO3.Neos:Content': '1'
+    'TYPO3.Neos.NodeTypes:TitleMixin': '1'
+    'TYPO3.Neos.NodeTypes:ImageMixin': '1'
+    'TYPO3.Neos.NodeTypes:LinkMixin': '1'
   ui:
     label: 'Teaser with image'
-    icon: 'icon-th-large'
-    inlineEditable: TRUE
-    group: 'special'
+    icon: icon-th-large
+    inlineEditable: true
+    group: special
     inspector:
       groups:
-        'content':
-          label: 'Content'
+        content:
+          label: Content
   properties:
-    'subTitle':
+    subTitle:
       type: string
-      defaultValue: 'Sub-Headline...'
+      defaultValue: Sub-Headline...
       ui:
-        inlineEditable: TRUE
+        inlineEditable: true
         aloha:
-          format: []
-          table: []
-          link: []
-          list: []
-          alignment: []
+          format: {  }
+          table: {  }
+          link: {  }
+          list: {  }
+          alignment: {  }
           formatlesspaste:
-            button: FALSE
-            formatlessPasteOption: TRUE
-    'title':
+            button: false
+            formatlessPasteOption: true
+    title:
       type: string
-      defaultValue: 'Headline...'
-    'link':
+      defaultValue: Headline...
+    link:
       ui:
         label: 'Teaser Link'
         inspector:
-          group: 'content'
-    'openInNewTab':
+          group: content
+    openInNewTab:
       ui:
         inspector:
-          group: 'content'
+          group: content

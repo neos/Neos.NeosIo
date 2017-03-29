@@ -1,23 +1,24 @@
+
 'Neos.NeosIo:PostFeatured':
   superTypes:
-    'TYPO3.Neos:Content': TRUE
+    'TYPO3.Neos:Content': '1'
   ui:
     label: 'Post featured'
-    icon: 'icon-star'
-    group: 'plugins'
+    icon: icon-star
+    group: plugins
     inspector:
       groups:
-        'properties':
-          label: Featured Post properties
+        properties:
+          label: 'Featured Post properties'
           position: 1
-
   properties:
-    'blogPost':
+    blogPost:
       type: reference
       ui:
         label: 'Choose blog post to link'
         reloadIfChanged: true
         inspector:
-          group: 'properties'
+          group: properties
           editorOptions:
-            nodeTypes: ['Neos.NeosIo:Post']
+            nodeTypes:
+              - 'Neos.NeosIo:Post'

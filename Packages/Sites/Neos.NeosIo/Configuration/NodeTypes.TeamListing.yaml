@@ -1,11 +1,12 @@
+
 'Neos.NeosIo:TeamListing':
   superTypes:
-    'TYPO3.Neos:Content': true
-    'TYPO3.Neos.NodeTypes:TitleMixin': true
+    'TYPO3.Neos:Content': '1'
+    'TYPO3.Neos.NodeTypes:TitleMixin': '1'
   ui:
     label: 'Teams & Guilds'
-    group: 'plugins'
-    icon: 'icon-group'
+    group: plugins
+    icon: icon-group
     inspector:
       groups:
         options:
@@ -16,18 +17,18 @@
       type: string
       ui:
         label: 'What to show'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
-          group: 'options'
+          group: options
           editor: Content/Inspector/Editors/SelectBoxEditor
           editorOptions:
             placeholder: 'Select one'
             values:
               '':
-                label: 'None'
-              'team':
+                label: None
+              team:
                 label: 'Neos teams'
-              'guild':
+              guild:
                 label: 'Neos guilds'
-              'council':
+              council:
                 label: 'Neos Council'

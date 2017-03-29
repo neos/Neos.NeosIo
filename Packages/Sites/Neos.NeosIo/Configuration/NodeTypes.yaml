@@ -1,17 +1,17 @@
 ##
 # Modify base types
 #
+
 'TYPO3.Neos:Document':
   constraints:
     nodeTypes:
       'Neos.NeosIo:RootPage': false
       'Neos.NeosIo:FooterContainer': false
-
 'TYPO3.Neos.NodeTypes:Page':
   superTypes:
-    'Neos.NeosIo:KeyVisualMixin': TRUE
+    'Neos.NeosIo:KeyVisualMixin': '1'
   childNodes:
-    'main':
+    main:
       constraints:
         nodeTypes:
           'Neos.NeosIo:FactsGrid': false
@@ -21,12 +21,10 @@
           'Neos.NeosIo:HeadlineSlider': false
           'Neos.NeosIo:Button': false
           'Neos.NeosIo:ChoiceButtons': false
-
 'TYPO3.Neos.NodeTypes:ImageCaptionMixin':
   properties:
-    hasCaption: ~
-    alignment: ~
-
+    hasCaption: null
+    alignment: null
 'TYPO3.Neos.NodeTypes:LinkMixin':
   properties:
     link:
@@ -38,44 +36,37 @@
         label: 'Open in new Tab'
         inspector:
           position: 310
-
 'TYPO3.Neos.NodeTypes:ContentImageMixin':
   properties:
     openInNewTab:
       ui:
         inspector:
-          group: 'image'
-
+          group: image
 'TYPO3.Neos.NodeTypes:Text':
   properties:
     text:
       ui:
         aloha:
-          'format':
-            'h4': TRUE
-            'h5': TRUE
-
+          format:
+            h4: true
+            h5: true
 'TYPO3.Neos.NodeTypes:TextWithImage':
   properties:
     text:
       ui:
         aloha:
-          'format':
-            'h4': TRUE
-            'h5': TRUE
-
+          format:
+            h4: true
+            h5: true
 'TYPO3.Neos.NodeTypes:AssetList':
   ui:
     label: 'File list'
-
 'TYPO3.Neos.NodeTypes:Form':
   ui:
-    group: 'special'
-
+    group: special
 'TYPO3.Neos.NodeTypes:Html':
   ui:
-    group: 'special'
-
+    group: special
 'Neos.NeosIo:MediaQueryMixin':
   abstract: true
   properties:
@@ -83,27 +74,26 @@
       type: boolean
       ui:
         label: 'Display on small MQ only'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
-          group: 'visibility'
+          group: visibility
           position: 100
     displayLargeMq:
       type: boolean
       ui:
         label: 'Display in large MQ only'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
-          group: 'visibility'
+          group: visibility
           position: 120
     displayAllMq:
       type: boolean
       ui:
         label: 'Display on all MQ'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
-          group: 'visibility'
+          group: visibility
           position: 130
-
 'TYPO3.Neos:Content':
   superTypes:
-    'Neos.NeosIo:MediaQueryMixin': TRUE
+    'Neos.NeosIo:MediaQueryMixin': '1'

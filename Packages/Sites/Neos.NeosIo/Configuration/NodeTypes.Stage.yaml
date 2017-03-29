@@ -5,118 +5,118 @@
 
 'Neos.NeosIo:Stage':
   superTypes:
-    'TYPO3.Neos:Content': TRUE
+    'TYPO3.Neos:Content': '1'
   childNodes:
-    'contents':
+    contents:
       type: 'TYPO3.Neos:ContentCollection'
       constraints:
         nodeTypes:
-          '*': FALSE
-          'TYPO3.Neos.NodeTypes:TwoColumn': TRUE
-          'TYPO3.Neos.NodeTypes:ThreeColumn': TRUE
-          'TYPO3.Neos.NodeTypes:FourColumn': TRUE
-          'TYPO3.Neos.NodeTypes:Text': TRUE
-          'TYPO3.Neos.NodeTypes:Image': TRUE
-          'TYPO3.Neos.NodeTypes:TextWithImage': TRUE
-          'TYPO3.Neos.NodeTypes:Headline': TRUE
-          'TYPO3.Neos.NodeTypes:Html': TRUE
-          'TYPO3.Neos.NodeTypes:ContentReferences': TRUE
-          'Neos.NeosIo:Box': TRUE
-          'Neos.NeosIo:Button': TRUE
-          'Neos.NeosIo:ChoiceButtons': TRUE
-          'Neos.NeosIo:Quote': TRUE
-          'Neos.NeosIo:SemanticSection': TRUE
-          'Neos.NeosIo:Youtube': TRUE
-          'Neos.NeosIo:FundingBadges': TRUE
+          '*': false
+          'TYPO3.Neos.NodeTypes:TwoColumn': true
+          'TYPO3.Neos.NodeTypes:ThreeColumn': true
+          'TYPO3.Neos.NodeTypes:FourColumn': true
+          'TYPO3.Neos.NodeTypes:Text': true
+          'TYPO3.Neos.NodeTypes:Image': true
+          'TYPO3.Neos.NodeTypes:TextWithImage': true
+          'TYPO3.Neos.NodeTypes:Headline': true
+          'TYPO3.Neos.NodeTypes:Html': true
+          'TYPO3.Neos.NodeTypes:ContentReferences': true
+          'Neos.NeosIo:Box': true
+          'Neos.NeosIo:Button': true
+          'Neos.NeosIo:ChoiceButtons': true
+          'Neos.NeosIo:Quote': true
+          'Neos.NeosIo:SemanticSection': true
+          'Neos.NeosIo:Youtube': true
+          'Neos.NeosIo:FundingBadges': true
   ui:
-    label: 'Stage'
-    icon: 'icon-tasks'
-    group: 'structure'
-    inlineEditable: TRUE
+    label: Stage
+    icon: icon-tasks
+    group: structure
+    inlineEditable: true
     inspector:
       groups:
         content:
-          label: 'Content'
+          label: Content
           position: 1
         background:
-          label: 'Background'
+          label: Background
           position: 2
   properties:
-    'isContentTextInverted':
+    isContentTextInverted:
       type: boolean
       defaultValue: false
       ui:
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         label: 'Invert Text-Color'
         inspector:
-          group: 'content'
-    'isContentExtraPadded':
+          group: content
+    isContentExtraPadded:
       type: boolean
       defaultValue: false
       ui:
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         label: 'Create more padding around the contents'
         inspector:
-          group: 'content'
-    'backgroundColor':
+          group: content
+    backgroundColor:
       type: string
-      defaultValue: 'bright'
+      defaultValue: bright
       ui:
         label: 'Background color'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
-          group: 'background'
-          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          group: background
+          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             values:
-              'bright':
-                label: 'Bright'
-              'dark':
-                label: 'Dark'
-              'primary':
-                label: 'Primary'
-              'secondary':
-                label: 'Secondary'
-              'teritary':
-                label: 'Teritary'
-    'backgroundImage':
+              bright:
+                label: Bright
+              dark:
+                label: Dark
+              primary:
+                label: Primary
+              secondary:
+                label: Secondary
+              teritary:
+                label: Teritary
+    backgroundImage:
       type: TYPO3\Media\Domain\Model\ImageInterface
       ui:
         label: 'Background image'
         inspector:
-          group: 'background'
-    'backgroundShadePercentage':
+          group: background
+    backgroundShadePercentage:
       type: string
       defaultValue: '0'
       ui:
         label: 'Background image shading'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
-          group: 'background'
-          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          group: background
+          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             values:
-              '0':
-                label: 'None'
-              '20':
-                label: '20%'
-              '40':
-                label: '40%'
-              '60':
-                label: '60%'
-              '80':
-                label: '80%'
+              0:
+                label: None
+              20:
+                label: 20%
+              40:
+                label: 40%
+              60:
+                label: 60%
+              80:
+                label: 80%
     alternativeText:
       type: string
       ui:
         label: 'Alternative text for background image'
         inspector:
-          group: 'background'
+          group: background
           position: 100
     title:
       type: string
       ui:
         label: 'Title for background image'
         inspector:
-          group: 'background'
+          group: background
           position: 150

@@ -1,90 +1,92 @@
+
 'Neos.NeosIo:ReferenceType':
-  superTypes: ['TYPO3.Neos:Document']
+  superTypes:
+    - 'TYPO3.Neos:Document'
   ui:
     label: 'Reference Type'
-    icon: 'icon-tag'
-
+    icon: icon-tag
 'Neos.NeosIo:Reference':
   superTypes:
-    'TYPO3.Neos:Document': TRUE
-  abstract: TRUE
+    'TYPO3.Neos:Document': '1'
+  abstract: true
   ui:
-    label: 'Reference'
-    icon: 'icon-globe'
+    label: Reference
+    icon: icon-globe
     inspector:
       groups:
-        'properties':
-          label: Reference properties
+        properties:
+          label: 'Reference properties'
           position: 1
   properties:
-    'url':
+    url:
       type: string
       ui:
         label: 'Project URL'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
-          group: 'properties'
-          editor: 'TYPO3.Neos/Inspector/Editors/LinkEditor'
+          group: properties
+          editor: TYPO3.Neos/Inspector/Editors/LinkEditor
           position: 10
-    'image':
+    image:
       type: TYPO3\Media\Domain\Model\ImageInterface
       ui:
         label: 'Add reference screenshot'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
-          group: 'properties'
+          group: properties
           position: 20
-    'projectType':
+    projectType:
       type: reference
       ui:
         label: 'Choose project type'
         reloadIfChanged: true
         inspector:
-          group: 'properties'
+          group: properties
           editorOptions:
-            nodeTypes: ['Neos.NeosIo:ReferenceType']
+            nodeTypes:
+              - 'Neos.NeosIo:ReferenceType'
       search:
-        fulltextExtractor: ${Indexing.extractInto('h2', value.properties.title)}
-    'launchDate':
+        fulltextExtractor: '${Indexing.extractInto(''h2'', value.properties.title)}'
+    launchDate:
       type: DateTime
       ui:
         label: 'Launch date'
         inspector:
-          group: 'properties'
+          group: properties
       validation:
-        'TYPO3.Neos/Validation/DateTimeValidator': []
+        TYPO3.Neos/Validation/DateTimeValidator: {  }
       search:
         indexing: '${(value ? Date.format(value, "Y-m-d\TH:i:sP") : null)}'
-    'datePublished':
+    datePublished:
       type: DateTime
       ui:
         label: 'Date published'
         inspector:
-          group: 'properties'
+          group: properties
       validation:
-        'TYPO3.Neos/Validation/DateTimeValidator': []
+        TYPO3.Neos/Validation/DateTimeValidator: {  }
       search:
         indexing: '${(value ? Date.format(value, "Y-m-d\TH:i:sP") : null)}'
-    'projectVolume':
+    projectVolume:
       type: string
       defaultValue: '1'
       ui:
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         label: 'Project volume'
         inspector:
           editor: Content/Inspector/Editors/SelectBoxEditor
-          group: 'properties'
+          group: properties
           editorOptions:
             values:
-              '1':
-                label: 'Unknown'
-              '5':
+              1:
+                label: Unknown
+              5:
                 label: '< 100 h'
-              '10':
+              10:
                 label: '100 - 499h'
-              '15':
+              15:
                 label: '500 - 999h'
-              '20':
+              20:
                 label: '1000 - 3000h'
-              '25':
+              25:
                 label: '> 3000h'

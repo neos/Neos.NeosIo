@@ -5,29 +5,29 @@
 
 'Neos.NeosIo:Quote':
   superTypes:
-    'TYPO3.Neos:Content': TRUE
+    'TYPO3.Neos:Content': '1'
   ui:
-    label: 'Quote'
-    icon: 'icon-quote-left'
-    inlineEditable: TRUE
-    group: 'special'
+    label: Quote
+    icon: icon-quote-left
+    inlineEditable: true
+    group: special
     inspector:
       groups:
-        'author':
-          label: 'Author'
+        author:
+          label: Author
   properties:
-    'quote':
+    quote:
       type: string
       defaultValue: 'Lorem ipsum dolor sit...'
-      inlineEditable: TRUE
-    'author':
+      inlineEditable: true
+    author:
       type: string
       defaultValue: 'Max Mustermann, Founder of Neos'
-      inlineEditable: TRUE
-    'authorAvatar':
+      inlineEditable: true
+    authorAvatar:
       type: TYPO3\Media\Domain\Model\ImageInterface
       ui:
         label: 'Author avatar'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
-          group: 'author'
+          group: author

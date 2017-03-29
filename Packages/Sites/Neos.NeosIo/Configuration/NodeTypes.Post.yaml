@@ -1,145 +1,147 @@
+
 'Neos.NeosIo:Post':
   superTypes:
-    'TYPO3.Neos.NodeTypes:Page': TRUE
-    'TYPO3.Neos.NodeTypes:ImageMixin': TRUE
-    'TYPO3.Neos.NodeTypes:ImageCaptionMixin': TRUE
-    'TYPO3.Neos.Seo:TitleTagMixin': FALSE
-    'TYPO3.Neos.Seo:TwitterCardMixin': FALSE
-    'TYPO3.Neos.Seo:CanonicalLinkMixin': FALSE
-    'TYPO3.Neos.Seo:OpenGraphMixin': FALSE
-    'TYPO3.Neos.Seo:XmlSitemapMixin': FALSE
-    'Neos.NeosIo:KeyVisualMixin': FALSE
+    'TYPO3.Neos.NodeTypes:Page': '1'
+    'TYPO3.Neos.NodeTypes:ImageMixin': '1'
+    'TYPO3.Neos.NodeTypes:ImageCaptionMixin': '1'
+    'TYPO3.Neos.Seo:TitleTagMixin': ''
+    'TYPO3.Neos.Seo:TwitterCardMixin': ''
+    'TYPO3.Neos.Seo:CanonicalLinkMixin': ''
+    'TYPO3.Neos.Seo:OpenGraphMixin': ''
+    'TYPO3.Neos.Seo:XmlSitemapMixin': ''
+    'Neos.NeosIo:KeyVisualMixin': ''
   ui:
-    label: 'Post'
-    icon: 'icon-newspaper-o'
+    label: Post
+    icon: icon-newspaper-o
     inspector:
       groups:
         options:
-          label: 'Options'
+          label: Options
           position: 20
         author:
-          label: 'Author'
+          label: Author
           position: 30
         image:
           position: 40
           collapsed: true
         seometa:
           position: 50
-          tab: ~
+          tab: null
   properties:
     datePublished:
-      type: 'DateTime'
-      defaultValue: 'now'
+      type: DateTime
+      defaultValue: now
       ui:
         label: 'Publication Date'
-        reloadPageIfChanged: TRUE
+        reloadPageIfChanged: true
         inspector:
-          group: 'options'
+          group: options
           editorOptions:
-            format: 'Y-m-d'
+            format: Y-m-d
       validation:
-        'TYPO3.Neos/Validation/NotEmptyValidator': []
-        'TYPO3.Neos/Validation/DateTimeValidator': []
+        TYPO3.Neos/Validation/NotEmptyValidator: {  }
+        TYPO3.Neos/Validation/DateTimeValidator: {  }
     title:
-      validation: ~
+      validation: null
       ui:
-        inlineEditable: TRUE
+        inlineEditable: true
         inspector:
-          group: ~
+          group: null
         aloha:
           placeholder: 'Enter title here'
-          'format':
-            'b': TRUE
-            'i': TRUE
-            'u': TRUE
-            'sub': TRUE
-            'sup': TRUE
-            'p': FALSE
-            'h1': FALSE
-            'h2': FALSE
-            'h3': FALSE
-            'pre': FALSE
-            'removeFormat': FALSE
-          'table': []
-          'list': []
-          'link':
-            'a': TRUE
-          'alignment': []
-          'formatlesspaste':
-            'button': FALSE
-            'formatlessPasteOption': TRUE
+          format:
+            b: true
+            i: true
+            u: true
+            sub: true
+            sup: true
+            p: false
+            h1: false
+            h2: false
+            h3: false
+            pre: false
+            removeFormat: false
+          table: {  }
+          list: {  }
+          link:
+            a: true
+          alignment: {  }
+          formatlesspaste:
+            button: false
+            formatlessPasteOption: true
     summary:
-      type: 'string'
+      type: string
       ui:
-        inlineEditable: TRUE
+        inlineEditable: true
         aloha:
           placeholder: 'Enter summary here'
           format:
-            b: TRUE
-            i: TRUE
-            u: TRUE
-            sub: TRUE
-            sup: TRUE
-            p: TRUE
-            h1: TRUE
-            h2: TRUE
-            h3: TRUE
-            h4: FALSE
-            h5: FALSE
-            h6: FALSE
-            removeFormat: TRUE
+            b: true
+            i: true
+            u: true
+            sub: true
+            sup: true
+            p: true
+            h1: true
+            h2: true
+            h3: true
+            h4: false
+            h5: false
+            h6: false
+            removeFormat: true
           table:
-            table: TRUE
+            table: true
           link:
-            a: TRUE
+            a: true
           list:
-            ul: TRUE
-            ol: TRUE
+            ul: true
+            ol: true
           alignment:
-            left: TRUE
-            center: TRUE
-            right: TRUE
-            justify: TRUE
+            left: true
+            center: true
+            right: true
+            justify: true
     featured:
       type: boolean
       ui:
-        label: 'Featured'
+        label: Featured
         inspector:
-          group: 'options'
+          group: options
     authors:
-      type: 'array'
+      type: array
       ui:
-        label: 'Author(s)'
+        label: Author(s)
         position: 10
-        reloadPageIfChanged: TRUE
+        reloadPageIfChanged: true
         inspector:
-          group: 'author'
-          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          group: author
+          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
-            placeholder: 'Choose'
-            dataSourceIdentifier: 'neos-neosio-editors'
+            placeholder: Choose
+            dataSourceIdentifier: neos-neosio-editors
     authorAlternative:
-      type: 'string'
+      type: string
       ui:
         label: 'Author (alt)'
         position: 20
-        reloadPageIfChanged: TRUE
+        reloadPageIfChanged: true
         inspector:
-          group: 'author'
+          group: author
     relatedDocuments:
-      type: 'references'
+      type: references
       ui:
         label: 'Related documents'
-        reloadPageIfChanged: TRUE
+        reloadPageIfChanged: true
         inspector:
-          group: 'options'
+          group: options
           editorOptions:
-            nodeTypes: ['TYPO3.Neos:Document']
+            nodeTypes:
+              - 'TYPO3.Neos:Document'
     metaRobotsNoindex:
       ui:
         inspector:
-          group: ~
+          group: null
     metaRobotsNofollow:
       ui:
         inspector:
-          group: ~
+          group: null

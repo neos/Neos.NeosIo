@@ -6,29 +6,29 @@
 
 'Neos.NeosIo:SemanticSection':
   superTypes:
-    'TYPO3.Neos:Content': TRUE
+    'TYPO3.Neos:Content': '1'
   childNodes:
-    'contents':
+    contents:
       type: 'TYPO3.Neos:ContentCollection'
       constraints:
         nodeTypes:
-          '*': FALSE
-          'TYPO3.Neos.NodeTypes:TwoColumn': TRUE
-          'TYPO3.Neos.NodeTypes:ThreeColumn': TRUE
-          'TYPO3.Neos.NodeTypes:FourColumn': TRUE
-          'TYPO3.Neos.NodeTypes:Text': TRUE
-          'TYPO3.Neos.NodeTypes:Image': TRUE
-          'TYPO3.Neos.NodeTypes:TextWithImage': TRUE
-          'TYPO3.Neos.NodeTypes:Html': TRUE
-          'TYPO3.Neos.NodeTypes:Headline': TRUE
-          'TYPO3.Neos.NodeTypes:ContentReferences': TRUE
-          'Neos.NeosIo:Button': TRUE
-          'Neos.NeosIo:ChoiceButtons': TRUE
-          'Neos.NeosIo:Quote': TRUE
-          'Neos.NeosIo:Youtube': TRUE
-          'Neos.NeosIo:PostFeatured': TRUE
+          '*': false
+          'TYPO3.Neos.NodeTypes:TwoColumn': true
+          'TYPO3.Neos.NodeTypes:ThreeColumn': true
+          'TYPO3.Neos.NodeTypes:FourColumn': true
+          'TYPO3.Neos.NodeTypes:Text': true
+          'TYPO3.Neos.NodeTypes:Image': true
+          'TYPO3.Neos.NodeTypes:TextWithImage': true
+          'TYPO3.Neos.NodeTypes:Html': true
+          'TYPO3.Neos.NodeTypes:Headline': true
+          'TYPO3.Neos.NodeTypes:ContentReferences': true
+          'Neos.NeosIo:Button': true
+          'Neos.NeosIo:ChoiceButtons': true
+          'Neos.NeosIo:Quote': true
+          'Neos.NeosIo:Youtube': true
+          'Neos.NeosIo:PostFeatured': true
   ui:
     label: 'Semantic Section'
-    icon: 'icon-tasks'
-    group: 'structure'
-    inlineEditable: TRUE
+    icon: icon-tasks
+    group: structure
+    inlineEditable: true

@@ -5,88 +5,88 @@
 
 'Neos.NeosIo:Button':
   superTypes:
-    'TYPO3.Neos:Content': TRUE
-    'TYPO3.Neos.NodeTypes:LinkMixin': TRUE
+    'TYPO3.Neos:Content': '1'
+    'TYPO3.Neos.NodeTypes:LinkMixin': '1'
   ui:
-    label: 'Button'
-    icon: 'icon-link'
-    inlineEditable: TRUE
+    label: Button
+    icon: icon-link
+    inlineEditable: true
     inspector:
       groups:
-        'content':
-          label: 'Content'
-        'appearance':
-          label: 'Appearance'
+        content:
+          label: Content
+        appearance:
+          label: Appearance
   properties:
-    'buttonLabel':
+    buttonLabel:
       type: string
       defaultValue: 'Button label'
       ui:
-        inlineEditable: TRUE
+        inlineEditable: true
         aloha:
-          autoparagraph: FALSE
-          'format': []
-          'table': []
-          'list': []
-          'link': []
-          'alignment': []
-          'formatlesspaste':
-            'button': FALSE
-            'formatlessPasteOption': TRUE
-    'link':
+          autoparagraph: false
+          format: {  }
+          table: {  }
+          list: {  }
+          link: {  }
+          alignment: {  }
+          formatlesspaste:
+            button: false
+            formatlessPasteOption: true
+    link:
       ui:
         label: 'Button Link'
         inspector:
-          group: 'content'
-    'openInNewTab':
+          group: content
+    openInNewTab:
       ui:
         inspector:
-          group: 'content'
-    'scrollToContentWhenClicked':
+          group: content
+    scrollToContentWhenClicked:
       type: boolean
       ui:
         label: 'Scroll to Content-Area when clicked'
         inspector:
-          group: 'content'
-    'alignment':
+          group: content
+    alignment:
       type: string
-      defaultValue: 'inline'
+      defaultValue: inline
       ui:
         label: 'Button Alignment'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
-          group: 'appearance'
-          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          group: appearance
+          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             values:
-              'inline':
+              inline:
                 label: 'Inline (Default)'
-              'Left':
-                label: 'Left'
-              'Center':
-                label: 'Center'
-              'Right':
-                label: 'Right'
-    'style':
+              Left:
+                label: Left
+              Center:
+                label: Center
+              Right:
+                label: Right
+    style:
       type: string
-      defaultValue: 'btn--primary'
+      defaultValue: btn--primary
       ui:
         label: 'Color of the Button'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
           editor: Content/Inspector/Editors/SelectBoxEditor
-          group: 'appearance'
+          group: appearance
           editorOptions:
             values:
-              'btn--primary':
-                label: 'Primary'
-              'btn--solidPrimary':
+              btn--primary:
+                label: Primary
+              btn--solidPrimary:
                 label: 'Primary (Solid)'
-              'btn--secondary':
-                label: 'Secondary'
-              'btn--solidSecondary':
+              btn--secondary:
+                label: Secondary
+              btn--solidSecondary:
                 label: 'Secondary (Solid)'
-              'btn--bright':
-                label: 'Bright'
-              'btn--solidBright':
+              btn--bright:
+                label: Bright
+              btn--solidBright:
                 label: 'Bright (Solid)'

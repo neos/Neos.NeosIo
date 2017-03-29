@@ -4,19 +4,19 @@
 
 'Neos.NeosIo:Box':
   superTypes:
-    'TYPO3.Neos:Content': TRUE
+    'TYPO3.Neos:Content': '1'
   childNodes:
-    'contents':
+    contents:
       type: 'TYPO3.Neos:ContentCollection'
       constraints:
         nodeTypes:
-          '*': FALSE
-          'TYPO3.Neos.NodeTypes:Text': TRUE
-          'TYPO3.Neos.NodeTypes:ContentReferences': TRUE
-          'Neos.NeosIo:Button': TRUE
-          'Neos.NeosIo:CountUp': TRUE
+          '*': false
+          'TYPO3.Neos.NodeTypes:Text': true
+          'TYPO3.Neos.NodeTypes:ContentReferences': true
+          'Neos.NeosIo:Button': true
+          'Neos.NeosIo:CountUp': true
   ui:
-    label: 'Box'
-    icon: 'icon-archive'
-    group: 'structure'
-    inlineEditable: TRUE
+    label: Box
+    icon: icon-archive
+    group: structure
+    inlineEditable: true

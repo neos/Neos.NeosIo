@@ -5,19 +5,19 @@
 
 'Neos.NeosIo:Teaser':
   superTypes:
-    'TYPO3.Neos:Content': TRUE
-    'TYPO3.Neos.NodeTypes:TitleMixin': TRUE
-    'TYPO3.Neos.NodeTypes:TextMixin': TRUE
+    'TYPO3.Neos:Content': '1'
+    'TYPO3.Neos.NodeTypes:TitleMixin': '1'
+    'TYPO3.Neos.NodeTypes:TextMixin': '1'
   ui:
     label: 'Teaser with text'
-    icon: 'icon-th-large'
-    inlineEditable: TRUE
-    group: 'special'
+    icon: icon-th-large
+    inlineEditable: true
+    group: special
   childNodes:
-    'button':
+    button:
       type: 'Neos.NeosIo:Button'
   properties:
-    'title':
+    title:
       type: string
-      defaultValue: 'Headline...'
-      inlineEditable: TRUE
+      defaultValue: Headline...
+      inlineEditable: true

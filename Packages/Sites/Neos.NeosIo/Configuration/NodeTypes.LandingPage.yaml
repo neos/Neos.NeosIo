@@ -5,24 +5,24 @@
 
 'Neos.NeosIo:LandingPage':
   superTypes:
-    'TYPO3.Neos.NodeTypes:Page': TRUE
-    'Neos.NeosIo:KeyVisualMixin': TRUE
+    'TYPO3.Neos.NodeTypes:Page': '1'
+    'Neos.NeosIo:KeyVisualMixin': '1'
   childNodes:
-    'main':
+    main:
       type: 'TYPO3.Neos:ContentCollection'
       constraints:
         nodeTypes:
-          '*': FALSE
-          'Neos.NeosIo:FactsGrid': TRUE
-          'Neos.NeosIo:Stage': TRUE
-          'Neos.NeosIo:DeviceStage': TRUE
-          'Neos.NeosIo:PostFeatured': TRUE
-          'TYPO3.Neos.NodeTypes:ContentReferences': TRUE
+          '*': false
+          'Neos.NeosIo:FactsGrid': true
+          'Neos.NeosIo:Stage': true
+          'Neos.NeosIo:DeviceStage': true
+          'Neos.NeosIo:PostFeatured': true
+          'TYPO3.Neos.NodeTypes:ContentReferences': true
   ui:
     label: 'Landing page'
-    icon: 'icon-plane'
+    icon: icon-plane
     inspector:
       groups:
-        'additional':
-          label: 'Additional'
+        additional:
+          label: Additional
           position: 20

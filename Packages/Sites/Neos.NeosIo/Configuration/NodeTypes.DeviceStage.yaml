@@ -5,25 +5,25 @@
 
 'Neos.NeosIo:DeviceStage':
   superTypes:
-    'TYPO3.Neos:Content': TRUE
+    'TYPO3.Neos:Content': '1'
   childNodes:
-    'contents':
+    contents:
       type: 'TYPO3.Neos:ContentCollection'
       constraints:
         nodeTypes:
-          '*': FALSE
-          'TYPO3.Neos.NodeTypes:Headline': TRUE
-          'TYPO3.Neos.NodeTypes:Text': TRUE
-          'Neos.NeosIo:Button': TRUE
-    'deviceContents':
+          '*': false
+          'TYPO3.Neos.NodeTypes:Headline': true
+          'TYPO3.Neos.NodeTypes:Text': true
+          'Neos.NeosIo:Button': true
+    deviceContents:
       type: 'TYPO3.Neos:ContentCollection'
       constraints:
         nodeTypes:
-          '*': FALSE
-          'TYPO3.Neos.NodeTypes:Image': TRUE
-          'Neos.NeosIo:Youtube': TRUE
+          '*': false
+          'TYPO3.Neos.NodeTypes:Image': true
+          'Neos.NeosIo:Youtube': true
   ui:
     label: 'Stage (with device media)'
-    icon: 'icon-desktop'
-    group: 'structure'
-    inlineEditable: TRUE
+    icon: icon-desktop
+    group: structure
+    inlineEditable: true

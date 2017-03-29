@@ -5,28 +5,29 @@
 
 'Neos.NeosIo:RootPage':
   superTypes:
-    'Neos.NeosIo:LandingPage': TRUE
+    'Neos.NeosIo:LandingPage': '1'
   ui:
     label: 'Root Page'
-    icon: 'icon-home'
+    icon: icon-home
   constraints:
     nodeTypes:
       'TYPO3.Neos.NodeTypes:Page': true
-      'Neos.NeosIo:FooterContainer': TRUE
+      'Neos.NeosIo:FooterContainer': true
   properties:
-    'titlePostfix':
+    titlePostfix:
       type: string
       defaultValue: ''
       ui:
         label: 'Website Title Postfix'
         inspector:
-          group: 'additional'
-    'imprintLinkNode':
+          group: additional
+    imprintLinkNode:
       type: reference
       ui:
         label: 'Imprint Link Page'
         reloadIfChanged: true
         inspector:
-          group: 'additional'
+          group: additional
           editorOptions:
-            nodeTypes: ['TYPO3.Neos.NodeTypes:Page']
+            nodeTypes:
+              - 'TYPO3.Neos.NodeTypes:Page'

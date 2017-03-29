@@ -4,44 +4,44 @@
 
 'Neos.NeosIo:BrandLogo':
   superTypes:
-    'TYPO3.Neos:Content': TRUE
+    'TYPO3.Neos:Content': '1'
   ui:
     label: 'Brand logo'
-    icon: 'icon-beer'
+    icon: icon-beer
     inspector:
       groups:
-        'appearance':
-          label: 'Appearance'
+        appearance:
+          label: Appearance
   properties:
-    'color':
+    color:
       type: string
-      defaultValue: 'white'
+      defaultValue: white
       ui:
         label: 'Color of the Brand logo'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
           editor: Content/Inspector/Editors/SelectBoxEditor
-          group: 'appearance'
+          group: appearance
           editorOptions:
             values:
-              'default':
-                label: 'Default'
-              'bright':
-                label: 'White'
-    'size':
+              default:
+                label: Default
+              bright:
+                label: White
+    size:
       type: string
-      defaultValue: 'default'
+      defaultValue: default
       ui:
         label: 'Size of the Brand logo'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
           editor: Content/Inspector/Editors/SelectBoxEditor
-          group: 'appearance'
+          group: appearance
           editorOptions:
             values:
-              'default':
-                label: 'Default'
-              'small':
-                label: 'Small'
-              'huge':
-                label: 'Huge'
+              default:
+                label: Default
+              small:
+                label: Small
+              huge:
+                label: Huge
