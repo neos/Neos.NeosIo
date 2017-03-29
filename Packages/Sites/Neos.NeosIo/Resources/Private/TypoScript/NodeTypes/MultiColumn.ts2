@@ -1,4 +1,4 @@
-prototype(TYPO3.Neos.NodeTypes:MultiColumn) {
+prototype(Neos.NodeTypes:MultiColumn) {
 	attributes = Neos.Fusion:Attributes {
 		class = Neos.Fusion:RawArray {
 			row = 'g'
@@ -9,7 +9,7 @@ prototype(TYPO3.Neos.NodeTypes:MultiColumn) {
 	columns.iterationName = 'multiColumnIteration'
 }
 
-prototype(TYPO3.Neos.NodeTypes:MultiColumnItem) {
+prototype(Neos.NodeTypes:MultiColumnItem) {
 	@override {
 		columnWidth = ${String.split(q(node).parent().property('layout'), '-')[multiColumnIteration.index]}
 		desktopColumnWidth = ${String.split(q(node).parent().property('desktopLayout'), '-')[multiColumnIteration.index]}

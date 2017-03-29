@@ -1,4 +1,4 @@
-prototype(TYPO3.Neos.NodeTypes:Image) {
+prototype(Neos.NodeTypes:Image) {
     partialRootPath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Partials'
 
     title.@process.filenameFallback = ${String.isBlank(value) ? node.properties.image.label : value}
