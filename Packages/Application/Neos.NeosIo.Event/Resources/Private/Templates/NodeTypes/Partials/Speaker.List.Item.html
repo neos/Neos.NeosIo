@@ -4,7 +4,7 @@
 <neos:link.node node="{speaker}">
 	<div class="gi u-w1/1 u-wm6/12 u-wl6/12 team-listing__member{f:if(condition: iterator.isOdd, then: ' odd', else: ' even')}">
 		<f:if condition="{speaker.properties.photo}">
-			<media:image asset="{speaker.properties.photo}" title="{speaker.properties.title}" alt="{speaker.properties.title}" maximumWidth="100" maximumHeight="100" allowUpScaling="true" allowCropping="true" class="gravatar" />
+			<media:image image="{speaker.properties.photo}" title="{speaker.properties.title}" alt="{speaker.properties.title}" maximumWidth="100" maximumHeight="100" allowUpScaling="true" allowCropping="true" class="gravatar" />
 		</f:if>
 		<strong>{speaker.properties.title}</strong>
 	</div>
