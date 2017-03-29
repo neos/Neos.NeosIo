@@ -1,18 +1,20 @@
+
 'Neos.NeosIo:Youtube':
-  superTypes: ['TYPO3.Neos:Content']
+  superTypes:
+    'TYPO3.Neos:Content': true
   ui:
     label: Youtube
-    icon: 'icon-youtube'
+    icon: icon-youtube
     inspector:
       groups:
-        'video':
+        video:
           label: Video
   properties:
-    'video':
+    video:
       type: string
       defaultValue: ''
       ui:
         label: 'Youtube video ID'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
-          group: 'video'
+          group: video
