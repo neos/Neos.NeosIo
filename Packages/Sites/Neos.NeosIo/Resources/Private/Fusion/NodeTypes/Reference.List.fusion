@@ -1,0 +1,68 @@
+prototype(Neos.NeosIo:Reference.List) < prototype(Neos.Neos:Content) {
+    referenceType = ${request.arguments.referenceType}
+    searchTerm = ${request.arguments.search}
+    order = ${request.arguments.order}
+    limit = ${request.arguments.limit}
+
+    @context {
+        referenceType = ${this.referenceType}
+        searchTerm = ${this.searchTerm}
+        order = ${this.order}
+        limit = ${this.limit}
+    }
+
+    paginationConfiguration = Neos.Fusion:RawArray {
+        itemsPerPage = 24
+        insertAbove = ${false}
+        insertBelow = ${true}
+        maximumNumberOfLinks = 3
+    }
+
+    referenceTypes = ${q(site).find('[instanceof Neos.NeosIo:ReferenceType]').sort('title', 'ASC').get()}
+
+
+    references = ${Search.query(site).nodeType('Neos.NeosIo:Reference')}
+    references.@process {
+        fulltext = ${String.isBlank(searchTerm) ? value : value.fulltext(searchTerm + '*')}
+        referenceType = ${String.isBlank(referenceType) ? value : value.exactMatch('projectType', referenceType)}
+        sort = ${String.isBlank(sort) ? value.sortDesc('datePublished') : value.sortDesc(sort)}
+        limit = ${String.isBlank(limit) ? value.limit(20) : value.limit(limit)}
+    }
+
+    itemRenderer = Neos.NeosIo:Reference.List.Item
+
+    @cache {
+        mode = 'uncached'
+        context {
+            1 = 'site'
+            2 = 'node'
+            3 = 'documentNode'
+        }
+    }
+}
+
+prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Reference.List.Item.html'
+    title = ${q(node).property('title')}
+    alternativeText = ${q(node).property('title')}
+    image = ${q(node).property('image')}
+    url = ${q(node).property('url')}
+    datePublished = ${q(node).property('datePublished')}
+    launchDate = ${q(node).property('launchDate')}
+    projectVolume = ${q(node).property('projectVolume')} {
+@process {
+isKnown = ${value > 1 ? value : false}
+}
+}
+projectType = ${q(q(node).property('projectType')).property('title')}
+
+@cache {
+mode = 'cached'
+entryIdentifier {
+node = ${node}
+}
+entryTags {
+1 = ${'Node_' + node.identifier}
+}
+}
+}

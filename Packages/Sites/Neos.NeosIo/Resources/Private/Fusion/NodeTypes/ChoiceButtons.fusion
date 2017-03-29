@@ -1,0 +1,9 @@
+prototype(Neos.NeosIo:ChoiceButtons) < prototype(Neos.Neos:Content) {
+    firstButton = Neos.NeosIo:Button {
+        @context.node = ${q(node).children('firstButton').get(0)}
+    }
+
+    secondButton = Neos.NeosIo:Button {
+        @context.node = ${q(node).children('secondButton').get(0)}
+    }
+}

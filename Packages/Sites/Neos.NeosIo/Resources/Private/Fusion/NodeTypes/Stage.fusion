@@ -1,0 +1,19 @@
+prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:Content) {
+    contents = PrimaryContent {
+        nodePath = 'contents'
+    }
+
+    isContentExtraPadded = ${q(node).property('isContentExtraPadded') || this.backgroundImage}
+
+    backgroundImageSrcSet = Neos.Fusion:Template {
+        templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Stage.html'
+        sectionName = 'imageSrcSet'
+        backgroundImage = ${q(node).property('backgroundImage')}
+    }
+
+    title = ${node.properties.title}
+    title.@process.filenameFallback = ${String.isBlank(value) ? node.properties.backgroundImage.label : value}
+
+    alternativeText = ${node.properties.alternativeText}
+    alternativeText.@process.filenameFallback = ${String.isBlank(value) ? node.properties.backgroundImage.label : value}
+}

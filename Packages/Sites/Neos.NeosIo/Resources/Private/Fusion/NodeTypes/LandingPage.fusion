@@ -1,0 +1,15 @@
+prototype(Neos.NeosIo:LandingPage.Document) < prototype(Neos.NeosIo:DefaultPage) {
+    body {
+        templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/LandingPage.html'
+
+        content {
+            keyVisual = PrimaryContent {
+                nodePath = 'keyVisual'
+            }
+
+            main = PrimaryContent {
+                nodePath = 'main'
+            }
+        }
+    }
+}

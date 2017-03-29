@@ -1,0 +1,28 @@
+/**
+* NodeTypes around Show Cases
+*/
+
+
+prototype(Neos.NeosIo:Reference.ShowCase.Document) < prototype(Neos.NeosIo:Reference.Document) {
+    body {
+        content {
+            main = Neos.NeosIo:Reference.ShowCase
+        }
+    }
+
+    @cache {
+        entryTags {
+            reference = 'NodeTypes_Neos.NeosIo:Reference'
+        }
+    }
+}
+
+prototype(Neos.NeosIo:Reference.ShowCase) < prototype(Neos.NeosIo:Reference) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Reference.ShowCase.html'
+    projectVolume = ${q(node).property('projectVolume')} {
+@process {
+isKnown = ${value > 1 ? value : false}
+}
+}
+projectType = ${q(q(node).property('projectType')).property('title')}
+}

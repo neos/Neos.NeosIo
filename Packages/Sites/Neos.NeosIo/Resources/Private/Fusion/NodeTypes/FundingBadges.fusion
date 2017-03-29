@@ -7,10 +7,10 @@ prototype(Neos.NeosIo:FundingBadges) < prototype(Neos.Neos:Content) {
     badgeData = ${q(site).fundingBadges().get()}
 
     badgeFilterButton = Neos.NeosIo:Button {
-            style = 'btn--bright'
-            buttonLabel = ${label}
-            @process.contentElementWrapping >
-        }
+        style = 'btn--bright'
+        buttonLabel = ${label}
+        @process.contentElementWrapping >
+    }
 
     @cache {
         mode = 'cached'

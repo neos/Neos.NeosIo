@@ -1,0 +1,20 @@
+postRss = Neos.Fusion:Http.Message {
+    feed = Neos.Fusion:Template {
+        templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/PostRss.xml'
+        posts = ${q(site).find('[instanceof Neos.NeosIo:Post]').sort('datePublished').slice(0, 20).get()}
+        site = ${site}
+        @cache {
+            mode = 'cached'
+
+            entryIdentifier {
+                identifier = 'postRss'
+            }
+
+            entryTags {
+                1 = ${'NodeType_Neos.NeosIo:Post'}
+            }
+        }
+    }
+
+    httpResponseHead.headers.Content-Type = 'application/xml'
+}

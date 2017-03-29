@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo:CrowdUserListItem) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/CrowdUser.html'
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/CrowdUser.html'
     sectionName = 'listItem'
 
     attributes = Neos.Fusion:Attributes {
@@ -14,7 +14,7 @@ prototype(Neos.NeosIo:CrowdUserListItem) < prototype(Neos.Fusion:Template) {
 
 
 prototype(Neos.NeosIo:CrowdUserOverlay) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/CrowdUser.html'
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/CrowdUser.html'
     sectionName = 'overlay'
 
     gravatarSize = 100
@@ -24,6 +24,6 @@ prototype(Neos.NeosIo:CrowdUserOverlay) < prototype(Neos.Fusion:Template) {
 
     attributes = Neos.Fusion:Attributes {
         id = ${'member-modal-' + userName}
-        class= "team-listing-modal__backdrop"
+        class = "team-listing-modal__backdrop"
     }
 }
