@@ -1,8 +1,8 @@
-prototype(Neos.NeosIo:CrowdUserListItem) < prototype(TYPO3.TypoScript:Template) {
+prototype(Neos.NeosIo:CrowdUserListItem) < prototype(Neos.Fusion:Template) {
     templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/CrowdUser.html'
     sectionName = 'listItem'
 
-    attributes = TYPO3.TypoScript:Attributes {
+    attributes = Neos.Fusion:Attributes {
         class = 'gi u-w1/1 u-wm6/12 u-wl6/12 team-listing__member'
     }
 
@@ -13,7 +13,7 @@ prototype(Neos.NeosIo:CrowdUserListItem) < prototype(TYPO3.TypoScript:Template) 
 }
 
 
-prototype(Neos.NeosIo:CrowdUserOverlay) < prototype(TYPO3.TypoScript:Template) {
+prototype(Neos.NeosIo:CrowdUserOverlay) < prototype(Neos.Fusion:Template) {
     templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/CrowdUser.html'
     sectionName = 'overlay'
 
@@ -22,7 +22,7 @@ prototype(Neos.NeosIo:CrowdUserOverlay) < prototype(TYPO3.TypoScript:Template) {
 
     user = ${q(site).crowdUser(userName).get()}
 
-    attributes = TYPO3.TypoScript:Attributes {
+    attributes = Neos.Fusion:Attributes {
         id = ${'member-modal-' + userName}
         class= "team-listing-modal__backdrop"
     }

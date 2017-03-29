@@ -2,22 +2,22 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
     head {
         meta-viewport = '<meta name="viewport" content="width=device-width, initial-scale=1" />'
 
-        stylesheets.site = TYPO3.TypoScript:Template {
+        stylesheets.site = Neos.Fusion:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
             sectionName = 'stylesheets'
         }
 
-        javascripts.site = TYPO3.TypoScript:Template {
+        javascripts.site = Neos.Fusion:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
             sectionName = 'headScripts'
         }
 
-        metaTags = TYPO3.TypoScript:Template {
+        metaTags = Neos.Fusion:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
             sectionName = 'metaTags'
         }
 
-        rss = TYPO3.TypoScript:Tag {
+        rss = Neos.Fusion:Tag {
             tagName = 'link'
             attributes {
                 rel = 'alternate'
@@ -61,14 +61,14 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
 		headerClasses = 'siteHeader'
 
         keyVisualImage = ${q(documentNode).property('keyVisualImage')}
-        keyVisualImageSrcSet = TYPO3.TypoScript:Template {
+        keyVisualImageSrcSet = Neos.Fusion:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Partials/KeyVisual.html'
             sectionName = 'imageSrcSet'
             keyVisualImage = ${q(documentNode).property('keyVisualImage')}
         }
         isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
 
-        javascripts.site = TYPO3.TypoScript:Template {
+        javascripts.site = Neos.Fusion:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
             sectionName = 'bodyScripts'
 

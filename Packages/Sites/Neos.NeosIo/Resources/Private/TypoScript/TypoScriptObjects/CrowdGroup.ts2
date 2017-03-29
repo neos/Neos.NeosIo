@@ -1,20 +1,20 @@
-prototype(Neos.NeosIo:CrowdGroup) < prototype(TYPO3.TypoScript:Template) {
+prototype(Neos.NeosIo:CrowdGroup) < prototype(Neos.Fusion:Template) {
     templatePath = 'resource://Neos.NeosIo/Private/Templates/TypoScriptObjects/CrowdGroup.html'
     sectionName = 'Main'
     group = ${group}
     @context.group = ${group}
 
-    attributes = TYPO3.TypoScript:Attributes {
+    attributes = Neos.Fusion:Attributes {
         class = 'team-listing__group'
     }
 
-    memberListItems = TYPO3.TypoScript:Collection {
+    memberListItems = Neos.Fusion:Collection {
         collection = ${group.members}
         itemRenderer = Neos.NeosIo:CrowdUserListItem
         itemName = 'userName'
     }
 
-    memberOverlays = TYPO3.TypoScript:Collection {
+    memberOverlays = Neos.Fusion:Collection {
         collection = ${group.members}
         itemRenderer = Neos.NeosIo:CrowdUserOverlay
         itemName = 'userName'

@@ -9,7 +9,7 @@ prototype(Neos.NeosIo:PostFeatured) < prototype(Neos.NeosIo:Stage) {
     backgroundShadePercentage = 60
     backgroundColor = ${q(post).property('image') ? 'dark' : 'primary'}
 
-    contents = TYPO3.TypoScript:Template {
+    contents = Neos.Fusion:Template {
         templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/PostFeatured.html'
         post = ${post}
         button = Neos.NeosIo:Button {

@@ -7,7 +7,7 @@ prototype(Neos.NeosIo:Post.Document) < prototype(Neos.NeosIo:DefaultPage) {
             @if.isNotBlank = ${!String.isBlank(metaDescription)}
         }
 
-        twitterCard = TYPO3.TypoScript:Array {
+        twitterCard = Neos.Fusion:Array {
             @if.isEnabledBlank = 1
             @if.isEnabled = 1
 
@@ -44,7 +44,7 @@ prototype(Neos.NeosIo:Post.Document) < prototype(Neos.NeosIo:DefaultPage) {
                 @context.openGraphImage = ${q(node).property('image')}
             }
 
-            openGraphPublishedTime = TYPO3.TypoScript:Tag {
+            openGraphPublishedTime = Neos.Fusion:Tag {
                 tagName = 'meta'
                 attributes {
                     property = 'article:published_time'

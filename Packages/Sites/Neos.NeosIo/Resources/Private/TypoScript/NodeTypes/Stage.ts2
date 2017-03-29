@@ -5,7 +5,7 @@ prototype(Neos.NeosIo:Stage) < prototype(TYPO3.Neos:Content) {
 
 	isContentExtraPadded = ${q(node).property('isContentExtraPadded') || this.backgroundImage}
 
-	backgroundImageSrcSet = TYPO3.TypoScript:Template {
+	backgroundImageSrcSet = Neos.Fusion:Template {
 		templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Stage.html'
 		sectionName = 'imageSrcSet'
 		backgroundImage = ${q(node).property('backgroundImage')}

@@ -11,7 +11,7 @@ prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
 		limit = ${this.limit}
 	}
 
-	paginationConfiguration = TYPO3.TypoScript:RawArray {
+	paginationConfiguration = Neos.Fusion:RawArray {
 		itemsPerPage = 24
 		insertAbove = ${false}
 		insertBelow = ${true}
@@ -41,7 +41,7 @@ prototype(Neos.NeosIo:Reference.List) < prototype(TYPO3.Neos:Content) {
 	}
 }
 
-prototype(Neos.NeosIo:Reference.List.Item) < prototype(TYPO3.TypoScript:Template) {
+prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Template) {
 	templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Reference.List.Item.html'
 	title = ${q(node).property('title')}
 	alternativeText = ${q(node).property('title')}

@@ -5,7 +5,7 @@ prototype(Neos.NeosIo:TeamListing) < prototype(TYPO3.Neos:Content) {
     teamListingFilter = ${q(node).property('teamListingFilter')}
     @context.teamListingFilter = ${this.teamListingFilter}
 
-    groups = TYPO3.TypoScript:Collection {
+    groups = Neos.Fusion:Collection {
         collection = ${q(site).crowdGroups().filter('[neos_group_type = ' + teamListingFilter + ']').get()}
         itemRenderer = Neos.NeosIo:CrowdGroup
         itemName = 'group'
