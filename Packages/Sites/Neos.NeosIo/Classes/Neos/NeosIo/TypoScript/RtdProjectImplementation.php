@@ -5,7 +5,7 @@ namespace Neos\NeosIo\TypoScript;
  * The Neos project is licensed under GPL v3 or later
  */
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use TYPO3\TypoScript\TypoScriptObjects\Helpers\FluidView;
 
 /**
@@ -16,7 +16,7 @@ class RtdProjectImplementation extends \TYPO3\TypoScript\TypoScriptObjects\Templ
 
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Http\Client\Browser
+     * @var \Neos\Flow\Http\Client\Browser
      */
     protected $browser;
 
@@ -25,7 +25,7 @@ class RtdProjectImplementation extends \TYPO3\TypoScript\TypoScriptObjects\Templ
      */
     protected function initializeObject()
     {
-        $this->browser->setRequestEngine(new \TYPO3\Flow\Http\Client\CurlEngine());
+        $this->browser->setRequestEngine(new \Neos\Flow\Http\Client\CurlEngine());
     }
 
     /**
@@ -42,7 +42,7 @@ class RtdProjectImplementation extends \TYPO3\TypoScript\TypoScriptObjects\Templ
     /**
      * @param string $projectSlug
      * @return array
-     * @throws \TYPO3\Flow\Http\Client\InfiniteRedirectionException
+     * @throws \Neos\Flow\Http\Client\InfiniteRedirectionException
      */
     protected function getProjectData($projectSlug)
     {

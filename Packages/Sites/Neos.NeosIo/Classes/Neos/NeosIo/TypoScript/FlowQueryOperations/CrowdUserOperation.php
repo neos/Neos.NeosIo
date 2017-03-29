@@ -9,7 +9,7 @@ namespace Neos\NeosIo\TypoScript\FlowQueryOperations;
 use Neos\NeosIo\Service\CrowdApiConnector;
 use TYPO3\Eel\FlowQuery\FlowQuery;
 use TYPO3\Eel\FlowQuery\Operations\AbstractOperation;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 class CrowdUserOperation extends AbstractOperation
 {

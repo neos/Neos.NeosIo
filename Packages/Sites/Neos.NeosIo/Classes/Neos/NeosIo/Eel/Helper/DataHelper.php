@@ -1,7 +1,7 @@
 <?php
 namespace Neos\NeosIo\Eel\Helper;
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use TYPO3\Neos\Domain\Repository\UserRepository;
 
 class DataHelper extends \TYPO3\Eel\Helper\ArrayHelper

@@ -6,10 +6,10 @@ namespace Neos\NeosIo\Command;
  * The Neos project is licensed under GPL v3 or later
  */
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use Neos\NeosIo\Service\CrowdApiConnector;
-use TYPO3\Flow\Cli\CommandController;
-use TYPO3\Flow\I18n\Translator;
+use Neos\Flow\Cli\CommandController;
+use Neos\Flow\I18n\Translator;
 
 /**
  * The Crowd Command Controller

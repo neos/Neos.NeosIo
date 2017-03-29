@@ -6,11 +6,11 @@ namespace Neos\NeosIo\Service;
  * The Neos project is licensed under GPL v3 or later
  */
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Cache\Frontend\VariableFrontend;
-use TYPO3\Flow\Http\Client\Browser;
-use TYPO3\Flow\Http\Client\CurlEngine;
-use TYPO3\Flow\Http\Uri;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Cache\Frontend\VariableFrontend;
+use Neos\Flow\Http\Client\Browser;
+use Neos\Flow\Http\Client\CurlEngine;
+use Neos\Flow\Http\Uri;
 
 /**
  * Abstract base class for api connectors.
@@ -54,7 +54,7 @@ abstract class AbstractApiConnector
     /**
      * @Flow\Inject
      *
-     * @var \TYPO3\Flow\Log\SystemLoggerInterface
+     * @var \Neos\Flow\Log\SystemLoggerInterface
      */
     protected $systemLogger;
 
