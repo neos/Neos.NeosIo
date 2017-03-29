@@ -1,7 +1,7 @@
 <?php
 namespace Neos\NeosIo\ViewHelpers;
 
-use TYPO3\Fluid\ViewHelpers\FormViewHelper;
+use Neos\FluidAdaptor\ViewHelpers\FormViewHelper;
 
 /**
  * A very simple form ViewHelper that doesn't render hidden referrer and "__trustedProperties" fields

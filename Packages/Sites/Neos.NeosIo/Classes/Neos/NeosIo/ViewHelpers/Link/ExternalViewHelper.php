@@ -1,7 +1,7 @@
 <?php
 namespace Neos\NeosIo\ViewHelpers\Link;
 
-use TYPO3\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
+use Neos\FluidAdaptor\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 class ExternalViewHelper extends AbstractTagBasedViewHelper
 {
