@@ -5,10 +5,10 @@
 
 'Neos.NeosIo:DeviceStage':
   superTypes:
-    'TYPO3.Neos:Content': true
+    'Neos.Neos:Content': true
   childNodes:
     contents:
-      type: 'TYPO3.Neos:ContentCollection'
+      type: 'Neos.Neos:ContentCollection'
       constraints:
         nodeTypes:
           '*': false
@@ -16,7 +16,7 @@
           'Neos.NodeTypes:Text': true
           'Neos.NeosIo:Button': true
     deviceContents:
-      type: 'TYPO3.Neos:ContentCollection'
+      type: 'Neos.Neos:ContentCollection'
       constraints:
         nodeTypes:
           '*': false

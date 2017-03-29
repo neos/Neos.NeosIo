@@ -1,4 +1,4 @@
-{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace neos=Neos\Neos\ViewHelpers}
 <neos:link.node node="{post}" class="u-linkReset u-mb1/1 u-cf">
     <div>{post.properties.datePublished -> f:format.date(localeFormatType: 'date', forceLocale: true)}</div>
     <h3 class="h1 u-w11/12 u-mb0">{post.properties.title -> f:format.stripTags()}</h3>

@@ -5,10 +5,10 @@
 
 'Neos.NeosIo:Stage':
   superTypes:
-    'TYPO3.Neos:Content': true
+    'Neos.Neos:Content': true
   childNodes:
     contents:
-      type: 'TYPO3.Neos:ContentCollection'
+      type: 'Neos.Neos:ContentCollection'
       constraints:
         nodeTypes:
           '*': false
@@ -66,7 +66,7 @@
         reloadIfChanged: true
         inspector:
           group: background
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             values:
               bright:
@@ -93,7 +93,7 @@
         reloadIfChanged: true
         inspector:
           group: background
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             values:
               0:

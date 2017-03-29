@@ -1,46 +1,15 @@
+
 TYPO3:
-  Neos:
-    userInterface:
-      navigateComponent:
-        nodeTree:
-          loadingDepth: 1
-      inspector:
-        editors:
-          # by default, only allow to reference Page and its subtypes. Otherwise, all Package Node Types are reachable
-          # as well (which makes it hard for editors to find the correct nodes)
-          'TYPO3.Neos/Inspector/Editors/LinkEditor':
-            editorOptions:
-              nodeTypes:
-                - 'Neos.NodeTypes:Page'
-                - 'Neos.MarketPlace:RepositoryStorage'
-                - 'Neos.NeosIo:Reference'
-                - 'Neos.NeosIo.Event:Location'
-                - 'Neos.NeosIo.Event:Organizer'
-                - 'Neos.NeosIo.Event:Person'
-
-    nodeTypes:
-      groups:
-        special:
-          position: 'after general'
-          label: 'Special'
-
   TYPO3CR:
     Search:
-      # Make sure that realtime indexing is on so market place syncs show up in search results
       realtimeIndexing:
         enabled: true
-
-      # We only need searching for the Neos Marketplace; thus disabling the indexing functionality for user workspaces
-      # drastically reduces index size and speeds up indexing.
       indexAllWorkspaces: false
-
       elasticSearch:
         indexName: wwwneosio
-
   TypoScript:
     defaultContext:
-      Data: 'Neos\NeosIo\Eel\Helper\DataHelper'
-
+      Data: Neos\NeosIo\Eel\Helper\DataHelper
 Neos:
   NeosIo:
     googleAnalyticsTrackingCode: null
@@ -50,38 +19,54 @@ Neos:
       apiUrl: 'https://neosfunding.sandstorm.de'
       timeout: 30
       actions:
-        getBadges: '/funding-api-sold-badges'
-      parameters: []
-
+        getBadges: /funding-api-sold-badges
+      parameters: {  }
     crowdApi:
-      username: 'neos.io-teams'
+      username: neos.io-teams
       password: ''
       apiUrl: 'https://crowd.neos.io/rest/usermanagement/1'
       timeout: 30
       actions:
-        search: '/search.json'
-
-        getGroup: '/group.json'
-        getGroupMembers: '/group/user/direct.json'
-        setGroupAttributes: '/group/attribute.json'
-
-        getUser: '/user.json'
-        setUserAttributes: '/user/attribute.json'
-
+        search: /search.json
+        getGroup: /group.json
+        getGroupMembers: /group/user/direct.json
+        setGroupAttributes: /group/attribute.json
+        getUser: /user.json
+        setUserAttributes: /user/attribute.json
       parameters:
-        active: true # Always search for active records
-
-      additionalAttributes: # List of valid additional attributes for crowd entities
+        active: true
+      additionalAttributes:
         group:
-          - neos_group_type # Something like 'team' or 'guild'
-          - neos_title # A human readable name for the group
-          - neos_summary # A short summary describing the group
+          - neos_group_type
+          - neos_title
+          - neos_summary
         user:
-          - neos_website # Homepage or blog
+          - neos_website
           - neos_skype
           - neos_twitter
           - neos_googleplus
           - neos_email
-          - neos_origin # Country of origin
-          - neos_bio # Short biography
-          - neos_contribution # A description what the user contributes to Neos
+          - neos_origin
+          - neos_bio
+          - neos_contribution
+  Neos:
+    userInterface:
+      navigateComponent:
+        nodeTree:
+          loadingDepth: 1
+      inspector:
+        editors:
+          Neos.Neos/Inspector/Editors/LinkEditor:
+            editorOptions:
+              nodeTypes:
+                - 'Neos.NodeTypes:Page'
+                - 'Neos.MarketPlace:RepositoryStorage'
+                - 'Neos.NeosIo:Reference'
+                - 'Neos.NeosIo.Event:Location'
+                - 'Neos.NeosIo.Event:Organizer'
+                - 'Neos.NeosIo.Event:Person'
+    nodeTypes:
+      groups:
+        special:
+          position: 'after general'
+          label: Special

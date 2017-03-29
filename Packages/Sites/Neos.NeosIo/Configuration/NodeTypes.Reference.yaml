@@ -1,13 +1,13 @@
 
 'Neos.NeosIo:ReferenceType':
   superTypes:
-    'TYPO3.Neos:Document': true
+    'Neos.Neos:Document': true
   ui:
     label: 'Reference Type'
     icon: icon-tag
 'Neos.NeosIo:Reference':
   superTypes:
-    'TYPO3.Neos:Document': true
+    'Neos.Neos:Document': true
   abstract: true
   ui:
     label: Reference
@@ -25,7 +25,7 @@
         reloadIfChanged: true
         inspector:
           group: properties
-          editor: TYPO3.Neos/Inspector/Editors/LinkEditor
+          editor: Neos.Neos/Inspector/Editors/LinkEditor
           position: 10
     image:
       type: Neos\Media\Domain\Model\ImageInterface
@@ -54,7 +54,7 @@
         inspector:
           group: properties
       validation:
-        TYPO3.Neos/Validation/DateTimeValidator: {  }
+        Neos.Neos/Validation/DateTimeValidator: {  }
       search:
         indexing: '${(value ? Date.format(value, "Y-m-d\TH:i:sP") : null)}'
     datePublished:
@@ -64,7 +64,7 @@
         inspector:
           group: properties
       validation:
-        TYPO3.Neos/Validation/DateTimeValidator: {  }
+        Neos.Neos/Validation/DateTimeValidator: {  }
       search:
         indexing: '${(value ? Date.format(value, "Y-m-d\TH:i:sP") : null)}'
     projectVolume:

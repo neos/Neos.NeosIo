@@ -1,4 +1,4 @@
-{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace neos=Neos\Neos\ViewHelpers}
 {namespace media=Neos\Media\ViewHelpers}
 
 <blockquote class="flag u-mb0" itemscope itemtype="http://schema.org/Person">
@@ -12,7 +12,7 @@
 		<f:else>
 			<f:if condition="{neos:rendering.inBackend()}">
 				<div class="flag__image">
-					<img src="{f:uri.resource(package: 'TYPO3.Neos', path: 'Images/dummy-image.svg')}"
+					<img src="{f:uri.resource(package: 'Neos.Neos', path: 'Images/dummy-image.svg')}"
 						 itemprop="image" class="avatar" style="width: 128px; height:128px;">
 				</div>
 			</f:if>

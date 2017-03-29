@@ -1,4 +1,4 @@
-{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace neos=Neos\Neos\ViewHelpers}
 {namespace io=Neos\NeosIo\ViewHelpers}
 
 <io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}" class="imageTeaser">
@@ -12,7 +12,7 @@
 			<f:if condition="{neos:rendering.inEditMode()}">
 				<img
 					class="imageTeaser__image neos-handle"
-					src="{f:uri.resource(package: 'TYPO3.Neos', path: 'Images/dummy-image.svg')}"
+					src="{f:uri.resource(package: 'Neos.Neos', path: 'Images/dummy-image.svg')}"
 					title="Dummy image"
 					alt="Dummy image"
 				/>

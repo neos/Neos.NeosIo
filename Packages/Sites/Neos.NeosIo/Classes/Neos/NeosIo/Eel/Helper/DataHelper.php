@@ -2,7 +2,7 @@
 namespace Neos\NeosIo\Eel\Helper;
 
 use Neos\Flow\Annotations as Flow;
-use TYPO3\Neos\Domain\Repository\UserRepository;
+use Neos\Neos\Domain\Repository\UserRepository;
 
 class DataHelper extends \Neos\Eel\Helper\ArrayHelper
 {
