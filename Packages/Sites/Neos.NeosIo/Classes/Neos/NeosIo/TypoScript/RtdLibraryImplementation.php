@@ -7,12 +7,12 @@ namespace Neos\NeosIo\TypoScript;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Utility\Arrays;
-use Neos\Fusion\TypoScriptObjects\Helpers\FluidView;
+use Neos\Fusion\FusionObjects\Helpers\FluidView;
 
 /**
  * RtdLibraryImplementation
  */
-class RtdLibraryImplementation extends \Neos\Fusion\TypoScriptObjects\TemplateImplementation
+class RtdLibraryImplementation extends \Neos\Fusion\FusionObjects\TemplateImplementation
 {
 
     /**
