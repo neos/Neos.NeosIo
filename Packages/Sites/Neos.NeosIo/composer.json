@@ -4,14 +4,19 @@
     "description": "neos.io site package",
     "license": "GPL-3.0+",
     "require": {
-      "typo3/neos": "*",
-      "typo3/neos-nodetypes": "*",
-      "typo3/neos-seo": "*",
-      "flowpack/elasticsearch-contentrepositoryadaptor": "*"
+        "typo3/neos": "*",
+        "typo3/neos-nodetypes": "*",
+        "typo3/neos-seo": "*",
+        "flowpack/elasticsearch-contentrepositoryadaptor": "*"
     },
     "autoload": {
         "psr-0": {
             "Neos\\NeosIo": "Classes"
         }
+    },
+    "extra": {
+        "applied-flow-migrations": [
+            "TYPO3.FLOW3-201201261636"
+        ]
     }
 }
