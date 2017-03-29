@@ -9,7 +9,7 @@ prototype(Neos.NeosIo:Post) {
 		style = 'btn--solidPrimary'
 		buttonLabel = 'Back to list'
 		alignment = 'Right'
-		link = TYPO3.Neos:NodeUri {
+		link = Neos.Neos:NodeUri {
 			node = ${q(node).parents('[instanceof Neos.NodeTypes:Page]').get(0)}
 			absolute = true
 		}

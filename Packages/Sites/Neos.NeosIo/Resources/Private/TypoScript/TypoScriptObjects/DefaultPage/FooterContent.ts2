@@ -1,4 +1,4 @@
-prototype(Neos.NeosIo:DefaultPage.FooterContent) < prototype(TYPO3.Neos:ContentCollectionRenderer) {
+prototype(Neos.NeosIo:DefaultPage.FooterContent) < prototype(Neos.Neos:ContentCollectionRenderer) {
 	templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/TypoScriptObjects/FooterContent.html'
     collection = ${q(site).children('[instanceof Neos.NeosIo:FooterContainer]').children('main').children().get()}
 }

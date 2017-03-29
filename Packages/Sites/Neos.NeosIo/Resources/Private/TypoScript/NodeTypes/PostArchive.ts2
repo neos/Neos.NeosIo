@@ -22,6 +22,6 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Flowpack.Listable:Listable) {
 
 # Adjust cahces for pagination
 root.@cache.entryIdentifier.pagination = ${request.pluginArguments.listable-paginate.currentPage}
-prototype(TYPO3.Neos:Page).@cache.entryIdentifier.pagination = ${request.pluginArguments.listable-paginate.currentPage}
-prototype(TYPO3.Neos:ContentCollection).@cache.entryIdentifier.pagination = ${request.pluginArguments.listable-paginate.currentPage}
+prototype(Neos.Neos:Page).@cache.entryIdentifier.pagination = ${request.pluginArguments.listable-paginate.currentPage}
+prototype(Neos.Neos:ContentCollection).@cache.entryIdentifier.pagination = ${request.pluginArguments.listable-paginate.currentPage}
 prototype(Flowpack.Listable:Listable).@cache.entryIdentifier.pagination = ${request.pluginArguments.listable-paginate.currentPage}

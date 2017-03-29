@@ -13,7 +13,7 @@ prototype(Neos.NeosIo:PostFeatured) < prototype(Neos.NeosIo:Stage) {
         templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/PostFeatured.html'
         post = ${post}
         button = Neos.NeosIo:Button {
-            link = TYPO3.Neos:NodeUri {
+            link = Neos.Neos:NodeUri {
                 node = ${post}
                 absolute = true
             }
