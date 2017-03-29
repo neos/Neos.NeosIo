@@ -10,7 +10,7 @@ prototype(Neos.NeosIo.Event:Page.Document) < prototype(Neos.NeosIo.Event:Default
 	}
 }
 
-prototype(Neos.NeosIo.Event:Page) < prototype(TYPO3.Neos:Content) {
+prototype(Neos.NeosIo.Event:Page) < prototype(Neos.Neos:Content) {
 	main = ContentCollection {
 		@cache.mode = 'cached'
 		nodePath = 'main'

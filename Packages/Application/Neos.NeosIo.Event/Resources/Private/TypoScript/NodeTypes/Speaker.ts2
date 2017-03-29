@@ -11,7 +11,7 @@ prototype(Neos.NeosIo.Event:Speaker.Document) < prototype(Neos.NeosIo.Event:Defa
 	}
 }
 
-prototype(Neos.NeosIo.Event:Speaker) < prototype(TYPO3.Neos:Content) {
+prototype(Neos.NeosIo.Event:Speaker) < prototype(Neos.Neos:Content) {
 	main = ContentCollection {
 		@cache.mode = 'cached'
 		nodePath = 'main'

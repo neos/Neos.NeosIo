@@ -33,7 +33,7 @@ prototype(Neos.NeosIo.Event:Event.Document) < prototype(Neos.NeosIo:LandingPage.
 	}
 }
 
-prototype(Neos.NeosIo.Event:Event) < prototype(TYPO3.Neos:Content) {
+prototype(Neos.NeosIo.Event:Event) < prototype(Neos.Neos:Content) {
 	templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/NodeTypes/Event.html'
 	main = ContentCollection {
 		@cache.mode = 'cached'

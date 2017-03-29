@@ -3,6 +3,6 @@ prototype(Neos.NeosIo.Event:Menu) < prototype(Menu) {
 	startingPoint = ${site}
 	maximumLevels = 1
 	attributes.class = 'nav eventNav'
-	filter = 'TYPO3.Neos:Document, !Neos.NeosIo:Reference'
+	filter = 'Neos.Neos:Document, !Neos.NeosIo:Reference'
 	@cache.entryIdentifier.documentNode = ${site}
 }
