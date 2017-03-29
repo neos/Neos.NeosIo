@@ -5,7 +5,7 @@
 'Neos.NeosIo.Event:Person':
   abstract: true
   superTypes:
-    'TYPO3.Neos:Document': true
+    'Neos.Neos:Document': true
     'Neos.NeosIo:Address': true
   constraints:
     nodeTypes:
@@ -36,7 +36,7 @@
         inspector:
           group: person
           position: 15
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             values:
               female:
