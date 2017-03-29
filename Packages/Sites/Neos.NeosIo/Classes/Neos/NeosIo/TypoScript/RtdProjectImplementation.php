@@ -6,12 +6,12 @@ namespace Neos\NeosIo\TypoScript;
  */
 
 use Neos\Flow\Annotations as Flow;
-use TYPO3\TypoScript\TypoScriptObjects\Helpers\FluidView;
+use Neos\Fusion\TypoScriptObjects\Helpers\FluidView;
 
 /**
  * RtdProjectImplementation
  */
-class RtdProjectImplementation extends \TYPO3\TypoScript\TypoScriptObjects\TemplateImplementation
+class RtdProjectImplementation extends \Neos\Fusion\TypoScriptObjects\TemplateImplementation
 {
 
     /**
