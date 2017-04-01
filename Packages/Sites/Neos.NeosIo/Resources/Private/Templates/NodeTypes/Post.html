@@ -13,7 +13,7 @@
 			<span itemprop="author" itemscope="" itemtype="https://schema.org/Person"><span itemprop="name">{author}</span></span>
 		</f:if>
 		<f:if condition="{image}">
-			<meta itemprop="image" content="{media:uri.image(asset: image, maximumWidth: 720, maximumHeight: 500, allowCropping: 1, allowUpScaling: 1)}"/>
+			<meta itemprop="image" content="{media:uri.image(image: image, maximumWidth: 720, maximumHeight: 500, allowCropping: 1, allowUpScaling: 1)}"/>
 		</f:if>
 	</p>
 

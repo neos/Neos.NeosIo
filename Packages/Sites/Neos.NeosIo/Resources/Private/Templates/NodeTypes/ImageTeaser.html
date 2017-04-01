@@ -6,7 +6,7 @@
 	<f:if condition="{image}">
 		<f:then>
 			<f:render partial="LazyLoadImage"
-					  arguments="{class: 'imageTeaser__image', title: title, alternativeText: alternativeText, asset: image, maximumWidth: '700c', maximumHeight: '450c', allowUpScaling: allowUpScaling}"/>
+					  arguments="{class: 'imageTeaser__image', title: title, alternativeText: alternativeText, image: image, maximumWidth: '700c', maximumHeight: '450c', allowUpScaling: allowUpScaling}"/>
 		</f:then>
 		<f:else>
 			<f:if condition="{neos:rendering.inEditMode()}">

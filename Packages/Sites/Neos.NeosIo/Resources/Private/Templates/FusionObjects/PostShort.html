@@ -11,12 +11,12 @@
                     <img
                             alt="{title -> f:format.stripTags()}"
                             class="media__img media__img--scaled u-mb1/1"
-                            src="{media:uri.image(asset: image, width: 1000, height: 250, allowCropping: true)}"
+                            src="{media:uri.image(image: image, width: 1000, height: 250, allowCropping: true)}"
                             srcset="
-                                    {media:uri.image(asset: image, width: 1000, height: 250, allowCropping: true)} 1920w,
-                                    {media:uri.image(asset: image, width: 700, height: 175, allowCropping: true)} 1280w,
-                                    {media:uri.image(asset: image, width: 400, height: 100, allowCropping: true)} 658w,
-                                    {media:uri.image(asset: image, width: 200, height: 50, allowCropping: true)}
+                                    {media:uri.image(image: image, width: 1000, height: 250, allowCropping: true)} 1920w,
+                                    {media:uri.image(image: image, width: 700, height: 175, allowCropping: true)} 1280w,
+                                    {media:uri.image(image: image, width: 400, height: 100, allowCropping: true)} 658w,
+                                    {media:uri.image(image: image, width: 200, height: 50, allowCropping: true)}
                                     ">
                 </f:then>
                 <f:else>
@@ -24,12 +24,12 @@
                             alt="{title -> f:format.stripTags()}"
                             class="media__img media__img--scaled u-mb1/1"
                             src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Images/Loader.svg')}"
-                            data-image-normal="{media:uri.image(asset: image, width: 1000, height: 250, allowCropping: true)}"
+                            data-image-normal="{media:uri.image(image: image, width: 1000, height: 250, allowCropping: true)}"
                             data-image-srcset="
-                                    {media:uri.image(asset: image, width: 1000, height: 250, allowCropping: true)} 1920w,
-                                    {media:uri.image(asset: image, width: 700, height: 175, allowCropping: true)} 1280w,
-                                    {media:uri.image(asset: image, width: 400, height: 100, allowCropping: true)} 658w,
-                                    {media:uri.image(asset: image, width: 200, height: 50, allowCropping: true)}
+                                    {media:uri.image(image: image, width: 1000, height: 250, allowCropping: true)} 1920w,
+                                    {media:uri.image(image: image, width: 700, height: 175, allowCropping: true)} 1280w,
+                                    {media:uri.image(image: image, width: 400, height: 100, allowCropping: true)} 658w,
+                                    {media:uri.image(image: image, width: 200, height: 50, allowCropping: true)}
                                     ">
                 </f:else>
             </f:if>
