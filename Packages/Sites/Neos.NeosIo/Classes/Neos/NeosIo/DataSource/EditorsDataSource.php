@@ -32,7 +32,7 @@ class EditorsDataSource extends AbstractDataSource
      * @param array $arguments Additional arguments (key / value)
      * @return array
      */
-    public function getData(NodeInterface $node, array $arguments)
+    public function getData(NodeInterface $node = null, array $arguments)
     {
         $options = [];
         foreach ($this->userService->getUsers() as $user) {
