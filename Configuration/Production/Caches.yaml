@@ -1,47 +1,47 @@
 Flow_Mvc_Routing_Route:
-  backend: 'TYPO3\Flow\Cache\Backend\RedisBackend'
+  backend: 'Neos\Cache\Backend\RedisBackend'
   backendOptions:
     hostname: '%env:BEACH_REDIS_HOSTNAME%'
     port: '6379'
     database: 0
 Flow_Mvc_Routing_Resolve:
-  backend: 'TYPO3\Flow\Cache\Backend\RedisBackend'
+  backend: 'Neos\Cache\Backend\RedisBackend'
   backendOptions:
     hostname: '%env:BEACH_REDIS_HOSTNAME%'
     port: '6379'
     database: 1
-TYPO3_TypoScript_Content:
-  backend: 'TYPO3\Flow\Cache\Backend\RedisBackend'
+Neos_Fusion_Content:
+  backend: 'Neos\Cache\Backend\RedisBackend'
   backendOptions:
     hostname: '%env:BEACH_REDIS_HOSTNAME%'
     port: '6379'
     database: 2
 Flow_Session_MetaData:
-  backend: 'TYPO3\Flow\Cache\Backend\RedisBackend'
+  backend: 'Neos\Cache\Backend\RedisBackend'
   backendOptions:
     hostname: '%env:BEACH_REDIS_HOSTNAME%'
     port: '6379'
     database: 3
 Flow_Session_Storage:
-  backend: 'TYPO3\Flow\Cache\Backend\RedisBackend'
+  backend: 'Neos\Cache\Backend\RedisBackend'
   backendOptions:
     hostname: '%env:BEACH_REDIS_HOSTNAME%'
     port: '6379'
     database: 4
-TYPO3_Media_ImageSize:
-  backend: 'TYPO3\Flow\Cache\Backend\RedisBackend'
+Neos_Media_ImageSize:
+  backend: 'Neos\Cache\Backend\RedisBackend'
   backendOptions:
     hostname: '%env:BEACH_REDIS_HOSTNAME%'
     port: '6379'
     database: 5
 Flow_Security_Cryptography_HashService:
-  backend: 'TYPO3\Flow\Cache\Backend\RedisBackend'
+  backend: 'Neos\Cache\Backend\RedisBackend'
   backendOptions:
     hostname: '%env:BEACH_REDIS_HOSTNAME%'
     port: '6379'
     database: 6
-TYPO3_Neos_GoogleAnalytics_Tokens:
-  backend: 'TYPO3\Flow\Cache\Backend\RedisBackend'
+Neos_Neos_GoogleAnalytics_Tokens:
+  backend: 'Neos\Cache\Backend\RedisBackend'
   backendOptions:
     hostname: '%env:BEACH_REDIS_HOSTNAME%'
     port: '6379'
