@@ -10,9 +10,9 @@
 	data-isInline="true"
 	<f:if condition="{keyVisualImage}">
 		<f:then>
-			data-src="{media:uri.image(asset: keyVisualImage, maximumWidth: 1500, maximumHeight: 1500)}"
+			data-src="{media:uri.image(image: keyVisualImage, maximumWidth: 1500, maximumHeight: 1500)}"
 			data-srcSet="{keyVisualImageSrcSet}"
-			style="background-image: url('{media:uri.image(asset: keyVisualImage, maximumWidth: 5, maximumHeight: 5)}')"
+			style="background-image: url('{media:uri.image(image: keyVisualImage, maximumWidth: 5, maximumHeight: 5)}')"
 		</f:then>
 		<f:else>
 			<f:if condition="{size}">

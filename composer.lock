@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0c30d98d3f2cfdffd1a8c01eecb16ce8",
-    "content-hash": "b2ec2dfc1197d28f8b8ff2c8efa97981",
+    "hash": "8ca103f19ce7073057dabc1c7041d2d3",
+    "content-hash": "a6caee068a49565aa865e831f5676da4",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -3486,6 +3486,37 @@
             ],
             "description": "An open source Content Application Platform based on Flow. A set of core Content Management features is resting within a larger context that allows you to build a perfectly customized experience for your users.",
             "time": "2017-04-05 14:23:52"
+        },
+        {
+            "name": "neos/neos-ui-compiled",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/neos-ui-compiled.git",
+                "reference": "07e29339e6b4ae2aa2b595cc6c0d8dd05d53b5fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/neos-ui-compiled/zipball/07e29339e6b4ae2aa2b595cc6c0d8dd05d53b5fe",
+                "reference": "07e29339e6b4ae2aa2b595cc6c0d8dd05d53b5fe",
+                "shasum": ""
+            },
+            "require": {
+                "neos/flow": "*"
+            },
+            "type": "neos-package",
+            "extra": {
+                "neos": {
+                    "package-key": "Neos.Neos.Ui.Compiled"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Neos\\Neos\\Ui\\Compiled": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2017-04-06 09:34:43"
         },
         {
             "name": "neos/nodetypes",
@@ -7026,7 +7057,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "neos/neos-ui-compiled": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
