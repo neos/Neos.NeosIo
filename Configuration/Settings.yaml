@@ -1,21 +1,3 @@
-TYPO3:
-  SwiftMailer:
-    transport:
-      type: 'Swift_SmtpTransport'
-      options:
-        host: 'smtp.mailgun.org'
-        port: 2525
-        username: '%env:SWIFTMAILER_USERNAME%'
-        password: '%env:SWIFTMAILER_PASSWORD%'
-
-  Neos:
-    GoogleAnalytics:
-      authentication:
-        applicationName: 'Neos'
-        clientId: '%env:GOOGLE_ANALYTICS_CLIENT_ID%'
-        clientSecret: '%env:GOOGLE_ANALYTICS_CLIENT_SECRET%'
-        developerKey: '%env:GOOGLE_ANALYTICS_CLIENT_DEVELOPER_KEY%'
-
 Neos:
   NeosIo:
     googleAnalyticsTrackingCode: '%env:GOOGLE_ANALYTICS_TRACKING_CODE%'
@@ -23,11 +5,24 @@ Neos:
       username: '%env:CROWD_API_USERNAME%'
       password: '%env:CROWD_API_PASSWORD%'
 
+  ContentRepository:
+    Search:
+      indexAllWorkspaces: true
+      elasticSearch:
+        indexName: '%env:BEACH_ELASTICSEARCH_INDEX_NAME%'
+
+    GoogleAnalytics:
+      authentication:
+        applicationName: 'Neos'
+        clientId: '%env:GOOGLE_ANALYTICS_CLIENT_ID%'
+        clientSecret: '%env:GOOGLE_ANALYTICS_CLIENT_SECRET%'
+        developerKey: '%env:GOOGLE_ANALYTICS_CLIENT_DEVELOPER_KEY%'
+
 Flowpack:
   ElasticSearch:
     clients:
       default:
-       - host: 'elasticsearch.default.svc.cluster.local'
-         port: '9200'
-       - host: 'elasticsearch.default.svc.cluster.local'
-         port: '9200'
+       - host: '%env:BEACH_ELASTICSEARCH_HOSTNAME%'
+         port: '%env:BEACH_ELASTICSEARCH_PORT%'
+       - host: '%env:BEACH_ELASTICSEARCH_HOSTNAME%'
+         port: '%env:BEACH_ELASTICSEARCH_PORT%'
