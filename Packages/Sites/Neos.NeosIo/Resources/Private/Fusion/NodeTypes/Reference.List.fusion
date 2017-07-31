@@ -1,10 +1,14 @@
 prototype(Neos.NeosIo:Reference.List) < prototype(Neos.Neos:Content) {
+    orderOptions = ${{featured: 'Featured', datePublished: 'Publish date', launchDate: 'Launch date', projectVolume: 'Project volume'}}
+    defaultOrder = ${Array.keys(this.orderOptions)[0]}
+
     referenceType = ${request.arguments.referenceType}
     searchTerm = ${request.arguments.search}
-    order = ${request.arguments.order}
+    order = ${Array.indexOf(Array.keys(this.orderOptions), request.arguments.order) != -1 ? request.arguments.order : this.defaultOrder}
     limit = ${request.arguments.limit}
 
     @context {
+        defaultOrder = ${this.defaultOrder}
         referenceType = ${this.referenceType}
         searchTerm = ${this.searchTerm}
         order = ${this.order}
@@ -20,12 +24,11 @@ prototype(Neos.NeosIo:Reference.List) < prototype(Neos.Neos:Content) {
 
     referenceTypes = ${q(site).find('[instanceof Neos.NeosIo:ReferenceType]').sort('title', 'ASC').get()}
 
-
     references = ${Search.query(site).nodeType('Neos.NeosIo:Reference')}
     references.@process {
         fulltext = ${String.isBlank(searchTerm) ? value : value.fulltext(searchTerm + '*')}
         referenceType = ${String.isBlank(referenceType) ? value : value.exactMatch('projectType', referenceType)}
-        sort = ${String.isBlank(sort) ? value.sortDesc('datePublished') : value.sortDesc(sort)}
+        order = ${String.isBlank(order) ? value.sortDesc(defaultOrder) : value.sortDesc(order)}
         limit = ${String.isBlank(limit) ? value.limit(20) : value.limit(limit)}
     }
 
@@ -54,6 +57,7 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Template) {
         isKnown = ${value > 1 ? value : false}
     }
     projectType = ${q(q(node).property('projectType')).property('title')}
+    featured = ${q(node).property('featured')}
 
     @cache {
         mode = 'cached'
