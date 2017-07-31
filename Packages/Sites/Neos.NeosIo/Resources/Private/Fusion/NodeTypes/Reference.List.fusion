@@ -49,20 +49,19 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Template) {
     url = ${q(node).property('url')}
     datePublished = ${q(node).property('datePublished')}
     launchDate = ${q(node).property('launchDate')}
-    projectVolume = ${q(node).property('projectVolume')} {
-@process {
-isKnown = ${value > 1 ? value : false}
-}
-}
-projectType = ${q(q(node).property('projectType')).property('title')}
+    projectVolume = ${q(node).property('projectVolume')}
+    projectVolume.@process {
+        isKnown = ${value > 1 ? value : false}
+    }
+    projectType = ${q(q(node).property('projectType')).property('title')}
 
-@cache {
-mode = 'cached'
-entryIdentifier {
-node = ${node}
-}
-entryTags {
-1 = ${'Node_' + node.identifier}
-}
-}
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryTags {
+            1 = ${'Node_' + node.identifier}
+        }
+    }
 }
