@@ -18,7 +18,9 @@
 					   onchange="this.form.submit()"/>
 			</div>
 			<div class="form__item">
-				<label for="referenceType">Type</label>
+				<label for="referenceType">
+					<f:translate id="references.filter.industry.label" package="Neos.NeosIo" source="Main">Industry</f:translate>
+				</label>
 				<f:form.select id="referenceType" class="textInput" name="referenceType" options="{referenceTypes}" value="{referenceType}" optionLabelField="label" optionValueField="nodeData.identifier" prependOptionLabel="- all -" additionalAttributes="{onchange: 'this.form.submit()'}" />
 			</div>
 			<div class="form__item">
