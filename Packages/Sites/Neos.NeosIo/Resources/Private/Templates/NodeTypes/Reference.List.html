@@ -30,6 +30,13 @@
 				<f:form.select id="order" class="textInput" name="order" options="{orderOptions}"
 							   value="{order}" additionalAttributes="{onchange: 'this.form.submit()'}" />
 			</div>
+			<div class="form__item">
+					<label for="projectVolume">
+					<f:translate id="references.select.filter.label" package="Neos.NeosIo" source="Main">Project volume</f:translate>
+				</label>
+				<f:form.select id="projectVolume" class="textInput" name="projectVolume" options="{projectVolumeOptions}"
+							   value="{projectVolume}" prependOptionLabel="- all -" additionalAttributes="{onchange: 'this.form.submit()'}" />
+			</div>
 		</fieldset>
 	</io:simpleForm>
 	<crsearch:widget.paginate query="{references}" as="paginatedReferences" widgetId="{node.name}" configuration="{paginationConfiguration}">
