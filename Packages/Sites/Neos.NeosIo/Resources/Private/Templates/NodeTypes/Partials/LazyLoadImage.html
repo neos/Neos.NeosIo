@@ -10,8 +10,8 @@
 	<f:else>
 		<img src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Images/Loader.svg')}"
 			 alt="{alternativeText}" title="{title}" class="{class}"
-			 width="{maximumWidth -> f:format.number(decimals: 0)}"
-			 height="{maximumHeight -> f:format.number(decimals: 0)}"
+			 width="{maximumWidth -> f:format.number(decimals: 0, thousandsSeparator:'', decimalSeparator:'')}"
+			 height="{maximumHeight -> f:format.number(decimals: 0, thousandsSeparator:'', decimalSeparator:'')}"
 			 data-image-normal="{media:uri.image(image: image, width: width, maximumWidth: maximumWidth, height: height, maximumHeight: maximumHeight, allowUpScaling: allowUpScaling, allowCropping: allowCropping)}"/>
 	</f:else>
 </f:if>

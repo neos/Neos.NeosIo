@@ -1,0 +1,17 @@
+'Neos.NodeTypes:Image':
+  properties:
+    imageStyle:
+      type: string
+      ui:
+        label: 'Image style'
+        reloadIfChanged: true
+        inspector:
+          group: image
+          position: 55
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              '':
+                label: 'None'
+              thumbnail:
+                label: 'Thumbnail'
