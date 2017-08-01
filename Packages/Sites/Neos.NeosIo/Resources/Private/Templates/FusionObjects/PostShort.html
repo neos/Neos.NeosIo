@@ -12,6 +12,8 @@
                             alt="{title -> f:format.stripTags()}"
                             class="media__img media__img--scaled u-mb1/1"
                             src="{media:uri.image(image: image, width: 1000, height: 250, allowCropping: true)}"
+                            width="{image.width}"
+                            height="{image.height}"
                             srcset="
                                     {media:uri.image(image: image, width: 1000, height: 250, allowCropping: true)} 1920w,
                                     {media:uri.image(image: image, width: 700, height: 175, allowCropping: true)} 1280w,
@@ -24,6 +26,8 @@
                             alt="{title -> f:format.stripTags()}"
                             class="media__img media__img--scaled u-mb1/1"
                             src="{f:uri.resource(package: 'Neos.NeosIo', path: 'Images/Loader.svg')}"
+                            width="{image.width}"
+                            height="{image.height}"
                             data-image-normal="{media:uri.image(image: image, width: 1000, height: 250, allowCropping: true)}"
                             data-image-srcset="
                                     {media:uri.image(image: image, width: 1000, height: 250, allowCropping: true)} 1920w,
