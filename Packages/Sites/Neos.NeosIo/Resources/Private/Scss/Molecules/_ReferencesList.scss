@@ -30,3 +30,20 @@
 		}
 	}
 }
+
+.references__item--featured {
+	position: relative;
+
+	&::after {
+		@include meta();
+
+		background-color: $btn-color;
+		color: color-adjust($base-text-color, 100%);
+		content: 'Featured';
+		display: block;
+		padding: 1px 8px;
+		position: absolute;
+		right: $grid-gutter;
+		top: 0;
+	}
+}

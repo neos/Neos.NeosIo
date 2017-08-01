@@ -1,10 +1,4 @@
 
-'Neos.NeosIo:ReferenceType':
-  superTypes:
-    'Neos.Neos:Document': true
-  ui:
-    label: 'Reference Type'
-    icon: icon-tag
 'Neos.NeosIo:Reference':
   superTypes:
     'Neos.Neos:Document': true
@@ -90,3 +84,10 @@
                 label: '1000 - 3000h'
               25:
                 label: '> 3000h'
+    featured:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: Featured
+        inspector:
+          group: properties

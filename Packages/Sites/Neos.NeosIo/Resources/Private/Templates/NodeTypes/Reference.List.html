@@ -18,20 +18,41 @@
 					   onchange="this.form.submit()"/>
 			</div>
 			<div class="form__item">
-				<label for="referenceType">Type</label>
+				<label for="referenceType">
+					<f:translate id="references.select.industry.label" package="Neos.NeosIo" source="Main">Industry</f:translate>
+				</label>
 				<f:form.select id="referenceType" class="textInput" name="referenceType" options="{referenceTypes}" value="{referenceType}" optionLabelField="label" optionValueField="nodeData.identifier" prependOptionLabel="- all -" additionalAttributes="{onchange: 'this.form.submit()'}" />
 			</div>
 			<div class="form__item">
-				<label for="order">Sort by</label>
-				<f:form.select id="order" class="textInput" name="order" options="{datePublished: 'Publish date', launchDate: 'Launch date', projectVolume: 'Project volume'}" value="{order}" additionalAttributes="{onchange: 'this.form.submit()'}" />
+				<label for="projectVolume">
+					<f:translate id="references.select.filter.label" package="Neos.NeosIo" source="Main">Project volume</f:translate>
+				</label>
+				<f:form.select id="projectVolume" class="textInput" name="projectVolume" options="{projectVolumeOptions}"
+							   value="{projectVolume}" prependOptionLabel="- any -" additionalAttributes="{onchange: 'this.form.submit()'}" />
+			</div>
+			<div class="form__item">
+				<label for="order">
+					<f:translate id="references.select.order.label" package="Neos.NeosIo" source="Main">Sort by</f:translate>
+				</label>
+				<f:form.select id="order" class="textInput" name="order" options="{orderOptions}"
+							   value="{order}" additionalAttributes="{onchange: 'this.form.submit()'}" />
 			</div>
 		</fieldset>
 	</io:simpleForm>
 	<crsearch:widget.paginate query="{references}" as="paginatedReferences" widgetId="{node.name}" configuration="{paginationConfiguration}">
 		<div class="references__list g">
-			<f:for each="{paginatedReferences}" as="reference">
-				<ts:render path="itemRenderer" context="{node: reference}" />
-			</f:for>
+			<f:if condition="{paginatedReferences}">
+				<f:then>
+					<f:for each="{paginatedReferences}" as="reference">
+						<ts:render path="itemRenderer" context="{node: reference}" />
+					</f:for>
+				</f:then>
+				<f:else>
+					<div class="gi">
+						<p>{f:translate(id:'references.search.noResult', package:'Neos.NeosIo', source: 'Main')}</p>
+					</div>
+				</f:else>
+			</f:if>
 		</div>
 	</crsearch:widget.paginate>
 </div>
