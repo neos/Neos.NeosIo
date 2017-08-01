@@ -8,4 +8,7 @@ prototype(Neos.NodeTypes:Image) {
         @process.titleFallback = ${String.isBlank(value) ? node.properties.title : value}
         @process.filenameFallback = ${String.isBlank(value) ? node.properties.image.label : value}
     }
+
+    imageClassName.@process.addImageStyle = ${value + ' ' + q(node).property('imageStyle')}
+    imageClassName.@process.addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
 }
