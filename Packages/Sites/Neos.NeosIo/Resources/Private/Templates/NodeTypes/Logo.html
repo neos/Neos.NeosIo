@@ -1,0 +1,28 @@
+{namespace neos=Neos\Neos\ViewHelpers}
+{namespace media=Neos\Media\ViewHelpers}
+{namespace io=Neos\NeosIo\ViewHelpers}
+<div {attributes -> f:format.raw()}>
+	<io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}"
+					  class="logo__link" title="Go to {title}">
+		<f:if condition="{image}">
+			<f:then>
+				<media:image class="badge__image"
+							 image="{image}"
+							 title="{title}"
+							 alt="Logo of {title}"
+							 maximumWidth="360"
+				/>
+			</f:then>
+			<f:else>
+				<f:if condition="{neos:rendering.inEditMode()}">
+					<img class="badge__image"
+						 src="{f:uri.resource(package: 'Neos.Neos', path: 'Images/dummy-image.svg')}"
+						 title="Dummy image"
+						 alt="Dummy image"
+						 width="160"
+					/>
+				</f:if>
+			</f:else>
+		</f:if>
+	</io:link.external>
+</div>

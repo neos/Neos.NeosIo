@@ -1,0 +1,10 @@
+prototype(Neos.NeosIo:LogoWall) < prototype(Neos.Neos:Content) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/LogoWall.html'
+
+    attributes.class = 'slider'
+    attributes.data-component = 'Slider'
+
+    logos = Neos.Neos:ContentCollection {
+        nodePath = 'logos'
+    }
+}
