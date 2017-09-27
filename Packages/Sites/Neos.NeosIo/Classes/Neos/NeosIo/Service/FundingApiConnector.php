@@ -29,7 +29,9 @@ class FundingApiConnector extends AbstractApiConnector
      *          "customerName": "great company",
      *          "customerLogo": "http://absolute.link.to/logo-image.png",
      *          "customerSum": 1200,
+     *          "customerLink": "http://absolute.link.to",
      *          "badgeType": "MonthlyBronze",
+     *          "badgeCategory": "Long Time Supporter",
      *          "fundingType": "MonthlyBronze"
      *          "startDate": "2015-10-08",
      *          "endDate": "2016-07-08"
@@ -48,11 +50,13 @@ class FundingApiConnector extends AbstractApiConnector
             $result = $this->fetchJsonData('getBadges');
             if (is_array($result)) {
                 $fundingData = array_reduce($result, function ($carry, $item) {
-                    $fundingType = $item['fundingType'];
+                    $fundingCategory = $item['badgeCategory'];
                     $customerName = strlen($item['customerName']) ? $item['customerName'] : 'Anonymous';
 
                     // Store all available funding types
-                    $carry['badgeTypes'][$fundingType] = true;
+                    if (!empty($fundingCategory)) {
+                        $carry['badgeTypes'][$fundingCategory] = true;
+                    }
 
                     // Each customer is a object holding badges and badge types
                     if (!array_key_exists($customerName, $carry['customers'])) {
@@ -63,10 +67,10 @@ class FundingApiConnector extends AbstractApiConnector
                             'logo' => $item['customerLogo']
                         ];
                     }
-                    if (!in_array($fundingType, $carry['customers'][$customerName]['badgeTypes'])) {
-                        $carry['customers'][$customerName]['badgeTypes'][] = $fundingType;
+                    if (!in_array($fundingCategory, $carry['customers'][$customerName]['badgeTypes'])) {
+                        $carry['customers'][$customerName]['badgeTypes'][] = $fundingCategory;
                     }
-                    $carry['customers'][$customerName]['badges'][]= $item;
+                    $carry['customers'][$customerName]['badges'][] = $item;
                     return $carry;
                 }, [
                     'customers' => [],
