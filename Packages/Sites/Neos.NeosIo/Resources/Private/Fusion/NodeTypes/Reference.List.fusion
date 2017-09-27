@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo:Reference.List) < prototype(Neos.Neos:Content) {
-    orderOptions = ${{featured: 'Featured', datePublished: 'Publish date', launchDate: 'Launch date', projectVolume: 'Project volume'}}
+    orderOptions = ${{datePublished: 'Publish date', launchDate: 'Launch date', projectVolume: 'Project volume', featured: 'Featured'}}
     defaultOrder = ${Array.keys(this.orderOptions)[0]}
 
 	projectVolumeOptions = ${{'5': '< 100 h', '10': '100 - 499h', '15': '500 - 999h', '20': '1000 - 3000h', '25': '> 3000h'}}
