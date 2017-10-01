@@ -59,3 +59,4 @@ with a scent of React's code style and logic.
 * Do not rely on big frameworks/libraries like jQuery. Instead use the standarized Web API's like `classList` and so on. If you find yourself running into troubles with cross-browser optimization, check if there are polyfills for the given API available.
 * Always bundle your dependencies and do not leak global variables on purpose - So no `<script>` tag other than the compiled bundle from browserify since you will run into async troubles and won't have code optimization that way.
 * Orient yourself on the existing JS components and learn from then, if you have any problems in doing so, ping @inkdpixels or the #guild-website channel on [Slack](http://slack.neos.io/).
+
