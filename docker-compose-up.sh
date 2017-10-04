@@ -15,5 +15,7 @@ echo "Cleaning up Data/Temporary…"
 docker exec "${BEACH_DEV_PROJECT_NAME}_php_1" /bin/bash -c "rm -rf /application/Data/Temporary"
 echo "Migrating database…"
 docker exec "${BEACH_DEV_PROJECT_NAME}_sidecar_1" /bin/bash -c "cd /application; ./flow doctrine:migrate"
+echo "Publishing static resources…"
+docker exec "${BEACH_DEV_PROJECT_NAME}_sidecar_1" /bin/bash -c "cd /application; ./flow resource:publish --collection static"
 
 echo "You can now open ${BEACH_SITE_BASE_URI} in a browser. Have a neos day!"
