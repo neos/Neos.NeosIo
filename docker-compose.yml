@@ -61,6 +61,7 @@ services:
      - "${BEACH_DEV_SSH_PORT}:22"
     volumes:
       - application:/application
+      - ./.Docker/secrets:/secrets
     depends_on:
       database:
         condition: service_healthy

@@ -6,6 +6,8 @@ if [ ! -d "Packages" ]; then
   composer install
 fi
 
+./.Docker/secrets/beach-ssh-hostkeys/generate-hostkeys.sh
+
 docker-compose up -d --remove-orphans
 echo "Copying files…"
 docker cp . "${BEACH_DEV_PROJECT_NAME}_php_1:/application/"
