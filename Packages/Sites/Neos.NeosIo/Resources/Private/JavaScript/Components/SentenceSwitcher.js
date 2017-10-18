@@ -77,7 +77,7 @@ export default class SentenceSwitcher {
 
 	getDefaultProps() {
 		return {
-			sentenceSelector: '.typo3-neos-nodetypes-headline > div > *'
+			sentenceSelector: '.neos-nodetypes-headline > div > *'
 		};
 	}
 
