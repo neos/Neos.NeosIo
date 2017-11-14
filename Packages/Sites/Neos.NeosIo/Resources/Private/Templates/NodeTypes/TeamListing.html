@@ -7,7 +7,7 @@
     <div{attributes -> f:format.raw()}
         <neos:contentElement.editable property="title"/>
 
-        <f:if condition="{teamListingFilter}">
+        <f:if condition="{teamFilterOrNameSet}">
             <f:then>
                 <f:if condition="{groups}">
                     <f:then>
