@@ -5,8 +5,13 @@ prototype(Neos.NeosIo:TeamListing) < prototype(Neos.Neos:Content) {
     teamListingFilter = ${q(node).property('teamListingFilter')}
     @context.teamListingFilter = ${this.teamListingFilter}
 
+    teamName = ${q(node).property('teamName')}
+    @context.teamName = ${this.teamName}
+
+    teamFilterOrNameSet = ${!String.isBlank(teamListingFilter) || !String.isBlank(teamName)}
+
     groups = Neos.Fusion:Collection {
-        collection = ${q(site).crowdGroups().filter('[neos_group_type = ' + teamListingFilter + ']').get()}
+        collection = ${q(site).crowdGroups().filter(!String.isBlank(teamName) ? '[name = ' + teamName + ']' : '[neos_group_type = ' + teamListingFilter + ']').get()}
         itemRenderer = Neos.NeosIo:CrowdGroup
         itemName = 'group'
     }

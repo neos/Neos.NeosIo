@@ -16,7 +16,7 @@
     teamListingFilter:
       type: string
       ui:
-        label: 'What to show'
+        label: 'Type of groups to show'
         reloadIfChanged: true
         inspector:
           group: options
@@ -32,3 +32,14 @@
                 label: 'Neos guilds'
               council:
                 label: 'Neos Council'
+              cic:
+                label: 'Neos foundation members'
+              cicDirectors:
+                label: 'Neos foundation directors'
+    teamName:
+      type: string
+      ui:
+        label: 'Exact group name to display'
+        reloadIfChanged: true
+        inspector:
+          group: options
