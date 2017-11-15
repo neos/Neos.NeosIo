@@ -101,7 +101,7 @@ services:
       retries: 120
 
   elasticsearch:
-    image: elasticsearch:2.4.4
+    image: elasticsearch:1.7.5
     container_name: ${BEACH_DEV_PROJECT_NAME}_elasticsearch_1
     volumes:
       - ./.Docker/elasticsearch:/data
