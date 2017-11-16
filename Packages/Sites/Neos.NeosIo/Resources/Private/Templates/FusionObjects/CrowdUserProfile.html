@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns:f="http://typo3.org/ns/Neos/FluidAdaptor/ViewHelpers">
+
+<f:section name="details">
+    <div{attributes -> f:format.raw()}>
+        <div data-component="EmptyClickHandler" class="team-listing-profile__inner">
+            <f:if condition="{user.additionalProperties.neos_bio}">
+                <p>{user.additionalProperties.neos_bio}</p>
+            </f:if>
+
+            <f:if condition="{user.additionalProperties.neos_contribution}">
+                <strong class="team-listing-profile__header">
+                    <f:translate id="profile.contribution" source="CrowdApi" package="Neos.NeosIo"
+                                 arguments="{0: user.first-name}">
+                        What {0} contributes to Neos
+                    </f:translate>
+                </strong>
+                <hr>
+                <p>
+                    {user.additionalProperties.neos_contribution}
+                </p>
+            </f:if>
+
+            <strong class="team-listing-profile__header">
+                <f:translate id="profile.contact" source="CrowdApi" package="Neos.NeosIo"
+                             arguments="{0: user.first-name}">
+                    Contact {0}
+                </f:translate>
+            </strong>
+            <hr>
+            <ul>
+                <li><strong>Slack:</strong> @{user.name}</li>
+                <f:for each="{user.additionalProperties}" key="property" as="value">
+                    <f:if condition="{value}">
+                        <f:render section="attribute" arguments="{property: property, value: value}"/>
+                    </f:if>
+                </f:for>
+            </ul>
+            <br>
+
+            <f:if condition="{user.memberships}">
+                <strong class="team-listing-profile__header">
+                    <f:translate id="profile.memberships" source="CrowdApi" package="Neos.NeosIo">Memberships
+                    </f:translate>
+                </strong>
+                <hr>
+                <ul>
+                    <f:for each="{user.memberships}" as="group">
+                        <li>{f:if(condition: group.neos_title, then: group.neos_title, else: group.name)}</li>
+                    </f:for>
+                </ul>
+            </f:if>
+        </div>
+    </div>
+</f:section>
+
+<f:section name="attribute">
+    <f:switch expression="{property}">
+        <f:case value="neos_twitter">
+            <li><f:link.external uri="http://twitter.com/{value}" target="_blank">Twitter</f:link.external></li>
+        </f:case>
+        <f:case value="neos_googleplus">
+            <li><f:link.external uri="{value}" target="_blank">Google+</f:link.external></li>
+        </f:case>
+        <f:case value="neos_skype">
+            <li><f:link.external uri="skype:{value}?call">Skype</f:link.external></li>
+        </f:case>
+        <f:case value="neos_email">
+            <li><f:link.external uri="mailto:{value}">{value}</f:link.external></li>
+        </f:case>
+        <f:case value="neos_origin"></f:case>
+        <f:case value="neos_bio"></f:case>
+        <f:case value="neos_contribution"></f:case>
+        <f:defaultCase>
+            <li>
+                <b>
+                    <f:translate id="attribute.{property}" source="CrowdApi" package="Neos.NeosIo">{property}</f:translate>
+                </b>
+                {value}
+            </li>
+        </f:defaultCase>
+    </f:switch>
+</f:section>
+</html>
