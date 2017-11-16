@@ -1,4 +1,6 @@
 .imageTeaser {
+	--image-clip-width: 28px;
+	--image-clip-height: 20px;
 	position: relative;
 	display: block;
 	min-height: $base-line-height*12+px;
@@ -6,21 +8,10 @@
 	overflow: hidden;
 	background: #000;
 
-	.imageTeaser__corner {
-		z-index: 2;
-		position: absolute;
-		fill: white;
-	}
-
-	.imageTeaser__corner--topLeft {
-		top: -1px;
-		left: -1px;
-	}
-
-	.imageTeaser__corner--bottomRight {
-		bottom: -1px;
-		right: -1px;
-	}
+	$clip-path: polygon(var(--image-clip-width) 0px, 0 var(--image-clip-height), 0 100%, calc(100% - var(--image-clip-width)) 100%, 100% calc(100% - var(--image-clip-height)), 100% 0);
+	// Autoprefixer doesn't add the required webkit prefix for some reason
+	-webkit-clip-path: $clip-path;
+	clip-path: $clip-path;
 
 	// Dark hover effect on big screens
 	@include min-screen(1025px) {

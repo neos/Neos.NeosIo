@@ -2,7 +2,6 @@
 {namespace io=Neos\NeosIo\ViewHelpers}
 
 <io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}" class="imageTeaser">
-	<f:render partial="CornerTopLeft" arguments="{_all}" />
 	<f:if condition="{image}">
 		<f:then>
 			<f:render partial="LazyLoadImage"
@@ -24,6 +23,4 @@
 		<neos:contentElement.editable property="subTitle" tag="h5" class="imageTeaser__contents__subHeading" />
 		<neos:contentElement.editable property="title" tag="h3" class="imageTeaser__contents__heading" />
 	</div>
-	<f:render partial="CornerBottomRight" arguments="{_all}" />
-
 </io:link.external>
