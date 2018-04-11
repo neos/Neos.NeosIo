@@ -13,10 +13,4 @@ prototype(Neos.NeosIo:CrowdGroup) < prototype(Neos.Fusion:Template) {
         itemRenderer = Neos.NeosIo:CrowdUserListItem
         itemName = 'userName'
     }
-
-    memberOverlays = Neos.Fusion:Collection {
-        collection = ${group.members}
-        itemRenderer = Neos.NeosIo:CrowdUserOverlay
-        itemName = 'userName'
-    }
 }
