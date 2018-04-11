@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "da9e868706634ebc779e3e6a8836333e",
+    "content-hash": "3823e406841b8b79350bdfe93f434440",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2872,6 +2872,48 @@
             "time": "2018-03-20T10:34:44+00:00"
         },
         {
+            "name": "neos/fusion-afx",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/fusion-afx.git",
+                "reference": "6e9c87c0002b7b2f0a8904e7eee986c30444d310"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/fusion-afx/zipball/6e9c87c0002b7b2f0a8904e7eee986c30444d310",
+                "reference": "6e9c87c0002b7b2f0a8904e7eee986c30444d310",
+                "shasum": ""
+            },
+            "require": {
+                "neos/fusion": "^3.2.0 || dev-master",
+                "packagefactory/afx": "~2.0.1"
+            },
+            "replace": {
+                "packagefactory/atomicfusion-afx": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0.0"
+            },
+            "type": "neos-package",
+            "extra": {
+                "neos": {
+                    "package-key": "Neos.Fusion.Afx"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Neos\\Fusion\\Afx\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "JSX inspired compact syntax for Neos.Fusion",
+            "time": "2017-11-13T15:39:51+00:00"
+        },
+        {
             "name": "neos/googleanalytics",
             "version": "2.0.4",
             "source": {
@@ -5727,6 +5769,42 @@
                 "service proxies"
             ],
             "time": "2017-05-04T11:12:50+00:00"
+        },
+        {
+            "name": "packagefactory/afx",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PackageFactory/afx.git",
+                "reference": "391c83ceb5c31f8e82811a4570b6473e11242441"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PackageFactory/afx/zipball/391c83ceb5c31f8e82811a4570b6473e11242441",
+                "reference": "391c83ceb5c31f8e82811a4570b6473e11242441",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PackageFactory\\Afx\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wilhelm Behncke",
+                    "email": "wilhelm.behncke@googlemail.com"
+                }
+            ],
+            "description": "An Afx parser for PHP",
+            "time": "2017-05-30T15:57:19+00:00"
         },
         {
             "name": "paragonie/random_compat",

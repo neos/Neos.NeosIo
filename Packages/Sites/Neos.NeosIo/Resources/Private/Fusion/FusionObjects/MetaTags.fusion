@@ -1,0 +1,27 @@
+prototype(Neos.NeosIo:MetaTags) < prototype(Neos.Fusion:Component) {
+    showSmartAppBanner = ${q(site).property('showSmartAppBanner')}
+    iOSAppId = ${q(site).property('iOSAppId')}
+    rssUri = Neos.Neos:NodeUri {
+        node = ${site}
+        absolute = true
+        @process.append = ${value + 'rss.xml'}
+    }
+
+    renderer = afx`
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="apple-itunes-app" content={'app-id=' + props.iOSAppId} @if.enabled={props.showSmartAppBanner}/>
+        <link rel="alternate" type="application/rss+xml" title="RSS-Feed" href={props.rssUri}/>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00adee"/>
+        <meta name="apple-mobile-web-app-title" content="Neos"/>
+        <meta name="application-name" content="Neos"/>
+        <meta name="msapplication-TileColor" content="#00adee"/>
+        <meta name="theme-color" content="#ffffff"/>
+
+        <link rel="alternate" type="application/rss+xml" title="RSS-Feed" href={props.rssUri}/>
+    `
+}
