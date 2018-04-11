@@ -1,5 +1,4 @@
 {namespace neos=Neos\Neos\ViewHelpers}
-<f:render partial="CornerTopLeft" arguments="{_all}" />
 <f:if condition="{image}">
 	<f:render partial="LazyLoadImage"
 			  arguments="{class: 'imageTeaser__image', title: title, alternativeText: alternativeText, image: image, maximumWidth: '700c', maximumHeight: '450c', allowUpScaling: allowUpScaling}"/>
@@ -34,4 +33,3 @@
 		<f:if condition="{projectType}"><span><i class="fa fa-industry"></i> {projectType}</span></f:if>
 	</footer>
 </div>
-<f:render partial="CornerBottomRight" arguments="{_all}" />
