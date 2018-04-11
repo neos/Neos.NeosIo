@@ -1,7 +1,5 @@
-$btn__cornerWidth: 14px;
-$btn__cornerHeight: 10px;
-$btn__strokeWidth: 1px;
-
+$btn-vertical-padding: 14px;
+$btn-horizontal-padding: 40px;
 
 /**
  * Base Button:
@@ -13,6 +11,14 @@ $btn__strokeWidth: 1px;
  *     a.btn My Button
  */
 @mixin btn() {
+	--btn-vertical-padding: $btn-vertical-padding;
+	--btn-horizontal-padding: $btn-horizontal-padding;
+	--btn-clip-width: 14px;
+	--btn-clip-height: 10px;
+	--btn-fill-color: transparent;
+	--btn-transition: background .15s ease-in;
+	--btn-color: currentColor;
+
 	display: inline-block;
 
 	// Set in em's so we can change the size of the button depending on the font-size.
@@ -24,7 +30,8 @@ $btn__strokeWidth: 1px;
 	// Normalize some rules across the targeted elements (<input>, <button> and the .btn class).
 	font-weight: $regular;
 	line-height: 1;
-	color: currentColor;
+	color: brand('primary'); // Fallback for IE11
+	color: var(--btn-color);
 	vertical-align: top;
 	transition: all $transition-duration ease;
 	text-align: center;
@@ -49,122 +56,56 @@ $btn__strokeWidth: 1px;
 	//
 	// Edge case for the neos backend.
 	//
-	a { color: currentColor; }
+	a {
+		color: currentColor;
+	}
 }
 .btn {
 	@include btn();
 }
 
-//
-// Children, mainly for the edge effect of the button.
-//
 .btn__content {
 	width: 100%;
-	padding: 8px 40px;
-}
-.btn__content,
-.btn__corner {
+	padding: $btn-vertical-padding $btn-horizontal-padding; // Fallback for IE11
+	padding: var(--btn-vertical-padding) var(--btn-horizontal-padding);
 	position: relative;
-	width: 100%;
-}
-.btn__corner {
-	&:after {
-		display: block;
-		content: '';
-		overflow-y: hidden;
-		width: 100%;
-	}
-	svg {
-		position: absolute;
-	}
-}
-.btn__corner--top {
-	padding-left: $btn__cornerWidth;
+	background: #fff; // Fallback for IE11
+	background: var(--btn-fill-color);
+	transition: var(--btn-transition);
 
-	svg {
-		left: 0;
-		top: 0;
-	}
-}
-.btn__corner--bottom {
-	padding-right: $btn__cornerWidth;
-
-	svg {
-		right: 0;
-		bottom: 0;
+	.stage--primary &,
+	.stage--bright & {
+		background: brand('secondary'); // Fallback for IE11
+		background: var(--btn-fill-color);
 	}
 }
 
-@mixin btnSvgBorder($strokeColor, $fillColor) {
-	.btn__corner {
-		height: $btn__cornerHeight;
 
-		svg {
-			line {
-				stroke: $strokeColor;
-				stroke-width: $btn__strokeWidth;
-			}
-
-			polygon {
-				fill: $fillColor;
-			}
-		}
-
-		&:after {
-			height: $btn__cornerHeight;
-			background: $fillColor;
-		}
-	}
-
-	.btn__corner--top:after {
-		border-right: $btn__strokeWidth solid $strokeColor;
-		border-top: $btn__strokeWidth solid $strokeColor;
-	}
-
-	.btn__corner--bottom:after {
-		border-left: $btn__strokeWidth solid $strokeColor;
-		border-bottom: $btn__strokeWidth solid $strokeColor;
-	}
-
+@mixin btnClippedBorder() {
 	.btn__content {
-		border-left: $btn__strokeWidth solid $strokeColor;
-		border-right: $btn__strokeWidth solid $strokeColor;
-		background: $fillColor;
+		$clip-path: polygon(var(--btn-clip-width) 0px, 0 var(--btn-clip-height), 0 100%, calc(100% - var(--btn-clip-width)) 100%, 100% calc(100% - var(--btn-clip-height)), 100% 0);
+
+		// Autoprefixer doesn't add the required webkit prefix for some reason
+		-webkit-clip-path: $clip-path;
+		clip-path: $clip-path;
 	}
 }
 
-/*
- * A basic :hover effect for all solid buttons.
- */
-@mixin solidBtnHoverPulse($baseColor) {
-	$hoverColor: lighten($baseColor, 10);
-	$transition: all .5s;
+@mixin btnBorder() {
+	&::before {
+		$clip-path: polygon(calc(var(--btn-clip-width) + 1px) 0px, 0 calc(var(--btn-clip-height) + 1px), 0 100%, calc(100% - var(--btn-clip-width) - 1px) 100%, 100% calc(100% - var(--btn-clip-height) - 1px), 100% 0);
 
-	position: relative;
+		position: absolute;
+		content: "";
+		background: var(--btn-stroke-color);
+		left: -1px;
+		top: -1px;
+		right: -1px;
+		bottom: -1px;
 
-	&:hover {
-		.btn__corner {
-			&:after{
-				transition: $transition;
-				background: $hoverColor;
-				border-color: $hoverColor;
-			}
-
-			polygon {
-				transition: $transition;
-				fill: $hoverColor;
-			}
-
-			line {
-				stroke: $hoverColor;
-			}
-		}
-
-		.btn__content {
-			transition: $transition;
-			border-color: $hoverColor;
-			background: $hoverColor;
-		}
+		// Autoprefixer doesn't add the required webkit prefix for some reason
+		-webkit-clip-path: $clip-path;
+		clip-path: $clip-path;
 	}
 }
 
@@ -185,7 +126,7 @@ $btn__strokeWidth: 1px;
 	width: 100%;
 }
 .btn--full {
-	@include btn--full();
+	@include btn--full;
 }
 
 /**
@@ -196,16 +137,19 @@ $btn__strokeWidth: 1px;
  *     a.btn.btn--primary My Button
  */
 @mixin btn--primary() {
-	color: brand('primary');
+	--btn-fill-color: var(--stage-background-color);
+	--btn-stroke-color: transparentize(brand('primary'), 0.4);
+	--btn-color: brand('primary');
 
-	@include btnSvgBorder(transparentize(brand('primary'), 0.4), transparent);
+	@include btnClippedBorder;
+	@include btnBorder;
 
 	&:hover {
-		@include btnSvgBorder(brand('primary'), transparent);
+		--btn-stroke-color: brand('primary');
 	}
 }
 .btn--primary {
-	@include btn--primary();
+	@include btn--primary;
 }
 
 /**
@@ -216,23 +160,12 @@ $btn__strokeWidth: 1px;
  *     a.btn.btn--solidPrimary My Button
  */
 .btn--solidPrimary {
-	color: #FFF;
+	--btn-fill-color: brand('primary');
+	--btn-color: #fff;
+	@include btnClippedBorder;
 
-	@include btnSvgBorder(brand('primary'), brand('primary'));
-	@include solidBtnHoverPulse(brand('primary'));
-
-	/* Browser fix for solid buttons */
-	.btn__corner--top {
-		svg {
-			left: 1px;
-			top: 1px;
-		}
-	}
-	.btn__corner--bottom {
-		svg {
-			right: 1px;
-			bottom: 1px;
-		}
+	&:hover {
+		--btn-fill-color: lighten(brand('primary'), 10);
 	}
 }
 
@@ -244,12 +177,15 @@ $btn__strokeWidth: 1px;
  *     a.btn.btn--secondary My Button
  */
 @mixin btn--secondary() {
-	color: brand('secondary');
+	--btn-fill-color: var(--stage-background-color);
+	--btn-stroke-color: #ccc;
+	--btn-color: brand('secondary');
 
-	@include btnSvgBorder(#ccc, transparent);
+	@include btnClippedBorder;
+	@include btnBorder;
 
 	&:hover {
-		@include btnSvgBorder(brand('teritary'), transparent);
+		--btn-stroke-color: brand('teritary');
 	}
 }
 .btn--secondary {
@@ -264,23 +200,13 @@ $btn__strokeWidth: 1px;
  *     a.btn.btn--solidSecondary My Button
  */
 .btn--solidSecondary {
-	color: #FFF;
+	--btn-fill-color: brand('secondary');
+	--btn-color: #fff;
 
-	@include btnSvgBorder(brand('secondary'), brand('secondary'));
-	@include solidBtnHoverPulse(brand('secondary'));
+	@include btnClippedBorder;
 
-	/* Browser fix for solid buttons */
-	.btn__corner--top {
-		svg {
-			left: 1px;
-			top: 1px;
-		}
-	}
-	.btn__corner--bottom {
-		svg {
-			right: 1px;
-			bottom: 1px;
-		}
+	&:hover {
+		--btn-fill-color: lighten(brand('secondary'), 10);
 	}
 }
 
@@ -294,12 +220,15 @@ $btn__strokeWidth: 1px;
  *     </div>
  */
 @mixin btn--bright() {
-	color: #FFF;
+	--btn-fill-color: var(--stage-background-color);
+	--btn-stroke-color: transparentize(#fff, 0.4);
+	--btn-color: #FFF;
 
-	@include btnSvgBorder(transparentize(#fff, 0.4), transparent);
+	@include btnClippedBorder;
+	@include btnBorder;
 
 	&:hover {
-		@include btnSvgBorder(#fff, transparent);
+		--btn-stroke-color: #fff;
 	}
 }
 .btn--bright {
@@ -316,16 +245,15 @@ $btn__strokeWidth: 1px;
  *     </div>
  */
 @mixin btn--solidBright() {
-	color: currentColor;
+	--btn-fill-color: transparentize(#fff, 0.1);
+	--btn-color: currentColor;
 
-	@include btnSvgBorder(transparentize(#fff, 0.1), transparentize(#fff, 0.1));
-
-	/* Browser fix for solid buttons */
+	@include btnClippedBorder;
 
 	&:hover {
-		@include btnSvgBorder(#fff, #fff);
+		--btn-fill-color: #fff;
 	}
 }
 .btn--solidBright {
-	@include btn--solidBright();
+	@include btn--solidBright;
 }

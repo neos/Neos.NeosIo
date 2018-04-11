@@ -1,4 +1,5 @@
 .stage {
+	--stage-background-color: #000;
 	display: block;
 	position: relative;
 	overflow: hidden;
@@ -7,12 +8,15 @@
 	@include u-linkReset();
 }
 .stage--bright {
+	--stage-background-color: #fff;
 	background: #FFF;
 }
 .stage--dark {
+	--stage-background-color: #000;
 	background: #000;
 }
 .stage--primary {
+	--stage-background-color: brand('primary');
 	background: brand('primary');
 
 	a {
@@ -26,9 +30,11 @@
 	}
 }
 .stage--secondary {
+	--stage-background-color: brand('secondary');
 	background: brand('secondary');
 }
 .stage--teritary {
+	--stage-background-color: brand('teritary');
 	background: brand('teritary');
 }
 

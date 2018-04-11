@@ -1,18 +1,21 @@
 {
     "name": "neos/neos-io-distribution",
     "description" : "neos.io website distribution",
-    "license": "GPL-3.0+",
+    "license": "GPL-3.0-or-later",
     "config": {
         "vendor-dir": "Packages/Libraries",
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "platform": {
+          "php": "7.1"
+        }
     },
     "require": {
       "neos/neos": "~3.1",
       "neos/media": "~3.1",
       "neos/nodetypes": "~3.1",
       "neos/seo": "~2.0.0",
-      "neos/neos-ui": "1.0.*@beta",
-      "neos/neos-ui-compiled": "1.0.*@beta",
+      "neos/neos-ui": "~1.0",
+      "neos/neos-ui-compiled": "~1.0",
       "neos/googleanalytics": "~2.0",
       "neos/form": "~3.0",
       "neos/marketplace": "1.*",
@@ -34,7 +37,7 @@
     "require-dev": {
        "neos/buildessentials": "~4.0",
        "mikey179/vfsstream": "~1.6",
-       "phpunit/phpunit": "~4.8 || ~5.2.0"
+       "phpunit/phpunit": "~5.2.0 || ~6.0"
     },
     "scripts": {
         "post-update-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",

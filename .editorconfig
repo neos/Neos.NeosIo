@@ -1,9 +1,16 @@
+root = true
+
 [*]
 end_of_line = lf
 charset = utf-8
 indent_style = tab
 indent_size = 4
 
-# Align the PHP code style to PSR-2
-[*.php]
+[{*.{yaml,yml},package.json,.*rc}]
+indent_size = 2
+
+[*.{php,fusion,yaml,yml,json}]
 indent_style = space
+
+[Sites.xml]
+indent_size = 1
