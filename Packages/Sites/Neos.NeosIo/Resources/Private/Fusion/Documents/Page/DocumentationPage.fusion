@@ -1,0 +1,25 @@
+prototype(Neos.NeosIo:DocumentationPage.Document) < prototype(Neos.NeosIo:DefaultPage) {
+    body {
+        templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/DocumentationPage.html'
+
+        parts {
+            secondaryMenu = Neos.Neos:Menu {
+                parents = ${q(documentNode).parents('[instanceof Neos.NeosIo:DocumentationPage]')}
+                startingPoint = ${(this.parents.count() == 0) ? documentNode : this.parents.last().get(0)}
+                entryLevel = -1
+                maximumLevels = 99
+                filter = 'Neos.NeosIo:DocumentationPage'
+            }
+        }
+
+        content {
+            keyVisual = PrimaryContent {
+                nodePath = 'keyVisual'
+            }
+
+            main = PrimaryContent {
+                nodePath = 'main'
+            }
+        }
+    }
+}
