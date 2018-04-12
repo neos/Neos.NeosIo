@@ -6,39 +6,41 @@
         "vendor-dir": "Packages/Libraries",
         "bin-dir": "bin",
         "platform": {
-          "php": "7.1"
+            "php": "7.1"
         }
     },
     "require": {
-      "neos/neos": "~3.1",
-      "neos/media": "~3.1",
-      "neos/nodetypes": "~3.1",
-      "neos/fusion-afx": "^1.0",
-      "neos/seo": "~2.0.0",
-      "neos/neos-ui": "~1.0",
-      "neos/neos-ui-compiled": "~1.0",
-      "neos/googleanalytics": "~2.0",
-      "neos/form": "~3.0",
-      "neos/marketplace": "1.*",
-      "neos/swiftmailer": "~6.0.0",
-      "neos/redirecthandler-neosadapter": "~2.0",
-      "neos/redirecthandler-databasestorage": "~2.0",
+        "neos/neos": "~3.1",
+        "neos/media": "~3.1",
+        "neos/nodetypes": "~3.1",
+        "neos/fusion-afx": "^1.0",
+        "neos/seo": "~2.0.0",
+        "neos/neos-ui": "~1.0",
+        "neos/neos-ui-compiled": "~1.0",
+        "neos/googleanalytics": "~2.0",
+        "neos/form": "~3.0",
+        "neos/marketplace": "1.*",
+        "neos/swiftmailer": "~6.0.0",
+        "neos/redirecthandler-neosadapter": "~2.0",
+        "neos/redirecthandler-databasestorage": "~2.0",
 
-      "flowpack/searchplugin": "~3.0",
-      "flownative/gravatar": "~2.0.0",
-      "flowpack/listable": "~2.0.0",
-      "flowpack/cachebuster": "~1.0.0",
-      "flowpack/elasticsearch-contentrepositoryadaptor": "~4.0",
-      "flownative/resource-tools": "1.*",
+        "flowpack/searchplugin": "~3.0",
+        "flownative/gravatar": "~2.0.0",
+        "flowpack/listable": "~2.0.0",
+        "flowpack/cachebuster": "~1.0.0",
+        "flowpack/elasticsearch-contentrepositoryadaptor": "~4.0",
+        "flownative/resource-tools": "1.*",
 
-      "moc/notfound": "~3.0.0",
-      "punktde/codeview": "^1.1",
-      "networkteam/neos-mailobfuscator": "^2.0"
+        "moc/notfound": "~3.0.0",
+        "punktde/codeview": "^1.1",
+        "networkteam/neos-mailobfuscator": "^2.0",
+        "jonnitto/photoswipe": "^1.3",
+        "jonnitto/imagesinarow": "^1.3"
     },
     "require-dev": {
-       "neos/buildessentials": "~4.0",
-       "mikey179/vfsstream": "~1.6",
-       "phpunit/phpunit": "~5.2.0 || ~6.0"
+        "neos/buildessentials": "~4.0",
+        "mikey179/vfsstream": "~1.6",
+        "phpunit/phpunit": "~5.2.0 || ~6.0"
     },
     "scripts": {
         "post-update-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
