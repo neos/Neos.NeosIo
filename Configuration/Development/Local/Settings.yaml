@@ -1,0 +1,25 @@
+#
+# Development settings for dev.neos.io
+#
+
+Neos:
+  Flow:
+    persistence:
+      backendOptions:
+        host: 127.0.0.1
+        dbname: neos-neosio
+        user: root
+        password: ''
+        unix_socket: 3306
+
+    http:
+      baseUri: ~
+
+  Imagine:
+    driver: 'Gd'
+
+
+  ContentRepository:
+    Search:
+      realtimeIndexing:
+        enabled: false

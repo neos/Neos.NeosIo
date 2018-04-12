@@ -1,0 +1,22 @@
+
+.secondaryMenu {
+	@include u-resetList();
+}
+
+.secondaryMenu__item {
+	line-height: $double-spacing+px;
+	> a {
+		display: block;
+	}
+}
+
+.secondaryMenu__item--current {
+	> a {
+		@include u-linkReset();
+	}
+}
+
+.secondaryMenu__itemsList {
+	@include u-resetList();
+	margin-left: $half-spacing+px;
+}
