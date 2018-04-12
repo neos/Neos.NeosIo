@@ -1,8 +1,8 @@
 prototype(Neos.NeosIo:MetaTags) < prototype(Neos.Fusion:Component) {
-    showSmartAppBanner = ${q(site).property('showSmartAppBanner')}
-    iOSAppId = ${q(site).property('iOSAppId')}
+    showSmartAppBanner = ${q(rootSite || site).property('showSmartAppBanner')}
+    iOSAppId = ${q(rootSite || site).property('iOSAppId')}
     rssUri = Neos.Neos:NodeUri {
-        node = ${site}
+        node = ${rootSite || site}
         absolute = true
         @process.append = ${value + 'rss.xml'}
     }

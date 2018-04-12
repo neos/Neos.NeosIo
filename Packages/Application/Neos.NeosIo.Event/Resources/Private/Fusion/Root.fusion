@@ -1,4 +1,5 @@
 root {
+	@context.rootSite = ${site}
 	@context.site = ${q(node).closest('[instanceof Neos.NeosIo.Event:Event]').get(0) ? q(node).closest('[instanceof Neos.NeosIo.Event:Event]').get(0) : site}
 }
 
