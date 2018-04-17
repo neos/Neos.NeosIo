@@ -49,3 +49,17 @@
 	margin-top: 3em !important;
 	margin-bottom: 3em !important;
 }
+
+/**
+ * Inllne icon that can appear in a paragraph of text without destroying the vertical flow.
+ *
+ *     @example
+ *     Some text, lorem ipsum <i class="inline-icon fa fa-fw fa-inversed fa-globe"></i> some more text behind this.
+
+ */
+.inline-icon {
+	background: $base-text-color;
+	line-height: $base-line-height+px !important;
+	width: $base-line-height+px;
+	text-align: center;
+}

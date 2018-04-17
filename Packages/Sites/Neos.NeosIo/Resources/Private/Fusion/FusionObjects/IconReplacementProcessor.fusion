@@ -1,0 +1,14 @@
+/*
+ * This processor replaces Neos UI icon placeholder in the form [ICON-XXX] with fontawesome icons.
+ */
+prototype(Neos.NeosIo:DocumentationContentIconProcessor) < prototype(Neos.Fusion:Value) {
+    @if.frontendOnly = ${!node.context.inBackend}
+
+    value = Neos.NeosIo:IconReplacer {
+        haystack = ${value}
+        tagName = 'i'
+        classStub = 'inline-icon fa fa-inverse fa-'
+    }
+}
+
+prototype(Neos.NeosIo:IconReplacer).@class = 'Neos\\NeosIo\\Fusion\\IconReplacerImplementation'
