@@ -4,7 +4,7 @@ namespace Neos\NeosIo\Fusion;
 use Neos\Fusion\FusionObjects\AbstractFusionObject;
 
 /**
- * A Fusion Menu object
+ * An inline icon replacer object.
  */
 class IconReplacerImplementation extends AbstractFusionObject
 {
