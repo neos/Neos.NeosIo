@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\NeosIo\Fusion;
 
 use Neos\Fusion\FusionObjects\AbstractFusionObject;
@@ -49,8 +50,9 @@ class IconReplacerImplementation extends AbstractFusionObject
         $classStub = $this->getClassStub();
         return preg_replace_callback(
             "/\[icon-(?<replace>[\w-]*)\]/i",
-            function($match) use ($tagName, $classStub) {
-                return '<'.$tagName.' class="'.$classStub.strtolower($match['replace']).'"></'.$tagName.'>';
+            function ($match) use ($tagName, $classStub) {
+                $iconName = strtolower($match['replace']);
+                return '<' . $tagName . ' aria-label="Icon ' . $iconName . '" class="' . $classStub . $iconName . '"></' . $tagName . '>';
             },
             $this->getHaystack()
         );
