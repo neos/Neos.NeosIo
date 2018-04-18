@@ -66,6 +66,22 @@ Neos:
       indexAllWorkspaces: false
       elasticSearch:
         indexName: wwwneosio
+
+    contentDimensions:
+      'language':
+        default: 'en'
+        defaultPreset: 'en'
+        label: 'Language'
+        icon: 'icon-language'
+        presets:
+          'en':
+            label: 'English'
+            values: ['en']
+            uriSegment: ''
+          'de':
+            label: 'German'
+            values: ['de', 'en']
+            uriSegment: 'de'
   Fusion:
     defaultContext:
       Data: Neos\NeosIo\Eel\Helper\DataHelper
