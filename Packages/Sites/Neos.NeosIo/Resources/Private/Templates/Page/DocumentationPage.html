@@ -14,10 +14,6 @@
 		keyVisualImageSrcSet: keyVisualImageSrcSet
 	}"/>
 
-	<nav>
-		{parts.breadcrumb -> f:format.raw()}
-	</nav>
-
 	<div class="stage stage--bright" id="mainContent">
 		<div class="stage__contents stage__contents--big">
 			<main class="content" role="main">
@@ -26,6 +22,9 @@
 						{parts.secondaryMenu -> f:format.raw()}
 					</div>
 					<div class="gi u-w1/1 u-wm8/12 u-wl8/12 neos-contentcollection">
+						<nav>
+							{parts.breadcrumb -> f:format.raw()}
+						</nav>
 						{content.main -> f:format.raw()}
 					</div>
 				</div>

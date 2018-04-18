@@ -1,0 +1,16 @@
+{namespace neos=Neos\Neos\ViewHelpers}
+{namespace fusion=Neos\Fusion\ViewHelpers}
+<ul{attributes -> f:format.raw()}>
+	<f:render section="itemsList" arguments="{items: items}" />
+</ul>
+
+<f:section name="itemsList">
+	<f:for each="{items}" as="item">
+		<li{fusion:render(path: '{item.state}.attributes', context: {item: item}) -> f:format.raw()}>
+		<neos:link.node node="{item.node}" section="{item.anchorName}">{item.label}</neos:link.node>
+		</li>
+		<f:if condition="{item.subItems}">
+			<f:render section="itemsList" arguments="{items: item.subItems}" />
+		</f:if>
+	</f:for>
+</f:section>
