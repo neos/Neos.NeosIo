@@ -86,55 +86,8 @@
   ui:
     group: special
 
-
-'Neos.NeosIo:MediaQueryMixin':
-  abstract: true
-  properties:
-    displaySmallMq:
-      type: boolean
-      ui:
-        label: 'Display on small MQ only'
-        reloadIfChanged: true
-        inspector:
-          group: visibility
-          position: 100
-    displayLargeMq:
-      type: boolean
-      ui:
-        label: 'Display in large MQ only'
-        reloadIfChanged: true
-        inspector:
-          group: visibility
-          position: 120
-    displayAllMq:
-      type: boolean
-      ui:
-        label: 'Display on all MQ'
-        reloadIfChanged: true
-        inspector:
-          group: visibility
-          position: 130
-
-'Neos.NeosIo:AnchorMixin':
-  abstract: true
-  ui:
-    inspector:
-      groups:
-        'anchor':
-          label: 'Internal Linking / Anchors'
-          position: 110
-          tab: meta
-
-  properties:
-    anchorName:
-      type: string
-      ui:
-        label: 'Anchor Name'
-        inspector:
-          group: anchor
-          position: 10
-
 'Neos.Neos:Content':
   superTypes:
+    'Neos.NeosIo:ContentInspectorGroupMixin': true
     'Neos.NeosIo:MediaQueryMixin': true
     'Neos.NeosIo:AnchorMixin': true
