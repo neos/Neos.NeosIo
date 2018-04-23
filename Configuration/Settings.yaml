@@ -30,3 +30,19 @@ Flowpack:
          port: '%env:BEACH_ELASTICSEARCH_PORT%'
          username: '%env:BEACH_ELASTICSEARCH_USERNAME%'
          password: '%env:BEACH_ELASTICSEARCH_PASSWORD%'
+
+    indexes:
+      default:      
+        'wwwneosio-production':    # custom index name, NOTE THIS SHOULD NOT BE HARDCODED ON BEACH
+          analysis:
+            filter:
+              autocompleteFilter:
+                max_shingle_size: 5
+                min_shingle_size: 2
+                type: 'shingle'
+            analyzer:
+              autocomplete:
+                filter: [ 'lowercase', 'autocompleteFilter' ]
+                char_filter: [ 'html_strip' ]
+                type: 'custom'
+                tokenizer: 'standard'
