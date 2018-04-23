@@ -1,8 +1,9 @@
 ##
 # Modify base types
 #
-
 'Neos.Neos:Document':
+  superTypes:
+    'Flowpack.SearchPlugin:SuggestableMixin': FALSE
   constraints:
     nodeTypes:
       'Neos.NeosIo:RootPage': false
