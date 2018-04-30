@@ -1,0 +1,52 @@
+prototype(Neos.NeosIo:DocumentationPageSubMenu) < prototype(Neos.Neos:Menu) {
+    @class = 'Neos\\NeosIo\\Fusion\\DocumentationPageSubMenuImplementation'
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/DocumentationPageSubMenu.html'
+
+    itemCollection = Neos.Fusion:RawCollection {
+        collection = ${q(site).find('[instanceof Neos.NeosIo:DocumentationPage]')}
+        itemRenderer = Neos.NeosIo:DocumentationPageSubMenuItemRenderer
+    }
+
+    attributes.class = "secondaryMenu"
+    active.attributes = Neos.Fusion:Attributes {
+        class = ${'secondaryMenu__item secondaryMenu__item--active secondaryMenu__item--menuLevel-' + item.menuLevel}
+    }
+    current.attributes = Neos.Fusion:Attributes {
+        class = ${'secondaryMenu__item secondaryMenu__item--current secondaryMenu__item--menuLevel-' + item.menuLevel}
+    }
+    normal.attributes = Neos.Fusion:Attributes {
+        class = ${'secondaryMenu__item secondaryMenu__item--normal secondaryMenu__item--menuLevel-' + item.menuLevel}
+    }
+
+    @cache {
+        entryTags {
+            1 = ${'DescendantOf_' + documentNode.identifier}
+        }
+    }
+}
+
+prototype(Neos.NeosIo:DocumentationPageSubMenuItemRenderer) < prototype(Neos.Fusion:RawArray) {
+    node = ${item}
+    label = ${q(item).property('title')}
+    anchorName = ''
+    subItems = Neos.Fusion:RawCollection {
+        // The Fusion code below extracts all headlines and renders them as on-page subItems into the menu.
+        // It is necessary to set an "anchorName" for each headline for these links to work.
+
+        @if.onlyAppendOnPageSubItemsForCurrentDocumentNode = ${documentNode.identifier == item.identifier}
+        collection = ${q(documentNode).find('[instanceof Neos.NeosIo:SemanticSection]').children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h2>"]')}
+        itemRenderer = Neos.Fusion:RawArray {
+            @context.currentSection = ${q(item).parents('[instanceof Neos.NeosIo:SemanticSection]').get(0)}
+            node = ${documentNode}
+            label = ${String.stripTags(q(item).property('title'))}
+            anchorName = ${q(item).property('anchorName')}
+            subItems = Neos.Fusion:RawCollection {
+                collection = ${q(currentSection).children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h3>"]')}
+                itemRenderer = Neos.Fusion:RawArray {
+                    node = ${documentNode}
+                    label = ${String.stripTags(q(item).property('title'))}
+                    anchorName = ${q(item).property('anchorName')}
+                }
+            }
+        }
+    }

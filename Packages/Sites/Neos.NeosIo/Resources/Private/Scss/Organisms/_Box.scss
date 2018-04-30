@@ -9,6 +9,7 @@
  *     </div>
  */
 .box {
+	position: relative;
 	margin-bottom: $basic-spacing+px;
 	padding: $double-spacing+px $basic-spacing+px;
 	background: #F0F3F5;
@@ -17,5 +18,16 @@
 	// we reset the bottom spacing for every last child instead of direct ones.
 	:last-child {
 		margin-bottom: 0;
+	}
+}
+
+.box__icon {
+	position: absolute;
+	right: $base-line-height+px;
+	top: $base-line-height+px;
+
+	@include mq('small') {
+		right: $half-spacing+px;
+		top: $half-spacing+px;
 	}
 }
