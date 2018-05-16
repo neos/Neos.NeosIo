@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "344feb8d7e88469d5e34b88168383bf4",
+    "content-hash": "1fe733ff11355b0fddbd5bf6d775d708",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3350,6 +3350,31 @@
             "description": "Flow error messages",
             "homepage": "http://flow.neos.io",
             "time": "2017-08-10T09:35:39+00:00"
+        },
+        {
+            "name": "neos/featurelist",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "./src/Neos.FeatureList",
+                "reference": "0ec6c220b4ee7c8853190da31432583b25fde9fc",
+                "shasum": null
+            },
+            "require": {
+                "neos/neos": "*"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "neos": {
+                    "package-key": "Neos.FeatureList"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Neos\\FeatureList\\": "Classes/"
+                }
+            },
+            "description": "feature list package"
         },
         {
             "name": "neos/flow",
