@@ -1,0 +1,22 @@
+Neos.NeosIo.FeatureList:Content.FeatureGroup:
+  ui:
+    label: Feature Group
+    icon: tags
+    group: feature
+    inlineEditable: true
+    inspector:
+      groups:
+        properties:
+          label: 'Badge properties'
+          position: 1
+          icon: 'icon-gears'
+  superTypes:
+    Neos.Neos:Content: true
+    Neos.Neos:ContentCollection: true
+  constraints:
+    nodeTypes:
+       "*": false
+       Neos.NeosIo.FeatureList:Content.Feature: true
+  properties:
+    title:
+      type: string

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fe733ff11355b0fddbd5bf6d775d708",
+    "content-hash": "99bc7c7a97f90947946042f21f61579c",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2019,16 +2019,16 @@
         },
         {
             "name": "google/cloud-core",
-            "version": "v1.20.1",
+            "version": "v1.20.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GoogleCloudPlatform/google-cloud-php-core.git",
-                "reference": "2c45f08b124ae56d60440935df59ee6d35e6a451"
+                "reference": "c2d69fb26af37d19ca70437229eb81cea2a90e59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GoogleCloudPlatform/google-cloud-php-core/zipball/2c45f08b124ae56d60440935df59ee6d35e6a451",
-                "reference": "2c45f08b124ae56d60440935df59ee6d35e6a451",
+                "url": "https://api.github.com/repos/GoogleCloudPlatform/google-cloud-php-core/zipball/c2d69fb26af37d19ca70437229eb81cea2a90e59",
+                "reference": "c2d69fb26af37d19ca70437229eb81cea2a90e59",
                 "shasum": ""
             },
             "require": {
@@ -2074,7 +2074,7 @@
                 "Apache-2.0"
             ],
             "description": "Google Cloud PHP shared dependency, providing functionality useful to all components.",
-            "time": "2018-05-08T16:06:53+00:00"
+            "time": "2018-05-17T16:38:58+00:00"
         },
         {
             "name": "google/cloud-storage",
@@ -3350,31 +3350,6 @@
             "description": "Flow error messages",
             "homepage": "http://flow.neos.io",
             "time": "2017-08-10T09:35:39+00:00"
-        },
-        {
-            "name": "neos/featurelist",
-            "version": "1.0.0",
-            "dist": {
-                "type": "path",
-                "url": "./src/Neos.FeatureList",
-                "reference": "0ec6c220b4ee7c8853190da31432583b25fde9fc",
-                "shasum": null
-            },
-            "require": {
-                "neos/neos": "*"
-            },
-            "type": "neos-plugin",
-            "extra": {
-                "neos": {
-                    "package-key": "Neos.FeatureList"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Neos\\FeatureList\\": "Classes/"
-                }
-            },
-            "description": "feature list package"
         },
         {
             "name": "neos/flow",
@@ -4856,6 +4831,31 @@
                 }
             },
             "description": "event package"
+        },
+        {
+            "name": "neos/neosio-featurelist",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "./src/Neos.NeosIo.FeatureList",
+                "reference": "d60795389c5319b76d9809b376e0f9e4f3c5b193",
+                "shasum": null
+            },
+            "require": {
+                "neos/neos": "*"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "neos": {
+                    "package-key": "Neos.NeosIo.FeatureList"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Neos\\NeosIo\\FeatureList\\": "Classes/"
+                }
+            },
+            "description": "neosio-feature list package"
         },
         {
             "name": "neos/nodetypes",
@@ -7386,6 +7386,119 @@
                 "uri"
             ],
             "time": "2017-06-14T03:57:53+00:00"
+        },
+        {
+            "name": "sitegeist/monocle",
+            "version": "v4.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sitegeist/Sitegeist.Monocle.git",
+                "reference": "bcb74ab5b722e682d327ee63fb18dc0fb347df4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sitegeist/Sitegeist.Monocle/zipball/bcb74ab5b722e682d327ee63fb18dc0fb347df4a",
+                "reference": "bcb74ab5b722e682d327ee63fb18dc0fb347df4a",
+                "shasum": ""
+            },
+            "require": {
+                "neos/neos": "*"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "applied-flow-migrations": [
+                    "TYPO3.FLOW3-201201261636",
+                    "TYPO3.Fluid-201205031303",
+                    "TYPO3.FLOW3-201205292145",
+                    "TYPO3.FLOW3-201206271128",
+                    "TYPO3.FLOW3-201209201112",
+                    "TYPO3.Flow-201209251426",
+                    "TYPO3.Flow-201211151101",
+                    "TYPO3.Flow-201212051340",
+                    "TYPO3.TypoScript-130516234520",
+                    "TYPO3.TypoScript-130516235550",
+                    "TYPO3.TYPO3CR-130523180140",
+                    "TYPO3.Neos.NodeTypes-201309111655",
+                    "TYPO3.Flow-201310031523",
+                    "TYPO3.Flow-201405111147",
+                    "TYPO3.Neos-201407061038",
+                    "TYPO3.Neos-201409071922",
+                    "TYPO3.TYPO3CR-140911160326",
+                    "TYPO3.Neos-201410010000",
+                    "TYPO3.TYPO3CR-141101082142",
+                    "TYPO3.Neos-20141113115300",
+                    "TYPO3.Fluid-20141113120800",
+                    "TYPO3.Flow-20141113121400",
+                    "TYPO3.Fluid-20141121091700",
+                    "TYPO3.Neos-20141218134700",
+                    "TYPO3.Fluid-20150214130800",
+                    "TYPO3.Neos-20150303231600",
+                    "TYPO3.TYPO3CR-20150510103823",
+                    "TYPO3.Flow-20151113161300",
+                    "TYPO3.Form-20160601101500",
+                    "TYPO3.Flow-20161115140400",
+                    "TYPO3.Flow-20161115140430",
+                    "Neos.Flow-20161124204700",
+                    "Neos.Flow-20161124204701",
+                    "Neos.Twitter.Bootstrap-20161124204912",
+                    "Neos.Form-20161124205254",
+                    "Neos.Flow-20161124224015",
+                    "Neos.Party-20161124225257",
+                    "Neos.Eel-20161124230101",
+                    "Neos.Kickstart-20161124230102",
+                    "Neos.Setup-20161124230842",
+                    "Neos.Imagine-20161124231742",
+                    "Neos.Media-20161124233100",
+                    "Neos.NodeTypes-20161125002300",
+                    "Neos.SiteKickstarter-20161125002311",
+                    "Neos.Neos-20161125002322",
+                    "Neos.ContentRepository-20161125012000",
+                    "Neos.Fusion-20161125013710",
+                    "Neos.Setup-20161125014759",
+                    "Neos.SiteKickstarter-20161125095901",
+                    "Neos.Fusion-20161125104701",
+                    "Neos.NodeTypes-20161125104800",
+                    "Neos.Neos-20161125104802",
+                    "Neos.Kickstarter-20161125110814",
+                    "Neos.Neos-20161125122412",
+                    "Neos.Flow-20161125124112",
+                    "TYPO3.FluidAdaptor-20161130112935",
+                    "Neos.Fusion-20161201202543",
+                    "Neos.Neos-20161201222211",
+                    "Neos.Fusion-20161202215034",
+                    "Neos.Fusion-20161219092345",
+                    "Neos.ContentRepository-20161219093512",
+                    "Neos.Media-20161219094126",
+                    "Neos.Neos-20161219094403",
+                    "Neos.Neos-20161219122512",
+                    "Neos.Fusion-20161219130100",
+                    "Neos.Neos-20161220163741",
+                    "Neos.Fusion-20170120013047"
+                ]
+            },
+            "autoload": {
+                "psr-0": {
+                    "Sitegeist\\Monocle": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Wilhelm Behncke",
+                    "email": "behncke@sitegeist.de",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Martin Ficzel",
+                    "email": "ficzel@sitegeist.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An living-styleguide for Neos that is based on the actual fusion-code",
+            "time": "2018-05-02T10:39:07+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -1,0 +1,15 @@
+'Neos.NeosIo.FeatureList:FeatureList':
+  superTypes:
+    'Neos.NeosIo:LandingPage': true
+    'Neos.NeosIo:KeyVisualMixin': true
+  ui:
+    label: Feature List
+    icon: clipboard-list
+    group: feature
+  childNodes:
+    featureGroups:
+      type: Neos.Neos:ContentCollection
+      constraints:
+        nodeTypes:
+          "*": false
+          Neos.NeosIo.FeatureList:Content.FeatureGroup: true
