@@ -18,6 +18,21 @@ Neos:
       clientSecret: '%env:GOOGLE_ANALYTICS_CLIENT_SECRET%'
       developerKey: '%env:GOOGLE_ANALYTICS_CLIENT_DEVELOPER_KEY%'
 
+  Flow:
+    persistence:
+      backendOptions:
+        host: '%env:BEACH_DATABASE_HOST%'
+        dbname: '%env:BEACH_DATABASE_NAME%'
+        user: '%env:BEACH_DATABASE_USERNAME%'
+        password: '%env:BEACH_DATABASE_PASSWORD%'
+        unix_socket: '%env:BEACH_DATABASE_SOCKET%'
+
+    http:
+      baseUri: '%env:BEACH_SITE_BASE_URI%'
+
+  Imagine:
+    driver: 'Imagick'
+
 Flowpack:
   ElasticSearch:
     clients:
