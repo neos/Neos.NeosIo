@@ -1,19 +1,24 @@
 {
-    "name": "neos/neosio-event",
-    "type": "typo3-flow-package",
-    "description": "event package",
+    "name": "neos/flowneosio",
+    "type": "neos-site",
+    "description": "flow.neos.io",
+    "license": "GPL-3.0+",
     "version": "1.0.0",
     "require": {
-        "typo3/neos": "*",
-        "typo3/neos-seo": "*",
+        "neos/neos": "*",
+        "neos/nodetypes": "*",
+        "neos/seo": "*",
         "neos/neosio": "*"
     },
     "autoload": {
         "psr-0": {
-            "Neos\\NeosIo\\Event": "Classes"
+            "Neos\\FlowNeosIo": "Classes/"
         }
     },
     "extra": {
+        "neos": {
+            "package-key": "Neos.FlowNeosIo"
+        },
         "applied-flow-migrations": [
             "TYPO3.FLOW3-201201261636",
             "TYPO3.Fluid-201205031303",

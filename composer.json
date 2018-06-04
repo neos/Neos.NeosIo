@@ -36,12 +36,22 @@
         "networkteam/neos-mailobfuscator": "^2.0",
         "jonnitto/photoswipe": "^1.3",
         "jonnitto/imagesinarow": "^1.3",
-        "flownative/google-cloudstorage": "4.*"
+        "flownative/google-cloudstorage": "4.*",
+
+        "neos/neosio": "1.0.0",
+        "neos/flowneosio": "1.0.0",
+        "neos/neosio-event": "1.0.0"
     },
     "require-dev": {
         "neos/buildessentials": "~4.0",
         "mikey179/vfsstream": "~1.6",
         "phpunit/phpunit": "~5.2.0 || ~6.0"
+    },
+    "repositories": {
+        "local": {
+            "type": "path",
+            "url": "./src/*"
+        }
     },
     "scripts": {
         "post-update-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
