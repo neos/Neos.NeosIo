@@ -1,0 +1,34 @@
+prototype(Neos.NeosIo.FeatureList:Molecule.Feature) < prototype(Neos.Fusion:Component) {
+
+	@styleguide {
+		props {
+			featureData = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+		}
+	}
+
+	featureData = ${[]}
+
+	renderer = afx`
+		<div class="feature" data-isCoreFeature={props.featureData.isCoreFeature} data-isCommunityFeature={props.featureData.isCommunityFeature}>
+			<div class="feature__title">{props.featureData.title}</div>
+			<div class="feature__description">{props.featureData.description}</div>
+			<div class="feature__links">
+				<Neos.Fusion:Collection collection={props.featureData.links} itemName="link" @children="itemRenderer" >
+					<a class="feature__links__item" href={link.uri} title={link.label}>{link.label} </a>
+				</Neos.Fusion:Collection>
+			</div>
+		</div>
+	`
+}
+
+
+prototype(Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData) < prototype(Neos.Fusion:RawArray) {
+	title = "Feature Title"
+	description = "This feature group contains various featurs provided by the core or community"
+	isCoreFeature = true
+	isCommunityFeature = true
+	links = Neos.Fusion:RawArray {
+		01 = ${{"label":"sitegeist/monocle", "uri": "https://www.neos.io/download-and-extend/packages/sitegeist/sitegeist-monocle.html" }}
+		02 = ${{"label":"flownative/anchorlinks", "uri": "https://www.neos.io/download-and-extend/packages/flownative/flownative-anchorlinks.html" }}
+	}
+}

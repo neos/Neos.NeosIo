@@ -1,4 +1,8 @@
 Neos.NeosIo.FeatureList:Content.FeatureGroup:
+
+  superTypes:
+    Neos.Neos:Content: true
+
   ui:
     label: Feature Group
     icon: tags
@@ -10,9 +14,11 @@ Neos.NeosIo.FeatureList:Content.FeatureGroup:
           label: 'Badge properties'
           position: 1
           icon: 'icon-gears'
-  superTypes:
-    Neos.Neos:Content: true
-    Neos.Neos:ContentCollection: true
+
+  options:
+    fusion:
+      prototypeGenerator: ~
+
   constraints:
     nodeTypes:
        "*": false
@@ -20,3 +26,7 @@ Neos.NeosIo.FeatureList:Content.FeatureGroup:
   properties:
     title:
       type: string
+      ui:
+        inlineEditable: true
+        aloha:
+          placeholder: "Feature Group Title"

@@ -1,37 +1,66 @@
 Neos.NeosIo.FeatureList:Content.Feature:
+
+  superTypes:
+    Neos.Neos:Content: TRUE
+
   ui:
     label: Feature
     icon: tag
     group: feature
-  superTypes:
-    Neos.Neos:Content: true
+    inspector:
+      groups:
+        feature:
+          label: 'Feature properties'
+          tab: default
+
+  options:
+    fusion:
+      prototypeGenerator: ~
 
   constraints:
     childNodes:
-       "*": false
-       Neos.NeosIo.FeatureList:Content.Feature: true
+       "*": FALSE
+       Neos.NeosIo.FeatureList:Content.Feature: TRUE
   properties:
+
     title:
       type: string
-
-    isCoreFeature:
-      type: boolean
-
-    isCommunityFeature:
-      type: boolean
+      ui:
+        inlineEditable: TRUE
+        aloha:
+          placeholder: "Feature Title"
 
     description:
       type: string
       ui:
-        label: 'Packages'
+        inlineEditable: TRUE
+        aloha:
+          placeholder: "Feature Description"
 
-    packages:
+    isCoreFeature:
+      type: boolean
+      ui:
+        label: 'Core Feature'
+        reloadIfChanged : TRUE
+        inspector:
+          group: feature
+
+    isCommunityFeature:
+      type: boolean
+      ui:
+        label: 'Community Feature'
+        reloadIfChanged : TRUE
+        inspector:
+          group: feature
+
+    relatedPackages:
       type: references
       ui:
         label: 'Packages'
         inspector:
-          editorOptions:
-            nodeTypes: ['Neos.MarketPlace:Package']
+          group: feature
+#          editorOptions:
+#            nodeTypes: ['Neos.MarketPlace:Package']
 
 
 

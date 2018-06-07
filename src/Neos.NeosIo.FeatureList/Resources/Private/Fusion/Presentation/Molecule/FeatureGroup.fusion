@@ -1,0 +1,28 @@
+prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) < prototype(Neos.Fusion:Component) {
+
+	@styleguide {
+		props {
+			title = 'Feature Group Title'
+			features = Neos.Fusion:RawArray {
+				01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+				02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+				03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+				04 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+			}
+		}
+	}
+
+	title = ''
+	features = ${[]}
+
+	renderer = afx`
+		<div class="featureGroup">
+			<div class="featureGroup__title">{props.title}</div>
+			<div class="featureGroup__features">
+				<Neos.Fusion:Collection collection={props.features} itemName="feature" @children="itemRenderer" >
+					<Neos.NeosIo.FeatureList:Molecule.Feature featureData={feature} />
+				</Neos.Fusion:Collection>
+			</div>
+		</div>
+	`
+}

@@ -1,0 +1,64 @@
+prototype(Neos.NeosIo.FeatureList:Content.FeatureList) < prototype(Neos.Neos:ContentComponent) {
+
+	featureGroups = Neos.Fusion:RawCollection {
+		collection = ${q(node).children('[instanceof Neos.NeosIo.FeatureList:Content.FeatureGroup]')}
+		itemName = 'featureGroup'
+		itemRenderer = Neos.Fusion:RawArray {
+			__node = ${featureGroup}
+			title = Neos.Neos:Editable {
+				property = 'title'
+				block = false
+				node = ${featureGroup}
+			}
+			features = Neos.Fusion:RawCollection {
+				collection = ${q(featureGroup).children('[instanceof Neos.NeosIo.FeatureList:Content.Feature]')}
+				itemName = 'feature'
+				itemRenderer = Neos.Fusion:RawArray {
+					__node = ${feature}
+					title = Neos.Neos:Editable {
+						property = 'title'
+						block = false
+						node = ${feature}
+					}
+					description = Neos.Neos:Editable {
+						property = 'description'
+						block = false
+						node = ${feature}
+					}
+					isCoreFeature = ${q(feature).property('isCoreFeature')}
+					isCommunityFeature = ${q(feature).property('isCommunityFeature')}
+					links = Neos.Fusion:RawCollection {
+						collection = ${q(feature).property('relatedPackages')}
+						itemName = 'relatedPackage'
+						itemRenderer = Neos.Fusion:RawArray {
+							label = ${q(relatedPackage).property('title')}
+							uri = Neos.Neos:NodeUri {
+								node = ${relatedPackage}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	renderer = Neos.NeosIo.FeatureList:Molecule.FeatureList {
+
+		featureGroups = ${props.featureGroups}
+
+		prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) {
+			@process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
+				@if.has = ${featureGroup.__node}
+				node = ${featureGroup.__node}
+			}
+		}
+
+		prototype(Neos.NeosIo.FeatureList:Molecule.Feature) {
+			@process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
+				@if.has = ${feature.__node}
+				node = ${feature.__node}
+			}
+		}
+
+	}
+}
