@@ -9,6 +9,15 @@
   - create an admin user using `./flow user:create --roles Administrator admin password My Admin`
   - log in using `http://127.0.0.1:8081/neos`
 
+## updating the content (locally)
+
+```
+git pull
+composer install
+./flow site:prune
+./flow site:import --packageKey Neos.NeosConIo
+```
+
 ## Building SASS
 To to a minified build of the SASS for production use, run the following command in the site package folder (where package.json is):
 
