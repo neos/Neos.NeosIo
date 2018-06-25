@@ -2,7 +2,11 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
     head {
         metaTags = Neos.NeosIo:MetaTags
 
-        stylesheets.site = Neos.Fusion:Template {
+		stylesheets.main = Ttree.StyleSheet:Resource {
+			uri = 'resource://Neos.NeosIo/Public/Styles/Main.css'
+			cacheBusting = true
+		}
+		stylesheets.site = Neos.Fusion:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
             sectionName = 'stylesheets'
         }
