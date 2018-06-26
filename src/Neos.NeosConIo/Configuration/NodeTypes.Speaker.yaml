@@ -7,9 +7,22 @@
     label: "Speaker"
     icon: 'icon-user'
     group: neoscon
-
+    inspector:
+      groups:
+        image:
+          label: i18n
+          position: 5
+          icon: 'icon-image'
   properties:
     text:
       ui:
         aloha:
           placeholder: 'Speaker description'
+    image:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: Speaker image
+        reloadIfChanged: true
+        inspector:
+          group: 'image'
+          position: 50
