@@ -1,6 +1,8 @@
 {namespace neos=Neos\Neos\ViewHelpers}
+{namespace media=Neos\Media\ViewHelpers}
 <neos:contentElement.wrap>
 	<div class="speaker">
+		<media:image image="{image}" maximumWidth="80" alt="{title}" />
 		<neos:contentElement.editable property="title" tag="h1" />
 		<neos:contentElement.editable property="text" />
 	</div>
