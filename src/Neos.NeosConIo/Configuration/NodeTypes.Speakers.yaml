@@ -1,0 +1,13 @@
+# only allowed on top level directly underneath the root page.
+'Neos.NeosConIo:Speakers':
+  superTypes:
+    'Neos.Neos:Document': true
+    'Neos.NeosConIo:Mixin.EventRelated': true
+  ui:
+    label: "NeosCon Event Speakers"
+    icon: 'icon-users'
+    group: neoscon
+  constraints:
+    nodeTypes:
+      'Neos.Neos:Document': false
+      'Neos.NeosConIo:Speaker': true
