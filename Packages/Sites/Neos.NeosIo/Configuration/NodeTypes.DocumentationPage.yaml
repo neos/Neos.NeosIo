@@ -6,11 +6,17 @@
 'Neos.NeosIo:DocumentationPage':
   superTypes:
     'Neos.NodeTypes:Page': true
-#    'Neos.NeosIo:KeyVisualMixin': true
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.NeosIo:DocumentationPage': true
   childNodes:
     main:
       type: 'Neos.Neos:ContentCollection'
-
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:SemanticSection': true
   ui:
     label: 'Documentation Page'
     icon: icon-file-text

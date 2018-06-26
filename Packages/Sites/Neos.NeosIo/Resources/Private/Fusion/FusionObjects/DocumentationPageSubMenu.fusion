@@ -1,13 +1,18 @@
+##
+# This menu shows one level of documentation pages and for the current page
+# the insde semantic section nested headlines
+##
 prototype(Neos.NeosIo:DocumentationPageSubMenu) < prototype(Neos.Neos:Menu) {
     @class = 'Neos\\NeosIo\\Fusion\\DocumentationPageSubMenuImplementation'
     templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/DocumentationPageSubMenu.html'
 
     itemCollection = Neos.Fusion:RawCollection {
-        collection = ${q(site).find('[instanceof Neos.NeosIo:DocumentationPage]')}
+        # The first documentation page is the documentation root, show all pages below
+        collection = ${q(site).find('[instanceof Neos.NeosIo:DocumentationPage]').first().children()}
         itemRenderer = Neos.NeosIo:DocumentationPageSubMenuItemRenderer
     }
 
-    attributes.class = "secondaryMenu"
+    attributes.class = 'secondaryMenu'
     active.attributes = Neos.Fusion:Attributes {
         class = ${'secondaryMenu__item secondaryMenu__item--active secondaryMenu__item--menuLevel-' + item.menuLevel}
     }
@@ -21,6 +26,7 @@ prototype(Neos.NeosIo:DocumentationPageSubMenu) < prototype(Neos.Neos:Menu) {
     @cache {
         entryTags {
             1 = ${'DescendantOf_' + documentNode.identifier}
+            2 = 'NodeType_Neos.NeosIo:DocumentationPage'
         }
     }
 }
