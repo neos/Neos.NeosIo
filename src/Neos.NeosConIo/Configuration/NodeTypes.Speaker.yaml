@@ -9,10 +9,8 @@
     group: neoscon
     inspector:
       groups:
-        image:
-          label: i18n
-          position: 5
-          icon: 'icon-image'
+        document:
+          label: Speaker
   properties:
     text:
       ui:
@@ -24,5 +22,16 @@
         label: Speaker image
         reloadIfChanged: true
         inspector:
-          group: 'image'
-          position: 50
+          group: 'document'
+          position: 100
+    event:
+      type: references
+      ui:
+        label: 'Event'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'document'
+          position: 160
+          editor: 'Neos.Neos/Inspector/Editors/ReferencesEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Event']

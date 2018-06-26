@@ -11,3 +11,15 @@
     nodeTypes:
       'Neos.Neos:Document': false
       'Neos.NeosConIo:Speaker': true
+  properties:
+    eventToShowSpeakersFor:
+      type: reference
+      ui:
+        label: 'Event to show speakers for'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'document'
+          position: 160
+          editor: 'Neos.Neos/Inspector/Editors/ReferenceEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Event']

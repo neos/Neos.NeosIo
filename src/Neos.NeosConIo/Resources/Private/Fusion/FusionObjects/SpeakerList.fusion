@@ -1,0 +1,14 @@
+prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Collection) {
+    // API to the outside: "collection" to render
+    //collection = ...
+    itemName = "node"
+    itemRenderer = Neos.NeosIo:ImageTeaser {
+        // node is the speaker here
+        title = ${node.properties.title}
+        image = ${node.properties.image}
+        link = Neos.Neos:NodeUri {
+            node = ${node}
+            absolute = true
+        }
+    }
+}

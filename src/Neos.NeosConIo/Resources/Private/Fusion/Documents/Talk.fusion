@@ -1,17 +1,8 @@
 prototype(Neos.NeosConIo:Talk.Document) < prototype(Neos.NeosIo:DefaultPage) {
     body.content.main = Neos.NeosConIo:Talk {
-        speakerList = Neos.Fusion:Collection {
+        speakerList = Neos.NeosConIo:SpeakerList {
             collection = ${node.properties.speakers}
-            itemName = "node"
-            itemRenderer = Neos.NeosIo:ImageTeaser {
-                // node is the speaker here
-                title = ${node.properties.title}
-                image = ${node.properties.image}
-                link = Neos.Neos:NodeUri {
-                    node = ${node}
-                    absolute = true
-                }
-            }
         }
     }
 }
+
