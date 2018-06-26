@@ -1,0 +1,32 @@
+{namespace neos=Neos\Neos\ViewHelpers}
+
+<neos:contentElement.wrap>
+	<div class="talk">
+		<neos:contentElement.editable property="title" tag="h1" />
+		<span>Video</span>
+		<div class="talk__details">
+			<div class="talk__speakers">
+				<ul>
+					<f:for each="{speakers}" as="speaker">
+						<li><neos:link.node node="{speaker}"></neos:link.node></li>
+					</f:for>
+					<li>Speaker</li>
+				</ul>
+			</div>
+			<div class="talk__description">
+				<neos:contentElement.editable property="text" />
+				<i class="fa fa-calendar"></i> <f:format.date format="d.m.Y">{talkDate}</f:format.date><br>
+				<i class="fa fa-clock-o"></i> <f:format.date format="G:i">{talkDate}</f:format.date>
+				<neos:contentElement.editable property="room" />
+				<neos:link.node node="{event}"></neos:link.node>
+			</div>
+		</div>
+		<div class="relatedTalks">
+			<ul>
+				<li>
+					Talk Link
+				</li>
+			</ul>
+		</div>
+	</div>
+</neos:contentElement.wrap>

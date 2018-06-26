@@ -1,0 +1,57 @@
+'Neos.NeosConIo:Talk':
+  superTypes:
+    'Neos.Neos:Document': true
+    'Neos.NeosConIo:Mixin.EventRelated': true
+    'Neos.NodeTypes.BaseMixins:TextMixin': true
+  ui:
+    label: 'Talk'
+    icon: 'icon-comment'
+    group: neoscon
+    inspector:
+      groups:
+        talkOptions:
+          label: 'Talk options'
+          position: 2
+          icon: 'icon-comment'
+  properties:
+    text:
+      ui:
+        aloha:
+          placeholder: 'Talk description'
+    talkDate:
+      type: DateTime
+      ui:
+        label: 'Date & Time'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'talkOptions'
+          editor: 'Neos.Neos/Inspector/Editors/DateTimeEditor'
+          editorOptions:
+            format: 'd.m.Y G:i'
+    speakers:
+      type: references
+      ui:
+        label: 'Speakers'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'talkOptions'
+          editor: 'Neos.Neos/Inspector/Editors/ReferencesEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Speaker']
+    event:
+      type: reference
+      ui:
+        label: 'Event'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'talkOptions'
+          editor: 'Neos.Neos/Inspector/Editors/ReferenceEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Event']
+    room:
+      type: string
+      ui:
+        label: 'Room'
+        aloha:
+          placeholder: 'Enter room here'
+
