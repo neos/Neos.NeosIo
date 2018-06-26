@@ -1,7 +1,23 @@
 {namespace neos=Neos\Neos\ViewHelpers}
 {namespace io=Neos\NeosIo\ViewHelpers}
 
-<io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}" class="imageTeaser">
+<f:section name="main">
+	<f:if condition="{link} != ''">
+		<f:then>
+			<io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}" class="imageTeaser imageTeaser--isLink">
+				<f:render section="imageTeaserContent" arguments="{_all}" />
+			</io:link.external>
+		</f:then>
+		<f:else>
+			<div class="imageTeaser">
+				<f:render section="imageTeaserContent" arguments="{_all}" />
+			</div>
+		</f:else>
+	</f:if>
+
+</f:section>
+
+<f:section name="imageTeaserContent">
 	<f:if condition="{image}">
 		<f:then>
 			<f:render partial="LazyLoadImage"
@@ -22,5 +38,6 @@
 	<div class="imageTeaser__contents u-invertText">
 		<neos:contentElement.editable property="subTitle" tag="h5" class="imageTeaser__contents__subHeading" />
 		<neos:contentElement.editable property="title" tag="h3" class="imageTeaser__contents__heading" />
+		<neos:contentElement.editable property="text" tag="p" class="imageTeaser__contents__text" />
 	</div>
-</io:link.external>
+</f:section>
