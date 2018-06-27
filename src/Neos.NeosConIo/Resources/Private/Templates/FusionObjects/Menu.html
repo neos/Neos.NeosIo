@@ -1,0 +1,48 @@
+{namespace neos=Neos\Neos\ViewHelpers}
+{namespace ts=Neos\Fusion\ViewHelpers}
+
+<nav role="navigation" class="offCanvas" id="offCanvas">
+	<div class="offCanvas__navWrapper">
+		<ul {attributes -> f:format.raw()}>
+			<f:for each="{items}" as="item">
+				<li class="offCanvas__category {f:if(condition: '{item.state} != \'normal\'', then: ' active')}">
+					<f:if condition="{item.subItems}">
+						<f:then>
+							<neos:link.node node="{item.node}"
+											additionalAttributes="{role: 'button', aria-haspopup: 'true', aria-expanded: 'false'}"
+											title="{item.node.label}">
+								{item.node.label}
+							</neos:link.node>
+							<ul class="{subNavClasses}">
+								<f:for each="{item.subItems}" as="subItem">
+									<f:if condition="{subItem.node.nodeType.name} == 'Neos.NeosIo:SpacerPage'">
+										<f:then>
+											<li><hr class="offCanvas__categorySeparator u-mb1/4 u-mt1/4"></li>
+										</f:then>
+										<f:else>
+											<li class="{f:if(condition: '{subItem.state} != \'normal\'', then: ' active')}">
+												<neos:link.node node="{subItem.node}"
+																title="{subItem.node.label}">
+													{subItem.node.label}
+												</neos:link.node>
+											</li>
+										</f:else>
+									</f:if>
+
+								</f:for>
+							</ul>
+						</f:then>
+						<f:else>
+							<neos:link.node node="{item.node}" title="{item.node.label}">{item.node.label}</neos:link.node>
+						</f:else>
+					</f:if>
+				</li>
+			</f:for>
+			<li class="offCanvas__category">
+				<a href="/#tickets" class="menuBuyTickets menuBuyTickets--inMainMenu">
+					Buy Tickets
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
