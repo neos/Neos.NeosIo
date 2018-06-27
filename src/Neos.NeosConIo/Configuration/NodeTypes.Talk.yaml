@@ -3,21 +3,38 @@
     'Neos.Neos:Document': true
     'Neos.NeosConIo:Mixin.EventRelated': true
     'Neos.NodeTypes.BaseMixins:TextMixin': true
+    'Neos.NeosIo:Youtube': true
   ui:
     label: 'Talk'
     icon: 'icon-comment'
     group: neoscon
     inspector:
       groups:
+        video:
+          position: 50
         talkOptions:
           label: 'Talk options'
-          position: 2
+          position: 100
           icon: 'icon-comment'
   properties:
     text:
       ui:
         aloha:
           placeholder: 'Talk description'
+    thumbnail:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: Talk thumbnail
+        reloadIfChanged: true
+        inspector:
+          group: 'talkOptions'
+          editorOptions:
+            crop:
+              aspectRatio:
+                forceCrop: true
+                locked:
+                  width: 16
+                  height: 9
     talkDate:
       type: DateTime
       ui:
@@ -48,6 +65,16 @@
           editor: 'Neos.Neos/Inspector/Editors/ReferenceEditor'
           editorOptions:
             nodeTypes: ['Neos.NeosConIo:Event']
+    relatedTalks:
+      type: references
+      ui:
+        label: 'Related talks'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'talkOptions'
+          editor: 'Neos.Neos/Inspector/Editors/ReferencesEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Talk']
     room:
       type: string
       ui:

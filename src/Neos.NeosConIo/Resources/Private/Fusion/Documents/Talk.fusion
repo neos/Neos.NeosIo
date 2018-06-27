@@ -3,6 +3,14 @@ prototype(Neos.NeosConIo:Talk.Document) < prototype(Neos.NeosIo:DefaultPage) {
         speakerList = Neos.NeosConIo:SpeakerList {
             collection = ${node.properties.speakers}
         }
+
+        talkList = Neos.NeosConIo:TalkList {
+            collection = ${node.properties.relatedTalks}
+        }
+
+        video = Neos.NeosIo:Youtube {
+            collection = ${node.properties.video}
+        }
     }
 }
 

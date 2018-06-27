@@ -1,16 +1,16 @@
-prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Collection) {
+prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Collection) {
     // API to the outside: "collection" to render
     //collection = ...
     itemName = "node"
     itemRenderer = Neos.Fusion:Tag {
         tagName = 'li'
-        attributes.class = 'talk__speakerList__item'
+        attributes.class = 'talk__talkList__item'
         content = Neos.NeosIo:ImageTeaser {
-            // node is the speaker here
+            // node is the talk here
             title = ${node.properties.title}
-            image = ${node.properties.image}
+            image = ${node.properties.thumbnail}
             text = ${node.properties.text}
-            className = 'imageTeaser--speaker'
+            className = 'imageTeaser--relatedTalk'
             link = Neos.Neos:NodeUri {
                 node = ${node}
                 absolute = true
