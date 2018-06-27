@@ -1,0 +1,22 @@
+prototype(Neos.NeosIo:DocumentationPage.Document) < prototype(Neos.NeosIo:DefaultPage) {
+    body {
+        templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/DocumentationPage.html'
+
+        parts {
+            breadcrumb {
+                attributes.class = 'nav nav--breadcrumb-ingrid'
+            }
+            secondaryMenu = Neos.NeosIo:DocumentationPageSubMenu
+        }
+
+        content {
+            keyVisual = PrimaryContent {
+                nodePath = 'keyVisual'
+            }
+
+            main = PrimaryContent {
+                nodePath = 'main'
+            }
+        }
+    }
+}

@@ -1,14 +1,13 @@
 ###########################################
-# A configurable button which can be used
-# to display actions to the user.
+# A dimension-aware button that can link to
+# any node in any configured dimension.
 ###########################################
 
-'Neos.NeosIo:Button':
+'Neos.NeosIo:ButtonDimensionAware':
   superTypes:
     'Neos.Neos:Content': true
-    'Neos.NodeTypes:LinkMixin': true
   ui:
-    label: Button
+    label: 'Dimension-Aware Button'
     icon: icon-link
     inlineEditable: true
   properties:
@@ -27,21 +26,39 @@
           formatlesspaste:
             button: false
             formatlessPasteOption: true
-    link:
+    linkedNode:
+      type: reference
       ui:
-        label: 'Button Link'
+        label: 'Linked Node'
         inspector:
           group: content
+          position: 10
+    language:
+      type: string
+      ui:
+        label: 'Language Dimension'
+        reloadIfChanged: true
+        inspector:
+          group: content
+          position: 20
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              '':
+                label: 'None (Same as current)'
+              'en':
+                label: 'en (English)'
+              'de':
+                label: 'de (German)'
+
     openInNewTab:
-      ui:
-        inspector:
-          group: content
-    scrollToContentWhenClicked:
       type: boolean
+      defaultValue: false
       ui:
-        label: 'Scroll to Content-Area when clicked'
+        label: 'Open in new Tab'
         inspector:
           group: content
+          position: 30
     alignment:
       type: string
       defaultValue: inline
