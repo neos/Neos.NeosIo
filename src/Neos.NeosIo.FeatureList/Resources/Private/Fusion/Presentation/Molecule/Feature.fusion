@@ -11,6 +11,12 @@ prototype(Neos.NeosIo.FeatureList:Molecule.Feature) < prototype(Neos.Fusion:Comp
 	renderer = afx`
 		<div class="feature" data-isCoreFeature={props.featureData.isCoreFeature} data-isCommunityFeature={props.featureData.isCommunityFeature}>
 			<div class="feature__title">{props.featureData.title}</div>
+			<div class="feature__core">
+				<i class="fa fa-cogs" @if.isCoreFeature={props.featureData.isCoreFeature}  title="Neos Core Feature" ></i>
+			</div>
+			<div class="feature__community">
+				<i class="fa fa-users" @if.isCommunityFeature={props.featureData.isCommunityFeature} title="Community Feature"></i>
+			</div>
 			<div class="feature__description">{props.featureData.description}</div>
 			<div class="feature__links">
 				<Neos.Fusion:Collection collection={props.featureData.links} itemName="link" @children="itemRenderer" >
@@ -23,12 +29,20 @@ prototype(Neos.NeosIo.FeatureList:Molecule.Feature) < prototype(Neos.Fusion:Comp
 
 
 prototype(Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData) < prototype(Neos.Fusion:RawArray) {
-	title = "Feature Title"
-	description = "This feature group contains various featurs provided by the core or community"
-	isCoreFeature = true
-	isCommunityFeature = true
+	title = ${String.crop(
+		'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+		Math.randomInt(20,50)
+	)}
+	description = ${String.crop(
+		'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+		Math.randomInt(50, 300)
+	)}
+	isCoreFeature = ${Math.randomInt(0, 5) > 2}
+	isCommunityFeature = ${Math.randomInt(0, 5) > 2}
 	links = Neos.Fusion:RawArray {
 		01 = ${{"label":"sitegeist/monocle", "uri": "https://www.neos.io/download-and-extend/packages/sitegeist/sitegeist-monocle.html" }}
 		02 = ${{"label":"flownative/anchorlinks", "uri": "https://www.neos.io/download-and-extend/packages/flownative/flownative-anchorlinks.html" }}
+		03 = ${{"label":"flownative/anchorlinks", "uri": "https://www.neos.io/download-and-extend/packages/flownative/flownative-anchorlinks.html" }}
+		@process.variousLength = ${Array.splice(value, 0, Math.randomInt(1,3))}
 	}
 }
