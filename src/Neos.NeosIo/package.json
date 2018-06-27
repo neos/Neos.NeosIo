@@ -4,7 +4,7 @@
   "description": "Neos.io site package",
   "author": "Neos Team",
   "scripts": {
-    "postinstall": "cd ../../Application/Neos.MarketPlace && npm install",
+    "postinstall": "cd ../../Packages/Application/Neos.MarketPlace && npm install",
     "prebuild:modernizr": "modernizr -c node_modules/modernizr/lib/config-all.json",
     "build:modernizr": "customizr -c Build/Modernizr.config.json",
     "postbuild:modernizr": "rm modernizr.js & uglify -s Resources/Public/JavaScript/Modernizr.min.js -o Resources/Public/JavaScript/Modernizr.min.js",
