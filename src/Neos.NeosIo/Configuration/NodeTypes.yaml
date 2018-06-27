@@ -7,6 +7,8 @@
     nodeTypes:
       'Neos.NeosIo:RootPage': false
       'Neos.NeosIo:FooterContainer': false
+
+
 'Neos.NodeTypes:Page':
   superTypes:
     'Neos.NeosIo:KeyVisualMixin': true
@@ -21,10 +23,14 @@
           'Neos.NeosIo:HeadlineSlider': false
           'Neos.NeosIo:Button': false
           'Neos.NeosIo:ChoiceButtons': false
+
+
 'Neos.NodeTypes:ImageCaptionMixin':
   properties:
     hasCaption: null
     alignment: null
+
+
 'Neos.NodeTypes:LinkMixin':
   properties:
     link:
@@ -36,12 +42,16 @@
         label: 'Open in new Tab'
         inspector:
           position: 310
+
+
 'Neos.NodeTypes:ContentImageMixin':
   properties:
     openInNewTab:
       ui:
         inspector:
           group: image
+
+
 'Neos.NodeTypes:Text':
   properties:
     text:
@@ -50,6 +60,8 @@
           format:
             h4: true
             h5: true
+
+
 'Neos.NodeTypes:TextWithImage':
   properties:
     text:
@@ -67,33 +79,6 @@
 'Neos.NodeTypes:Html':
   ui:
     group: special
-'Neos.NeosIo:MediaQueryMixin':
-  abstract: true
-  properties:
-    displaySmallMq:
-      type: boolean
-      ui:
-        label: 'Display on small screen only'
-        reloadIfChanged: true
-        inspector:
-          group: visibility
-          position: 100
-    displayLargeMq:
-      type: boolean
-      ui:
-        label: 'Display in large screen only'
-        reloadIfChanged: true
-        inspector:
-          group: visibility
-          position: 120
-    displayAllMq:
-      type: boolean
-      ui:
-        label: 'Display on all screen sizes'
-        reloadIfChanged: true
-        inspector:
-          group: visibility
-          position: 130
 
 'Neos.NeosIo:AnchorMixin':
   abstract: true
@@ -116,6 +101,7 @@
 
 'Neos.Neos:Content':
   superTypes:
+    'Neos.NeosIo:ContentInspectorGroupMixin': true
     'Neos.NeosIo:MediaQueryMixin': true
     'Neos.NeosIo:AnchorMixin': true
 

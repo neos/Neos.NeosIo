@@ -1,0 +1,27 @@
+###########################################
+# Documentation page, where special node types
+# are available.
+###########################################
+
+'Neos.NeosIo:DocumentationPage':
+  superTypes:
+    'Neos.NodeTypes:Page': true
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.NeosIo:DocumentationPage': true
+  childNodes:
+    main:
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:SemanticSection': true
+  ui:
+    label: 'Documentation Page'
+    icon: icon-file-text
+    inspector:
+      groups:
+        additional:
+          label: Additional
+          position: 20

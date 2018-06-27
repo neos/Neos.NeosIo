@@ -1,0 +1,45 @@
+
+.secondaryMenu {
+	@include u-resetList();
+	margin-top: $half-spacing+px;
+}
+
+.secondaryMenu__item {
+	line-height: $double-spacing+px;
+	padding-left: $basic-spacing+px;
+	> a {
+		display: block;
+	}
+	&:hover {
+		background: brand('primary');
+		color: #fff;
+		> a {
+			color: currentColor;
+			text-decoration: none;
+		}
+	}
+}
+
+.secondaryMenu__item--current {
+	> a {
+		@include u-linkReset();
+	}
+}
+
+.secondaryMenu__item--menuLevel-2 {
+	> a {
+		padding-left: $basic-spacing+px;
+		font-size: rs($base-font-size - 1);
+	}
+}
+
+.secondaryMenu__item--menuLevel-3,
+.secondaryMenu__item--menuLevel-4,
+.secondaryMenu__item--menuLevel-5,
+.secondaryMenu__item--menuLevel-6
+{
+	> a {
+		padding-left: 2*$basic-spacing+px;
+		font-size: rs($base-font-size - 2);
+	}
+}
