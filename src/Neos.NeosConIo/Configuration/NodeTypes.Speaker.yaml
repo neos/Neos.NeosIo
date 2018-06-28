@@ -11,6 +11,8 @@
       groups:
         document:
           label: Speaker
+        speakerDetails:
+          label: Speaker details
   properties:
     text:
       ui:
@@ -31,7 +33,6 @@
                 locked:
                   width: 1
                   height: 1
-
     event:
       type: references
       ui:
@@ -43,3 +44,52 @@
           editor: 'Neos.Neos/Inspector/Editors/ReferencesEditor'
           editorOptions:
             nodeTypes: ['Neos.NeosConIo:Event']
+    featuredTalk:
+      type: reference
+      ui:
+        label: 'Featured talk'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'document'
+          position: 170
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Talk']
+    relatedTalks:
+      type: references
+      ui:
+        label: 'Related Talks'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'document'
+          position: 180
+          editor: 'Neos.Neos/Inspector/Editors/ReferencesEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Talk']
+    company:
+      type: string
+      ui:
+        label: 'Company'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'speakerDetails'
+    position:
+      type: string
+      ui:
+        label: 'Position'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'speakerDetails'
+    twitter:
+      type: string
+      ui:
+        label: 'Twitter name'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'speakerDetails'
+    github:
+      type: string
+      ui:
+        label: 'Github name'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'speakerDetails'
