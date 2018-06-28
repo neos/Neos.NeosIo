@@ -14,7 +14,7 @@
 				<neos:contentElement.editable property="text" />
 				<i class="fa fa-calendar"></i> <f:format.date format="d.m.Y">{talkDate}</f:format.date><br>
 				<i class="fa fa-clock-o"></i> <f:format.date format="G:i">{talkDate}</f:format.date>
-				<neos:contentElement.editable property="room" />
+				{roomName -> f:format.raw()}
 				<neos:link.node node="{event}"></neos:link.node>
 			</div>
 		</div>

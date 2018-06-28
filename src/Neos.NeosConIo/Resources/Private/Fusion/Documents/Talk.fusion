@@ -11,6 +11,8 @@ prototype(Neos.NeosConIo:Talk.Document) < prototype(Neos.NeosIo:DefaultPage) {
         video = Neos.NeosIo:Youtube {
             video = ${node.properties.video}
         }
+
+        roomName = ${q(q(node).property('room')).property('name')}
     }
 }
 
