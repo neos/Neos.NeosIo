@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import assembler from '@reduct/assembler';
 import * as siteComponents from './Components/';
-import * as marketPlaceComponents from '../../../../../Application/Neos.MarketPlace/Resources/Private/JavaScript/Components/';
+import * as marketPlaceComponents from '../../../../../Packages/Application/Neos.MarketPlace/Resources/Private/JavaScript/Components/';
 import Layzr from 'layzr.js';
 
 const app = assembler();
