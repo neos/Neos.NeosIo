@@ -5,7 +5,4 @@ prototype(Neos.NeosConIo:Talks.Document) < prototype(Neos.NeosIo:DefaultPage) {
     body.content.main = PrimaryContent {
         nodePath = 'main'
     }
-    #body.content.main = Neos.NeosConIo:TalkList {
-    #    collection = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').arrayPropertyContains("event", node.properties.eventToShowTalksFor)}
-    #}
 }
