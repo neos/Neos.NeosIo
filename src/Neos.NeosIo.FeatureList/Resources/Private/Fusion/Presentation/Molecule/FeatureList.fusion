@@ -35,7 +35,7 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList) < prototype(Neos.Fusion:
 	renderer = afx`
 		<div class="featureList">
 			<Neos.Fusion:Collection collection={props.featureGroups} itemName="featureGroup" @children="itemRenderer" >
-				<Neos.NeosIo.FeatureList:Molecule.FeatureGroup title={featureGroup.title} features={featureGroup.features} />
+				<Neos.NeosIo.FeatureList:Molecule.FeatureGroup title={featureGroup.title} description={featureGroup.description} features={featureGroup.features} />
 			</Neos.Fusion:Collection>
 		</div>
 	`

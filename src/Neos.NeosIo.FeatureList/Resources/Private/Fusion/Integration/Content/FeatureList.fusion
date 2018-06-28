@@ -10,6 +10,11 @@ prototype(Neos.NeosIo.FeatureList:Content.FeatureList) < prototype(Neos.Neos:Con
 				block = false
 				node = ${featureGroup}
 			}
+			description = Neos.Neos:Editable {
+				property = 'description'
+				block = true
+				node = ${featureGroup}
+			}
 			features = Neos.Fusion:RawCollection {
 				collection = ${q(featureGroup).children('[instanceof Neos.NeosIo.FeatureList:Content.Feature]')}
 				itemName = 'feature'
