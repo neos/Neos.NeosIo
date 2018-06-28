@@ -1,6 +1,16 @@
 # Neos.io website
 
+**WARNING: Always execute NPM in `./src/Neos.NeosIo`, NOT in the symlink `./Packages/Sites/Neos.NeosIo`,
+as relative file paths won't work otherwise.**
+
+```
+cd ./src/Neos.NeosIo
+npm install
+```  
+
+
 ## Building SASS
+
 To to a minified build of the SASS for production use, run the following command in the site package folder (where package.json is):
 
 `npm run build:sass && npm run postbuild:sass && npm run minify:styles`

@@ -58,6 +58,14 @@
 		opacity: .7;
 		transform: translateX(-50%) translateY(-50%) scale(1.01);
 	}
+
+	&.stage__bg--fixed {
+		transform: none;
+		left: 0;
+		top: 0;
+		background-size: cover;
+		background-attachment: fixed;
+	}
 }
 .stage__bg--shade-20 {
 	opacity: .8;
@@ -95,4 +103,7 @@
 }
 .stage__contents--small {
 	max-width: $layout-small-width;
+}
+.stage__contents--big {
+	max-width: 9999px;
 }

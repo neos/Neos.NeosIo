@@ -3,17 +3,56 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:Content) {
         nodePath = 'contents'
     }
 
-    isContentExtraPadded = ${q(node).property('isContentExtraPadded') || this.backgroundImage}
+    isContentExtraPadded = ${q(node).property('isContentExtraPadded') || node.properties.backgroundImage  != null}
 
-    backgroundImageSrcSet = Neos.Fusion:Template {
-        templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Stage.html'
-        sectionName = 'imageSrcSet'
-        backgroundImage = ${q(node).property('backgroundImage')}
+    backgroundImage = Neos.Fusion:Case {
+        fixed.condition = ${node.properties.backgroundImageFixed}
+        fixed.renderer = Neos.NeosIo:Stage.FixedBackgroundImage
+
+        default.condition = true
+        default.renderer = Neos.NeosIo:Stage.BackgroundImage
+    }
+}
+
+prototype(Neos.NeosIo:Stage.BackgroundImage) < prototype(Neos.Fusion:Tag) {
+    tagName = 'img'
+    attributes {
+        alt = ${node.properties.alternativeText}
+        alt.@process.filenameFallback = ${String.isBlank(value) ? node.properties.backgroundImage.label : value}
+
+        title = ${node.properties.title}
+        title.@process.filenameFallback = ${String.isBlank(value) ? node.properties.backgroundImage.label : value}
+
+        class = Neos.Fusion:RawArray {
+            stage__bg = 'stage__bg'
+            shade =  ${'stage__bg--shade-' + node.properties.backgroundShadePercentage}
+            shade.@if.hasShadeActive = ${node.properties.backgroundShadePercentage}
+        }
+        data-component = 'ProgressiveImage'
+        data-src = Neos.Neos:ImageUri {
+            asset = ${node.properties.backgroundImage}
+            maximumWidth = 1280
+            maximumHeight = 600
+        }
+        data-srcset = Neos.Fusion:Template {
+            templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Stage.html'
+            sectionName = 'imageSrcSet'
+            backgroundImage = ${node.properties.backgroundImage}
+        }
+        src = Neos.Neos:ImageUri {
+            asset = ${node.properties.backgroundImage}
+            maximumWidth = 5
+            maximumHeight = 5
+        }
     }
 
-    title = ${node.properties.title}
-    title.@process.filenameFallback = ${String.isBlank(value) ? node.properties.backgroundImage.label : value}
+    @if.hasBackgroundImage = ${node.properties.backgroundImage}
+}
 
-    alternativeText = ${node.properties.alternativeText}
-    alternativeText.@process.filenameFallback = ${String.isBlank(value) ? node.properties.backgroundImage.label : value}
+
+prototype(Neos.NeosIo:Stage.FixedBackgroundImage) < prototype(Neos.NeosIo:Stage.BackgroundImage) {
+    tagName = 'div'
+    attributes.class.stage__bg--fixed = 'stage__bg--fixed'
+    attributes.data-isInline = 'true'
+    attributes.src = ''
 }
