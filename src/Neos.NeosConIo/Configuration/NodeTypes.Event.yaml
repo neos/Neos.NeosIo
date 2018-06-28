@@ -40,3 +40,10 @@
           editorOptions:
             placeholder: 'Description'
             rows: 4
+  childNodes:
+    'rooms':
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosConIo:Room': true

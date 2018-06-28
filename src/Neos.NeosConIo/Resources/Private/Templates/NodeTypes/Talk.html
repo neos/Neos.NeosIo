@@ -21,7 +21,7 @@
 						</li>
 					</f:if>
 					<f:if condition="{room}">
-						<li><neos:contentElement.editable property="room" /></li>
+						<li>{roomName -> f:format.raw()}</li>
 					</f:if>
 				</ul>
 			</div>
