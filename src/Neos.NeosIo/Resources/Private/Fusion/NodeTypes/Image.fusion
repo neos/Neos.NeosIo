@@ -11,4 +11,7 @@ prototype(Neos.NodeTypes:Image) {
 
     imageClassName.@process.addImageStyle = ${value + ' ' + q(node).property('imageStyle')}
     imageClassName.@process.addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
+
+    maxheight = ${q(node).property('customHeight') ? q(node).property('customHeight') : this.maximumHeight}
+    maxWidth = ${q(node).property('customHeight') ? null : this.maximumWidth}
 }
