@@ -3,11 +3,11 @@ prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Collection) {
     collection = ${q(site).find('[instanceof Neos.NeosConIo:Talk]')}
 
     @context.eventToFilter = ${node.properties.eventToShowTalksFor}
-    @process.wrapWithUl = ${'<ul class="talk__talkList">' + value + '</ul>'}
+    @process.wrapWithUl = ${'<ul class="talkList">' + value + '</ul>'}
     itemName = "node"
     itemRenderer = Neos.Fusion:Tag {
         tagName = 'li'
-        attributes.class = 'talk__talkList__item'
+        attributes.class = 'talkList__item'
         content = Neos.NeosIo:ImageTeaser {
             // node is the talk here
             title = ${node.properties.title}

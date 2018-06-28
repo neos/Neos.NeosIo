@@ -1,0 +1,23 @@
+.talkList {
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	margin: 0 #{-$basic-spacing / 2}px;
+	width: calc(100% + #{$basic-spacing}px);
+
+	&__item {
+		width: 100%;
+		margin-bottom: #{$basic-spacing}px;
+		padding: 0 #{$basic-spacing / 2}px ;
+
+		@include mq('medium') {
+			width: 50%;
+		}
+
+		@include mq('large') {
+			width: 33.33333%;
+		}
+	}
+}
