@@ -10,10 +10,9 @@ Neos.NeosIo.FeatureList:Content.FeatureGroup:
     inlineEditable: true
     inspector:
       groups:
-        properties:
-          label: 'Badge properties'
-          position: 1
-          icon: 'icon-gears'
+        feature:
+          label: 'Feature properties'
+          tab: default
 
   options:
     fusion:
@@ -37,3 +36,11 @@ Neos.NeosIo.FeatureList:Content.FeatureGroup:
         inlineEditable: true
         aloha:
           placeholder: "Feature Group Description"
+
+    icon:
+      type: string
+      ui:
+        label: 'Icon name (from Font Awesome)'
+        reloadIfChanged : TRUE
+        inspector:
+          group: feature

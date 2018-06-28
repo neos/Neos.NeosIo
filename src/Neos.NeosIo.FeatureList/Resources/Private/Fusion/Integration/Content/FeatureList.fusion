@@ -15,6 +15,7 @@ prototype(Neos.NeosIo.FeatureList:Content.FeatureList) < prototype(Neos.Neos:Con
 				block = true
 				node = ${featureGroup}
 			}
+			icon = ${q(featureGroup).property('icon')}
 			features = Neos.Fusion:RawCollection {
 				collection = ${q(featureGroup).children('[instanceof Neos.NeosIo.FeatureList:Content.Feature]')}
 				itemName = 'feature'

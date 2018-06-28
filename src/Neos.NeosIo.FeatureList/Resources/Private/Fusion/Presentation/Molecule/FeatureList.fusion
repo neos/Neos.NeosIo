@@ -5,6 +5,7 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList) < prototype(Neos.Fusion:
 			featureGroups = Neos.Fusion:RawArray {
 				01 = Neos.Fusion:RawArray {
 					title = 'Feature Group 1'
+					icon = 'users'
 					features = Neos.Fusion:RawArray {
 						01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 						02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
@@ -14,6 +15,8 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList) < prototype(Neos.Fusion:
 				}
 				02 = Neos.Fusion:RawArray {
 					title = 'Feature Group 1'
+					icon = 'cogs'
+					description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
 					features = Neos.Fusion:RawArray {
 						01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 						02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
@@ -35,7 +38,7 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList) < prototype(Neos.Fusion:
 	renderer = afx`
 		<div class="featureList">
 			<Neos.Fusion:Collection collection={props.featureGroups} itemName="featureGroup" @children="itemRenderer" >
-				<Neos.NeosIo.FeatureList:Molecule.FeatureGroup title={featureGroup.title} description={featureGroup.description} features={featureGroup.features} />
+				<Neos.NeosIo.FeatureList:Molecule.FeatureGroup featureGroupData={featureGroup} />
 			</Neos.Fusion:Collection>
 		</div>
 	`
