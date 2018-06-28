@@ -3,16 +3,13 @@
 <neos:contentElement.wrap>
 	<div class="talk">
 		<neos:contentElement.editable property="title" tag="h1" />
-		<span>Video</span>
+		<div class="talk__video">
+			{video -> f:format.raw()}
+		</div>
 		<div class="talk__details">
-			<div class="talk__speakers">
-				<ul>
-					<f:for each="{speakers}" as="speaker">
-						<li><neos:link.node node="{speaker}"></neos:link.node></li>
-					</f:for>
-					<li>Speaker</li>
-				</ul>
-			</div>
+			<ul class="talk__speakerList">
+				{speakerList -> f:format.raw()}
+			</ul>
 			<div class="talk__description">
 				<neos:contentElement.editable property="text" />
 				<i class="fa fa-calendar"></i> <f:format.date format="d.m.Y">{talkDate}</f:format.date><br>
@@ -21,12 +18,9 @@
 				<neos:link.node node="{event}"></neos:link.node>
 			</div>
 		</div>
-		{speakerList -> f:format.raw()}
 		<div class="relatedTalks">
-			<ul>
-				<li>
-					Talk Link
-				</li>
+			<ul class="talk__talkList">
+				{talkList -> f:format.raw()}
 			</ul>
 		</div>
 	</div>
