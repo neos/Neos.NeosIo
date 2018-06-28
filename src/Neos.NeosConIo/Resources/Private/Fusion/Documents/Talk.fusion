@@ -6,6 +6,7 @@ prototype(Neos.NeosConIo:Talk.Document) < prototype(Neos.NeosIo:DefaultPage) {
 
         talkList = Neos.NeosConIo:TalkList {
             collection = ${node.properties.relatedTalks}
+            itemRenderer.@if.talkHasCorrectEvent = true
         }
 
         video = Neos.NeosIo:Youtube {

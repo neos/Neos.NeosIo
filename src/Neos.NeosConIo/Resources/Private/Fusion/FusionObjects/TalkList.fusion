@@ -1,6 +1,9 @@
 prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Collection) {
     // API to the outside: "collection" to render
-    //collection = ...
+    collection = ${q(site).find('[instanceof Neos.NeosConIo:Talk]')}
+
+    @context.eventToFilter = ${node.properties.eventToShowTalksFor}
+    @process.wrapWithUl = ${'<ul class="talk__talkList">' + value + '</ul>'}
     itemName = "node"
     itemRenderer = Neos.Fusion:Tag {
         tagName = 'li'
@@ -15,6 +18,17 @@ prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Collection) {
                 node = ${node}
                 absolute = true
             }
+        }
+
+    }
+    // "node" is the current talk here
+    itemRenderer.@if.talkHasCorrectEvent = ${node.properties.event == eventToFilter}
+
+    @cache {
+        mode = 'cached'
+        entryTags {
+            # when a talk is changed, we need to rerender this page.
+            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk')}
         }
     }
 }
