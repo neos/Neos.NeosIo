@@ -14,12 +14,8 @@
 <body>
 <f:section name="body">
 	<f:render partial="SiteHeader.html" arguments="{_all}" />
-	<f:render partial="KeyVisual.html" arguments="{
-		contents: content.keyVisual,
-		isKeyVisualContentsInverted: isKeyVisualContentsInverted,
-		keyVisualImage: keyVisualImage,
-		keyVisualImageSrcSet: keyVisualImageSrcSet
-	}" />
+
+	{content.keyVisual -> f:format.raw()}
 
 	<f:if condition="{parts.eventNav}">
 		<nav>{parts.eventNav -> f:format.raw()}</nav>

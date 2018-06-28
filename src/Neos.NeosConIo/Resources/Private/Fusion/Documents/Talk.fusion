@@ -1,4 +1,5 @@
 prototype(Neos.NeosConIo:Talk.Document) < prototype(Neos.NeosIo:DefaultPage) {
+    body.content.keyVisual = ""
     body.content.main = Neos.NeosConIo:Talk {
         speakerList = Neos.NeosConIo:SpeakerList {
             collection = ${node.properties.speakers}

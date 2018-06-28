@@ -3,8 +3,14 @@ prototype(Neos.NeosIo:LandingPage.Document) < prototype(Neos.NeosIo:DefaultPage)
         templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/LandingPage.html'
 
         content {
-            keyVisual = PrimaryContent {
-                nodePath = 'keyVisual'
+            keyVisual {
+                // to use the "large" key visual, we need to append a CSS class to the outer container; and change the default-Image.
+                prototype(Neos.NeosIo:KeyVisual.AbstractRenderer).classes.@process.appendLarge = ${value + " keyVisual--large"}
+                prototype(Neos.NeosIo:KeyVisual.StaticPlaceholderImageRenderer).@context.staticUrlPrefix.path = 'Images/DefaultKeyvisual'
+
+                content = Neos.Neos:ContentCollection {
+                    nodePath = 'keyVisual'
+                }
             }
 
             main = PrimaryContent {

@@ -93,7 +93,7 @@ export default class ProgressiveImage {
 
 		if (sources.length && srcSet !== '') {
 			sources.forEach(source => {
-				const parts = source.split(' ');
+				const parts = source.trim().split(' ');
 				const url = parts[0];
 				const viewportWidth = Math.abs(parts[1].replace('w', ''));
 

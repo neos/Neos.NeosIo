@@ -6,13 +6,7 @@
 <body>
 <f:section name="body">
 	<f:render partial="SiteHeader.html" arguments="{_all}" />
-	<f:render partial="KeyVisual.html" arguments="{
-		contents: content.keyVisual,
-		isKeyVisualContentsInverted: isKeyVisualContentsInverted,
-		keyVisualImage: keyVisualImage,
-		keyVisualImageSrcSet: keyVisualImageSrcSet
-		size: 'large'
-	}" />
+	{content.keyVisual -> f:format.raw()}
 
 	<main class="content" role="main" id="mainContent">
 		{content.main -> f:format.raw()}

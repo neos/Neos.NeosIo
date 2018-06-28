@@ -7,12 +7,7 @@
 <f:section name="body">
 	<f:render partial="SiteHeader.html" arguments="{_all}"/>
 
-	<f:render partial="KeyVisual.html" arguments="{
-		contents: content.keyVisual,
-		isKeyVisualContentsInverted: isKeyVisualContentsInverted,
-		keyVisualImage: keyVisualImage,
-		keyVisualImageSrcSet: keyVisualImageSrcSet
-	}"/>
+	{content.keyVisual -> f:format.raw()}
 
 	<div class="stage stage--bright" id="mainContent">
 		<div class="stage__contents stage__contents--big">
