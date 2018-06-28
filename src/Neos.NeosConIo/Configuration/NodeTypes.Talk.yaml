@@ -3,7 +3,6 @@
     'Neos.Neos:Document': true
     'Neos.NeosConIo:Mixin.EventRelated': true
     'Neos.NodeTypes.BaseMixins:TextMixin': true
-    'Neos.NeosIo:Youtube': true
   ui:
     label: 'Talk'
     icon: 'icon-comment'
@@ -11,6 +10,7 @@
     inspector:
       groups:
         video:
+          label: Video
           position: 50
         talkOptions:
           label: 'Talk options'
@@ -82,3 +82,11 @@
         aloha:
           placeholder: 'Enter room here'
 
+    video:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Youtube video ID'
+        reloadIfChanged: true
+        inspector:
+          group: video
