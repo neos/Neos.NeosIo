@@ -6,6 +6,9 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:Content) {
     isContentExtraPadded = ${q(node).property('isContentExtraPadded') || node.properties.backgroundImage  != null}
 
     backgroundImage = Neos.Fusion:Case {
+        fixed.condition = ${node.properties.backgroundImageFixed}
+        fixed.renderer = Neos.NeosIo:Stage.FixedBackgroundImage
+
         default.condition = true
         default.renderer = Neos.NeosIo:Stage.BackgroundImage
     }
@@ -44,4 +47,12 @@ prototype(Neos.NeosIo:Stage.BackgroundImage) < prototype(Neos.Fusion:Tag) {
     }
 
     @if.hasBackgroundImage = ${node.properties.backgroundImage}
+}
+
+
+prototype(Neos.NeosIo:Stage.FixedBackgroundImage) < prototype(Neos.NeosIo:Stage.BackgroundImage) {
+    tagName = 'div'
+    attributes.class.stage__bg--fixed = 'stage__bg--fixed'
+    attributes.data-isInline = 'true'
+    attributes.src = ''
 }
