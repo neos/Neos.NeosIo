@@ -1,0 +1,26 @@
+# only allowed on top level directly underneath the root page.
+'Neos.NeosConIo:TalkList':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: "NeosCon Talk overview"
+    icon: 'icon-comments'
+    group: neoscon
+    inspector:
+      groups:
+        event:
+          label: Event Properties
+          position: 100
+
+  properties:
+    eventToShowTalksFor:
+      type: reference
+      ui:
+        label: 'Event to show talks for'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'event'
+          position: 160
+          editor: 'Neos.Neos/Inspector/Editors/ReferenceEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Event']

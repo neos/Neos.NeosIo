@@ -1,0 +1,26 @@
+# only allowed on top level directly underneath the root page.
+'Neos.NeosConIo:SpeakerList':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: "NeosCon Speaker overview"
+    icon: 'icon-users'
+    group: neoscon
+    inspector:
+      groups:
+        event:
+          label: Event Properties
+          position: 100
+
+  properties:
+    eventToShowSpeakersFor:
+      type: reference
+      ui:
+        label: 'Event to show speakers for'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'event'
+          position: 160
+          editor: 'Neos.Neos/Inspector/Editors/ReferenceEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Event']

@@ -22,36 +22,43 @@
 
 .talk__details {
 	display: flex;
-	margin-bottom: #{$basic-spacing * 2}px;
+	margin-bottom: #{$basic-spacing * .5}px;
 
 	@include mq('small') {
 		display: block;
 	}
-}
 
-.talk__speakerList {
-	padding: 0;
-	margin: 0;
-	list-style: none;
-	width: $imageTeaser--speaker__width;
+	.speaker__speakerList {
+		display: block;
+		margin: 0;
+		width: $imageTeaser--speaker__width;
 
-	@include mq('small') {
-		display: flex;
-		flex-flow: row wrap;
-		justify-content: flex-start;
-		margin: 0 #{-$basic-spacing / 2}px;
-		width: calc(100% + #{$basic-spacing}px);
+		@include mq('small') {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: flex-start;
+			margin: 0 #{-$basic-spacing / 2}px;
+			width: calc(100% + #{$basic-spacing}px);
+		}
 	}
 
-	&__item {
+	.speaker__speakerList__item {
+		padding: 0;
+
 		@include mq('small') {
-			padding: 0 #{$basic-spacing / 2}px ;
+			padding: 0 #{$basic-spacing / 2}px;
 		}
 
 		@media all and (max-width: 441px) {
 			margin: 0 auto;
 		}
 	}
+}
+
+.talk__infos {
+	padding: 0;
+	margin: 0 0 #{$basic-spacing}px;
+	list-style: none;
 }
 
 .talk__talkList {

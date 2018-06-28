@@ -7,21 +7,30 @@
 			{video -> f:format.raw()}
 		</div>
 		<div class="talk__details">
-			<ul class="talk__speakerList">
-				{speakerList -> f:format.raw()}
-			</ul>
+			{speakerList -> f:format.raw()}
 			<div class="talk__description">
 				<neos:contentElement.editable property="text" />
-				<i class="fa fa-calendar"></i> <f:format.date format="d.m.Y">{talkDate}</f:format.date><br>
-				<i class="fa fa-clock-o"></i> <f:format.date format="G:i">{talkDate}</f:format.date>
-				{roomName -> f:format.raw()}
-				<neos:link.node node="{event}"></neos:link.node>
+				<ul class="talk__infos">
+					<li class="talk__infos__item">{event.properties.title}</li>
+					<f:if condition="{talkDate}">
+						<li class="talk__infos__item">
+							<i class="fa fa-calendar"></i> <f:format.date format="d.m.Y">{talkDate}</f:format.date>
+						</li>
+						<li class="talk__infos__item">
+							<i class="fa fa-clock-o"></i> <f:format.date format="G:i">{talkDate}</f:format.date>
+						</li>
+					</f:if>
+					<f:if condition="{room}">
+						<li>{roomName -> f:format.raw()}</li>
+					</f:if>
+				</ul>
 			</div>
 		</div>
-		<div class="relatedTalks">
-			<ul class="talk__talkList">
+		<f:if condition="{talkList}">
+			<div class="relatedTalks">
+				<h2>Related talks</h2>
 				{talkList -> f:format.raw()}
-			</ul>
-		</div>
+			</div>
+		</f:if>
 	</div>
 </neos:contentElement.wrap>

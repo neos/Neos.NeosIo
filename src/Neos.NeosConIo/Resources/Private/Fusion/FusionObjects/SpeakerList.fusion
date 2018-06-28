@@ -1,10 +1,14 @@
 prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Collection) {
     // API to the outside: "collection" to render
-    //collection = ...
+    collection = ${q(site).find('[instanceof Neos.NeosConIo:Speaker]').arrayPropertyContains("event", node.properties.eventToShowSpeakersFor)}
+
+    @context.eventToFilter = ${node.properties.eventToShowSpeakersFor}
+    @process.wrapWithUl = ${'<ul class="speaker__speakerList">' + value + '</ul>'}
+
     itemName = "node"
     itemRenderer = Neos.Fusion:Tag {
         tagName = 'li'
-        attributes.class = 'talk__speakerList__item'
+        attributes.class = 'speaker__speakerList__item'
         content = Neos.NeosIo:ImageTeaser {
             // node is the speaker here
             title = ${node.properties.title}
