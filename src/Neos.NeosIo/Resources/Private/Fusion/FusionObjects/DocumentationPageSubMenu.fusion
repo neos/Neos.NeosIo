@@ -16,7 +16,7 @@ prototype(Neos.NeosIo:DocumentationPageSubMenu) < prototype(Neos.Neos:Menu) {
 
     itemCollection = Neos.Fusion:RawCollection {
         # The first documentation page is the documentation root, show all pages below
-        collection = ${q(site).find('[instanceof Neos.NeosIo:DocumentationPage]').first().children().filter('[instanceof Neos.Neos:Document]')}
+        collection = ${q(site).find('[instanceof Neos.NeosIo:DocumentationPage]').first().children().filter('[instanceof Neos.NeosIo:DocumentationPage]')}
         itemRenderer = Neos.NeosIo:DocumentationPageSubMenuItemRenderer
     }
 
