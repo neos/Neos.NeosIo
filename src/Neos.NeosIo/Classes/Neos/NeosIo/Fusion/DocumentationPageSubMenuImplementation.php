@@ -43,6 +43,7 @@ class DocumentationPageSubMenuImplementation extends MenuImplementation
         $currentNode = $currentNodeAndChildNodes['node'];
         $label = $currentNodeAndChildNodes['label'];
         $anchorName = $currentNodeAndChildNodes['anchorName'] ?? '';
+        $linkAttributes = $currentNodeAndChildNodes['linkAttributes'] ?? '';
         $subItems = $currentNodeAndChildNodes['subItems'] ?? [];
 
         if ($this->isNodeHidden($currentNode)) {
@@ -53,6 +54,7 @@ class DocumentationPageSubMenuImplementation extends MenuImplementation
             'node' => $currentNode,
             'state' => self::STATE_NORMAL,
             'anchorName' => $anchorName,
+            'linkAttributes' => $linkAttributes,
             'label' => $label,
             'menuLevel' => $this->currentLevel
         );
