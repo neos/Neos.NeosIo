@@ -12,7 +12,7 @@ prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Collection) {
             // node is the talk here
             title = ${node.properties.title}
             image = ${node.properties.thumbnail}
-            imageUrl = ${(node.properties.video && !node.properties.thumbnail) ? "https://img.youtube.com/vi/" + node.properties.video + "/maxresdefault.jpg" : null}
+            fallbackImageUrl = ${(node.properties.video && !node.properties.thumbnail) ? "https://img.youtube.com/vi/" + node.properties.video + "/maxresdefault.jpg" : null}
             text = ${node.properties.text}
             className = 'imageTeaser--relatedTalk'
             link = Neos.Neos:NodeUri {

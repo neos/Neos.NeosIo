@@ -24,9 +24,9 @@
 					  arguments="{class: 'imageTeaser__image', title: title, alternativeText: alternativeText, image: image, maximumWidth: '700c', maximumHeight: '450c', allowUpScaling: allowUpScaling}"/>
 		</f:then>
 		<f:else>
-			<f:if condition="{imageUrl}">
+			<f:if condition="{fallbackImageUrl}">
 				<f:then>
-					<img src="{imageUrl}"
+					<img src="{fallbackImageUrl}"
 						 alt="{alternativeText}" title="{title}" class="{class}"
 						 />
 				</f:then>
