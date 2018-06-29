@@ -10,10 +10,10 @@
         }
     },
     "require": {
-        "neos/neosio": "dev-master",
-        "neos/flowneosio": "dev-master",
-        "neos/neosio-event": "dev-master",
-        "neos/neosconio": "dev-master"
+        "neos/neosio": "*",
+        "neos/flowneosio": "*",
+        "neos/neosio-event": "*",
+        "neos/neosconio": "*"
     },
     "require-dev": {
         "neos/buildessentials": "~4.0",
@@ -26,6 +26,8 @@
             "url": "./src/*"
         }
     },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
     "scripts": {
         "post-update-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
         "post-install-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
