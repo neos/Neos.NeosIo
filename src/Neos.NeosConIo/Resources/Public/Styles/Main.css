@@ -3809,6 +3809,92 @@ ul.checked {
         display: block;
         visibility: visible; } }
 
+.schedule {
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto; }
+  .schedule__header {
+    margin-bottom: 52px; }
+  .schedule .days {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; }
+    .schedule .days__day {
+      cursor: pointer;
+      min-width: 300px; }
+      .schedule .days__day * {
+        color: #00ADEE; }
+      @media screen and (max-width: 649px) {
+        .schedule .days__day {
+          min-width: 0;
+          width: 100%;
+          margin-top: 13px; } }
+      .schedule .days__day.active .btn__content {
+        background: #3ccaff; }
+        .schedule .days__day.active .btn__content * {
+          color: white; }
+  .schedule .rooms {
+    display: flex;
+    justify-content: center;
+    height: 55px;
+    margin-top: 13px;
+    border-bottom: 1px solid #ced1d4; }
+    .schedule .rooms__room {
+      width: 50%;
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      margin-top: 2px;
+      color: #656a71; }
+      @media screen and (max-width: 649px) {
+        .schedule .rooms__room {
+          text-align: center !important; } }
+      .schedule .rooms__room:hover {
+        color: #00ADEE; }
+      .schedule .rooms__room.active {
+        pointer-events: none;
+        border-color: #00ADEE; }
+      .schedule .rooms__room:focus {
+        outline: none; }
+  .schedule .talks {
+    margin-left: auto;
+    margin-right: auto; }
+  .schedule .talk {
+    display: none; }
+    .schedule .talk__header {
+      display: flex;
+      cursor: pointer;
+      align-items: center;
+      flex-wrap: wrap; }
+      .schedule .talk__header h4 {
+        margin-bottom: 0; }
+    .schedule .talk.visible {
+      display: block; }
+    .schedule .talk__description {
+      transition: max-height, 0.5s;
+      max-height: 0;
+      overflow: hidden;
+      margin-top: 26px; }
+      .schedule .talk__description.visible {
+        max-height: 1000px; }
+    .schedule .talk__speaker-image {
+      height: auto;
+      border-radius: 50%;
+      align-self: flex-start;
+      margin-right: 13px; }
+    .schedule .talk__time {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      margin-right: 13px; }
+  .schedule .btn:focus {
+    transform: none;
+    outline: none; }
+  .schedule .fa {
+    margin-right: 6px; }
+  .schedule .btn + .btn {
+    margin-left: 0; }
+
 /*
  * Print styles - Inlined to avoid another HTTP connection.
  */

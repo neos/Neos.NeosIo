@@ -1,0 +1,28 @@
+prototype(Neos.NeosConIo:Schedule) < prototype(Neos.Neos:ContentComponent) {
+    @if.eventNodeIsSet = ${q(event).is('[instanceof Neos.NeosConIo:Event]')}
+    @if.dateIsSet = ${q(q(event).property('eventDate')).is('[instanceof DateTime]')}
+
+    @context {
+        event = ${q(node).property('event')}
+        days = Neos.Fusion:RawArray {
+           day1 = ${q(q(node).property('event')).property('eventDate')}
+           day2 = ${Date.add(q(q(node).property('event')).property('eventDate'), 'P1D')}
+        }
+    }
+
+    renderer = afx`
+        <div class="schedule" data-component="Schedule">
+            <header class="schedule__header">
+                <div class="days">
+                    <Neos.NeosConIo:Days />
+                </div>
+                <div class="rooms">
+                   <Neos.NeosConIo:Rooms />
+                </div>
+            </header>
+            <ul class="talks">
+                <Neos.NeosConIo:Talks />
+            </ul>
+        </div>
+    `
+}
