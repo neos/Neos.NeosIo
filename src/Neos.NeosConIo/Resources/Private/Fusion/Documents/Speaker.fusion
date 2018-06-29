@@ -21,7 +21,6 @@ prototype(Neos.NeosConIo:Speaker.Document) < prototype(Neos.NeosIo:DefaultPage) 
 
         moreTalks = Neos.Fusion:Collection {
             // node is speaker here
-            // ToDo: Just get talks for current speaker
             collection = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').arrayPropertyContains("speakers", node)}
 
             @process.wrapWithUl = ${'<ul class="talkList">' + value + '</ul>'}
