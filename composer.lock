@@ -4737,7 +4737,7 @@
             "dist": {
                 "type": "path",
                 "url": "./src/Neos.NeosIo",
-                "reference": "f74db1cb30d05ee97b07390c73a82e42174e1b90",
+                "reference": "ce66a80518ec6961907ae8246af20d557d1d1505",
                 "shasum": null
             },
             "require": {
@@ -4765,7 +4765,8 @@
                 "neos/seo": "~2.0.0",
                 "neos/swiftmailer": "~6.0.0",
                 "networkteam/neos-mailobfuscator": "^2.0",
-                "punktde/codeview": "^1.1"
+                "punktde/codeview": "^1.1",
+                "webexcess/redirecthandler-backend": "^1.1"
             },
             "type": "neos-site",
             "extra": {
@@ -8379,6 +8380,51 @@
             ],
             "description": "The TYPO3 Fluid template rendering engine",
             "time": "2017-01-20T21:49:18+00:00"
+        },
+        {
+            "name": "webexcess/redirecthandler-backend",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webexcess/redirecthandler-backend.git",
+                "reference": "b5d882138d15b51214a3528b9583d8819b7c435a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webexcess/redirecthandler-backend/zipball/b5d882138d15b51214a3528b9583d8819b7c435a",
+                "reference": "b5d882138d15b51214a3528b9583d8819b7c435a",
+                "shasum": ""
+            },
+            "require": {
+                "neos/neos": "~3.0 || ~4.0 || dev-master",
+                "neos/redirecthandler": "~2.0 || dev-master"
+            },
+            "type": "neos-package",
+            "extra": {
+                "installer-name": "WebExcess.RedirectHandler.Backend",
+                "neos": {
+                    "package-key": "WebExcess.RedirectHandler.Backend"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "WebExcess\\RedirectHandler\\Backend\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stefan Bruggmann",
+                    "email": "stefan.bruggmann@webexcess.ch",
+                    "homepage": "https://twitter.com/webexcess",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This package provides a backend module to manage Neos.RedirectHandler redirects",
+            "time": "2018-05-03T19:58:18+00:00"
         },
         {
             "name": "zendframework/zend-code",
