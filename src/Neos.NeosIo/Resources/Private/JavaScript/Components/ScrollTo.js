@@ -9,19 +9,27 @@ const scrollDocument = /Firefox/.test(navigator.userAgent) || /Trident.*rv[ :]*1
 	document.documentElement :
 	document.body;
 
-function scrollTo(element, to, duration) {
+function scrollTo(to, duration) {
 	if (duration <= 0) {
 		return;
 	}
 
-	const difference = to - element.scrollTop;
+	if(typeof window.scrollTo === 'function') { // browser feature check
+		window.scrollTo({
+			top: to,
+			behavior: 'smooth'
+		});
+		return;
+	}
+
+	const difference = to - scrollDocument.scrollTop;
 	const perTick = difference / duration * 10;
 
 	setTimeout(() => {
-		element.scrollTop += Number(perTick);
+		scrollDocument.scrollTop += Number(perTick);
 
-		if (element.scrollTop !== to) {
-			scrollTo(element, to, duration - 10);
+		if (scrollDocument.scrollTop !== to) {
+			scrollTo(scrollDocument, to, duration - 10);
 		}
 	}, 10);
 }
@@ -45,6 +53,6 @@ export default class ScrollTo {
 	}
 
 	scrollTo() {
-		scrollTo(scrollDocument, this.target.getBoundingClientRect().top + window.scrollY, 600);
+		scrollTo(this.target.getBoundingClientRect().top + window.scrollY, 600);
 	}
 }
