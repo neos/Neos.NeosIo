@@ -3,12 +3,10 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:Content) {
         absolute = true
     }
 
-    title = null
-    // is an asset. Either image or imageUrl must be specified.
-    image = null
-    // is an URL. Either image or imageUrl must be specified.
-    imageUrl = null
-    text = null
+    title = ${q(node).property('title')}
+    image = ${q(node).property('image')}
+    text = ${q(node).property('text')}
+    fallbackImageUrl = null
     className = null
 
     sectionName = 'main'
