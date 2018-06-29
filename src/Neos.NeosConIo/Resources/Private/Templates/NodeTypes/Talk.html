@@ -3,9 +3,11 @@
 <neos:contentElement.wrap>
 	<div class="talk">
 		<neos:contentElement.editable property="title" tag="h1" />
-		<div class="talk__video">
-			{video -> f:format.raw()}
-		</div>
+		<f:if condition="{video}">
+			<div class="talk__video">
+				{video -> f:format.raw()}
+			</div>
+		</f:if>
 		<div class="talk__details">
 			{speakerList -> f:format.raw()}
 			<div class="talk__description">

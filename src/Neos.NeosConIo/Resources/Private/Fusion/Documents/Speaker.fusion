@@ -1,3 +1,50 @@
 prototype(Neos.NeosConIo:Speaker.Document) < prototype(Neos.NeosIo:DefaultPage) {
-    body.content.main = Neos.NeosConIo:Speaker
+    body.content.main = Neos.NeosConIo:Speaker {
+        // node is the speaker here
+        @context.featuredTalkNode = ${q(node).property('featuredTalk')}
+
+        featuredTalk = Neos.NeosIo:ImageTeaser {
+
+            title = ${q(featuredTalkNode).property('title')}
+            image = ${q(featuredTalkNode).property('thumbnail')}
+            imageUrl = ${(q(featuredTalkNode).property('video') && !q(featuredTalkNode).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(featuredTalkNode).property('video') + "/maxresdefault.jpg" : null}
+            text = ${q(featuredTalkNode).property('text')}
+            className = 'imageTeaser--featuredTalk'
+            link = Neos.Neos:NodeUri {
+                node = ${featuredTalkNode}
+                absolute = true
+            }
+        }
+
+        // Just show featured talk when defined in the backend
+        featuredTalk.@if.featuredTalkIsSelected = ${featuredTalkNode}
+
+        moreTalks = Neos.Fusion:Collection {
+            // node is speaker here
+            collection = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').arrayPropertyContains("speakers", node)}
+
+            @process.wrapWithUl = ${'<ul class="talkList">' + value + '</ul>'}
+            itemName = "node"
+            itemRenderer = Neos.Fusion:Tag {
+                tagName = 'li'
+                attributes.class = 'talkList__item'
+                content = Neos.NeosIo:ImageTeaser {
+                    // node is the talk here
+                    title = ${node.properties.title}
+                    image = ${node.properties.thumbnail}
+                    imageUrl = ${(node.properties.video && !node.properties.thumbnail) ? "https://img.youtube.com/vi/" + node.properties.video + "/maxresdefault.jpg" : null}
+                    text = ${node.properties.text}
+                    className = 'imageTeaser--relatedTalk'
+                    link = Neos.Neos:NodeUri {
+                        node = ${node}
+                        absolute = true
+                    }
+                }
+            }
+
+            itemRenderer.@if.talkHasCorrectSpeaker = true
+            itemRenderer.@if.talkIsNotFeatured = ${node != featuredTalkNode}
+        }
+
+    }
 }

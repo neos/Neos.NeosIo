@@ -3,8 +3,44 @@
 
 <neos:contentElement.wrap>
 	<div class="speaker">
-		<media:image image="{image}" maximumWidth="80" alt="{title}" />
 		<neos:contentElement.editable property="title" tag="h1" />
-		<neos:contentElement.editable property="text" />
+		<div class="speaker__details">
+			<div class="speaker__imageWrapper">
+				<media:image image="{image}" alt="{title}" class="speaker__image" />
+			</div>
+			<div class="speaker__description">
+				<neos:contentElement.editable property="text" />
+				<ul class="speaker__infos">
+					<f:if condition="{company}">
+						<li class="speaker__infos__item">
+							<i class="fa fa-briefcase"></i> {company}
+						</li>
+					</f:if>
+					<f:if condition="{position}">
+						<li class="speaker__infos__item">
+							<i class="fa fa-group"></i> {position}
+						</li>
+					</f:if>
+					<f:if condition="{twitter}">
+						<li class="speaker__infos__item"><i class="fa fa-twitter"></i> <a href="https://twitter.com/{twitter}" target="_blank" title="Go to twitter profile">{twitter}</a></li>
+					</f:if>
+					<f:if condition="{github}">
+						<li class="speaker__infos__item"><i class="fa fa-github"></i> <a href="https://github.com/{github}" target="_blank" title="Go to github profile">{github}</a></li>
+					</f:if>
+				</ul>
+			</div>
+		</div>
+		<f:if condition="{featuredTalk}">
+			<div class="speaker__featuredTalk">
+				<h2>Featured talk</h2>
+				{featuredTalk -> f:format.raw()}
+			</div>
+		</f:if>
+		<f:if condition="{moreTalks}">
+			<div class="speaker__moreTalks">
+				<h2>More talks</h2>
+				{moreTalks -> f:format.raw()}
+			</div>
+		</f:if>
 	</div>
 </neos:contentElement.wrap>
