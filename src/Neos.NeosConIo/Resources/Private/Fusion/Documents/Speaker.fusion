@@ -19,6 +19,8 @@ prototype(Neos.NeosConIo:Speaker.Document) < prototype(Neos.NeosIo:DefaultPage) 
         // Just show featured talk when defined in the backend
         featuredTalk.@if.featuredTalkIsSelected = ${featuredTalkNode}
 
+        moreTalksVisible = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').arrayPropertyContains("speakers", node)}
+
         moreTalks = Neos.Fusion:Collection {
             // node is speaker here
             collection = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').arrayPropertyContains("speakers", node)}
