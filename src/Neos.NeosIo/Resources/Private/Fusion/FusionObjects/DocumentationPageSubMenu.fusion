@@ -42,7 +42,8 @@ prototype(Neos.NeosIo:DocumentationPageSubMenu) < prototype(Neos.Neos:Menu) {
 prototype(Neos.NeosIo:DocumentationPageSubMenuItemRenderer) < prototype(Neos.Fusion:RawArray) {
     node = ${item}
     label = ${q(item).property('title')}
-    anchorName = ''
+    // the current page should scroll to the top
+    anchorName = ${documentNode.identifier == item.identifier ? 'mainContent' : ''}
     linkAttributes = ''
     subItems = Neos.Fusion:RawCollection {
         // The Fusion code below extracts all headlines and renders them as on-page subItems into the menu.
