@@ -1,0 +1,13 @@
+# only allowed on top level directly underneath the root page.
+'Neos.NeosConIo:Talks':
+  superTypes:
+    'Neos.NodeTypes:Page': true
+    'Neos.NeosConIo:Mixin.EventRelated': true
+  ui:
+    label: "NeosCon Event Talks"
+    icon: 'icon-comments'
+    group: neoscon
+  constraints:
+    nodeTypes:
+      'Neos.Neos:Document': false
+      'Neos.NeosConIo:Talk': true

@@ -23,25 +23,19 @@
           'Neos.NodeTypes:ContentReferences': true
           'Neos.NeosIo:Box': true
           'Neos.NeosIo:Button': true
+          'Neos.NeosIo:ButtonDimensionAware': true
           'Neos.NeosIo:ChoiceButtons': true
           'Neos.NeosIo:Quote': true
           'Neos.NeosIo:SemanticSection': true
           'Neos.NeosIo:Youtube': true
           'Neos.NeosIo:FundingBadges': true
           'Neos.NeosIo:BadgeGrid': true
+          'Neos.NeosIo:ImageTeaser': true
   ui:
     label: Stage
     icon: icon-tasks
     group: structure
     inlineEditable: true
-    inspector:
-      groups:
-        content:
-          label: Content
-          position: 1
-        background:
-          label: Background
-          position: 2
   properties:
     isContentTextInverted:
       type: boolean
@@ -83,6 +77,7 @@
     backgroundImage:
       type: Neos\Media\Domain\Model\ImageInterface
       ui:
+        reloadIfChanged: true
         label: 'Background image'
         inspector:
           group: background
@@ -107,6 +102,14 @@
                 label: 60%
               80:
                 label: 80%
+    backgroundImageFixed:
+      type: boolean
+      ui:
+        reloadIfChanged: true
+        label: 'Background image fixed?'
+        inspector:
+          group: background
+
     alternativeText:
       type: string
       ui:

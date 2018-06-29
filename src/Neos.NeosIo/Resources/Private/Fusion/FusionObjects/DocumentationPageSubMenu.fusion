@@ -1,0 +1,78 @@
+##
+# This menu shows one level of documentation pages and for the current page
+# the insde semantic section nested headlines.
+# 
+# The submenu is build to work specifically in our use case, so here are a few things to consider.
+# The menu renders all documentation nodes right below the first documentation node found. So currently 
+# the menu only works for one documentation area on the website. 
+# The navigation also renders a inpage-navigation for the currently active page. For that is finds all 
+# Neos.NodeTypes:Headline inside a Neos.NeosIo:SemanticSection with a headline size h2. It will add this 
+# headline to the menu if a anchor name is set on the headline. It will then look for all h3 headlines 
+# in the same section and render them below, again only is an anchor name is set.
+##
+prototype(Neos.NeosIo:DocumentationPageSubMenu) < prototype(Neos.Neos:Menu) {
+    @class = 'Neos\\NeosIo\\Fusion\\DocumentationPageSubMenuImplementation'
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/DocumentationPageSubMenu.html'
+
+    itemCollection = Neos.Fusion:RawCollection {
+        # The first documentation page is the documentation root, show all pages below
+        collection = ${q(site).find('[instanceof Neos.NeosIo:DocumentationPage]').first().children().filter('[instanceof Neos.NeosIo:DocumentationPage]')}
+        itemRenderer = Neos.NeosIo:DocumentationPageSubMenuItemRenderer
+    }
+
+    attributes.class = 'secondaryMenu'
+    active.attributes = Neos.Fusion:Attributes {
+        class = ${'secondaryMenu__item secondaryMenu__item--active secondaryMenu__item--menuLevel-' + item.menuLevel}
+    }
+    current.attributes = Neos.Fusion:Attributes {
+        class = ${'secondaryMenu__item secondaryMenu__item--current secondaryMenu__item--menuLevel-' + item.menuLevel}
+    }
+    normal.attributes = Neos.Fusion:Attributes {
+        class = ${'secondaryMenu__item secondaryMenu__item--normal secondaryMenu__item--menuLevel-' + item.menuLevel}
+    }
+
+    @cache {
+        entryTags {
+            1 = ${'DescendantOf_' + documentNode.identifier}
+            2 = 'NodeType_Neos.NeosIo:DocumentationPage'
+        }
+    }
+}
+
+prototype(Neos.NeosIo:DocumentationPageSubMenuItemRenderer) < prototype(Neos.Fusion:RawArray) {
+    node = ${item}
+    label = ${q(item).property('title')}
+    // the current page should scroll to the top
+    anchorName = ${documentNode.identifier == item.identifier ? 'mainContent' : ''}
+    linkAttributes = ''
+    subItems = Neos.Fusion:RawCollection {
+        // The Fusion code below extracts all headlines and renders them as on-page subItems into the menu.
+        // It is necessary to set an "anchorName" for each headline for these links to work.
+
+        @if.onlyAppendOnPageSubItemsForCurrentDocumentNode = ${documentNode.identifier == item.identifier}
+        collection = ${q(documentNode).find('[instanceof Neos.NeosIo:SemanticSection]').children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h2>"]')}
+        itemRenderer = Neos.Fusion:RawArray {
+            @context.currentSection = ${q(item).parents('[instanceof Neos.NeosIo:SemanticSection]').get(0)}
+            node = ${documentNode}
+            label = ${String.stripTags(q(item).property('title'))}
+            anchorName = ${q(item).property('anchorName')}
+            linkAttributes = Neos.Fusion:RawArray {
+                data-component = 'ScrollTo'
+                data-targetSelector = ${'a[name=' + q(item).property('anchorName') + ']'}
+            }
+            @if.hasAnchorName = ${q(item).property('anchorName')}
+            subItems = Neos.Fusion:RawCollection {
+                collection = ${q(currentSection).children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h3>"]')}
+                itemRenderer = Neos.Fusion:RawArray {
+                    node = ${documentNode}
+                    label = ${String.stripTags(q(item).property('title'))}
+                    anchorName = ${q(item).property('anchorName')}
+                    linkAttributes = Neos.Fusion:RawArray {
+                        data-component = 'ScrollTo'
+                        data-targetSelector = ${'a[name=' + q(item).property('anchorName') + ']'}
+                    }
+                    @if.hasAnchorName = ${q(item).property('anchorName')}
+                }
+            }
+        }
+    }

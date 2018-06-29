@@ -1,0 +1,36 @@
+// Base class for ImageRenderer and StaticPlaceholderImageRenderer; implementing common functionality and the base markup.
+prototype(Neos.NeosIo:KeyVisual.AbstractRenderer) < prototype(Neos.Fusion:Component) {
+    // API to outside world
+    // "props.*" on the right side here is set inside Neos.NeosIo:KeyVisual (as this fusion object here is the renderer inside Neos.NeosIo:KeyVisual)
+    isKeyVisualContentsInverted = ${props.isKeyVisualContentsInverted}
+    content = ${props.content}
+
+    // API to sub components
+    previewImageUri = ''
+    highQualityImageUri = '
+    imageSrcSet = ''
+
+    classes = "keyVisual"
+
+    divClasses = ${"keyVisual__contents u-alignCenter " + (this.isKeyVisualContentsInverted ? "u-invertText" : "")}
+    previewImageStyleAttribute = ${"background-image: url('" + this.previewImageUri + "')"}
+
+    renderer = afx`
+<section class={props.classes}>
+    <div class={props.divClasses}
+        data-component="ProgressiveImage"
+        data-isInline="true"
+            data-src={props.highQualityImageUri}
+            data-srcSet={props.imageSrcSet}
+            style={props.divStyle}
+    >
+        {props.content}
+    </div>
+    <a
+        data-component="ScrollTo"
+        href="#mainContent"
+        data-targetSelector="#mainContent"
+        class="scrollHint"></a>
+</section>
+    `
+}

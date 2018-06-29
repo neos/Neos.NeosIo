@@ -9,15 +9,12 @@
     'Neos.NodeTypes:TitleMixin': true
     'Neos.NodeTypes:ImageMixin': true
     'Neos.NodeTypes:LinkMixin': true
+    'Neos.NodeTypes:TextMixin': true
   ui:
     label: 'Teaser with image'
     icon: icon-th-large
     inlineEditable: true
     group: special
-    inspector:
-      groups:
-        content:
-          label: Content
   properties:
     subTitle:
       type: string
@@ -36,6 +33,13 @@
     title:
       type: string
       defaultValue: Headline...
+      ui:
+        aloha:
+          link: { }
+    text:
+      ui:
+        aloha:
+          link: { }
     link:
       ui:
         label: 'Teaser Link'

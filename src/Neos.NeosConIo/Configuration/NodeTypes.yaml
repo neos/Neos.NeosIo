@@ -1,0 +1,15 @@
+##
+# Modify base types
+#
+
+'Neos.Neos:Document':
+  constraints:
+    nodeTypes:
+      'Neos.NeosConIo:Mixin.EventRelated': false
+
+'Neos.NeosIo:RootPage':
+  constraints:
+    nodeTypes:
+      'Neos.NeosConIo:Speakers': true
+      'Neos.NeosConIo:Events': true
+      'Neos.NeosConIo:Talks': true

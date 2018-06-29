@@ -1,0 +1,23 @@
+// Add hover and active styling for nav items
+.siteHeader__nav {
+	li {
+		a {
+			&:not(.menuBuyTickets) {
+				&:hover {
+					color: brand('primary');
+				}
+			}
+		}
+
+		&.active {
+			> a {
+				color: brand('primary');
+			}
+		}
+	}
+}
+
+// Fix header dropdown to be above ticket button
+.siteHeader__dropDownNav {
+	z-index: 1;
+}

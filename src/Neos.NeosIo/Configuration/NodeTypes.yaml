@@ -7,6 +7,8 @@
     nodeTypes:
       'Neos.NeosIo:RootPage': false
       'Neos.NeosIo:FooterContainer': false
+
+
 'Neos.NodeTypes:Page':
   superTypes:
     'Neos.NeosIo:KeyVisualMixin': true
@@ -21,10 +23,14 @@
           'Neos.NeosIo:HeadlineSlider': false
           'Neos.NeosIo:Button': false
           'Neos.NeosIo:ChoiceButtons': false
+
+
 'Neos.NodeTypes:ImageCaptionMixin':
   properties:
     hasCaption: null
     alignment: null
+
+
 'Neos.NodeTypes:LinkMixin':
   properties:
     link:
@@ -36,12 +42,27 @@
         label: 'Open in new Tab'
         inspector:
           position: 310
+
+
 'Neos.NodeTypes:ContentImageMixin':
   properties:
     openInNewTab:
+      type: boolean
       ui:
+        label: 'Open in new Tab'
         inspector:
           group: image
+    customHeight:
+      type: integer
+      defaultValue: ''
+      ui:
+        reloadIfChanged: true
+        label: 'Height in px'
+        inspector:
+          group: image
+
+
+
 'Neos.NodeTypes:Text':
   properties:
     text:
@@ -50,6 +71,8 @@
           format:
             h4: true
             h5: true
+
+
 'Neos.NodeTypes:TextWithImage':
   properties:
     text:
@@ -67,33 +90,6 @@
 'Neos.NodeTypes:Html':
   ui:
     group: special
-'Neos.NeosIo:MediaQueryMixin':
-  abstract: true
-  properties:
-    displaySmallMq:
-      type: boolean
-      ui:
-        label: 'Display on small MQ only'
-        reloadIfChanged: true
-        inspector:
-          group: visibility
-          position: 100
-    displayLargeMq:
-      type: boolean
-      ui:
-        label: 'Display in large MQ only'
-        reloadIfChanged: true
-        inspector:
-          group: visibility
-          position: 120
-    displayAllMq:
-      type: boolean
-      ui:
-        label: 'Display on all MQ'
-        reloadIfChanged: true
-        inspector:
-          group: visibility
-          position: 130
 
 'Neos.NeosIo:AnchorMixin':
   abstract: true
@@ -116,5 +112,18 @@
 
 'Neos.Neos:Content':
   superTypes:
+    'Neos.NeosIo:ContentInspectorGroupMixin': true
     'Neos.NeosIo:MediaQueryMixin': true
     'Neos.NeosIo:AnchorMixin': true
+
+'Neos.NodeTypes.BaseMixins:TextMixin':
+  properties:
+    text:
+      ui:
+        aloha:
+          'format':
+            left: true
+            center: true
+            right: true
+            justify: true
+

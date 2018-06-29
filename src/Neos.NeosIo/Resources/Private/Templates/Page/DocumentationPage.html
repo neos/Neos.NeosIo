@@ -1,0 +1,34 @@
+{namespace neos=Neos\Neos\ViewHelpers}
+{namespace ts=Neos\Fusion\ViewHelpers}
+
+<!DOCTYPE html>
+<html>
+<body>
+<f:section name="body">
+	<f:render partial="SiteHeader.html" arguments="{_all}"/>
+
+	{content.keyVisual -> f:format.raw()}
+
+	<div class="stage stage--bright" id="mainContent">
+		<div class="stage__contents stage__contents--big">
+			<main class="content" role="main">
+				<div class="g">
+					<div class="gi u-w1/1 u-wm4/12 u-wl4/12 neos-contentcollection">
+						{parts.secondaryMenu -> f:format.raw()}
+					</div>
+					<div class="gi u-w1/1 u-wm8/12 u-wl8/12 neos-contentcollection">
+						<nav>
+							{parts.breadcrumb -> f:format.raw()}
+						</nav>
+						{content.main -> f:format.raw()}
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+	<f:render partial="SiteFooter.html" arguments="{_all}"/>
+</f:section>
+</body>
+</html>

@@ -1,0 +1,17 @@
+// Renders a placeholder (default) keyVisualImage with source sets
+prototype(Neos.NeosIo:KeyVisual.StaticPlaceholderImageRenderer) < prototype(Neos.NeosIo:KeyVisual.AbstractRenderer) {
+    @context.staticUrlPrefix = Neos.Fusion:ResourceUri {
+        path = 'Images/DefaultSmallKeyvisual'
+        package = 'Neos.NeosIo'
+        localize = false
+    }
+
+    previewImageUri = ${staticUrlPrefix + "-5w.jpg"}
+    highQualityImageUri = ${staticUrlPrefix + "-1500w.jpg"}
+    imageSrcSet = Neos.Fusion:Array {
+        ultraHighRes = ${staticUrlPrefix + "-1920w.jpg 1920w, "}
+        highRes = ${staticUrlPrefix + "-1280w.jpg 1280w, "}
+        mediumRes = ${staticUrlPrefix + "-658w.jpg 658w, "}
+        lowRes = ${staticUrlPrefix + "-280w.jpg 280w"}
+    }
+}

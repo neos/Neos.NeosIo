@@ -13,8 +13,8 @@ If you need help setting up `nvm`, `npm` or if you got any other problems, join 
 ## Building the assets
 
 We rely on the NPM package manager and it's ecosystem for third party dependencies. We also use npm for building our assets.
-As with every project which relies on NPM, execute `npm install` in the site package directory first - This will fetch and
-install all dependencies from the NPM registry.
+As with every project which relies on NPM, execute `npm install` in the `src/Neos.NeosIo` directory first - This will fetch and
+install all dependencies from the NPM registry. 
 
 Afterwards you can run any of the following commands in your favorite shell.
 

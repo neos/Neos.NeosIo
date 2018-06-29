@@ -1,0 +1,27 @@
+'Neos.NeosIo:MediaQueryMixin':
+  abstract: true
+  properties:
+    displaySmallMq:
+      type: boolean
+      ui:
+        label: 'Display on small MQ only'
+        reloadIfChanged: true
+        inspector:
+          group: visibility
+          position: 100
+    displayLargeMq:
+      type: boolean
+      ui:
+        label: 'Display in large MQ only'
+        reloadIfChanged: true
+        inspector:
+          group: visibility
+          position: 120
+    displayAllMq:
+      type: boolean
+      ui:
+        label: 'Display on all MQ'
+        reloadIfChanged: true
+        inspector:
+          group: visibility
+          position: 130

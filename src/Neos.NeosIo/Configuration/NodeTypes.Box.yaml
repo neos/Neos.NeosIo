@@ -20,3 +20,21 @@
     icon: icon-archive
     group: structure
     inlineEditable: true
+  properties:
+    style:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Box Style'
+        reloadIfChanged: true
+        inspector:
+          group: appearance
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              '':
+                label: Normal
+              'info':
+                label: Info
+              'attention':
+                label: Attention

@@ -1,0 +1,8 @@
+prototype(Neos.NeosConIo:Talks.Document) < prototype(Neos.NeosIo:DefaultPage) {
+    body.content.keyVisual.content = Neos.Neos:ContentCollection {
+        nodePath = 'keyVisual'
+    }
+    body.content.main = PrimaryContent {
+        nodePath = 'main'
+    }
+}

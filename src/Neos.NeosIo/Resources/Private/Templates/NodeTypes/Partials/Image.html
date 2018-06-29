@@ -5,7 +5,7 @@
 	<f:then>
 		<io:link.external uri="{link}" openInNewTab="{openInNewTab}" noLinkWhen="{neos:rendering.inBackend()}">
 			<f:render partial="LazyLoadImage"
-					  arguments="{title: title, alternativeText: alternativeText, image: image, width: width, maximumWidth: maximumWidth, height: height, maximumHeight: maximumHeight, allowUpScaling: allowUpScaling}"/>
+					  arguments="{title: title, alternativeText: alternativeText, image: image, width: width, maximumWidth: maxWidth, height: height, maximumHeight: maxheight, allowUpScaling: allowUpScaling}"/>
 		</io:link.external>
 	</f:then>
 	<f:else>

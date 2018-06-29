@@ -2,6 +2,10 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
     head {
         metaTags = Neos.NeosIo:MetaTags
 
+        stylesheets.main = Ttree.StyleSheet:Resource {
+            uri = 'resource://Neos.NeosIo/Public/Styles/Main.css'
+            cacheBusting = true
+        }
         stylesheets.site = Neos.Fusion:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
             sectionName = 'stylesheets'
@@ -37,13 +41,11 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Page) {
         homepage = ${site}
         headerClasses = 'siteHeader'
 
-        keyVisualImage = ${q(documentNode).property('keyVisualImage')}
-        keyVisualImageSrcSet = Neos.Fusion:Template {
-            templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Partials/KeyVisual.html'
-            sectionName = 'imageSrcSet'
+
+        content.keyVisual = Neos.NeosIo:KeyVisual {
             keyVisualImage = ${q(documentNode).property('keyVisualImage')}
+            isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
         }
-        isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
 
         javascripts.site = Neos.Fusion:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'

@@ -1,0 +1,19 @@
+'Neos.NeosConIo:Room':
+  superTypes:
+    'Neos.Neos:Content': true
+  label: "${q(node).property('name') || node.nodeType.label}"
+  ui:
+    label: 'room'
+    icon: 'icon-room'
+    group: neoscon
+    inspector:
+      groups:
+        'roomSettings':
+          label: 'room settings'
+  properties:
+    name:
+      type: string
+      ui:
+        label: 'room name'
+        inspector:
+          group: 'roomSettings'

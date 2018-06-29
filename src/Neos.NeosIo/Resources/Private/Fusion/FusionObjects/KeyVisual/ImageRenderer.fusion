@@ -1,0 +1,53 @@
+// Renders a keyVisualImage with source sets
+prototype(Neos.NeosIo:KeyVisual.ImageRenderer) < prototype(Neos.NeosIo:KeyVisual.AbstractRenderer) {
+    // "props.keyVisualImage" on the right side here is set inside Neos.NeosIo:KeyVisual (as this fusion object here is the renderer inside Neos.NeosIo:KeyVisual)
+    keyVisualImage = ${props.keyVisualImage}
+
+    previewImageUri = Neos.Neos:ImageUri {
+        asset = ${props.keyVisualImage}
+        maximumWidth = 5
+        maximumHeight = 5
+    }
+
+    highQualityImageUri = Neos.Neos:ImageUri {
+        asset = ${props.keyVisualImage}
+        maximumWidth = 1500
+        maximumHeight = 1500
+    }
+
+    imageSrcSet = Neos.Fusion:Array {
+        ultraHighRes = Neos.Neos:ImageUri {
+            asset = ${props.keyVisualImage}
+            maximumWidth = 1920
+            maximumHeight = 1600
+
+            @process.addSrcSet = ${value + " 1920w, "}
+        }
+
+        highRes = Neos.Neos:ImageUri {
+            asset = ${props.keyVisualImage}
+            maximumWidth = 1280
+            maximumHeight = 1000
+
+            @process.addSrcSet = ${value + " 1280w, "}
+        }
+
+        mediumRes = Neos.Neos:ImageUri {
+            asset = ${props.keyVisualImage}
+            maximumWidth = 658
+            maximumHeight = 658
+            allowCropping = true
+
+            @process.addSrcSet = ${value + " 658w, "}
+        }
+
+        lowRes = Neos.Neos:ImageUri {
+            asset = ${props.keyVisualImage}
+            maximumWidth = 400
+            maximumHeight = 400
+            allowCropping = true
+
+            @process.addSrcSet = ${value + " 280w"}
+        }
+    }
+}

@@ -1,0 +1,50 @@
+/**
+ * Currently only used for DocumentationPageSubMenu
+ */
+.secondaryMenu {
+	@include u-resetList();
+	margin-top: $half-spacing+px;
+}
+
+.secondaryMenu__submenu {
+	@include u-resetList();
+	padding-left: $basic-spacing+px;
+}
+
+.secondaryMenu__link {
+	padding-top: ($basic-spacing / 2)+px;
+	padding-bottom: ($basic-spacing / 2)+px;
+	padding-left: $basic-spacing+px;
+	display: block;
+
+	&:active,
+	&:hover,
+	&:focus {
+		background: brand('primary');
+		color: #fff;
+		text-decoration: none;
+	}
+}
+
+.secondaryMenu__item--current {
+	> a {
+		@include u-linkReset();
+	}
+}
+
+.secondaryMenu__item--menuLevel-2 {
+	> a {
+		padding-left: $basic-spacing+px;
+		font-size: rs($base-font-size - 1);
+	}
+}
+
+.secondaryMenu__item--menuLevel-3,
+.secondaryMenu__item--menuLevel-4,
+.secondaryMenu__item--menuLevel-5,
+.secondaryMenu__item--menuLevel-6 {
+	> a {
+		padding-left: 2*$basic-spacing+px;
+		font-size: rs($base-font-size - 2);
+	}
+}

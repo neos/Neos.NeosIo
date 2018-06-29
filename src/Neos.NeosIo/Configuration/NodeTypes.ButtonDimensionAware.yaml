@@ -1,0 +1,103 @@
+###########################################
+# A dimension-aware button that can link to
+# any node in any configured dimension.
+###########################################
+
+'Neos.NeosIo:ButtonDimensionAware':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'Dimension-Aware Button'
+    icon: icon-link
+    inlineEditable: true
+  properties:
+    buttonLabel:
+      type: string
+      defaultValue: 'Button label'
+      ui:
+        inlineEditable: true
+        aloha:
+          autoparagraph: false
+          format: {  }
+          table: {  }
+          list: {  }
+          link: {  }
+          alignment: {  }
+          formatlesspaste:
+            button: false
+            formatlessPasteOption: true
+    linkedNode:
+      type: reference
+      ui:
+        label: 'Linked Node'
+        inspector:
+          group: content
+          position: 10
+    language:
+      type: string
+      ui:
+        label: 'Language Dimension'
+        reloadIfChanged: true
+        inspector:
+          group: content
+          position: 20
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              '':
+                label: 'None (Same as current)'
+              'en':
+                label: 'en (English)'
+              'de':
+                label: 'de (German)'
+
+    openInNewTab:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: 'Open in new Tab'
+        inspector:
+          group: content
+          position: 30
+    alignment:
+      type: string
+      defaultValue: inline
+      ui:
+        label: 'Button Alignment'
+        reloadIfChanged: true
+        inspector:
+          group: appearance
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              inline:
+                label: 'Inline (Default)'
+              Left:
+                label: Left
+              Center:
+                label: Center
+              Right:
+                label: Right
+    style:
+      type: string
+      defaultValue: btn--primary
+      ui:
+        label: 'Color of the Button'
+        reloadIfChanged: true
+        inspector:
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          group: appearance
+          editorOptions:
+            values:
+              btn--primary:
+                label: Primary
+              btn--solidPrimary:
+                label: 'Primary (Solid)'
+              btn--secondary:
+                label: Secondary
+              btn--solidSecondary:
+                label: 'Secondary (Solid)'
+              btn--bright:
+                label: Bright
+              btn--solidBright:
+                label: 'Bright (Solid)'

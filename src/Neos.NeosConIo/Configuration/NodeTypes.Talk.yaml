@@ -1,0 +1,94 @@
+'Neos.NeosConIo:Talk':
+  superTypes:
+    'Neos.Neos:Document': true
+    'Neos.NeosConIo:Mixin.EventRelated': true
+    'Neos.NodeTypes.BaseMixins:TextMixin': true
+  ui:
+    label: 'Talk'
+    icon: 'icon-comment'
+    group: neoscon
+    inspector:
+      groups:
+        video:
+          label: Video
+          position: 50
+        talkOptions:
+          label: 'Talk options'
+          position: 100
+          icon: 'icon-comment'
+  properties:
+    text:
+      ui:
+        aloha:
+          placeholder: 'Talk description'
+    thumbnail:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: Talk thumbnail
+        reloadIfChanged: true
+        inspector:
+          group: 'talkOptions'
+          editorOptions:
+            crop:
+              aspectRatio:
+                forceCrop: true
+                locked:
+                  width: 16
+                  height: 9
+    talkDate:
+      type: DateTime
+      ui:
+        label: 'Date & Time'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'talkOptions'
+          editor: 'Neos.Neos/Inspector/Editors/DateTimeEditor'
+          editorOptions:
+            format: 'd.m.Y G:i'
+    speakers:
+      type: references
+      ui:
+        label: 'Speakers'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'talkOptions'
+          editor: 'Neos.Neos/Inspector/Editors/ReferencesEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Speaker']
+    event:
+      type: reference
+      ui:
+        label: 'Event'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'talkOptions'
+          editor: 'Neos.Neos/Inspector/Editors/ReferenceEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Event']
+    relatedTalks:
+      type: references
+      ui:
+        label: 'Related talks'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'talkOptions'
+          editor: 'Neos.Neos/Inspector/Editors/ReferencesEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Talk']
+    room:
+      type: reference
+      ui:
+        label: 'Room'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'talkOptions'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Room']
+    video:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Youtube video ID'
+        reloadIfChanged: true
+        inspector:
+          group: video
