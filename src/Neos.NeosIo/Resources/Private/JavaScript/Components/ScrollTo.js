@@ -40,6 +40,7 @@ function scrollTo(to, duration) {
 export default class ScrollTo {
 	constructor() {
 		this.target = document.querySelector(this.props.targetSelector);
+		this.siteHeader = document.querySelector('.siteHeader');
 
 		if (!this.target) {
 			throw new Error(`ScrollTo: Cannot find target node with selector "${this.props.targetSelector}"`);
@@ -53,6 +54,14 @@ export default class ScrollTo {
 	}
 
 	scrollTo() {
-		scrollTo(this.target.getBoundingClientRect().top + window.scrollY, 600);
+		let to = this.target.getBoundingClientRect().top + window.scrollY;
+		let current = document.documentElement.scrollTop || document.body.scrollTop;
+		if(this.siteHeader && (current > to || window.innerWidth < 1350)) {
+			// if we are scrolling up or on mobile the site header is visible and 
+			// blocks the first piece of the screen
+			// see also _SiteHeader.scss class .siteHeader--hidden
+			to = to - this.siteHeader.getBoundingClientRect().height;
+		}
+		scrollTo(to, 600);
 	}
 }
