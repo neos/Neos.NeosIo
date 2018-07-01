@@ -1,0 +1,26 @@
+###########################################
+# A date counter which counts down to the
+# target date.
+###########################################
+
+'Neos.NeosIo:CountDown':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'Countdown'
+    icon: icon-signal
+    inspector:
+      groups:
+        countdown:
+          label: 'Countdown settings'
+          icon: 'icon-cog'
+          position: 1
+  properties:
+    toDate:
+      type: DateTime
+      ui:
+        inspector:
+          editorOptions:
+            format: 'd-m-Y H:i'
+          label: 'Countdown date'
+          group: countdown

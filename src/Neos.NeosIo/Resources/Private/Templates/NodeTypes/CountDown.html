@@ -1,0 +1,19 @@
+{namespace neos=Neos\Neos\ViewHelpers}
+
+<f:if condition="{neos:rendering.inBackend()}">
+	<f:then>
+		<div class="u-alignCenter">
+			Countdown timer to a specific time.
+		</div>
+	</f:then>
+	<f:else>
+		<div class="countDown u-alignCenter">
+			<span data-component="CountDown" data-toDateUnixTimestamp="{toDate -> f:format.date(format: 'U')}"></span>
+		</div>
+	</f:else>
+</f:if>
+
+
+
+
+
