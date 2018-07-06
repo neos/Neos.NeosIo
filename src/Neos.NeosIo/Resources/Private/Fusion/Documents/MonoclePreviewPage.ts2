@@ -1,0 +1,20 @@
+prototype(Sitegeist.Monocle:Preview.Page) {
+	head {
+		metaTags = Neos.NeosIo:MetaTags
+
+		stylesheets.main = Ttree.StyleSheet:Resource {
+			uri = 'resource://Neos.NeosIo/Public/Styles/Main.css'
+			cacheBusting = true
+		}
+
+		stylesheets.site = Neos.Fusion:Template {
+			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
+			sectionName = 'stylesheets'
+		}
+
+		javascripts.site = Neos.Fusion:Template {
+			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
+			sectionName = 'headScripts'
+		}
+	}
+}
