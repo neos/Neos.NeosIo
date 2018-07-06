@@ -8,11 +8,15 @@ prototype(Neos.NeosIo.FeatureList:Molecule.Feature) < prototype(Neos.Fusion:Comp
 
 	featureData = ${[]}
 
+	_neosAvatarUrl = Neos.Fusion:ResourceUri {
+		path = 'resource://Neos.NeosIo.FeatureList/Public/Images/NeosAvatars/neos_avatar_primary.svg'
+	}
+
 	renderer = afx`
 		<div class="feature" data-isCoreFeature={props.featureData.isCoreFeature} data-isCommunityFeature={props.featureData.isCommunityFeature}>
 			<div class="feature__title">{props.featureData.title}</div>
 			<div class="feature__core">
-				<i class="fa fa-cogs" @if.isCoreFeature={props.featureData.isCoreFeature}  title="Neos Core Feature" ></i>
+				<img src={props._neosAvatarUrl} @if.isCoreFeature={props.featureData.isCoreFeature} alt="" title="Neos Core Feature" />
 			</div>
 			<div class="feature__community">
 				<i class="fa fa-users" @if.isCommunityFeature={props.featureData.isCommunityFeature} title="Community Feature"></i>
