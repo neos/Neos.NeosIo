@@ -7,6 +7,7 @@ Neos.NeosIo.FeatureList:Content.Feature:
     label: Feature
     icon: tag
     group: feature
+    inlineEditable: TRUE
     inspector:
       groups:
         feature:
@@ -29,6 +30,8 @@ Neos.NeosIo.FeatureList:Content.Feature:
         inlineEditable: TRUE
         aloha:
           placeholder: "Feature Title"
+      options:
+        silhouette: 'text.plain'
 
     description:
       type: string
@@ -36,6 +39,8 @@ Neos.NeosIo.FeatureList:Content.Feature:
         inlineEditable: TRUE
         aloha:
           placeholder: "Feature Description"
+      options:
+        silhouette: 'text.block'
 
     isCoreFeature:
       type: boolean

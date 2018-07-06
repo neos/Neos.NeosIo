@@ -28,7 +28,7 @@ prototype(Neos.NeosIo.FeatureList:Content.FeatureList) < prototype(Neos.Neos:Con
 					}
 					description = Neos.Neos:Editable {
 						property = 'description'
-						block = false
+						block = true
 						node = ${feature}
 					}
 					isCoreFeature = ${q(feature).property('isCoreFeature')}
