@@ -17,9 +17,14 @@
 						{parts.secondaryMenu -> f:format.raw()}
 					</div>
 					<div class="gi u-w1/1 u-wm8/12 u-wl8/12 neos-contentcollection">
-						<nav>
-							{parts.breadcrumb -> f:format.raw()}
-						</nav>
+						<div class="g">
+							<nav class="gi">
+								{parts.breadcrumb -> f:format.raw()}
+							</nav>
+							<nav class="gi" style="float: right;">
+								{parts.languages -> f:format.raw()}
+							</nav>
+						</div>
 						{content.main -> f:format.raw()}
 					</div>
 				</div>

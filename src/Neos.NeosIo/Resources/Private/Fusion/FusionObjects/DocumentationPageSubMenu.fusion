@@ -50,7 +50,7 @@ prototype(Neos.NeosIo:DocumentationPageSubMenuItemRenderer) < prototype(Neos.Fus
         // It is necessary to set an "anchorName" for each headline for these links to work.
 
         @if.onlyAppendOnPageSubItemsForCurrentDocumentNode = ${documentNode.identifier == item.identifier}
-        collection = ${q(documentNode).find('[instanceof Neos.NeosIo:SemanticSection]').children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h2>"]')}
+        collection = ${q(documentNode).find('[instanceof Neos.NeosIo:SemanticSection]').children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h2>"][anchorName][anchorName != ""]')}
         itemRenderer = Neos.Fusion:RawArray {
             @context.currentSection = ${q(item).parents('[instanceof Neos.NeosIo:SemanticSection]').get(0)}
             node = ${documentNode}
@@ -60,9 +60,8 @@ prototype(Neos.NeosIo:DocumentationPageSubMenuItemRenderer) < prototype(Neos.Fus
                 data-component = 'ScrollTo'
                 data-targetSelector = ${'a[name=' + q(item).property('anchorName') + ']'}
             }
-            @if.hasAnchorName = ${q(item).property('anchorName')}
             subItems = Neos.Fusion:RawCollection {
-                collection = ${q(currentSection).children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h3>"]')}
+                collection = ${q(currentSection).children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h3>"][anchorName][anchorName != ""]')}
                 itemRenderer = Neos.Fusion:RawArray {
                     node = ${documentNode}
                     label = ${String.stripTags(q(item).property('title'))}
@@ -71,7 +70,6 @@ prototype(Neos.NeosIo:DocumentationPageSubMenuItemRenderer) < prototype(Neos.Fus
                         data-component = 'ScrollTo'
                         data-targetSelector = ${'a[name=' + q(item).property('anchorName') + ']'}
                     }
-                    @if.hasAnchorName = ${q(item).property('anchorName')}
                 }
             }
         }
