@@ -1,7 +1,7 @@
-prototype(Neos.NeosIo.FeatureList:Content.FeatureList) < prototype(Neos.Neos:ContentComponent) {
+prototype(Neos.NeosIo.FeatureList:FeatureList) < prototype(Neos.Neos:ContentComponent) {
 
 	featureGroups = Neos.Fusion:RawCollection {
-		collection = ${q(node).children('[instanceof Neos.NeosIo.FeatureList:Content.FeatureGroup]')}
+		collection = ${q(node).children('[instanceof Neos.NeosIo.FeatureList:FeatureGroup]')}
 		itemName = 'featureGroup'
 		itemRenderer = Neos.Fusion:RawArray {
 			__node = ${featureGroup}
@@ -15,7 +15,7 @@ prototype(Neos.NeosIo.FeatureList:Content.FeatureList) < prototype(Neos.Neos:Con
 			}
 			icon = ${q(featureGroup).property('icon')}
 			features = Neos.Fusion:RawCollection {
-				collection = ${q(featureGroup).children('[instanceof Neos.NeosIo.FeatureList:Content.Feature]')}
+				collection = ${q(featureGroup).children('[instanceof Neos.NeosIo.FeatureList:Feature]')}
 				itemName = 'feature'
 				itemRenderer = Neos.Fusion:RawArray {
 					__node = ${feature}
