@@ -41,10 +41,11 @@ Neos.NeosIo.FeatureList:FeatureGroup:
       options:
         silhouette: 'text.free'
 
-    icon:
-      type: string
+    image:
+      type: Neos\Media\Domain\Model\ImageInterface
       ui:
-        label: 'Icon name (from Font Awesome)'
-        reloadIfChanged : TRUE
+        label: "Feature Icon"
+        reloadIfChanged: true
         inspector:
-          group: feature
+          group: 'feature'
+          position: 50

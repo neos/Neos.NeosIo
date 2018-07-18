@@ -13,7 +13,11 @@ prototype(Neos.NeosIo.FeatureList:FeatureList) < prototype(Neos.Neos:ContentComp
 				property = 'description'
 				node = ${featureGroup}
 			}
-			icon = ${q(featureGroup).property('icon')}
+			image = Neos.Neos:ImageUri {
+				@if.has = ${q(featureGroup).property('image')}
+				asset = ${q(featureGroup).property('image')}
+				maximumWidth = 60
+			}
 			features = Neos.Fusion:RawCollection {
 				collection = ${q(featureGroup).children('[instanceof Neos.NeosIo.FeatureList:Feature]')}
 				itemName = 'feature'

@@ -20,7 +20,9 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList) < prototype(Neos.Fusion:
 prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList.ExampleData) < prototype(Neos.Fusion:RawArray) {
 	01 = Neos.Fusion:RawArray {
 		title = 'Feature Group 1'
-		icon = 'users'
+		image = Neos.Fusion:ResourceUri {
+			path = 'resource://Neos.Neos/Public/Images/dummy-image.svg'
+		}
 		features = Neos.Fusion:RawArray {
 			01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 			02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
@@ -30,7 +32,9 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList.ExampleData) < prototype(
 	}
 	02 = Neos.Fusion:RawArray {
 		title = 'Feature Group 2'
-		icon = 'cogs'
+		image = Neos.Fusion:ResourceUri {
+			path = 'resource://Neos.Neos/Public/Images/dummy-image.svg'
+		}
 		description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
 		features = Neos.Fusion:RawArray {
 			01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
@@ -39,6 +43,7 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList.ExampleData) < prototype(
 	}
 	03 = Neos.Fusion:RawArray {
 		title = 'Feature Group 3'
+		image = null
 		features = Neos.Fusion:RawArray {
 			01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 			02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData

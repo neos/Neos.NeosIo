@@ -10,7 +10,10 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) < prototype(Neos.Fusion
 
 	renderer = afx`
 		<div class="featureGroup" @if.has={props.featureGroupData}>
-			<div class="featureGroup__title"><i class={"fa fa-" + props.featureGroupData.icon}  @if.has={props.featureGroupData.icon}></i> {props.featureGroupData.title}</div>
+			<div class="featureGroup__title">
+				<img class="featureGroup__image" src={props.featureGroupData.image} alt={props.featureGroupData.title} @if.has={props.featureGroupData.image} />
+				{props.featureGroupData.title}
+			</div>
 			<div class="featureGroup__description" @if.has={props.featureGroupData.description}>{props.featureGroupData.description}</div>
 			<div class="featureGroup__features">
 				<Neos.Fusion:Collection collection={props.featureGroupData.features} itemName="feature" @children="itemRenderer" >
@@ -24,7 +27,9 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) < prototype(Neos.Fusion
 prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup.ExampleData) < prototype(Neos.Fusion:RawArray) {
 	title = 'Feature Group Title'
 	description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-	icon = 'users'
+	image = Neos.Fusion:ResourceUri {
+		path = 'resource://Neos.Neos/Public/Images/dummy-image.svg'
+	}
 	features = Neos.Fusion:RawArray {
 		01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 		02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
