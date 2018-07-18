@@ -2,17 +2,7 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) < prototype(Neos.Fusion
 
 	@styleguide {
 		props {
-			featureGroupData = Neos.Fusion:RawArray {
-				title = 'Feature Group Title'
-				description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-				icon = 'users'
-				features = Neos.Fusion:RawArray {
-					01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-					02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-					03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-					04 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-				}
-			}
+			featureGroupData = Neos.NeosIo.FeatureList:Molecule.FeatureGroup.ExampleData
 		}
 	}
 
@@ -29,4 +19,16 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) < prototype(Neos.Fusion
 			</div>
 		</div>
 	`
+}
+
+prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup.ExampleData) < prototype(Neos.Fusion:RawArray) {
+	title = 'Feature Group Title'
+	description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
+	icon = 'users'
+	features = Neos.Fusion:RawArray {
+		01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+		02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+		03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+		04 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+	}
 }

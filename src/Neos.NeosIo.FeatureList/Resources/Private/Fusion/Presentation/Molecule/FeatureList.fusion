@@ -2,34 +2,7 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList) < prototype(Neos.Fusion:
 
 	@styleguide {
 		props {
-			featureGroups = Neos.Fusion:RawArray {
-				01 = Neos.Fusion:RawArray {
-					title = 'Feature Group 1'
-					icon = 'users'
-					features = Neos.Fusion:RawArray {
-						01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-						02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-						03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-						04 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-					}
-				}
-				02 = Neos.Fusion:RawArray {
-					title = 'Feature Group 2'
-					icon = 'cogs'
-					description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-					features = Neos.Fusion:RawArray {
-						01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-						02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-					}
-				}
-				03 = Neos.Fusion:RawArray {
-					title = 'Feature Group 3'
-					features = Neos.Fusion:RawArray {
-						01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-						02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-					}
-				}
-			}
+			featureGroups = Neos.NeosIo.FeatureList:Molecule.FeatureList.ExampleData
 		}
 	}
 
@@ -42,4 +15,33 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList) < prototype(Neos.Fusion:
 			</Neos.Fusion:Collection>
 		</div>
 	`
+}
+
+prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList.ExampleData) < prototype(Neos.Fusion:RawArray) {
+	01 = Neos.Fusion:RawArray {
+		title = 'Feature Group 1'
+		icon = 'users'
+		features = Neos.Fusion:RawArray {
+			01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+			02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+			03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+			04 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+		}
+	}
+	02 = Neos.Fusion:RawArray {
+		title = 'Feature Group 2'
+		icon = 'cogs'
+		description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
+		features = Neos.Fusion:RawArray {
+			01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+			02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+		}
+	}
+	03 = Neos.Fusion:RawArray {
+		title = 'Feature Group 3'
+		features = Neos.Fusion:RawArray {
+			01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+			02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+		}
+	}
 }
