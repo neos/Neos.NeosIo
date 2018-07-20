@@ -1,0 +1,18 @@
+'Neos.NeosIo.FeatureList:FeatureList':
+
+  superTypes:
+    Neos.Neos:Content: true
+
+  ui:
+    label: Feature List
+    icon: clipboard-list
+    group: feature
+
+  options:
+    fusion:
+      prototypeGenerator: ~
+
+  constraints:
+    nodeTypes:
+      "*": false
+      Neos.NeosIo.FeatureList:FeatureGroup: true
