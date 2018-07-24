@@ -2,16 +2,27 @@
   margin: 2em 0;
 }
 
-.featureGroup__title {
-  font-weight: bold;
-  font-size: 1.4em;
+.featureGroup__header {
   margin: 1em 0;
-  color: map-get($brand-colors, primary);
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .featureGroup__image {
-  padding-right: 20px;
   width: 60px;
+  padding-right: 20px;
+}
+
+.featureGroup__image > img {
+  width: 60px;
+}
+
+.featureGroup__title {
+  flex-grow: 1;
+  width: calc(100% - 80px);
+  font-weight: bold;
+  font-size: 1.4em;
+  color: map-get($brand-colors, primary);
 }
 
 .featureGroup__image + div.neos-inline-editable {

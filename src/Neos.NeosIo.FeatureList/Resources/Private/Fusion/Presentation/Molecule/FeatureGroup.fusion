@@ -10,9 +10,9 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) < prototype(Neos.Fusion
 
 	renderer = afx`
 		<div class="featureGroup" @if.has={props.featureGroupData}>
-			<div class="featureGroup__title">
-				<img class="featureGroup__image" src={props.featureGroupData.image} alt={props.featureGroupData.title} @if.has={props.featureGroupData.image} />
-				{props.featureGroupData.title}
+			<div class="featureGroup__header">
+				<div class="featureGroup__image" @if.has={props.featureGroupData.image}><img src={props.featureGroupData.image} alt={props.featureGroupData.title}  /></div>
+				<div class="featureGroup__title">{props.featureGroupData.title}</div>
 			</div>
 			<div class="featureGroup__description" @if.has={props.featureGroupData.description}>{props.featureGroupData.description}</div>
 			<div class="featureGroup__features">

@@ -46,12 +46,29 @@
   display: block;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (min-width: 501px) and (max-width: 800px) {
   .feature__title {
     width:  calc(50% - 40px);
   }
   .feature__links {
     width:  calc(50% - 40px);
+  }
+  .feature__description {
+    order: 2;
+    flex: 1 0 100%;
+    padding-left: 0;
+    padding-top: 0;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .feature__title {
+    width: calc(100% - 60px);
+  }
+  .feature__links {
+    order: 3;
+    width: 100%;
+    padding-left: 0;
   }
   .feature__description {
     order: 2;
