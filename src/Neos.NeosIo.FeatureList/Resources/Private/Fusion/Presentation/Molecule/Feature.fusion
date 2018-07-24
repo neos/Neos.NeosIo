@@ -22,7 +22,7 @@ prototype(Neos.NeosIo.FeatureList:Molecule.Feature) < prototype(Neos.Fusion:Comp
 				<i class="fa fa-users" @if.isCommunityFeature={props.featureData.isCommunityFeature} title="Community Feature"></i>
 			</div>
 			<div class="feature__description">{props.featureData.description}</div>
-			<div class="feature__links">
+			<div class="feature__links" @if.has={props.featureData.links}>
 				<Neos.Fusion:Collection collection={props.featureData.links} itemName="link" @children="itemRenderer" >
 					<a class="feature__links__item" href={link.uri} title={link.label}>{link.label} </a>
 				</Neos.Fusion:Collection>
