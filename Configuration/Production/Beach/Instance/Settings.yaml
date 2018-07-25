@@ -28,7 +28,7 @@ Neos:
         unix_socket: '%env:BEACH_DATABASE_SOCKET%'
 
   Imagine:
-    driver: 'Imagick'
+    driver: 'Vips'
 
 Flowpack:
   ElasticSearch:
@@ -44,7 +44,7 @@ Flowpack:
          password: '%env:BEACH_ELASTICSEARCH_PASSWORD%'
 
     indexes:
-      default:      
+      default:
         'wwwneosio-production':    # custom index name, NOTE THIS SHOULD NOT BE HARDCODED ON BEACH
           analysis:
             filter:
