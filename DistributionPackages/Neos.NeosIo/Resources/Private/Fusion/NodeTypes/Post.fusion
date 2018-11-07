@@ -1,7 +1,14 @@
-prototype(Neos.NeosIo:Post) {
+prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Post.html'
+
+    node = ${node}
+    datePublished = ${q(node).property('datePublished')}
+    title = ${q(node).property('title')}
+    image = ${q(node).property('image')}
+    summary = ${q(node).property('summary')}
     author = ${this.authors ? Data.users(this.authors) + this.authorAlternative : this.authorAlternative}
 
-    content = Neos.Neos:PrimaryContent {
+    content = Neos.Neos:ContentCollection {
         nodePath = 'main'
     }
 
@@ -19,6 +26,7 @@ prototype(Neos.NeosIo:Post) {
     latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').slice(0, 6).sort('datePublished', 'DESC').get()}
 }
 
-prototype(Neos.NeosIo:PostShort) < prototype(Neos.NeosIo:Post) {
+prototype(Neos.NeosIo:Post.Short) < prototype(Neos.NeosIo:PostRenderer) {
     templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/PostShort.html'
+    content >
 }

@@ -55,7 +55,7 @@ prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
     }
 
     body {
-        content.main = Neos.NeosIo:Post
+        content.main = Neos.NeosIo:PostRenderer
         keyVisualImage = ${q(node).property('image')}
         keyVisualImageSrcSet.keyVisualImage = ${q(node).property('image')}
     }
