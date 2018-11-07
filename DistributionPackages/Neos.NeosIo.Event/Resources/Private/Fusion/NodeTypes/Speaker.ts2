@@ -12,12 +12,12 @@ prototype(Neos.NeosIo.Event:Speaker.Document) < prototype(Neos.NeosIo.Event:Defa
 }
 
 prototype(Neos.NeosIo.Event:Speaker) < prototype(Neos.Neos:Content) {
-	main = ContentCollection {
+	main = Neos.Neos:ContentCollection {
 		@cache.mode = 'cached'
 		nodePath = 'main'
 	}
 
-	belowFacts = ContentCollection {
+	belowFacts = Neos.Neos:ContentCollection {
 		@cache.mode = 'cached'
 		nodePath = 'belowFacts'
 	}
