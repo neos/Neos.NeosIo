@@ -1,7 +1,7 @@
 prototype(Neos.NeosIo:Post) {
     author = ${this.authors ? Data.users(this.authors) + this.authorAlternative : this.authorAlternative}
 
-    content = PrimaryContent {
+    content = Neos.Neos:PrimaryContent {
         nodePath = 'main'
     }
 

@@ -41,17 +41,19 @@
       type: string
       ui:
         inlineEditable: true
-        aloha:
-          placeholder: 'Enter the description for this badge'
-          format:
-            strong: true
-            em: true
-            u: true
-            sub: true
-            sup: true
+        inline:
+          editorOptions:
+            formatting:
+              strong: true
+              em: true
+              u: true
+              sub: true
+              sup: true
+            placeholder: 'Enter the description for this badge'
     linkText:
       type: string
       ui:
         inlineEditable: true
-        aloha:
-          placeholder: 'Enter the label for the link'
+        inline:
+          editorOptions:
+            placeholder: 'Enter the label for the link'
