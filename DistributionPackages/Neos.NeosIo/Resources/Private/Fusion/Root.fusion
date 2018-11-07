@@ -13,11 +13,5 @@ root {
         condition = ${request.parentRequest.uri.path == '/rss.xml'}
         renderPath = '/postRss'
     }
-    // Override the default root matcher to render document nodes with a prototype of the same name
-    default {
-        type = ${q(node).property('_nodeType') + '.Document'}
-        renderPath >
-    }
 }
 
-prototype(Neos.Neos:FallbackNode.Document) < prototype(Neos.Neos:FallbackNode)

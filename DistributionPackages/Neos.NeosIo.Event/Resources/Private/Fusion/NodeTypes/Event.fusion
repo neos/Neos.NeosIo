@@ -3,7 +3,7 @@
 */
 
 
-prototype(Neos.NeosIo.Event:Event.Document) < prototype(Neos.NeosIo:LandingPage.Document) {
+prototype(Neos.NeosIo.Event:Event) < prototype(Neos.NeosIo:LandingPage) {
 	body {
 		templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/Page/Event.Landingpage.html'
 		content {
@@ -41,6 +41,6 @@ prototype(Neos.NeosIo.Event:Event) < prototype(Neos.Neos:Content) {
 	}
 }
 
-prototype(Neos.NeosIo.Event:Conference.Document) < prototype(Neos.NeosIo.Event:Event.Document)
+prototype(Neos.NeosIo.Event:Conference) < prototype(Neos.NeosIo.Event:Event)
 
 prototype(Neos.NeosIo.Event:Conference) < prototype(Neos.NeosIo.Event:Event)

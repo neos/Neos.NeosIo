@@ -1,4 +1,4 @@
-prototype(Neos.NeosIo:Post.Document) < prototype(Neos.NeosIo:DefaultPage) {
+prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
     head {
         @context.metaDescription = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 152, '...')}
 
