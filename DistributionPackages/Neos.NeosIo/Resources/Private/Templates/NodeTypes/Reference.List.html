@@ -1,5 +1,5 @@
 {namespace io=Neos\NeosIo\ViewHelpers}
-{namespace ts=Neos\Fusion\ViewHelpers}
+{namespace fusion=Neos\Fusion\ViewHelpers}
 {namespace crsearch=Neos\ContentRepository\Search\ViewHelpers}
 <div {attributes -> f:format.raw()}>
 	<io:simpleForm actionUri="#reference-filter" class="form form--inline" method="get" id="reference-filter">
@@ -44,7 +44,7 @@
 			<f:if condition="{paginatedReferences}">
 				<f:then>
 					<f:for each="{paginatedReferences}" as="reference">
-						<ts:render path="itemRenderer" context="{node: reference}" />
+						<fusion:render path="itemRenderer" context="{node: reference}" />
 					</f:for>
 				</f:then>
 				<f:else>

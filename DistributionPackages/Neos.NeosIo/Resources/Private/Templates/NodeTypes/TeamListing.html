@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-      xmlns:f="http://typo3.org/ns/Neos/FluidAdaptor/ViewHelpers"
-      xmlns:ts="http://typo3.org/ns/Neos/Fusion/ViewHelpers"
-      xmlns:neos="http://typo3.org/ns/Neos/Neos/ViewHelpers">
+      xmlns:f="http://neos.io/ns/Neos/FluidAdaptor/ViewHelpers"
+      xmlns:fusion="http://neos.io/ns/Neos/Fusion/ViewHelpers"
+      xmlns:neos="http://neos.io/ns/Neos/Neos/ViewHelpers">
 <f:section name="Main">
     <div{attributes -> f:format.raw()}
         <neos:contentElement.editable property="title"/>
@@ -11,7 +11,7 @@
             <f:then>
                 <f:if condition="{groups}">
                     <f:then>
-                        <ts:render path="groups" />
+                        <fusion:render path="groups" />
                     </f:then>
                     <f:else>
                         <f:if condition="{node.context.workspace.name} != 'live'">

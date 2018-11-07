@@ -1,5 +1,5 @@
 {namespace neos=Neos\Neos\ViewHelpers}
-{namespace ts=Neos\Fusion\ViewHelpers}
+{namespace fusion=Neos\Fusion\ViewHelpers}
 
 <ul{attributes -> f:format.raw()}>
 	<f:render section="itemsList" arguments="{items: items}" />
@@ -7,7 +7,7 @@
 
 <f:section name="itemsList">
 	<f:for each="{items}" as="item">
-		<li{ts:render(path: '{item.state}.attributes', context: {item: item}) -> f:format.raw()}>
+		<li{fusion:render(path: '{item.state}.attributes', context: {item: item}) -> f:format.raw()}>
 			<neos:link.node node="{item.node}" title="{item.node.label}"/>
 		</li>
 	</f:for>
