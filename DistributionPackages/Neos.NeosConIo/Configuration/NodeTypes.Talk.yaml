@@ -19,8 +19,9 @@
   properties:
     text:
       ui:
-        aloha:
-          placeholder: 'Talk description'
+        inline:
+          editorOptions:
+            placeholder: 'Talk description'
     thumbnail:
       type: Neos\Media\Domain\Model\ImageInterface
       ui:
@@ -39,7 +40,7 @@
       type: DateTime
       ui:
         label: 'Date & Time'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
           group: 'talkOptions'
           editor: 'Neos.Neos/Inspector/Editors/DateTimeEditor'
@@ -49,7 +50,7 @@
       type: references
       ui:
         label: 'Speakers'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
           group: 'talkOptions'
           editor: 'Neos.Neos/Inspector/Editors/ReferencesEditor'
@@ -59,7 +60,7 @@
       type: reference
       ui:
         label: 'Event'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
           group: 'talkOptions'
           editor: 'Neos.Neos/Inspector/Editors/ReferenceEditor'
@@ -69,7 +70,7 @@
       type: references
       ui:
         label: 'Related talks'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
           group: 'talkOptions'
           editor: 'Neos.Neos/Inspector/Editors/ReferencesEditor'
@@ -79,7 +80,7 @@
       type: reference
       ui:
         label: 'Room'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
           group: 'talkOptions'
           editorOptions:
