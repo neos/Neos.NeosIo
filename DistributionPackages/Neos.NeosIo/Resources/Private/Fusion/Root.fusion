@@ -1,7 +1,11 @@
-/**
-* Root Fusion template for the Neos_io site
-* Also includes basic DocumentNodeTypes
-*/
+#
+# Root Fusion template for the Neos_io site
+# Also includes basic DocumentNodeTypes
+#
+
+include: Documents/**/*.fusion
+include: NodeTypes/**/*.fusion
+include: FusionObjects/**/*.fusion
 
 root {
     postRss {
@@ -17,15 +21,3 @@ root {
 }
 
 prototype(Neos.Neos:FallbackNode.Document) < prototype(Neos.Neos:FallbackNode)
-
-##################################
-# Includes
-##################################
-
-#
-# Fusion includes for node types
-#
-
-include: Documents/**/*.ts2
-include: NodeTypes/**/*.ts2
-include: FusionObjects/**/*.ts2

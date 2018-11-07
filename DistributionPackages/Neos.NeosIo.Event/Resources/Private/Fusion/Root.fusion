@@ -1,15 +1,7 @@
+include: FusionObjects/**/*.fusion
+include: NodeTypes/**/*.fusion
+
 root {
-	@context.rootSite = ${site}
-	@context.site = ${q(node).closest('[instanceof Neos.NeosIo.Event:Event]').get(0) ? q(node).closest('[instanceof Neos.NeosIo.Event:Event]').get(0) : site}
+    @context.rootSite = ${site}
+    @context.site = ${q(node).closest('[instanceof Neos.NeosIo.Event:Event]').get(0) ? q(node).closest('[instanceof Neos.NeosIo.Event:Event]').get(0) : site}
 }
-
-##################################
-# Includes
-##################################
-
-#
-# TypoScript includes for node types
-#
-
-include: TypoScriptObjects/**/*.ts2
-include: NodeTypes/**/*.ts2
