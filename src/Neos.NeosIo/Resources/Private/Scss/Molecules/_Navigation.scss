@@ -115,3 +115,45 @@
 	@extend .nav--breadcrumb;
 	padding: $basic-spacing+px 0;
 }
+
+/**
+ * Language Switcher Navigation:
+ *
+ *     @example
+ *     <nav>
+ *       <ul class="nav nav--language-switcher">
+ *         <li><a href="">German</a></li>
+ *         <li><a href="">English</a></li>
+ *         <li><a href="">Spanish</a></li>
+ *       </ul>
+ *     </nav>
+ */
+.nav--language-switcher {
+	font-size: rs(14);
+	line-height: $basic-spacing+px;
+	padding: $basic-spacing+px 0;
+
+	> li {
+		&.current {
+			font-weight: $bold;
+		}
+
+		&:after {
+			content: ' | ';
+			padding: 0 3px;
+			font-weight: $regular;
+		}
+		&:last-child:after {
+			display: none;
+		}
+
+		> a {
+			display: inline-block;
+			text-transform: uppercase;
+
+			&:hover {
+				color: brand('primary');
+			}
+		}
+	}
+}

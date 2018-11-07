@@ -7,7 +7,7 @@
 <f:section name="itemsList">
 	<f:for each="{items}" as="item">
 		<li{fusion:render(path: '{item.state}.attributes', context: {item: item}) -> f:format.raw()}>
-			<neos:link.node node="{item.node}" section="{item.anchorName}" class="secondaryMenu__link" additionalAttributes="{item.linkAttributes}">{item.label}</neos:link.node>
+			<neos:link.node node="{item.node}" section="{item.anchorName}" class="secondaryMenu__link" additionalAttributes="{item.linkAttributes}">{item.label -> f:format.raw()}</neos:link.node>
 			<f:if condition="{item.subItems}">
 				<ul class="secondaryMenu__submenu">
 					<f:render section="itemsList" arguments="{items: item.subItems}" />

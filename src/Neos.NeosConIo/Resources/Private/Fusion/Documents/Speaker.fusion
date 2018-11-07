@@ -1,4 +1,5 @@
 prototype(Neos.NeosConIo:Speaker.Document) < prototype(Neos.NeosIo:DefaultPage) {
+    body.content.keyVisual = ""
     body.content.main = Neos.NeosConIo:Speaker {
         // node is the speaker here
         @context.featuredTalkNode = ${q(node).property('featuredTalk')}

@@ -21,3 +21,18 @@
 .siteHeader__dropDownNav {
 	z-index: 1;
 }
+
+.siteHeader--shaded {
+	+ nav {
+		margin-top: 60px;
+		transition: margin-top .5s ease;
+
+		@include mq('medium') {
+			margin-top: 80px;
+		}
+
+		@media all and (min-width: 1350px) {
+			margin-top: 55px;
+		}
+	}
+}
