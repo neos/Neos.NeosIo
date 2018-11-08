@@ -6,7 +6,7 @@
 prototype(Neos.NeosIo:Reference) < prototype(Neos.NeosIo:DefaultPage) {
     body {
         content {
-            main = Neos.NeosIo:Reference
+            main = Neos.NeosIo:ReferenceItem
         }
     }
 
@@ -17,7 +17,7 @@ prototype(Neos.NeosIo:Reference) < prototype(Neos.NeosIo:DefaultPage) {
     }
 }
 
-prototype(Neos.NeosIo:Reference) < prototype(Neos.Neos:Content) {
+prototype(Neos.NeosIo:ReferenceItem) < prototype(Neos.Neos:Content) {
     main = Neos.Neos:ContentCollection {
         @cache.mode = 'cached'
         nodePath = 'main'
