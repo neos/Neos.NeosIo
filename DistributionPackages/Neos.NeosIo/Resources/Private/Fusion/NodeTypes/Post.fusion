@@ -6,6 +6,9 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Template) {
     title = ${q(node).property('title')}
     image = ${q(node).property('image')}
     summary = ${q(node).property('summary')}
+    authors = ${q(node).property('authors')}
+    authorAlternative = ${q(node).property('authorAlternative')}
+    relatedDocuments = ${q(node).property('relatedDocuments')}
     author = ${this.authors ? Data.users(this.authors) + this.authorAlternative : this.authorAlternative}
 
     content = Neos.Neos:ContentCollection {
