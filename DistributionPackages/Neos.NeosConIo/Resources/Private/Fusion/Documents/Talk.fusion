@@ -1,11 +1,23 @@
 prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
     body.content.keyVisual = ""
-    body.content.main = Neos.NeosConIo:Talk {
+    body.content.main = Neos.Fusion:Template {
+        templatePath = 'resource://Neos.NeosConIo/Private/Templates/NodeTypes/Talk.html'
+
+        title = ${q(node).property('title')}
+        text = ${q(node).property('text')}
+        thumbnail = ${q(node).property('thumbnail')}
+        talkDate = ${q(node).property('talkDate')}
+        speakers = ${q(node).property('speakers')}
+        event = ${q(node).property('event')}
+        relatedTalks = ${q(node).property('relatedTalks')}
+        room = ${q(node).property('room')}
+        video = ${q(node).property('video')}
+
         speakerList = Neos.NeosConIo:SpeakerList {
             collection = ${node.properties.speakers}
         }
 
-        talkListVisible = ${node.properties.relatedTalks}
+        talkListVisible = ${Array.length(node.properties.relatedTalks) > 0}
 
         talkList = Neos.NeosConIo:TalkList {
             collection = ${node.properties.relatedTalks}
