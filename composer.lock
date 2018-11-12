@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd2ed2cf21bef11b0ca9b07b56411079",
+    "content-hash": "d4916c9ac26b5ebee4c76835aedbf1f1",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -4284,12 +4284,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kdambekalns/Neos.MarketPlace.git",
-                "reference": "0bec8220550bf6323925e62255ff457557ec25b3"
+                "reference": "b0a76d4276f769a094487ea2a036d999fdd3345a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kdambekalns/Neos.MarketPlace/zipball/0bec8220550bf6323925e62255ff457557ec25b3",
-                "reference": "0bec8220550bf6323925e62255ff457557ec25b3",
+                "url": "https://api.github.com/repos/kdambekalns/Neos.MarketPlace/zipball/b0a76d4276f769a094487ea2a036d999fdd3345a",
+                "reference": "b0a76d4276f769a094487ea2a036d999fdd3345a",
                 "shasum": ""
             },
             "require": {
@@ -4395,7 +4395,7 @@
             "support": {
                 "source": "https://github.com/kdambekalns/Neos.MarketPlace/tree/task/neos-4-compatibility"
             },
-            "time": "2018-11-08T17:17:08+00:00"
+            "time": "2018-11-12T15:20:17+00:00"
         },
         {
             "name": "neos/media",
@@ -8819,16 +8819,16 @@
         },
         {
             "name": "ttree/outofbandrendering",
-            "version": "2.0.1",
+            "version": "dev-task/neos-4-compatibility",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ttreeagency/OutOfBandRendering.git",
-                "reference": "79e9c7d72af5bd1239524bcdc754ee2ca7d1f437"
+                "url": "https://github.com/kdambekalns/OutOfBandRendering.git",
+                "reference": "d90ea2b82e127eb174cfe39f8d85a9499af7ab96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ttreeagency/OutOfBandRendering/zipball/79e9c7d72af5bd1239524bcdc754ee2ca7d1f437",
-                "reference": "79e9c7d72af5bd1239524bcdc754ee2ca7d1f437",
+                "url": "https://api.github.com/repos/kdambekalns/OutOfBandRendering/zipball/d90ea2b82e127eb174cfe39f8d85a9499af7ab96",
+                "reference": "d90ea2b82e127eb174cfe39f8d85a9499af7ab96",
                 "shasum": ""
             },
             "require": {
@@ -8915,17 +8915,19 @@
                     "Ttree\\OutOfBandRendering\\": "Classes"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "A package to render Fusion Out of Band in complex application fun & easy",
             "keywords": [
-                "FUSION",
                 "flow-framework",
+                "fusion",
                 "neoscms"
             ],
-            "time": "2018-11-10T16:51:15+00:00"
+            "support": {
+                "source": "https://github.com/kdambekalns/OutOfBandRendering/tree/task/neos-4-compatibility"
+            },
+            "time": "2018-11-12T15:36:40+00:00"
         },
         {
             "name": "ttree/script",
@@ -10789,6 +10791,12 @@
     ],
     "aliases": [
         {
+            "alias": "2.0.99",
+            "alias_normalized": "2.0.99.0",
+            "version": "dev-task/neos-4-compatibility",
+            "package": "ttree/outofbandrendering"
+        },
+        {
             "alias": "1.1.0",
             "alias_normalized": "1.1.0.0",
             "version": "dev-task/neos-4-compatibility",
@@ -10797,6 +10805,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "ttree/outofbandrendering": 20,
         "neos/marketplace": 20
     },
     "prefer-stable": true,
