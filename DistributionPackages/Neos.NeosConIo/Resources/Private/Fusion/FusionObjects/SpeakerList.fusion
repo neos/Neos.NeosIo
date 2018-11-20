@@ -14,6 +14,10 @@ prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Collection) {
             title = ${node.properties.title}
             image = ${node.properties.image}
             text = ${node.properties.text}
+
+            // Ensure Text has no tags (especially link tag) in the markup, as this
+            // will otherwise lead to two nested <a> tags which makes the browser break.
+            text.@process.stripTags = ${String.stripTags(value)}
             className = 'imageTeaser--speaker'
             link = Neos.Neos:NodeUri {
                 node = ${node}
