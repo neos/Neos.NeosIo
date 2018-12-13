@@ -5,8 +5,22 @@ prototype(Neos.NeosConIo:Schedule) < prototype(Neos.Neos:ContentComponent) {
     @context {
         event = ${q(node).property('event')}
         days = Neos.Fusion:RawArray {
-           day1 = ${q(q(node).property('event')).property('eventDate')}
-           day2 = ${Date.add(q(q(node).property('event')).property('eventDate'), 'P1D')}
+           day1 = ${q(node).property('event') && q(q(node).property('event')).property('eventDate')}
+           day2 = ${q(node).property('event') && q(q(node).property('event')).property('eventDate') && Date.add(q(q(node).property('event')).property('eventDate'), 'P1D')}
+        }
+    }
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${node}
+        }
+        tags {
+            1 = ${Neos.Caching.nodeTag(node)}
+            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk')}
+            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event')}
+            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Room')}
+            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Speaker')}
         }
     }
 
