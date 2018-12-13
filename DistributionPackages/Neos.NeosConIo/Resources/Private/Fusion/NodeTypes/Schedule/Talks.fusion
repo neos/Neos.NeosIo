@@ -5,11 +5,11 @@ prototype(Neos.NeosConIo:Talks) < prototype(Neos.Fusion:Component) {
         <Neos.Fusion:Collection collection={props.talks} itemName="talk" @children="itemRenderer">
             <li data-date={Date.format(q(talk).property('talkDate'), 'y-m-d')} data-room-id={talk.properties.room.identifier} class="talk">
                 <header class="talk__header">
-                    <Neos.NeosConIo:ScheduleSpeakerImages talk={talk} />
                     <div class="talk__time">
                         <i class="fa fa-clock-o"></i>
                         {Date.format(q(talk).property('talkDate'), 'G:i')}
                     </div>
+                    <Neos.NeosConIo:ScheduleSpeakerImages talk={talk} />
                     <h4 class="talk__title">{q(talk).property('title')}</h4>
                 </header>
 
@@ -25,9 +25,11 @@ prototype(Neos.NeosConIo:ScheduleSpeakerImages) < prototype(Neos.Fusion:Componen
     speakers = ${q(talk).property('speakers')}
 
     renderer = afx`
-        <Neos.Fusion:Collection collection={props.speakers} itemName="speaker" @children="itemRenderer">
-            <Neos.NeosConIo:ScheduleSpeakerImage speaker={speaker} />
-        </Neos.Fusion:Collection>
+        <div class="talk__speaker-images">
+            <Neos.Fusion:Collection collection={props.speakers} itemName="speaker" @children="itemRenderer">
+                <Neos.NeosConIo:ScheduleSpeakerImage speaker={speaker} />
+            </Neos.Fusion:Collection>
+        </div>
     `
 }
 prototype(Neos.NeosConIo:ScheduleSpeakerImage) < prototype(Neos.Fusion:Component)  {

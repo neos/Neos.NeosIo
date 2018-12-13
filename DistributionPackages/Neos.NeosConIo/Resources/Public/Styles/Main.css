@@ -3985,9 +3985,9 @@ ul.checked {
   -webkit-box-direction: normal;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin: 0 -13px;
   width: calc(100% + 26px); }
   .speaker__speakerList__item {
@@ -4229,13 +4229,19 @@ ul.checked {
       cursor: pointer;
       -webkit-box-align: center;
           -ms-flex-align: center;
-              align-items: center;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap; }
+              align-items: center; }
+      @media screen and (max-width: 649px) {
+        .schedule .talk__header {
+          -ms-flex-wrap: wrap;
+              flex-wrap: wrap; } }
       .schedule .talk__header h4 {
         margin-bottom: 0; }
     .schedule .talk.visible {
       display: block; }
+    .schedule .talk__title {
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1; }
     .schedule .talk__description {
       -webkit-transition: max-height, 0.5s;
       -o-transition: max-height, 0.5s;
@@ -4245,12 +4251,16 @@ ul.checked {
       margin-top: 26px; }
       .schedule .talk__description.visible {
         max-height: 1000px; }
+    .schedule .talk__speaker-images {
+      width: 100px;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+      margin-right: 13px; }
     .schedule .talk__speaker-image {
       height: auto;
       border-radius: 50%;
       -ms-flex-item-align: start;
-          align-self: flex-start;
-      margin-right: 13px; }
+          align-self: flex-start; }
     .schedule .talk__time {
       display: -webkit-box;
       display: -ms-flexbox;

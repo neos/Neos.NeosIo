@@ -89,7 +89,10 @@ $containerWidth: 680px;
 			display: flex;
 			cursor: pointer;
 			align-items: center;
-			flex-wrap: wrap;
+
+			@include mq('small') {
+				flex-wrap: wrap;
+			}
 
 			h4 {
 				margin-bottom: 0;
@@ -100,6 +103,9 @@ $containerWidth: 680px;
 			display: block;
 		}
 
+		&__title {
+			flex-grow: 1;
+		}
 		&__description {
 			transition: max-height, 0.5s;
 			max-height: 0;
@@ -111,11 +117,16 @@ $containerWidth: 680px;
 			}
 		}
 
+		&__speaker-images {
+			width: 100px;
+			flex-shrink: 0;
+			margin-right: $basic-spacing/2 + px;
+		}
+
 		&__speaker-image {
 			height: auto;
 			border-radius: 50%;
 			align-self: flex-start;
-			margin-right: $basic-spacing/2 + px;
 		}
 
 		&__time {
