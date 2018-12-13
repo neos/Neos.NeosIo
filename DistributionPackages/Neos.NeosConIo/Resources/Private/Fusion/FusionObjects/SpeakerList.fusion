@@ -5,15 +5,32 @@ prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Collection) {
     @context.eventToFilter = ${node.properties.eventToShowSpeakersFor}
     @process.wrapWithUl = ${'<ul class="speaker__speakerList">' + value + '</ul>'}
 
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${node}
+        }
+        tags {
+            1 = ${Neos.Caching.nodeTag(node)}
+            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk')}
+            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event')}
+            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Room')}
+            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Speaker')}
+        }
+    }
+
+
     itemName = "node"
     itemRenderer = Neos.Fusion:Tag {
         tagName = 'li'
         attributes.class = 'speaker__speakerList__item'
         content = Neos.NeosIo:ImageTeaser {
             // node is the speaker here
+            subTitle = ""
             title = ${node.properties.title}
             image = ${node.properties.image}
-            text = ${node.properties.text}
+            text = ${String.stripTags(node.properties.company)}
 
             // Ensure Text has no tags (especially link tag) in the markup, as this
             // will otherwise lead to two nested <a> tags which makes the browser break.
