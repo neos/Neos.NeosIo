@@ -1,0 +1,141 @@
+$dayHighlightColor: lighten(map-get($brand-colors, primary), 15);
+$roomHighlightColor: map-get($brand-colors, primary);
+$containerWidth: 680px;
+
+.schedule {
+	max-width: $containerWidth;
+	margin-left: auto;
+	margin-right: auto;
+
+	&__header {
+		margin-bottom: $basic-spacing*2 + px;
+	}
+
+	.days {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+
+		&__day {
+			cursor: pointer;
+			min-width: 300px;
+
+			* {
+				color: brand("primary");
+			}
+
+
+			@include mq('small') {
+				min-width: 0;
+				width: 100%;
+				margin-top: $basic-spacing/2 + px;
+			}
+
+			&.active {
+				.btn__content {
+					* {
+						color: white;
+					}
+
+					background: $dayHighlightColor;
+				}
+			}
+		}
+	}
+
+	.rooms {
+		display: flex;
+		justify-content: center;
+		height: 55px;
+		margin-top: $basic-spacing/2 + px;
+		border-bottom: 1px solid lighten($base-text-color, 40);
+
+		&__room {
+			width: 50%;
+			background: transparent;
+			border: 0;
+			border-bottom: 2px solid transparent;
+			margin-top: 2px;
+			color: $base-text-color;
+
+			@include mq('small') {
+				text-align: center !important;
+			}
+
+			&:hover {
+				color: map-get($brand-colors, primary);
+			}
+
+			&.active {
+				pointer-events: none;
+				border-color: $roomHighlightColor;
+			}
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+
+	.talks {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.talk {
+		display: none;
+
+		&__header {
+			display: flex;
+			cursor: pointer;
+			align-items: center;
+			flex-wrap: wrap;
+
+			h4 {
+				margin-bottom: 0;
+			}
+		}
+
+		&.visible {
+			display: block;
+		}
+
+		&__description {
+			transition: max-height, 0.5s;
+			max-height: 0;
+			overflow: hidden;
+			margin-top: $basic-spacing + px;
+
+			&.visible {
+				max-height: 1000px;
+			}
+		}
+
+		&__speaker-image {
+			height: auto;
+			border-radius: 50%;
+			align-self: flex-start;
+			margin-right: $basic-spacing/2 + px;
+		}
+
+		&__time {
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+			margin-right: $basic-spacing/2 + px;
+		}
+	}
+
+	.btn:focus {
+		transform: none;
+		outline: none;
+	}
+
+	.fa {
+		margin-right: 6px;
+	}
+
+	.btn + .btn {
+		margin-left: 0;
+	}
+}
