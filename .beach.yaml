@@ -1,0 +1,12 @@
+builder:
+  steps:
+    build-assets:
+      executor: docker
+      image: 'node:11.4-alpine'
+      script:
+        - cd ${BEACH_BUILD_WORKSPACE_PATH}/Packages/Application/Neos.MarketPlace
+        - npm install
+        - cd ${BEACH_BUILD_WORKSPACE_PATH}/Packages/Sites/Neos.NeosIo
+        - npm install
+        - npm run build
+        - npm run minify
