@@ -1,4 +1,4 @@
-prototype(Neos.NeosIo:DocumentationPage.Document) < prototype(Neos.NeosIo:DefaultPage) {
+prototype(Neos.NeosIo:DocumentationPage) < prototype(Neos.NeosIo:DefaultPage) {
     body {
         templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/DocumentationPage.html'
 
@@ -18,7 +18,7 @@ prototype(Neos.NeosIo:DocumentationPage.Document) < prototype(Neos.NeosIo:Defaul
                 nodePath = 'keyVisual'
             }
 
-            main = PrimaryContent {
+            main = Neos.Neos:PrimaryContent {
                 nodePath = 'main'
             }
         }

@@ -2,7 +2,7 @@
 * Basic page inside the event package
 */
 
-prototype(Neos.NeosIo.Event:Page.Document) < prototype(Neos.NeosIo.Event:DefaultPage) {
+prototype(Neos.NeosIo.Event:Page) < prototype(Neos.NeosIo.Event:DefaultPage) {
 	body {
 		content {
 			main = Neos.NeosIo.Event:Page
@@ -11,7 +11,7 @@ prototype(Neos.NeosIo.Event:Page.Document) < prototype(Neos.NeosIo.Event:Default
 }
 
 prototype(Neos.NeosIo.Event:Page) < prototype(Neos.Neos:Content) {
-	main = ContentCollection {
+	main = Neos.Neos:ContentCollection {
 		@cache.mode = 'cached'
 		nodePath = 'main'
 	}

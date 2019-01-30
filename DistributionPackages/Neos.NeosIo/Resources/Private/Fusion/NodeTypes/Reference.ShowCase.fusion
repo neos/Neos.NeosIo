@@ -3,10 +3,10 @@
 */
 
 
-prototype(Neos.NeosIo:Reference.ShowCase.Document) < prototype(Neos.NeosIo:Reference.Document) {
+prototype(Neos.NeosIo:Reference.ShowCase) < prototype(Neos.NeosIo:Reference) {
     body {
         content {
-            main = Neos.NeosIo:Reference.ShowCase
+            main = Neos.NeosIo:Reference.ShowCaseItem
         }
     }
 
@@ -17,8 +17,13 @@ prototype(Neos.NeosIo:Reference.ShowCase.Document) < prototype(Neos.NeosIo:Refer
     }
 }
 
-prototype(Neos.NeosIo:Reference.ShowCase) < prototype(Neos.NeosIo:Reference) {
+prototype(Neos.NeosIo:Reference.ShowCaseItem) < prototype(Neos.NeosIo:ReferenceItem) {
     templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Reference.ShowCase.html'
+
+    node = ${node}
+    url = ${q(node).property('url')}
+    image = ${q(node).property('image')}
+    launchDate = ${q(node).property('launchDate')}
 
     projectVolume = ${q(node).property('projectVolume')}
     projectVolume.@process {

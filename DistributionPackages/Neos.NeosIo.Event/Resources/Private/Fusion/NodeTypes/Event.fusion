@@ -3,7 +3,7 @@
 */
 
 
-prototype(Neos.NeosIo.Event:Event.Document) < prototype(Neos.NeosIo:LandingPage.Document) {
+prototype(Neos.NeosIo.Event:Event) < prototype(Neos.NeosIo:LandingPage) {
 	body {
 		templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/Page/Event.Landingpage.html'
 		content {
@@ -35,12 +35,12 @@ prototype(Neos.NeosIo.Event:Event.Document) < prototype(Neos.NeosIo:LandingPage.
 
 prototype(Neos.NeosIo.Event:Event) < prototype(Neos.Neos:Content) {
 	templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/NodeTypes/Event.html'
-	main = ContentCollection {
+	main = Neos.Neos:ContentCollection {
 		@cache.mode = 'cached'
 		nodePath = 'main'
 	}
 }
 
-prototype(Neos.NeosIo.Event:Conference.Document) < prototype(Neos.NeosIo.Event:Event.Document)
+prototype(Neos.NeosIo.Event:Conference) < prototype(Neos.NeosIo.Event:Event)
 
 prototype(Neos.NeosIo.Event:Conference) < prototype(Neos.NeosIo.Event:Event)

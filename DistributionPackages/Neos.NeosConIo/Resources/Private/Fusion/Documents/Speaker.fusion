@@ -1,6 +1,18 @@
-prototype(Neos.NeosConIo:Speaker.Document) < prototype(Neos.NeosIo:DefaultPage) {
+prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
     body.content.keyVisual = ""
-    body.content.main = Neos.NeosConIo:Speaker {
+    body.content.main = Neos.Fusion:Template {
+        templatePath = 'resource://Neos.NeosConIo/Private/Templates/NodeTypes/Speaker.html'
+
+        title = ${q(node).property('title')}
+        text = ${q(node).property('text')}
+        image = ${q(node).property('image')}
+        event = ${q(node).property('event')}
+        featuredTalk = ${q(node).property('featuredTalk')}
+        company = ${q(node).property('company')}
+        position = ${q(node).property('position')}
+        twitter = ${q(node).property('twitter')}
+        github = ${q(node).property('github')}
+
         // node is the speaker here
         @context.featuredTalkNode = ${q(node).property('featuredTalk')}
 

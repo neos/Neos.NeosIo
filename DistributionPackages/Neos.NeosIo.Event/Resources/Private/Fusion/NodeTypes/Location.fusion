@@ -3,7 +3,7 @@
 */
 
 
-prototype(Neos.NeosIo.Event:Location.Document) < prototype(Neos.NeosIo.Event:DefaultPage) {
+prototype(Neos.NeosIo.Event:Location) < prototype(Neos.NeosIo.Event:DefaultPage) {
 	body {
 		content {
 			main = Neos.NeosIo.Event:Location
@@ -12,7 +12,7 @@ prototype(Neos.NeosIo.Event:Location.Document) < prototype(Neos.NeosIo.Event:Def
 }
 
 prototype(Neos.NeosIo.Event:Location) < prototype(Neos.Neos:Content) {
-	main = ContentCollection {
+	main = Neos.Neos:ContentCollection {
 		@cache.mode = 'cached'
 		nodePath = 'main'
 	}

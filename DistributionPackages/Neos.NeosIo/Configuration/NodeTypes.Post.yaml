@@ -47,60 +47,51 @@
         inlineEditable: true
         inspector:
           group: null
-        aloha:
-          placeholder: 'Enter title here'
-          format:
-            b: true
-            i: true
-            u: true
-            sub: true
-            sup: true
-            p: false
-            h1: false
-            h2: false
-            h3: false
-            pre: false
-            removeFormat: false
-          table: {  }
-          list: {  }
-          link:
-            a: true
-          alignment: {  }
-          formatlesspaste:
-            button: false
-            formatlessPasteOption: true
+        inline:
+          editorOptions:
+            formatting:
+              u: true
+              sub: true
+              sup: true
+              p: false
+              h1: false
+              h2: false
+              h3: false
+              pre: false
+              removeFormat: false
+              a: true
+              strong: true
+              em: true
+            placeholder: 'Enter title here'
     summary:
       type: string
       ui:
         inlineEditable: true
-        aloha:
-          placeholder: 'Enter summary here'
-          format:
-            b: true
-            i: true
-            u: true
-            sub: true
-            sup: true
-            p: true
-            h1: true
-            h2: true
-            h3: true
-            h4: false
-            h5: false
-            h6: false
-            removeFormat: true
-          table:
-            table: true
-          link:
-            a: true
-          list:
-            ul: true
-            ol: true
-          alignment:
-            left: true
-            center: true
-            right: true
-            justify: true
+        inline:
+          editorOptions:
+            formatting:
+              u: true
+              sub: true
+              sup: true
+              p: true
+              h1: true
+              h2: true
+              h3: true
+              h4: false
+              h5: false
+              h6: false
+              removeFormat: true
+              table: true
+              a: true
+              ul: true
+              ol: true
+              left: true
+              center: true
+              right: true
+              justify: true
+              strong: true
+              em: true
+            placeholder: 'Enter summary here'
     featured:
       type: boolean
       ui:

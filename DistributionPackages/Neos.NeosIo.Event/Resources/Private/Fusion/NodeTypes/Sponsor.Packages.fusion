@@ -2,7 +2,7 @@
 * NodeTypes around the Sponsor Package Listing
 */
 
-prototype(Neos.NeosIo.Event:Sponsor.Packages.Document) < prototype(Neos.NeosIo.Event:DefaultPage) {
+prototype(Neos.NeosIo.Event:Sponsor.Packages) < prototype(Neos.NeosIo.Event:DefaultPage) {
 	body {
 		content {
 			main = Neos.NeosIo.Event:Sponsor.Packages
@@ -11,12 +11,12 @@ prototype(Neos.NeosIo.Event:Sponsor.Packages.Document) < prototype(Neos.NeosIo.E
 }
 
 prototype(Neos.NeosIo.Event:Sponsor.Packages) < prototype(Neos.Neos:Content) {
-	main = ContentCollection {
+	main = Neos.Neos:ContentCollection {
 		@cache.mode = 'cached'
 		nodePath = 'main'
 	}
 
-	aboveListing = ContentCollection {
+	aboveListing = Neos.Neos:ContentCollection {
 		@cache.mode = 'cached'
 		nodePath = 'aboveListing'
 	}

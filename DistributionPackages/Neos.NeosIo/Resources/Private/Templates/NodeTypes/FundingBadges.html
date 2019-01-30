@@ -1,14 +1,11 @@
-{namespace ts=Neos\Fusion\ViewHelpers}
-<?xml version="1.0" encoding="UTF-8" ?>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-      xmlns:f="http://typo3.org/ns/Neos/FluidAdaptor/ViewHelpers">
+{namespace fusion=Neos\Fusion\ViewHelpers}
 <f:section name="Main">
 	<div{attributes -> f:format.raw()}>
 
 	<div class="fundingBadges__sortingControls" data-fake="{badgeData.badgeTypes.0}">
 		<f:for each="{badgeData.badgeTypes}" as="type" key="label">
 			<span class="fundingBadges__sortingControl" data-filter="{label}">
-				<ts:render path="badgeFilterButton" context="{
+				<fusion:render path="badgeFilterButton" context="{
 					filterName: label,
 					label: label
 				}"/>
@@ -85,4 +82,3 @@
 <f:section name="logo">
 	<img class="funding-badge--customer-logo" src="{customer.logo}" alt="Logo of {customerName}" title="{customerName}"/>
 </f:section>
-</html>

@@ -26,12 +26,20 @@
         "mikey179/vfsstream": "^1.6",
         "phpunit/phpunit": "^7.0"
     },
-    "repositories": {
-        "local": {
+    "repositories": [
+        {
             "type": "path",
             "url": "./DistributionPackages/*"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/kdambekalns/OutOfBandRendering.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/kdambekalns/Neos.MarketPlace.git"
         }
-    },
+    ],
     "scripts": {
         "post-update-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
         "post-install-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",

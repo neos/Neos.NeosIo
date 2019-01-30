@@ -1,8 +1,8 @@
-prototype(Neos.NeosConIo:Speakers.Document) < prototype(Neos.NeosIo:DefaultPage) {
+prototype(Neos.NeosConIo:Speakers) < prototype(Neos.NeosIo:DefaultPage) {
     body.content.keyVisual.content = Neos.Neos:ContentCollection {
         nodePath = 'keyVisual'
     }
-    body.content.main = PrimaryContent {
+    body.content.main = Neos.Neos:PrimaryContent {
         nodePath = 'main'
     }
 }

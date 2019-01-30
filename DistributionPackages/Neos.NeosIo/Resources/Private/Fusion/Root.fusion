@@ -1,7 +1,11 @@
-/**
-* Root Fusion template for the Neos_io site
-* Also includes basic DocumentNodeTypes
-*/
+#
+# Root Fusion template for the Neos_io site
+# Also includes basic DocumentNodeTypes
+#
+
+include: Documents/**/*.fusion
+include: NodeTypes/**/*.fusion
+include: FusionObjects/**/*.fusion
 
 root {
     postRss {
@@ -9,23 +13,5 @@ root {
         condition = ${request.parentRequest.uri.path == '/rss.xml'}
         renderPath = '/postRss'
     }
-    // Override the default root matcher to render document nodes with a prototype of the same name
-    default {
-        type = ${q(node).property('_nodeType') + '.Document'}
-        renderPath >
-    }
 }
 
-prototype(Neos.Neos:FallbackNode.Document) < prototype(Neos.Neos:FallbackNode)
-
-##################################
-# Includes
-##################################
-
-#
-# Fusion includes for node types
-#
-
-include: Documents/**/*.ts2
-include: NodeTypes/**/*.ts2
-include: FusionObjects/**/*.ts2
