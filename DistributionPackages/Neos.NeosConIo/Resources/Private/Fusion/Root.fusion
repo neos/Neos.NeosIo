@@ -7,12 +7,12 @@ prototype(Neos.NeosIo:DefaultPage).head.stylesheets.main.uri = 'resource://Neos.
 #
 prototype(Neos.NeosIo:DefaultPage).body.partialRootPath = 'resource://Neos.NeosConIo/Private/Templates/Page/Partials'
 
-
-include: Documents/**/*.fusion
-include: FusionObjects/**/*.fusion
-
 prototype(Neos.NeosIo:DefaultPage.Menu) {
     templatePath = 'resource://Neos.NeosConIo/Private/Templates/FusionObjects/Menu.html'
 
     @cache.entryIdentifier.documentNode = ${documentNode}
 }
+
+include: Documents/**/*.fusion
+include: FusionObjects/**/*.fusion
+include: NodeTypes/**/*.fusion

@@ -48,7 +48,7 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
                     title = ${node.properties.title}
                     image = ${node.properties.thumbnail}
                     fallbackImageUrl = ${(node.properties.video && !node.properties.thumbnail) ? "https://img.youtube.com/vi/" + node.properties.video + "/maxresdefault.jpg" : null}
-                    text = ${node.properties.text}
+                    text = ${""}
                     className = 'imageTeaser--relatedTalk'
                     link = Neos.Neos:NodeUri {
                         node = ${node}

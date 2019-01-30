@@ -1,0 +1,23 @@
+prototype(Neos.NeosConIo:Days) < prototype(Neos.Fusion:Component) {
+    days = ${days}
+    class = Neos.Fusion:Array {
+        base = 'days__day '
+        button = 'btn '
+        buttonPrimary = 'btn--primary '
+    }
+
+    renderer = afx`
+        <Neos.Fusion:Collection collection={props.days} itemName="day" iterator="iterator" @children="itemRenderer">
+            <button class={props.class} data-date={Date.format(day, 'y-m-d')}>
+                <div class="btn__content">
+                    <h3>Conference Day {iterator.cycle}</h3>
+                    <div>
+                        {Date.format(day, 'd M Y')}
+                    </div>
+                </div>
+            </button>
+        </Neos.Fusion:Collection>
+    `
+}
+
+

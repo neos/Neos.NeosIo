@@ -1,0 +1,21 @@
+'Neos.NeosConIo:Schedule':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'Schedule'
+    icon: 'icon-calendar'
+    group: neoscon
+    inspector:
+      groups:
+        event:
+          label: 'Event'
+          icon: 'calendar-alt'
+          position: 20
+  properties:
+    event:
+      type: reference
+      ui:
+        label: 'Event'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
