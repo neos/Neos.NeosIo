@@ -4,6 +4,8 @@ builder:
       executor: docker
       image: 'flownative/beach-build-toolbox-frontend:latest'
       script:
+        - cd ${BEACH_BUILD_WORKSPACE_PATH}/Packages/Sites/Neos.NeosConIo
+        - npm install
         - cd ${BEACH_BUILD_WORKSPACE_PATH}/Packages/Application/Neos.MarketPlace
         - npm install
         - cd ${BEACH_BUILD_WORKSPACE_PATH}/Packages/Sites/Neos.NeosIo
