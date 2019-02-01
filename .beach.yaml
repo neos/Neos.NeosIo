@@ -5,10 +5,8 @@ builder:
       image: 'flownative/beach-build-toolbox-frontend:latest'
       script:
         - cd ${BEACH_BUILD_WORKSPACE_PATH}/Packages/Application/Neos.MarketPlace
-        - ls -la
         - npm install
         - cd ${BEACH_BUILD_WORKSPACE_PATH}/Packages/Sites/Neos.NeosIo
-        - ls -la
         - npm install
         - npm run build
         - npm run minify
