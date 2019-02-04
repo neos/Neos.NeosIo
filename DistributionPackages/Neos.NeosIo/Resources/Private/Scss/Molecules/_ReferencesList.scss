@@ -37,13 +37,13 @@
 	&::after {
 		@include meta();
 
-		background-color: $btn-color;
-		color: color-adjust($base-text-color, 100%);
+		background-color: #{$btn-color};
+		color: #{color-adjust($base-text-color, 100%)};
 		content: 'Featured';
 		display: block;
 		padding: 1px 8px;
 		position: absolute;
-		right: $grid-gutter;
+		right: #{$grid-gutter};
 		top: 0;
 		z-index: 2;
 	}

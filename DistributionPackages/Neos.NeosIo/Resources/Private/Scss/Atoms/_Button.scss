@@ -11,8 +11,8 @@ $btn-horizontal-padding: 40px;
  *     a.btn My Button
  */
 @mixin btn() {
-	--btn-vertical-padding: $btn-vertical-padding;
-	--btn-horizontal-padding: $btn-horizontal-padding;
+	--btn-vertical-padding: #{$btn-vertical-padding};
+	--btn-horizontal-padding: #{$btn-horizontal-padding};
 	--btn-clip-width: 14px;
 	--btn-clip-height: 10px;
 	--btn-fill-color: transparent;
@@ -30,10 +30,10 @@ $btn-horizontal-padding: 40px;
 	// Normalize some rules across the targeted elements (<input>, <button> and the .btn class).
 	font-weight: $regular;
 	line-height: 1;
-	color: brand('primary'); // Fallback for IE11
+	color: #{brand('primary')}; // Fallback for IE11
 	color: var(--btn-color);
 	vertical-align: top;
-	transition: all $transition-duration ease;
+	transition: all #{$transition-duration} ease;
 	text-align: center;
 	background: 0;
 
@@ -66,7 +66,7 @@ $btn-horizontal-padding: 40px;
 
 .btn__content {
 	width: 100%;
-	padding: $btn-vertical-padding $btn-horizontal-padding; // Fallback for IE11
+	padding: #{$btn-vertical-padding} #{$btn-horizontal-padding}; // Fallback for IE11
 	padding: var(--btn-vertical-padding) var(--btn-horizontal-padding);
 	position: relative;
 	background: #fff; // Fallback for IE11
@@ -75,7 +75,7 @@ $btn-horizontal-padding: 40px;
 
 	.stage--primary &,
 	.stage--bright & {
-		background: brand('secondary'); // Fallback for IE11
+		background: #{brand('secondary')}; // Fallback for IE11
 		background: var(--btn-fill-color);
 	}
 }
@@ -86,8 +86,8 @@ $btn-horizontal-padding: 40px;
 		$clip-path: polygon(var(--btn-clip-width) 0px, 0 var(--btn-clip-height), 0 100%, calc(100% - var(--btn-clip-width)) 100%, 100% calc(100% - var(--btn-clip-height)), 100% 0);
 
 		// Autoprefixer doesn't add the required webkit prefix for some reason
-		-webkit-clip-path: $clip-path;
-		clip-path: $clip-path;
+		-webkit-clip-path: #{$clip-path};
+		clip-path: #{$clip-path};
 	}
 }
 
@@ -104,8 +104,8 @@ $btn-horizontal-padding: 40px;
 		bottom: -1px;
 
 		// Autoprefixer doesn't add the required webkit prefix for some reason
-		-webkit-clip-path: $clip-path;
-		clip-path: $clip-path;
+		-webkit-clip-path: #{$clip-path};
+		clip-path: #{$clip-path};
 	}
 }
 
@@ -138,14 +138,14 @@ $btn-horizontal-padding: 40px;
  */
 @mixin btn--primary() {
 	--btn-fill-color: var(--stage-background-color);
-	--btn-stroke-color: transparentize(brand('primary'), 0.4);
-	--btn-color: brand('primary');
+	--btn-stroke-color: #{transparentize(brand('primary'), 0.4)};
+	--btn-color: #{brand('primary')};
 
 	@include btnClippedBorder;
 	@include btnBorder;
 
 	&:hover {
-		--btn-stroke-color: brand('primary');
+		--btn-stroke-color: #{brand('primary')};
 	}
 }
 .btn--primary {
@@ -160,12 +160,12 @@ $btn-horizontal-padding: 40px;
  *     a.btn.btn--solidPrimary My Button
  */
 .btn--solidPrimary {
-	--btn-fill-color: brand('primary');
+	--btn-fill-color: #{brand('primary')};
 	--btn-color: #fff;
 	@include btnClippedBorder;
 
 	&:hover {
-		--btn-fill-color: lighten(brand('primary'), 10);
+		--btn-fill-color: #{lighten(brand('primary'), 10)};
 	}
 }
 
@@ -179,13 +179,13 @@ $btn-horizontal-padding: 40px;
 @mixin btn--secondary() {
 	--btn-fill-color: var(--stage-background-color);
 	--btn-stroke-color: #ccc;
-	--btn-color: brand('secondary');
+	--btn-color: #{brand('secondary')};
 
 	@include btnClippedBorder;
 	@include btnBorder;
 
 	&:hover {
-		--btn-stroke-color: brand('teritary');
+		--btn-stroke-color: #{brand('teritary')};
 	}
 }
 .btn--secondary {
@@ -200,13 +200,13 @@ $btn-horizontal-padding: 40px;
  *     a.btn.btn--solidSecondary My Button
  */
 .btn--solidSecondary {
-	--btn-fill-color: brand('secondary');
+	--btn-fill-color: #{brand('secondary')};
 	--btn-color: #fff;
 
 	@include btnClippedBorder;
 
 	&:hover {
-		--btn-fill-color: lighten(brand('secondary'), 10);
+		--btn-fill-color: #{lighten(brand('secondary'), 10)};
 	}
 }
 
@@ -221,7 +221,7 @@ $btn-horizontal-padding: 40px;
  */
 @mixin btn--bright() {
 	--btn-fill-color: var(--stage-background-color);
-	--btn-stroke-color: transparentize(#fff, 0.4);
+	--btn-stroke-color: #{transparentize(#fff, 0.4)};
 	--btn-color: #FFF;
 
 	@include btnClippedBorder;
@@ -245,7 +245,7 @@ $btn-horizontal-padding: 40px;
  *     </div>
  */
 @mixin btn--solidBright() {
-	--btn-fill-color: transparentize(#fff, 0.1);
+	--btn-fill-color: #{transparentize(#fff, 0.1)};
 	--btn-color: currentColor;
 
 	@include btnClippedBorder;

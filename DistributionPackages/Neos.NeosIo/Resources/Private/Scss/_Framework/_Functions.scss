@@ -86,7 +86,7 @@ $end: right !default;
 //
 // For example:
 // .selector {
-//		color: brand('myElement');
+//		color: #{brand('myElement')};
 // }
 @function brand($key) {
 	@return map-get($brand-colors, $key);
