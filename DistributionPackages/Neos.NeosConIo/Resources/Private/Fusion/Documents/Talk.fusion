@@ -17,7 +17,7 @@ prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
             collection = ${node.properties.speakers}
         }
 
-        talkListVisible = ${Array.length(node.properties.relatedTalks) > 0}
+        talkListVisible = ${node.properties.relatedTalks && Array.length(node.properties.relatedTalks) > 0}
 
         talkList = Neos.NeosConIo:TalkList {
             collection = ${node.properties.relatedTalks}
