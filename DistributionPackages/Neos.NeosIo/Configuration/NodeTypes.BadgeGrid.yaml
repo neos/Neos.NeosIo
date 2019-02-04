@@ -1,0 +1,15 @@
+'Neos.NeosIo:BadgeGrid':
+  superTypes:
+    'Neos.Neos:Content': true
+  childNodes:
+    badges:
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:Badge': true
+  ui:
+    label: 'Badge grid'
+    icon: 'icon-th-large'
+    group: special
+    inlineEditable: true

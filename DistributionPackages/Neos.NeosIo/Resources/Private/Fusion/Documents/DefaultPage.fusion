@@ -1,0 +1,61 @@
+prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
+    head {
+        metaTags = Neos.NeosIo:MetaTags
+
+        stylesheets.main = Ttree.StyleSheet:Resource {
+            uri = 'resource://Neos.NeosIo/Public/Styles/Main.css'
+            cacheBusting = true
+        }
+        stylesheets.site = Neos.Fusion:Template {
+            templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
+            sectionName = 'stylesheets'
+        }
+
+        javascripts.site = Neos.Fusion:Template {
+            templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
+            sectionName = 'headScripts'
+        }
+
+        openGraphMetaTags {
+            @context.openGraphType = 'Website'
+
+            openGraphImageTag.@context {
+                openGraphImage.@process.keyVisualFallback = ${value == null && q(node).property('keyVisualImage') ? q(node).property('keyVisualImage') : value}
+            }
+        }
+    }
+
+    body {
+        templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
+        sectionName = 'body'
+        parts {
+            menu = Neos.NeosIo:DefaultPage.Menu
+
+            breadcrumb = Neos.NeosIo:DefaultPage.BreadcrumbMenu
+
+            footerContent = Neos.NeosIo:DefaultPage.FooterContent
+
+            footerMenu = Neos.NeosIo:DefaultPage.FooterMenu
+        }
+
+        homepage = ${site}
+        headerClasses = 'siteHeader'
+
+
+        content.keyVisual = Neos.NeosIo:KeyVisual {
+            keyVisualImage = ${q(documentNode).property('keyVisualImage')}
+            isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
+        }
+
+        javascripts.site = Neos.Fusion:Template {
+            templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
+            sectionName = 'bodyScripts'
+
+            googleAnalyticsTrackingCode = ${Configuration.setting('Neos.NeosIo.googleAnalyticsTrackingCode')}
+        }
+
+        imprintLinkNode = ${q(site).property('imprintLinkNode')}
+    }
+
+    @cache.entryTags.site = ${'Node_' + site.identifier}
+}

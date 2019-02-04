@@ -1,0 +1,12 @@
+prototype(Neos.NeosIo:DefaultPage.FooterMenu) < prototype(Neos.Neos:Menu) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/FooterMenu.html'
+    attributes.class = 'nav nav--stacked siteFooter__nav'
+
+    footerContainer = ${q(site).children('[instanceof Neos.NeosIo:FooterContainer]').first()}
+    @context.footerContainer = ${footerContainer.get(0)}
+
+    itemCollection = ${q(this.footerContainer).children('[instanceof Neos.Neos:Document]').get()}
+
+    @cache.entryIdentifier.documentNode = ${site}
+    @cache.entryTags.1 = ${'DescendantOf_' + footerContainer.identifier}
+}

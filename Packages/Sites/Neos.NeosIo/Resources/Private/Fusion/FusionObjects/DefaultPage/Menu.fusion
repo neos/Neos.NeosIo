@@ -1,9 +1,0 @@
-prototype(Neos.NeosIo:DefaultPage.Menu) < prototype(Menu) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/Menu.html'
-    entryLevel = 1
-    maximumLevels = 2
-    attributes.class = 'nav siteHeader__nav offCanvas__nav'
-    filter = 'Neos.Neos:Document, !Neos.NeosIo:Reference'
-    @cache.entryIdentifier.documentNode = ${site}
-    subNavClasses = 'nav nav--stacked siteHeader__dropDownNav offCanvas__categoryList'
-}

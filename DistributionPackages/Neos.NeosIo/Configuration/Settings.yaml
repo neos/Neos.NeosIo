@@ -1,0 +1,92 @@
+
+Neos:
+  NeosIo:
+    googleAnalyticsTrackingCode: null
+    fundingApi:
+      username: ''
+      password: ''
+      apiUrl: 'https://neosfunding.sandstorm.de'
+      timeout: 30
+      actions:
+        getBadges: /funding-api-sold-badges
+      parameters: {  }
+    crowdApi:
+      username: neos.io-teams
+      password: ''
+      apiUrl: 'https://crowd.neos.io/rest/usermanagement/1'
+      timeout: 30
+      actions:
+        search: /search.json
+        getGroup: /group.json
+        getGroupMembers: /group/user/direct.json
+        setGroupAttributes: /group/attribute.json
+        getUser: /user.json
+        setUserAttributes: /user/attribute.json
+      parameters:
+        active: true
+      additionalAttributes:
+        group:
+          - neos_group_type
+          - neos_title
+          - neos_summary
+        user:
+          - neos_website
+          - neos_skype
+          - neos_twitter
+          - neos_googleplus
+          - neos_email
+          - neos_origin
+          - neos_bio
+          - neos_contribution
+  Neos:
+    userInterface:
+      navigateComponent:
+        nodeTree:
+          loadingDepth: 1
+      inspector:
+        editors:
+          Neos.Neos/Inspector/Editors/LinkEditor:
+            editorOptions:
+              nodeTypes:
+                - 'Neos.NodeTypes:Page'
+                - 'Neos.MarketPlace:RepositoryStorage'
+                - 'Neos.NeosIo:Reference'
+                - 'Neos.NeosIo.Event:Location'
+                - 'Neos.NeosIo.Event:Organizer'
+                - 'Neos.NeosIo.Event:Person'
+    nodeTypes:
+      groups:
+        special:
+          position: 'after general'
+          label: Special
+  ContentRepository:
+    Search:
+      realtimeIndexing:
+        enabled: true
+      indexAllWorkspaces: false
+      elasticSearch:
+        indexName: wwwneosio
+
+    contentDimensions:
+      'language':
+        default: 'en'
+        defaultPreset: 'en'
+        label: 'Language'
+        icon: 'icon-language'
+        presets:
+          'en':
+            label: 'English'
+            values: ['en']
+            uriSegment: ''
+          'de':
+            label: 'German'
+            values: ['de']
+            uriSegment: 'de'
+  Fusion:
+    defaultContext:
+      Data: Neos\NeosIo\Eel\Helper\DataHelper
+
+PunktDe:
+  CodeView:
+    loadCSS: false
+    loadJS: true

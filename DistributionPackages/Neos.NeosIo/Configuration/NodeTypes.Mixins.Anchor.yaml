@@ -1,0 +1,22 @@
+'Neos.NeosIo:AnchorMixin':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        'anchor':
+          label: 'Internal Linking / Anchors'
+          position: 110
+          tab: meta
+  properties:
+    anchorName:
+      type: string
+      ui:
+        label: 'Anchor Name'
+        inspector:
+          group: anchor
+          position: 10
+      validation:
+        'Neos.Neos/Validation/StringLengthValidator':
+          maximum: 255
+        'Neos.Neos/Validation/RegularExpressionValidator':
+          regularExpression: '/^[a-z0-9\-]+$/i'

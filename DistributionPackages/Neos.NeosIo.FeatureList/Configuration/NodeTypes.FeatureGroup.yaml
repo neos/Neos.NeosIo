@@ -1,0 +1,48 @@
+
+'Neos.NeosIo.FeatureList:FeatureGroup':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'Feature Group'
+    icon: tags
+    group: feature
+    inlineEditable: true
+    inspector:
+      groups:
+        feature:
+          label: 'Feature properties'
+          tab: default
+  options:
+    fusion:
+      prototypeGenerator: null
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.NeosIo.FeatureList:Feature': true
+  properties:
+    title:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Feature Group Title'
+      options:
+        silhouette: text.plain
+    description:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Feature Group Description'
+      options:
+        silhouette: text.free
+    image:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Feature Icon'
+        reloadIfChanged: true
+        inspector:
+          group: feature
+          position: 50

@@ -1,0 +1,85 @@
+'Neos.NeosConIo:Speaker':
+  superTypes:
+    'Neos.Neos:Document': true
+    'Neos.NeosConIo:Mixin.EventRelated': true
+    'Neos.NodeTypes.BaseMixins:TextMixin': true
+  ui:
+    label: "Speaker"
+    icon: 'icon-user'
+    group: neoscon
+    inspector:
+      groups:
+        document:
+          label: Speaker
+        speakerDetails:
+          label: Speaker details
+  properties:
+    text:
+      ui:
+        inline:
+          editorOptions:
+            placeholder: 'Speaker description'
+    image:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: Speaker image
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 100
+          editorOptions:
+            crop:
+              aspectRatio:
+                forceCrop: true
+                locked:
+                  width: 1
+                  height: 1
+    event:
+      type: references
+      ui:
+        label: 'Event'
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 160
+          editor: 'Neos.Neos/Inspector/Editors/ReferencesEditor'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Event']
+    featuredTalk:
+      type: reference
+      ui:
+        label: 'Featured talk'
+        reloadIfChanged: true
+        inspector:
+          group: 'document'
+          position: 170
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Talk']
+    company:
+      type: string
+      ui:
+        label: 'Company'
+        reloadIfChanged: true
+        inspector:
+          group: 'speakerDetails'
+    position:
+      type: string
+      ui:
+        label: 'Position'
+        reloadIfChanged: true
+        inspector:
+          group: 'speakerDetails'
+    twitter:
+      type: string
+      ui:
+        label: 'Twitter name'
+        reloadIfChanged: true
+        inspector:
+          group: 'speakerDetails'
+    github:
+      type: string
+      ui:
+        label: 'Github name'
+        reloadIfChanged: true
+        inspector:
+          group: 'speakerDetails'

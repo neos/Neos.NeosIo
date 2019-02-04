@@ -1,0 +1,21 @@
+prototype(Neos.NeosIo:CrowdUserProfile) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/CrowdUserProfile.html'
+    sectionName = 'details'
+
+    user = ''
+    @context.user = ${this.user}
+
+    userName = ''
+    @context.userName = ${this.userName}
+
+    profileId = ''
+    @context.profileId = ${this.profileId}
+
+    attributes = Neos.Fusion:Attributes {
+        class = 'team-listing-profile'
+        data-component = 'ClassToggler'
+        data-activeClass = 'member-active'
+        data-targetSelector = ${'#' + profileId}
+        data-targetActiveClass = 'team-listing-profile--visible'
+    }
+}

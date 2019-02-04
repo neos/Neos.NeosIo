@@ -1,0 +1,39 @@
+prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) < prototype(Neos.Fusion:Component) {
+
+	@styleguide {
+		props {
+			featureGroupData = Neos.NeosIo.FeatureList:Molecule.FeatureGroup.ExampleData
+		}
+	}
+
+	featureGroupData = null
+
+	renderer = afx`
+		<div class="featureGroup" @if.has={props.featureGroupData}>
+			<div class="featureGroup__header">
+				<div class="featureGroup__image" @if.has={props.featureGroupData.image}><img src={props.featureGroupData.image} alt={props.featureGroupData.title}  /></div>
+				<div class="featureGroup__title">{props.featureGroupData.title}</div>
+			</div>
+			<div class="featureGroup__description" @if.has={props.featureGroupData.description}>{props.featureGroupData.description}</div>
+			<div class="featureGroup__features">
+				<Neos.Fusion:Collection collection={props.featureGroupData.features} itemName="feature" @children="itemRenderer" >
+					<Neos.NeosIo.FeatureList:Molecule.Feature featureData={feature} />
+				</Neos.Fusion:Collection>
+			</div>
+		</div>
+	`
+}
+
+prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup.ExampleData) < prototype(Neos.Fusion:RawArray) {
+	title = 'Feature Group Title'
+	description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
+	image = Neos.Fusion:ResourceUri {
+		path = 'resource://Neos.Neos/Public/Images/dummy-image.svg'
+	}
+	features = Neos.Fusion:RawArray {
+		01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+		02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+		03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+		04 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+	}
+}

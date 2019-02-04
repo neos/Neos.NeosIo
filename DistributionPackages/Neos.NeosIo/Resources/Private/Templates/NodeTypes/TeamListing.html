@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns:fusion="Neos\Fusion\ViewHelpers"
+      xmlns:neos="Neos\Neos\ViewHelpers">
+<f:section name="Main">
+    <div{attributes -> f:format.raw()}>
+        <neos:contentElement.editable property="title"/>
+
+        <f:if condition="{teamFilterOrNameSet}">
+            <f:then>
+                <f:if condition="{groups}">
+                    <f:then>
+                        <fusion:render path="groups" />
+                    </f:then>
+                    <f:else>
+                        <f:if condition="{node.context.workspace.name} != 'live'">
+                            <p>No groups found</p>
+                        </f:if>
+                    </f:else>
+                </f:if>
+            </f:then>
+            <f:else>
+                <f:if condition="{node.context.workspace.name} != 'live'">
+                    <p>Please select a group in the inspector</p>
+                </f:if>
+            </f:else>
+        </f:if>
+        <div class="teamOverlay"></div>
+</f:section>
+</html>

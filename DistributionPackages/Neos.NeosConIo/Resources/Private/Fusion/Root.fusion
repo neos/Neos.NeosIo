@@ -1,0 +1,18 @@
+include: resource://Neos.NeosIo/Private/Fusion/Root.fusion
+
+prototype(Neos.NeosIo:DefaultPage).head.stylesheets.main.uri = 'resource://Neos.NeosConIo/Public/Styles/Main.css'
+
+#
+# Change the partial root path for
+#
+prototype(Neos.NeosIo:DefaultPage).body.partialRootPath = 'resource://Neos.NeosConIo/Private/Templates/Page/Partials'
+
+prototype(Neos.NeosIo:DefaultPage.Menu) {
+    templatePath = 'resource://Neos.NeosConIo/Private/Templates/FusionObjects/Menu.html'
+
+    @cache.entryIdentifier.documentNode = ${documentNode}
+}
+
+include: Documents/**/*.fusion
+include: FusionObjects/**/*.fusion
+include: NodeTypes/**/*.fusion

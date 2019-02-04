@@ -1,0 +1,17 @@
+
+<div {attributes -> f:format.raw()}>
+	<f:if condition="{keynoteSpeakersToRender}">
+		<h2>Keynotes</h2>
+		<div class="team-listing__members">
+			{keynoteSpeakersToRender -> f:format.raw()}
+		</div>
+	</f:if>
+
+	<hr />
+	<f:if condition="{otherSpeakersToRender}">
+		<h2>Talks and Showcases</h2>
+		<div class="team-listing__members">
+			{otherSpeakersToRender -> f:format.raw()}
+		</div>
+	</f:if>
+</div>

@@ -1,0 +1,8 @@
+prototype(Neos.NeosIo.Event:Menu) < prototype(Neos.Neos:Menu) {
+	templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/FusionObjects/Menu.html'
+	startingPoint = ${site}
+	maximumLevels = 1
+	attributes.class = 'nav eventNav'
+	filter = 'Neos.Neos:Document, !Neos.NeosIo:Reference'
+	@cache.entryIdentifier.documentNode = ${site}
+}

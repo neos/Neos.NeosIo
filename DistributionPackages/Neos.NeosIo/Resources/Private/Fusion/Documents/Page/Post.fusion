@@ -1,0 +1,62 @@
+prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
+    head {
+        @context.metaDescription = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 152, '...')}
+
+        metaDescriptionTag {
+            attributes.content = ${metaDescription}
+            @if.isNotBlank = ${!String.isBlank(metaDescription)}
+        }
+
+        twitterCard = Neos.Fusion:Array {
+            @if.isEnabledBlank = 1
+            @if.isEnabled = 1
+
+            cardTypeTag.attributes.content = 'summary'
+
+            cardTitleTag {
+                attributes.content = ${String.crop(String.stripTags(q(node).property('title')), 67, '...')}
+                @if.isNotBlank = 1
+            }
+
+            cardDescriptionTag {
+                attributes.content = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 197, '...')}
+                @if.isNotBlank = 1
+            }
+
+            cardImageTag {
+                attributes.content.asset = ${q(node).property('image')}
+                @if.isImageSet = ${q(node).property('image') != null}
+            }
+        }
+
+        openGraphMetaTags {
+            @context.openGraphType = 'article'
+
+            openGraphTitleTag {
+                @context.openGraphTitle = ${String.crop(String.stripTags(q(node).property('title')), 67, '...')}
+            }
+
+            openGraphDescriptionTag {
+                @context.openGraphDescription = ${metaDescription}
+            }
+
+            openGraphImageTag {
+                @context.openGraphImage = ${q(node).property('image')}
+            }
+
+            openGraphPublishedTime = Neos.Fusion:Tag {
+                tagName = 'meta'
+                attributes {
+                    property = 'article:published_time'
+                    content = ${Date.format(q(node).property('datePublished'), 'c')}
+                }
+            }
+        }
+    }
+
+    body {
+        content.main = Neos.NeosIo:PostRenderer
+        keyVisualImage = ${q(node).property('image')}
+        keyVisualImageSrcSet.keyVisualImage = ${q(node).property('image')}
+    }
+}

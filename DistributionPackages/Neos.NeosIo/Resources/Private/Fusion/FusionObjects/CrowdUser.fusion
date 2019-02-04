@@ -1,0 +1,23 @@
+prototype(Neos.NeosIo:CrowdUserListItem) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/CrowdUser.html'
+
+    gravatarSize = 100
+    gravatarRenderSize = ${this.gravatarSize * 2}
+
+    user = ${q(site).crowdUser(userName).get()}
+    @context.user = ${this.user}
+
+    profileId = ${'member-profile-' + node.identifier + '-' + userName}
+    @context.profileId = ${this.profileId}
+
+    attributes = Neos.Fusion:Attributes {
+        class = 'team-listing__profile'
+        id = ${profileId}
+    }
+
+    userDetails = Neos.NeosIo:CrowdUserProfile {
+        user = ${user}
+        userName = ${userName}
+        profileId = ${profileId}
+    }
+}

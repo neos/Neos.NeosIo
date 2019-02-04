@@ -1,0 +1,42 @@
+###########################################
+# A number counter which animates to the
+# target number once in the users viewport.
+###########################################
+
+'Neos.NeosIo:CountUp':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NodeTypes:TextMixin': true
+  ui:
+    label: 'Detail Counter'
+    icon: icon-signal
+    inlineEditable: true
+  properties:
+    text:
+      ui:
+        inline:
+          editorOptions: {  }
+    prefix:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: prefix
+    number:
+      type: string
+      defaultValue: '101'
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: nr
+    suffix:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: suffix

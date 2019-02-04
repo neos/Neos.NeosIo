@@ -1,0 +1,73 @@
+Neos:
+  NeosIo:
+    googleAnalyticsTrackingCode: '%env:GOOGLE_ANALYTICS_TRACKING_CODE%'
+    crowdApi:
+      username: '%env:CROWD_API_USERNAME%'
+      password: '%env:CROWD_API_PASSWORD%'
+
+  ContentRepository:
+    Search:
+      indexAllWorkspaces: true
+      elasticSearch:
+        indexName: '%env:BEACH_ELASTICSEARCH_INDEX_NAME%'
+
+  GoogleAnalytics:
+    authentication:
+      applicationName: 'Neos'
+      clientId: '%env:GOOGLE_ANALYTICS_CLIENT_ID%'
+      clientSecret: '%env:GOOGLE_ANALYTICS_CLIENT_SECRET%'
+      developerKey: '%env:GOOGLE_ANALYTICS_CLIENT_DEVELOPER_KEY%'
+
+  Flow:
+    persistence:
+      backendOptions:
+        host: '%env:BEACH_DATABASE_HOST%'
+        dbname: '%env:BEACH_DATABASE_NAME%'
+        user: '%env:BEACH_DATABASE_USERNAME%'
+        password: '%env:BEACH_DATABASE_PASSWORD%'
+        unix_socket: '%env:BEACH_DATABASE_SOCKET%'
+
+  Imagine:
+    driver: 'Vips'
+    enabledDrivers:
+      Vips: true
+      Gd: true
+      Imagick: true
+  Media:
+    image:
+      defaultOptions:
+        # The Vips driver does not support interlace
+        interlace: ~
+
+Flowpack:
+  ElasticSearch:
+    clients:
+      default:
+       - host: '%env:BEACH_ELASTICSEARCH_HOSTNAME%'
+         port: '%env:BEACH_ELASTICSEARCH_PORT%'
+         username: '%env:BEACH_ELASTICSEARCH_USERNAME%'
+         password: '%env:BEACH_ELASTICSEARCH_PASSWORD%'
+       - host: '%env:BEACH_ELASTICSEARCH_HOSTNAME%'
+         port: '%env:BEACH_ELASTICSEARCH_PORT%'
+         username: '%env:BEACH_ELASTICSEARCH_USERNAME%'
+         password: '%env:BEACH_ELASTICSEARCH_PASSWORD%'
+
+    indexes:
+      default:
+        'wwwneosio-production':    # custom index name, NOTE THIS SHOULD NOT BE HARDCODED ON BEACH
+          analysis:
+            filter:
+              autocompleteFilter:
+                max_shingle_size: 5
+                min_shingle_size: 2
+                type: 'shingle'
+            analyzer:
+              autocomplete:
+                filter: [ 'lowercase', 'autocompleteFilter' ]
+                char_filter: [ 'html_strip' ]
+                type: 'custom'
+                tokenizer: 'standard'
+
+    ContentRepositoryAdaptor:
+      driver:
+        version: 2.x

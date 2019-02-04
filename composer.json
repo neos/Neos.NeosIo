@@ -1,40 +1,45 @@
 {
     "name": "neos/neos-io-distribution",
     "description" : "neos.io website distribution",
-    "license": "GPL-3.0+",
+    "license": "GPL-3.0-or-later",
     "config": {
         "vendor-dir": "Packages/Libraries",
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "platform": {
+            "php": "7.2"
+        }
     },
     "require": {
-      "neos/neos": "~3.1",
-      "neos/media": "~3.1",
-      "neos/nodetypes": "~3.1",
-      "neos/seo": "~2.0.0",
-      "neos/neos-ui": "1.0.*@beta",
-      "neos/neos-ui-compiled": "1.0.*@beta",
+        "neos/neosio": "*",
+        "neos/flowneosio": "*",
+        "neos/neosio-featurelist": "*",
+        "neos/neosio-event": "*",
+        "neos/neosconio": "*",
 
-      "neos/googleanalytics": "~2.0",
-      "neos/form": "~3.0",
-
-      "neos/swiftmailer": "~6.0.0",
-
-      "flowpack/elasticsearch-contentrepositoryadaptor": "~4.0",
-
-      "flownative/aws-s3": "~2.0",
-      "neos/marketplace": "~1.0.0",
-      "flowpack/searchplugin": "~3.0",
-      "flownative/gravatar": "~2.0.0",
-      "flowpack/listable": "~2.0.0",
-      "moc/notfound": "~3.0.0",
-      "neos/redirecthandler-neosadapter": "~2.0",
-      "neos/redirecthandler-databasestorage": "~2.0"
+        "flownative/google-cloudstorage": "^4.0",
+        "rokka/imagine-vips": "^0.1"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require-dev": {
-       "neos/buildessentials": "~4.0",
-       "mikey179/vfsstream": "~1.6",
-       "phpunit/phpunit": "~4.8 || ~5.2.0"
+        "neos/buildessentials": "^4.0",
+        "mikey179/vfsstream": "^1.6",
+        "phpunit/phpunit": "^7.0"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./DistributionPackages/*"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/kdambekalns/OutOfBandRendering.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/kdambekalns/Neos.MarketPlace.git"
+        }
+    ],
     "scripts": {
         "post-update-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
         "post-install-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",

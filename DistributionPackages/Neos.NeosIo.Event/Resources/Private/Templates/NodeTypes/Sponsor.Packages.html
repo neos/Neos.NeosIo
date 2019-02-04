@@ -1,0 +1,36 @@
+{namespace neos=Neos\Neos\ViewHelpers}
+
+<div{attributes -> f:format.raw()}>
+	{aboveListing -> f:format.raw()}
+	<f:if condition="{packagesToRender}">
+		<div class="g">
+			<f:for each="{packagesToRender}" as="package" iteration="iterator">
+				<f:cycle values="{0: 'first', 1: 'second', 2: 'third'}" as="cycle">
+					<div class="gi u-w1/1 u-wm6/12 u-wl4/12 packageListing {cycle}{f:if(condition: iterator.isOdd, then: ' odd', else: ' even')}">
+						<div class="blueBox">
+							<div class="boxHeader">
+								<h2 class="h4">{package.properties.title}</h2>
+							</div>
+								<div class="boxBody">
+									<h3 class="h5">Opportunities</h3>
+									<hr>
+									<f:render partial="Opportunities.html" arguments="{freeTickets: package.properties.freeTickets, logoOnFrontpageP : package.properties.logoOnFrontpageP, logoOnFrontpageV: package.properties.logoOnFrontpageV, logoInFooterP : package.properties.logoInFooterP, logoInFooterV: package.properties.logoInFooterV, opportunities : package.properties.opportunities}" />
+
+									<f:if condition="{package.properties.costs}">
+										<span class="costs"><f:format.currency currencySign="€" decimalSeparator="," thousandsSeparator=".">{package.properties.costs}</f:format.currency></span>
+									</f:if>
+
+									<div class="callToAction">
+										<neos:link.node node="{package}" class="btn btn--solidSecondary">
+											<div class="btn__content">Explore the details</div>
+										</neos:link.node>
+									</div>
+							</div>
+						</div>
+					</div>
+				</f:cycle>
+			</f:for>
+		</div>
+	</f:if>
+	{main -> f:format.raw()}
+</div>

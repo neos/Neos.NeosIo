@@ -1,0 +1,16 @@
+prototype(Neos.NeosIo:CrowdGroup) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/CrowdGroup.html'
+
+    group = ${group}
+    @context.group = ${group}
+
+    attributes = Neos.Fusion:Attributes {
+        class = 'team-listing__group'
+    }
+
+    memberListItems = Neos.Fusion:Collection {
+        collection = ${group.members}
+        itemRenderer = Neos.NeosIo:CrowdUserListItem
+        itemName = 'userName'
+    }
+}

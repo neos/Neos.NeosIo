@@ -1,0 +1,17 @@
+prototype(Neos.NodeTypes:Image) {
+    partialRootPath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Partials'
+
+    title.@process.filenameFallback = ${String.isBlank(value) ? node.properties.image.label : value}
+
+    alternativeText = ${node.properties.alternativeText}
+    alternativeText {
+        @process.titleFallback = ${String.isBlank(value) ? node.properties.title : value}
+        @process.filenameFallback = ${String.isBlank(value) ? node.properties.image.label : value}
+    }
+
+    imageClassName.@process.addImageStyle = ${value + ' ' + q(node).property('imageStyle')}
+    imageClassName.@process.addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
+
+    maxheight = ${q(node).property('customHeight') ? q(node).property('customHeight') : this.maximumHeight}
+    maxWidth = ${q(node).property('customHeight') ? null : this.maximumWidth}
+}

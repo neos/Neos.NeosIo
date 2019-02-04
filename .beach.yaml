@@ -1,16 +1,18 @@
-php:
-  version: '7.0'
-build:
-  script:
-    - nvm install 4.4.2
-    - nvm use 4.4.2
-    - cd $BEACH_BUILD_DIR/Packages/Application/Neos.MarketPlace
-    - npm install
-    - cd $BEACH_BUILD_DIR/Packages/Sites/Neos.NeosIo
-    - npm install
-    - npm run build
-    - npm run minify
-run:
-  cronJobs:
-    hourly:
-      - $BEACH_APPLICATION_DIR/flow marketplace:sync > $BEACH_APPLICATION_DIR/Data/Logs/MarketPlaceSync.log
+builder:
+  steps:
+    build-assets:
+      executor: docker
+      image: 'flownative/beach-build-toolbox-frontend:latest'
+      script:
+        - cd ${BEACH_BUILD_WORKSPACE_PATH}/DistributionPackages/Neos.NeosConIo
+        - npm install
+        - npm run build:sass
+        - npm run minify:styles
+        - cd ${BEACH_BUILD_WORKSPACE_PATH}/Packages/Application/Neos.MarketPlace
+        - npm install
+        - npm run build
+        - npm run minify
+        - cd ${BEACH_BUILD_WORKSPACE_PATH}/DistributionPackages/Neos.NeosIo
+        - npm install
+        - npm run build
+        - npm run minify

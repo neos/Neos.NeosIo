@@ -1,0 +1,46 @@
+prototype(Neos.NeosConIo:Talks) < prototype(Neos.Fusion:Component) {
+    talks = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').filterByReference('event', event).get()}
+
+    renderer = afx`
+        <Neos.Fusion:Collection collection={props.talks} itemName="talk" @children="itemRenderer">
+            <li data-date={Date.format(q(talk).property('talkDate'), 'y-m-d')} data-room-id={talk.properties.room.identifier} class="talk">
+                <header class="talk__header">
+                    <div class="talk__time">
+                        <i class="fa fa-clock-o"></i>
+                        {Date.format(q(talk).property('talkDate'), 'G:i')}
+                    </div>
+                    <Neos.NeosConIo:ScheduleSpeakerImages talk={talk} />
+                    <h4 class="talk__title">{q(talk).property('title')}</h4>
+                </header>
+
+                <div class="talk__description">
+                    {q(talk).property('text')}
+                </div>
+            </li>
+        </Neos.Fusion:Collection>
+    `
+}
+
+prototype(Neos.NeosConIo:ScheduleSpeakerImages) < prototype(Neos.Fusion:Component)  {
+    speakers = ${q(talk).property('speakers')}
+
+    renderer = afx`
+        <div class="talk__speaker-images">
+            <Neos.Fusion:Collection collection={props.speakers} itemName="speaker" @children="itemRenderer">
+                <Neos.NeosConIo:ScheduleSpeakerImage speaker={speaker} />
+            </Neos.Fusion:Collection>
+        </div>
+    `
+}
+prototype(Neos.NeosConIo:ScheduleSpeakerImage) < prototype(Neos.Fusion:Component)  {
+    imageUri = Neos.Neos:ImageUri {
+        asset = ${q(speaker).property('image')}
+        maximumWidth = 50
+        maximumHeight = 50
+        allowCropping = true
+    }
+
+    renderer = afx`
+        <img src={props.imageUri} height="50" width="50" class="talk__speaker-image" alt={speaker.properties.title} title={speaker.properties.title} @if.imageIsSet={props.imageUri} />
+    `
+}

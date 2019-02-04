@@ -1,0 +1,49 @@
+'Neos.NeosConIo:Event':
+  superTypes:
+    'Neos.Neos:Document': true
+    'Neos.NeosConIo:Mixin.EventRelated': true
+  ui:
+    label: "Event"
+    icon: 'icon-calendar'
+    group: neoscon
+    inspector:
+      groups:
+        event:
+          label: 'Event'
+          icon: 'calendar-alt'
+          position: 20
+  properties:
+    eventDate:
+      type: DateTime
+      placeholder: 'Select a date...'
+      ui:
+        label: 'Event date'
+        inspector:
+          group: 'event'
+          editorOptions:
+            format: 'd.m.Y'
+    location:
+      type: string
+      ui:
+        label: 'Location'
+        inspector:
+          group: 'event'
+          editorOptions:
+            placeholder: 'Event Location...'
+    description:
+      type: string
+      ui:
+        label: 'Description'
+        inspector:
+          group: 'event'
+          editor: 'Neos.Neos/Inspector/Editors/TextAreaEditor'
+          editorOptions:
+            placeholder: 'Description'
+            rows: 4
+  childNodes:
+    'rooms':
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosConIo:Room': true

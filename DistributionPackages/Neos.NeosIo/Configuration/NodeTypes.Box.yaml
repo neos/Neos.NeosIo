@@ -1,0 +1,40 @@
+###########################################
+# A box to slightly highlight certain contents.
+###########################################
+
+'Neos.NeosIo:Box':
+  superTypes:
+    'Neos.Neos:Content': true
+  childNodes:
+    contents:
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NodeTypes:Text': true
+          'Neos.NodeTypes:ContentReferences': true
+          'Neos.NeosIo:Button': true
+          'Neos.NeosIo:CountUp': true
+  ui:
+    label: Box
+    icon: icon-archive
+    group: structure
+    inlineEditable: true
+  properties:
+    style:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Box Style'
+        reloadIfChanged: true
+        inspector:
+          group: appearance
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              '':
+                label: Normal
+              'info':
+                label: Info
+              'attention':
+                label: Attention

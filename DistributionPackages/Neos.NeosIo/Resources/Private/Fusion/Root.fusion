@@ -1,0 +1,17 @@
+#
+# Root Fusion template for the Neos_io site
+# Also includes basic DocumentNodeTypes
+#
+
+include: Documents/**/*.fusion
+include: NodeTypes/**/*.fusion
+include: FusionObjects/**/*.fusion
+
+root {
+    postRss {
+        position = 'before format'
+        condition = ${request.parentRequest.uri.path == '/rss.xml'}
+        renderPath = '/postRss'
+    }
+}
+

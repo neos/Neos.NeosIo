@@ -1,8 +1,0 @@
-prototype(Neos.NeosIo.Event:Menu) < prototype(Menu) {
-	templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/TypoScriptObjects/Menu.html'
-	startingPoint = ${site}
-	maximumLevels = 1
-	attributes.class = 'nav eventNav'
-	filter = 'Neos.Neos:Document, !Neos.NeosIo:Reference'
-	@cache.entryIdentifier.documentNode = ${site}
-}

@@ -1,0 +1,28 @@
+/**
+* NodeTypes around References
+*/
+
+
+prototype(Neos.NeosIo:Reference) < prototype(Neos.NeosIo:DefaultPage) {
+    body {
+        content {
+            main = Neos.NeosIo:ReferenceItem
+        }
+    }
+
+    @cache {
+        entryTags {
+            reference = 'NodeTypes_Neos.NeosIo:Reference'
+        }
+    }
+}
+
+prototype(Neos.NeosIo:ReferenceItem) < prototype(Neos.Neos:Content) {
+    main = Neos.Neos:ContentCollection {
+        @cache.mode = 'cached'
+        nodePath = 'main'
+    }
+}
+
+
+prototype(Neos.NeosIo:ReferenceType) < prototype(Neos.NeosIo:DefaultPage)

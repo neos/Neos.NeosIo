@@ -1,0 +1,26 @@
+prototype(Neos.NeosIo:DocumentationPage) < prototype(Neos.NeosIo:DefaultPage) {
+    body {
+        templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/DocumentationPage.html'
+
+        parts {
+            breadcrumb {
+                attributes.class = 'nav nav--breadcrumb-ingrid'
+            }
+            languages = Neos.Neos:DimensionsMenu {
+                templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/DocumentationPageDimensionsMenu.html'
+                attributes.class = 'nav nav--language-switcher'
+            }
+            secondaryMenu = Neos.NeosIo:DocumentationPageSubMenu
+        }
+
+        content {
+            keyVisual.content = Neos.Neos:ContentCollection {
+                nodePath = 'keyVisual'
+            }
+
+            main = Neos.Neos:PrimaryContent {
+                nodePath = 'main'
+            }
+        }
+    }
+}

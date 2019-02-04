@@ -1,0 +1,24 @@
+##
+# Modify base types
+#
+
+'Neos.Neos:Document':
+  constraints:
+    nodeTypes:
+      'Neos.NeosConIo:Mixin.EventRelated': false
+
+'Neos.NeosIo:RootPage':
+  constraints:
+    nodeTypes:
+      'Neos.NeosConIo:Speakers': true
+      'Neos.NeosConIo:Events': true
+      'Neos.NeosConIo:Talks': true
+
+'Neos.NeosIo:SemanticSection':
+  childNodes:
+    contents:
+      constraints:
+        nodeTypes:
+          'Neos.NeosConIo:SpeakerList': true
+          'Neos.NeosConIo:Schedule': true
+

@@ -1,0 +1,29 @@
+prototype(Neos.NeosIo:TeamListing) < prototype(Neos.Neos:Content) {
+    sectionName = 'Main'
+    attributes.class = 'vertical-feature-block'
+
+    teamListingFilter = ${q(node).property('teamListingFilter')}
+    @context.teamListingFilter = ${this.teamListingFilter}
+
+    teamName = ${q(node).property('teamName')}
+    @context.teamName = ${this.teamName}
+
+    teamFilterOrNameSet = ${!String.isBlank(teamListingFilter) || !String.isBlank(teamName)}
+
+    groups = Neos.Fusion:Collection {
+        collection = ${q(site).crowdGroups().filter(!String.isBlank(teamName) ? '[name = ' + teamName + ']' : '[neos_group_type = ' + teamListingFilter + ']').get()}
+        itemRenderer = Neos.NeosIo:CrowdGroup
+        itemName = 'group'
+    }
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            documentNode = ${documentNode}
+            node = ${node}
+        }
+        entryTags {
+            1 = ${'Node_' + node.identifier}
+        }
+    }
+}

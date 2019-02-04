@@ -1,0 +1,16 @@
+prototype(Neos.NeosIo:PostArchive) >
+prototype(Neos.NeosIo:PostArchive) < prototype(Flowpack.Listable:PaginatedCollection) {
+    collection = ${q(site).find('[instanceof Neos.NeosIo:Post]').get()}
+    itemsPerPage = 15
+    maximumNumberOfLinks = 10
+
+    prototype(Flowpack.Listable:Collection) {
+        listClass = 'u-resetList siteWrapper siteWrapper--small'
+        itemClass = 'u-mb1/1'
+    }
+    prototype(Flowpack.Listable:Pagination) {
+        class = 'paginator'
+        itemClass = 'paginator'
+        currentItemClass = 'paginator__current'
+    }
+}

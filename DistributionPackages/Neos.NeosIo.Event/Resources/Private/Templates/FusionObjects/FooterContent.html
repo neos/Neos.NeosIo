@@ -1,0 +1,36 @@
+{namespace media=Neos\Media\ViewHelpers}
+<f:for each="{organizersToRender}" as="organizers">
+	<div class="g">
+		<f:if condition="{organizersToRender -> f:count()} > 1">
+			<f:then>
+				<h3 class="h1 typo3-neos-alignment-center">Organizers</h3>
+			</f:then>
+			<f:else>
+				<h3 class="h1 typo3-neos-alignment-center">Organizer</h3>
+			</f:else>
+		</f:if>
+		<div class="gi u-w1/1 u-wm6/12 u-wl6/12">
+			<f:if condition="{organizers.properties.logo}">
+				<f:if condition="{organizers.properties.website}">
+					<f:then>
+						<a href="{organizers.properties.website}">
+							<figure>
+								<media:image image="{organizers.properties.logo}" title="{organizers.properties.title}" alt="{organizers.properties.title}" maximumWidth="700" maximumHeight="500" allowUpScaling="false" />
+							</figure>
+						</a>
+					</f:then>
+					<f:else>
+						<figure>
+							<media:image image="{organizers.properties.logo}" title="{organizers.properties.title}" alt="{organizers.properties.title}" maximumWidth="700" maximumHeight="500" allowUpScaling="false" />
+						</figure>
+					</f:else>
+				</f:if>
+			</f:if>
+		</div>
+		<div class="gi u-w1/1 u-wm6/12 u-wl6/12">
+			<f:if condition="{organizers.properties.description}">
+				<p>{organizers.properties.description -> f:format.raw()}</p>
+			</f:if>
+		</div>
+	</div>
+</f:for>

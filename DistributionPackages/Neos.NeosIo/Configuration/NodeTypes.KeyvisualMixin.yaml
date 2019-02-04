@@ -1,0 +1,44 @@
+###########################################
+# Mixin which is responsible for all options
+# regarding the document keyvisual.
+###########################################
+
+'Neos.NeosIo:KeyVisualMixin':
+  abstract: TRUE
+  childNodes:
+    'keyVisual':
+      type: 'Neos.Neos:ContentCollection'
+      position: 'before main'
+      constraints:
+        nodeTypes:
+          '*': FALSE
+          'Neos.NodeTypes:Headline': TRUE
+          'Neos.NodeTypes:ContentReferences': TRUE
+          'Neos.NeosIo:BrandLogo': TRUE
+          'Neos.NeosIo:ChoiceButtons': TRUE
+          'Neos.NeosIo:Button': TRUE
+          'Neos.NeosIo:HeadlineSlider': TRUE
+          'Neos.NodeTypes:TwoColumn': TRUE
+          'Neos.NodeTypes:Image': TRUE
+
+  ui:
+    inspector:
+      groups:
+        'keyVisual':
+          label: 'Keyvisual'
+          position: 10
+  properties:
+    'keyVisualImage':
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Image for the Keyvisual-Section'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'keyVisual'
+          position: 1
+    'isKeyVisualContentsInverted':
+      type: boolean
+      ui:
+        label: 'Invert the text-color for the Keyvisual contents'
+        inspector:
+          group: 'keyVisual'

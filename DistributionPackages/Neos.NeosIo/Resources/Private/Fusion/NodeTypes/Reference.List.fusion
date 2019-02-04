@@ -1,0 +1,82 @@
+prototype(Neos.NeosIo:Reference.List) < prototype(Neos.Neos:Content) {
+    orderOptions = ${{featured: 'Featured', datePublished: 'Publish date', launchDate: 'Launch date', projectVolume: 'Project volume'}}
+    defaultOrder = ${Array.keys(this.orderOptions)[0]}
+
+    projectVolumeOptions = ${{'5': '< 100 h', '10': '100 - 499h', '15': '500 - 999h', '20': '1000 - 3000h', '25': '> 3000h'}}
+
+    referenceType = ${request.arguments.referenceType}
+    projectVolume = ${request.arguments.projectVolume}
+    searchTerm = ${request.arguments.search}
+    order = ${Array.indexOf(Array.keys(this.orderOptions), request.arguments.order) != -1 ? request.arguments.order : this.defaultOrder}
+    limit = ${request.arguments.limit}
+
+    @context {
+        defaultOrder = ${this.defaultOrder}
+        referenceType = ${this.referenceType}
+        projectVolume = ${this.projectVolume}
+        searchTerm = ${this.searchTerm}
+        order = ${this.order}
+        limit = ${this.limit}
+    }
+
+    paginationConfiguration = Neos.Fusion:RawArray {
+        itemsPerPage = 24
+        insertAbove = ${false}
+        insertBelow = ${true}
+        maximumNumberOfLinks = 3
+    }
+
+    referenceTypes = ${q(site).find('[instanceof Neos.NeosIo:ReferenceType]').sort('title', 'ASC').get()}
+
+    references = ${Search.query(site).nodeType('Neos.NeosIo:Reference')}
+    references.@process {
+        fulltext = ${String.isBlank(searchTerm) ? value : value.fulltext(searchTerm + '*')}
+        referenceType = ${String.isBlank(referenceType) ? value : value.exactMatch('projectType', referenceType)}
+        projectVolume = ${String.isBlank(projectVolume) ? value : value.exactMatch('projectVolume', projectVolume)}
+
+        // Do the ordering as selected by the user or use default ordering if nothing is selected
+        order = ${String.isBlank(order) ? value.sortDesc(defaultOrder) : value.sortDesc(order)}
+
+        // Always have a secondary sort by publish date
+        orderByPublishDate = ${value.sortDesc('datePublished')}
+
+        limit = ${String.isBlank(limit) ? value.limit(20) : value.limit(limit)}
+    }
+
+    itemRenderer = Neos.NeosIo:Reference.List.Item
+
+    @cache {
+        mode = 'uncached'
+        context {
+            1 = 'site'
+            2 = 'node'
+            3 = 'documentNode'
+        }
+    }
+}
+
+prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Reference.List.Item.html'
+    title = ${q(node).property('title')}
+    alternativeText = ${q(node).property('title')}
+    image = ${q(node).property('image')}
+    url = ${q(node).property('url')}
+    datePublished = ${q(node).property('datePublished')}
+    launchDate = ${q(node).property('launchDate')}
+    projectVolume = ${q(node).property('projectVolume')}
+    projectVolume.@process {
+        isKnown = ${value > 1 ? value : false}
+    }
+    projectType = ${q(q(node).property('projectType')).property('title')}
+    featured = ${q(node).property('featured')}
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryTags {
+            1 = ${'Node_' + node.identifier}
+        }
+    }
+}

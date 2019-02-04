@@ -1,0 +1,38 @@
+.featureGroup {
+  margin: 2em 0;
+}
+
+.featureGroup__header {
+  margin: 1em 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.featureGroup__image {
+  width: 60px;
+  padding-right: 20px;
+}
+
+.featureGroup__image > img {
+  width: 60px;
+}
+
+.featureGroup__title {
+  flex-grow: 1;
+  width: calc(100% - 80px);
+  font-weight: bold;
+  font-size: 1.4em;
+  color: map-get($brand-colors, primary);
+}
+
+.featureGroup__image + div.neos-inline-editable {
+  display: inline-block;
+}
+
+.featureGroup__description {
+  margin: 1em 0;
+}
+
+.featureGroup__features {
+  clear: left;
+}

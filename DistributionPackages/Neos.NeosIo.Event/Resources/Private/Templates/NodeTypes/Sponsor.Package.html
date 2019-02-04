@@ -1,0 +1,31 @@
+
+<div{attributes -> f:format.raw()}>
+	<div class="boxAside">
+		<div class="main">
+			<h1>{title}</h1>
+			{main -> f:format.raw()}
+		</div>
+		<div class="aside">
+			<div class="blueBox">
+				<div class="boxHeader smaller">
+					<h2 class="h4">Opportunities</h2>
+				</div>
+				<div class="boxBody">
+					<f:render partial="Opportunities.html" arguments="{freeTickets: freeTickets, logoOnFrontpageP : logoOnFrontpageP, logoOnFrontpageV: logoOnFrontpageV, logoInFooterP : logoInFooterP, logoInFooterV: logoInFooterV, opportunities : opportunities, detail: true}" />
+
+					<f:if condition="{package.properties.costs}">
+						<span class="costs"><f:format.currency currencySign="€" decimalSeparator="," thousandsSeparator=".">{package.properties.costs}</f:format.currency></span>
+					</f:if>
+
+					<f:if condition="{email}">
+						<div class="callToAction">
+							<a href="mailto:{email}" class="btn btn--solidSecondary">
+								<div class="btn__content">Contact Us</div>
+							</a>
+						</div>
+					</f:if>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,74 @@
+version: '3'
+
+networks:
+  local_beach:
+    external:
+      name: local_beach
+
+services:
+  webserver:
+    image: ${BEACH_WEBSERVER_IMAGE:-flownative/beach-nginx}:${BEACH_WEBSERVER_IMAGE_VERSION:-latest}
+    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_webserver
+    networks:
+      - local_beach
+    ports:
+      - "80"
+    volumes:
+      - .:/application:delegated
+    environment:
+      - VIRTUAL_HOST=${BEACH_VIRTUAL_HOSTS:?Please specify Beach virtual hosts as BEACH_VIRTUAL_HOSTS}
+      - BEACH_PHP_FPM_HOST=${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_php.local_beach
+      - BEACH_FLOW_BASE_CONTEXT=${BEACH_FLOW_BASE_CONTEXT:-Development}
+      - BEACH_FLOW_SUB_CONTEXT=${BEACH_FLOW_SUB_CONTEXT:-Instance}
+      - BEACH_PHP_MEMORY_LIMIT=${BEACH_PHP_MEMORY_LIMIT:-750M}
+
+  php:
+    image: ${BEACH_PHP_IMAGE:-flownative/beach-phpfpm}:${BEACH_PHP_IMAGE_VERSION:-latest}
+    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_php
+    networks:
+      - local_beach
+    ports:
+      - "${BEACH_SSH_PORT:-2222}:22"
+    depends_on:
+      - webserver
+      - redis
+    volumes:
+      - ./Data/Persistent:/application/Data/Persistent:delegated
+      - ./Data/Logs:/application/Data/Logs:delegated
+      - ./Data/DoctrineMigrations:/application/Data/DoctrineMigrations
+      - .:/application-on-host:delegated
+      - ./.LocalBeach/secrets:/secrets
+      - ./.LocalBeach/home:/home/beach
+      - ./Web:/application/Web:delegated
+    environment:
+      - BEACH_PHP_FPM_ENABLE=true
+      - BEACH_REMOTE_ENABLE=true
+      - BEACH_REMOTE_AUTHORIZED_KEYS=${BEACH_REMOTE_AUTHORIZED_KEYS:?Please add your base64-encoded public ssh key to BEACH_REMOTE_AUTHORIZED_KEYS, for example in your global shell profile}
+      - BEACH_REMOTE_ENVIRONMENT_VARIABLE_NAMES=${BEACH_REMOTE_ENVIRONMENT_VARIABLE_NAMES:-RkxPV19DT05URVhUCkJFQUNIX0ZMT1dfU1VCX0NPTlRFWFQKQkVBQ0hfREVQTE9ZTUVOVF9KT0JfSURFTlRJRklFUgpCRUFDSF9JTlNUQU5DRV9JREVOVElGSUVSCkJFQUNIX1BIUF9NRU1PUllfTElNSVQKQkVBQ0hfUEhQX1RJTUVaT05FCkJFQUNIX0ZMT1dfU1VCX0NPTlRFWFQKQkVBQ0hfREFUQUJBU0VfREFUQV9TT1VSQ0VfTkFNRQpCRUFDSF9EQVRBQkFTRV9IT1NUCkJFQUNIX0RBVEFCQVNFX05BTUUKQkVBQ0hfREFUQUJBU0VfVVNFUk5BTUUKQkVBQ0hfREFUQUJBU0VfUEFTU1dPUkQKQkVBQ0hfREFUQUJBU0VfUE9SVApCRUFDSF9XRUJTRVJWRVJfUE9SVApCRUFDSF9TSVRFX1VSSV9TQ0hFTUUKQkVBQ0hfU0lURV9QUklNQVJZX0RPTUFJTgpCRUFDSF9TSVRFX0JBU0VfVVJJCkJFQUNIX1JFRElTX0hPU1QKQkVBQ0hfUkVESVNfUEFTU1dPUkQKQkVBQ0hfUkVESVNfUE9SVApCRUFDSF9HT09HTEVfQ0xPVURfU1RPUkFHRV9TRVJWSUNFX0FDQ09VTlRfSURFTlRJRklFUgpCRUFDSF9HT09HTEVfQ0xPVURfU1RPUkFHRV9TRVJWSUNFX0FDQ09VTlRfUFJJVkFURV9LRVkKQkVBQ0hfR09PR0xFX0NMT1VEX1NUT1JBR0VfU1RPUkFHRV9CVUNLRVQKQkVBQ0hfR09PR0xFX0NMT1VEX1NUT1JBR0VfVEFSR0VUX0JVQ0tFVApCRUFDSF9HT09HTEVfQ0xPVURfU1RPUkFHRV9SRUdJT04KQkVBQ0hfUEhQX1RJTUVaT05F}
+      - BEACH_FLOW_BASE_CONTEXT=${BEACH_FLOW_BASE_CONTEXT:-Development}
+      - BEACH_FLOW_SUB_CONTEXT=${BEACH_FLOW_SUB_CONTEXT:-Instance}
+      - BEACH_DATABASE_HOST=${BEACH_DATABASE_HOST:-local_beach_database.local_beach}
+      - BEACH_DATABASE_PORT=${BEACH_DATABASE_PORT:-3306}
+      - BEACH_DATABASE_NAME=${BEACH_PROJECT_NAME}
+      - BEACH_DATABASE_USERNAME=${BEACH_DATABASE_USERNAME:-root}
+      - BEACH_DATABASE_PASSWORD=${BEACH_DATABASE_PASSWORD:-password}
+      - BEACH_REDIS_HOST=${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_redis.local_beach
+      - BEACH_REDIS_PORT=${BEACH_REDIS_PORT:-6379}
+      - BEACH_REDIS_PASSWORD=${BEACH_REDIS_PASSWORD:-password}
+      - BEACH_PHP_MEMORY_LIMIT=${BEACH_PHP_MEMORY_LIMIT:-750M}
+      - BEACH_SYNCD_ENABLE=true
+      - BEACH_APPLICATION_USER_SERVICE_ENABLE=false
+
+  redis:
+    image: ${BEACH_REDIS_IMAGE:-flownative/beach-redis}:${BEACH_REDIS_IMAGE_VERSION:-latest}
+    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_redis
+    networks:
+      - local_beach
+    environment:
+      - REDIS_MAX_MEMORY=${BEACH_REDIS_MAX_MEMORY:-50000000}
+      - REDIS_PASSWORD=${BEACH_REDIS_PASSWORD:-password}
+    healthcheck:
+      test: "/healthcheck.sh --liveness"
+      interval: 1s
+      timeout: 5s
+      retries: 120

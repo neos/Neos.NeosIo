@@ -1,0 +1,126 @@
+###########################################
+# The general NodeType which is responsible
+# for the layout and structure of the page.
+###########################################
+
+'Neos.NeosIo:Stage':
+  superTypes:
+    'Neos.Neos:Content': true
+  childNodes:
+    contents:
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NodeTypes:TwoColumn': true
+          'Neos.NodeTypes:ThreeColumn': true
+          'Neos.NodeTypes:FourColumn': true
+          'Neos.NodeTypes:Text': true
+          'Neos.NodeTypes:Image': true
+          'Neos.NodeTypes:TextWithImage': true
+          'Neos.NodeTypes:Headline': true
+          'Neos.NodeTypes:Html': true
+          'Neos.NodeTypes:ContentReferences': true
+          'Neos.NeosIo:Box': true
+          'Neos.NeosIo:Button': true
+          'Neos.NeosIo:ButtonDimensionAware': true
+          'Neos.NeosIo:ChoiceButtons': true
+          'Neos.NeosIo:Quote': true
+          'Neos.NeosIo:SemanticSection': true
+          'Neos.NeosIo:Youtube': true
+          'Neos.NeosIo:FundingBadges': true
+          'Neos.NeosIo:BadgeGrid': true
+          'Neos.NeosIo:ImageTeaser': true
+  ui:
+    label: Stage
+    icon: icon-tasks
+    group: structure
+    inlineEditable: true
+  properties:
+    isContentTextInverted:
+      type: boolean
+      defaultValue: false
+      ui:
+        reloadIfChanged: true
+        label: 'Invert Text-Color'
+        inspector:
+          group: content
+    isContentExtraPadded:
+      type: boolean
+      defaultValue: false
+      ui:
+        reloadIfChanged: true
+        label: 'Create more padding around the contents'
+        inspector:
+          group: content
+    backgroundColor:
+      type: string
+      defaultValue: bright
+      ui:
+        label: 'Background color'
+        reloadIfChanged: true
+        inspector:
+          group: background
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              bright:
+                label: Bright
+              dark:
+                label: Dark
+              primary:
+                label: Primary
+              secondary:
+                label: Secondary
+              teritary:
+                label: Teritary
+    backgroundImage:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        reloadIfChanged: true
+        label: 'Background image'
+        inspector:
+          group: background
+    backgroundShadePercentage:
+      type: string
+      defaultValue: '0'
+      ui:
+        label: 'Background image shading'
+        reloadIfChanged: true
+        inspector:
+          group: background
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              0:
+                label: None
+              20:
+                label: 20%
+              40:
+                label: 40%
+              60:
+                label: 60%
+              80:
+                label: 80%
+    backgroundImageFixed:
+      type: boolean
+      ui:
+        reloadIfChanged: true
+        label: 'Background image fixed?'
+        inspector:
+          group: background
+
+    alternativeText:
+      type: string
+      ui:
+        label: 'Alternative text for background image'
+        inspector:
+          group: background
+          position: 100
+    title:
+      type: string
+      ui:
+        label: 'Title for background image'
+        inspector:
+          group: background
+          position: 150
