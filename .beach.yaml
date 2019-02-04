@@ -6,8 +6,12 @@ builder:
       script:
         - cd ${BEACH_BUILD_WORKSPACE_PATH}/DistributionPackages/Neos.NeosConIo
         - npm install
+        - npm run build:sass
+        - npm run minify:styles
         - cd ${BEACH_BUILD_WORKSPACE_PATH}/Packages/Application/Neos.MarketPlace
         - npm install
+        - npm run build
+        - npm run minify
         - cd ${BEACH_BUILD_WORKSPACE_PATH}/DistributionPackages/Neos.NeosIo
         - npm install
         - npm run build
