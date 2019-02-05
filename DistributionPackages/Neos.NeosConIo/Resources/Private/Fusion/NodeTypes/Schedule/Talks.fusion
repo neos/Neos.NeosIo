@@ -1,4 +1,4 @@
-prototype(Neos.NeosConIo:Talks) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosConIo:Schedule.Talks) < prototype(Neos.Fusion:Component) {
     talks = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').filterByReference('event', event).get()}
 
     renderer = afx`
