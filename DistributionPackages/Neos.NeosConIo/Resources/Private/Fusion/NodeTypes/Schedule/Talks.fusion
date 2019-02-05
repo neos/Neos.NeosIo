@@ -4,7 +4,7 @@ prototype(Neos.NeosConIo:Schedule.Talks) < prototype(Neos.Fusion:Component) {
     talks = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').filterByReference('event', event).filterOnDay('talkDate', day).get()}
     breaksInSchedule = ${q(event).find('[instanceof Neos.NeosConIo:BreakInSchedule]').filterOnDay('talkDate', day).get()}
 
-    talksAndBreaks = ${q(this.talks).add(this.breaksInSchedule).sort('talkDate', 'ASC')}
+    talksAndBreaks = ${q(this.talks).add(this.breaksInSchedule).sortMultiple('talkDate', 'ASC')}
     rooms = ${q(event).find('[instanceof Neos.NeosConIo:Room]').get()}
 
     renderer = afx`
