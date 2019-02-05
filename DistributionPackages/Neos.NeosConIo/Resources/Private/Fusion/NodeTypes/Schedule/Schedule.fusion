@@ -21,22 +21,23 @@ prototype(Neos.NeosConIo:Schedule) < prototype(Neos.Neos:ContentComponent) {
             3 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event')}
             4 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Room')}
             5 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Speaker')}
+            6 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:BreakInSchedule')}
         }
     }
 
+    days = ${days}
+
     renderer = afx`
         <div class="schedule" data-component="Schedule">
-            <header class="schedule__header">
-                <div class="days">
-                    <Neos.NeosConIo:Days />
+            <Neos.Fusion:Collection collection={props.days} itemName="day" @children="itemRenderer">
+                <h3 class="conferenceDayTitle">Conference Day {iterator.cycle}</h3>
+                <div class="conferenceDaySubtitle">
+                    {Date.format(day, 'd M Y')}
                 </div>
-                <div class="rooms">
-                   <Neos.NeosConIo:Rooms />
+                <div class="talks">
+                    <Neos.NeosConIo:Schedule.Talks day={day} />
                 </div>
-            </header>
-            <ul class="talks">
-                <Neos.NeosConIo:Schedule.Talks />
-            </ul>
+            </Neos.Fusion:Collection>
         </div>
     `
 }

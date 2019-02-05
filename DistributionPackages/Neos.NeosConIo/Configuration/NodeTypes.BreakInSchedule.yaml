@@ -1,0 +1,35 @@
+'Neos.NeosConIo:BreakInSchedule':
+  superTypes:
+    'Neos.Neos:Content': true
+  label: "${(q(node).property('title') + ' (' + q(node).property('room.name') + ')') || node.nodeType.label}"
+  ui:
+    label: 'Break in schedule'
+    icon: 'icon-room'
+    group: neoscon
+    inspector:
+      groups:
+        'breakSettings':
+          label: 'Break settings'
+  properties:
+    title:
+      type: string
+      ui:
+        label: 'Title'
+        inspector:
+          group: 'breakSettings'
+    talkDate:
+      type: DateTime
+      ui:
+        label: 'Date & Time'
+        reloadIfChanged: true
+        inspector:
+          group: 'breakSettings'
+          editor: 'Neos.Neos/Inspector/Editors/DateTimeEditor'
+          editorOptions:
+            format: 'd.m.Y G:i'
+    text:
+      type: string
+      ui:
+        label: 'Additional Text'
+        inspector:
+          group: 'breakSettings'

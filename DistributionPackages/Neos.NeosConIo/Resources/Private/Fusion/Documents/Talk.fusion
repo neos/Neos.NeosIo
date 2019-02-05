@@ -17,6 +17,8 @@ prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
             collection = ${node.properties.speakers}
         }
 
+        talkDate = ${Neos.NeosConIo.Date.timezone(q(node).property('talkDate'), 'Europe/Berlin')}
+
         talkListVisible = ${node.properties.relatedTalks && Array.length(node.properties.relatedTalks) > 0}
 
         talkList = Neos.NeosConIo:TalkList {
