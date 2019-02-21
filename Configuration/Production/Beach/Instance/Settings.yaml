@@ -25,7 +25,25 @@ Neos:
         dbname: '%env:BEACH_DATABASE_NAME%'
         user: '%env:BEACH_DATABASE_USERNAME%'
         password: '%env:BEACH_DATABASE_PASSWORD%'
-        unix_socket: '%env:BEACH_DATABASE_SOCKET%'
+
+    resource:
+      storages:
+        googlePersistentResourcesStorage:
+          storage: 'Flownative\Google\CloudStorage\GcsStorage'
+          storageOptions:
+            bucket: '%env:BEACH_GOOGLE_CLOUD_STORAGE_PUBLIC_BUCKET%'
+            keyPrefix: '/'
+      collections:
+        persistent:
+          storage: 'googlePersistentResourcesStorage'
+          target: 'googlePersistentResourcesTarget'
+      targets:
+        googlePersistentResourcesTarget:
+          target: 'Flownative\Google\CloudStorage\GcsTarget'
+          targetOptions:
+            bucket: '%env:BEACH_GOOGLE_CLOUD_STORAGE_PUBLIC_BUCKET%'
+            keyPrefix: '/'
+            baseUri: '%env:BEACH_PERSISTENT_RESOURCES_BASE_PATH%'
 
   Imagine:
     driver: 'Vips'
