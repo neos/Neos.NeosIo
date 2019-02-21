@@ -4184,67 +4184,73 @@ ul.checked {
     line-height: 55px; }
   .schedule .talk__roomSmallDevice {
     display: none; }
-  .schedule .talk--fullWidthBecauseNoRoom {
-    grid-column-end: 1 / 3; }
+  .schedule .talk {
+    /** Two Room Variant */
+    /** One Room Variant */
+    /** General Settings */ }
+    .schedule .talk--room0.talk--totalRooms2 {
+      grid-column: 1 / 2; }
+    .schedule .talk--room1.talk--totalRooms2 {
+      grid-column: 2 / 3; }
+    .schedule .talk--fullWidthBecauseNoRoom.talk--totalRooms2 {
+      grid-column: 1 / 3; }
+    .schedule .talk--room0.talk--totalRooms1 {
+      grid-column: 1 / 3; }
+    .schedule .talk--fullWidthBecauseNoRoom.talk--totalRooms1 {
+      grid-column: 1 / 3; }
     .schedule .talk--fullWidthBecauseNoRoom .talk__header {
       min-height: 52px; }
     .schedule .talk--fullWidthBecauseNoRoom .talk__title {
       font-style: italic; }
-  .schedule .talk--room0 {
-    grid-column: 1 / 2; }
-  .schedule .talk--room1 {
-    grid-column: 2 / 3; }
-  .schedule .talk--fullWidthBecauseNoRoom {
-    grid-column: 1 / 3; }
-  .schedule .talk__header {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    cursor: pointer;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center; }
-    @media screen and (max-width: 649px) {
-      .schedule .talk__header {
-        -ms-flex-wrap: wrap;
-            flex-wrap: wrap; } }
-    .schedule .talk__header h4 {
-      margin-bottom: 0; }
-  .schedule .talk.visible {
-    display: block; }
-  .schedule .talk__title {
-    -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1; }
-  .schedule .talk__description {
-    -webkit-transition: max-height, 0.5s;
-    -o-transition: max-height, 0.5s;
-    transition: max-height, 0.5s;
-    max-height: 0;
-    overflow: hidden;
-    margin-top: 26px; }
-    .schedule .talk__description.visible {
-      max-height: 1000px; }
-  .schedule .talk__speaker-images {
-    width: 100px;
-    -ms-flex-negative: 0;
-        flex-shrink: 0;
-    margin-right: 13px; }
-  .schedule .talk__speaker-image {
-    height: auto;
-    border-radius: 50%;
-    -ms-flex-item-align: start;
-        align-self: flex-start; }
-  .schedule .talk__time {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: nowrap;
-        flex-wrap: nowrap;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    margin-right: 13px; }
+    .schedule .talk__header {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      cursor: pointer;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
+      @media screen and (max-width: 649px) {
+        .schedule .talk__header {
+          -ms-flex-wrap: wrap;
+              flex-wrap: wrap; } }
+      .schedule .talk__header h4 {
+        margin-bottom: 0; }
+    .schedule .talk.visible {
+      display: block; }
+    .schedule .talk__title {
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1; }
+    .schedule .talk__description {
+      -webkit-transition: max-height, 0.5s;
+      -o-transition: max-height, 0.5s;
+      transition: max-height, 0.5s;
+      max-height: 0;
+      overflow: hidden;
+      margin-top: 26px; }
+      .schedule .talk__description.visible {
+        max-height: 1000px; }
+    .schedule .talk__speaker-images {
+      width: 100px;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+      margin-right: 13px; }
+    .schedule .talk__speaker-image {
+      height: auto;
+      border-radius: 50%;
+      -ms-flex-item-align: start;
+          align-self: flex-start; }
+    .schedule .talk__time {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      margin-right: 13px; }
   .schedule .fa {
     margin-right: 6px; }
   @media only screen and (max-width: 1100px) {

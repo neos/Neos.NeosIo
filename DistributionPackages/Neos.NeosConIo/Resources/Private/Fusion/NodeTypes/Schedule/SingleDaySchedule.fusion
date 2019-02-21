@@ -1,0 +1,42 @@
+prototype(Neos.NeosConIo:SingleDaySchedule) < prototype(Neos.Neos:ContentComponent) {
+    @if.eventNodeIsSet = ${q(event).is('[instanceof Neos.NeosConIo:Event]')}
+    @if.dateIsSet = ${q(q(event).property('eventDate')).is('[instanceof DateTime]')}
+
+    @context {
+        event = ${q(node).property('event')}
+        days = Neos.Fusion:RawArray {
+           day1 = ${q(node).property('event') && q(q(node).property('event')).property('eventDate')}
+        }
+    }
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${node}
+        }
+        tags {
+            1 = ${Neos.Caching.nodeTag(node)}
+            2 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk')}
+            3 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event')}
+            4 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Room')}
+            5 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Speaker')}
+            6 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:BreakInSchedule')}
+        }
+    }
+
+    days = ${days}
+
+    renderer = afx`
+        <div class="schedule" data-component="Schedule">
+            <Neos.Fusion:Collection collection={props.days} itemName="day" @children="itemRenderer">
+                <h3 class="conferenceDayTitle">{Date.format(day, 'd M Y')}</h3>
+                <div class="conferenceDaySubtitle">
+
+                </div>
+                <div class="talks">
+                    <Neos.NeosConIo:Schedule.Talks day={day} />
+                </div>
+            </Neos.Fusion:Collection>
+        </div>
+    `
+}

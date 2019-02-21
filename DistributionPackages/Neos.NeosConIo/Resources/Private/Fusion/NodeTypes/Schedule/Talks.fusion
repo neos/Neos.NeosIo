@@ -9,12 +9,12 @@ prototype(Neos.NeosConIo:Schedule.Talks) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <Neos.Fusion:Collection collection={props.rooms} itemName="room" @children="itemRenderer">
-            <div class={"room-header talk talk--room" + q(room).prevAll().count()}>
+            <div class={"room-header talk talk--room" + q(room).prevAll().count() + " talk--totalRooms" + Array.length(props.rooms)}>
                 {q(room).property('name')}
             </div>
         </Neos.Fusion:Collection>
         <Neos.Fusion:Collection collection={props.talksAndBreaks} itemName="talk" @children="itemRenderer">
-            <div data-date={Date.format(q(talk).property('talkDate'), 'y-m-d')} data-room-id={talk.properties.room.identifier} class={"talk " + (talk.properties.room.identifier ? 'talk--room' + q(talk.properties.room).prevAll().count() : 'talk--fullWidthBecauseNoRoom')}>
+            <div data-date={Date.format(q(talk).property('talkDate'), 'y-m-d')} data-room-id={talk.properties.room.identifier} class={"talk " + (talk.properties.room.identifier ? 'talk--room' + q(talk.properties.room).prevAll().count() + ' talk--totalRooms' + Array.length(props.rooms) : 'talk--fullWidthBecauseNoRoom talk--totalRooms' + Array.length(props.rooms))}>
                 <header class="talk__header">
                     <div class="talk__time">
                         <i class="fa fa-clock-o"></i>
