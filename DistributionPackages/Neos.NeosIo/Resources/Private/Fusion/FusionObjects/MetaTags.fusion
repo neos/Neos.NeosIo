@@ -1,6 +1,7 @@
 prototype(Neos.NeosIo:MetaTags) < prototype(Neos.Fusion:Component) {
     showSmartAppBanner = ${q(rootSite || site).property('showSmartAppBanner')}
     iOSAppId = ${q(rootSite || site).property('iOSAppId')}
+    googleSiteVerificationCode = ${q(rootSite || site).property('googleSiteVerificationCode')}
     rssUri = Neos.Neos:NodeUri {
         node = ${rootSite || site}
         absolute = true
@@ -11,6 +12,7 @@ prototype(Neos.NeosIo:MetaTags) < prototype(Neos.Fusion:Component) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="apple-itunes-app" content={'app-id=' + props.iOSAppId} @if.enabled={props.showSmartAppBanner}/>
         <link rel="alternate" type="application/rss+xml" title="RSS-Feed" href={props.rssUri}/>
+        <meta name="google-site-verification" content={props.googleSiteVerificationCode} @if.enabled={props.googleSiteVerificationCode} />
 
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>

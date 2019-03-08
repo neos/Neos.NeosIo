@@ -14,6 +14,7 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
         javascripts.site = Neos.Fusion:Template {
             templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
             sectionName = 'headScripts'
+            googleTagManagerID = ${q(site).property('googleTagManagerID')}
         }
 
         openGraphMetaTags {
@@ -28,6 +29,7 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
     body {
         templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
         sectionName = 'body'
+
         parts {
             menu = Neos.NeosIo:DefaultPage.Menu
 
@@ -40,6 +42,7 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
 
         homepage = ${site}
         headerClasses = 'siteHeader'
+        googleTagManagerID = ${q(site).property('googleTagManagerID')}
 
 
         content.keyVisual = Neos.NeosIo:KeyVisual {
