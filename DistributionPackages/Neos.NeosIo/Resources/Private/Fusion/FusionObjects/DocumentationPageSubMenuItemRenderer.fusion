@@ -1,0 +1,37 @@
+prototype(Neos.NeosIo:DocumentationPageSubMenuItemRenderer) < prototype(Neos.Fusion:RawArray) {
+    node = ${item}
+    label = ${q(item).property('title')}
+    // the current page should scroll to the top
+    anchorName = ${documentNode.identifier == item.identifier ? 'mainContent' : ''}
+    linkAttributes = ''
+    subItems = Neos.Fusion:RawCollection {
+        // The Fusion code below extracts all headlines and renders them as on-page subItems into the menu.
+        // It is necessary to set an "anchorName" for each headline for these links to work.
+
+        @if.onlyAppendOnPageSubItemsForCurrentDocumentNode = ${documentNode.identifier == item.identifier}
+        collection = ${q(documentNode).find('[instanceof Neos.NeosIo:SemanticSection]').children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h2>"][anchorName][anchorName != ""]')}
+        itemRenderer = Neos.Fusion:RawArray
+        itemRenderer = Neos.Fusion:RawArray {
+            @context.currentSection = ${q(item).parents('[instanceof Neos.NeosIo:SemanticSection]').get(0)}
+            node = ${documentNode}
+            label = ${String.stripTags(q(item).property('title'))}
+            anchorName = ${q(item).property('anchorName')}
+            linkAttributes = Neos.Fusion:RawArray {
+                data-component = 'ScrollTo'
+                data-targetSelector = ${'a[name=' + q(item).property('anchorName') + ']'}
+            }
+            subItems = Neos.Fusion:RawCollection {
+                collection = ${q(currentSection).children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h3>"][anchorName][anchorName != ""]')}
+                itemRenderer = Neos.Fusion:RawArray {
+                    node = ${documentNode}
+                    label = ${String.stripTags(q(item).property('title'))}
+                    anchorName = ${q(item).property('anchorName')}
+                    linkAttributes = Neos.Fusion:RawArray {
+                        data-component = 'ScrollTo'
+                        data-targetSelector = ${'a[name=' + q(item).property('anchorName') + ']'}
+                    }
+                }
+            }
+        }
+    }
+}
