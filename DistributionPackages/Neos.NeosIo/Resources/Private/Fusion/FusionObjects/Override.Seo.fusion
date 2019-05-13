@@ -1,0 +1,17 @@
+prototype(Neos.Seo:OpenGraphMetaTags) {
+    image {
+        keyVisualImage {
+            condition = ${q(documentNode).property('keyVisualImage')}
+            renderer = ${q(documentNode).property('keyVisualImage')}
+        }
+    }
+}
+
+prototype(Neos.Seo:TwitterCard) {
+    image.asset {
+        keyVisualImage {
+            condition = ${q(documentNode).property('keyVisualImage')}
+            renderer = ${q(documentNode).property('keyVisualImage')}
+        }
+    }
+}
