@@ -2,30 +2,6 @@
 # Routes configuration                                                   #
 
 ##
-# Flowpack SearchPlugin sub routes
-
--
-  name: 'FlowpackSearchPlugin'
-  uriPattern: '<FlowpackSearchPluginSubRoutes>'
-  subRoutes:
-    FlowpackSearchPluginSubRoutes:
-      package: Flowpack.SearchPlugin
-      variables:
-        'defaultUriSuffix': '.html'
-
-##
-# Neos Seo: XML sitemap
-
--
-  name: 'Neos Seo'
-  uriPattern: '<NeosSeoSubRoutes>'
-  subRoutes:
-    'NeosNeosSeoSubRoutes':
-      package: 'Neos.Seo'
-      variables:
-        'xmlSitemapPath': 'sitemap.xml'
-
-##
 # Ttree OutOfBandRendering sub routes
 -
   name: 'Ttree.OutOfBandRendering'
