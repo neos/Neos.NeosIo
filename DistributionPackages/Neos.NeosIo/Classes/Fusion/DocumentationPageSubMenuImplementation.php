@@ -1,12 +1,12 @@
 <?php
 namespace Neos\NeosIo\Fusion;
 
-use Neos\Neos\Fusion\MenuImplementation;
+use Neos\Neos\Fusion\MenuItemsImplementation;
 
 /**
  * 2nd-level menu for the documentation pages. Pulls its sub-items from the headlines on the current page.
  */
-class DocumentationPageSubMenuImplementation extends MenuImplementation
+class DocumentationPageSubMenuImplementation extends MenuItemsImplementation
 {
 
     /**
