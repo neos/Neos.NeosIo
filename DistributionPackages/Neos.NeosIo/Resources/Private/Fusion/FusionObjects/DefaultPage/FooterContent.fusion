@@ -1,4 +1,3 @@
 prototype(Neos.NeosIo:DefaultPage.FooterContent) < prototype(Neos.Neos:ContentCollectionRenderer) {
-    templatePath = 'resource://Neos.NeosIo.Event/Private/Templates/FusionObjects/FooterContent.html'
     collection = ${q(site).children('[instanceof Neos.NeosIo:FooterContainer]').children('main').children().get()}
 }
