@@ -2,35 +2,34 @@
 <html>
 <body>
 <f:section name="body">
-	<f:render partial="SiteHeader.html" arguments="{_all}"/>
+    {parts.siteHeader -> f:format.raw()}
 
-	{content.keyVisual -> f:format.raw()}
+    {content.keyVisual -> f:format.raw()}
 
-	<div class="stage stage--bright" id="mainContent">
-		<div class="stage__contents stage__contents--big">
-			<main class="content" role="main">
-				<div class="g">
-					<div class="gi u-w1/1 u-wm4/12 u-wl4/12 neos-contentcollection">
-						{parts.secondaryMenu -> f:format.raw()}
-					</div>
-					<div class="gi u-w1/1 u-wm8/12 u-wl8/12 neos-contentcollection">
-						<div class="g">
-							<nav class="gi">
-								{parts.breadcrumb -> f:format.raw()}
-							</nav>
-							<nav class="gi" style="float: right;">
-								{parts.languages -> f:format.raw()}
-							</nav>
-						</div>
-						{content.main -> f:format.raw()}
-					</div>
-				</div>
-			</main>
-		</div>
-	</div>
+    <div class="stage stage--bright" id="mainContent">
+        <div class="stage__contents stage__contents--big">
+            <main class="content" role="main">
+                <div class="g">
+                    <div class="gi u-w1/1 u-wm4/12 u-wl4/12 neos-contentcollection">
+                        {parts.secondaryMenu -> f:format.raw()}
+                    </div>
+                    <div class="gi u-w1/1 u-wm8/12 u-wl8/12 neos-contentcollection">
+                        <div class="g">
+                            <nav class="gi">
+                                {parts.breadcrumb -> f:format.raw()}
+                            </nav>
+                            <nav class="gi" style="float: right;">
+                                {parts.languages -> f:format.raw()}
+                            </nav>
+                        </div>
+                        {content.main -> f:format.raw()}
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
 
-
-	<f:render partial="SiteFooter.html" arguments="{_all}"/>
+    {parts.footer -> f:format.raw()}
 </f:section>
 </body>
 </html>

@@ -1,20 +1,21 @@
 prototype(Sitegeist.Monocle:Preview.Page) {
-	head {
-		metaTags = Neos.NeosIo:MetaTags
+    head {
+        metaTags = Neos.NeosIo:MetaTags
 
-		stylesheets.main = Ttree.StyleSheet:Resource {
-			uri = 'resource://Neos.NeosIo/Public/Styles/Main.css'
-			cacheBusting = true
-		}
+        stylesheets {
+            main = Ttree.StyleSheet:Resource {
+                uri = 'resource://Neos.NeosIo/Public/Styles/Main.css'
+            }
+            fonts = Ttree.StyleSheet:External {
+                uri = 'https://fonts.googleapis.com/css?family=Work+Sans:300,200,200italic,300italic,400,400italic'
+            }
+            fontAwesome = Ttree.StyleSheet:Resource {
+                uri = 'resource://Neos.NeosIo/Public/Styles/font-awesome.min.css'
+            }
+        }
 
-		stylesheets.site = Neos.Fusion:Template {
-			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
-			sectionName = 'stylesheets'
-		}
-
-		javascripts.site = Neos.Fusion:Template {
-			templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
-			sectionName = 'headScripts'
-		}
-	}
+        javascripts.site = Ttree.Script:Resource {
+            uri = 'resource://Neos.NeosIo/Public/JavaScript/Modernizr.min.js'
+        }
+    }
 }

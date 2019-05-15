@@ -2,14 +2,13 @@
 <html>
 <body>
 <f:section name="body">
-	<f:render partial="SiteHeader.html" arguments="{_all}" />
-	{content.keyVisual -> f:format.raw()}
+    {parts.siteHeader -> f:format.raw()}
+    {content.keyVisual -> f:format.raw()}
 
-	<main class="content" role="main" id="mainContent">
-		{content.main -> f:format.raw()}
-	</main>
-
-	<f:render partial="SiteFooter.html" arguments="{_all}" />
+    <main class="content" role="main" id="mainContent">
+        {content.main -> f:format.raw()}
+    </main>
+    {parts.footer -> f:format.raw()}
 </f:section>
 </body>
 </html>

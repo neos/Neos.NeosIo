@@ -18,3 +18,11 @@ postRss = Neos.Fusion:Http.Message {
 
     httpResponseHead.headers.Content-Type = 'application/xml'
 }
+
+root {
+    postRss {
+        position = 'before format'
+        condition = ${request.parentRequest.uri.path == '/rss.xml'}
+        renderPath = '/postRss'
+    }
+}
