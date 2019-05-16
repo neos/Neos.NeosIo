@@ -4,6 +4,7 @@ builder:
       executor: docker
       image: 'flownative/beach-build-toolbox-frontend:latest'
       script:
+        - rm -f Web/robots.txt
         - cd ${BEACH_BUILD_WORKSPACE_PATH}/DistributionPackages/Neos.NeosConIo
         - npm install
         - npm run build:sass
