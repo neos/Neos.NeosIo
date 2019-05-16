@@ -1,0 +1,10 @@
+# Disable cachebusting and hash creation as we use cachebuster package
+prototype(Ttree.Script:Resource) {
+    cacheBusting = false
+    attributes.@context.hash >
+}
+
+prototype(Ttree.StyleSheet:Resource) {
+    cacheBusting = false
+    attributes.@context.hash >
+}
