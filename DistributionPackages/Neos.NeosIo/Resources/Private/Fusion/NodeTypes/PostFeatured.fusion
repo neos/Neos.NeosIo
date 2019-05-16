@@ -1,30 +1,42 @@
-prototype(Neos.NeosIo:PostFeatured) >
-prototype(Neos.NeosIo:PostFeatured) < prototype(Neos.NeosIo:Stage) {
-    @context.post = ${q(node).property('blogPost')}
+prototype(Neos.NeosIo:PostFeatured) < prototype(Neos.Neos:ContentComponent) {
+    post = ${q(node).property('blogPost')}
+    @context.post = ${this.post}
 
-    isContentTextInverted = true
-    isContentExtraPadded = false
-
-    backgroundImage = ${q(post).property('image')}
+    backgroundImage = ${q(this.post).property('image')}
     backgroundShadePercentage = 60
-    backgroundColor = ${q(post).property('image') ? 'dark' : 'primary'}
+    backgroundColor = ${q(this.post).property('image') ? 'dark' : 'primary'}
 
-    contents = Neos.Fusion:Template {
-        templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/PostFeatured.html'
-        post = ${post}
-        button = Neos.NeosIo:Button {
-            link = Neos.Neos:NodeUri {
-                node = ${post}
-                absolute = true
-            }
-            buttonLabel = 'Read more'
-            style = 'btn--bright'
+    title = ${q(this.post).property('title')}
+    summary = ${q(this.post).property('summary')}
+    datePublished = ${q(this.post).property('datePublished')}
+
+    button = Neos.NeosIo:Button {
+        link = Neos.Neos:NodeUri {
+            node = ${post}
+            absolute = true
         }
+        buttonLabel = 'Read more'
+        style = 'btn--bright'
     }
 
-    backgroundImageSrcSet {
-        backgroundImage = ${q(post).property('image')}
-    }
+    className = ${'stage post--featured stage--' + this.backgroundColor}
+
+    renderer = afx`
+        <section class={props.className}>
+            <div class="stage__contents u-invertText">
+                <Neos.Neos:NodeLink node={props.post} attributes.class="u-linkReset u-mb1/1 u-cf">
+                    <div>{Date.formatCldr(props.datePublished, 'MMMM dd, yyyy')}</div>
+                    <h3 class="h1 u-w11/12 u-mb0">{String.stripTags(props.title)}</h3>
+                    <p class="u-w9/12 u-mt1/2">{props.summary}</p>
+                </Neos.Neos:NodeLink>
+                {props.button}
+            </div>
+            <Neos.NeosIo:Stage.BackgroundImage
+                @context.node={props.post}
+                backgroundImage={props.backgroundImage}
+                backgroundShadePercentage={props.backgroundShadePercentage}/>
+        </section>
+    `
 
     @cache {
         mode = 'cached'

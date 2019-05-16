@@ -1,5 +1,13 @@
-prototype(Neos.NeosIo:Teaser) < prototype(Neos.Neos:Content) {
+prototype(Neos.NeosIo:Teaser) < prototype(Neos.Neos:ContentComponent) {
     button = Neos.NeosIo:Button {
         @context.node = ${q(node).children('button').get(0)}
     }
+
+    renderer = afx`
+        <div>
+            <h3><Neos.Neos:Editable property="title" block="false"/> →</h3>
+            <Neos.Neos:Editable property="text"/>
+            {props.button}
+        </div>
+    `
 }
