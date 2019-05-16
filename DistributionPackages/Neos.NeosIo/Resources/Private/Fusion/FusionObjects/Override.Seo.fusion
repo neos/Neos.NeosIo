@@ -15,3 +15,10 @@ prototype(Neos.Seo:TwitterCard) {
         }
     }
 }
+
+prototype(Neos.Seo:RobotsTxt) {
+    data {
+        // Ignore urls like https://www.neos.io/docs-and-support/editor-documentation/administration-interface@blog-posts-hv24y;language=en.html
+        disallowPublicWorkspaces = 'Disallow: /*@'
+    }
+}
