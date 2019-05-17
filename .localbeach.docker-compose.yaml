@@ -75,3 +75,19 @@ services:
       interval: 1s
       timeout: 5s
       retries: 120
+
+  elasticsearch:
+    image: ${BEACH_ELASTICSEARCH_IMAGE:-flownative/elasticsearch}:${BEACH_ELASTICSEARCH_IMAGE_VERSION:-2.4}
+    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_elasticsearch
+    networks:
+      - local_beach
+    volumes:
+      - ./.LocalBeach/elasticsearch:/data
+    environment:
+      - ELASTICSEARCH_CLUSTER_NAME=${ELASTICSEARCH_CLUSTER_NAME:-elasticsearch-default}
+      - ELASTICSEARCH_NODE_MASTER=${ELASTICSEARCH_NODE_MASTER:-true}
+      - ELASTICSEARCH_NODE_DATA=${ELASTICSEARCH_NODE_DATA:-true}
+      - ELASTICSEARCH_NODE_NAME=${ELASTICSEARCH_NODE_NAME:-}
+      - ELASTICSEARCH_HTTP_ENABLE=${ELASTICSEARCH_HTTP_ENABLE:-true}
+      - ELASTICSEARCH_HTTP_CORS_ENABLE=${ELASTICSEARCH_HTTP_CORS_ENABLE:-true}
+      - ELASTICSEARCH_HTTP_CORS_ALLOW_ORIGIN=${ELASTICSEARCH_HTTP_CORS_ALLOW_ORIGIN:-*}
