@@ -20,8 +20,7 @@
 <f:section name="imageTeaserContent">
 	<f:if condition="{image}">
 		<f:then>
-			<f:render partial="LazyLoadImage"
-					  arguments="{class: 'imageTeaser__image', title: title, alternativeText: alternativeText, image: image, maximumWidth: '700c', maximumHeight: '450c', allowUpScaling: allowUpScaling}"/>
+			{imageTag -> f:format.raw()}
 		</f:then>
 		<f:else>
 			<f:if condition="{fallbackImageUrl}">

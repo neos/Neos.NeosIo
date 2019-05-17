@@ -1,8 +1,5 @@
 <h1>{title}</h1>
-<f:if condition="{image}">
-	<f:render partial="LazyLoadImage"
-			  arguments="{class: 'u-mb1/2', title: title, alternativeText: alternativeText, image: image, maximumWidth: '561', maximumHeight: '261', allowUpScaling: false, allowCropping: true}"/>
-</f:if>
+{imageTag -> f:format.raw()}
 <ul>
 	<f:if condition="{launchDate}"><li><i class="fa fa-rocket"></i> <f:format.date format="d.m.Y">{launchDate}</f:format.date></li></f:if>
 

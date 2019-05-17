@@ -1,13 +1,30 @@
 prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:Content) {
+    sectionName = 'main'
+
     link.@process.convertUris = Neos.Neos:ConvertUris {
         absolute = true
     }
 
     title = ${q(node).property('title')}
+    alternativeText = ${this.title}
     image = ${q(node).property('image')}
     text = ${q(node).property('text')}
     fallbackImageUrl = null
     className = null
 
-    sectionName = 'main'
+    @context {
+        title = ${this.title}
+        alternativeText = ${this.alternativeText}
+        image = ${this.image}
+    }
+
+    imageTag = Neos.NeosIo:Component.LazyLoadImage {
+        image = ${image}
+        title = ${title}
+        alternativeText = ${alternativeText}
+        className = 'imageTeaser__image'
+        maximumHeight = '450'
+        maximumwidth = '700'
+        allowCropping = true
+    }
 }

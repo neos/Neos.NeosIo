@@ -1,0 +1,61 @@
+prototype(Neos.NeosIo:Component.LazyLoadImage) < prototype(Neos.Fusion:Component) {
+    @if.hasImage = ${this.image}
+
+    image =  null
+    width = null
+    maximumWidth = null
+    height = null
+    maximumHeight = null
+    allowUpScaling = false
+    allowCropping = false
+    className = ''
+    title = ''
+    alternativeText = ''
+
+    renderer = Neos.Fusion:Component {
+        @apply.props = ${props}
+
+        imageSrc = Neos.Neos:ImageUri {
+            asset = ${props.image}
+            width = ${props.width}
+            maximumWidth = ${props.maximumWidth}
+            height = ${props.height}
+            maximumHeight = ${props.maximumHeight}
+            allowUpScaling = ${props.allowUpScaling}
+            allowCropping = ${props.allowCropping}
+        }
+
+        renderer = Neos.Fusion:Tag {
+            tagName = 'img'
+            attributes {
+                src = Neos.Fusion:Case {
+                    loader {
+                        condition = ${documentNode.context.workspaceName == 'live'}
+                        renderer = Neos.Fusion:ResourceUri {
+                            path = 'resource://Neos.NeosIo/Public/Images/Loader.svg'
+                        }
+                    }
+                    default {
+                        condition = true
+                        renderer = ${props.imageSrc}
+                    }
+                }
+                class = ${props.className}
+                class.@if.set = ${props.className}
+                title = ${props.title}
+                title.@if.set = ${props.title}
+                alt = ${props.alternativeText}
+                alt.@if.set = ${props.alternativeText}
+                width = ${props.maximumWidth}
+                width.@if.set = ${props.width}
+                height = ${props.maximumHeight}
+                height.@if.set = ${props.height}
+                style = Neos.Fusion:Join {
+                    maxHeight = ${'max-height: ' + props.maximumHeight + 'px;'}
+                    maxHeight.@if.set = ${props.maximumHeight}
+                }
+                data-image-normal = ${props.imageSrc}
+            }
+        }
+    }
+}

@@ -1,8 +1,8 @@
 prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Collection) {
     // API to the outside: "collection" to render
-    collection = ${q(site).find('[instanceof Neos.NeosConIo:Speaker]').arrayPropertyContains("event", node.properties.eventToShowSpeakersFor)}
+    collection = ${q(site).find('[instanceof Neos.NeosConIo:Speaker]').arrayPropertyContains("event", q(node).property('eventToShowSpeakersFor'))}
 
-    @context.eventToFilter = ${node.properties.eventToShowSpeakersFor}
+    @context.eventToFilter = ${q(node).property('eventToShowSpeakersFor')}
     @process.wrapWithUl = ${'<ul class="speaker__speakerList">' + value + '</ul>'}
 
 
@@ -28,9 +28,9 @@ prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Collection) {
         content = Neos.NeosIo:ImageTeaser {
             // node is the speaker here
             subTitle = ""
-            title = ${node.properties.title}
-            image = ${node.properties.image}
-            text = ${String.stripTags(node.properties.company)}
+            title = ${q(node).property('title')}
+            image = ${q(node).property('image')}
+            text = ${String.stripTags(q(node).property('company'))}
 
             // Ensure Text has no tags (especially link tag) in the markup, as this
             // will otherwise lead to two nested <a> tags which makes the browser break.

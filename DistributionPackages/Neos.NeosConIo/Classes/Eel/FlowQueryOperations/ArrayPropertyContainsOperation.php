@@ -11,7 +11,9 @@ namespace Neos\NeosConIo\Eel\FlowQueryOperations;
  * source code.
  */
 
+use Neos\ContentRepository\Exception\NodeException;
 use Neos\Eel\FlowQuery\FlowQuery;
+use Neos\Eel\FlowQuery\FlowQueryException;
 use Neos\Eel\FlowQuery\Operations\AbstractOperation;
 use Neos\Flow\Annotations as Flow;
 use Neos\Utility\ObjectAccess;
@@ -49,19 +51,27 @@ class ArrayPropertyContainsOperation extends AbstractOperation
      * @param FlowQuery $flowQuery
      * @param array $arguments
      * @return void
+     * @throws NodeException
+     * @throws FlowQueryException
      */
     public function evaluate(FlowQuery $flowQuery, array $arguments)
     {
-
         $propertyNameToFilter = $arguments[0];
         $valueToCheck = $arguments[1];
+
+        if (empty($propertyNameToFilter)) {
+            throw new FlowQueryException('You have to provide a valid "propertyNameToFilter" as first argument.', 1558078284);
+        }
+        if ($valueToCheck === null) {
+            throw new FlowQueryException('You have to provide a valid "valueToCheck" as second argument.', 1558078335);
+        }
 
         $filteredContext = array();
         $context = $flowQuery->getContext();
         foreach ($context as $element) {
             /* @var $element NodeInterface */
             $propertyValue = $element->getProperty($propertyNameToFilter);
-            if (in_array($valueToCheck, $propertyValue)) {
+            if (is_array($propertyValue) && in_array($valueToCheck, $propertyValue)) {
                 $filteredContext[] = $element;
             }
         }
