@@ -14,6 +14,9 @@ prototype(Neos.NodeTypes:Image) {
         @process.addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
     }
 
+    maximumHeight = null
+    maximumWidth = null
+
     maximumHeight.@process.override = ${q(node).property('customHeight') || value}
     maximumWidth.@process.override = ${q(node).property('customWidth') ? null : value}
 
