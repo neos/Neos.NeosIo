@@ -1,56 +1,65 @@
 prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
     head {
-        @context.metaDescription = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 152, '...')}
+        metaDescriptionTag.attributes.content = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 152, '...')}
+        metaDescriptionTag.@if.isNotBlank = true
 
-        metaDescriptionTag {
-            attributes.content = ${metaDescription}
-            @if.isNotBlank = ${!String.isBlank(metaDescription)}
-        }
+        twitterCard {
+            description.@process.useSummary = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : value, 197, '...')}
 
-        twitterCard = Neos.Fusion:Array {
-            @if.isEnabledBlank = 1
-            @if.isEnabled = 1
-
-            cardTypeTag.attributes.content = 'summary'
-
-            cardTitleTag {
-                attributes.content = ${String.crop(String.stripTags(q(node).property('title')), 67, '...')}
-                @if.isNotBlank = 1
-            }
-
-            cardDescriptionTag {
-                attributes.content = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 197, '...')}
-                @if.isNotBlank = 1
-            }
-
-            cardImageTag {
-                attributes.content.asset = ${q(node).property('image')}
-                @if.isImageSet = ${q(node).property('image') != null}
+            image.asset {
+                post {
+                    condition = ${q(node).property('image')}
+                    renderer = ${q(node).property('image')}
+                }
             }
         }
 
         openGraphMetaTags {
-            @context.openGraphType = 'article'
-
-            openGraphTitleTag {
-                @context.openGraphTitle = ${String.crop(String.stripTags(q(node).property('title')), 67, '...')}
+            type = 'article'
+            title = ${String.crop(String.stripTags(q(node).property('title')), 67, '...')}
+            description.@process.useSummary = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : value, 197, '...')}
+            image {
+                post {
+                    condition = ${q(node).property('image')}
+                    renderer = ${q(node).property('image')}
+                }
             }
-
-            openGraphDescriptionTag {
-                @context.openGraphDescription = ${metaDescription}
-            }
-
-            openGraphImageTag {
-                @context.openGraphImage = ${q(node).property('image')}
-            }
-
-            openGraphPublishedTime = Neos.Fusion:Tag {
+            renderer.publishedTime = Neos.Fusion:Tag {
                 tagName = 'meta'
                 attributes {
                     property = 'article:published_time'
                     content = ${Date.format(q(node).property('datePublished'), 'c')}
                 }
             }
+        }
+
+        structuredData = Neos.Fusion:Component {
+            headline = ${String.stripTags(q(node).property('title'))}
+            description = ${String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription')}
+            datePublished = ${Date.format(q(node).property('datePublished'), 'c')}
+            dateModified = ${Date.format(q(node).property('_lastModificationDateTime'), 'c')}
+            mainEntityOfPage = Neos.Neos:NodeUri {
+                node = ${node}
+                absolute = true
+            }
+            author = Neos.Seo:StructuredData.Object {
+                type = 'Person'
+                attributes.name = ${(q(node).property('authors') ? Data.users(q(node).property('authors')) + q(node).property('authorAlternative') : q(node).property('authorAlternative')) || 'Neos Foundation CIC'}
+            }
+            image = Neos.Seo:StructuredData.ImageObject {
+                image = ${q(node).property('image') || q(site).property('keyVisualImage')}
+            }
+            publisher = Neos.Seo:StructuredData.Object {
+                type = 'Organization'
+                attributes {
+                    name = 'Neos Foundation CIC'
+                    logo = Neos.Fusion:ResourceUri {
+                        path = 'resource://Neos.NeosIo/Public/Images/NeosLogoSocial.png'
+                    }
+                }
+            }
+
+            renderer = afx`<Neos.Seo:StructuredData.RootObject type="NewsArticle" attributes={props}/>`
         }
     }
 
