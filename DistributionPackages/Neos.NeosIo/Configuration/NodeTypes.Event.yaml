@@ -53,11 +53,14 @@
             format: 'd.m.Y'
     'location':
       type: string
+      inlineEditable: true
       options:
         showInCreationDialog: true
       ui:
         label: 'Event location'
-        reloadIfChanged: true
+        inline:
+          editorOptions:
+            placeholder: 'Event location'
     'url':
       type: string
       options:
@@ -70,11 +73,14 @@
           editor: 'Neos.Neos/Inspector/Editors/LinkEditor'
     'organizer':
       type: string
+      inlineEditable: true
       options:
         showInCreationDialog: true
       ui:
         label: 'Organizer(s) (comma separated, if more than one)'
-        reloadIfChanged: true
+        inline:
+          editorOptions:
+            placeholder: 'Organizer(s) (comma separated, if more than one)'
     'description':
       type: string
       inlineEditable: true
