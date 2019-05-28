@@ -1,0 +1,27 @@
+prototype(Neos.NeosIo:Event) < prototype(Neos.NeosIo:DefaultPage) {
+    body {
+        content.main = Neos.NeosIo:Component.Event {
+            name = Neos.Neos:Editable {
+                property = 'title'
+                block = false
+            }
+            description = Neos.Neos:Editable {
+                property = 'description'
+            }
+            startDate = ${q(node).property('startDate')}
+            endDate = ${q(node).property('endDate')}
+            location = Neos.Neos:Editable {
+                property = 'location'
+                block = false
+            }
+            url = ${q(node).property('url')}
+            organizer = Neos.Neos:Editable {
+                property = 'organizer'
+                block = false
+            }
+            type = ${q(node).property('type')}
+
+            @process.contentElementWrapping = Neos.Neos:ContentElementWrapping
+        }
+    }
+}
