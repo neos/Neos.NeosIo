@@ -1,0 +1,29 @@
+prototype(Neos.NeosIo:Event.List) < prototype(Neos.Neos:ContentComponent) {
+    type = ${q(node).property('type')}
+    limit = ${q(node).property('limit')}
+    source = ${q(node).property('source') || documentNode}
+
+    events = ${q(this.source).find('[instanceof Neos.NeosIo:Event]')}
+    events.@process {
+        filter = ${value.filter('[type == "' + this.type + '"]')}
+        filter.@if.hasType = ${this.type}
+        slice = ${value.slice(0, this.limit)}
+        slice.@if.hasLimit = ${this.limit > 0}
+    }
+
+    renderer = Neos.NeosIo:Component.Event.List {
+        events = Neos.Fusion:Map {
+            items = ${props.events}
+            itemRenderer = Neos.Fusion:DataStructure {
+                name = ${q(item).property('title')}
+                startDate = ${q(item).property('startDate')}
+                endDate = ${q(item).property('endDate')}
+                location = ${q(item).property('location')}
+                url = ${q(item).property('url')}
+                organizer = ${q(item).property('organizer')}
+                type = ${q(item).property('type')}
+                description = ${q(item).property('description')}
+            }
+        }
+    }
+}

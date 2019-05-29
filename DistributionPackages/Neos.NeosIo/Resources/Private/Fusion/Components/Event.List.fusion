@@ -1,0 +1,13 @@
+prototype(Neos.NeosIo:Component.Event.List) < prototype(Neos.Fusion:Component) {
+    events = ${[]}
+
+    renderer = afx`
+        <section>
+            Event list
+
+            <Neos.Fusion:Loop items={props.events}>
+                <Neos.NeosIo:Component.Event {...item}/>
+            </Neos.Fusion:Loop>
+        </section>
+    `
+}

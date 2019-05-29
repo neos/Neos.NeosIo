@@ -1,0 +1,49 @@
+'Neos.NeosIo:Event.List':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'Neos Event List'
+    icon: 'icon-calendar'
+    inlineEditable: true
+    group: 'special'
+    inspector:
+      groups:
+        'event':
+          label: 'Event'
+          icon: 'icon-calendar'
+  properties:
+    'type':
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Event type to show'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              '':
+                label: 'All'
+              'conference':
+                label: 'Conference / Marketing'
+              'meetup':
+                label: 'Meetup'
+              'sprint':
+                label: 'Sprint'
+    'limit':
+      type: integer
+      defaultValue: 0
+      ui:
+        label: 'Maximum number of events to show'
+    'source':
+      type: reference
+      ui:
+        label: 'Folder to show events from'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo:Event'
