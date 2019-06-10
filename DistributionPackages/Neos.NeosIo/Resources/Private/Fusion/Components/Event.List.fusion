@@ -1,13 +1,40 @@
 prototype(Neos.NeosIo:Component.Event.List) < prototype(Neos.Fusion:Component) {
     events = ${[]}
+    noEntriesNotice = ''
+    alwaysShowNoEntriesNotice = false
 
     renderer = afx`
-        <section>
-            Event list
-
-            <Neos.Fusion:Loop items={props.events}>
-                <Neos.NeosIo:Component.Event {...item}/>
-            </Neos.Fusion:Loop>
-        </section>
+        <p @if.hasNoEntries={props.alwaysShowNoEntriesNotice || (Array.isEmpty(props.events) && !String.isBlank(props.noEntriesNotice))}>{props.noEntriesNotice}</p>
+        <Neos.Fusion:Loop items={props.events}>
+            <Neos.NeosIo:Component.Event.List.Item {...item}/>
+        </Neos.Fusion:Loop>
     `
+}
+
+prototype(Neos.NeosIo:Component.Event.List.Item) < prototype(Neos.Fusion:Component) {
+    name = ''
+    startDate = null
+    endDate = null
+    location = ''
+    url = ''
+    detailsUrl = ''
+
+    renderer.@context {
+        datesString = Neos.Fusion:Join {
+            @glue = ' - '
+            from = ${Date.format(props.startDate, 'd.m.Y')}
+            from.@if.hasStartDate = ${props.startDate != null}
+            to = ${Date.format(props.endDate, 'd.m.Y')}
+            to.@if.hasEndDate = ${props.endDate != null}
+        }
+    }
+    renderer = afx`
+        <p>
+            {datesString} -&nbsp;
+            <a href={props.detailsUrl}>{props.name}</a>
+            <span @if.hasLocation={!String.isBlank(props.location)}> &commat; {props.location}</span>
+            <span @if.hasOrganizer={!String.isBlank(props.organizer)}> (organized by {props.organizer})</span>
+        </p>
+    `
+
 }
