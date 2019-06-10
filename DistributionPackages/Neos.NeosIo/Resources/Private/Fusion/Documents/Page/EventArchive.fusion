@@ -1,0 +1,49 @@
+prototype(Neos.NeosIo:EventArchive) < prototype(Neos.NeosIo:DefaultPage) {
+    head {
+        metaDescriptionTag.attributes.content.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
+        openGraphMetaTags.description.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
+        twitterCard.description.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
+    }
+
+    body {
+        content {
+            main = Neos.Fusion:Join {
+                headline = ${'<h1>Event Archive (' + q(node).property('title') + ')</h1>'}
+                eventList = Neos.NeosIo:Component.Event.List {
+                    alwaysShowNoEntriesNotice = ${node.context.inBackend}
+                    noEntriesNotice = Neos.Neos:Editable {
+                        property = 'noEntriesNotice'
+                        block = true
+                    }
+                    events = Neos.Fusion:Map {
+                        items = ${q(documentNode).find('[instanceof Neos.NeosIo:Event]')}
+                        items.@process {
+                            filterDate = ${value.filterByDate('startDate', Date.now(), '<')}
+                            sort = ${value.sort('startDate', 'DESC')}
+                        }
+
+                        itemRenderer = Neos.Fusion:DataStructure {
+                            name = ${q(item).property('title')}
+                            startDate = ${q(item).property('startDate')}
+                            endDate = ${q(item).property('endDate')}
+                            location = ${q(item).property('location')}
+                            url = ${q(item).property('url')}
+                            organizer = ${q(item).property('organizer')}
+                            detailsUrl = Neos.Neos:NodeUri {
+                                node = ${item}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @cache {
+        mode = 'cached'
+        # 86400 seconds == 1 day
+        maximumLifetime = '86400'
+        entryTags {
+            eventNodes = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Event', documentNode)}
+        }
+    }
+}

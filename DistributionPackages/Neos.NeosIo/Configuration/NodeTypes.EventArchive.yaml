@@ -1,0 +1,41 @@
+'Neos.NeosIo:EventArchive':
+  superTypes:
+    'Neos.Neos:Document': true
+  ui:
+    label: 'Neos Event Archive'
+    icon: 'icon-archive'
+    inlineEditable: true
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.Neos:Document': false
+      'Neos.MarketPlace:RepositoryStorage': false
+      'Neos.NeosIo:Event': true
+  childNodes:
+    main:
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:SemanticSection': true
+  properties:
+    'noEntriesNotice':
+      type: string
+      inlineEditable: true
+      ui:
+        inline:
+          editorOptions:
+            formatting:
+              u: true
+              sub: true
+              sup: true
+              p: false
+              h1: false
+              h2: false
+              h3: false
+              pre: false
+              removeFormat: false
+              a: true
+              strong: true
+              em: true
+            placeholder: 'No entries notice (optional)'

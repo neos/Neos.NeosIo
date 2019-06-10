@@ -1,17 +1,29 @@
 prototype(Neos.NeosIo:Event.List) < prototype(Neos.Neos:ContentComponent) {
     type = ${q(node).property('type')}
+    mode = ${q(node).property('mode')}
     limit = ${q(node).property('limit')}
     source = ${q(node).property('source') || documentNode}
 
     events = ${q(this.source).find('[instanceof Neos.NeosIo:Event]')}
     events.@process {
-        filter = ${value.filter('[type == "' + this.type + '"]')}
-        filter.@if.hasType = ${this.type}
+        filterType = ${value.filter('[type = "' + this.type + '"]')}
+        filterType.@if.hasType = ${this.type}
+
+        filterDate = ${value.filterByDate('startDate', Date.now(), this.mode == 'archive' ? '<' : '>')}
+        filterDate.@if.hasDateFilter = ${this.mode != null}
+
+
+        sort = ${value.sort('startDate', this.mode == 'archive' ? 'DESC' : 'ASC')}
         slice = ${value.slice(0, this.limit)}
         slice.@if.hasLimit = ${this.limit > 0}
     }
 
     renderer = Neos.NeosIo:Component.Event.List {
+        alwaysShowNoEntriesNotice = ${node.context.inBackend}
+        noEntriesNotice = Neos.Neos:Editable {
+            property = 'noEntriesNotice'
+            block = true
+        }
         events = Neos.Fusion:Map {
             items = ${props.events}
             itemRenderer = Neos.Fusion:DataStructure {
@@ -21,9 +33,18 @@ prototype(Neos.NeosIo:Event.List) < prototype(Neos.Neos:ContentComponent) {
                 location = ${q(item).property('location')}
                 url = ${q(item).property('url')}
                 organizer = ${q(item).property('organizer')}
-                type = ${q(item).property('type')}
-                description = ${q(item).property('description')}
+                detailsUrl = Neos.Neos:NodeUri {
+                    node = ${item}
+                }
             }
+        }
+    }
+    @cache {
+        mode = 'cached'
+        # 86400 seconds == 1 day
+        maximumLifetime = '86400'
+        entryTags {
+            eventNodes = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Event', documentNode)}
         }
     }
 }
