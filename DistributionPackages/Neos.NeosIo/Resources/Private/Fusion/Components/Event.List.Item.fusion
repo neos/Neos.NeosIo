@@ -6,18 +6,9 @@ prototype(Neos.NeosIo:Component.Event.List.Item) < prototype(Neos.Fusion:Compone
     url = ''
     detailsUrl = ''
 
-    renderer.@context {
-        datesString = Neos.Fusion:Join {
-            @glue = ' - '
-            from = ${Date.format(props.startDate, 'd.m.Y')}
-            from.@if.hasStartDate = ${props.startDate != null}
-            to = ${Date.format(props.endDate, 'd.m.Y')}
-            to.@if.hasEndDate = ${props.endDate != null}
-        }
-    }
     renderer = afx`
         <p>
-            {datesString} -&nbsp;
+            <Neos.NeosIo:Component.Event.DatesString startDate={props.startDate} endDate={props.endDate}/> -&nbsp;
             <a href={props.detailsUrl}>{props.name}</a>
             <span @if.hasLocation={!String.isBlank(props.location)}> &commat; {props.location}</span>
             <span @if.hasOrganizer={!String.isBlank(props.organizer)}> (organized by {props.organizer})</span>

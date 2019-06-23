@@ -8,15 +8,6 @@ prototype(Neos.NeosIo:Component.Event) < prototype(Neos.Fusion:Component) {
     type = ''
     description = ''
 
-    renderer.@context {
-        datesString = Neos.Fusion:Join {
-            @glue = ' - '
-            from = ${Date.format(props.startDate, 'd.m.Y')}
-            from.@if.hasStartDate = ${props.startDate != null}
-            to = ${Date.format(props.endDate, 'd.m.Y')}
-            to.@if.hasEndDate = ${props.endDate != null}
-        }
-    }
     renderer = afx`
         <article>
             <h1>{props.name}</h1>
@@ -24,7 +15,7 @@ prototype(Neos.NeosIo:Component.Event) < prototype(Neos.Fusion:Component) {
                 <dt>Type:</dt>
                 <dd>{props.type}</dd>
                 <dt>Date:</dt>
-                <dd>{datesString}</dd>
+                <dd><Neos.NeosIo:Component.Event.DatesString startDate={props.startDate} endDate={props.endDate}/></dd>
                 <dt>Location:</dt>
                 <dd>{props.location}</dd>
                 <dt>Url:</dt>
