@@ -4,9 +4,13 @@ prototype(Neos.NeosIo:Component.Event.List) < prototype(Neos.Fusion:Component) {
     alwaysShowNoEntriesNotice = false
 
     renderer = afx`
-        <p @if.hasNoEntries={props.alwaysShowNoEntriesNotice || (Array.isEmpty(props.events) && !String.isBlank(props.noEntriesNotice))}>{props.noEntriesNotice}</p>
-        <Neos.Fusion:Loop items={props.events}>
-            <Neos.NeosIo:Component.Event.List.Item {...item}/>
-        </Neos.Fusion:Loop>
+        <div class="event-list">
+            <p @if.hasNoEntries={props.alwaysShowNoEntriesNotice || (Array.isEmpty(props.events) && !String.isBlank(props.noEntriesNotice))}>{props.noEntriesNotice}</p>
+            <ul @if.hasEntries={props.events}>
+                <Neos.Fusion:Loop items={props.events}>
+                    <Neos.NeosIo:Component.Event.List.Item {...item}/>
+                </Neos.Fusion:Loop>
+            </ul>
+        </div>
     `
 }
