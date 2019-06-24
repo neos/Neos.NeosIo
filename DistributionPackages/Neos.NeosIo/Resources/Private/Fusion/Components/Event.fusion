@@ -18,8 +18,8 @@ prototype(Neos.NeosIo:Component.Event) < prototype(Neos.Fusion:Component) {
                 <dd><time><Neos.NeosIo:Component.Event.DatesString startDate={props.startDate} endDate={props.endDate}/></time></dd>
                 <dt>Location:</dt>
                 <dd><address>{props.location}</address></dd>
-                <dt>Url:</dt>
-                <dd><a href={props.url} target="_blank" title={props.name}>{props.url}</a></dd>
+                <dt @if.set={props.url}>Url:</dt>
+                <dd @if.set={props.url}><a href={props.url} target="_blank" title={props.name}>{props.url}</a></dd>
                 <dt>Organizer(s):</dt>
                 <dd>{props.organizer}</dd>
             </dl>
