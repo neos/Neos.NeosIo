@@ -1,0 +1,89 @@
+'Neos.NeosIo:Event.List':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'Neos Event List'
+    icon: 'icon-calendar'
+    inlineEditable: true
+    group: 'special'
+    inspector:
+      groups:
+        'event':
+          label: 'Event'
+          icon: 'icon-calendar'
+  properties:
+    'type':
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Event type to show'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              '':
+                label: 'All'
+              'conference':
+                label: 'Conference / Marketing'
+              'meetup':
+                label: 'Meetup'
+              'sprint':
+                label: 'Sprint'
+    'mode':
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Mode of the list'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              '':
+                label: 'All events'
+              'upcoming':
+                label: 'Only upcoming events'
+              'archive':
+                label: 'Only past events (archive)'
+    'limit':
+      type: integer
+      defaultValue: 0
+      ui:
+        label: 'Max number to show (0 = no limit)'
+        inspector:
+          group: 'event'
+    'source':
+      type: reference
+      ui:
+        label: 'Folder to show events from'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo:Event'
+    'noEntriesNotice':
+      type: string
+      inlineEditable: true
+      ui:
+        inline:
+          editorOptions:
+            formatting:
+              u: true
+              sub: true
+              sup: true
+              p: false
+              h1: false
+              h2: false
+              h3: false
+              pre: false
+              removeFormat: false
+              a: true
+              strong: true
+              em: true
+            placeholder: 'No entries notice (optional)'

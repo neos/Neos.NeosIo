@@ -1,0 +1,107 @@
+'Neos.NeosIo:Event':
+  superTypes:
+    'Neos.Neos:Document': true
+  ui:
+    label: 'Neos Event'
+    icon: 'icon-calendar'
+    inlineEditable: true
+    inspector:
+      groups:
+        'event':
+          label: 'Event'
+          icon: 'icon-calendar'
+  properties:
+    'type':
+      type: string
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator': []
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Event type'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              'conference':
+                label: 'Conference / Marketing'
+              'meetup':
+                label: 'Meetup'
+              'sprint':
+                label: 'Sprint'
+    'startDate':
+      type: DateTime
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator': []
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Event start date'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          editorOptions:
+            format: 'd.m.Y'
+    'endDate':
+      type: DateTime
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Event end date (optional)'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          editorOptions:
+            format: 'd.m.Y'
+    'location':
+      type: string
+      inlineEditable: true
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Event location'
+        inline:
+          editorOptions:
+            placeholder: 'Event location'
+    'url':
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Event URL (optional)'
+        reloadIfChanged: true
+        inspector:
+          group: 'event'
+          editor: 'Neos.Neos/Inspector/Editors/LinkEditor'
+    'organizer':
+      type: string
+      inlineEditable: true
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Organizer(s) (comma separated, if more than one)'
+        inline:
+          editorOptions:
+            placeholder: 'Organizer(s) (comma separated, if more than one)'
+    'description':
+      type: string
+      inlineEditable: true
+      ui:
+        inline:
+          editorOptions:
+            formatting:
+              u: true
+              sub: true
+              sup: true
+              p: false
+              h1: false
+              h2: false
+              h3: false
+              pre: false
+              removeFormat: false
+              a: true
+              strong: true
+              em: true
+            placeholder: 'Event description'

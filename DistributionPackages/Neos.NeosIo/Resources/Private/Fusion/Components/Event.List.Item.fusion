@@ -1,0 +1,19 @@
+prototype(Neos.NeosIo:Component.Event.List.Item) < prototype(Neos.Fusion:Component) {
+    name = ''
+    startDate = null
+    endDate = null
+    location = ''
+    url = ''
+    detailsUrl = ''
+
+    renderer = afx`
+        <li class="event-list__item">
+            <h4>
+                <time><Neos.NeosIo:Component.Event.DatesString startDate={props.startDate} endDate={props.endDate}/></time> -&nbsp;
+                <a href={props.detailsUrl} title={props.name}>{props.name}</a>
+            </h4>
+            <address @if.hasLocation={!String.isBlank(props.location)}> &commat; {props.location}</address>
+            <span @if.hasOrganizer={!String.isBlank(props.organizer)}> (organized by {props.organizer})</span>
+        </li>
+    `
+}
