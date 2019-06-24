@@ -38,12 +38,4 @@ prototype(Neos.NeosIo:EventArchive) < prototype(Neos.NeosIo:DefaultPage) {
             }
         }
     }
-    @cache {
-        mode = 'cached'
-        # 86400 seconds == 1 day
-        maximumLifetime = '86400'
-        entryTags {
-            eventNodes = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Event', documentNode)}
-        }
-    }
 }
