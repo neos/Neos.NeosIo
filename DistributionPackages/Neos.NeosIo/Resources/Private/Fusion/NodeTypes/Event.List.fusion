@@ -47,6 +47,7 @@ prototype(Neos.NeosIo:Event.List) < prototype(Neos.Neos:ContentComponent) {
             node = ${node}
         }
         entryTags {
+            node = ${Neos.Caching.nodeTag(node)}
             eventNodes = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Event', documentNode)}
         }
     }
