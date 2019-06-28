@@ -12,7 +12,6 @@ prototype(Neos.NeosIo:Event.List) < prototype(Neos.Neos:ContentComponent) {
         filterDate = ${value.filterByDate('startDate', Date.now(), this.mode == 'archive' ? '<' : '>')}
         filterDate.@if.hasDateFilter = ${this.mode != null}
 
-
         sort = ${value.sort('startDate', this.mode == 'archive' ? 'DESC' : 'ASC')}
         slice = ${value.slice(0, this.limit)}
         slice.@if.hasLimit = ${this.limit > 0}
