@@ -33,8 +33,8 @@ prototype(Neos.NeosIo:Event) < prototype(Neos.NeosIo:DefaultPage) {
 
             structuredData = Neos.Fusion:Component {
                 name = ${q(node).property('title')}
-                startDate = ${Date.format(q(node).property('startDate'), 'c')}
-                endDate = ${Date.format(q(node).property('endDate'), 'c')}
+                startDate = ${Date.format(q(node).property('startDate'), 'Y-m-d')}
+                endDate = ${Date.format(q(node).property('endDate'), 'Y-m-d')}
                 endDate.@if.set = ${q(node).property('endDate')}
                 description = ${String.stripTags(q(node).property('description'))}
                 location = Neos.Seo:StructuredData.Object {
