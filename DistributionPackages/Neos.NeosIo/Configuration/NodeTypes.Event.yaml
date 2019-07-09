@@ -58,11 +58,11 @@
             format: 'd.m.Y'
     'location':
       type: string
-      inlineEditable: true
       options:
         showInCreationDialog: true
       ui:
         label: 'Event location'
+        inlineEditable: true
         inline:
           editorOptions:
             placeholder: 'Event location'
@@ -78,31 +78,46 @@
           editor: 'Neos.Neos/Inspector/Editors/LinkEditor'
     'organizer':
       type: string
-      inlineEditable: true
       options:
         showInCreationDialog: true
       ui:
         label: 'Organizer(s) (comma separated, if more than one)'
+        inlineEditable: true
         inline:
           editorOptions:
             placeholder: 'Organizer(s) (comma separated, if more than one)'
+            linking:
+              anchor: true
+              title: true
+              relNofollow: true
+              targetBlank: true
+            formatting:
+              a: true
     'description':
       type: string
-      inlineEditable: true
       ui:
+        inlineEditable: true
         inline:
           editorOptions:
+            autoparagraph: true
+            placeholder: 'Event description'
+            linking:
+              anchor: true
+              title: true
+              relNofollow: true
+              targetBlank: true
             formatting:
               u: true
               sub: true
               sup: true
-              p: false
+              p: true
               h1: false
               h2: false
               h3: false
               pre: false
+              ul: true
+              ol: true
               removeFormat: false
               a: true
               strong: true
               em: true
-            placeholder: 'Event description'
