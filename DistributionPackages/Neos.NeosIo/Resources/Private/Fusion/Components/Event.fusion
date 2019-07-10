@@ -16,17 +16,17 @@ prototype(Neos.NeosIo:Component.Event) < prototype(Neos.Fusion:Component) {
                 <dd>{String.firstLetterToUpperCase(props.type)}</dd>
                 <dt>Date:</dt>
                 <dd><time><Neos.NeosIo:Component.Event.DatesString startDate={props.startDate} endDate={props.endDate}/></time></dd>
-                <dt>Location:</dt>
-                <dd><address>{props.location}</address></dd>
-                <dt @if.set={props.url}>Url:</dt>
-                <dd @if.set={props.url}>
+                <dt @if.set={!String.isBlank(props.location)}>Location:</dt>
+                <dd @if.set={!String.isBlank(props.location)}><address>{props.location}</address></dd>
+                <dt @if.set={!String.isBlank(props.url)}>Url:</dt>
+                <dd @if.set={!String.isBlank(props.url)}>
                     <a href={props.url} target="_blank" title={props.name}>{props.url} <i class="fa fa-external-link"></i></a>
                 </dd>
-                <dt>Organizer(s):</dt>
-                <dd>{props.organizer}</dd>
+                <dt @if.set={!String.isBlank(props.organizer)}>Organizer(s):</dt>
+                <dd @if.set={!String.isBlank(props.organizer)}>{props.organizer}</dd>
             </dl>
-            <h2>Details:</h2>
-            <div>{props.description}</div>
+            <h2 @if.set={!String.isBlank(props.description)}>Details:</h2>
+            <div @if.set={!String.isBlank(props.description)}>{props.description}</div>
         </article>
     `
 }
