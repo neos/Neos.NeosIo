@@ -9,7 +9,7 @@ prototype(Neos.NeosIo:Component.Event.List.Item) < prototype(Neos.Fusion:Compone
     renderer = afx`
         <li class="event-list__item">
             <h4>
-                <time><Neos.NeosIo:Component.Event.DatesString startDate={props.startDate} endDate={props.endDate}/></time> -&nbsp;
+                <time><Neos.NeosIo:Component.Event.DatesString startDate={props.startDate} endDate={props.endDate} dateFormat="j.n." /></time>&nbsp;
                 <a href={props.detailsUrl} title={props.name}>{props.name}</a>
             </h4>
             <address @if.hasLocation={!String.isBlank(props.location)}> &commat; {props.location}</address>
