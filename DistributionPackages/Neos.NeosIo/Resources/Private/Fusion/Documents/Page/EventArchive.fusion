@@ -10,11 +10,7 @@ prototype(Neos.NeosIo:EventArchive) < prototype(Neos.NeosIo:DefaultPage) {
             main = Neos.Fusion:Join {
                 headline = ${'<h1>Event Archive (' + q(node).property('title') + ')</h1>'}
                 eventList = Neos.NeosIo:Component.Event.List {
-                    alwaysShowNoEntriesNotice = ${node.context.inBackend}
-                    noEntriesNotice = Neos.Neos:Editable {
-                        property = 'noEntriesNotice'
-                        block = true
-                    }
+                    noEntriesNotice = 'There are no archived events yet for this year'
                     events = Neos.Fusion:Map {
                         items = ${q(documentNode).find('[instanceof Neos.NeosIo:Event]')}
                         items.@process {

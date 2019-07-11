@@ -1,5 +1,6 @@
 prototype(Neos.NeosIo:Component.Event.List) < prototype(Neos.Fusion:Component) {
     events = ${[]}
+    eventsByMonth = ${NeosIo_Event.groupByMonth(this.events)}
     noEntriesNotice = ''
     alwaysShowNoEntriesNotice = false
 
@@ -7,8 +8,15 @@ prototype(Neos.NeosIo:Component.Event.List) < prototype(Neos.Fusion:Component) {
         <div class="event-list">
             <p @if.hasNoEntries={props.alwaysShowNoEntriesNotice || (Array.isEmpty(props.events) && !String.isBlank(props.noEntriesNotice))}>{props.noEntriesNotice}</p>
             <ul @if.hasEntries={props.events}>
-                <Neos.Fusion:Loop items={props.events}>
-                    <Neos.NeosIo:Component.Event.List.Item {...item}/>
+                <Neos.Fusion:Loop items={props.eventsByMonth} itemKey="month" itemName="eventsOfThisMonth">
+                    <li>
+                        <h3>{month}</h3>
+                        <ul>
+                            <Neos.Fusion:Loop items={eventsOfThisMonth} itemName="event">
+                                <Neos.NeosIo:Component.Event.List.Item {...event}/>
+                            </Neos.Fusion:Loop>
+                        </ul>
+                    </li>
                 </Neos.Fusion:Loop>
             </ul>
         </div>
