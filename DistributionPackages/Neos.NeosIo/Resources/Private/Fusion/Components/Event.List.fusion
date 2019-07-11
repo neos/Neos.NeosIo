@@ -1,16 +1,14 @@
 prototype(Neos.NeosIo:Component.Event.List) < prototype(Neos.Fusion:Component) {
     events = ${[]}
+    eventsByMonth = ${NeosIo_Event.groupByMonth(this.events)}
     noEntriesNotice = ''
     alwaysShowNoEntriesNotice = false
 
-    renderer.@context {
-        eventsByMonth = ${NeosIo_Event.groupByMonth(props.events)}
-    }
     renderer = afx`
         <div class="event-list">
             <p @if.hasNoEntries={props.alwaysShowNoEntriesNotice || (Array.isEmpty(props.events) && !String.isBlank(props.noEntriesNotice))}>{props.noEntriesNotice}</p>
             <ul @if.hasEntries={props.events}>
-                <Neos.Fusion:Loop items={eventsByMonth} itemKey="month" itemName="eventsOfThisMonth">
+                <Neos.Fusion:Loop items={props.eventsByMonth} itemKey="month" itemName="eventsOfThisMonth">
                     <li>
                         <h3>{month}</h3>
                         <ul>
