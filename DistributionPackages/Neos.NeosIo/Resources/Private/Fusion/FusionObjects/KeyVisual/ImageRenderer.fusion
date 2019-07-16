@@ -15,13 +15,14 @@ prototype(Neos.NeosIo:KeyVisual.ImageRenderer) < prototype(Neos.NeosIo:KeyVisual
         maximumHeight = 1500
     }
 
-    imageSrcSet = Neos.Fusion:Array {
+    imageSrcSet = Neos.Fusion:Join {
+        @glue = ', '
         ultraHighRes = Neos.Neos:ImageUri {
             asset = ${props.keyVisualImage}
             maximumWidth = 1920
             maximumHeight = 1600
 
-            @process.addSrcSet = ${value + " 1920w, "}
+            @process.addSrcSet = ${value + " 1920w"}
         }
 
         highRes = Neos.Neos:ImageUri {
@@ -29,7 +30,7 @@ prototype(Neos.NeosIo:KeyVisual.ImageRenderer) < prototype(Neos.NeosIo:KeyVisual
             maximumWidth = 1280
             maximumHeight = 1000
 
-            @process.addSrcSet = ${value + " 1280w, "}
+            @process.addSrcSet = ${value + " 1280w"}
         }
 
         mediumRes = Neos.Neos:ImageUri {
@@ -38,16 +39,7 @@ prototype(Neos.NeosIo:KeyVisual.ImageRenderer) < prototype(Neos.NeosIo:KeyVisual
             maximumHeight = 658
             allowCropping = true
 
-            @process.addSrcSet = ${value + " 658w, "}
-        }
-
-        lowRes = Neos.Neos:ImageUri {
-            asset = ${props.keyVisualImage}
-            maximumWidth = 400
-            maximumHeight = 400
-            allowCropping = true
-
-            @process.addSrcSet = ${value + " 280w"}
+            @process.addSrcSet = ${value + " 658w"}
         }
     }
 }

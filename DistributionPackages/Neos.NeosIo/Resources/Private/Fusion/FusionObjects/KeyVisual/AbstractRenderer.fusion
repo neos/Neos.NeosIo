@@ -7,7 +7,7 @@ prototype(Neos.NeosIo:KeyVisual.AbstractRenderer) < prototype(Neos.Fusion:Compon
 
     // API to sub components
     previewImageUri = ''
-    highQualityImageUri = '
+    highQualityImageUri = ''
     imageSrcSet = ''
 
     classes = "keyVisual print-hidden"
@@ -16,21 +16,20 @@ prototype(Neos.NeosIo:KeyVisual.AbstractRenderer) < prototype(Neos.Fusion:Compon
     previewImageStyleAttribute = ${"background-image: url('" + this.previewImageUri + "')"}
 
     renderer = afx`
-<section class={props.classes}>
-    <div class={props.divClasses}
-        data-component="ProgressiveImage"
-        data-isInline="true"
-            data-src={props.highQualityImageUri}
-            data-srcSet={props.imageSrcSet}
-            style={props.divStyle}
-    >
-        {props.content}
-    </div>
-    <a
-        data-component="ScrollTo"
-        href="#mainContent"
-        data-targetSelector="#mainContent"
-        class="scrollHint"></a>
-</section>
+        <section class={props.classes}>
+            <div class={props.divClasses}
+                data-component="ProgressiveImage"
+                data-isInline="true"
+                data-src={props.highQualityImageUri}
+                data-srcSet={props.imageSrcSet}
+                style={props.divStyle}>
+                {props.content}
+            </div>
+            <a
+                data-component="ScrollTo"
+                href="#mainContent"
+                data-targetSelector="#mainContent"
+                class="scrollHint"></a>
+        </section>
     `
 }
