@@ -1,0 +1,116 @@
+'Neos.NeosIo:NeosServiceProvider':
+  superTypes:
+    'Neos.NodeTypes:Page': true
+    'Neos.NeosIo:Address': true
+  ui:
+    label: 'Service Provider'
+    icon: 'icon-address-card'
+    inlineEditable: true
+    inspector:
+      groups:
+        properties:
+          label: 'Service Provider Properties'
+          position: 1
+          icon: 'icon-concierge-bell'
+        address:
+          label: 'Service Provider Address'
+          position: 2
+          icon: 'icon-map-marker-alt'
+        contributions:
+          label: 'Service Provider Contributions'
+          position: 3
+          icon: 'icon-donate'
+  properties:
+    name:
+      type: string
+      ui:
+        label: 'Service Provider Name'
+        reloadIfChanged: true
+        inlineEditable: true
+    logo:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Logo'
+        reloadIfChanged: true
+        inspector:
+          group: service
+          position: 10
+    description:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            formatting:
+              strong: true
+              em: true
+              u: true
+              sub: true
+              sup: true
+            placeholder: 'Enter a description'
+      validation:
+        'Neos.Neos/Validation/StringLengthValidator':
+          minimum: 1
+          maximum: 500
+    typesOfService:
+      type: array
+      ui:
+        label: 'Choose types of service'
+        reloadIfChanged: true
+        inspector:
+          group: properties
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          allowEmpty: false
+          placeholder: 'Select Services'
+          editorOptions:
+            values:
+              hosting:
+                label: 'Hosting'
+              consulting:
+                label: 'Consulting'
+              development:
+                label: 'Development'
+              design:
+                label: 'Design, Concept'
+              freelance:
+                label: 'Freelancer'
+    showCases:
+      type: references
+      ui:
+        label: 'Show cases'
+        reloadIfChanged: true
+        inspector:
+          group: contributions
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo:Reference.ShowCase'
+    caseStudies:
+      type: references
+      ui:
+        label: 'Case Studies'
+        reloadIfChanged: true
+        inspector:
+          group: contributions
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo:Reference.CaseStudies'
+    packages:
+      type: references
+      ui:
+        label: 'Packages'
+        reloadIfChanged: true
+        inspector:
+          group: contributions
+          editorOptions:
+            nodeTypes:
+              - 'Neos.MarketPlace:Vendor'
+    badges:
+      type: references
+      ui:
+        label: 'Packages'
+        reloadIfChanged: true
+        inspector:
+          group: contributions
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo:Badge'
