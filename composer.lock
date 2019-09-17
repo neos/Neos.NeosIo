@@ -3220,6 +3220,75 @@
             "time": "2018-01-19T08:15:53+00:00"
         },
         {
+            "name": "league/csv",
+            "version": "9.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/csv.git",
+                "reference": "d16f85d1f958a765844db4bc7174017edf2dd637"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/d16f85d1f958a765844db4bc7174017edf2dd637",
+                "reference": "d16f85d1f958a765844db4bc7174017edf2dd637",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=7.0.10"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "friendsofphp/php-cs-fixer": "^2.12",
+                "phpstan/phpstan": "^0.9.2",
+                "phpstan/phpstan-phpunit": "^0.9.4",
+                "phpstan/phpstan-strict-rules": "^0.9.0",
+                "phpunit/phpunit": "^6.0"
+            },
+            "suggest": {
+                "ext-iconv": "Needed to ease transcoding CSV using iconv stream filters"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Csv\\": "src"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://github.com/nyamsprod/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Csv data manipulation made easy in PHP",
+            "homepage": "http://csv.thephpleague.com",
+            "keywords": [
+                "csv",
+                "export",
+                "filter",
+                "import",
+                "read",
+                "write"
+            ],
+            "time": "2019-07-30T14:39:11+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.25.1",
             "source": {
@@ -5184,7 +5253,7 @@
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosIo",
-                "reference": "aab3d3dbf6f28c94fcb3b003603233cf19911e35"
+                "reference": "f70f8a8bc0c11a2e3ec04a8766718b46a5d44a3f"
             },
             "require": {
                 "flownative/gravatar": "^2.0",
@@ -5203,16 +5272,16 @@
                 "neos/neos": "^4.3",
                 "neos/neos-ui": "^3.0",
                 "neos/nodetypes": "^4.3",
-                "neos/redirecthandler-databasestorage": "^2.0",
-                "neos/redirecthandler-neosadapter": "^2.0",
-                "neos/redirecthandler-ui": "^1.1",
+                "neos/redirecthandler-databasestorage": "~4.0",
+                "neos/redirecthandler-neosadapter": "~4.0",
+                "neos/redirecthandler-ui": "~2.0",
                 "neos/seo": "^3.0",
                 "neos/swiftmailer": "^6.0",
                 "networkteam/neos-mailobfuscator": "^2.0",
                 "punktde/codeview": "^1.1",
                 "sitegeist/monocle": "^4.1",
                 "sitegeist/silhouettes": "^1.0.2",
-                "yoast/yoast-seo-for-neos": "1.0.0-beta"
+                "yoast/yoast-seo-for-neos": "~1.0"
             },
             "type": "neos-site",
             "extra": {
@@ -6403,30 +6472,31 @@
         },
         {
             "name": "neos/redirecthandler",
-            "version": "2.0.1",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/redirecthandler.git",
-                "reference": "351effbe2d184e82cc1dc65a5e409d092ba56194"
+                "reference": "6150530c5561c43b26267e29c0a8bd7a5904f39d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/redirecthandler/zipball/351effbe2d184e82cc1dc65a5e409d092ba56194",
-                "reference": "351effbe2d184e82cc1dc65a5e409d092ba56194",
+                "url": "https://api.github.com/repos/neos/redirecthandler/zipball/6150530c5561c43b26267e29c0a8bd7a5904f39d",
+                "reference": "6150530c5561c43b26267e29c0a8bd7a5904f39d",
                 "shasum": ""
             },
             "require": {
+                "ext-json": "*",
+                "league/csv": "^9.2",
                 "neos/flow": ">=4.0 <6.0 || dev-master",
-                "neos/redirecthandler-storageimplementation": "~2.0"
+                "neos/redirecthandler-storageimplementation": "~3.0"
             },
             "suggest": {
-                "league/csv": "Allows import/export based on CSV files",
                 "neos/redirecthandler-databasestorage": "Supports storing redirects in the database"
             },
             "type": "neos-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "3.0.x-dev"
                 },
                 "applied-flow-migrations": [
                     "TYPO3.FLOW3-201209201112",
@@ -6464,32 +6534,33 @@
                 "MIT"
             ],
             "description": "Basic API to handle HTTP redirects with the Flow Framework",
-            "time": "2018-04-25T19:39:51+00:00"
+            "time": "2019-09-26T06:23:04+00:00"
         },
         {
             "name": "neos/redirecthandler-databasestorage",
-            "version": "2.0.1",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/redirecthandler-databasestorage.git",
-                "reference": "463efeb2f8c825b0c62500e365aec423ea152560"
+                "reference": "50ebbb3a04589b405d16bd975943661a362a0c23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/redirecthandler-databasestorage/zipball/463efeb2f8c825b0c62500e365aec423ea152560",
-                "reference": "463efeb2f8c825b0c62500e365aec423ea152560",
+                "url": "https://api.github.com/repos/neos/redirecthandler-databasestorage/zipball/50ebbb3a04589b405d16bd975943661a362a0c23",
+                "reference": "50ebbb3a04589b405d16bd975943661a362a0c23",
                 "shasum": ""
             },
             "require": {
-                "neos/redirecthandler": "~2.0 || dev-master"
+                "neos/flow": "~5.0 || ~6.0",
+                "neos/redirecthandler": "~3.0 || ~4.0"
             },
             "provide": {
-                "neos/redirecthandler-storageimplementation": "2.0"
+                "neos/redirecthandler-storageimplementation": "3.0"
             },
             "type": "neos-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "4.0.x-dev"
                 },
                 "applied-flow-migrations": [
                     "TYPO3.FLOW3-201209201112",
@@ -6527,28 +6598,31 @@
                 "MIT"
             ],
             "description": "A plugin for neos/redirecthandler to store redirects in the database",
-            "time": "2017-12-20T07:29:35+00:00"
+            "time": "2019-09-04T10:32:12+00:00"
         },
         {
             "name": "neos/redirecthandler-neosadapter",
-            "version": "2.1.0",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/redirecthandler-neosadapter.git",
-                "reference": "f8404c81c59e6b324c3fe18d14ca534f4f3592a0"
+                "reference": "1504e8a580ad931e93de0983e50ad426cf568d18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/redirecthandler-neosadapter/zipball/f8404c81c59e6b324c3fe18d14ca534f4f3592a0",
-                "reference": "f8404c81c59e6b324c3fe18d14ca534f4f3592a0",
+                "url": "https://api.github.com/repos/neos/redirecthandler-neosadapter/zipball/1504e8a580ad931e93de0983e50ad426cf568d18",
+                "reference": "1504e8a580ad931e93de0983e50ad426cf568d18",
                 "shasum": ""
             },
             "require": {
-                "neos/neos": ">=3.0 <5.0 || dev-master",
-                "neos/redirecthandler": "~2.0 || dev-master"
+                "neos/neos": "~4.3 || ~5.0",
+                "neos/redirecthandler": "~3.0 || ~4.0"
             },
             "type": "neos-package",
             "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                },
                 "applied-flow-migrations": [
                     "TYPO3.FLOW3-201209201112",
                     "TYPO3.FLOW3-201201261636",
@@ -6617,35 +6691,120 @@
                 "GPL-3.0-or-later"
             ],
             "description": "Neos Redirect Handler",
-            "time": "2019-08-15T15:40:03+00:00"
+            "time": "2019-09-20T09:23:44+00:00"
         },
         {
             "name": "neos/redirecthandler-ui",
-            "version": "1.2.0",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neos/redirecthandler-ui.git",
-                "reference": "0330d85af51c2224c4a258ef51ecc969bc42cf67"
+                "reference": "4e5d7163ea6d61c7968b371bc4f06b9e9b149f59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neos/redirecthandler-ui/zipball/0330d85af51c2224c4a258ef51ecc969bc42cf67",
-                "reference": "0330d85af51c2224c4a258ef51ecc969bc42cf67",
+                "url": "https://api.github.com/repos/neos/redirecthandler-ui/zipball/4e5d7163ea6d61c7968b371bc4f06b9e9b149f59",
+                "reference": "4e5d7163ea6d61c7968b371bc4f06b9e9b149f59",
                 "shasum": ""
             },
             "require": {
-                "neos/neos": "~3.0 || ~4.0 || dev-master",
-                "neos/redirecthandler": "~2.0 || dev-master"
+                "ext-json": "*",
+                "neos/neos": "~4.3 || ~5.0",
+                "neos/redirecthandler": "~3.0 || ~4.0"
             },
             "replace": {
                 "webexcess/redirecthandler-backend": "*"
             },
             "type": "neos-package",
             "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                },
                 "installer-name": "Neos.RedirectHandler.Ui",
                 "neos": {
                     "package-key": "Neos.RedirectHandler.Ui"
-                }
+                },
+                "applied-flow-migrations": [
+                    "TYPO3.FLOW3-201201261636",
+                    "TYPO3.Fluid-201205031303",
+                    "TYPO3.FLOW3-201205292145",
+                    "TYPO3.FLOW3-201206271128",
+                    "TYPO3.FLOW3-201209201112",
+                    "TYPO3.Flow-201209251426",
+                    "TYPO3.Flow-201211151101",
+                    "TYPO3.Flow-201212051340",
+                    "TYPO3.TypoScript-130516234520",
+                    "TYPO3.TypoScript-130516235550",
+                    "TYPO3.TYPO3CR-130523180140",
+                    "TYPO3.Neos.NodeTypes-201309111655",
+                    "TYPO3.Flow-201310031523",
+                    "TYPO3.Flow-201405111147",
+                    "TYPO3.Neos-201407061038",
+                    "TYPO3.Neos-201409071922",
+                    "TYPO3.TYPO3CR-140911160326",
+                    "TYPO3.Neos-201410010000",
+                    "TYPO3.TYPO3CR-141101082142",
+                    "TYPO3.Neos-20141113115300",
+                    "TYPO3.Fluid-20141113120800",
+                    "TYPO3.Flow-20141113121400",
+                    "TYPO3.Fluid-20141121091700",
+                    "TYPO3.Neos-20141218134700",
+                    "TYPO3.Fluid-20150214130800",
+                    "TYPO3.Neos-20150303231600",
+                    "TYPO3.TYPO3CR-20150510103823",
+                    "TYPO3.Flow-20151113161300",
+                    "TYPO3.Form-20160601101500",
+                    "TYPO3.Flow-20161115140400",
+                    "TYPO3.Flow-20161115140430",
+                    "Neos.Flow-20161124204700",
+                    "Neos.Flow-20161124204701",
+                    "Neos.Twitter.Bootstrap-20161124204912",
+                    "Neos.Form-20161124205254",
+                    "Neos.Flow-20161124224015",
+                    "Neos.Party-20161124225257",
+                    "Neos.Eel-20161124230101",
+                    "Neos.Kickstart-20161124230102",
+                    "Neos.Setup-20161124230842",
+                    "Neos.Imagine-20161124231742",
+                    "Neos.Media-20161124233100",
+                    "Neos.NodeTypes-20161125002300",
+                    "Neos.SiteKickstarter-20161125002311",
+                    "Neos.Neos-20161125002322",
+                    "Neos.ContentRepository-20161125012000",
+                    "Neos.Fusion-20161125013710",
+                    "Neos.Setup-20161125014759",
+                    "Neos.SiteKickstarter-20161125095901",
+                    "Neos.Fusion-20161125104701",
+                    "Neos.NodeTypes-20161125104800",
+                    "Neos.Neos-20161125104802",
+                    "Neos.Kickstarter-20161125110814",
+                    "Neos.Neos-20161125122412",
+                    "Neos.Flow-20161125124112",
+                    "TYPO3.FluidAdaptor-20161130112935",
+                    "Neos.Fusion-20161201202543",
+                    "Neos.Neos-20161201222211",
+                    "Neos.Fusion-20161202215034",
+                    "Neos.Fusion-20161219092345",
+                    "Neos.ContentRepository-20161219093512",
+                    "Neos.Media-20161219094126",
+                    "Neos.Neos-20161219094403",
+                    "Neos.Neos-20161219122512",
+                    "Neos.Fusion-20161219130100",
+                    "Neos.Neos-20161220163741",
+                    "Neos.Neos-20170115114620",
+                    "Neos.Fusion-20170120013047",
+                    "Neos.Flow-20170125103800",
+                    "Neos.Seo-20170127154600",
+                    "Neos.Flow-20170127183102",
+                    "Neos.Fusion-20180211175500",
+                    "Neos.Fusion-20180211184832",
+                    "Neos.Flow-20180415105700",
+                    "Neos.Neos-20180907103800",
+                    "Neos.Neos.Ui-20190319094900",
+                    "Neos.Flow-20190425144900",
+                    "Neos.Flow-20190515215000",
+                    "Neos.NodeTypes-20190917101945"
+                ]
             },
             "autoload": {
                 "psr-4": {
@@ -6657,7 +6816,7 @@
                 "GPL-3.0-or-later"
             ],
             "description": "This package provides a backend module to manage Neos.RedirectHandler redirects",
-            "time": "2019-05-20T13:03:30+00:00"
+            "time": "2019-09-18T14:03:02+00:00"
         },
         {
             "name": "neos/seo",
@@ -9533,22 +9692,24 @@
         },
         {
             "name": "yoast/yoast-seo-for-neos",
-            "version": "1.0.0-beta",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Yoast/Yoast-SEO-for-Neos.git",
-                "reference": "fad3182a0281ec636eecaf122ddb91e7af57c9be"
+                "reference": "e80fe0dc6fda44072a3bc1fb0bce784a2823d8dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Yoast/Yoast-SEO-for-Neos/zipball/fad3182a0281ec636eecaf122ddb91e7af57c9be",
-                "reference": "fad3182a0281ec636eecaf122ddb91e7af57c9be",
+                "url": "https://api.github.com/repos/Yoast/Yoast-SEO-for-Neos/zipball/e80fe0dc6fda44072a3bc1fb0bce784a2823d8dd",
+                "reference": "e80fe0dc6fda44072a3bc1fb0bce784a2823d8dd",
                 "shasum": ""
             },
             "require": {
-                "neos/neos": "^3.0 || ^4.0 || dev-master",
-                "neos/neos-ui": "^2.0 || ^3.0 || dev-master",
-                "neos/seo": "^2.0 || ^3.0",
+                "ext-json": "*",
+                "neos/fusion-afx": ">=1.1",
+                "neos/neos": ">=3.3",
+                "neos/neos-ui": "~2.2 || ~3.2 || >=4.0",
+                "neos/seo": ">=2.1",
                 "php": "~7.0"
             },
             "replace": {
@@ -9589,7 +9750,7 @@
                 "seo",
                 "yoast"
             ],
-            "time": "2019-04-29T13:49:38+00:00"
+            "time": "2019-09-21T15:36:13+00:00"
         },
         {
             "name": "zendframework/zend-code",
