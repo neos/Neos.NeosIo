@@ -20,6 +20,10 @@ prototype(Neos.NodeTypes:Image) {
     maximumHeight.@process.override = ${q(node).property('customHeight') || value}
     maximumWidth.@process.override = ${q(node).property('customWidth') ? null : value}
 
+    link.@process.convertUris {
+        absolute = true
+    }
+
     @context {
         image = ${this.image}
         title = ${this.title}

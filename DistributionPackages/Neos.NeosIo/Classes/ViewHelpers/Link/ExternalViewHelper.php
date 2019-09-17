@@ -34,7 +34,8 @@ class ExternalViewHelper extends AbstractTagBasedViewHelper
     {
         if (!$this->arguments['noLinkWhen'] && !empty(trim($uri))) {
             $scheme = parse_url($uri, PHP_URL_SCHEME);
-            if ($scheme === null && $defaultScheme !== '') {
+            $host = parse_url($uri, PHP_URL_HOST);
+            if ($scheme === null && $defaultScheme !== '' && !empty($host)) {
                 $uri = $defaultScheme . '://' . $uri;
             }
             $this->tag->addAttribute('href', $uri);
@@ -43,7 +44,7 @@ class ExternalViewHelper extends AbstractTagBasedViewHelper
                 $this->tag->addAttribute('rel', 'noopener');
             }
         }
-        
+
         $this->tag->setContent($this->renderChildren());
         $this->tag->forceClosingTag(true);
 
