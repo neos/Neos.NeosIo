@@ -1,0 +1,67 @@
+'Neos.NeosIo:Address':
+  abstract: true
+  properties:
+    'street':
+      type: string
+      ui:
+        label: 'Street'
+        inlineEditable: true
+        inspector:
+          group: 'address'
+          position: 20
+    'zip':
+      type: 'Zip Code'
+      ui:
+        label: i18n
+        inlineEditable: true
+        inspector:
+          group: 'address'
+          position: 25
+    'city':
+      type: string
+      ui:
+        label: 'City'
+        inlineEditable: true
+        inspector:
+          group: 'address'
+          position: 30
+    'country':
+      type: string
+      ui:
+        label: 'Country'
+        inlineEditable: true
+        inspector:
+          group: 'address'
+          position: 35
+    'website':
+      type: string
+      ui:
+        label: 'Website'
+        reloadIfChanged: true
+        inspector:
+          group: 'address'
+          position: 45
+    'email':
+      type: string
+      ui:
+        label: 'E-Mail Address'
+        reloadIfChanged: true
+        inspector:
+          group: 'address'
+          position: 50
+    'latitude':
+      type: string
+      ui:
+        label: 'Latitude'
+        reloadIfChanged: true
+        inspector:
+          group: 'address'
+          position: 55
+    'longitude':
+      type: string
+      ui:
+        label: 'Longitude'
+        reloadIfChanged: true
+        inspector:
+          group: 'address'
+          position: 60
