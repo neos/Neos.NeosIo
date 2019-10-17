@@ -17,12 +17,3 @@ composer install
 ./flow site:prune
 ./flow site:import --packageKey Neos.NeosConIo
 ```
-
-## Building SASS
-To to a minified build of the SASS for production use, run the following command in the site package folder (where package.json is):
-
-`npm run build:sass && npm run postbuild:sass && npm run minify:styles`
-
-During development, you can use:
-
-`npm run watch:sass`
