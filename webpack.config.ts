@@ -121,10 +121,10 @@ function config(
         },
         resolve: {
             extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.scss'],
-            // absolute paths for JS related files
+            // absolute paths for JS and SCSS related files
             alias: {
-                Packages: path.resolve(__dirname, 'Packages/'),
-                DistributionPackages: path.resolve(__dirname, 'DistributionPackages/')
+                DistributionPackages: path.resolve(__dirname, 'DistributionPackages/'),
+                Packages: path.resolve(__dirname, 'Packages/')
             }
         }
     };
