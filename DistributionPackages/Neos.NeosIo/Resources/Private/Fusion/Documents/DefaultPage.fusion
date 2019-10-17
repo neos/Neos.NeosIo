@@ -13,10 +13,6 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
                 uri = 'resource://Neos.NeosIo/Public/Styles/font-awesome.min.css'
             }
         }
-
-        javascripts.site = Ttree.Script:Resource {
-            uri = 'resource://Neos.NeosIo/Public/JavaScript/Modernizr.min.js'
-        }
     }
 
     body {
@@ -36,7 +32,7 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
         }
 
         javascripts.site = Ttree.Script:Resource {
-            uri = 'resource://Neos.NeosIo/Public/JavaScript/Bundle.min.js'
+            uri = 'resource://Neos.NeosIo/Public/Scripts/Main.js'
             attributes.async = ''
         }
     }
