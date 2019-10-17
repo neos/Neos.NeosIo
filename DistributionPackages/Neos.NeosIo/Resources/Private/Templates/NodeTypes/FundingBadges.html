@@ -18,34 +18,30 @@
 			<li class="fundingBadges__singleElement" data-customer-name="{customerName -> f:format.case(mode: 'lower')}"
 			    data-filters='{customer.badgeTypes -> f:format.json() -> f:format.raw()}'>
 
-				<f:if condition="{customer.logo}">
-					<f:then>
-						<f:if condition="{customer.link}">
-							<f:then>
-								<a href="{customer.link}" title="Visit {customerName}" target="_blank">
-									<f:render section="logo" arguments="{_all}"/>
-								</a>
-							</f:then>
-							<f:else>
-								<f:render section="logo" arguments="{_all}"/>
-							</f:else>
-						</f:if>
-					</f:then>
-					<f:else>
-						<strong class="funding-badge--customer-name">
-							<f:if condition="{customer.link}">
-								<f:then>
-									<a href="{customer.link}" title="Visit {customerName}" target="_blank">
-										{customerName}
-									</a>
-								</f:then>
-								<f:else>
-									{customerName}
-								</f:else>
-							</f:if>
-						</strong>
-					</f:else>
-				</f:if>
+                <f:if condition="{customer.logo}">
+                    <f:if condition="{customer.link}">
+                        <f:then>
+                            <a href="{customer.link}" title="Visit {customerName}" target="_blank">
+                                <f:render section="logo" arguments="{_all}"/>
+                            </a>
+                        </f:then>
+                        <f:else>
+                            <f:render section="logo" arguments="{_all}"/>
+                        </f:else>
+                    </f:if>
+                </f:if>
+                <strong class="funding-badge--customer-name">
+                    <f:if condition="{customer.link}">
+                        <f:then>
+                            <a href="{customer.link}" title="Visit {customerName}" target="_blank">
+                                {customerName}
+                            </a>
+                        </f:then>
+                        <f:else>
+                            {customerName}
+                        </f:else>
+                    </f:if>
+                </strong>
 			   <ul>
 					<f:for each="{customer.badges}" as="badge">
 						<li class="funding-badge--item">
@@ -80,5 +76,7 @@
 </f:section>
 
 <f:section name="logo">
-	<img class="funding-badge--customer-logo" src="{customer.logo}" alt="Logo of {customerName}" title="{customerName}"/>
+    <div class="funding-badge--customer-logo-wrap">
+       <img class="funding-badge--customer-logo" src="{customer.logo}" alt="Logo of {customerName}" title="{customerName}"/>
+    </div>
 </f:section>
