@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 {namespace neos=Neos\Neos\ViewHelpers}
 <html>
-<head>
-    <f:section name="stylesheets">
-        <link href="{f:uri.resource(path: 'Styles/Main.css', package: 'Neos.NeosIo')}" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,200,200italic,300italic,400,400italic" rel="stylesheet">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    </f:section>
-    <f:section name="metaTags">
-        <f:render partial="Favicon" />
-    </f:section>
-</head>
 <body>
 <f:section name="body">
     {parts.siteHeader -> f:format.raw()}

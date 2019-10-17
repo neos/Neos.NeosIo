@@ -1,9 +1,11 @@
-prototype(Neos.NeosIo:DefaultPage) {
-    head {
-        stylesheets.neosMarketPlace = Ttree.StyleSheet:Resource {
-            uri = 'resource://Neos.MarketPlace/Public/Styles/Main.css'
-            @position = 'after site'
-        }
+prototype(Neos.NeosIo:PageStyles) {
+    neosMarketPlace = Neos.Fusion:Component {
+        @position = 'after main'
+        renderer = afx`
+            <link rel="stylesheet" @children="attributes.href">
+                <Neos.Fusion:ResourceUri path="resource://Neos.MarketPlace/Public/Styles/Main.css"/>
+            </link>
+        `
     }
 }
 

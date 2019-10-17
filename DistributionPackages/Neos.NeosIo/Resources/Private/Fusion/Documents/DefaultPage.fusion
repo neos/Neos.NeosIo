@@ -1,18 +1,7 @@
 prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
     head {
         metaTags = Neos.NeosIo:MetaTags
-
-        stylesheets {
-            main = Ttree.StyleSheet:Resource {
-                uri = 'resource://Neos.NeosIo/Public/Styles/Main.css'
-            }
-            fonts = Ttree.StyleSheet:External {
-                uri = 'https://fonts.googleapis.com/css?family=Work+Sans:300,200,200italic,300italic,400,400italic'
-            }
-            fontAwesome = Ttree.StyleSheet:Resource {
-                uri = 'resource://Neos.NeosIo/Public/Styles/font-awesome.min.css'
-            }
-        }
+        stylesheets = Neos.NeosIo:PageStyles
     }
 
     body {
@@ -31,10 +20,11 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
             isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
         }
 
-        javascripts.site = Ttree.Script:Resource {
-            uri = 'resource://Neos.NeosIo/Public/Scripts/Main.js'
-            attributes.async = ''
-        }
+        javascripts.site = afx`
+            <script @children="attributes.src" async="">
+                <Neos.Fusion:ResourceUri path="resource://Neos.NeosIo/Public/Scripts/Main.js"/>
+            </script>
+        `
     }
 
     @cache.entryTags.site = ${'Node_' + site.identifier}
