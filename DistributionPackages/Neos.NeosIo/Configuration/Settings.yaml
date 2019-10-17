@@ -41,6 +41,10 @@ Neos:
   Flow:
     http:
       applicationToken: 'MajorVersion'
+    mvc:
+      routes:
+        'Neos.NeosIo':
+          position: 'before Neos.Neos'
 
   Neos:
     userInterface:
