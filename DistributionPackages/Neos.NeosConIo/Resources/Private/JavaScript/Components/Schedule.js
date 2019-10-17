@@ -1,4 +1,4 @@
-import {component} from '@reduct/component';
+import { component } from '@reduct/component';
 import propTypes from '@reduct/nitpick';
 
 @component({
@@ -9,7 +9,6 @@ export default class Schedule {
         this.talks = this.findAll(this.props.talkSelector);
         this.registerTalkClickEvent();
     }
-
 
     registerTalkClickEvent() {
         this.talks.forEach(talk => {
