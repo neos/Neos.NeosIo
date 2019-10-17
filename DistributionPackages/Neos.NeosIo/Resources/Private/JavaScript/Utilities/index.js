@@ -1,5 +1,3 @@
-import loadJs from './LoadJs.js';
+import loadJs from './LoadJs';
 
-export {
-	loadJs
-};
+export { loadJs };

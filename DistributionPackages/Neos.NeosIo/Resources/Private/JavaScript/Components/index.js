@@ -1,21 +1,21 @@
-import AmChart from './AmChart.js';
-import ClassToggler from './ClassToggler.js';
-import EmptyClickHandler from './EmptyClickHandler.js';
-import CountUp from './CountUp.js';
-import FundingBadges from './FundingBadges.js';
-import ScrollTo from './ScrollTo.js';
-import ProgressiveImage from './ProgressiveImage.js';
-import ScrollClassToggler from './ScrollClassToggler.js';
-import SentenceSwitcher from './SentenceSwitcher.js';
+import AmChart from './AmChart';
+import ClassToggler from './ClassToggler';
+import EmptyClickHandler from './EmptyClickHandler';
+import CountUp from './CountUp';
+import FundingBadges from './FundingBadges';
+import ScrollTo from './ScrollTo';
+import ProgressiveImage from './ProgressiveImage';
+import ScrollClassToggler from './ScrollClassToggler';
+import SentenceSwitcher from './SentenceSwitcher';
 
 export {
-	AmChart,
-	ClassToggler,
-	CountUp,
-	ScrollTo,
-	FundingBadges,
-	SentenceSwitcher,
-	ProgressiveImage,
-	ScrollClassToggler,
-	EmptyClickHandler
+    AmChart,
+    ClassToggler,
+    CountUp,
+    ScrollTo,
+    FundingBadges,
+    SentenceSwitcher,
+    ProgressiveImage,
+    ScrollClassToggler,
+    EmptyClickHandler
 };
