@@ -45,7 +45,7 @@
 			   <ul>
 					<f:for each="{customer.badges}" as="badge">
 						<li class="funding-badge--item">
-							<f:if condition="{badge.customerSum} > 0">
+							<f:if condition="{badge.customerSum} > 0 && {badge.badgeCategory} != 'Active Team Member Employers'">
 								<strong class="funding-badge--customer-sum">
 									{badge.customerSum -> f:format.currency(currencySign: '€')}
 								</strong>
