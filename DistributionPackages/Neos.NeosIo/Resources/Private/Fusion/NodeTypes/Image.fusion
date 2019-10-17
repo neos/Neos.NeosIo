@@ -15,10 +15,11 @@ prototype(Neos.NodeTypes:Image) {
     }
 
     maximumHeight = null
-    maximumWidth = null
+    // The maximum page width
+    maximumWidth = ${1096 * 2}
 
     maximumHeight.@process.override = ${q(node).property('customHeight') || value}
-    maximumWidth.@process.override = ${q(node).property('customWidth') ? null : value}
+    maximumWidth.@process.override = ${q(node).property('customHeight') ? null : value}
 
     link.@process.convertUris {
         absolute = true
@@ -30,7 +31,7 @@ prototype(Neos.NodeTypes:Image) {
         alternativeText = ${this.alternativeText}
         imageClassName = ${this.imageClassName}
         maximumHeight = ${this.maximumHeight}
-        maximumwidth = ${this.maximumwidth}
+        maximumWidth = ${this.maximumWidth}
         allowUpScaling = ${this.allowUpScaling}
         allowCropping = ${this.allowCropping}
     }
@@ -41,7 +42,7 @@ prototype(Neos.NodeTypes:Image) {
         alternativeText = ${alternativeText}
         className = ${imageClassName}
         maximumHeight = ${maximumHeight}
-        maximumwidth = ${maximumwidth}
+        maximumWidth = ${maximumWidth}
         allowUpScaling = ${allowUpScaling}
         allowCropping = ${allowCropping}
     }
