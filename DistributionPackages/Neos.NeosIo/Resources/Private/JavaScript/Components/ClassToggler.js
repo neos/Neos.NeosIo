@@ -1,4 +1,4 @@
-import {component} from '@reduct/component';
+import { component } from '@reduct/component';
 import propTypes from '@reduct/nitpick';
 
 @component({
@@ -19,24 +19,20 @@ export default class ClassToggler {
     }
 
     toggleClass() {
-        const {
-            activeClass,
-            targetActiveClass,
-            documentActiveClass
-        } = this.props;
+        const { activeClass, targetActiveClass, documentActiveClass } = this.props;
 
         let otherElementsWithTargetClass = document.querySelectorAll('.' + targetActiveClass);
         let otherElementsWithActiveClass = document.querySelectorAll('.' + activeClass);
         let target = this.target;
         let self = this.el;
 
-        otherElementsWithTargetClass.forEach(function (el) {
+        otherElementsWithTargetClass.forEach(function(el) {
             if (el !== target) {
                 el.classList.remove(targetActiveClass);
             }
         });
 
-        otherElementsWithActiveClass.forEach(function (el) {
+        otherElementsWithActiveClass.forEach(function(el) {
             if (el !== self) {
                 el.classList.remove(activeClass);
             }

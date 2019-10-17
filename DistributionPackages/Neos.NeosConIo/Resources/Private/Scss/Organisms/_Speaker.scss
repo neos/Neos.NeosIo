@@ -1,165 +1,162 @@
-$imageTeaser--speaker__animation: .2s linear;
+$imageTeaser--speaker__animation: 0.2s linear;
 
 // Styling adjustments for speaker image teaser
 .imageTeaser--speaker {
-	min-height: 0;
-	height: $imageTeaser--speaker__width;
-	width: $imageTeaser--speaker__width;
+  min-height: 0;
+  height: $imageTeaser--speaker__width;
+  width: $imageTeaser--speaker__width;
 
-	.imageTeaser__contents {
-		padding: 1em;
-	}
+  .imageTeaser__contents {
+    padding: 1em;
+  }
 
-	.imageTeaser__contents__heading {
-		display: inline;
-		font-size: 16px;
-	}
+  .imageTeaser__contents__heading {
+    display: inline;
+    font-size: 16px;
+  }
 
-	.imageTeaser__contents__text {
-		font-size:12px;
-	}
+  .imageTeaser__contents__text {
+    font-size: 12px;
+  }
 
-	&.imageTeaser--isLink {
-		position: relative;
+  &.imageTeaser--isLink {
+    position: relative;
 
-		// Speaker image teaser special hover styling
-		&::before,
-		&::after {
-			position: absolute;
-			z-index: 1;
-			content: '';
-			width: 100%;
-			height: 100%;
-			transition: transform $imageTeaser--speaker__animation, border-color $imageTeaser--speaker__animation;
-			transform: scale(0);
-			background: transparent;
-		}
+    // Speaker image teaser special hover styling
+    &::before,
+    &::after {
+      position: absolute;
+      z-index: 1;
+      content: "";
+      width: 100%;
+      height: 100%;
+      transition: transform $imageTeaser--speaker__animation, border-color $imageTeaser--speaker__animation;
+      transform: scale(0);
+      background: transparent;
+    }
 
-		&::before {
-			left: 0;
-			bottom: 0;
-			border-bottom: 2px solid transparent;
-			border-left: 2px solid transparent;
-			transform-origin: 0 100%;
-		}
+    &::before {
+      left: 0;
+      bottom: 0;
+      border-bottom: 2px solid transparent;
+      border-left: 2px solid transparent;
+      transform-origin: 0 100%;
+    }
 
-		&::after {
-			right: 0;
-			top: 0;
-			border-top: 2px solid transparent;
-			border-right: 2px solid transparent;
-			transform-origin: 100% 0;
-		}
+    &::after {
+      right: 0;
+      top: 0;
+      border-top: 2px solid transparent;
+      border-right: 2px solid transparent;
+      transform-origin: 100% 0;
+    }
 
-		&:hover,
-		&:focus {
-			&::before,
-			&::after {
-				transition: transform $imageTeaser--speaker__animation;
-				border-color: brand('primary');
-				transform: scale(1);
-			}
+    &:hover,
+    &:focus {
+      &::before,
+      &::after {
+        transition: transform $imageTeaser--speaker__animation;
+        border-color: brand("primary");
+        transform: scale(1);
+      }
 
-			.imageTeaser__contents__heading {
-				&::after {
-					display: none;
-				}
-			}
-		}
-	}
+      .imageTeaser__contents__heading {
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
 }
 
 .imageTeaser--featuredTalk {
-	height: 100%;
-	min-height: 0;
+  height: 100%;
+  min-height: 0;
 
-	.imageTeaser__image {
-		position: relative;
-	}
+  .imageTeaser__image {
+    position: relative;
+  }
 
-	.imageTeaser__contents__heading {
-		display: inline;
-	}
+  .imageTeaser__contents__heading {
+    display: inline;
+  }
 
-	.imageTeaser__contents__text {
-		display: none;
-	}
+  .imageTeaser__contents__text {
+    display: none;
+  }
 }
 
 // Styling for speakerlist on speaker overview
 .speaker__speakerList {
-	padding: 0;
-	list-style: none;
-	display: flex;
-	flex-flow: row wrap;
-	justify-content: center;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 
-	margin: 0 #{-$basic-spacing / 2}px;
-	width: calc(100% + #{$basic-spacing}px);
+  margin: 0 #{-$basic-spacing / 2}px;
+  width: calc(100% + #{$basic-spacing}px);
 
-	&__item {
-		padding: 0 #{$basic-spacing / 2}px;
+  &__item {
+    padding: 0 #{$basic-spacing / 2}px;
 
-		@media all and (max-width: 441px) {
-			margin: 0 auto;
-		}
-	}
+    @media all and (max-width: 441px) {
+      margin: 0 auto;
+    }
+  }
 }
 
 // Styling for elements on speaker details page
 
 .speaker__details {
-	display: flex;
-	margin-bottom: #{$basic-spacing * .5}px;
+  display: flex;
+  margin-bottom: #{$basic-spacing * 0.5}px;
 
-	@include mq('small') {
-		display: block;
-	}
+  @include mq("small") {
+    display: block;
+  }
 }
 
 .speaker__imageWrapper {
-	flex: 0 0 auto;
-	margin-bottom: #{$basic-spacing}px;
-	width: 33.33333%;
+  flex: 0 0 auto;
+  margin-bottom: #{$basic-spacing}px;
+  width: 33.33333%;
 
-	@include mq('small') {
-		width: 100%;
-	}
-
+  @include mq("small") {
+    width: 100%;
+  }
 }
 
 .speaker__image {
-	width: 100%;
+  width: 100%;
 }
 
 .speaker__description {
-	padding-left: #{$basic-spacing}px;
+  padding-left: #{$basic-spacing}px;
 
-	@include mq('small') {
-		padding-left: 0;
-	}
+  @include mq("small") {
+    padding-left: 0;
+  }
 }
 
 .speaker__infos {
-	padding: 0;
-	margin: 0 0 #{$basic-spacing}px;
-	list-style: none;
+  padding: 0;
+  margin: 0 0 #{$basic-spacing}px;
+  list-style: none;
 
-	&__item {
-		.fa {
-			padding-right: 6px;
-		}
-	}
+  &__item {
+    .fa {
+      padding-right: 6px;
+    }
+  }
 }
 
 .speaker__video {
-	margin-bottom: #{$basic-spacing * 2}px;
+  margin-bottom: #{$basic-spacing * 2}px;
 }
 
 .speaker__featuredTalk {
-
-	~ .speaker__moreTalks {
-		margin-top: #{$basic-spacing * 1.5}px;
-	}
-
+  ~ .speaker__moreTalks {
+    margin-top: #{$basic-spacing * 1.5}px;
+  }
 }

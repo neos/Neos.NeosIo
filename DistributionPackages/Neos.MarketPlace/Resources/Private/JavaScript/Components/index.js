@@ -1,7 +1,4 @@
-import ShowMore from './ShowMore.js';
-import PackageVersionBrowser from './PackageVersionBrowser.js';
+import ShowMore from './ShowMore';
+import PackageVersionBrowser from './PackageVersionBrowser';
 
-export {
-	ShowMore,
-	PackageVersionBrowser
-};
+export { ShowMore, PackageVersionBrowser };

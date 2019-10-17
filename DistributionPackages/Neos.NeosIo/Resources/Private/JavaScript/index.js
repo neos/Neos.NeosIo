@@ -1,8 +1,8 @@
 import 'babel-polyfill';
 import assembler from '@reduct/assembler';
-import * as siteComponents from './Components/';
-import * as marketPlaceComponents from '../../../../Neos.MarketPlace/Resources/Private/JavaScript/Components/';
-import * as neosConComponents from '../../../../Neos.NeosConIo/Resources/Private/JavaScript/Components/';
+import * as siteComponents from './Components';
+import * as marketPlaceComponents from 'DistributionPackages/Neos.MarketPlace/Resources/Private/JavaScript/Components';
+import * as neosConComponents from 'DistributionPackages/Neos.NeosConIo/Resources/Private/JavaScript/Components';
 import Layzr from 'layzr.js';
 
 const app = assembler();
@@ -22,8 +22,7 @@ document.addEventListener('Neos.PageLoaded', app.run());
 
 setTimeout(() => {
     layzr
-    .update()
-    .check()
-    .handlers(true);
+        .update()
+        .check()
+        .handlers(true);
 }, 0);
-

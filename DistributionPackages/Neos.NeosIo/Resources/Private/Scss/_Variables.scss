@@ -6,7 +6,7 @@
 $direction: ltr !default;
 
 // Base directory for all images.
-$image-base-path: '../Images/' !default;
+$image-base-path: "../Images/" !default;
 
 // =============================================================================
 // Brand related variables
@@ -14,13 +14,13 @@ $image-base-path: '../Images/' !default;
 // All brand colors, for each of these keys, a utility color-class will be generated.
 // f.e. `.u-brandColor-primary { color: #0097d7; }`
 $brand-colors: (
-	primary: #00ADEE,
-	secondary: #26224C,
-	teritary: #34363C
-)	!default;
+  primary: #00adee,
+  secondary: #26224c,
+  teritary: #34363c
+) !default;
 
 // The main brand font-family
-$brand-font-family: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !default;
+$brand-font-family: "Work Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 
 // If the CD makes use of rounded corners, use this variable for consistency.
 $brand-border-radius: 3px !default;
@@ -38,8 +38,8 @@ $webFonts: false;
 
 // Font-family stack variables to standardize the font-setting
 $sans-font-family: $brand-font-family !default;
-$serif-font-family: Georgia, 'Times New Roman', Times, serif !default;
-$mono-font-family: Menlo, Monaco, Consolas, 'Courier New', monospace !default;
+$serif-font-family: Georgia, "Times New Roman", Times, serif !default;
+$mono-font-family: Menlo, Monaco, Consolas, "Courier New", monospace !default;
 
 // The font-weights below are used to emphasize written words instead of numbers in your Sass.
 $bold: 400 !default;
@@ -89,7 +89,7 @@ $content-background: #fff !default;
 // Z-Index Masterlist, describe your z-index'es here, and use the z() function in your Sass files.
 // F.e: z-index: z('myElement');
 $zIndexes: (
-	siteHeader: 1000
+  siteHeader: 1000
 ) !default;
 
 // =============================================================================
@@ -102,21 +102,21 @@ $is-responsive: true !default;
 // Breakpoints, each breakpoint is accessible via the mq('myKey') @mixin
 // and will output the written rules inside a media-query declaration.
 $mq-breakpoints: (
-	small: (
-		query: 'screen and (max-width: 649px)',
-		classNameShorthand: 's'
-	),
-	medium: (
-		query: 'screen and (min-width: 650px)',
-		classNameShorthand: 'm'
-	),
-	smallerThanLarge: (
-		query: 'screen and (max-width: 1249px)'
-	),
-	large: (
-		query: 'screen and (min-width: 1250px)',
-		classNameShorthand: 'l'
-	)
+  small: (
+    query: "screen and (max-width: 649px)",
+    classNameShorthand: "s"
+  ),
+  medium: (
+    query: "screen and (min-width: 650px)",
+    classNameShorthand: "m"
+  ),
+  smallerThanLarge: (
+    query: "screen and (max-width: 1249px)"
+  ),
+  large: (
+    query: "screen and (min-width: 1250px)",
+    classNameShorthand: "l"
+  )
 ) !default;
 
 // Default unit for media-query mixins(min-screen(), max-screen(), screen()) - it must include a digit e.g.:
@@ -127,7 +127,7 @@ $mq-unit: 1px !default;
 // Design related variables
 // =============================================================================
 // Transition duration.
-$transition-duration: .3s;
+$transition-duration: 0.3s;
 
 // Default color for all anchors and links.
 $link-color: map-get($brand-colors, primary) !default;
@@ -137,11 +137,11 @@ $btn-color: map-get($brand-colors, primary) !default;
 
 // Mood and action colors used on buttons, alerts and other actions.
 $color-info: map-get($brand-colors, primary) !default;
-$color-positive: #8CD700 !default;
-$color-negative: #D75200 !default;
+$color-positive: #8cd700 !default;
+$color-negative: #d75200 !default;
 
 // For certain atoms used colors
-$lighter-text: lighten(brand('teritary'), 35%);
+$lighter-text: lighten(brand("teritary"), 35%);
 
 // Default styling for horizontal rules and bordered elements like tables.
 $basic-border-color: color-adjust($content-background, 10%) !default;

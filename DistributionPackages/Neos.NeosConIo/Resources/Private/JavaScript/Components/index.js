@@ -1,5 +1,3 @@
-import Schedule from './Schedule.js';
+import Schedule from './Schedule';
 
-export {
-    Schedule
-};
+export { Schedule };

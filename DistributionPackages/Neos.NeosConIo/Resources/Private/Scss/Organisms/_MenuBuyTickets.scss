@@ -1,39 +1,38 @@
 // Common styling for Buy Tickets link; both used in main menu and next to responsive menu.
 .menuBuyTickets {
-	background: #FBA541;
-	color: white;
-	padding: 5px 10px !important;
-	border-radius: 3px;
-	&:hover {
-		background: darken(#FBA541, 10);
-	}
+  background: #fba541;
+  color: white;
+  padding: 5px 10px !important;
+  border-radius: 3px;
+  &:hover {
+    background: darken(#fba541, 10);
+  }
 }
-
 
 // Hide "Buy" entry in main menu on small screens, as button is visible.
 @media screen and (max-width: 1350px) {
-	.menuBuyTickets--inMainMenu {
-		display: none !important;
-	}
+  .menuBuyTickets--inMainMenu {
+    display: none !important;
+  }
 }
 
 // "Buy" entry on small screens
 .siteHeader__buyTickets {
-	position: absolute;
-	top: 50%;
-	right: 5em;
-	font-size: 0.95em;
-	font-weight: 400;
-	z-index: 1;
-	transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  right: 5em;
+  font-size: 0.95em;
+  font-weight: 400;
+  z-index: 1;
+  transform: translateY(-50%);
 
-	@media screen and (min-width: 1350px) {
-		display: none;
-		visibility: hidden;
+  @media screen and (min-width: 1350px) {
+    display: none;
+    visibility: hidden;
 
-		.eventHeader & {
-			display: block;
-			visibility: visible;
-		}
-	}
+    .eventHeader & {
+      display: block;
+      visibility: visible;
+    }
+  }
 }
