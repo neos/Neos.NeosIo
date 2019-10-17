@@ -1,0 +1,48 @@
+{
+  "ignoreFiles": [
+    "**/Public/**",
+    "**/Private/Templates/**",
+    "node_modules/**",
+    "**/*.noLinter.*"
+],
+  "extends": "stylelint-config-standard",
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "rules": {
+    "block-closing-brace-newline-after": ["always", {
+      ignoreAtRules: ["if", "else"]
+    }],
+    "declaration-colon-newline-after": null,
+    "at-rule-empty-line-before": null,
+    "at-rule-no-unknown": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": [ true, { "severity": "warning" }],
+    "max-empty-lines": 3,
+    "max-nesting-depth": 5,
+    "no-invalid-double-slash-comments": true,
+    "font-family-no-missing-generic-family-keyword": null,
+    "property-no-unknown": [true, {
+      ignoreProperties: [
+        "box","box-item",
+        "grid-kiss",
+        "font-range","min-font-size","max-font-size","lower-font-range","upper-font-range",
+        "font-awesome",
+        "size","min-size","max-size",
+        "border-top-radius","border-right-radius","border-bottom-radius","border-left-radius",
+        "tap-highlight-color","touch-callout"
+      ]
+    }],
+    "selector-pseudo-class-no-unknown": [true, {
+      "ignorePseudoClasses": [
+        "at-least","at-most","between","exactly"
+      ]
+    }],
+    "selector-pseudo-element-no-unknown": [true, {
+      "ignorePseudoElements": [
+        "track","thumb"
+      ]
+    }],
+    "selector-type-no-unknown": null
+  }
+}

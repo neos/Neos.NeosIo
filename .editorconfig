@@ -1,16 +1,30 @@
+# http://EditorConfig.org
+
+# top-most EditorConfig file
 root = true
 
+# Default
 [*]
-end_of_line = lf
 charset = utf-8
-indent_style = tab
+end_of_line = lf
+insert_final_newline = true
+trim_trailing-whitespace = true
+indent_style = space
 indent_size = 4
 
-[{*.{yaml,yml},package.json,.*rc}]
+# Exceptions
+[{*.{yaml,yml,sh,jscsrc,scss},package.json,.*rc}]
 indent_size = 2
 
-[*.{php,fusion,yaml,yml,json}]
-indent_style = space
+[*.{json,scss}]
+max_line_length = 1000
 
 [Sites.xml]
+indent_size = 1
+
+[*.{note,md,edit,read}]
+trim_trailing-whitespace = false
+
+[Makefile]
+indent_style = tab
 indent_size = 1
