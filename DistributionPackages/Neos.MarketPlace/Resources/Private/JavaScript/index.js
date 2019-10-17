@@ -7,4 +7,3 @@ const app = assembler();
 app.registerAll(components);
 
 setTimeout(() => app.run(), 0);
-document.addEventListener('Neos.PageLoaded', app.run());
