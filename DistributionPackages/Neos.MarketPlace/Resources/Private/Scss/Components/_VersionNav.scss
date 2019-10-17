@@ -1,0 +1,44 @@
+.version-nav {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+
+  &__item {
+    list-style: none;
+  }
+  
+  &__link {
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+    padding: .1em .4em;
+    background-color: white;
+    transition: all .85s;
+
+    &:hover, &:focus {
+      color: white;
+      background-color: #00ADEE;
+      text-decoration: none;
+    }
+
+    &:active, &:visited {
+      text-decoration: none;
+      outline: 0;
+    }
+  }
+
+  &__version,
+  &__time {
+    line-height: 26px;
+  }
+
+  &__version {
+    vertical-align: baseline;
+  }
+
+  &__time {
+    float: right;
+    font-size: 80%;
+    vertical-align: baseline;
+  }
+}

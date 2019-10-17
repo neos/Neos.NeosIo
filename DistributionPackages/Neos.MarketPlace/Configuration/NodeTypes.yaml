@@ -1,0 +1,703 @@
+#
+# Keywords Default Mapping
+
+keywordsDefaultMapping:
+  type: multi_field
+  fields:
+    name:
+      type: string
+      include_in_all: true
+    tag:
+      type: string
+      index: not_analyzed
+      include_in_all: true
+    suggestion:
+      type: completion
+      analyzer: simple
+      search_analyzer: simple
+      payloads: true
+versionDefaultMapping:
+  elasticSearchMapping:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      keywords:
+        type: multi_field
+        fields:
+          name:
+            type: string
+            include_in_all: true
+          tag:
+            type: string
+            index: not_analyzed
+            include_in_all: true
+          suggestion:
+            type: completion
+            analyzer: simple
+            search_analyzer: simple
+            payloads: true
+      homepage:
+        type: string
+      version:
+        type: string
+      versionNormalized:
+        type: long
+      stability:
+        type: boolean
+      stabilityLevel:
+        type: string
+        index: not_analyzed
+      time:
+        type: date
+        format: date_time_no_millis
+      timestamp:
+        type: integer
+documentProperty:
+  reloadIfChanged: true
+  inspector:
+    group: document
+metricProperty:
+  reloadIfChanged: true
+  inspector:
+    group: metrics
+githubProperty:
+  reloadIfChanged: true
+  inspector:
+    group: metrics
+'Neos.Neos:Document':
+  constraints:
+    nodeTypes:
+      'Neos.MarketPlace:Document': false
+      'Neos.MarketPlace:RepositoryStorage': true
+'Neos.Neos:ContentCollection':
+  constraints:
+    nodeTypes:
+      'Neos.MarketPlace:Version': false
+      'Neos.MarketPlace:Dist': false
+      'Neos.MarketPlace:Source': false
+      'Neos.MarketPlace:People': false
+      'Neos.MarketPlace:Readme': false
+'Neos.MarketPlace:Document':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        document:
+          label: i18n
+  childNodes:
+    main:
+      type: 'Neos.Neos:ContentCollection'
+  superTypes:
+    'Neos.Neos:Document': true
+    'Neos.Seo:TitleTagMixin': true
+    'Neos.Seo:TwitterCardMixin': true
+    'Neos.Seo:CanonicalLinkMixin': true
+    'Neos.Seo:OpenGraphMixin': true
+    'Neos.Seo:XmlSitemapMixin': true
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.Neos:Document': false
+      'Neos.MarketPlace:RepositoryStorage': false
+'Neos.MarketPlace:RepositoryStorage':
+  superTypes:
+    'Neos.MarketPlace:Document': true
+  ui:
+    label: i18n
+    icon: icon-search
+  constraints:
+    nodeTypes:
+      'Neos.MarketPlace:Vendor': true
+'Neos.MarketPlace:Vendor':
+  class: Neos\MarketPlace\Domain\Model\VendorNode
+  superTypes:
+    'Neos.MarketPlace:Document': true
+  constraints:
+    nodeTypes:
+      'Neos.MarketPlace:Package': true
+  ui:
+    label: i18n
+    icon: icon-building
+  properties:
+    title:
+      type: string
+      search:
+        elasticSearchMapping:
+          type: string
+          include_in_all: true
+      ui:
+        reloadIfChanged: true
+        inspector:
+          position: 1
+        label: i18n
+    lastActivity:
+      type: DateTime
+      ui:
+        label: i18n
+        inspector:
+          group: document
+          editorOptions:
+            format: 'd-m-Y H:i'
+      search:
+        indexing: '${Date.format(node.lastActivity, "Y-m-d\TH:i:sP")}'
+        elasticSearchMapping:
+          type: date
+          include_in_all: false
+          format: date_time_no_millis
+    __composerVendorKey:
+      search:
+        elasticSearchMapping:
+          type: multi_field
+          fields:
+            name:
+              type: string
+              include_in_all: true
+            tag:
+              type: string
+              index: not_analyzed
+              include_in_all: true
+            suggestion:
+              type: completion
+              analyzer: simple
+              search_analyzer: simple
+              payloads: true
+        indexing: '${q(node).property(''title'')}'
+'Neos.MarketPlace:Package':
+  class: Neos\MarketPlace\Domain\Model\PackageNode
+  superTypes:
+    'Neos.MarketPlace:Document': true
+  ui:
+    label: i18n
+    icon: icon-gift
+    inspector:
+      groups:
+        metrics:
+          label: i18n
+        github:
+          label: i18n
+  childNodes:
+    maintainers:
+      position: 'before main'
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          'Neos.MarketPlace:Maintainer': true
+    authors:
+      position: 'after maintainers'
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          'Neos.MarketPlace:Author': true
+    versions:
+      position: 'after authors'
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          'Neos.MarketPlace:Version': true
+    readme:
+      position: 'after versions'
+      type: 'Neos.MarketPlace:Readme'
+  properties:
+    title:
+      type: string
+      search:
+        elasticSearchMapping:
+          type: string
+          include_in_all: true
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: document
+        label: i18n
+    description:
+      type: string
+      search:
+        elasticSearchMapping:
+          type: string
+          include_in_all: true
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: document
+        label: i18n
+    time:
+      type: DateTime
+      ui:
+        label: i18n
+        inspector:
+          group: document
+          editorOptions:
+            format: 'd-m-Y H:i'
+    type:
+      type: string
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: document
+        label: i18n
+    repository:
+      type: string
+      search:
+        elasticSearchMapping:
+          type: string
+          include_in_all: true
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: document
+        label: i18n
+    abandoned:
+      type: string
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: document
+        label: i18n
+    lastActivity:
+      type: DateTime
+      ui:
+        label: i18n
+        inspector:
+          group: document
+          editorOptions:
+            format: 'd-m-Y H:i'
+      search:
+        indexing: '${Date.format(node.lastActivity, "Y-m-d\TH:i:sP")}'
+        elasticSearchMapping:
+          type: date
+          include_in_all: false
+          format: date_time_no_millis
+    lastVersion:
+      type: reference
+      ui:
+        label: i18n
+        inspector:
+          group: document
+          editorOptions:
+            nodeTypes:
+              - 'Neos.MarketPlace:Version'
+      search:
+        indexing: '${MarketIndexing.prepareVersion(q(node).property(''lastVersion''))}'
+        elasticSearchMapping:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            keywords:
+              type: multi_field
+              fields:
+                name:
+                  type: string
+                  include_in_all: true
+                tag:
+                  type: string
+                  index: not_analyzed
+                  include_in_all: true
+                suggestion:
+                  type: completion
+                  analyzer: simple
+                  search_analyzer: simple
+                  payloads: true
+            homepage:
+              type: string
+            version:
+              type: string
+            versionNormalized:
+              type: long
+            stability:
+              type: boolean
+            stabilityLevel:
+              type: string
+              index: not_analyzed
+            time:
+              type: date
+              format: date_time_no_millis
+            timestamp:
+              type: integer
+    downloadTotal:
+      type: integer
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: metrics
+        label: i18n
+    downloadMonthly:
+      type: integer
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: metrics
+        label: i18n
+    downloadDaily:
+      type: integer
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: metrics
+        label: i18n
+    favers:
+      type: integer
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: metrics
+        label: i18n
+    githubStargazers:
+      type: integer
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: metrics
+        label: i18n
+    githubWatchers:
+      type: integer
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: metrics
+        label: i18n
+    githubForks:
+      type: integer
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: metrics
+        label: i18n
+    githubIssues:
+      type: integer
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: metrics
+        label: i18n
+    githubAvatar:
+      type: string
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: metrics
+        label: i18n
+    __readme:
+      search:
+        fulltextExtractor: '${Indexing.extractHtmlTags(q(node).find(''readme'').first().property(''source''))}'
+    __packageKey:
+      search:
+        indexing: '${q(node).property(''title'')}'
+        elasticSearchMapping:
+          type: multi_field
+          fields:
+            name:
+              type: string
+              include_in_all: true
+            tag:
+              type: string
+              index: not_analyzed
+              include_in_all: true
+            suggestion:
+              type: completion
+              analyzer: simple
+              search_analyzer: simple
+              payloads: true
+    __composerVendor:
+      search:
+        indexing: '${Array.first(String.split(q(node).property(''title''), ''/''))}'
+        elasticSearchMapping:
+          type: string
+          include_in_all: true
+    __packageType:
+      search:
+        indexing: '${MarketIndexing.packageTypeMapping(q(node).property(''type''))}'
+        elasticSearchMapping:
+          type: string
+          index: not_analyzed
+          include_in_all: true
+'Neos.MarketPlace:People':
+  abstract: true
+  superTypes:
+    'Neos.Neos:Content': true
+  properties:
+    title:
+      type: string
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: document
+        label: i18n
+    email:
+      type: string
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: document
+        label: i18n
+    homepage:
+      type: string
+      ui:
+        reloadIfChanged: true
+        inspector:
+          group: document
+        label: i18n
+'Neos.MarketPlace:Maintainer':
+  superTypes:
+    'Neos.MarketPlace:People': true
+  search:
+    fulltext:
+      enable: false
+  ui:
+    label: i18n
+    icon: icon-user
+'Neos.MarketPlace:Author':
+  superTypes:
+    'Neos.MarketPlace:People': true
+  search:
+    fulltext:
+      enable: false
+  ui:
+    label: i18n
+    icon: icon-user
+'Neos.MarketPlace:Version':
+  abstract: true
+  label: '${q(node).property(''version'') + '' ('' + q(node).property(''type'') + '')''}'
+  class: Neos\MarketPlace\Domain\Model\VersionNode
+  superTypes:
+    'Neos.Neos:Content': true
+  childNodes:
+    source:
+      position: 'before main'
+      type: 'Neos.MarketPlace:Source'
+    dist:
+      position: 'before main'
+      type: 'Neos.MarketPlace:Dist'
+  ui:
+    label: i18n
+    icon: icon-file
+    inspector:
+      groups:
+        general:
+          label: i18n
+        dependencies:
+          label: i18n
+  properties:
+    version:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: general
+          position: 1
+    versionNormalized:
+      type: integer
+      search:
+        elasticSearchMapping:
+          type: long
+          index: not_analyzed
+      ui:
+        label: i18n
+        inspector:
+          group: general
+          position: 2
+    stability:
+      type: boolean
+      search:
+        elasticSearchMapping:
+          type: boolean
+          index: not_analyzed
+      ui:
+        label: i18n
+        inspector:
+          group: general
+    stabilityLevel:
+      type: string
+      search:
+        elasticSearchMapping:
+          type: string
+          index: not_analyzed
+      ui:
+        label: i18n
+        inspector:
+          group: general
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            placeholder: i18n
+            values:
+              '':
+                label: ''
+              stable:
+                label: i18n
+              dev:
+                label: i18n
+              alpha:
+                label: i18n
+              beta:
+                label: i18n
+              rc:
+                label: i18n
+    description:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: general
+    keywords:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: general
+      search:
+        indexing: '${MarketIndexing.trimExplode(q(node).property(''keywords''))}'
+        elasticSearchMapping:
+          type: multi_field
+          fields:
+            name:
+              type: string
+              include_in_all: true
+            tag:
+              type: string
+              index: not_analyzed
+              include_in_all: true
+            suggestion:
+              type: completion
+              analyzer: simple
+              search_analyzer: simple
+              payloads: true
+    homepage:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: general
+    license:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: general
+    type:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: general
+    time:
+      type: DateTime
+      ui:
+        label: i18n
+        inspector:
+          group: general
+    abandoned:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: general
+    bin:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: general
+    provide:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: null
+    require:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: null
+    requireDev:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: null
+    suggest:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: null
+    conflict:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: null
+    replace:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: null
+'Neos.MarketPlace:ReleasedVersion':
+  superTypes:
+    'Neos.MarketPlace:Version': true
+  ui:
+    label: i18n
+'Neos.MarketPlace:PrereleasedVersion':
+  superTypes:
+    'Neos.MarketPlace:Version': true
+  ui:
+    label: i18n
+'Neos.MarketPlace:DevelopmentVersion':
+  superTypes:
+    'Neos.MarketPlace:Version': true
+  ui:
+    label: i18n
+'Neos.MarketPlace:Source':
+  superTypes:
+    'Neos.Neos:Content': true
+  properties:
+    type:
+      type: string
+      ui:
+        label: i18n
+    url:
+      type: string
+      ui:
+        label: i18n
+    reference:
+      type: string
+      ui:
+        label: i18n
+'Neos.MarketPlace:Dist':
+  superTypes:
+    'Neos.MarketPlace:Source': true
+  properties:
+    shasum:
+      type: string
+      ui:
+        label: i18n
+'Neos.MarketPlace:Readme':
+  superTypes:
+    'Neos.NodeTypes:Html': true
+  ui:
+    label: i18n
+    group: marketplace
+  properties:
+    source:
+      search:
+        fulltextExtractor: '${Indexing.extractHtmlTags(value)}'
+'Neos.MarketPlace:PackageHighlight':
+  superTypes:
+    'Neos.NodeTypes:ContentReferences': true
+  ui:
+    label: i18n
+    group: marketplace
+  properties:
+    references:
+      ui:
+        inspector:
+          editorOptions:
+            nodeTypes:
+              - 'Neos.MarketPlace:Package'
+        label: i18n

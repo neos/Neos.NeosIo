@@ -1,0 +1,16 @@
+prototype(Neos.MarketPlace:PackageSearchResult) < prototype(Neos.MarketPlace:DocumentSearchResult) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/SearchResult/PackageSearchResult.html'
+
+    lastActivity = Neos.MarketPlace:PackageLastActivity
+
+    lastVersion = ${q(node).property('lastVersion')}
+
+    lastVersionLabel = ${q(this.lastVersion).property('version')}
+    lastVersionTime = ${q(this.lastVersion).property('time')}
+
+    description = ${String.isBlank(q(this.lastVersion).property('description')) ? q(node).property('description') : q(this.lastVersion).property('description')}
+
+    metrics = Neos.MarketPlace:PackageMetrics {
+        attributes.class.@process.pullRight = ${value + ' pull-right'}
+    }
+}

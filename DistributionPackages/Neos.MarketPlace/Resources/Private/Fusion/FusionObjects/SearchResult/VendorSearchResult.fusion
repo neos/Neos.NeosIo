@@ -1,0 +1,5 @@
+prototype(Neos.MarketPlace:VendorSearchResult) < prototype(Neos.MarketPlace:DocumentSearchResult) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/SearchResult/VendorSearchResult.html'
+
+    lastActivity = ${q(node).property('lastActivity')}
+}

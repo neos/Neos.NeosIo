@@ -1,0 +1,9 @@
+prototype(Neos.MarketPlace:PackageRequirements) < prototype(Neos.Fusion:Collection) {
+    property = ''
+    itemKey = 'package'
+    itemName = 'version'
+    itemRenderer = Neos.MarketPlace:PackageRequirementsItem
+    collection = ${Json.parse(q(node).property(this.property))}
+
+    @process.wrap = ${value ? '<ul>' + value + '</ul>' : ''}
+}

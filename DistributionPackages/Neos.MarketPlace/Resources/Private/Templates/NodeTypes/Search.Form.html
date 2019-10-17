@@ -1,0 +1,12 @@
+<form class="search-form" action="{actionUri}" method="GET">
+    <label for="search"
+           class="search-form__label">
+        <i class="fa fa-search"></i>
+    </label>
+    <input type="search"
+           name="search"
+           class="search-form__input"
+           value="{searchWord}"
+           placeholder="{f:translate(id: 'search', package: 'Flowpack.SearchPlugin')}"
+           data-autocomplete-source="{f:uri.action(action: 'index', controller: 'Suggest', package: 'Flowpack.SearchPlugin', format: 'json', absolute: 1, arguments: {node: node})}"/>
+</form>

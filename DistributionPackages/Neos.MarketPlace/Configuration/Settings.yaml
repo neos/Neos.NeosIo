@@ -1,0 +1,61 @@
+
+Neos:
+  MarketPlace:
+    typeMapping:
+      neos-plugin: neos-plugin
+      typo3-flow-build: neos-build
+      typo3-flow-boilerplate: neos-boilerplate
+      neos-site: neos-site
+      neos-package: neos-package
+      neos-framework: neos-framework
+      neos-build: neos-build
+      neos-boilerplate: neos-boilerplate
+    vendorMapping:
+      neos: true
+      flowpack: true
+    packageBlackList:
+      neos/app: true
+      neos/data: true
+      neos/html: true
+      neos/image: true
+      neos/lib: true
+      neos/limp: true
+      neos/plim: true
+      neos/start: true
+      neos/start-blog: true
+      neos/start-skel: true
+      neos/tiga: true
+    repository:
+      identifier: 9127231f-d1b8-440f-8ef7-b05f760178fb
+    github:
+      cacheDirectory: '%FLOW_PATH_DATA%Github/Cache'
+      account: username
+      password: password
+  Neos:
+    nodeTypes:
+      groups:
+        marketplace:
+          position: 'after general'
+          label: 'Neos.MarketPlace:Main:nodeTypes.groups.marketplace'
+    userInterface:
+      translation:
+        autoInclude:
+          Neos.MarketPlace:
+            - Main
+            - 'NodeTypes/*'
+    fusion:
+      autoInclude:
+        Neos.MarketPlace: true
+  ContentRepository:
+    Search:
+      defaultContext:
+        MarketIndexing: Neos\MarketPlace\Eel\IndexingHelper
+  Fusion:
+    defaultContext:
+      MarketPlaceSearch: Neos\MarketPlace\Eel\ElasticSearchQueryBuilder
+      MarketCaching: Neos\MarketPlace\Eel\CachingHelper
+Ttree:
+  OutOfBandRendering:
+    presets:
+      'marketplace:version':
+        path: 'root<Neos.Fusion:Case>/neosMarketPlaceDocument<Neos.Fusion:Matcher>/element<Neos.MarketPlace:Package>/body<Neos.Fusion:Template>/content/main<Neos.Fusion:Array>/package<Neos.MarketPlace:Package>/versions<Neos.MarketPlace:VersionPreview>'

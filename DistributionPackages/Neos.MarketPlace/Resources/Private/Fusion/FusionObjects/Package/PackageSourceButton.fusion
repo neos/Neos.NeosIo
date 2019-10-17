@@ -1,0 +1,10 @@
+prototype(Neos.MarketPlace:PackageSourceButton) < prototype(Neos.MarketPlace:Button) {
+    lastVersion = Neos.MarketPlace:LastVersionQuery
+
+    source = ${this.lastVersion.find('source').get(0)}
+    sourceType = ${q(this.source).property('type')}
+
+    content = ${this.url ? 'Check the code <b>' + this.sourceType + '</b>' : null}
+
+    url = ${q(this.source).property('url')}
+}

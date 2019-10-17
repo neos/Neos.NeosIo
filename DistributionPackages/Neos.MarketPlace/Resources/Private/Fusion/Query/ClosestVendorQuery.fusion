@@ -1,0 +1,3 @@
+prototype(Neos.MarketPlace:ClosestVendorQuery) < prototype(Neos.Fusion:Value) {
+    value = ${q(node).closest('[instanceof Neos.MarketPlace:Vendor]').get(0)}
+}

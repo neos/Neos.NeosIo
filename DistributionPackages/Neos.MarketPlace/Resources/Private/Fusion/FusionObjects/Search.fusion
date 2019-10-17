@@ -1,0 +1,86 @@
+root {
+    @cache {
+        entryIdentifier {
+            searchQuery = ${MarketCaching.queryCacheKey(request.arguments.search)}
+            searchPagination = ${MarketCaching.paginationCacheKey(request)}
+        }
+
+        maximumLifetime.@process.searchQuery = ${String.isBlank(request.arguments.search) ? '86400' : '3600'}
+    }
+}
+
+prototype(Neos.MarketPlace:RepositoryStorage) {
+    @cache {
+        entryIdentifier {
+            searchQuery = ${MarketCaching.queryCacheKey(request.arguments.search)}
+            searchPagination = ${MarketCaching.paginationCacheKey(request)}
+        }
+
+        maximumLifetime = ${String.isBlank(request.arguments.search) ? '86400' : '3600'}
+    }
+}
+
+prototype(Neos.MarketPlace:Search) >
+prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Search.html'
+
+    attributes {
+        class = 'market-block'
+    }
+
+    configuration {
+        itemsPerPage = 30
+        insertAbove = ${false}
+        insertBelow = ${true}
+        maximumNumberOfLinks = 5
+    }
+
+    @context.actionNode = Neos.MarketPlace:ClosestRepositoryStorageNodeQuery
+
+    hasSearchQuery = ${String.isBlank(request.arguments.search) ? false : true}
+
+    query = ${MarketPlaceSearch.query(documentNode)}
+
+    query.@process.nodeType = ${value.nodeType('Neos.MarketPlace:Package')}
+
+    query.@process.fulltext = ${this.hasSearchQuery ? value.fulltext('*' + this.searchTerm + '*') : value}
+
+    query.@process.sort = ${this.hasSearchQuery ? value : value.sortDesc('lastActivity')}
+
+    query.@process.log = ${value.log('marketplace')}
+
+    showResult = ${true}
+
+    searchQuery = ${this.query}
+    totalSearchResults = ${this.query.execute().count()}
+
+    prototype(Flowpack.SearchPlugin:Search.Form) {
+        templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Search.Form.html'
+
+        actionUri = Neos.Neos:NodeUri {
+            node = ${actionNode}
+        }
+    }
+
+    searchResultRenderer {
+        attributes {
+            class = 'search-results'
+        }
+    }
+
+    @cache {
+        mode = 'cached'
+
+        entryIdentifier {
+            documentNode = ${documentNode}
+            searchQuery = ${MarketCaching.queryCacheKey(request.arguments.search)}
+            searchPagination = ${MarketCaching.paginationCacheKey(request)}
+        }
+
+        maximumLifetime = ${String.isBlank(request.arguments.search) ? '86400' : '3600'}
+
+        entryTags {
+            1 = ${'Node_' + documentNode.identifier}
+        }
+    }
+}

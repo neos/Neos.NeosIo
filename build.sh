@@ -6,7 +6,7 @@ npm install
 npm run build:sass
 npm run minify:styles
 cd -
-cd Packages/Application/Neos.MarketPlace
+cd DistributionPackages/Neos.MarketPlace
 npm install
 npm run build
 npm run minify

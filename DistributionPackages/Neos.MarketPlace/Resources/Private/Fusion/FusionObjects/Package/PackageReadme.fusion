@@ -1,0 +1,19 @@
+prototype(Neos.MarketPlace:PackageReadme) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/PackageReadme.html'
+
+    attributes = Neos.Fusion:Attributes {
+        class = 'readme'
+        data-component = 'ShowMore'
+        data-selector = '.readme__wrapper'
+        data-maximumHeight = 700
+    }
+
+    readmeSource = ${q(documentNode).find('readme').first().property('source')}
+    hasReadme = ${this.readmeSource != '<p>Enter HTML here</p>' && String.isBlank(this.readmeSource) == false}
+
+    readme = Neos.Fusion:Collection {
+        itemName = 'node'
+        itemRenderer = Neos.Neos:ContentCase
+        collection = ${q(documentNode).find('readme')}
+    }
+}

@@ -1,0 +1,23 @@
+prototype(Neos.MarketPlace:VersionMenu) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Version/VersionMenu.html'
+
+    collection = Neos.MarketPlace:VersionsQuery
+    @context.versions = ${this.collection}
+
+    wrapperAttributes = Neos.Fusion:Attributes {
+        data-component = 'ShowMore'
+        data-selector = 'ul'
+    }
+
+    attributes = Neos.Fusion:Attributes  {
+        class = 'version-nav'
+    }
+
+    title = 'Released Versions'
+
+    versions = Neos.Fusion:Collection {
+        collection = ${versions}
+        itemRenderer = Neos.MarketPlace:VersionMenuItem
+        itemName = 'node'
+    }
+}
