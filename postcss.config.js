@@ -1,5 +1,3 @@
-const sortCSSmq = require('sort-css-media-queries');
-
 module.exports = {
     plugins: {
         'postcss-assets': {
@@ -46,7 +44,7 @@ module.exports = {
             minPixelValue: 0
         },
         'css-mqpacker': {
-            sort: sortCSSmq
+            sort: require('sort-css-media-queries')
         },
         autoprefixer: {
             grid: true
