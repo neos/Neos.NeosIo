@@ -1,0 +1,34 @@
+prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/Package.SubMenu.html'
+
+    versions = Neos.MarketPlace:VersionsQuery
+    @context.releasedVersionQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:ReleasedVersion]')}
+    @context.prereleasedVersionQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:PrereleasedVersion]')}
+    @context.developmentVersionsQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:DevelopmentVersion]')}
+
+    maintainers = Neos.MarketPlace:PeopleMenu {
+        path = 'maintainers'
+    }
+
+    releasedVersionMenu = Neos.MarketPlace:VersionMenu {
+        title = 'Stable versions'
+        collection = ${releasedVersionQuery}
+        @if.hasVersions = ${releasedVersionQuery.count() > 0}
+    }
+
+    prereleasedVersionMenu = Neos.MarketPlace:VersionCompactMenu {
+        title = 'Prerelease versions'
+        collection = ${prereleasedVersionQuery}
+        @if.hasVersions = ${prereleasedVersionQuery.count() > 0}
+    }
+
+    developmentVersionMenu = Neos.MarketPlace:VersionCompactMenu {
+        title = 'Development versions'
+        collection = ${developmentVersionsQuery}
+        @if.hasVersions = ${developmentVersionsQuery.count() > 0}
+    }
+
+    sourceButton = Neos.MarketPlace:PackageSourceButton
+
+    avatarUrl = ${q(node).property('githubAvatar')}
+}

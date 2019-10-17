@@ -1,0 +1,3 @@
+prototype(Neos.MarketPlace:VersionsQuery) < prototype(Neos.Fusion:Value) {
+    value = ${q(documentNode).find('versions').children('[instanceof Neos.MarketPlace:Version]').sort('versionNormalized').get()}
+}

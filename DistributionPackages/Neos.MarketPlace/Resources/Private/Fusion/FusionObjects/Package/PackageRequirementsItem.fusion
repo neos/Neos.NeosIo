@@ -1,0 +1,10 @@
+prototype(Neos.MarketPlace:PackageRequirementsItem) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/PackageRequirementsItem.html'
+
+    package = ${package}
+    version = ${version}
+
+    uri = Neos.MarketPlace:PackageUri {
+        packageKey = ${package}
+    }
+}

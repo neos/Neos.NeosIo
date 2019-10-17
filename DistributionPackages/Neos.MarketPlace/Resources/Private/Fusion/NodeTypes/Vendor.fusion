@@ -1,0 +1,19 @@
+prototype(Neos.MarketPlace:VendorRenderer) < prototype(Neos.Neos:Content) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Vendor.html'
+
+    attributes = Neos.Fusion:Attributes {
+        class = 'market-block'
+    }
+
+    main = Neos.Neos:ContentCollection {
+        nodePath = 'main'
+    }
+
+    packages = Neos.Fusion:Collection {
+        collection = ${q(node).children('[instanceof Neos.MarketPlace:Package]')}
+        itemName = 'node'
+        itemRenderer = Neos.MarketPlace:PackageSearchResult
+    }
+
+    @process.contentElementWrapping >
+}

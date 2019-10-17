@@ -1,0 +1,16 @@
+prototype(Neos.MarketPlace:PackageMenu) >
+prototype(Neos.MarketPlace:PackageMenu) < prototype(Neos.Fusion:Tag) {
+    skipVendorName = ${true}
+    @context.skipVendorName = ${this.skipVendorName}
+
+    tagName = 'ul'
+    attributes {
+        class = 'package-nav'
+    }
+    content = Neos.Fusion:Collection {
+        collection = ${q(documentNode).find('[instanceof Neos.MarketPlace:Package]')}
+        collection.@process.sort = ${value.sort('title', 'ASC')}
+        itemRenderer = Neos.MarketPlace:PackageMenuItem
+        itemName = 'package'
+    }
+}

@@ -1,0 +1,15 @@
+prototype(Neos.MarketPlace:Tags) >
+prototype(Neos.MarketPlace:Tags) < prototype(Neos.Fusion:Tag) {
+    @context.data = ${String.split(this.data, ', ')}
+    tagName = 'ul'
+    content = Neos.Fusion:Collection {
+        collection = ${data}
+        itemName = 'keyword'
+        itemRenderer = Neos.Fusion:Tag {
+            tagName = 'li'
+            content = ${'#' + String.toLowerCase(keyword)}
+        }
+    }
+
+    attributes.class = 'market-tagline'
+}

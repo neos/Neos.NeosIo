@@ -1,0 +1,10 @@
+prototype(Neos.NeosIo:DefaultPage) {
+    head {
+        stylesheets.neosMarketPlace = Ttree.StyleSheet:Resource {
+            uri = 'resource://Neos.MarketPlace/Public/Styles/Main.css'
+            @position = 'after site'
+        }
+    }
+}
+
+prototype(Neos.MarketPlace:DefaultPage) < prototype(Neos.NeosIo:DefaultPage)

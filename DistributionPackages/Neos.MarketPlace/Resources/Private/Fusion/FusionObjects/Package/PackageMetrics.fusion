@@ -1,0 +1,11 @@
+prototype(Neos.MarketPlace:PackageMetrics) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/PackageMetrics.html'
+
+    attributes = Neos.Fusion:Attributes {
+        class = 'metrics'
+    }
+
+    stargazers = ${q(node).property('githubStargazers')}
+    forks = ${q(node).property('githubForks')}
+    downloads = ${q(node).property('downloadTotal')}
+}

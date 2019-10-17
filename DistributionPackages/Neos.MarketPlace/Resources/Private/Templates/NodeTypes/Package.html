@@ -1,0 +1,27 @@
+{namespace marketplace=Neos\MarketPlace\ViewHelpers}
+
+<article{attributes -> f:format.raw()}>
+<header>
+    <h1>{packageName}</h1>
+</header>
+<f:if condition="{isAbandoned}">
+    <p>This package is abandoned and no longer maintained. The author suggests using the <strong>{abandoned}</strong> package instead.</p>
+    <hr>
+</f:if>
+<div class="package__meta">
+    {lastActivity -> f:format.raw()} {metrics -> f:format.raw()}
+</div>
+<code class="market-code">
+    <i class="fa fa-download"></i> composer require {packageName}
+</code>
+<f:if condition="{description}">
+    <p><strong>{description}</strong></p>
+</f:if>
+{main -> f:format.raw()}
+
+{versions -> f:format.raw()}
+
+{readme -> f:format.raw()}
+
+{packageCount -> f:format.raw()}
+</article>

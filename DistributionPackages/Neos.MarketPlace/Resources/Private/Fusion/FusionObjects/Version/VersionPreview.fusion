@@ -1,0 +1,42 @@
+prototype(Neos.MarketPlace:VersionPreview) >
+prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Tag) {
+    version = ${String.isBlank(request.arguments.version) ? null : String.trim(request.arguments.version)}
+    @context.version = ${this.version ? this.version : 'latest'}
+
+    findByVersionQuery = ${q(node).find('versions').find('[instanceof Neos.MarketPlace:Version][version = "' + this.version + '"]').first()}
+    findLastVersionQuery = Neos.MarketPlace:LastVersionQuery
+
+    collection = ${this.version ? this.findByVersionQuery : this.findLastVersionQuery}
+
+    @context.collection = ${this.collection}
+
+    tagName = 'section'
+
+    attributes {
+        class = 'block block--versions'
+        data-component = 'PackageVersionBrowser'
+        data-version = ${version}
+        data-path = ${node.path}
+    }
+
+    content = Neos.Fusion:Collection {
+        collection = ${collection}
+        itemRenderer = Neos.MarketPlace:Version
+        itemName = 'node'
+    }
+
+    @cache {
+        mode = 'cached'
+
+        entryIdentifier {
+            node = ${node}
+            version = ${request.arguments.version ? request.arguments.version : 'latest'}
+            format = ${request.format}
+        }
+
+        entryTags {
+            1 = ${'Node_' + node.identifier}
+            2 = ${'DescendantOf_' + node.identifier}
+        }
+    }
+}

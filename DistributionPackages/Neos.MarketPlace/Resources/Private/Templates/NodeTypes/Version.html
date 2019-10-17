@@ -1,0 +1,114 @@
+<article{attributes -> f:format.raw()}>
+<header>
+    <h2>{version}</h2>
+</header>
+<f:if condition="{isAbandoned}">
+    <p>This version is abandoned and no longer maintained. The author suggests using the <strong>{abandoned}</strong> package instead.</p>
+    <hr>
+</f:if>
+<f:if condition="{description}">
+    <p>{description}</p>
+</f:if>
+
+<div class="g">
+    <div class="gi u-w1/1 u-wm1/2">
+        <dl>
+            <f:if condition="{homepage}">
+                <dt>Homepage</dt>
+                <dd>{homepage}</dd>
+            </f:if>
+            <f:if condition="{version}">
+                <dt>Version</dt>
+                <dd>{version}</dd>
+            </f:if>
+            <f:if condition="{type}">
+                <dt>Type</dt>
+                <dd>{type}</dd>
+            </f:if>
+            <f:if condition="{time}">
+                <dt>Release Date</dt>
+                <dd>{time -> f:format.date(localeFormatType: "dateTime", localeFormatLength: "medium", forceLocale: true)}</dd>
+            </f:if>
+            <dt>Source</dt>
+            <dd><a href="{sourceUrl}">{sourceType}</a></dd>
+            <dt>Distribution</dt>
+            <dd><a href="{distUrl}">{distType}</a></dd>
+        </dl>
+    </div>
+    <div class="gi u-w1/1 u-wm1/2">
+        <dl>
+            <dt>Requires</dt>
+            <f:if condition="{require}">
+                <f:then>
+                    <dd>{require -> f:format.raw()}</dd>
+                </f:then>
+                <f:else>
+                    <dd>None</dd>
+                </f:else>
+            </f:if>
+            <dt>Requires (dev)</dt>
+            <f:if condition="{requireDev}">
+                <f:then>
+                    <dd>{requireDev -> f:format.raw()}</dd>
+                </f:then>
+                <f:else>
+                    <dd>None</dd>
+                </f:else>
+            </f:if>
+            <dt>Suggest</dt>
+            <f:if condition="{suggest}">
+                <f:then>
+                    <dd>{suggest -> f:format.raw()}</dd>
+                </f:then>
+                <f:else>
+                    <dd>None</dd>
+                </f:else>
+            </f:if>
+            <dt>Provides</dt>
+            <f:if condition="{provide}">
+                <f:then>
+                    <dd>{provide -> f:format.raw()}</dd>
+                </f:then>
+                <f:else>
+                    <dd>None</dd>
+                </f:else>
+            </f:if>
+            <dt>Conflicts</dt>
+            <f:if condition="{conflict}">
+                <f:then>
+                    <dd>{conflict -> f:format.raw()}</dd>
+                </f:then>
+                <f:else>
+                    <dd>None</dd>
+                </f:else>
+            </f:if>
+            <dt>Replaces</dt>
+            <f:if condition="{replace}">
+                <f:then>
+                    <dd>{replace -> f:format.raw()}</dd>
+                </f:then>
+                <f:else>
+                    <dd>None</dd>
+                </f:else>
+            </f:if>
+            <f:if condition="{bin}">
+                <dt>Bin</dt>
+                <dd>{bin}</dd>
+            </f:if>
+        </dl>
+    </div>
+</div>
+<footer>
+    <div>
+        <f:if condition="{license}">
+            <i class="fa fa-copyright" title="License"></i> {license}
+        </f:if>
+        <f:if condition="{hasKeywords}">
+            <i class="fa fa-tag" title="Tags"></i> {keywords -> f:format.raw()}
+        </f:if>
+        <f:if condition="{sourceReference}">
+            <i class="fa fa-bookmark" title="License"></i> {sourceReference}
+        </f:if>
+    </div>
+</footer>
+</article>

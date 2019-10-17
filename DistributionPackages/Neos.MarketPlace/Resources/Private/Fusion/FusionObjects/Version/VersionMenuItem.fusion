@@ -1,0 +1,9 @@
+prototype(Neos.MarketPlace:VersionMenuItem) < prototype(Neos.MarketPlace:Version) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Version/VersionMenuItem.html'
+    attributes {
+        class = 'version-nav__item'
+    }
+    attributes.class.@process.nodeType >
+
+    @process.contentElementWrapping >
+}

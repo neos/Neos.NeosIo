@@ -1,0 +1,5 @@
+prototype(Neos.MarketPlace:PackageLastActivity) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/PackageLastActivity.html'
+
+    lastActivity = ${q(node).property('lastActivity')}
+}

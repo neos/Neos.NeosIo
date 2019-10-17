@@ -1,0 +1,3 @@
+prototype(Neos.MarketPlace:ClosestRepositoryStorageNodeQuery) < prototype(Neos.Fusion:Value) {
+    value = ${documentNode ? q(documentNode).closest('[instanceof Neos.MarketPlace:RepositoryStorage]').get(0) : []}
+}

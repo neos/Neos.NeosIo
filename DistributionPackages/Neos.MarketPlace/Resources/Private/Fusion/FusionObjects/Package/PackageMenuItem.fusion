@@ -1,0 +1,18 @@
+prototype(Neos.MarketPlace:PackageMenuItem) >
+prototype(Neos.MarketPlace:PackageMenuItem) < prototype(Neos.MarketPlace:Content) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/PackageMenuItem.html'
+    attributes {
+        class = 'package-nav__item'
+    }
+    @context.package = ${package}
+
+    vendor = Neos.MarketPlace:ClosestVendorQuery
+    vendorName = ${q(this.vendor).property('title')}
+
+    name = ${q(package).property('title')}
+    name.@process.removeVendorName = ${skipVendorName ? String.replace(value, this.vendorName + '/', '') : value}
+
+    uri = Neos.Neos:NodeUri {
+        node = ${package}
+    }
+}

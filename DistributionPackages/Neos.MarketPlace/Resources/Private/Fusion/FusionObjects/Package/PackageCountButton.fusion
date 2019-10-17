@@ -1,0 +1,24 @@
+prototype(Neos.MarketPlace:PackageCountButton) < prototype(Neos.MarketPlace:Button) {
+    vendor = ${vendor}
+    @context.vendor = ${this.vendor}
+
+    packageCount = ${q(this.vendor).find('[instanceof Neos.MarketPlace:Package]').count()}
+
+    content = ${this.packageCount > 1 ? 'The same vendor provides <span class="badge">' + this.packageCount + '</span> package(s).' : null}
+
+    url = Neos.Neos:NodeUri {
+        node = ${vendor}
+    }
+
+    @cache {
+        mode = 'cached'
+
+        entryIdentifier {
+            vendor = ${vendor}
+        }
+
+        entryTags {
+            1 = ${'DescendantOf_' + vendor.identifier}
+        }
+    }
+}

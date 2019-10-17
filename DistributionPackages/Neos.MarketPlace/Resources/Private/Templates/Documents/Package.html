@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{namespace neos=Neos\Neos\ViewHelpers}
+<html>
+<head>
+    <f:section name="stylesheets">
+        <link href="{f:uri.resource(path: 'Styles/Main.css', package: 'Neos.NeosIo')}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,200,200italic,300italic,400,400italic" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    </f:section>
+    <f:section name="headScripts">
+        <script src="{f:uri.resource(path: 'JavaScript/Modernizr.min.js', package: 'Neos.NeosIo')}"></script>
+    </f:section>
+    <f:section name="metaTags">
+        <f:render partial="Favicon" />
+    </f:section>
+</head>
+<body>
+<f:section name="body">
+    {parts.siteHeader -> f:format.raw()}
+
+    {content.keyVisual -> f:format.raw()}
+
+    <nav>
+        {parts.breadcrumb -> f:format.raw()}
+    </nav>
+    <div class="stage stage--bright" id="mainContent">
+        <div class="stage__contents">
+            <main role="main" class="g">
+                <header>
+                    {parts.form -> f:format.raw()}
+                </header>
+                <section class="gi u-w1/1 u-wm8/12 u-wl9/12">
+                    {content.main -> f:format.raw()}
+                </section>
+                <aside class="gi u-w1/1 u-wm4/12 u-wl3/12">
+                    {parts.subMenu -> f:format.raw()}
+                </aside>
+            </main>
+        </div>
+    </div>
+    {parts.footer -> f:format.raw()}
+</f:section>
+</body>
+</html>
