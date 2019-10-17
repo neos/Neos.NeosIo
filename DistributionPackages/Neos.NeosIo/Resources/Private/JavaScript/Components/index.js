@@ -3,7 +3,6 @@ import ClassToggler from './ClassToggler.js';
 import EmptyClickHandler from './EmptyClickHandler.js';
 import CountUp from './CountUp.js';
 import FundingBadges from './FundingBadges.js';
-import GitHubAPI from './GitHubAPI.js';
 import ScrollTo from './ScrollTo.js';
 import ProgressiveImage from './ProgressiveImage.js';
 import ScrollClassToggler from './ScrollClassToggler.js';
@@ -15,7 +14,6 @@ export {
 	CountUp,
 	ScrollTo,
 	FundingBadges,
-	GitHubAPI,
 	SentenceSwitcher,
 	ProgressiveImage,
 	ScrollClassToggler,
