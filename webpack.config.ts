@@ -4,6 +4,9 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import GlobImporter from 'node-sass-glob-importer';
 import TerserPlugin from 'terser-webpack-plugin';
 
+const distFolder = 'DistributionPackages';
+const packagesFolder = 'Packages';
+
 function config(
     {
         packageName,
@@ -46,7 +49,7 @@ function config(
             devtoolModuleFilenameTemplate: isProduction
                 ? 'webpack://[namespace]/[resource-path]?[loaders]'
                 : 'file://[absolute-resource-path]?[loaders]',
-            path: path.resolve(__dirname, 'DistributionPackages', packageName, publicPath),
+            path: path.resolve(__dirname, distFolder, packageName, publicPath),
             filename: path.join((publicPath = isInlineAsset ? '' : 'Scripts'), `${baseFilename}.js`)
         },
         optimization: isProduction
@@ -65,7 +68,7 @@ function config(
                 filename: path.join(isInlineAsset ? '' : 'Styles', `${baseFilename}.css`)
             })
         ],
-        context: path.resolve(__dirname, 'DistributionPackages/'),
+        context: path.resolve(__dirname, distFolder),
         module: {
             rules: [
                 {
@@ -108,8 +111,8 @@ function config(
                                 sassOptions: {
                                     importer: GlobImporter(),
                                     includePaths: [
-                                        path.resolve(__dirname, 'DistributionPackages'),
-                                        path.resolve(__dirname, 'Packages'),
+                                        path.resolve(__dirname, distFolder),
+                                        path.resolve(__dirname, packagesFolder),
                                         'node_modules'
                                     ]
                                 }
@@ -123,8 +126,8 @@ function config(
             extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.scss'],
             // absolute paths for JS and SCSS related files
             alias: {
-                DistributionPackages: path.resolve(__dirname, 'DistributionPackages/'),
-                Packages: path.resolve(__dirname, 'Packages/')
+                DistributionPackages: path.resolve(__dirname, distFolder),
+                Packages: path.resolve(__dirname, packagesFolder)
             }
         }
     };
