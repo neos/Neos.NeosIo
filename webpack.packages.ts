@@ -8,6 +8,10 @@
  * hasSourceMap  <boolean> (optional) (default: `true`) Flag to toggle source map generation
  */
 
-const packages = [{ packageName: 'Neos.NeosIo' }];
+const packages = [
+    { packageName: 'Neos.MarketPlace' },
+    { packageName: 'Neos.NeosConIo' },
+    { packageName: 'Neos.NeosIo' }
+];
 
 export default packages;
