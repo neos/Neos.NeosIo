@@ -1,0 +1,23 @@
+prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection) < prototype(Neos.NeosIo:DefaultPage) {
+    body {
+        content {
+            main  = Neos.Fusion:Component {
+                serviceProviders = ${q(node).children('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
+
+                renderer = afx`
+                    <div>
+                        <ul>
+                            <Neos.Fusion:Loop items={props.serviceProviders} itemName="serviceProvider">
+                                <li>
+                                    <Neos.Neos:NodeLink node={serviceProvider}>
+                                        {q(serviceProvider).property('title')}
+                                    </Neos.Neos:NodeLink>
+                                </li>
+                            </Neos.Fusion:Loop>
+                        </ul>
+                    </div>
+                `
+            }
+        }
+    }
+}

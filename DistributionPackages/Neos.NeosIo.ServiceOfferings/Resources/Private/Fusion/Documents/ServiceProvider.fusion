@@ -1,0 +1,29 @@
+prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neos.NeosIo:DefaultPage) {
+    body {
+        content {
+            main  = Neos.Fusion:Component {
+                title = ${q(node).property('title')}
+                street = ${q(node).property('street')}
+                zip = ${q(node).property('zip')}
+                city = ${q(node).property('city')}
+                typesOfService = ${q(node).property('typesOfService')}
+
+                renderer = afx`
+                    <div>
+                        <h1>{props.title}</h1>
+                        <address>
+                            {props.street} {props.zip} {props.city}
+                        </address>
+
+                        <h2>Offers</h2>
+                        <ul>
+                            <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
+                                <li>{service}</li>
+                            </Neos.Fusion:Loop>
+                        </ul>
+                    </div>
+                `
+            }
+        }
+    }
+}
