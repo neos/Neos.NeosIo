@@ -12,11 +12,20 @@ prototype(Neos.NeosIo:Content.Column) < prototype(Neos.Neos:ContentComponent) {
         property = 'moreLinkLabel'
     }
 
+    buttonColor = ${q(node).property('style')}
+    buttonAlignment = ${q(node).property('alignment')}
+    buttonClass = 'grid-layout--item--more-link'
+    buttonClass.@process.alignment = ${value + (this.buttonAlignment ? ' u-align' + this.buttonAlignment : '' )}
+
     renderer = afx`
         <div class={props.className}>
             {props.column}
-            <div class="grid-layout--item--more-link" @if.hasLink={props.moreLink}>
-                <Neos.NeosIo:Component.Button uri={props.moreLink} color="solidPrimary">
+            <div class={props.buttonClass} @if.hasLink={props.moreLink}>
+                <Neos.NeosIo:Component.Button
+                    uri={props.moreLink}
+                    color={props.buttonColor}
+                    alignment={props.buttonAlignment}
+                >
                     {props.moreLinkLabel}
                 </Neos.NeosIo:Component.Button>
             </div>

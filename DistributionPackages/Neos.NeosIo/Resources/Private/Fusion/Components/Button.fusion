@@ -1,8 +1,10 @@
 prototype(Neos.NeosIo:Component.Button) < prototype(Neos.Fusion:Component) {
+    color = ''
     uri = null
+
     additionalClassName = ''
     className = 'btn'
-    className.@process.color = ${value + (this.color ? ' btn--' + this.color : '' )}
+    className.@process.color = ${value + (this.color ? ' ' + this.color : '' )}
     className.@process.additionalClassName = ${value + (this.additionalClassName ? ' ' + this.additionalClassName : '' )}
 
     renderer = afx`
