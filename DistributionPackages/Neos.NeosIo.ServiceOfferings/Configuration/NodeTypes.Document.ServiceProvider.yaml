@@ -1,7 +1,9 @@
-'Neos.NeosIo.ServiceOfferings:NeosServiceProvider':
+'Neos.NeosIo.ServiceOfferings:Document.ServiceProvider':
   superTypes:
-    'Neos.NodeTypes:Page': true
-    'Neos.NeosIo:Address': true
+    'Neos.Neos:Document': true
+    'Neos.NeosIo.ServiceOfferings:Mixin.Address': true
+    'Neos.NeosIo.ServiceOfferings:Mixin.Contributions': true
+    'Neos.NeosIo.ServiceOfferings:Mixin.Contact': true
   ui:
     label: 'Service Provider'
     icon: 'icon-address-card'
@@ -10,16 +12,7 @@
       groups:
         properties:
           label: 'Service Provider Properties'
-          position: 1
           icon: 'icon-concierge-bell'
-        address:
-          label: 'Service Provider Address'
-          position: 2
-          icon: 'icon-map-marker-alt'
-        contributions:
-          label: 'Service Provider Contributions'
-          position: 3
-          icon: 'icon-donate'
   properties:
     name:
       type: string
@@ -60,9 +53,10 @@
         inspector:
           group: properties
           editor: Content/Inspector/Editors/SelectBoxEditor
-          allowEmpty: false
           placeholder: 'Select Services'
           editorOptions:
+            multiple: true
+            allowEmpty: false
             values:
               hosting:
                 label: 'Hosting'
@@ -74,43 +68,3 @@
                 label: 'Design, Concept'
               freelance:
                 label: 'Freelancer'
-    showCases:
-      type: references
-      ui:
-        label: 'Show cases'
-        reloadIfChanged: true
-        inspector:
-          group: contributions
-          editorOptions:
-            nodeTypes:
-              - 'Neos.NeosIo:Reference.ShowCase'
-    caseStudies:
-      type: references
-      ui:
-        label: 'Case Studies'
-        reloadIfChanged: true
-        inspector:
-          group: contributions
-          editorOptions:
-            nodeTypes:
-              - 'Neos.NeosIo:Reference.CaseStudies'
-    packages:
-      type: references
-      ui:
-        label: 'Packages'
-        reloadIfChanged: true
-        inspector:
-          group: contributions
-          editorOptions:
-            nodeTypes:
-              - 'Neos.MarketPlace:Vendor'
-    badges:
-      type: references
-      ui:
-        label: 'Packages'
-        reloadIfChanged: true
-        inspector:
-          group: contributions
-          editorOptions:
-            nodeTypes:
-              - 'Neos.NeosIo:Badge'

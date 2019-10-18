@@ -1,5 +1,12 @@
-'Neos.NeosIo:Address':
+'Neos.NeosIo.ServiceOfferings:Mixin.Address':
   abstract: true
+  ui:
+    inspector:
+      groups:
+        address:
+          label: 'Service Provider Address'
+          position: 2
+          icon: 'icon-map-marker-alt'
   properties:
     'street':
       type: string
@@ -8,7 +15,6 @@
         inlineEditable: true
         inspector:
           group: 'address'
-          position: 20
     'zip':
       type: 'Zip Code'
       ui:
@@ -16,7 +22,7 @@
         inlineEditable: true
         inspector:
           group: 'address'
-          position: 25
+          position: 'after street'
     'city':
       type: string
       ui:
@@ -24,7 +30,7 @@
         inlineEditable: true
         inspector:
           group: 'address'
-          position: 30
+          position: 'after zip'
     'country':
       type: string
       ui:
@@ -32,23 +38,7 @@
         inlineEditable: true
         inspector:
           group: 'address'
-          position: 35
-    'website':
-      type: string
-      ui:
-        label: 'Website'
-        reloadIfChanged: true
-        inspector:
-          group: 'address'
-          position: 45
-    'email':
-      type: string
-      ui:
-        label: 'E-Mail Address'
-        reloadIfChanged: true
-        inspector:
-          group: 'address'
-          position: 50
+          position: 'after city'
     'latitude':
       type: string
       ui:
@@ -56,7 +46,7 @@
         reloadIfChanged: true
         inspector:
           group: 'address'
-          position: 55
+          position: 'after country'
     'longitude':
       type: string
       ui:
@@ -64,4 +54,4 @@
         reloadIfChanged: true
         inspector:
           group: 'address'
-          position: 60
+          position: 'after latitude'

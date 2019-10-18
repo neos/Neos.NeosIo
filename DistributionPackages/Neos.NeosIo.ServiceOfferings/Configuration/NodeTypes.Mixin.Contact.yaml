@@ -1,0 +1,25 @@
+'Neos.NeosIo.ServiceOfferings:Mixin.Contact':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        contact:
+          label: 'Service Provider Address'
+          position: 2
+          icon: 'icon-map-marker-alt'
+  properties:
+    'website':
+      type: string
+      ui:
+        label: 'Website'
+        reloadIfChanged: true
+        inspector:
+          group: 'contact'
+    'email':
+      type: string
+      ui:
+        label: 'E-Mail Address'
+        reloadIfChanged: true
+        inspector:
+          group: 'contact'
+          position: 'after website'
