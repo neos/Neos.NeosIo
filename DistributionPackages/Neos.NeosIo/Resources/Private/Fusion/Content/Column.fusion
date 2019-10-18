@@ -1,0 +1,29 @@
+prototype(Neos.NeosIo:Content.Column) < prototype(Neos.Neos:ContentComponent) {
+    @override {
+        columnWidth = ${String.split(q(node).parent().property('layout'), '-')[multiColumnIteration.index]}
+        desktopColumnWidth = ${String.split(q(node).parent().property('desktopLayout'), '-')[multiColumnIteration.index]}
+    }
+    column = Neos.Neos:ContentCollection {
+        nodePath = '.'
+    }
+    className = ${'gi u-w1/1 u-wm' + columnWidth + '/12 u-wl' + desktopColumnWidth + '/12 neos-contentcollection'}
+
+    moreLink = ${q(node).property('moreLink')}
+    moreLink.@process.convertUris = Neos.Neos:ConvertUris {
+        absolute = true
+    }
+    moreLinkLabel = Neos.Neos:Editable {
+        property = 'moreLinkLabel'
+    }
+
+    renderer = afx`
+        <div class={props.className}>
+            {props.column}
+            <div class="read-more" @if.hasLink={props.moreLink}>
+                <Neos.NeosIo:Component.Button uri={props.moreLink} color="solidPrimary">
+                    {props.moreLinkLabel}
+                </Neos.NeosIo:Component.Button>
+            </div>
+        </div>
+    `
+}
