@@ -22,16 +22,16 @@ $grid-gutter: $column-gutter / 2;
  */
 .g,
 .grid {
-	margin-left: -#{$grid-gutter};
-	margin-right: -#{$grid-gutter};
+  margin-left: -#{$grid-gutter};
+  margin-right: -#{$grid-gutter};
 
-	@include u-cf();
+  @include u-cf();
 }
 .gi,
 .grid__item {
-	float: $start;
-	padding-left: $grid-gutter;
-	padding-right: $grid-gutter;
+  float: $start;
+  padding-left: $grid-gutter;
+  padding-right: $grid-gutter;
 }
 
 //
@@ -39,14 +39,87 @@ $grid-gutter: $column-gutter / 2;
 // float clears due to different content heights.
 //
 .u-w1\/1.u-wm6\/12.u-wl3\/12.neos-contentcollection:nth-child(odd) {
-	@include screen(650, 1200) {
-		clear: both;
-	}
+  @include screen(650, 1200) {
+    clear: both;
+  }
 }
 
 //
 // General adjustment for full-width grid items on smaller screens.
 //
 .u-w1\/1.gi {
-	margin-bottom: $basic-spacing+px;
+  margin-bottom: $basic-spacing + px;
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-rows: auto;
+
+  &--item {
+    display: flex;
+    flex-direction: column;
+    padding-left: $grid-gutter;
+    padding-right: $grid-gutter;
+
+    &--more-link {
+      margin-top: auto;
+    }
+  }
+
+  // two column layouts
+  &.layout--75-25 {
+    grid-template-columns: 75% 25%;
+  }
+
+  &.layout--25-75 {
+    grid-template-columns: 25% 75%;
+  }
+
+  &.layout--50-50,
+  &.layout--6-6,
+  &.wide-layout--6-6 {
+    grid-template-columns: 50% 50%;
+  }
+
+  &.layout--66-33,
+  &.layout--8-4,
+  &.wide-layout--8-4 {
+    grid-template-columns: 66.66% 33.33%;
+  }
+
+  &.layout--33-66,
+  &.layout--4-8,
+  &.wide-layout--4-8 {
+    grid-template-columns: 33.33% 66.66%;
+  }
+
+  &.layout--12-12 {
+    grid-template-columns: 100%;
+  }
+
+  // three column layouts
+  &.layout--33-33-33,
+  &.layout--4-4-4,
+  &.wide-layout--4-4-4 {
+    grid-template-columns: 33.33% 33.33% 33.33%;
+  }
+
+  &.layout--50-25-25 {
+    grid-template-columns: 50% 25% 25%;
+  }
+
+  &.layout--25-50-25 {
+    grid-template-columns: 25% 50% 25%;
+  }
+
+  &.layout--25-25-50 {
+    grid-template-columns: 25% 25% 50%;
+  }
+
+  // four column layouts
+  &.wide-layout--3-3-3-3,
+  &.layout--3-3-3-3,
+  &.layout--25-25-25-25 {
+    grid-template-columns: 25% 25% 25% 25%;
+  }
 }

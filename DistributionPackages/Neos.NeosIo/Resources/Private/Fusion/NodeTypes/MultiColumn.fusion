@@ -6,6 +6,12 @@ prototype(Neos.NodeTypes:MultiColumn) {
             @process.nodeType >
         }
     }
+    @override {
+        columnWidth = ${q(node).property('layout')}
+        desktopColumnWidth = ${q(node).property('desktopLayout')}
+    }
+
+    attributes.class = ${'grid-layout layout--' + columnWidth + ' wide-layout--' + desktopColumnWidth}
     columns = Neos.Fusion:Collection {
         @context.columnLayout = ${q(node).property('layout')}
         collection = ${q(node).children('[instanceof Neos.Neos:ContentCollection]')}
@@ -13,4 +19,5 @@ prototype(Neos.NodeTypes:MultiColumn) {
         itemName = 'node'
         iterationName = 'multiColumnIteration'
     }
+
 }
