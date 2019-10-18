@@ -1,0 +1,45 @@
+'Neos.NeosIo:Mixin.ButtonStyles':
+  abstract: true
+  properties:
+    alignment:
+      type: string
+      defaultValue: inline
+      ui:
+        label: 'Button Alignment'
+        reloadIfChanged: true
+        inspector:
+          group: appearance
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              inline:
+                label: 'Inline (Default)'
+              Left:
+                label: Left
+              Center:
+                label: Center
+              Right:
+                label: Right
+    style:
+      type: string
+      defaultValue: btn--primary
+      ui:
+        label: 'Color of the Button'
+        reloadIfChanged: true
+        inspector:
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          group: appearance
+          editorOptions:
+            values:
+              btn--primary:
+                label: Primary
+              btn--solidPrimary:
+                label: 'Primary (Solid)'
+              btn--secondary:
+                label: Secondary
+              btn--solidSecondary:
+                label: 'Secondary (Solid)'
+              btn--bright:
+                label: Bright
+              btn--solidBright:
+                label: 'Bright (Solid)'
