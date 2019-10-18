@@ -4,18 +4,15 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import GlobImporter from 'node-sass-glob-importer';
 import TerserPlugin from 'terser-webpack-plugin';
 
-const distFolder = 'DistributionPackages';
-const packagesFolder = 'Packages';
-
 function config(
     {
-        packageName,
+        packageName = null,
         filename = 'Main.js',
         entryPath = 'Resources/Private/Fusion',
         publicPath = 'Resources/Public',
         hasSourceMap = true
     }: {
-        packageName: string;
+        packageName?: string;
         filename?: string;
         entryPath?: string;
         publicPath?: string;
@@ -23,10 +20,25 @@ function config(
     },
     argv: any
 ): object {
+    const alias = {};
+    const includePaths = [];
     const isInlineAsset = publicPath == 'Resources/Private/Templates/InlineAssets';
     const baseFilename = filename.substring(0, filename.lastIndexOf('.'));
     const isProduction = argv.mode == 'production';
+    const distFolder = packageName ? 'DistributionPackages' : '';
     hasSourceMap = isInlineAsset ? false : hasSourceMap;
+    packageName = packageName || '';
+
+    if (packageName) {
+        // We are in a monorepo
+        const distributionPath = path.resolve(__dirname, distFolder);
+        const packagesPath = path.resolve(__dirname, 'Packages');
+        alias[distFolder] = distributionPath;
+        alias['Packages'] = packagesPath;
+        includePaths.push(distributionPath);
+        includePaths.push(packagesPath);
+    }
+    includePaths.push('node_modules');
 
     return {
         mode: isProduction ? 'production' : 'development',
@@ -50,7 +62,7 @@ function config(
                 ? 'webpack://[namespace]/[resource-path]?[loaders]'
                 : 'file://[absolute-resource-path]?[loaders]',
             path: path.resolve(__dirname, distFolder, packageName, publicPath),
-            filename: path.join((publicPath = isInlineAsset ? '' : 'Scripts'), `${baseFilename}.js`)
+            filename: path.join(isInlineAsset ? '' : 'Scripts', `${baseFilename}.js`)
         },
         optimization: isProduction
             ? {
@@ -110,11 +122,7 @@ function config(
                                 // absolute paths for SCSS
                                 sassOptions: {
                                     importer: GlobImporter(),
-                                    includePaths: [
-                                        path.resolve(__dirname, distFolder),
-                                        path.resolve(__dirname, packagesFolder),
-                                        'node_modules'
-                                    ]
+                                    includePaths: includePaths
                                 }
                             }
                         }
@@ -125,10 +133,7 @@ function config(
         resolve: {
             extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.scss'],
             // absolute paths for JS and SCSS related files
-            alias: {
-                DistributionPackages: path.resolve(__dirname, distFolder),
-                Packages: path.resolve(__dirname, packagesFolder)
-            }
+            alias: alias
         }
     };
 }
