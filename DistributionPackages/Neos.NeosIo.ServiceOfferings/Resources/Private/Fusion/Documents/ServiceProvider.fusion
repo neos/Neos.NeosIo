@@ -2,25 +2,109 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
     body {
         content {
             main  = Neos.Fusion:Component {
-                title = ${q(node).property('title')}
-                street = ${q(node).property('street')}
-                zip = ${q(node).property('zip')}
-                city = ${q(node).property('city')}
+                title = Neos.Neos:Editable {
+                    property = 'title'
+                }
+                description = Neos.Neos:Editable {
+                    property = 'description'
+                }
+                street = Neos.Neos:Editable {
+                    property = 'street'
+                }
+                zipcode = Neos.Neos:Editable {
+                    property = 'zipcode'
+                }
+                city = Neos.Neos:Editable {
+                    property = 'city'
+                }
+                country = Neos.Neos:Editable {
+                    property = 'country'
+                }
+
+                # Only editable via inspector for validation
+                logo = ${q(node).property('logo')}
+                email = ${q(node).property('email')}
+                website = ${q(node).property('website')}
+
+                # Lists
                 typesOfService = ${q(node).property('typesOfService')}
+                showCases = ${q(node).property('showCases')}
+                caseStudies = ${q(node).property('caseStudies')}
+                packages = ${q(node).property('packages')}
+                badges = ${q(node).property('badges')}
 
                 renderer = afx`
                     <div>
                         <h1>{props.title}</h1>
-                        <address>
-                            {props.street} {props.zip} {props.city}
+
+                        <p @if.set={props.description}>{props.description}</p>
+
+                        <img alt={props.title} @children="attributes.src" @if.set={props.logo}>
+                            <Neos.Neos:ImageUri asset={props.logo}/>
+                        </img>
+
+                        <h2>Contact</h2>
+
+                        <address @if.set={props.street || props.city}>
+                            {props.street}<br/>
+                            {props.zip} {props.city} - {props.country}
                         </address>
 
-                        <h2>Offers</h2>
                         <ul>
-                            <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
-                                <li>{service}</li>
-                            </Neos.Fusion:Loop>
+                            <li @if.set={props.email}>
+                                <i class="fas fa-email"/>
+                                <a href={'mailto:' + props.email}>Email</a>
+                            </li>
+                            <li @if.set={props.website}>
+                                <i class="fas fa-home"/>
+                                <a href={props.website} target="_blank" rel="noreferrer noopener">Website</a>
+                            </li>
                         </ul>
+
+                        <div @if.set={props.typesOfService}>
+                            <h2>Provided services</h2>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
+                                    <li>{service}</li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
+
+                        <div @if.set={props.badges}>
+                            <h2>Badges</h2>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.badges} itemName="badge">
+                                    <li>{badge.title}</li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
+
+                        <div @if.set={props.showCases}>
+                            <h2>Showcases</h2>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.showCases} itemName="showCase">
+                                    <li>{showCase.title}</li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
+
+                        <div @if.set={props.caseStudies}>
+                            <h2>Casestudies</h2>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
+                                    <li>{caseStudy.title}</li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
+
+                        <div @if.set={props.packages}>
+                            <h2>Packages</h2>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.packages} itemName="package">
+                                    <li>{package.title}</li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
                     </div>
                 `
             }

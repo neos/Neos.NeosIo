@@ -4,8 +4,25 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection) < pro
             main  = Neos.Fusion:Component {
                 serviceProviders = ${q(node).children('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
 
+                serviceProvidersData = Neos.Fusion:Map {
+                    itemName = 'serviceProvider'
+                    itemRenderer = Neos.Fusion:DataStructure {
+                        title = ${q(serviceProvider).property('title')}
+                        description = ${q(serviceProvider).property('description')}
+                        website = ${q(serviceProvider).property('website')}
+                        logo = Neos.Neos:ImageUri {
+                            asset = ${q(serviceProvider).property('logo')}
+                        }
+                        typesOfService = ${q(node).property('typesOfService')}
+                        showCases = ${Array.length(q(node).property('showCases'))}
+                        caseStudies = ${Array.length(q(node).property('caseStudies'))}
+                        packages = ${Array.length(q(node).property('packages'))}
+                        badges = ${Array.length(q(node).property('badges'))}
+                    }
+                }
+
                 renderer = afx`
-                    <div>
+                    <div class="service-provider-collection" data-component="ServiceProviderApp" data-providerData={Json.serialize(props.serviceProvidersData}>
                         <ul>
                             <Neos.Fusion:Loop items={props.serviceProviders} itemName="serviceProvider">
                                 <li>
