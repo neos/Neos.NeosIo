@@ -1,7 +1,12 @@
 prototype(Neos.MarketPlace:RepositoryStorage) < prototype(Neos.MarketPlace:DefaultPage) {
     body {
         content {
-            main = Neos.MarketPlace:Search
+            main = Neos.Fusion:Join {
+                content = Neos.Neos:PrimaryContent {
+                    nodePath = 'main'
+                }
+                marketplace = Neos.MarketPlace:Search
+            }
         }
     }
 }
