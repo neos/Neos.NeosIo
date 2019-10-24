@@ -1,12 +1,12 @@
-prototype(Neos.NeosIo:PageStyles) {
-    neosMarketPlace = Neos.Fusion:Component {
-        @position = 'after main'
-        renderer = afx`
-            <link rel="stylesheet" @children="attributes.href">
+prototype(Neos.MarketPlace:DefaultPage) < prototype(Neos.NeosIo:DefaultPage) {
+    prototype(Neos.NeosIo:PageStyles) {
+        neosMarketPlace = Neos.Fusion:Component {
+            @position = 'after main'
+            renderer = afx`
+                <link rel="stylesheet" @children="attributes.href">
                 <Neos.Fusion:ResourceUri path="resource://Neos.MarketPlace/Public/Styles/Main.css"/>
-            </link>
-        `
+                </link>
+            `
+        }
     }
 }
-
-prototype(Neos.MarketPlace:DefaultPage) < prototype(Neos.NeosIo:DefaultPage)
