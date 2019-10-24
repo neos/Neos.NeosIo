@@ -1,5 +1,12 @@
-prototype(Neos.NeosIo:DefaultPage) {
-    head.stylesheets.main.uri = 'resource://Neos.NeosConIo/Public/Styles/Main.css'
+prototype(Neos.NeosIo:PageStyles) {
+    neosConIo = Neos.Fusion:Component {
+        @position = 'after main'
+        renderer = afx`
+            <link rel="stylesheet" @children="attributes.href">
+                <Neos.Fusion:ResourceUri path="resource://Neos.NeosConIo/Public/Styles/Main.css"/>
+            </link>
+        `
+    }
 }
 
 prototype(Neos.NeosIo:DefaultPage.Menu) {
