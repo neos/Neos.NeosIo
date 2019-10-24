@@ -2,9 +2,9 @@ prototype(Neos.NeosIo:Event.List) < prototype(Neos.Neos:ContentComponent) {
     type = ${q(node).property('type')}
     mode = ${q(node).property('mode')}
     limit = ${q(node).property('limit')}
-    source = ${q(node).property('source') || documentNode}
+    sourceFolder = ${q(node).property('sourceFolder') || documentNode}
 
-    events = ${q(this.source).find('[instanceof Neos.NeosIo:Event]')}
+    events = ${q(this.sourceFolder).find('[instanceof Neos.NeosIo:Event]')}
     events.@process {
         filterType = ${value.filter('[type = "' + this.type + '"]')}
         filterType.@if.hasType = ${this.type}
