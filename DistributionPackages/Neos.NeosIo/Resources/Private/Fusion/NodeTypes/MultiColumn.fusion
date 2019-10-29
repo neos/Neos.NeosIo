@@ -6,7 +6,7 @@ prototype(Neos.NodeTypes:MultiColumn) {
             @process.nodeType >
         }
     }
-    @override {
+    @context {
         columnWidth = ${q(node).property('layout')}
         desktopColumnWidth = ${q(node).property('desktopLayout')}
     }

@@ -4,11 +4,9 @@ prototype(Neos.NeosIo:Component.Button) < prototype(Neos.Fusion:Component) {
 
     additionalClassName = ''
     className = 'btn'
-    className.@process.color = ${value + (this.color ? ' ' + this.color : '' )}
-    className.@process.additionalClassName = ${value + (this.additionalClassName ? ' ' + this.additionalClassName : '' )}
 
     renderer = afx`
-        <a class={props.className} href={props.uri}>
+        <a class={[props.className, props.color, props.additionalClassName]} href={props.uri}>
             <div class="btn__content">{props.content}</div>
         </a>
     `
