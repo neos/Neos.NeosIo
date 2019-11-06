@@ -48,6 +48,8 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     itemName = 'vendor'
                     carryName = 'packageList'
                     itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
+                    @process.unique = ${Carbon.Array.unique(value)}
+                    @process.sort = ${q(value).sort('downloadTotal').get()}
                 }
 
                 renderer = afx`
