@@ -9,37 +9,59 @@
   properties:
     'street':
       type: string
+      options:
+        showInCreationDialog: true
       ui:
         label: 'Street'
         inlineEditable: true
         inspector:
           group: 'address'
+        inline:
+          editorOptions:
+            placeholder: 'Street'
     'zipcode':
       type: string
+      options:
+        showInCreationDialog: true
       ui:
         label: 'Zip Code'
         inlineEditable: true
         inspector:
           group: 'address'
           position: 'after street'
+        inline:
+          editorOptions:
+            placeholder: 'Zipcode'
     'city':
       type: string
+      options:
+        showInCreationDialog: true
       ui:
         label: 'City'
         inlineEditable: true
         inspector:
           group: 'address'
           position: 'after zip'
+        inline:
+          editorOptions:
+            placeholder: 'City'
     'country':
       type: string
+      options:
+        showInCreationDialog: true
       ui:
         label: 'Country'
         inlineEditable: true
         inspector:
           group: 'address'
           position: 'after city'
+        inline:
+          editorOptions:
+            placeholder: 'country'
     'latitude':
       type: string
+      options:
+        showInCreationDialog: true
       ui:
         label: 'Latitude'
         reloadIfChanged: true
@@ -48,6 +70,8 @@
           position: 'after country'
     'longitude':
       type: string
+      options:
+        showInCreationDialog: true
       ui:
         label: 'Longitude'
         reloadIfChanged: true

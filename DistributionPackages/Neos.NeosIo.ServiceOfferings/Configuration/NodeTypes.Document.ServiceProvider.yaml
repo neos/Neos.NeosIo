@@ -14,15 +14,16 @@
           position: 'after document'
           label: 'Service Provider Properties'
           icon: 'concierge-bell'
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.Neos:Document': false
+      'Neos.MarketPlace:RepositoryStorage': false
   properties:
-    name:
-      type: string
-      ui:
-        label: 'Service Provider Name'
-        reloadIfChanged: true
-        inlineEditable: true
     logo:
       type: Neos\Media\Domain\Model\ImageInterface
+      options:
+        showInCreationDialog: true
       ui:
         label: 'Logo'
         reloadIfChanged: true
@@ -31,6 +32,8 @@
           position: 10
     description:
       type: string
+      options:
+        showInCreationDialog: true
       ui:
         inlineEditable: true
         inline:
@@ -48,6 +51,8 @@
           maximum: 500
     typesOfService:
       type: array
+      options:
+        showInCreationDialog: true
       ui:
         label: 'Choose types of service'
         reloadIfChanged: true

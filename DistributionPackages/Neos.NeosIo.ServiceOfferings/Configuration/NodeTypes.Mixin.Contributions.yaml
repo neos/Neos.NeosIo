@@ -9,6 +9,8 @@
   properties:
     showCases:
       type: references
+      options:
+        showInCreationDialog: true
       ui:
         label: 'Show cases'
         reloadIfChanged: true
@@ -19,6 +21,8 @@
               - 'Neos.NeosIo:Reference.ShowCase'
     caseStudies:
       type: references
+      options:
+        showInCreationDialog: true
       ui:
         label: 'Case Studies'
         reloadIfChanged: true
@@ -29,6 +33,8 @@
               - 'Neos.NeosIo:Reference.CaseStudies'
     packages:
       type: references
+      options:
+        showInCreationDialog: true
       ui:
         label: 'Packages'
         reloadIfChanged: true
@@ -36,11 +42,13 @@
           group: contributions
           editorOptions:
             nodeTypes:
-              - 'Neos.MarketPlace:Vendor'
+              - 'Neos.MarketPlace:Package'
     badges:
       type: references
+      options:
+        showInCreationDialog: true
       ui:
-        label: 'Packages'
+        label: 'Badges'
         reloadIfChanged: true
         inspector:
           group: contributions
