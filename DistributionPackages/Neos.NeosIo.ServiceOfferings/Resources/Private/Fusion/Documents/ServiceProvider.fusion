@@ -2,6 +2,10 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
     body {
         content {
             main  = Neos.Fusion:Component {
+                @process.wrap = Neos.Neos:ContentElementWrapping {
+                    node = ${documentNode}
+                }
+
                 title = Neos.Neos:Editable {
                     property = 'title'
                 }
@@ -10,15 +14,19 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                 }
                 street = Neos.Neos:Editable {
                     property = 'street'
+                    block = false
                 }
                 zipcode = Neos.Neos:Editable {
                     property = 'zipcode'
+                    block = false
                 }
                 city = Neos.Neos:Editable {
                     property = 'city'
+                    block = false
                 }
                 country = Neos.Neos:Editable {
                     property = 'country'
+                    block = false
                 }
 
                 # Only editable via inspector for validation
@@ -30,8 +38,17 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                 typesOfService = ${q(node).property('typesOfService')}
                 showCases = ${q(node).property('showCases')}
                 caseStudies = ${q(node).property('caseStudies')}
+                vendors = ${q(node).property('vendors')}
                 packages = ${q(node).property('packages')}
                 badges = ${q(node).property('badges')}
+
+                allPackages = Neos.Fusion:Reduce {
+                    initialValue = ${q(node).property('packages')}
+                    items = ${q(node).property('vendors')}
+                    itemName = 'vendor'
+                    carryName = 'packageList'
+                    itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
+                }
 
                 renderer = afx`
                     <div>
@@ -47,7 +64,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
 
                         <address @if.set={props.street || props.city}>
                             {props.street}<br/>
-                            {props.zip} {props.city} - {props.country}
+                            {props.zipcode} {props.city} - {props.country}
                         </address>
 
                         <ul>
@@ -98,10 +115,16 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                         </div>
 
                         <div @if.set={props.packages}>
-                            <h2>Packages</h2>
+                            <h2>Neos packages</h2>
                             <ul>
-                                <Neos.Fusion:Loop items={props.packages} itemName="package">
-                                    <li>{package.title}</li>
+                                <Neos.Fusion:Loop items={props.allPackages} itemName="package">
+                                    <li @if.notAbandoned={!q(package).property('abandoned')}>
+                                        <a href={q(package).property('repository')} title="Repository" target="_blank">
+                                            {q(package).property('title')}
+                                        </a> &nbsp;
+                                        <i class="fa fa-download"></i> {q(package).property('downloadTotal')} &nbsp;
+                                        <i class="fa fa-star"></i> {q(package).property('favers')}
+                                    </li>
                                 </Neos.Fusion:Loop>
                             </ul>
                         </div>
