@@ -1,0 +1,69 @@
+'Neos.NeosIo.ServiceOfferings:Mixin.Contributions':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        contributions:
+          label: 'Service Provider Contributions'
+          icon: 'donate'
+  properties:
+    showCases:
+      type: references
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Show cases'
+        reloadIfChanged: true
+        inspector:
+          group: contributions
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo:Reference.ShowCase'
+    caseStudies:
+      type: references
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Case Studies'
+        reloadIfChanged: true
+        inspector:
+          group: contributions
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo:Reference.CaseStudies'
+    vendors:
+      type: references
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Vendors'
+        reloadIfChanged: true
+        inspector:
+          group: contributions
+          editorOptions:
+            nodeTypes:
+              - 'Neos.MarketPlace:Vendor'
+    packages:
+      type: references
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Packages'
+        reloadIfChanged: true
+        inspector:
+          group: contributions
+          editorOptions:
+            nodeTypes:
+              - 'Neos.MarketPlace:Package'
+    badges:
+      type: references
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Badges'
+        reloadIfChanged: true
+        inspector:
+          group: contributions
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo:Badge'

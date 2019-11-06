@@ -1,0 +1,38 @@
+'Neos.NeosIo.ServiceOfferings:Mixin.Contact':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        contact:
+          label: 'Service Provider Contact'
+          icon: 'phone'
+  properties:
+    website:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Website'
+        reloadIfChanged: true
+        inspector:
+          group: 'contact'
+    email:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'E-Mail Address'
+        reloadIfChanged: true
+        inspector:
+          group: 'contact'
+          position: 'after website'
+    phone:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Phone'
+        reloadIfChanged: true
+        inspector:
+          group: 'contact'
+          position: 'after email'

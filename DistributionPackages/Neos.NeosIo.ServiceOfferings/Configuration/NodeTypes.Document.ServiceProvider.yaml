@@ -1,0 +1,76 @@
+'Neos.NeosIo.ServiceOfferings:Document.ServiceProvider':
+  superTypes:
+    'Neos.Neos:Document': true
+    'Neos.NeosIo.ServiceOfferings:Mixin.Address': true
+    'Neos.NeosIo.ServiceOfferings:Mixin.Contributions': true
+    'Neos.NeosIo.ServiceOfferings:Mixin.Contact': true
+  ui:
+    label: 'Service Provider'
+    icon: 'address-card'
+    inlineEditable: true
+    inspector:
+      groups:
+        properties:
+          position: 'after document'
+          label: 'Service Provider Properties'
+          icon: 'concierge-bell'
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.Neos:Document': false
+      'Neos.MarketPlace:RepositoryStorage': false
+  properties:
+    logo:
+      type: Neos\Media\Domain\Model\ImageInterface
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Logo'
+        reloadIfChanged: true
+        inspector:
+          group: properties
+          position: 10
+    description:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            formatting:
+              strong: true
+              em: true
+              u: true
+              sub: true
+              sup: true
+            placeholder: 'Enter a description'
+      validation:
+        'Neos.Neos/Validation/StringLengthValidator':
+          minimum: 1
+          maximum: 500
+    typesOfService:
+      type: array
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Choose types of service'
+        reloadIfChanged: true
+        inspector:
+          group: properties
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          placeholder: 'Select Services'
+          editorOptions:
+            multiple: true
+            allowEmpty: false
+            values:
+              hosting:
+                label: 'Hosting'
+              consulting:
+                label: 'Consulting'
+              development:
+                label: 'Development'
+              design:
+                label: 'Design, Concept'
+              freelance:
+                label: 'Freelancer'

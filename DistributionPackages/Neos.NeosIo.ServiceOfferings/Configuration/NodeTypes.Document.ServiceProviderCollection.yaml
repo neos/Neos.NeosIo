@@ -1,0 +1,11 @@
+'Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection':
+  superTypes:
+    'Neos.Neos:Document': true
+  ui:
+    label: 'Service Provider Collection'
+    icon: 'address-card'
+  constraints:
+    nodeTypes:
+      'Neos.Neos:Document': false
+      'Neos.MarketPlace:RepositoryStorage': false
+      'Neos.NeosIo.ServiceOfferings:Document.ServiceProvider': true

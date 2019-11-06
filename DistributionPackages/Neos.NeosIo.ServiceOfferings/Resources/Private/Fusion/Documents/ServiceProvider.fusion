@@ -1,0 +1,162 @@
+prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neos.NeosIo:DefaultPage) {
+    body {
+        content {
+            main  = Neos.Fusion:Component {
+                @process.wrap = Neos.Neos:ContentElementWrapping {
+                    node = ${documentNode}
+                }
+
+                title = Neos.Neos:Editable {
+                    property = 'title'
+                }
+                description = Neos.Neos:Editable {
+                    property = 'description'
+                }
+                street = Neos.Neos:Editable {
+                    property = 'street'
+                    block = false
+                }
+                zipcode = Neos.Neos:Editable {
+                    property = 'zipcode'
+                    block = false
+                }
+                city = Neos.Neos:Editable {
+                    property = 'city'
+                    block = false
+                }
+                country = Neos.Neos:Editable {
+                    property = 'country'
+                    block = false
+                }
+
+                # Only editable via inspector for validation
+                logo = ${q(node).property('logo')}
+                email = ${q(node).property('email')}
+                website = ${q(node).property('website')}
+                phone = ${q(node).property('phone')}
+                longitude = ${q(node).property('longitude')}
+                latitude = ${q(node).property('latitude')}
+
+                # Lists
+                typesOfService = ${q(node).property('typesOfService')}
+                showCases = ${q(node).property('showCases')}
+                caseStudies = ${q(node).property('caseStudies')}
+                vendors = ${q(node).property('vendors')}
+                packages = ${q(node).property('packages')}
+                badges = ${q(node).property('badges')}
+
+                allPackages = Neos.Fusion:Reduce {
+                    initialValue = ${q(node).property('packages')}
+                    items = ${q(node).property('vendors')}
+                    itemName = 'vendor'
+                    carryName = 'packageList'
+                    itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
+                    @process.unique = ${Carbon.Array.unique(value)}
+                    @process.unique.@if.hasItems = ${Type.isArray(value)}
+                    @process.sort = ${q(value).sort('downloadTotal').get()}
+                    @process.sort.@if.hasItems = ${Type.isArray(value)}
+                }
+
+                map = WebExcess.OpenStreetMap:Map.Component {
+                    address = ${Array.join([q(node).property('street'), q(node).property('zipcode') + ' ' + q(node).property('city'), q(node).property('country')], ', ')}
+                    lat = ${q(node).property('latitude')}
+                    lon = ${q(node).property('longitude')}
+                }
+
+                renderer = afx`
+                    <div class="service-provider">
+                        <Neos.Neos:NodeLink node={q(documentNode).parent().get(0)}>Back to the overview</Neos.Neos:NodeLink>
+
+                        <h1 class="service-provider__title">{props.title}</h1>
+
+                        <img class="service-provider__logo" alt={props.title} @children="attributes.src" @if.set={props.logo}>
+                        <Neos.Neos:ImageUri asset={props.logo} maximumWidth="300" maximumHeight="300"/>
+                        </img>
+
+                        <p class="service-provider__description" @if.set={props.description}>{props.description}</p>
+
+                        <h2>Contact</h2>
+
+                        <ul class="service-provider__contact">
+                            <li @if.set={props.email}>
+                                <i class="fa fa-envelope-square"></i>&nbsp;
+                                <a href={'mailto:' + props.email}>Email</a>
+                            </li>
+                            <li @if.set={props.website}>
+                                <i class="fa fa-home"></i>&nbsp;
+                                <a href={props.website} target="_blank">Website</a>
+                            </li>
+                            <li @if.set={props.phone}>
+                                <i class="fa fa-phone"></i>&nbsp;
+                                <a href={'tel:' + props.phone} target="_blank">{props.phone}</a>
+                            </li>
+                        </ul>
+
+                        <address @if.set={props.street || props.city} class="service-provider__address">
+                            {props.street}<br/>
+                            {props.zipcode} {props.city} - {props.country}
+                        </address>
+
+                        <div class="service-provider__map" @if.hasAddress={props.latitude && props.longitude}>
+                            {props.map}
+                        </div>
+
+                        <div @if.set={props.typesOfService} class="service-provider__services">
+                            <h2>Provided services</h2>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
+                                    <li>{String.firstLetterToUpperCase(service)}</li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
+
+                        <div @if.set={props.badges} class="service-provider__badges">
+                            <h2>Badges</h2>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.badges} itemName="badge">
+                                    <li>{badge.title}</li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
+
+                        <div @if.set={props.showCases} class="service-provider__showcases">
+                            <h2>Showcases</h2>
+                            <div class="references__list g">
+                                <Neos.Fusion:Loop items={props.showCases} itemName="showCase">
+                                    <Neos.NeosIo:Reference.List.Item @context.node={showCase}/>
+                                </Neos.Fusion:Loop>
+                            </div>
+                        </div>
+
+                        <div @if.set={props.caseStudies} class="service-provider__casestudies">
+                            <h2>Casestudies</h2>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
+                                    <li>{caseStudy.title}</li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
+
+                        <div @if.set={props.packages} class="service-provider__packages">
+                            <h2>Neos packages</h2>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.allPackages} itemName="package">
+                                    <li @if.notAbandoned={!q(package).property('abandoned')}>
+                                        <a href={q(package).property('repository')}
+                                           title="Repository"
+                                           target="_blank"
+                                           rel="noreferrer noopener">
+                                            {q(package).property('title')}
+                                        </a> &nbsp;
+                                        <i class="fa fa-download"></i> {q(package).property('downloadTotal')} &nbsp;
+                                        <i class="fa fa-star"></i> {q(package).property('favers')}
+                                    </li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            }
+        }
+    }
+}
