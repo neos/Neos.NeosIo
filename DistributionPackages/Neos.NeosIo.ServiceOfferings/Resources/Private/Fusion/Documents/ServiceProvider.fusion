@@ -33,6 +33,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                 logo = ${q(node).property('logo')}
                 email = ${q(node).property('email')}
                 website = ${q(node).property('website')}
+                phone = ${q(node).property('phone')}
 
                 # Lists
                 typesOfService = ${q(node).property('typesOfService')}
@@ -52,44 +53,50 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     @process.sort = ${q(value).sort('downloadTotal').get()}
                 }
 
+
                 renderer = afx`
-                    <div>
-                        <h1>{props.title}</h1>
+                    <div class="service-provider">
+                        <h1 class="service-provider__title">{props.title}</h1>
 
-                        <p @if.set={props.description}>{props.description}</p>
-
-                        <img alt={props.title} @children="attributes.src" @if.set={props.logo}>
-                            <Neos.Neos:ImageUri asset={props.logo}/>
+                        <img class="service-provider__logo" alt={props.title} @children="attributes.src" @if.set={props.logo}>
+                        <Neos.Neos:ImageUri asset={props.logo} maximumWidth="300" maximumHeight="300"/>
                         </img>
+
+                        <p class="service-provider__description" @if.set={props.description}>{props.description}</p>
 
                         <h2>Contact</h2>
 
-                        <address @if.set={props.street || props.city}>
+                        <address @if.set={props.street || props.city} class="service-provider__address">
                             {props.street}<br/>
                             {props.zipcode} {props.city} - {props.country}
                         </address>
 
-                        <ul>
+
+                        <ul class="service-provider__contact">
                             <li @if.set={props.email}>
-                                <i class="fas fa-email"/>
+                                <i class="fa fa-envelope-square"></i>&nbsp;
                                 <a href={'mailto:' + props.email}>Email</a>
                             </li>
                             <li @if.set={props.website}>
-                                <i class="fas fa-home"/>
-                                <a href={props.website} target="_blank" rel="noreferrer noopener">Website</a>
+                                <i class="fa fa-home"></i>&nbsp;
+                                <a href={props.website} target="_blank">Website</a>
+                            </li>
+                            <li @if.set={props.phone}>
+                                <i class="fa fa-phone"></i>&nbsp;
+                                <a href={'tel:' + props.phone} target="_blank">{props.phone}</a>
                             </li>
                         </ul>
 
-                        <div @if.set={props.typesOfService}>
+                        <div @if.set={props.typesOfService} class="service-provider__services">
                             <h2>Provided services</h2>
                             <ul>
                                 <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
-                                    <li>{service}</li>
+                                    <li>{String.firstLetterToUpperCase(service)}</li>
                                 </Neos.Fusion:Loop>
                             </ul>
                         </div>
 
-                        <div @if.set={props.badges}>
+                        <div @if.set={props.badges} class="service-provider__badges">
                             <h2>Badges</h2>
                             <ul>
                                 <Neos.Fusion:Loop items={props.badges} itemName="badge">
@@ -98,16 +105,16 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                             </ul>
                         </div>
 
-                        <div @if.set={props.showCases}>
+                        <div @if.set={props.showCases} class="service-provider__showcases">
                             <h2>Showcases</h2>
-                            <ul>
+                            <div class="references__list g">
                                 <Neos.Fusion:Loop items={props.showCases} itemName="showCase">
-                                    <li>{showCase.title}</li>
+                                    <Neos.NeosIo:Reference.List.Item @context.node={showCase}/>
                                 </Neos.Fusion:Loop>
-                            </ul>
+                            </div>
                         </div>
 
-                        <div @if.set={props.caseStudies}>
+                        <div @if.set={props.caseStudies} class="service-provider__casestudies">
                             <h2>Casestudies</h2>
                             <ul>
                                 <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
@@ -116,12 +123,15 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                             </ul>
                         </div>
 
-                        <div @if.set={props.packages}>
+                        <div @if.set={props.packages} class="service-provider__packages">
                             <h2>Neos packages</h2>
                             <ul>
                                 <Neos.Fusion:Loop items={props.allPackages} itemName="package">
                                     <li @if.notAbandoned={!q(package).property('abandoned')}>
-                                        <a href={q(package).property('repository')} title="Repository" target="_blank">
+                                        <a href={q(package).property('repository')}
+                                           title="Repository"
+                                           target="_blank"
+                                           rel="noreferrer noopener">
                                             {q(package).property('title')}
                                         </a> &nbsp;
                                         <i class="fa fa-download"></i> {q(package).property('downloadTotal')} &nbsp;

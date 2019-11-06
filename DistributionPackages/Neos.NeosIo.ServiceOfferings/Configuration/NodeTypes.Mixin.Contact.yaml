@@ -7,7 +7,7 @@
           label: 'Service Provider Contact'
           icon: 'phone'
   properties:
-    'website':
+    website:
       type: string
       options:
         showInCreationDialog: true
@@ -16,7 +16,7 @@
         reloadIfChanged: true
         inspector:
           group: 'contact'
-    'email':
+    email:
       type: string
       options:
         showInCreationDialog: true
@@ -26,3 +26,13 @@
         inspector:
           group: 'contact'
           position: 'after website'
+    phone:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Phone'
+        reloadIfChanged: true
+        inspector:
+          group: 'contact'
+          position: 'after email'
