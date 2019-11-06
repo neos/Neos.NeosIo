@@ -22,7 +22,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection) < pro
                 }
 
                 renderer = afx`
-                    <div class="service-provider-collection" data-component="ServiceProviderApp" data-providerData={Json.serialize(props.serviceProvidersData}>
+                    <div class="service-provider-collection" data-component="ServiceProviderApp" data-providerData={Json.stringify(props.serviceProvidersData)}>
                         <ul>
                             <Neos.Fusion:Loop items={props.serviceProviders} itemName="serviceProvider">
                                 <li>
