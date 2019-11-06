@@ -4,37 +4,70 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection) < pro
             main  = Neos.Fusion:Component {
                 serviceProviders = ${q(node).children('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
 
-                serviceProvidersData = Neos.Fusion:Map {
-                    itemName = 'serviceProvider'
-                    itemRenderer = Neos.Fusion:DataStructure {
-                        title = ${q(serviceProvider).property('title')}
-                        description = ${q(serviceProvider).property('description')}
-                        website = ${q(serviceProvider).property('website')}
-                        logo = Neos.Neos:ImageUri {
-                            asset = ${q(serviceProvider).property('logo')}
-                        }
-                        typesOfService = ${q(node).property('typesOfService')}
-                        showCases = ${Array.length(q(node).property('showCases'))}
-                        caseStudies = ${Array.length(q(node).property('caseStudies'))}
-                        packages = ${Array.length(q(node).property('packages'))}
-                        badges = ${Array.length(q(node).property('badges'))}
-                    }
-                }
+                renderer = Neos.Fusion:Component {
+                    @apply.props = ${props}
 
-                renderer = afx`
-                    <div class="service-provider-collection" data-component="ServiceProviderApp" data-providerData={Json.stringify(props.serviceProvidersData)}>
-                        <ul>
-                            <Neos.Fusion:Loop items={props.serviceProviders} itemName="serviceProvider">
-                                <li>
-                                    <Neos.Neos:NodeLink node={serviceProvider}>
-                                        {q(serviceProvider).property('title')}
-                                    </Neos.Neos:NodeLink>
-                                </li>
-                            </Neos.Fusion:Loop>
-                        </ul>
-                    </div>
-                `
+                    serviceProvidersData = Neos.Fusion:Map {
+                        items = ${props.serviceProviders}
+                        itemName = 'serviceProvider'
+                        itemRenderer = Neos.Fusion:DataStructure {
+                            title = ${q(serviceProvider).property('title')}
+                            description = ${q(serviceProvider).property('description') || ''}
+                            website = ${q(serviceProvider).property('website') || ''}
+                            logo = Neos.Neos:ImageUri {
+                                asset = ${q(serviceProvider).property('logo')}
+                                @if.hasLogo = ${q(serviceProvider).property('logo')}
+                            }
+                            typesOfService = ${q(node).property('typesOfService') || []}
+                            showCases = ${Array.length(q(node).property('showCases') || [])}
+                            caseStudies = ${Array.length(q(node).property('caseStudies') || [])}
+                            packages = ${Array.length(q(node).property('packages') || [])}
+                            vendors = ${Array.length(q(node).property('vendors') || [])}
+                            badges = ${Array.length(q(node).property('badges') || [])}
+                        }
+                    }
+
+                    mapData = Neos.Fusion:Map {
+                        items = ${q(props.serviceProviders).filter('[latitude != ""][longitude != ""]').get()}
+                        itemName = 'serviceProvider'
+                        itemRenderer = Neos.Fusion:DataStructure {
+                            type = 'Feature'
+                            properties = Neos.Fusion:DataStructure {
+                                tooltip = ${serviceProvider.label}
+                                popup = afx`
+                                    <h4>{serviceProvider.label}</h4>
+                                    <p @if.set={q(serviceProvider).property('description')}>{q(serviceProvider).property('description')}</p>
+                                    <Neos.Neos:NodeLink node={serviceProvider}>Details</Neos.Neos:NodeLink>
+                                `
+                            }
+                            geometry = Neos.Fusion:DataStructure {
+                                type = 'Point'
+                                coordinates = ${[String.toFloat(q(serviceProvider).property('longitude')), String.toFloat(q(serviceProvider).property('latitude'))]}
+                            }
+                        }
+                    }
+
+                    renderer = afx`
+                        <div class="service-provider-collection" data-component="ServiceProviderApp" data-providerData={Json.stringify(props.serviceProvidersData)}>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.serviceProviders} itemName="serviceProvider">
+                                    <li>
+                                        <Neos.Neos:NodeLink node={serviceProvider}>
+                                            {q(serviceProvider).property('title')}
+                                        </Neos.Neos:NodeLink>
+                                    </li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+
+                            <WebExcess.OpenStreetMap:Map.Component json={Json.stringify(props.mapData)}/>
+                        </div>
+                    `
+                }
             }
         }
+    }
+
+    @cache {
+        entryTags.children = ${Neos.Caching.descendantOfTag(footerContainer)}
     }
 }

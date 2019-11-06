@@ -34,6 +34,8 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                 email = ${q(node).property('email')}
                 website = ${q(node).property('website')}
                 phone = ${q(node).property('phone')}
+                longitude = ${q(node).property('longitude')}
+                latitude = ${q(node).property('latitude')}
 
                 # Lists
                 typesOfService = ${q(node).property('typesOfService')}
@@ -50,12 +52,21 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     carryName = 'packageList'
                     itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
                     @process.unique = ${Carbon.Array.unique(value)}
+                    @process.unique.@if.hasItems = ${Type.isArray(value)}
                     @process.sort = ${q(value).sort('downloadTotal').get()}
+                    @process.sort.@if.hasItems = ${Type.isArray(value)}
                 }
 
+                map = WebExcess.OpenStreetMap:Map.Component {
+                    address = ${Array.join([q(node).property('street'), q(node).property('zipcode') + ' ' + q(node).property('city'), q(node).property('country')], ', ')}
+                    lat = ${q(node).property('latitude')}
+                    lon = ${q(node).property('longitude')}
+                }
 
                 renderer = afx`
                     <div class="service-provider">
+                        <Neos.Neos:NodeLink node={q(documentNode).parent().get(0)}>Back to the overview</Neos.Neos:NodeLink>
+
                         <h1 class="service-provider__title">{props.title}</h1>
 
                         <img class="service-provider__logo" alt={props.title} @children="attributes.src" @if.set={props.logo}>
@@ -65,12 +76,6 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                         <p class="service-provider__description" @if.set={props.description}>{props.description}</p>
 
                         <h2>Contact</h2>
-
-                        <address @if.set={props.street || props.city} class="service-provider__address">
-                            {props.street}<br/>
-                            {props.zipcode} {props.city} - {props.country}
-                        </address>
-
 
                         <ul class="service-provider__contact">
                             <li @if.set={props.email}>
@@ -86,6 +91,15 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                                 <a href={'tel:' + props.phone} target="_blank">{props.phone}</a>
                             </li>
                         </ul>
+
+                        <address @if.set={props.street || props.city} class="service-provider__address">
+                            {props.street}<br/>
+                            {props.zipcode} {props.city} - {props.country}
+                        </address>
+
+                        <div class="service-provider__map" @if.hasAddress={props.latitude && props.longitude}>
+                            {props.map}
+                        </div>
 
                         <div @if.set={props.typesOfService} class="service-provider__services">
                             <h2>Provided services</h2>
