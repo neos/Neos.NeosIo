@@ -1,0 +1,36 @@
+prototype(Neos.NeosIo.ServiceOfferings:Component.MapData) < prototype(Neos.Fusion:Map) {
+    serviceProviders = ${[]}
+    items = ${q(this.serviceProviders).filter('[latitude != ""][longitude != ""]').get()}
+    itemName = 'serviceProvider'
+    itemRenderer = Neos.Fusion:DataStructure {
+        type = 'Feature'
+        properties = Neos.Fusion:DataStructure {
+            tooltip = ${serviceProvider.label}
+            popup = afx`
+                <h4>{serviceProvider.label}</h4>
+                <p @if.set={q(serviceProvider).property('description')}>{q(serviceProvider).property('description')}</p>
+                <address @if.set={q(serviceProvider).property('street')}>
+                    {q(serviceProvider).property('street')}<br/>
+                    {q(serviceProvider).property('zipcode')} {q(serviceProvider).property('city')}
+                </address>
+                <div @if.set={q(serviceProvider).property('website')}>
+                    <i class="fa fa-home"></i>&nbsp;
+                    <a href={q(serviceProvider).property('website')} target="_blank">Website</a>
+                </div>
+                <div @if.set={q(serviceProvider).property('email')}>
+                    <i class="fa fa-envelope-square"></i>&nbsp;
+                    <a href={'mailto:' + q(serviceProvider).property('email')}>Email</a>
+                </div>
+                <div @if.set={q(serviceProvider).property('phone')}>
+                    <i class="fa fa-phone"></i>&nbsp;
+                    <a href={'tel:' + q(serviceProvider).property('phone')} target="_blank">{q(serviceProvider).property('phone')}</a>
+                </div>
+                <Neos.Neos:NodeLink node={serviceProvider} attributes.class="service-provider-popup__more">Read more</Neos.Neos:NodeLink>
+            `
+        }
+        geometry = Neos.Fusion:DataStructure {
+            type = 'Point'
+            coordinates = ${[String.toFloat(q(serviceProvider).property('longitude')), String.toFloat(q(serviceProvider).property('latitude'))]}
+        }
+    }
+}

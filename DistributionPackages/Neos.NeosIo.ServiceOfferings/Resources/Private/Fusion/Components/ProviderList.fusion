@@ -1,0 +1,35 @@
+prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.Fusion:Component) {
+    serviceProviders = ${[]}
+
+    renderer = afx`
+        <div class="service-providers__list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <Neos.Fusion:Loop items={props.serviceProviders} itemName="serviceProvider">
+                        <tr>
+                            <td>
+                                <Neos.Neos:NodeLink node={serviceProvider}>
+                                    {serviceProvider.label}
+                                </Neos.Neos:NodeLink>
+                            </td>
+                            <td>
+                                <address @if.hasAddress={q(serviceProvider).property('street') && q(serviceProvider).property('city')}>
+                                    {q(serviceProvider).property('street')},&nbsp;
+                                    {q(serviceProvider).property('zipcode')}&nbsp;
+                                    {q(serviceProvider).property('city')},&nbsp;
+                                    {q(serviceProvider).property('country')}
+                                </address>
+                            </td>
+                        </tr>
+                    </Neos.Fusion:Loop>
+                </tbody>
+            </table>
+        </div>
+    `
+}
