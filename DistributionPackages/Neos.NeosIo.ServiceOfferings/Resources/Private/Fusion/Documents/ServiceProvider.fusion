@@ -51,10 +51,8 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     itemName = 'vendor'
                     carryName = 'packageList'
                     itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
-                    @process.unique = ${Carbon.Array.unique(value)}
-                    @process.unique.@if.hasItems = ${Type.isArray(value)}
-                    @process.sort = ${q(value).sort('downloadTotal').get()}
-                    @process.sort.@if.hasItems = ${Type.isArray(value)}
+                    @process.unique = ${value ? Carbon.Array.unique(value) : value}
+                    @process.sort = ${value ? q(value).sort('downloadTotal').get() : value}
                 }
 
                 map = WebExcess.OpenStreetMap:Map.Component {
@@ -137,7 +135,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                             </ul>
                         </div>
 
-                        <div @if.set={props.packages} class="service-provider__packages">
+                        <div @if.set={props.allPackages} class="service-provider__packages">
                             <h2>Neos packages</h2>
                             <ul>
                                 <Neos.Fusion:Loop items={props.allPackages} itemName="package">
