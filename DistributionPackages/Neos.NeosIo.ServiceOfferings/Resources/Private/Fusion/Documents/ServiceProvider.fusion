@@ -1,6 +1,10 @@
 prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neos.NeosIo:DefaultPage) {
     body {
         content {
+            keyVisual {
+                keyVisualImage = ${q(documentNode).property('bannerImage')}
+            }
+
             main  = Neos.Fusion:Component {
                 @process.wrap = Neos.Neos:ContentElementWrapping {
                     node = ${documentNode}
@@ -38,6 +42,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                 latitude = ${q(node).property('latitude')}
                 fundingPlatformName = ${q(node).property('fundingPlatformName')}
                 githubName = ${q(node).property('githubName')}
+                size = ${q(node).property('size')}
 
                 # Lists
                 typesOfService = ${q(node).property('typesOfService')}
@@ -81,31 +86,34 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                         <p class="service-provider__description" @if.set={props.description}>{props.description}</p>
 
                         <section class="service-provider__details">
-                            <div class="service-provider__contact">
-                                <h2>Contact</h2>
+                            <div>
+                                <div class="service-provider__contact">
+                                    <h2>Contact</h2>
 
-                                <ul>
-                                    <li @if.set={props.email}>
-                                        <i class="fa fa-envelope-square"></i>&nbsp;
-                                        <a href={'mailto:' + props.email}>Email</a>
-                                    </li>
-                                    <li @if.set={props.website}>
-                                        <i class="fa fa-home"></i>&nbsp;
-                                        <a href={props.website} target="_blank">Website</a>
-                                    </li>
-                                    <li @if.set={props.phone}>
-                                        <i class="fa fa-phone"></i>&nbsp;
-                                        <a href={'tel:' + props.phone} target="_blank">{props.phone}</a>
-                                    </li>
-                                </ul>
+                                    <ul>
+                                        <li @if.set={props.email}>
+                                            <i class="fa fa-envelope-square"></i>&nbsp;
+                                            <a href={'mailto:' + props.email}>Email</a>
+                                        </li>
+                                        <li @if.set={props.website}>
+                                            <i class="fa fa-home"></i>&nbsp;
+                                            <a href={props.website} target="_blank">Website</a>
+                                        </li>
+                                        <li @if.set={props.phone}>
+                                            <i class="fa fa-phone"></i>&nbsp;
+                                            <a href={'tel:' + props.phone} target="_blank">{props.phone}</a>
+                                        </li>
+                                    </ul>
 
-                                <address @if.set={props.street || props.city} class="service-provider__address">
-                                    {props.street}<br/>
-                                    {props.zipcode} {props.city} - {props.country}
-                                </address>
+                                    <address @if.set={props.street || props.city} class="service-provider__address">
+                                        {props.street}<br/>
+                                        {props.zipcode} {props.city} - {props.country}
+                                    </address>
+                                </div>
 
                                  <div @if.set={props.typesOfService} class="service-provider__services">
                                      <h2>Provided services</h2>
+                                     <span>Number of employees: {props.size}</span>
                                      <ul>
                                          <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
                                              <li>{String.firstLetterToUpperCase(service)}</li>

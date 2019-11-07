@@ -2,37 +2,17 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection) < pro
     body {
         content {
             main  = Neos.Fusion:Component {
-                serviceProviders = ${q(node).children('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
+                serviceProviders = ${q(node).children('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]').get()}
 
                 renderer = Neos.Fusion:Component {
                     @apply.props = ${props}
-
-                    serviceProvidersData = Neos.Fusion:Map {
-                        items = ${props.serviceProviders}
-                        itemName = 'serviceProvider'
-                        itemRenderer = Neos.Fusion:DataStructure {
-                            title = ${q(serviceProvider).property('title')}
-                            description = ${q(serviceProvider).property('description') || ''}
-                            website = ${q(serviceProvider).property('website') || ''}
-                            logo = Neos.Neos:ImageUri {
-                                asset = ${q(serviceProvider).property('logo')}
-                                @if.hasLogo = ${q(serviceProvider).property('logo')}
-                            }
-                            typesOfService = ${q(node).property('typesOfService') || []}
-                            showCases = ${Array.length(q(node).property('showCases') || [])}
-                            caseStudies = ${Array.length(q(node).property('caseStudies') || [])}
-                            packages = ${Array.length(q(node).property('packages') || [])}
-                            vendors = ${Array.length(q(node).property('vendors') || [])}
-                            badges = ${Array.length(q(node).property('badges') || [])}
-                        }
-                    }
 
                     mapData = Neos.NeosIo.ServiceOfferings:Component.MapData {
                         serviceProviders = ${props.serviceProviders}
                     }
 
                     renderer = afx`
-                        <div class="service-provider-collection" data-providerData={Json.stringify(props.serviceProvidersData)}>
+                        <div class="service-provider-collection">
                             <WebExcess.OpenStreetMap:Map.Component
                                     json={Json.stringify(props.mapData)}
                                     mapHooks.addMarkersLayerHook="clusterMarkersHook"
