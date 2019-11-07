@@ -1,5 +1,5 @@
 module.exports = {
-    presets: ['@babel/env', '@babel/react', '@babel/typescript'],
+    presets: ['@babel/env', '@babel/react', ["@babel/typescript", { jsxPragma: "h" }]],
     plugins: [
         [
             '@babel/plugin-proposal-decorators',
@@ -13,6 +13,13 @@ module.exports = {
                 loose: true
             }
         ],
-        '@babel/proposal-object-rest-spread'
+        '@babel/proposal-object-rest-spread',
+
+        [
+            "@babel/plugin-transform-react-jsx", {
+                pragma: "h",
+                pragmaFrag: "Fragment",
+            }
+        ]
     ]
 };

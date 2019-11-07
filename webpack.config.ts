@@ -10,17 +10,18 @@ function config(
         filename = 'Main.js',
         entryPath = 'Resources/Private/Fusion',
         publicPath = 'Resources/Public',
-        hasSourceMap = true
+        hasSourceMap = true,
+        alias = {},
     }: {
         packageName?: string;
         filename?: string;
         entryPath?: string;
         publicPath?: string;
         hasSourceMap?: boolean;
+        alias?: Object;
     },
     argv: any
 ): object {
-    const alias = {};
     const includePaths = [];
     const isInlineAsset = publicPath == 'Resources/Private/Templates/InlineAssets';
     const baseFilename = filename.substring(0, filename.lastIndexOf('.'));
