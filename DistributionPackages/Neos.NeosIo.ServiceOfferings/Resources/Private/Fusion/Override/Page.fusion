@@ -1,8 +1,32 @@
 prototype(Neos.Neos:Page) {
-    head.stylesheets.openStreetMap {
-        @if.onServiceProviderPage = ${q(documentNode).is('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection],[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
+    head.stylesheets {
+        openStreetMapClusters = Neos.Fusion:Tag {
+            tagName = 'link'
+            attributes {
+                rel = 'stylesheet'
+                href = Neos.Fusion:ResourceUri {
+                    path = 'resource://Neos.NeosIo.ServiceOfferings/Public/Styles/Main.css'
+                }
+            }
+            @if.onServiceProviderPage = ${q(documentNode).is('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection],[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
+            @position = 'before openStreetMap'
+        }
+
+        openStreetMap >
     }
-    body.javascripts.openStreetMap {
-        @if.onServiceProviderPage = ${q(documentNode).is('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection],[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
+
+    body.javascripts {
+        openStreetMapClusters = Neos.Fusion:Tag {
+            tagName = 'script'
+            attributes {
+                src = Neos.Fusion:ResourceUri {
+                    path = 'resource://Neos.NeosIo.ServiceOfferings/Public/Scripts/Main.js'
+                }
+            }
+            @if.onServiceProviderPage = ${q(documentNode).is('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection],[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
+            @position = 'before openStreetMap'
+        }
+
+        openStreetMap >
     }
 }
