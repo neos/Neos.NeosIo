@@ -1,0 +1,8 @@
+prototype(Neos.Neos:Page) {
+    head.stylesheets.openStreetMap {
+        @if.onServiceProviderPage = ${q(documentNode).is('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection],[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
+    }
+    body.javascripts.openStreetMap {
+        @if.onServiceProviderPage = ${q(documentNode).is('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection],[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
+    }
+}
