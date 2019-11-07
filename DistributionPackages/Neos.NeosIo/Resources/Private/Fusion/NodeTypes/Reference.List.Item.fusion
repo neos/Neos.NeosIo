@@ -16,11 +16,10 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Template) {
     @context {
         title = ${this.title}
         alternativeText = ${this.alternativeText}
-        image = ${this.image}
     }
 
     imageTag = Neos.NeosIo:Component.LazyLoadImage {
-        image = ${image}
+        image = ${q(node).property('image')}
         title = ${title}
         alternativeText = ${alternativeText}
         className = 'imageTeaser__image'
@@ -35,7 +34,7 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Template) {
             node = ${node}
         }
         entryTags {
-            1 = ${'Node_' + node.identifier}
+            node = ${Neos.Caching.nodeTag(node)}
         }
     }
 }

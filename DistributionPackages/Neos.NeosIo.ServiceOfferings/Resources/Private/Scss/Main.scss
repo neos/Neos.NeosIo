@@ -1,0 +1,41 @@
+@import 'Leaflet';
+@import 'Plugins/WebExcess.OpenStreetMap/Resources/Private/Assets/Main';
+
+.service-provider {
+  &__logo {
+    float: right;
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  &__address {
+    margin-bottom: 1rem;
+  }
+
+  &__map {
+    width: 500px;
+    max-width: 100%;
+  }
+}
+
+.marker-cluster {
+  text-align: center;
+  padding: .3rem .6rem;
+  border-radius: 50%;
+  font-size: 20px;
+  background-color: #00adee;
+  box-shadow: 5px -3px 10px -6px #26224c;
+  color: white;
+  text-shadow: 0 1px #26224c;
+}
+
+.leaflet-popup-content {
+  address {
+    margin-bottom: 1rem;
+  }
+
+  .service-provider-popup__more {
+    display: block;
+    margin-top: 1rem;
+  }
+}

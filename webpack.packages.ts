@@ -9,6 +9,7 @@
  */
 
 const packages = [
+    { packageName: 'Neos.NeosIo.ServiceOfferings' },
     { packageName: 'Neos.MarketPlace' },
     { packageName: 'Neos.NeosConIo' },
     { packageName: 'Neos.NeosIo' }
