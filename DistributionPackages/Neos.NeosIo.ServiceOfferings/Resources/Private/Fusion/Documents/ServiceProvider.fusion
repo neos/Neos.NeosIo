@@ -119,34 +119,25 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                              </div>
                         </section>
 
-                        <div @if.set={props.badges} class="service-provider__badges">
-                            <h2>Badges</h2>
-                            <ul>
-                                <Neos.Fusion:Loop items={props.badges} itemName="badge">
-                                    <li>{badge.title}</li>
-                                </Neos.Fusion:Loop>
-                            </ul>
-                        </div>
-
-                        <div @if.set={props.caseStudies} class="service-provider__casestudies">
+                        <section @if.set={props.caseStudies} class="service-provider__casestudies">
                             <h2>Casestudies</h2>
                             <ul>
                                 <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
                                     <li>{caseStudy.title}</li>
                                 </Neos.Fusion:Loop>
                             </ul>
-                        </div>
+                        </section>
 
-                        <div @if.set={props.showCases} class="service-provider__showcases">
+                        <section @if.set={props.showCases} class="service-provider__showcases">
                             <h2>Showcases</h2>
                             <div class="references__list g">
                                 <Neos.Fusion:Loop items={props.showCases} itemName="showCase">
                                     <Neos.NeosIo:Reference.List.Item @context.node={showCase}/>
                                 </Neos.Fusion:Loop>
                             </div>
-                        </div>
+                        </section>
 
-                        <div class="service-provider__contributions">
+                        <section class="service-provider__contributions">
                             <div @if.set={props.allPackages} class="service-provider__packages">
                                 <h2>Neos packages</h2>
                                 <ul>
@@ -168,15 +159,26 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                                     &nbsp;<i class="fa fa-github"></i>
                                 </div>
                             </div>
-                            <div @if.set={props.fundingPlatformName && props.fundingBadges} class="service-provider__sponsorships">
-                                <h2>Funding badges</h2>
-                                <ul>
-                                    <Neos.Fusion:Loop items={props.fundingBadges} itemName="fundingBadge">
-                                        <li>{fundingBadge.badgeType} ({fundingBadge.startDate} - {fundingBadge.endDate})</li>
-                                    </Neos.Fusion:Loop>
-                                </ul>
+                            <div>
+                                <div @if.set={props.fundingPlatformName && props.fundingBadges} class="service-provider__sponsorships">
+                                    <h2>Funding badges</h2>
+                                    <ul>
+                                        <Neos.Fusion:Loop items={props.fundingBadges} itemName="fundingBadge">
+                                            <li>{fundingBadge.badgeType} ({fundingBadge.startDate} - {fundingBadge.endDate})</li>
+                                        </Neos.Fusion:Loop>
+                                    </ul>
+                                </div>
+
+                                <div @if.set={props.badges} class="service-provider__badges">
+                                    <h2>Sponsorship badges</h2>
+                                    <div class="service-provider__badge-wrap">
+                                        <Neos.Fusion:Loop items={props.badges} itemName="badge">
+                                            <Neos.Neos:ImageTag asset={q(badge).property('image')} attributes.alt={q(badge).property('description')}/>
+                                        </Neos.Fusion:Loop>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </section>
                     </div>
                 `
             }
