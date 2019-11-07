@@ -7,6 +7,15 @@
           label: 'Service Provider Contributions'
           icon: 'donate'
   properties:
+    fundingPlatformName:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Funding platform name'
+        reloadIfChanged: true
+        inspector:
+          group: contributions
     showCases:
       type: references
       options:
@@ -31,6 +40,15 @@
           editorOptions:
             nodeTypes:
               - 'Neos.NeosIo:Reference.CaseStudies'
+    githubName:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Github name'
+        reloadIfChanged: true
+        inspector:
+          group: contributions
     vendors:
       type: references
       options:

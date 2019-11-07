@@ -36,6 +36,8 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                 phone = ${q(node).property('phone')}
                 longitude = ${q(node).property('longitude')}
                 latitude = ${q(node).property('latitude')}
+                fundingPlatformName = ${q(node).property('fundingPlatformName')}
+                githubName = ${q(node).property('githubName')}
 
                 # Lists
                 typesOfService = ${q(node).property('typesOfService')}
@@ -61,6 +63,11 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     lon = ${q(node).property('longitude')}
                 }
 
+                fundingBadges = ${q(site).fundingBadges().get()}
+                fundingBadges.@process {
+                    getBadges = ${value['customers'][q(node).property('fundingPlatformName')]['badges'] || []}
+                }
+
                 renderer = afx`
                     <div class="service-provider">
                         <Neos.Neos:NodeLink node={q(documentNode).parent().get(0)}>Back to the overview</Neos.Neos:NodeLink>
@@ -73,46 +80,59 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
 
                         <p class="service-provider__description" @if.set={props.description}>{props.description}</p>
 
-                        <h2>Contact</h2>
+                        <section class="service-provider__details">
+                            <div class="service-provider__contact">
+                                <h2>Contact</h2>
 
-                        <ul class="service-provider__contact">
-                            <li @if.set={props.email}>
-                                <i class="fa fa-envelope-square"></i>&nbsp;
-                                <a href={'mailto:' + props.email}>Email</a>
-                            </li>
-                            <li @if.set={props.website}>
-                                <i class="fa fa-home"></i>&nbsp;
-                                <a href={props.website} target="_blank">Website</a>
-                            </li>
-                            <li @if.set={props.phone}>
-                                <i class="fa fa-phone"></i>&nbsp;
-                                <a href={'tel:' + props.phone} target="_blank">{props.phone}</a>
-                            </li>
-                        </ul>
+                                <ul>
+                                    <li @if.set={props.email}>
+                                        <i class="fa fa-envelope-square"></i>&nbsp;
+                                        <a href={'mailto:' + props.email}>Email</a>
+                                    </li>
+                                    <li @if.set={props.website}>
+                                        <i class="fa fa-home"></i>&nbsp;
+                                        <a href={props.website} target="_blank">Website</a>
+                                    </li>
+                                    <li @if.set={props.phone}>
+                                        <i class="fa fa-phone"></i>&nbsp;
+                                        <a href={'tel:' + props.phone} target="_blank">{props.phone}</a>
+                                    </li>
+                                </ul>
 
-                        <address @if.set={props.street || props.city} class="service-provider__address">
-                            {props.street}<br/>
-                            {props.zipcode} {props.city} - {props.country}
-                        </address>
+                                <address @if.set={props.street || props.city} class="service-provider__address">
+                                    {props.street}<br/>
+                                    {props.zipcode} {props.city} - {props.country}
+                                </address>
 
-                        <div class="service-provider__map" @if.hasAddress={props.latitude && props.longitude}>
-                            {props.map}
-                        </div>
+                                 <div @if.set={props.typesOfService} class="service-provider__services">
+                                     <h2>Provided services</h2>
+                                     <ul>
+                                         <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
+                                             <li>{String.firstLetterToUpperCase(service)}</li>
+                                         </Neos.Fusion:Loop>
+                                     </ul>
+                                 </div>
+                             </div>
 
-                        <div @if.set={props.typesOfService} class="service-provider__services">
-                            <h2>Provided services</h2>
-                            <ul>
-                                <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
-                                    <li>{String.firstLetterToUpperCase(service)}</li>
-                                </Neos.Fusion:Loop>
-                            </ul>
-                        </div>
+                             <div class="service-provider__map" @if.hasAddress={props.latitude && props.longitude}>
+                                 {props.map}
+                             </div>
+                        </section>
 
                         <div @if.set={props.badges} class="service-provider__badges">
                             <h2>Badges</h2>
                             <ul>
                                 <Neos.Fusion:Loop items={props.badges} itemName="badge">
                                     <li>{badge.title}</li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
+
+                        <div @if.set={props.caseStudies} class="service-provider__casestudies">
+                            <h2>Casestudies</h2>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
+                                    <li>{caseStudy.title}</li>
                                 </Neos.Fusion:Loop>
                             </ul>
                         </div>
@@ -126,31 +146,36 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                             </div>
                         </div>
 
-                        <div @if.set={props.caseStudies} class="service-provider__casestudies">
-                            <h2>Casestudies</h2>
-                            <ul>
-                                <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
-                                    <li>{caseStudy.title}</li>
-                                </Neos.Fusion:Loop>
-                            </ul>
-                        </div>
-
-                        <div @if.set={props.allPackages} class="service-provider__packages">
-                            <h2>Neos packages</h2>
-                            <ul>
-                                <Neos.Fusion:Loop items={props.allPackages} itemName="package">
-                                    <li @if.notAbandoned={!q(package).property('abandoned')}>
-                                        <a href={q(package).property('repository')}
-                                           title="Repository"
-                                           target="_blank"
-                                           rel="noreferrer noopener">
-                                            {q(package).property('title')}
-                                        </a> &nbsp;
-                                        <i class="fa fa-download"></i> {q(package).property('downloadTotal')} &nbsp;
-                                        <i class="fa fa-star"></i> {q(package).property('favers')}
-                                    </li>
-                                </Neos.Fusion:Loop>
-                            </ul>
+                        <div class="service-provider__contributions">
+                            <div @if.set={props.allPackages} class="service-provider__packages">
+                                <h2>Neos packages</h2>
+                                <ul>
+                                    <Neos.Fusion:Loop items={props.allPackages} itemName="package">
+                                        <li @if.notAbandoned={!q(package).property('abandoned')}>
+                                            <a href={q(package).property('repository')}
+                                               title="Repository"
+                                               target="_blank"
+                                               rel="noreferrer noopener">
+                                                {q(package).property('title')}
+                                            </a> &nbsp;
+                                            <i class="fa fa-download"></i> {q(package).property('downloadTotal')} &nbsp;
+                                            <i class="fa fa-star"></i> {q(package).property('favers')}
+                                        </li>
+                                    </Neos.Fusion:Loop>
+                                </ul>
+                                <div @if.hasVendor={props.githubName}>
+                                    More on <a href={'http://github.com/' + props.githubName} target="_blank" rel="noopener noreferrer">Github</a>
+                                    &nbsp;<i class="fa fa-github"></i>
+                                </div>
+                            </div>
+                            <div @if.set={props.fundingPlatformName && props.fundingBadges} class="service-provider__sponsorships">
+                                <h2>Funding badges</h2>
+                                <ul>
+                                    <Neos.Fusion:Loop items={props.fundingBadges} itemName="fundingBadge">
+                                        <li>{fundingBadge.badgeType} ({fundingBadge.startDate} - {fundingBadge.endDate})</li>
+                                    </Neos.Fusion:Loop>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 `
