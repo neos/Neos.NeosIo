@@ -8,6 +8,7 @@
     label: 'Service Provider'
     icon: 'address-card'
     inlineEditable: true
+    group: serviceOfferings
     inspector:
       groups:
         properties:
@@ -68,7 +69,7 @@
           minimum: 1
           maximum: 500
     typesOfService:
-      type: array
+      type: references
       options:
         showInCreationDialog: true
       ui:
@@ -76,22 +77,11 @@
         reloadIfChanged: true
         inspector:
           group: properties
-          editor: Content/Inspector/Editors/SelectBoxEditor
-          placeholder: 'Select Services'
+          placeholder: 'Select services'
           editorOptions:
             multiple: true
-            allowEmpty: false
-            values:
-              hosting:
-                label: 'Hosting'
-              consulting:
-                label: 'Consulting'
-              development:
-                label: 'Development'
-              design:
-                label: 'Design, Concept'
-              freelance:
-                label: 'Freelancer'
+            nodeTypes:
+              - 'Neos.NeosIo.ServiceOfferings:Document.ServiceType'
     size:
       type: string
       options:

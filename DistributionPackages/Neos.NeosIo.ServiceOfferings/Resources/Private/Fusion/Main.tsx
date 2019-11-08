@@ -14,8 +14,6 @@ if (providerListing) {
     const providerData: Provider[] = JSON.parse(providerListing.dataset.providerData);
     shuffleArray(providerData);
 
-    console.log(providerData);
-
     render(
         (
             <ProviderData.Provider value={providerData}>

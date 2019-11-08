@@ -20,7 +20,10 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
                 zipcode = ${q(serviceProvider).property('zipcode') || ''}
                 city = ${q(serviceProvider).property('city') || ''}
                 country = ${q(serviceProvider).property('country')}
-                typesOfService = ${q(serviceProvider).property('typesOfService') || []}
+                typesOfService = Neos.Fusion:Map {
+                    items = ${q(serviceProvider).property('typesOfService') || []}
+                    itemRenderer = ${item.label}
+                }
                 size = ${q(serviceProvider).property('size') || ''}
                 url = Neos.Neos:NodeUri {
                     node = ${serviceProvider}

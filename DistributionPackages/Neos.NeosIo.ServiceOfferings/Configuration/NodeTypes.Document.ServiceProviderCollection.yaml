@@ -4,8 +4,15 @@
   ui:
     label: 'Service Provider Collection'
     icon: 'address-card'
+    group: serviceOfferings
   constraints:
     nodeTypes:
       'Neos.Neos:Document': false
       'Neos.MarketPlace:RepositoryStorage': false
       'Neos.NeosIo.ServiceOfferings:Document.ServiceProvider': true
+      'Neos.NeosIo.ServiceOfferings:Document.ServiceType': true
+  childNodes:
+    main:
+      type: 'Neos.Neos:ContentCollection'
+    bottom:
+      type: 'Neos.Neos:ContentCollection'
