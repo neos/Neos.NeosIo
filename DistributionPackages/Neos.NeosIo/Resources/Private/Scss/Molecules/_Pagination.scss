@@ -1,3 +1,24 @@
 .search-results__navigation {
   clear: both;
 }
+
+.paginator {
+  display: flex;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+
+  > li {
+    list-style: none;
+    align-items: center;
+    margin: 0 1em;
+  }
+
+  &__current {
+    background-color: #bbbbbb;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    padding: 0.3em 0.6em;
+  }
+}
