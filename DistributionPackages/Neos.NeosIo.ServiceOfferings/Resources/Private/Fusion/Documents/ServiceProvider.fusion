@@ -116,7 +116,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                                      <span>Number of employees: {props.size}</span>
                                      <ul>
                                          <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
-                                             <li>{String.firstLetterToUpperCase(service)}</li>
+                                             <li>{service.label}</li>
                                          </Neos.Fusion:Loop>
                                      </ul>
                                  </div>

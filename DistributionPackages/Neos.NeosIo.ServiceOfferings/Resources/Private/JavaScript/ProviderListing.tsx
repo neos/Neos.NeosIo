@@ -8,6 +8,7 @@ import {sortObjects} from "./Helper/Sorter";
 export default function ProviderListing() {
     const providerData: Provider[] = useContext(ProviderData);
 
+    // Filter entries
     const countries: string[] = useMemo(() => providerData.reduce((carry: string[], provider: Provider) => {
         carry.push(provider.country);
         return carry;
@@ -17,12 +18,14 @@ export default function ProviderListing() {
         return carry;
     }, []).filter((v, i, a) => v && a.indexOf(v) === i), [providerData]);
 
+    // State hooks
     const [searchWord, setSearchWord] = useState('');
     const [countryFilter, setCountryFilter] = useState('');
     const [sizeFilter, setSizeFilter] = useState('');
     const [sorting, setSorting] = useState('');
     const [providers, setProviders] = useState(providerData);
 
+    // Callbacks
     const search = (word: string) => setSearchWord(word.toLowerCase());
     const filterByCountry = (country: string) => setCountryFilter(country);
     const filterBySize = (size: string) => setSizeFilter(size);
@@ -44,7 +47,7 @@ export default function ProviderListing() {
         <div>
             <div class="form form--inline">
                 <div className="form__item">
-                    <label for="service-provider-search"><i class="fa fa-search"></i></label>
+                    <label for="service-provider-search"><i class="fa fa-search"/></label>
                     <input type="text"
                            id="service-provider-search"
                            placeholder="Search..."
@@ -75,7 +78,7 @@ export default function ProviderListing() {
                     <tr>
                         <th>
                             <span class="service-providers__header service-providers__header--sortable"
-                                  onClick={() => sortBy('name')}>Name</span>
+                                  onClick={() => sortBy('title')}>Name</span>
                         </th>
                         <th>
                             <span class="service-providers__header service-providers__header--sortable"
@@ -91,7 +94,9 @@ export default function ProviderListing() {
                     </tr>
                 </thead>
                 <tbody>
-                    {providers.map(provider => <ProviderListEntry provider={provider}/>)}
+                    {providers.length ? providers.map(provider => <ProviderListEntry provider={provider}/>) : (
+                        <tr><td colspan="4">No matching providers found</td></tr>
+                    )}
                 </tbody>
             </table>
         </div>
