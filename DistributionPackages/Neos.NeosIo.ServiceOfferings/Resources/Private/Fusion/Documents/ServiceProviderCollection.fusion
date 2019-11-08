@@ -1,25 +1,35 @@
 prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection) < prototype(Neos.NeosIo:DefaultPage) {
     body {
         content {
-            main  = Neos.Fusion:Component {
-                serviceProviders = ${q(node).children('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]').get()}
+            main = Neos.Fusion:Join {
+                top = Neos.Neos:PrimaryContent {
+                    nodePath = 'main'
+                }
 
-                renderer = Neos.Fusion:Component {
-                    @apply.props = ${props}
+                listing  = Neos.Fusion:Component {
+                    serviceProviders = ${q(node).children('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]').get()}
 
-                    mapData = Neos.NeosIo.ServiceOfferings:Component.MapData {
-                        serviceProviders = ${props.serviceProviders}
+                    renderer = Neos.Fusion:Component {
+                        @apply.props = ${props}
+
+                        mapData = Neos.NeosIo.ServiceOfferings:Component.MapData {
+                            serviceProviders = ${props.serviceProviders}
+                        }
+
+                        renderer = afx`
+                            <div class="service-provider-collection">
+                                <WebExcess.OpenStreetMap:Map.Component
+                                        json={Json.stringify(props.mapData)}
+                                        mapHooks.addMarkersLayerHook="clusterMarkersHook"
+                                />
+                                <Neos.NeosIo.ServiceOfferings:Component.ProviderList serviceProviders={props.serviceProviders}/>
+                            </div>
+                        `
                     }
+                }
 
-                    renderer = afx`
-                        <div class="service-provider-collection">
-                            <WebExcess.OpenStreetMap:Map.Component
-                                    json={Json.stringify(props.mapData)}
-                                    mapHooks.addMarkersLayerHook="clusterMarkersHook"
-                            />
-                            <Neos.NeosIo.ServiceOfferings:Component.ProviderList serviceProviders={props.serviceProviders}/>
-                        </div>
-                    `
+                bottom = Neos.Neos:ContentCollection {
+                    nodePath = 'bottom'
                 }
             }
         }
