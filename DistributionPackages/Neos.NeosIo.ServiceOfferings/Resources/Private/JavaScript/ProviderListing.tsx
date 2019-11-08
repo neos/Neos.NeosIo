@@ -3,6 +3,7 @@ import * as React from "preact/compat";
 import {useContext, useState, useEffect, useMemo} from "preact/hooks";
 import ProviderData from "./Context/ProviderData";
 import ProviderListEntry from "./Components/ProviderListEntry";
+import {sortObjects} from "./Helper/Sorter";
 
 export default function ProviderListing() {
     const providerData: Provider[] = useContext(ProviderData);
@@ -19,20 +20,25 @@ export default function ProviderListing() {
     const [searchWord, setSearchWord] = useState('');
     const [countryFilter, setCountryFilter] = useState('');
     const [sizeFilter, setSizeFilter] = useState('');
+    const [sorting, setSorting] = useState('');
     const [providers, setProviders] = useState(providerData);
 
-    const search = (value: string) => setSearchWord(value.toLowerCase());
-    const filterByCountry = (value: string) => setCountryFilter(value);
-    const filterBySize = (value: string) => setSizeFilter(value);
+    const search = (word: string) => setSearchWord(word.toLowerCase());
+    const filterByCountry = (country: string) => setCountryFilter(country);
+    const filterBySize = (size: string) => setSizeFilter(size);
+    const sortBy = (property: string) => setSorting(property);
 
     useEffect(() => {
-        const filteredProviders = providerData.filter(provider => {
+        let filteredProviders = providerData.filter(provider => {
             return (!searchWord || provider.title.toLowerCase().includes(searchWord))
                 && (!countryFilter || provider.country == countryFilter)
                 && (!sizeFilter || provider.size == sizeFilter);
         });
+        if (sorting) {
+            filteredProviders = sortObjects(filteredProviders, sorting);
+        }
         setProviders(filteredProviders);
-    }, [searchWord, countryFilter, sizeFilter]);
+    }, [searchWord, countryFilter, sizeFilter, sorting]);
 
     return (
         <div>
@@ -67,10 +73,21 @@ export default function ProviderListing() {
             <table>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Services</th>
-                        <th>Size</th>
+                        <th>
+                            <span class="service-providers__header service-providers__header--sortable"
+                                  onClick={() => sortBy('name')}>Name</span>
+                        </th>
+                        <th>
+                            <span class="service-providers__header service-providers__header--sortable"
+                                  onClick={() => sortBy('country')}>Location</span>
+                        </th>
+                        <th>
+                            <span class="service-providers__header">Services</span>
+                        </th>
+                        <th>
+                            <span class="service-providers__header service-providers__header--sortable"
+                                  onClick={() => sortBy('size')}>Size</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
