@@ -97,11 +97,11 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                                         </li>
                                         <li @if.set={props.website}>
                                             <i class="fa fa-home"></i>&nbsp;
-                                            <a href={props.website} target="_blank">Website</a>
+                                            <a href={props.website} target="_blank" rel="noopener">Website</a>
                                         </li>
                                         <li @if.set={props.phone}>
                                             <i class="fa fa-phone"></i>&nbsp;
-                                            <a href={'tel:' + props.phone} target="_blank">{props.phone}</a>
+                                            <a href={'tel:' + props.phone} target="_blank" rel="noopener">{props.phone}</a>
                                         </li>
                                     </ul>
 
