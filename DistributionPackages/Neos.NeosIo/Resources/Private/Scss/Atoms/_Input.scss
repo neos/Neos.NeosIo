@@ -23,7 +23,11 @@ input {
 	&::-webkit-datetime-edit {
 		margin-top: -.17em;
 		margin-bottom: -.17em;
-	}
+  }
+
+  &[type="search"] {
+    box-sizing: border-box;
+  }
 
 	// Base styling for checkboxes and radio buttons.
 	&[type="checkbox"],
