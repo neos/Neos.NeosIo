@@ -1,0 +1,42 @@
+prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.Fusion:Component) {
+    serviceProviders = ${[]}
+
+    renderer = Neos.Fusion:Component {
+        @apply.props = ${props}
+
+        serviceProvidersData = Neos.Fusion:Map {
+            items = ${props.serviceProviders}
+            itemName = 'serviceProvider'
+            itemRenderer = Neos.Fusion:DataStructure {
+                identifier = ${serviceProvider.identifier}
+                title = ${q(serviceProvider).property('title')}
+                description = ${q(serviceProvider).property('description') || ''}
+                website = ${q(serviceProvider).property('website') || ''}
+                logo = Neos.Neos:ImageUri {
+                    asset = ${q(serviceProvider).property('logo')}
+                    @if.hasLogo = ${q(serviceProvider).property('logo')}
+                }
+                street = ${q(serviceProvider).property('street') || ''}
+                zipcode = ${q(serviceProvider).property('zipcode') || ''}
+                city = ${q(serviceProvider).property('city') || ''}
+                country = ${q(serviceProvider).property('country')}
+                typesOfService = Neos.Fusion:Map {
+                    items = ${q(serviceProvider).property('typesOfService') || []}
+                    itemRenderer = ${item.label}
+                }
+                size = ${q(serviceProvider).property('size') || ''}
+                url = Neos.Neos:NodeUri {
+                    node = ${serviceProvider}
+                }
+                latitude = ${q(serviceProvider).property('latitude') || 0}
+                longitude = ${q(serviceProvider).property('longitude') || 0}
+            }
+        }
+
+        renderer = afx`
+            <div class="service-providers__list" id="service-providers-listing"
+                 data-provider-data={Json.stringify(props.serviceProvidersData)}>
+            </div>
+        `
+    }
+}

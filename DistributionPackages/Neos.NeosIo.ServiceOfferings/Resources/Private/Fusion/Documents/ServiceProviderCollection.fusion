@@ -1,86 +1,35 @@
 prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection) < prototype(Neos.NeosIo:DefaultPage) {
     body {
         content {
-            main  = Neos.Fusion:Component {
-                serviceProviders = ${q(node).children('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
+            main = Neos.Fusion:Join {
+                top = Neos.Neos:PrimaryContent {
+                    nodePath = 'main'
+                }
 
-                renderer = Neos.Fusion:Component {
-                    @apply.props = ${props}
+                listing  = Neos.Fusion:Component {
+                    serviceProviders = ${q(node).children('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]').get()}
 
-                    serviceProvidersData = Neos.Fusion:Map {
-                        items = ${props.serviceProviders}
-                        itemName = 'serviceProvider'
-                        itemRenderer = Neos.Fusion:DataStructure {
-                            title = ${q(serviceProvider).property('title')}
-                            description = ${q(serviceProvider).property('description') || ''}
-                            website = ${q(serviceProvider).property('website') || ''}
-                            logo = Neos.Neos:ImageUri {
-                                asset = ${q(serviceProvider).property('logo')}
-                                @if.hasLogo = ${q(serviceProvider).property('logo')}
-                            }
-                            typesOfService = ${q(node).property('typesOfService') || []}
-                            showCases = ${Array.length(q(node).property('showCases') || [])}
-                            caseStudies = ${Array.length(q(node).property('caseStudies') || [])}
-                            packages = ${Array.length(q(node).property('packages') || [])}
-                            vendors = ${Array.length(q(node).property('vendors') || [])}
-                            badges = ${Array.length(q(node).property('badges') || [])}
+                    renderer = Neos.Fusion:Component {
+                        @apply.props = ${props}
+
+                        mapData = Neos.NeosIo.ServiceOfferings:Component.MapData {
+                            serviceProviders = ${props.serviceProviders}
                         }
+
+                        renderer = afx`
+                            <div class="service-provider-collection">
+                                <WebExcess.OpenStreetMap:Map.Component
+                                        json={Json.stringify(props.mapData)}
+                                        mapHooks.addMarkersLayerHook="clusterMarkersHook"
+                                />
+                                <Neos.NeosIo.ServiceOfferings:Component.ProviderList serviceProviders={props.serviceProviders}/>
+                            </div>
+                        `
                     }
+                }
 
-                    mapData = Neos.Fusion:Map {
-                        items = ${q(props.serviceProviders).filter('[latitude != ""][longitude != ""]').get()}
-                        itemName = 'serviceProvider'
-                        itemRenderer = Neos.Fusion:DataStructure {
-                            type = 'Feature'
-                            properties = Neos.Fusion:DataStructure {
-                                tooltip = ${serviceProvider.label}
-                                popup = afx`
-                                    <h4>{serviceProvider.label}</h4>
-                                    <p @if.set={q(serviceProvider).property('description')}>{q(serviceProvider).property('description')}</p>
-                                    <address @if.set={q(serviceProvider).property('street')}>
-                                        {q(serviceProvider).property('street')}<br/>
-                                        {q(serviceProvider).property('zipcode')} {q(serviceProvider).property('city')}
-                                    </address>
-                                    <div @if.set={q(serviceProvider).property('website')}>
-                                        <i class="fa fa-home"></i>&nbsp;
-                                        <a href={q(serviceProvider).property('website')} target="_blank">Website</a>
-                                    </div>
-                                    <div @if.set={q(serviceProvider).property('email')}>
-                                        <i class="fa fa-envelope-square"></i>&nbsp;
-                                        <a href={'mailto:' + q(serviceProvider).property('email')}>Email</a>
-                                    </div>
-                                    <div @if.set={q(serviceProvider).property('phone')}>
-                                        <i class="fa fa-phone"></i>&nbsp;
-                                        <a href={'tel:' + q(serviceProvider).property('phone')} target="_blank">{q(serviceProvider).property('phone')}</a>
-                                    </div>
-                                    <Neos.Neos:NodeLink node={serviceProvider} attributes.class="service-provider-popup__more">Read more</Neos.Neos:NodeLink>
-                                `
-                            }
-                            geometry = Neos.Fusion:DataStructure {
-                                type = 'Point'
-                                coordinates = ${[String.toFloat(q(serviceProvider).property('longitude')), String.toFloat(q(serviceProvider).property('latitude'))]}
-                            }
-                        }
-                    }
-
-                    renderer = afx`
-                        <div class="service-provider-collection" data-providerData={Json.stringify(props.serviceProvidersData)}>
-                            <ul>
-                                <Neos.Fusion:Loop items={props.serviceProviders} itemName="serviceProvider">
-                                    <li>
-                                        <Neos.Neos:NodeLink node={serviceProvider}>
-                                            {q(serviceProvider).property('title')}
-                                        </Neos.Neos:NodeLink>
-                                    </li>
-                                </Neos.Fusion:Loop>
-                            </ul>
-
-                            <WebExcess.OpenStreetMap:Map.Component
-                                    json={Json.stringify(props.mapData)}
-                                    mapHooks.addMarkersLayerHook="clusterMarkersHook"
-                            />
-                        </div>
-                    `
+                bottom = Neos.Neos:ContentCollection {
+                    nodePath = 'bottom'
                 }
             }
         }

@@ -8,6 +8,7 @@
     label: 'Service Provider'
     icon: 'address-card'
     inlineEditable: true
+    group: serviceOfferings
     inspector:
       groups:
         properties:
@@ -30,6 +31,24 @@
         inspector:
           group: properties
           position: 10
+    bannerImage:
+      type: Neos\Media\Domain\Model\ImageInterface
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Banner image'
+        reloadIfChanged: true
+        inspector:
+          group: properties
+          position: 'after logo'
+          editorOptions:
+            crop:
+              aspectRatio:
+                forceCrop: true
+                locked:
+                  width: 1920
+                  height: 480
+
     description:
       type: string
       options:
@@ -50,7 +69,7 @@
           minimum: 1
           maximum: 500
     typesOfService:
-      type: array
+      type: references
       options:
         showInCreationDialog: true
       ui:
@@ -58,19 +77,32 @@
         reloadIfChanged: true
         inspector:
           group: properties
-          editor: Content/Inspector/Editors/SelectBoxEditor
-          placeholder: 'Select Services'
+          placeholder: 'Select services'
           editorOptions:
             multiple: true
+            nodeTypes:
+              - 'Neos.NeosIo.ServiceOfferings:Document.ServiceType'
+    size:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Size (number of employees)'
+        reloadIfChanged: true
+        inspector:
+          group: properties
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          placeholder: 'Select size'
+          editorOptions:
             allowEmpty: false
             values:
-              hosting:
-                label: 'Hosting'
-              consulting:
-                label: 'Consulting'
-              development:
-                label: 'Development'
-              design:
-                label: 'Design, Concept'
-              freelance:
-                label: 'Freelancer'
+              '1':
+                label: 'Single person / Freelancer'
+              '2-10':
+                label: 'Small agency 2-10'
+              '11-50':
+                label: 'Medium agency 11-50'
+              '51-100':
+                label: 'Large agency 51-100'
+              '100+':
+                label: 'Big agency 100+'

@@ -1,0 +1,21 @@
+'Neos.NeosIo.ServiceOfferings:Document.ServiceType':
+  superTypes:
+    'Neos.Neos:Shortcut': true
+    'Yoast.YoastSeoForNeos:Mixin.SEO': false
+    'Yoast.YoastSeoForNeos:Mixin.Analysis': false
+  ui:
+    label: 'Service Provider - Service Type'
+    icon: 'tag'
+    group: serviceOfferings
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.Neos:Document': false
+      'Neos.MarketPlace:RepositoryStorage': false
+  properties:
+    _hiddenInIndex:
+      defaultValue: true
+      ui: {}
+    targetMode:
+      defaultValue: parentNode
+      ui: {}
