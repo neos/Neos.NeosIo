@@ -9,8 +9,10 @@ interface Provider {
     city: string
     zipcode: string
     country: string
-    size: number
+    size: string
     url: string
+    latitude: number
+    longitude: number
     // "showCases": 0,
     // "caseStudies": 0,
     // "packages": 0,

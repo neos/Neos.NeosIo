@@ -25,6 +25,8 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
                 url = Neos.Neos:NodeUri {
                     node = ${serviceProvider}
                 }
+                latitude = ${q(serviceProvider).property('latitude') || 0}
+                longitude = ${q(serviceProvider).property('longitude') || 0}
             }
         }
 
