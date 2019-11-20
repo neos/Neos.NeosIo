@@ -127,24 +127,6 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                              </div>
                         </section>
 
-                        <section @if.set={props.caseStudies} class="service-provider__casestudies">
-                            <h2>Casestudies</h2>
-                            <ul>
-                                <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
-                                    <li>{caseStudy.title}</li>
-                                </Neos.Fusion:Loop>
-                            </ul>
-                        </section>
-
-                        <section @if.set={props.showCases} class="service-provider__showcases">
-                            <h2>Showcases</h2>
-                            <div class="references__list g">
-                                <Neos.Fusion:Loop items={props.showCases} itemName="showCase">
-                                    <Neos.NeosIo:Reference.List.Item @context.node={showCase}/>
-                                </Neos.Fusion:Loop>
-                            </div>
-                        </section>
-
                         <section class="service-provider__contributions">
                             <div @if.set={props.allPackages} class="service-provider__packages">
                                 <h2>Neos packages</h2>
@@ -185,6 +167,24 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                                         </Neos.Fusion:Loop>
                                     </div>
                                 </div>
+                            </div>
+                        </section>
+
+                        <section @if.set={props.caseStudies} class="service-provider__casestudies">
+                            <h2>Casestudies</h2>
+                            <ul>
+                                <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
+                                    <li>{caseStudy.title}</li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </section>
+
+                        <section @if.set={props.showCases} class="service-provider__showcases">
+                            <h2>Showcases</h2>
+                            <div class="references__list g">
+                                <Neos.Fusion:Loop items={props.showCases} itemName="showCase">
+                                    <Neos.NeosIo:Reference.List.Item @context.node={showCase}/>
+                                </Neos.Fusion:Loop>
                             </div>
                         </section>
                     </div>
