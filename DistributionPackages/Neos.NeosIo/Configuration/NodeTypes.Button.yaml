@@ -7,6 +7,7 @@
   superTypes:
     'Neos.Neos:Content': true
     'Neos.NodeTypes:LinkMixin': true
+    'Neos.NeosIo:Mixin.ButtonStyles': true
   ui:
     label: Button
     icon: icon-link
@@ -37,45 +38,3 @@
         label: 'Scroll to Content-Area when clicked'
         inspector:
           group: content
-    alignment:
-      type: string
-      defaultValue: inline
-      ui:
-        label: 'Button Alignment'
-        reloadIfChanged: true
-        inspector:
-          group: appearance
-          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
-          editorOptions:
-            values:
-              inline:
-                label: 'Inline (Default)'
-              Left:
-                label: Left
-              Center:
-                label: Center
-              Right:
-                label: Right
-    style:
-      type: string
-      defaultValue: btn--primary
-      ui:
-        label: 'Color of the Button'
-        reloadIfChanged: true
-        inspector:
-          editor: Content/Inspector/Editors/SelectBoxEditor
-          group: appearance
-          editorOptions:
-            values:
-              btn--primary:
-                label: Primary
-              btn--solidPrimary:
-                label: 'Primary (Solid)'
-              btn--secondary:
-                label: Secondary
-              btn--solidSecondary:
-                label: 'Secondary (Solid)'
-              btn--bright:
-                label: Bright
-              btn--solidBright:
-                label: 'Bright (Solid)'
