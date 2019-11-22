@@ -3,7 +3,7 @@ export enum SortDirection {
     Desc,
 }
 
-export function sortObjects(objects: Array<any>, propertyName: string, sortDirection?: SortDirection): Array<any> {
+export function sortObjects(objects: Array<any>, propertyName: string, sortDirection?: SortDirection, valueMapping?: Object): Array<any> {
     const sortedObjects = objects.sort((a, b) => {
         let x = a[propertyName];
         if (typeof x === 'string') {
@@ -16,6 +16,10 @@ export function sortObjects(objects: Array<any>, propertyName: string, sortDirec
             y = y.toLowerCase();
         } else if (y === null) {
             y = '';
+        }
+        if (valueMapping) {
+            x = valueMapping[x];
+            y = valueMapping[y];
         }
         return x < y ? -1 : x > y ? 1 : 0;
     });

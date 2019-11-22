@@ -1,9 +1,18 @@
 import {h} from 'preact';
 import * as React from "preact/compat";
-import {useContext, useState, useEffect, useMemo} from "preact/hooks";
+import {useContext, useEffect, useMemo, useState} from "preact/hooks";
 import ProviderData from "./Context/ProviderData";
 import ProviderListEntry from "./Components/ProviderListEntry";
-import {sortObjects} from "./Helper/Sorter";
+import {SortDirection, sortObjects} from "./Helper/Sorter";
+
+const sizeValueMap = {
+    '': 99,
+    '1': 1,
+    '2-10': 2,
+    '11-50': 3,
+    '51-100': 4,
+    '100+': 4
+};
 
 export default function ProviderListing() {
     const providerData: Provider[] = useContext(ProviderData);
@@ -38,7 +47,12 @@ export default function ProviderListing() {
                 && (!sizeFilter || provider.size == sizeFilter);
         });
         if (sorting) {
-            filteredProviders = sortObjects(filteredProviders, sorting);
+            filteredProviders = sortObjects(
+                filteredProviders,
+                sorting,
+                SortDirection.Asc,
+                sorting === 'size' ? sizeValueMap : null
+            );
         }
         setProviders(filteredProviders);
     }, [searchWord, countryFilter, sizeFilter, sorting]);
