@@ -163,7 +163,14 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                                     <h2>Sponsorship badges</h2>
                                     <div class="service-provider__badge-wrap">
                                         <Neos.Fusion:Loop items={props.badges} itemName="badge">
-                                            <Neos.Neos:ImageTag asset={q(badge).property('image')} attributes.alt={q(badge).property('description')}/>
+                                            <div>
+                                                <Neos.Neos:ImageTag
+                                                    asset={q(badge).property('image')}
+                                                    attributes.width={120}
+                                                    attributes.height={180}
+                                                    attributes.alt={q(badge).property('description')}
+                                                />
+                                            </div>
                                         </Neos.Fusion:Loop>
                                     </div>
                                 </div>

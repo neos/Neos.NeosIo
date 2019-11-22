@@ -43,11 +43,16 @@
 
   &__badge-wrap {
     display: flex;
+    flex-wrap: wrap;
+
+    > * {
+      flex: 1;
+      margin-right: 10px;
+    }
 
     img {
-      flex: 1;
       max-width: 120px;
-      margin-right: 10px;
+      height: auto;
     }
   }
 }
