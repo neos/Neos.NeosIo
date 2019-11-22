@@ -109,7 +109,7 @@ export default function ProviderListing() {
                 </thead>
                 <tbody>
                     {providers.length ? providers.map(provider => <ProviderListEntry provider={provider}/>) : (
-                        <tr><td colspan="4">No matching providers found</td></tr>
+                        <tr><td colSpan={4}>No matching providers found</td></tr>
                     )}
                 </tbody>
             </table>
