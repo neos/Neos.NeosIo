@@ -2,7 +2,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Packages) < prototype(
     packages = ${[]}
     githubName = ''
 
-    @if.hasPackages = ${this.packages}
+    @if.hasPackages = ${Type.isArray(this.packages) && Array.length(this.packages)}
 
     renderer = afx`
         <div class="service-provider__packages">

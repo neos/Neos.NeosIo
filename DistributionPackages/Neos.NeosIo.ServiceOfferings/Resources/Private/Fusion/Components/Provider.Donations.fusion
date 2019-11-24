@@ -5,7 +5,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Donations) < prototype
 
     renderer = afx`
         <div class="service-provider__donations">
-            <div @if.set={props.fundingPlatformName && props.fundingBadges} class="service-provider__sponsorships">
+            <div @if.set={props.fundingPlatformName && Type.isArray( props.fundingBadges) && Array.length( props.fundingBadges)} class="service-provider__sponsorships">
                 <h2>Funding badges</h2>
                 <ul>
                     <Neos.Fusion:Loop items={props.fundingBadges} itemName="fundingBadge">
@@ -14,7 +14,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Donations) < prototype
                 </ul>
             </div>
 
-            <div @if.set={props.badges} class="service-provider__badges">
+            <div @if.set={Type.isArray(props.badges) && Array.length(props.badges)} class="service-provider__badges">
                 <h2>Sponsorship badges</h2>
                 <div class="service-provider__badge-wrap">
                     <Neos.Fusion:Loop items={props.badges} itemName="badge">
