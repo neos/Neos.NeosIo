@@ -1,0 +1,35 @@
+prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Contact) < prototype(Neos.Fusion:Component) {
+    email = ''
+    website = ''
+    phone = ''
+    street = ''
+    city = ''
+    zipcode = ''
+    country = ''
+
+    renderer = afx`
+        <div class="service-provider__contact">
+            <h2>Contact</h2>
+
+            <ul>
+                <li @if.set={props.email}>
+                    <i class="fas fa-envelope-square"></i>&nbsp;
+                    <a href={'mailto:' + props.email}>Email</a>
+                </li>
+                <li @if.set={props.website}>
+                    <i class="fas fa-home"></i>&nbsp;
+                    <a href={props.website} target="_blank" rel="noopener">Website</a>
+                </li>
+                <li @if.set={props.phone}>
+                    <i class="fas fa-phone"></i>&nbsp;
+                    <a href={'tel:' + props.phone} target="_blank" rel="noopener">{props.phone}</a>
+                </li>
+            </ul>
+
+            <address @if.set={props.street || props.city} class="service-provider__address">
+                {props.street}<br/>
+                {props.zipcode} {props.city} - {props.country}
+            </address>
+        </div>
+    `
+}

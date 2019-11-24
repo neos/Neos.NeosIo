@@ -19,7 +19,7 @@ prototype(Neos.NeosIo.FeatureList:Molecule.Feature) < prototype(Neos.Fusion:Comp
 				<img src={props._neosAvatarUrl} @if.isCoreFeature={props.featureData.isCoreFeature} alt="" title="Neos Core Feature" />
 			</div>
 			<div class="feature__community">
-				<i class="fa fa-users" @if.isCommunityFeature={props.featureData.isCommunityFeature} title="Community Feature"></i>
+				<i class="fas fa-users" @if.isCommunityFeature={props.featureData.isCommunityFeature} title="Community Feature"></i>
 			</div>
 			<div class="feature__description">{props.featureData.description}</div>
 			<div class="feature__links" @if.has={props.featureData.links}>

@@ -1,0 +1,13 @@
+prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Map) < prototype(Neos.Fusion:Component) {
+    address = ''
+    lat = ''
+    lon = ''
+
+    @if.hasLocation = ${this.lat && this.lon}
+
+    renderer = afx`
+        <div class="service-provider__map">
+            <WebExcess.OpenStreetMap:Map.Component {...props}/>
+        </div>
+    `
+}
