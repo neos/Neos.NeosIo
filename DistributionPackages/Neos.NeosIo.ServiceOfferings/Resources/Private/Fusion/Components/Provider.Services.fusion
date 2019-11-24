@@ -2,7 +2,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Services) < prototype(
     typesOfService = ${[]}
     size = ''
 
-    @if.hasServices = ${this.typesOfService}
+    @if.hasServices = ${Type.isArray(this.typesOfService) && Array.length(this.typesOfService)}
 
     sizeIcons = Neos.Fusion:DataStructure {
         '1' = 'user'

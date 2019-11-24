@@ -27,7 +27,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Contact) < prototype(N
             </ul>
 
             <address @if.set={props.street || props.city} class="service-provider__address">
-                {props.street}<br/ @if.set={props.street}>
+                {props.street}<br @if.set={props.street}/>
                 {props.zipcode} {props.city}{props.country ? ' - ' + props.country : null}
             </address>
         </div>
