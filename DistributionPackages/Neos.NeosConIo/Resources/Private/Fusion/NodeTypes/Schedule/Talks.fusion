@@ -17,7 +17,7 @@ prototype(Neos.NeosConIo:Schedule.Talks) < prototype(Neos.Fusion:Component) {
             <div data-date={Date.format(q(talk).property('talkDate'), 'y-m-d')} data-room-id={talk.properties.room.identifier} class={"talk " + (talk.properties.room.identifier ? 'talk--room' + q(talk.properties.room).prevAll().count() + ' talk--totalRooms' + Array.length(props.rooms) : 'talk--fullWidthBecauseNoRoom talk--totalRooms' + Array.length(props.rooms))}>
                 <header class="talk__header">
                     <div class="talk__time">
-                        <i class="fa fa-clock-o"></i>
+                        <i class="fas fa-clock"></i>
                         {Date.format(Neos.NeosConIo.Date.timezone(q(talk).property('talkDate'), 'Europe/Berlin'), 'G:i')}
                     </div>
 

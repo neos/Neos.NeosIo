@@ -1,11 +1,11 @@
 <h1>{title}</h1>
 {imageTag -> f:format.raw()}
 <ul>
-	<f:if condition="{launchDate}"><li><i class="fa fa-rocket"></i> <f:format.date format="d.m.Y">{launchDate}</f:format.date></li></f:if>
+	<f:if condition="{launchDate}"><li><i class="fas fa-rocket"></i> <f:format.date format="d.m.Y">{launchDate}</f:format.date></li></f:if>
 
 	<f:if condition="{projectVolume}">
 			<li>
-				<i class="fa fa-users"></i>
+				<i class="fas fa-users"></i>
 				<f:if condition="{projectVolume} == 5">
 					< 100h
 				</f:if>
@@ -24,6 +24,6 @@
 			</li>
 	</f:if>
 
-	<f:if condition="{projectType}"><li><i class="fa fa-industry"></i> {projectType}</li></f:if>
+	<f:if condition="{projectType}"><li><i class="fas fa-industry"></i> {projectType}</li></f:if>
 </ul>
 </footer>

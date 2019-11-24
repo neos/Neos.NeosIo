@@ -1,11 +1,11 @@
 <ul{attributes -> f:format.raw()}>
     <f:if condition="{stargazers}">
-        <li class="metrics__item"><i class="fa fa-star"></i> {stargazers}</li>
+        <li class="metrics__item"><i class="fas fa-star"></i> {stargazers}</li>
     </f:if>
     <f:if condition="{forks}">
-        <li class="metrics__item"><i class="fa fa-code-fork"></i> {forks}</li>
+        <li class="metrics__item"><i class="fas fa-code-branch"></i> {forks}</li>
     </f:if>
     <f:if condition="{downloads}">
-        <li class="metrics__item"><i class="fa fa-download"></i> {downloads}</li>
+        <li class="metrics__item"><i class="fas fa-download"></i> {downloads}</li>
     </f:if>
 </ul>
