@@ -1,0 +1,29 @@
+prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Services) < prototype(Neos.Fusion:Component) {
+    typesOfService = ${[]}
+    size = ''
+
+    @if.hasServices = ${Type.isArray(this.typesOfService) && Array.length(this.typesOfService)}
+
+    sizeIcons = Neos.Fusion:DataStructure {
+        '1' = 'user'
+        '2-10' = 'users'
+        '11-50' = 'building'
+        '51-100' = 'industry'
+        '100+' = 'city'
+    }
+
+    renderer = afx`
+        <div class="service-provider__services">
+            <h2>Provided services</h2>
+            <span>
+                <i class={'fas fa-' + props.sizeIcons[props.size]}></i>&nbsp;
+                Number of employees: {props.size}
+            </span>
+            <ul>
+                <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
+                    <li>{service.label}</li>
+                </Neos.Fusion:Loop>
+            </ul>
+        </div>
+    `
+}

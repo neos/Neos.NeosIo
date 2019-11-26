@@ -1,0 +1,30 @@
+prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Packages) < prototype(Neos.Fusion:Component) {
+    packages = ${[]}
+    githubName = ''
+
+    @if.hasPackages = ${Type.isArray(this.packages) && Array.length(this.packages)}
+
+    renderer = afx`
+        <div class="service-provider__packages">
+            <h2>Neos packages</h2>
+            <ul>
+                <Neos.Fusion:Loop items={props.packages} itemName="package">
+                    <li @if.notAbandoned={!q(package).property('abandoned')}>
+                        <a href={q(package).property('repository')}
+                           title="Repository"
+                           target="_blank"
+                           rel="noreferrer noopener">
+                            {q(package).property('title')}
+                        </a> &nbsp;
+                        <i class="fas fa-download"></i> {q(package).property('downloadTotal')} &nbsp;
+                        <i class="fas fa-star"></i> {q(package).property('favers')}
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
+            <div @if.hasVendor={props.githubName}>
+                More on <a href={'http://github.com/' + props.githubName} target="_blank" rel="noopener noreferrer">Github</a>
+                &nbsp;<i class="fab fa-github"></i>
+            </div>
+        </div>
+    `
+}

@@ -3,11 +3,11 @@
 <div class="imageTeaser__contents u-invertText">
 	<h3 class="imageTeaser__contents__heading">{title}</h3>
 	<footer class="references__data">
-		<f:if condition="{launchDate}"><span><i class="fa fa-rocket"></i> <f:format.date format="d.m.Y">{launchDate}</f:format.date></span></f:if>
+		<f:if condition="{launchDate}"><span><i class="fas fa-rocket"></i> <f:format.date format="d.m.Y">{launchDate}</f:format.date></span></f:if>
 
 		<f:if condition="{projectVolume}">
 			<span>
-				<i class="fa fa-users"></i>
+				<i class="fas fa-users"></i>
 				<f:if condition="{projectVolume} == 5">
 					< 100h
 				</f:if>
@@ -26,6 +26,6 @@
 			</span>
 		</f:if>
 
-		<f:if condition="{projectType}"><span><i class="fa fa-industry"></i> {projectType}</span></f:if>
+		<f:if condition="{projectType}"><span><i class="fas fa-industry"></i> {projectType}</span></f:if>
 	</footer>
 </div>

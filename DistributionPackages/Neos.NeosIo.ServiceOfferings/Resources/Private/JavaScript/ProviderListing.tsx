@@ -61,7 +61,7 @@ export default function ProviderListing() {
         <div>
             <div class="form form--inline">
                 <div className="form__item">
-                    <label for="service-provider-search"><i class="fa fa-search"/></label>
+                    <label for="service-provider-search"><i class="fas fa-search"/></label>
                     <input type="text"
                            id="service-provider-search"
                            placeholder="Search..."
@@ -92,18 +92,18 @@ export default function ProviderListing() {
                     <tr>
                         <th>
                             <span class="service-providers__header service-providers__header--sortable"
-                                  onClick={() => sortBy('title')}>Name <i class="fa fa-sort"/></span>
+                                  onClick={() => sortBy('title')}>Name <i class="fas fa-sort"/></span>
                         </th>
                         <th>
                             <span class="service-providers__header service-providers__header--sortable"
-                                  onClick={() => sortBy('country')}>Location <i class="fa fa-sort"/></span>
+                                  onClick={() => sortBy('country')}>Location <i class="fas fa-sort"/></span>
                         </th>
                         <th>
                             <span class="service-providers__header">Services</span>
                         </th>
                         <th>
                             <span class="service-providers__header service-providers__header--sortable"
-                                  onClick={() => sortBy('size')}>Size <i class="fa fa-sort"/></span>
+                                  onClick={() => sortBy('size')}>Size <i class="fas fa-sort"/></span>
                         </th>
                     </tr>
                 </thead>

@@ -17,7 +17,7 @@ export default class ShowMoreComponent {
             wrapperClass: 'show-more',
             targetClass: 'show-more__target',
             buttonClass: 'show-more__button',
-            iconClass: 'fa fa-chevron-down'
+            iconClass: 'fas fa-chevron-down'
         };
     }
 

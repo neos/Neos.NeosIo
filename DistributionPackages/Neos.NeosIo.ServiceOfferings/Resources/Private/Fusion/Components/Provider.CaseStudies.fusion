@@ -1,0 +1,16 @@
+prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.CaseStudies) < prototype(Neos.Fusion:Component) {
+    caseStudies = null
+
+    @if.hasCaseStudies = ${Type.isArray(this.caseStudies) && Array.length(this.caseStudies)}
+
+    renderer = afx`
+        <section class="service-provider__casestudies">
+            <h2>Casestudies</h2>
+            <ul>
+                <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
+                    <li>{caseStudy.title}</li>
+                </Neos.Fusion:Loop>
+            </ul>
+        </section>
+    `
+}
