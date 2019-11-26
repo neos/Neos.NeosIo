@@ -104,7 +104,7 @@ export default function ProviderListing() {
                         </th>
                         <th>
                             <span class="service-providers__header service-providers__header--sortable"
-                                  onClick={() => sortBy('country')}>Location <i class="fas fa-sort"/></span>
+                                  onClick={() => sortBy('city')}>Location <i class="fas fa-sort"/></span>
                         </th>
                         <th>
                             <span class="service-providers__header">Services</span>
