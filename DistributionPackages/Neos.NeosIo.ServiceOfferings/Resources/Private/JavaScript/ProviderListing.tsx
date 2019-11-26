@@ -11,7 +11,7 @@ const sizeValueMap = {
     '2-10': 2,
     '11-50': 3,
     '51-100': 4,
-    '100+': 4
+    '100+': 5
 };
 
 export default function ProviderListing() {
@@ -32,17 +32,25 @@ export default function ProviderListing() {
     const [countryFilter, setCountryFilter] = useState('');
     const [sizeFilter, setSizeFilter] = useState('');
     const [sorting, setSorting] = useState('');
+    const [sortingDirection, setSortingDirection] = useState(SortDirection.Asc);
     const [providers, setProviders] = useState(providerData);
 
     // Callbacks
     const search = (word: string) => setSearchWord(word.toLowerCase());
     const filterByCountry = (country: string) => setCountryFilter(country);
     const filterBySize = (size: string) => setSizeFilter(size);
-    const sortBy = (property: string) => setSorting(property);
+    const sortBy = (property: string) => {
+        if (property !== sorting) {
+            setSortingDirection(SortDirection.Asc);
+            setSorting(property);
+        } else {
+            setSortingDirection(sortingDirection === SortDirection.Asc ? SortDirection.Desc : SortDirection.Asc);
+        }
+    };
 
     useEffect(() => {
         let filteredProviders = providerData.filter(provider => {
-            return (!searchWord || provider.title.toLowerCase().includes(searchWord))
+            return (!searchWord || provider.searchText.includes(searchWord))
                 && (!countryFilter || provider.country == countryFilter)
                 && (!sizeFilter || provider.size == sizeFilter);
         });
@@ -50,12 +58,12 @@ export default function ProviderListing() {
             filteredProviders = sortObjects(
                 filteredProviders,
                 sorting,
-                SortDirection.Asc,
+                sortingDirection,
                 sorting === 'size' ? sizeValueMap : null
             );
         }
         setProviders(filteredProviders);
-    }, [searchWord, countryFilter, sizeFilter, sorting]);
+    }, [searchWord, countryFilter, sizeFilter, sorting, sortingDirection]);
 
     return (
         <div>
@@ -109,7 +117,9 @@ export default function ProviderListing() {
                 </thead>
                 <tbody>
                     {providers.length ? providers.map(provider => <ProviderListEntry provider={provider}/>) : (
-                        <tr><td colSpan={4}>No matching providers found</td></tr>
+                        <tr>
+                            <td colSpan={4}>No matching providers found</td>
+                        </tr>
                     )}
                 </tbody>
             </table>

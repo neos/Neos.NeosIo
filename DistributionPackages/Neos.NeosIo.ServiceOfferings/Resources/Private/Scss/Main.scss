@@ -2,6 +2,10 @@
 @import 'Plugins/WebExcess.OpenStreetMap/Resources/Private/Assets/Main';
 
 .service-provider {
+  section + section {
+    margin-top: 3rem;
+  }
+
   &-collection {
     margin: 3rem 0 5rem;
   }
@@ -32,7 +36,6 @@
   &__details,
   &__contributions {
     clear: both;
-    margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
 
@@ -55,6 +58,18 @@
       height: auto;
     }
   }
+
+  &__services {
+    ul {
+      margin-top: .5rem;
+    }
+  }
+
+  &__sponsorships {
+    time {
+      color: lighten(#656a71, 20%);
+    }
+  }
 }
 
 .service-providers {
@@ -65,14 +80,39 @@
 
     tr {
       border-bottom: 1pt solid #eeeeee;
-
-      &:last-child {
-        border-bottom: none;
-      }
     }
 
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    th {
+      user-select: none;
+    }
+
+    th,
     td {
-      padding-right: 2rem;
+      padding: .4rem 1rem .4rem 0;
+    }
+
+    &-entry {
+      &__title {
+        width: 30%;
+      }
+
+      &__location {
+        address {
+          font-style: normal;
+        }
+      }
+
+      &__services {
+
+      }
+
+      &__size {
+
+      }
     }
   }
 

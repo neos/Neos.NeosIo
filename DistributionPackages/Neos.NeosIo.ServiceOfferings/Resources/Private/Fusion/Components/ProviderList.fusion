@@ -23,7 +23,9 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
                 typesOfService = Neos.Fusion:Map {
                     items = ${q(serviceProvider).property('typesOfService') || []}
                     itemRenderer = ${item.label}
+                    @process.sort = ${Array.sort(value)}
                 }
+                searchText = ${String.toLowerCase(Array.join(Array.concat([this.title, this.city, this.country], this.typesOfService), ' '))}
                 size = ${q(serviceProvider).property('size') || ''}
                 url = Neos.Neos:NodeUri {
                     node = ${serviceProvider}

@@ -9,7 +9,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Donations) < prototype
                 <h2>Funding badges</h2>
                 <ul>
                     <Neos.Fusion:Loop items={props.fundingBadges} itemName="fundingBadge">
-                        <li>{fundingBadge.badgeType} ({fundingBadge.startDate} - {fundingBadge.endDate})</li>
+                        <li>{fundingBadge.badgeType} <time>({fundingBadge.startDate} - {fundingBadge.endDate})</time></li>
                     </Neos.Fusion:Loop>
                 </ul>
             </div>
