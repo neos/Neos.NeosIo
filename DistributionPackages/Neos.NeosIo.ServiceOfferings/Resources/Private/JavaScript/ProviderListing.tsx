@@ -98,20 +98,15 @@ export default function ProviderListing() {
             <table>
                 <thead>
                     <tr>
-                        <th>
-                            <span class="service-providers__header service-providers__header--sortable"
-                                  onClick={() => sortBy('title')}>Name <i class="fas fa-sort"/></span>
+                        <th class="service-providers__header service-providers__header--sortable"
+                            onClick={() => sortBy('title')}>Name&nbsp;<i class="fas fa-sort"/>
                         </th>
-                        <th>
-                            <span class="service-providers__header service-providers__header--sortable"
-                                  onClick={() => sortBy('city')}>Location <i class="fas fa-sort"/></span>
+                        <th class="service-providers__header service-providers__header--sortable"
+                            onClick={() => sortBy('city')}>Location&nbsp;<i class="fas fa-sort"/>
                         </th>
-                        <th>
-                            <span class="service-providers__header">Services</span>
-                        </th>
-                        <th>
-                            <span class="service-providers__header service-providers__header--sortable"
-                                  onClick={() => sortBy('size')}>Size <i class="fas fa-sort"/></span>
+                        <th class="service-providers__header">Services</th>
+                        <th class="service-providers__header service-providers__header--sortable"
+                            onClick={() => sortBy('size')}>Size&nbsp;<i class="fas fa-sort"/>
                         </th>
                     </tr>
                 </thead>
