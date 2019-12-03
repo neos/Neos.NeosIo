@@ -6,6 +6,7 @@
  * entryPath     <string>  (optional) (default: `Resources/Private/Fusion`) The entry path, relative to the package
  * publicPath    <string>  (optional) (default: `Resources/Public`) The public path, relative to the package
  * hasSourceMap  <boolean> (optional) (default: `true`) Flag to toggle source map generation
+ * alias         <object>  (optional) (default: `{}`) Add your own, package-specific alias
  */
 
 const packages = [
@@ -13,9 +14,9 @@ const packages = [
         packageName: 'Neos.NeosIo.ServiceOfferings',
         filename: 'Main.tsx',
         alias: {
-            "react": "preact/compat",
-            "react-dom/test-utils": "preact/test-utils",
-            "react-dom": "preact/compat",
+            react: 'preact/compat',
+            'react-dom/test-utils': 'preact/test-utils',
+            'react-dom': 'preact/compat'
         }
     },
     { packageName: 'Neos.MarketPlace' },
