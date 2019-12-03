@@ -43,9 +43,7 @@ module.exports = {
             mediaQuery: false,
             minPixelValue: 0
         },
-        'css-mqpacker': {
-            sort: require('sort-css-media-queries')
-        },
+        'postcss-sort-media-queries': true,
         autoprefixer: {
             grid: true
         },
