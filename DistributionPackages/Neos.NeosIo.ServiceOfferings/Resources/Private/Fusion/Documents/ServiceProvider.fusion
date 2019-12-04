@@ -117,4 +117,8 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
             }
         }
     }
+
+    @cache {
+        maximumLifetime = 86400
+    }
 }
