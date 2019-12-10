@@ -1,0 +1,12 @@
+prototype(Neos.NeosIo:VideoEmbed) < prototype(Neos.Neos:ContentComponent) {
+
+    mp4src = Neos.Fusion:ResourceUri {
+        resource = ${q(node).property('mp4').resource}
+    }
+
+    renderer = afx`
+        <video class="videoEmbed" autoplay muted loop="true" playsinline="true">
+            <source type="video/mp4" src={props.mp4src}/>
+        </video>
+    `
+}

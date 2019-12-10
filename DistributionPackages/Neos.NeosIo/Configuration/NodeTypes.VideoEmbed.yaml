@@ -1,0 +1,20 @@
+'Neos.NeosIo:VideoEmbed':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: Video Embed
+    icon: icon-video
+    group: special
+    inspector:
+      groups:
+        appearance:
+          label: Appearance
+  properties:
+    'mp4':
+      type: 'Neos\Media\Domain\Model\Asset'
+      ui:
+        label: 'MP4 Video'
+        inspector:
+          group: appearance
+          editiorOptions:
+            accept: mp4
