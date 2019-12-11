@@ -1,0 +1,24 @@
+'Neos.NeosIo:VideoEmbed':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'Video (autoplay, looped and muted)`
+    icon: 'fas fa-play-circle'
+    group: special
+    inspector:
+      groups:
+        appearance:
+          label: Appearance
+          icon: 'fas fa-play-circle'
+  properties:
+    assets:
+      type: array<Neos\Media\Domain\Model\Asset>
+      ui:
+        label: Videos
+        reloadIfChanged: true
+        help:
+          message: 'The asssets must be `.mp4`, `.webm` or `.ogg` files. Other filetypes will be ignored.'
+        inspector:
+          group: appearance
+          editorOptions:
+            accept: 'video/*'
