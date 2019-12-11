@@ -11,12 +11,14 @@
           label: Appearance
           icon: 'fas fa-play-circle'
   properties:
-    'mp4':
-      type: 'Neos\Media\Domain\Model\Asset'
+    assets:
+      type: array<Neos\Media\Domain\Model\Asset>
       ui:
-        label: 'MP4 Video'
+        label: Videos
         reloadIfChanged: true
+        help:
+          message: 'The asssets must be `.mp4`, `.webm` or `.ogg` files. Other filetypes will be ignored.'
         inspector:
           group: appearance
-          editiorOptions:
-            accept: mp4
+          editorOptions:
+            accept: 'video/*'

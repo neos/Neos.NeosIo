@@ -1,14 +1,25 @@
 prototype(Neos.NeosIo:VideoEmbed) < prototype(Neos.Neos:ContentComponent) {
+    videoFileTypes = ${['webm', 'mp4', 'ogg']}
+    assets = ${q(node).property('assets')}
 
-    mp4src = Neos.Fusion:ResourceUri {
-        resource = ${q(node).property('mp4').resource}
+    renderer = Neos.Fusion:Component {
+        sources = Neos.Fusion:Loop {
+            items = ${props.videoFileTypes}
+            itemName = 'fileextension'
+            itemRenderer = Neos.Fusion:Loop {
+                items = ${props.assets}
+                itemName = 'asset'
+                itemRenderer = afx`
+                    <source @if.isRequiredFiletype={asset.resource.fileextension == fileextension} type={'video/' + fileextension}>
+                        <Neos.Fusion:ResourceUri @path='attributes.src' resource={asset.resource} />
+                    </source>
+                `
+            }
+        }
+        renderer = afx`
+             <video @if.set={props.sources && String.indexOf(props.sources, 'video/mp4') != -1} class="videoEmbed" autoplay muted loop="true" playsinline="true">
+                {props.sources}
+            </video>
+            <p @if.set={!props.sources}>Please add some videos in the inspector. At least one <code>.mp4</code> is required.</p>
+        `
     }
-
-    renderer = afx`
-        <video class="videoEmbed" autoplay muted loop="true" playsinline="true">
-            <source type="video/mp4" src={props.mp4src}/>
-        </video>
-    `
-
-    renderer.@process.notSet = ${props.mp4src == '' ? '<p>Please select a video in the inspector</p>' : value}
-}
