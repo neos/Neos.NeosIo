@@ -1,0 +1,15 @@
+'Neos.NeosIo:LogoWall':
+  superTypes:
+    'Neos.Neos:Content': true
+  childNodes:
+    logos:
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:Logo': true
+  ui:
+    label: 'Logowall'
+    icon: 'icon-th-large'
+    group: special
+    inlineEditable: true

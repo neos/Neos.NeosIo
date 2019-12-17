@@ -1,0 +1,13 @@
+prototype(Neos.NeosIo:Logo) < prototype(Neos.Neos:Content) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Logo.html'
+
+    attributes.class = 'logo slide'
+
+    link = ${q(node).property('link')}
+    link.@process.convertUris = Neos.Neos:ConvertUris {
+        absolute = true
+    }
+    link.@process.dontLinkInBackend = ${documentNode.context.inBackend ? '#' : value}
+
+    openInNewTab = ${true}
+}

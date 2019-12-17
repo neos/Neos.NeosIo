@@ -1,0 +1,39 @@
+'Neos.NeosIo:Logo':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NodeTypes:TitleMixin': true
+  ui:
+    label: 'Logo'
+    icon: 'icon-user-secret'
+    inlineEditable: true
+    inspector:
+      groups:
+        properties:
+          label: 'Logo properties'
+          position: 1
+          icon: 'icon-gears'
+  properties:
+    title:
+      type: string
+      defaultValue: ~
+      ui:
+        inspector:
+          group: properties
+          position: 5
+    link:
+      type: string
+      ui:
+        label: 'URL'
+        reloadIfChanged: true
+        inspector:
+          group: properties
+          editor: Neos.Neos/Inspector/Editors/LinkEditor
+          position: 10
+    image:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Logo image'
+        reloadIfChanged: true
+        inspector:
+          group: properties
+          position: 20
