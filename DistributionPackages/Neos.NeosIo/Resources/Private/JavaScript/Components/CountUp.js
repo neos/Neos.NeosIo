@@ -19,7 +19,8 @@ export default class CountUpComponent {
     }
 
     animate() {
-        const { to } = this.props;
+        let { to } = this.props;
+        to = parseInt(to, 10);
         const { el } = this;
         let delay = 2;
         let count = to - 62 > 0 ? to - 62 : 0;
