@@ -162,7 +162,12 @@ class PackageConverter extends AbstractTypeConverter
         if (!$lastActivity) {
             $lastActivity = new \DateTime();
         }
-        return (!($packageNode->getLastActivity() instanceof \DateTime) || $lastActivity > $packageNode->getLastActivity());
+        return (
+            !($packageNode->getLastActivity() instanceof \DateTime)
+            || $lastActivity > $packageNode->getLastActivity()
+            || intval($package->getFavers()) !== $packageNode->getProperty('favers')
+            || $package->getDownloads()->getTotal() !== $packageNode->getProperty('downloadTotal')
+        );
     }
 
     /**
