@@ -4,7 +4,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import GlobImporter from 'node-sass-glob-importer';
 import TerserPlugin from 'terser-webpack-plugin';
 
-const DEFAULT_INLINE_PATH = 'Resources/Private/Templates/InlineAssets';
+const defaultInlinePath = 'Resources/Private/Templates/InlineAssets';
 
 function config(
     {
@@ -27,7 +27,7 @@ function config(
     argv: any
 ): object {
     const includePaths = [];
-    const isInlineAsset = inline || publicPath == DEFAULT_INLINE_PATH;
+    const isInlineAsset = inline || publicPath == defaultInlinePath;
     const baseFilename = filename.substring(0, filename.lastIndexOf('.'));
     const isProduction = argv.mode == 'production';
     const distFolder = packageName ? 'DistributionPackages' : '';
@@ -35,7 +35,7 @@ function config(
     packageName = packageName || '';
 
     if (inline) {
-        publicPath = DEFAULT_INLINE_PATH;
+        publicPath = defaultInlinePath;
     }
 
     if (packageName) {
