@@ -4,17 +4,21 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import GlobImporter from 'node-sass-glob-importer';
 import TerserPlugin from 'terser-webpack-plugin';
 
+const DEFAULT_INLINE_PATH = 'Resources/Private/Templates/InlineAssets';
+
 function config(
     {
         packageName = null,
         filename = 'Main.js',
+        inline = false,
         entryPath = 'Resources/Private/Fusion',
         publicPath = 'Resources/Public',
         hasSourceMap = true,
-        alias = {},
+        alias = {}
     }: {
         packageName?: string;
         filename?: string;
+        inline?: boolean;
         entryPath?: string;
         publicPath?: string;
         hasSourceMap?: boolean;
@@ -23,12 +27,16 @@ function config(
     argv: any
 ): object {
     const includePaths = [];
-    const isInlineAsset = publicPath == 'Resources/Private/Templates/InlineAssets';
+    const isInlineAsset = inline || publicPath == DEFAULT_INLINE_PATH;
     const baseFilename = filename.substring(0, filename.lastIndexOf('.'));
     const isProduction = argv.mode == 'production';
     const distFolder = packageName ? 'DistributionPackages' : '';
     hasSourceMap = isInlineAsset ? false : hasSourceMap;
     packageName = packageName || '';
+
+    if (inline) {
+        publicPath = DEFAULT_INLINE_PATH;
+    }
 
     if (packageName) {
         // We are in a monorepo
