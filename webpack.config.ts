@@ -111,14 +111,14 @@ function config(
                             loader: 'css-loader',
                             options: {
                                 url: false,
-                                sourceMap: isInlineAsset ? false : hasSourceMap,
+                                sourceMap: hasSourceMap,
                                 importLoaders: 2
                             }
                         },
                         {
                             loader: 'postcss-loader',
                             options: {
-                                sourceMap: isInlineAsset ? false : hasSourceMap
+                                sourceMap: hasSourceMap
                             }
                         },
                         {
@@ -128,7 +128,7 @@ function config(
                             loader: 'sass-loader',
 
                             options: {
-                                sourceMap: isInlineAsset ? false : hasSourceMap,
+                                sourceMap: hasSourceMap,
                                 // absolute paths for SCSS
                                 sassOptions: {
                                     importer: GlobImporter(),
