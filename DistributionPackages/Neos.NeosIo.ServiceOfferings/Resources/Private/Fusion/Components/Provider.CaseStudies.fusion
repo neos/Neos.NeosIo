@@ -6,11 +6,30 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.CaseStudies) < prototy
     renderer = afx`
         <section class="service-provider__casestudies">
             <h2>Casestudies</h2>
-            <ul>
+            <div class="references__list g">
                 <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
-                    <li>{caseStudy.title}</li>
+                    <div class="references__item gi u-w1/1 u-wm1/2 u-wl1/2">
+                        <Neos.Neos:NodeLink
+                            node={caseStudy}
+                            attributes.class="imageTeaser imageTeaser--isLink"
+                            attributes.title={q(caseStudy).property('title')}
+                        >
+                            <Neos.Neos:ImageTag
+                                asset={q(caseStudy).property('keyVisualImage')}
+                                maximumHeight={450}
+                                maximumwidth={700}
+                                allowCropping={true}
+                                attributes.class="imageTeaser__image"
+                                attributes.alt={q(caseStudy).property('title')}
+                                attributes.style="max-height: 450px;"
+                            />
+                            <span class="imageTeaser__contents u-invertText">
+                                <h3 class="imageTeaser__contents__heading">{q(caseStudy).property('title')}</h3>
+                            </span>
+                        </Neos.Neos:NodeLink>
+                    </div>
                 </Neos.Fusion:Loop>
-            </ul>
+            </div>
         </section>
     `
 }
