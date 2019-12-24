@@ -124,6 +124,7 @@ function config(
                                 // absolute paths for SCSS
                                 sassOptions: {
                                     importer: GlobImporter(),
+                                    outputStyle: 'nested',
                                     includePaths: includePaths
                                 }
                             }
