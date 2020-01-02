@@ -7,7 +7,7 @@ prototype(Neos.MarketPlace:Component.Feed.PackageVersions) < prototype(Neos.Fusi
         name = ${q(props.package).property('title')}
         repository = ${q(props.package).property('repository')}
         authors = Neos.Fusion:Loop {
-            items = ${q(props.package).property('authors')}
+            items = ${q(props.package).find('maintainers').children().get()}
             itemName = 'author'
             itemRenderer = afx`
                 <author>
