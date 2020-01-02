@@ -1,0 +1,22 @@
+'Neos.MarketPlace:Document':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        document:
+          label: i18n
+  childNodes:
+    main:
+      type: 'Neos.Neos:ContentCollection'
+  superTypes:
+    'Neos.Neos:Document': true
+    'Neos.Seo:TitleTagMixin': true
+    'Neos.Seo:TwitterCardMixin': true
+    'Neos.Seo:CanonicalLinkMixin': true
+    'Neos.Seo:OpenGraphMixin': true
+    'Neos.Seo:XmlSitemapMixin': true
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.Neos:Document': false
+      'Neos.MarketPlace:RepositoryStorage': false
