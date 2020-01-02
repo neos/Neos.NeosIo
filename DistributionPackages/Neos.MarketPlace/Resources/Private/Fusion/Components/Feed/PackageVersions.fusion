@@ -1,0 +1,39 @@
+prototype(Neos.MarketPlace:Component.Feed.PackageVersions) < prototype(Neos.Fusion:Component) {
+    package = null
+    dateFilter = null
+
+    renderer = Neos.Fusion:Component {
+        @apply.props = ${props}
+        name = ${q(props.package).property('title')}
+        repository = ${q(props.package).property('repository')}
+        authors = Neos.Fusion:Loop {
+            items = ${q(props.package).property('authors')}
+            itemName = 'author'
+            itemRenderer = afx`
+                <author>
+                    <name>{q(author).property('title')}</name>
+                </author>
+            `
+        }
+
+        versions = ${Search.query(props.package)}
+        versions.@process {
+            nodeType = ${value.nodeType('Neos.MarketPlace:ReleasedVersion')}
+            limit = ${value.limit(100)}
+            execute = ${value.execute().toArray()}
+        }
+
+        renderer = afx`
+            <Neos.Fusion:Loop items={props.versions} itemName="version">
+                <entry @if.isRecent={q(version).property('time') > props.dateFilter}>
+                    <title>{props.name} {q(version).property('version')}</title>
+                    {props.authors}
+                    <link rel="alternate" href={props.repository}/>
+                    <id>urn:uuid:{version.identifier}</id>
+                    <updated>{Date.format(q(version).property('time'), 'Y-m-d\TH:i:sP')}</updated>
+                    <summary @if.set={q(version).property('description')}>{q(version).property('description')}</summary>
+                </entry>
+            </Neos.Fusion:Loop>
+        `
+    }
+}
