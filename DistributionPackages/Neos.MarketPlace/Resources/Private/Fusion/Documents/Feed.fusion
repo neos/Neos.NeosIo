@@ -23,7 +23,7 @@ prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Http.Message) {
                 <title>Latest Neos CMS package releases</title>
                 <subtitle>This feed contains all Neos CMS and Flow Framework compatible package releases in the last 30 days</subtitle>
                 <id>urn:uuid:{documentNode.identifier}</id>
-                <updated @if.hasEntries={props.query}>{Date.format(q(props.query[0]).property('lastActivity'), 'Y-m-d\TH:i:sP')}</updated>
+                <updated @if.hasEntries={props.query}>{Date.format(q(q(props.query[0]).property('lastVersion')).property('time'), 'Y-m-d\TH:i:sP')}</updated>
                 <link rel="alternate" type="text/html" @children="attributes.href">
                     <Neos.Neos:NodeUri node={documentNode} format="html" absolute={true} />
                 </link>
