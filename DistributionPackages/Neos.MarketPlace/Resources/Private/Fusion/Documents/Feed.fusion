@@ -13,7 +13,7 @@ prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Http.Message) {
 
         query = ${MarketPlaceSearch.query(documentNode)}
         query.@process.nodeType = ${value.nodeType('Neos.MarketPlace:Package')}
-        query.@process.onlyRecent = ${value.greaterThan('lastVersion.time', Date.format(this.dateFilter, "Y-m-d\TH:i:sP"))}
+        query.@process.onlyRecent = ${value.greaterThan('lastVersion.time',this.dateFilter)}
         query.@process.sort = ${value.sortDesc('lastVersion.time')}
         query.@process.limit = ${value.limit(9999)}
         query.@process.execute = ${value.execute().toArray()}
