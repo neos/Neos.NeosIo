@@ -1,0 +1,10 @@
+- name:  'ATOM Package Feed'
+  uriPattern: '{node}.atom'
+  defaults:
+    '@package': 'Neos.Neos'
+    '@controller': 'Frontend\Node'
+    '@action': 'show'
+    '@format': 'atom'
+  routeParts:
+    'node':
+      handler: 'Neos\Neos\Routing\FrontendNodeRoutePartHandler'

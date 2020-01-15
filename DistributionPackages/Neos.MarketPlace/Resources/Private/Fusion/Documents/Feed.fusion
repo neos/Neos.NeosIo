@@ -1,0 +1,58 @@
+prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Http.Message) {
+    httpResponseHead {
+        headers.Content-Type = 'application/xml'
+    }
+
+    doctype = '<?xml version="1.0" encoding="utf-8"?>'
+    doctype.@position = 'start 100'
+
+    feed = Neos.Fusion:Component {
+        @position = 'after doctype'
+
+        dateFilter = ${Date.subtract(Date.now(), 'P30D')}
+
+        query = ${MarketPlaceSearch.query(documentNode)}
+        query.@process.nodeType = ${value.nodeType('Neos.MarketPlace:Package')}
+        query.@process.onlyRecent = ${value.greaterThan('lastVersion.time',this.dateFilter)}
+        query.@process.sort = ${value.sortDesc('lastVersion.time')}
+        query.@process.limit = ${value.limit(9999)}
+        query.@process.execute = ${value.execute().toArray()}
+
+        renderer = afx`
+            <feed xmlns="http://www.w3.org/2005/Atom">
+                <title>Latest Neos CMS package releases</title>
+                <subtitle>This feed contains all Neos CMS and Flow Framework compatible package releases in the last 30 days</subtitle>
+                <id>urn:uuid:{documentNode.identifier}</id>
+                <updated @if.hasEntries={props.query}>{Date.format(q(q(props.query[0]).property('lastVersion')).property('time'), 'Y-m-d\TH:i:sP')}</updated>
+                <link rel="alternate" type="text/html" @children="attributes.href">
+                    <Neos.Neos:NodeUri node={documentNode} format="html" absolute={true} />
+                </link>
+                <link rel="self" type="application/atom+xml" @children="attributes.href">
+                    <Neos.Neos:NodeUri node={documentNode} format="atom" absolute={true} />
+                </link>
+                <Neos.Fusion:Loop items={props.query} itemName="package">
+                    <Neos.MarketPlace:Component.Feed.PackageVersions package={package} dateFilter={props.dateFilter} />
+                </Neos.Fusion:Loop>
+            </feed>
+        `
+    }
+
+    @cache {
+        entryIdentifier {
+            node = ${documentNode}
+            format = 'atom'
+        }
+        entryTags {
+            node = ${Neos.Caching.nodeTag(documentNode)}
+        }
+        maximumLifetime = 7200
+    }
+}
+
+root {
+    marketPlaceFeed {
+        @position = 'before format'
+        condition = ${request.format == 'atom' && q(documentNode).is('[instanceof Neos.MarketPlace:RepositoryStorage]')}
+        renderer = Neos.MarketPlace:Feed
+    }
+}

@@ -1,4 +1,3 @@
-
 Neos:
   MarketPlace:
     typeMapping:
@@ -31,6 +30,11 @@ Neos:
       cacheDirectory: '%FLOW_PATH_DATA%Github/Cache'
       account: username
       password: password
+  Flow:
+    mvc:
+      routes:
+        Neos.MarketPlace:
+          position: 'before Neos.Neos'
   Neos:
     nodeTypes:
       groups:

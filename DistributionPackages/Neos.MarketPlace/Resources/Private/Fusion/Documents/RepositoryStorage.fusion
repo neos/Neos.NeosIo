@@ -1,4 +1,20 @@
 prototype(Neos.MarketPlace:RepositoryStorage) < prototype(Neos.MarketPlace:DefaultPage) {
+    head {
+        atomFeedLink = Neos.Fusion:Tag {
+            @position = 'after metaTags'
+            attributes {
+                rel = 'alternate'
+                type = 'application/atom+xml'
+                title = "Atom-Feed with the latest package releases"
+                href = Neos.Neos:NodeUri {
+                    node = ${documentNode}
+                    absolute = true
+                    format = 'atom'
+                }
+            }
+        }
+    }
+
     body {
         content {
             main = Neos.Fusion:Join {
