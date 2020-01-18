@@ -6,6 +6,12 @@ prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Http.Message) {
     doctype = '<?xml version="1.0" encoding="utf-8"?>'
     doctype.@position = 'start 100'
 
+    xsl = Neos.Fusion:ResourceUri {
+        path = 'resource://Neos.MarketPlace/Public/Assets/feed.xsl'
+    }
+    xsl.@process.wrap = ${'<?xml-stylesheet media="screen" type="text/xsl" href="' + value + '" version="2.0"?>'}
+    xsl.@position = 'after doctype 100'
+
     feed = Neos.Fusion:Component {
         @position = 'after doctype'
 
@@ -21,7 +27,10 @@ prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Http.Message) {
         renderer = afx`
             <feed xmlns="http://www.w3.org/2005/Atom">
                 <title>Latest Neos CMS package releases</title>
-                <subtitle>This feed contains all Neos CMS and Flow Framework compatible package releases in the last 30 days</subtitle>
+                <subtitle>This feed contains all Neos CMS and Flow Framework compatible package releases in the last 30 days.</subtitle>
+                <logo>
+                    <Neos.Fusion:ResourceUri path="resource://Neos.NeosIo/Public/Images/NeosLogoSocial.png" absolute={true} />
+                </logo>
                 <id>urn:uuid:{documentNode.identifier}</id>
                 <updated @if.hasEntries={props.query}>{Date.format(q(q(props.query[0]).property('lastVersion')).property('time'), 'Y-m-d\TH:i:sP')}</updated>
                 <link rel="alternate" type="text/html" @children="attributes.href">

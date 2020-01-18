@@ -28,7 +28,7 @@ prototype(Neos.MarketPlace:Component.Feed.PackageVersions) < prototype(Neos.Fusi
                 <entry @if.isRecent={q(version).property('time') > props.dateFilter}>
                     <title>{props.name} {q(version).property('version')}</title>
                     {props.authors}
-                    <link rel="alternate" href={props.repository}/>
+                    <link rel="alternate" href={props.repository + '/releases/tag/' + q(version).property('version')}/>
                     <id>urn:uuid:{version.identifier}</id>
                     <updated>{Date.format(q(version).property('time'), 'Y-m-d\TH:i:sP')}</updated>
                     <summary @if.set={q(version).property('description')}>{q(version).property('description')}</summary>
