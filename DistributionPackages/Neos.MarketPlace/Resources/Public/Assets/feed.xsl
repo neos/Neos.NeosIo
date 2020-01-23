@@ -109,7 +109,7 @@
                     }
                 </style>
             </head>
-            <body style="font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"">
+            <body style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'">
                 <header class="site-header">
                     <h1>
                         <xsl:value-of select="atom:feed/atom:title"/>
