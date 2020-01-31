@@ -11,6 +11,33 @@
                     <xsl:value-of select="atom:feed/atom:title"/>
                 </title>
                 <style>
+                    html {
+                        --text-color: #000;
+                        --text-color-light: #656a71;
+                        --bg-color: #fff;
+                        --h1-color: #3b444f;
+                        --h2-color: #00adee;
+                        --border-color: #eee;
+                        --link-color: #00adee;
+
+                        background-color: var(--bg-color);
+                    }
+
+                    @media (prefers-color-scheme: dark) {
+                        html {
+                            --text-color: #fff;
+                            --text-color-light: #eee;
+                            --bg-color: #34363c;
+                            --h1-color: #00adee;
+                        }
+
+                        .logo {
+                            background: white;
+                            padding: 1rem;
+                            box-shadow: 0 4px 7px 3px rgba(0, 0, 0, .95);
+                        }
+                    }
+
                     body {
                         display: grid;
                         grid-gap: 1rem;
@@ -21,6 +48,7 @@
                             ". footer .";
                         padding: 1rem 0;
                         font-size: 16px;
+                        color: var(--text-color);
                     }
 
                     .site-header {
@@ -32,7 +60,7 @@
                             "title"
                             "description";
                         padding-bottom: 1rem;
-                        border-bottom: 1px solid #eee;
+                        border-bottom: 1px solid var(--border-color);
                     }
 
                     @media (min-width: 768px) {
@@ -44,7 +72,7 @@
                     }
 
                     a {
-                        color: #00adee;
+                        color: var(--link-color);
                         text-decoration: none;
                     }
 
@@ -53,7 +81,7 @@
                     }
 
                     h1 {
-                        color: #3b444f;
+                        color: var(--h1-color);
                         grid-area: title;
                         margin: 0;
                     }
@@ -84,12 +112,12 @@
 
                     article + article {
                         margin-top: 1rem;
-                        border-top: 1px solid #eee;
+                        border-top: 1px solid var(--border-color);
                         padding-top: 1rem;
                     }
 
                     article h2 {
-                        color: #00adee;
+                        color: var(--h2-color);
                         margin: 0 0 .5rem;
                     }
 
@@ -99,13 +127,13 @@
 
                     .entry__details {
                         font-size: 90%;
-                        color: #656a71;
+                        color: var(--text-color-light);
                     }
 
                     .site-footer {
                         grid-area: footer;
                         padding-top: 1rem;
-                        border-top: 1px solid #eee;
+                        border-top: 1px solid var(--border-color);
                     }
                 </style>
             </head>
