@@ -17,33 +17,53 @@ prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Http.Message) {
 
         dateFilter = ${Date.subtract(Date.now(), 'P30D')}
 
-        query = ${MarketPlaceSearch.query(documentNode)}
-        query.@process.nodeType = ${value.nodeType('Neos.MarketPlace:Package')}
-        query.@process.onlyRecent = ${value.greaterThan('lastVersion.time',this.dateFilter)}
-        query.@process.sort = ${value.sortDesc('lastVersion.time')}
-        query.@process.limit = ${value.limit(9999)}
-        query.@process.execute = ${value.execute().toArray()}
+        packages = ${MarketPlaceSearch.query(documentNode)}
+        packages.@process {
+            nodeType = ${value.nodeType('Neos.MarketPlace:Package')}
+            onlyRecent = ${value.greaterThan('lastVersion.time', this.dateFilter)}
+            onlyRecent.@if.hasDateFilter = ${this.dateFilter}
+            sort = ${value.sortDesc('lastVersion.time')}
+            limit = ${value.limit(9999)}
+            execute = ${value.execute().toArray()}
+        }
 
-        renderer = afx`
-            <feed xmlns="http://www.w3.org/2005/Atom">
-                <title>Latest Neos CMS package releases</title>
-                <subtitle>This feed contains all Neos CMS and Flow Framework compatible package releases in the last 30 days.</subtitle>
-                <logo>
-                    <Neos.Fusion:ResourceUri path="resource://Neos.NeosIo/Public/Images/NeosLogoSocial.png" absolute={true} />
-                </logo>
-                <id>urn:uuid:{documentNode.identifier}</id>
-                <updated @if.hasEntries={props.query}>{Date.format(q(q(props.query[0]).property('lastVersion')).property('time'), 'Y-m-d\TH:i:sP')}</updated>
-                <link rel="alternate" type="text/html" @children="attributes.href">
+        renderer = Neos.Fusion:Component {
+            releasedVersions = Neos.Fusion:Reduce {
+                items = ${props.packages}
+                carryName = 'allVersions'
+                initialValue = ${[]}
+                itemReducer = Neos.Fusion:Value {
+                    versions = Neos.MarketPlace:Component.Feed.PackageVersions {
+                        package = ${item}
+                    }
+                    value = ${Array.concat(allVersions, this.versions)}
+                }
+                @process.filter = ${Array.filter(value, x => x.time > props.dateFilter)}
+                @process.filter.@if.hasDateFilter = ${props.dateFilter}
+                @process.sort = ${q(value).sortByProperty('time', 'DESC').get()}
+            }
+
+            renderer = afx`
+                <feed xmlns="http://www.w3.org/2005/Atom">
+                    <title>Latest Neos CMS package releases</title>
+                    <subtitle>This feed contains all Neos CMS and Flow Framework compatible package releases in the last 30 days.</subtitle>
+                    <logo>
+                        <Neos.Fusion:ResourceUri path="resource://Neos.NeosIo/Public/Images/NeosLogoSocial.png" absolute={true} />
+                    </logo>
+                    <id>urn:uuid:{documentNode.identifier}</id>
+                    <updated @if.hasEntries={props.query}>{Date.format(q(q(props.query[0]).property('lastVersion')).property('time'), 'Y-m-d\TH:i:sP')}</updated>
+                    <link rel="alternate" type="text/html" @children="attributes.href">
                     <Neos.Neos:NodeUri node={documentNode} format="html" absolute={true} />
-                </link>
-                <link rel="self" type="application/atom+xml" @children="attributes.href">
+                    </link>
+                    <link rel="self" type="application/atom+xml" @children="attributes.href">
                     <Neos.Neos:NodeUri node={documentNode} format="atom" absolute={true} />
-                </link>
-                <Neos.Fusion:Loop items={props.query} itemName="package">
-                    <Neos.MarketPlace:Component.Feed.PackageVersions package={package} dateFilter={props.dateFilter} />
-                </Neos.Fusion:Loop>
-            </feed>
-        `
+                    </link>
+                    <Neos.Fusion:Loop items={props.releasedVersions} itemName="version">
+                        <Neos.MarketPlace:Component.Feed.Version {...version} />
+                    </Neos.Fusion:Loop>
+                </feed>
+            `
+        }
     }
 
     @cache {

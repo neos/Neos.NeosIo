@@ -153,7 +153,7 @@
                         </p>
                         <p>
                             You can find the package search
-                            <a title="Package search on the Neos CMS website">
+                            <a title="Package search on the Neos CMS website" target="_blank">
                                 <xsl:attribute name="href">
                                     <xsl:value-of select="atom:feed/atom:link[@rel='alternate']/@href"/>
                                 </xsl:attribute>
@@ -176,9 +176,12 @@
         <article>
             <header>
                 <h2>
-                    <a title="Go to the release package of the package">
+                    <a target="_blank">
+                        <xsl:attribute name="title">
+                            <xsl:value-of select="concat('Go to the release notes of the package release ', atom:title)" />
+                        </xsl:attribute>
                         <xsl:attribute name="href">
-                            <xsl:value-of select="atom:link/@href"/>
+                            <xsl:value-of select="atom:link[@rel='alternate']/@href"/>
                         </xsl:attribute>
                         <xsl:value-of select="atom:title"/>
                     </a>
@@ -192,7 +195,7 @@
             </header>
             <div>
                 <p>
-                    <xsl:value-of select="atom:summary"/>
+                    <xsl:copy-of select="atom:summary" />
                 </p>
             </div>
         </article>

@@ -1,0 +1,30 @@
+prototype(Neos.MarketPlace:Component.Feed.Version) < prototype(Neos.Fusion:Component) {
+    packageName = ''
+    version = ''
+    authors = ${[]}
+    repository = ''
+    identifier = ''
+    time = 0
+    description = ''
+
+    renderer = afx`
+        <entry>
+            <title>{props.packageName} {props.version}</title>
+            <Neos.Fusion:Loop items={props.authors} itemName="author">
+                <author>
+                    <name>{author}</name>
+                </author>
+            </Neos.Fusion:Loop>
+            <link rel="alternate" href={props.repository + '/releases/tag/' + props.version}/>
+            <link rel="repository" href={props.repository}/>
+            <id>urn:uuid:{props.identifier}</id>
+            <updated>{Date.format(props.time, 'Y-m-d\TH:i:sP')}</updated>
+            <summary type="html">
+                <p>{String.stripTags(props.description)}</p>
+                <p>
+                    <a href={props.repository} title={'Go to the repository of the package ' + props.packageName}>Go to repository</a>
+                </p>
+            </summary>
+        </entry>
+    `
+}
