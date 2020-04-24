@@ -33,7 +33,7 @@ prototype(Neos.NeosIo:ReleasePlan) < prototype(Neos.Neos:ContentComponent) {
                 {Json.stringify(props.releasePlanData)}
             </script>
         </div>
-        <div @if.noData={props.releasePlanData}>
+        <div @if.noData={!props.releasePlanData}>
             <p>The release plan is currently being worked upon. It will be available again soon.</p>
         </div>
     `
