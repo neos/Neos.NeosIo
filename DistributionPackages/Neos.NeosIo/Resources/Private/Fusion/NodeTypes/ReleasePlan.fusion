@@ -1,0 +1,40 @@
+prototype(Neos.NeosIo:ReleasePlan) >
+prototype(Neos.NeosIo:ReleasePlan) < prototype(Neos.Neos:ContentComponent) {
+    releasePlanData = Neos.Fusion:Map {
+        items = ${q(node).find('[instanceof Neos.NeosIo:ReleasePlan.Version]')}
+        itemName = 'releaseVersion'
+        itemRenderer = Neos.Fusion:DataStructure {
+            version = ${q(releaseVersion).property('version')}
+            segments = Neos.Fusion:Map {
+                items = ${q(releaseVersion).find('[instanceof Neos.NeosIo:ReleasePlan.Segment]')}
+                itemName = 'versionSegment'
+                itemRenderer = Neos.Fusion:DataStructure {
+                    start = ${Date.format(q(versionSegment).property('start'), 'Y-m')}
+                    end = ${Date.format(q(versionSegment).property('end'), 'Y-m')}
+                    task = ${q(versionSegment).property('task')}
+                }
+            }
+        }
+    }
+    // The JSON data are used by the AmChart library to display the Gantt chart.
+    // Colors are automaically generated and set depending on the index of the segment.
+    // The higher the brighter the color will be.
+    renderer = afx`
+        <div data-component="AmChart" class="amChart" @if.data={props.releasePlanData}>
+            <div class="u-alignCenter">
+                <div class="spinner">
+                    <i class="spinner__dot"></i>
+                    <i class="spinner__dot"></i>
+                    <i class="spinner__dot"></i>
+                </div>
+            </div>
+
+            <script type="application/json" data-json>
+                {Json.stringify(props.releasePlanData)}
+            </script>
+        </div>
+        <div @if.noData={!props.releasePlanData}>
+            <p>The release plan is currently being worked upon. It will be available again soon.</p>
+        </div>
+    `
+}

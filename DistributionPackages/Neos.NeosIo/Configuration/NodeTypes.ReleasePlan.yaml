@@ -6,8 +6,13 @@
 'Neos.NeosIo:ReleasePlan':
   superTypes:
     'Neos.Neos:Content': true
+    'Neos.Neos:ContentCollection': true
   ui:
     label: 'Release Plan Chart'
     icon: icon-calendar
     inlineEditable: false
     group: special
+  constraints:
+    nodeTypes:
+      'Neos.Neos:Content': false
+      'Neos.NeosIo:ReleasePlan.Version': true
