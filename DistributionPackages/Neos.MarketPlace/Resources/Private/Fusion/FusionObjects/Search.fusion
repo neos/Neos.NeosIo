@@ -43,7 +43,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
 
     query.@process.nodeType = ${value.nodeType('Neos.MarketPlace:Package')}
 
-    query.@process.fulltext = ${this.hasSearchQuery ? value.fulltext('*' + this.searchTerm + '*') : value}
+    query.@process.fulltext = ${this.hasSearchQuery ? value.fulltext('*' + String.replace(this.searchTerm, '"', '') + '*') : value}
 
     query.@process.sort = ${this.hasSearchQuery ? value : value.sortDesc('lastActivity')}
 
