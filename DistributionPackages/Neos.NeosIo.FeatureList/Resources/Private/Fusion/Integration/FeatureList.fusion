@@ -3,7 +3,7 @@ prototype(Neos.NeosIo.FeatureList:FeatureList) < prototype(Neos.Neos:ContentComp
 	featureGroups = Neos.Fusion:RawCollection {
 		collection = ${q(node).children('[instanceof Neos.NeosIo.FeatureList:FeatureGroup]')}
 		itemName = 'featureGroup'
-		itemRenderer = Neos.Fusion:RawArray {
+		itemRenderer = Neos.Fusion:DataStructure {
 			__node = ${featureGroup}
 			title = Neos.Neos:Editable {
 				property = 'title'
@@ -19,9 +19,9 @@ prototype(Neos.NeosIo.FeatureList:FeatureList) < prototype(Neos.Neos:ContentComp
 				maximumWidth = 60
 			}
 			features = Neos.Fusion:RawCollection {
-				collection = ${q(featureGroup).children('[instanceof Neos.NeosIo.FeatureList:Feature]')}
+				collection = ${q(featureGroup).children('[instanceof Neos.NeosIo.FeatureList:Feature]').add(q(featureGroup).property('features'))}
 				itemName = 'feature'
-				itemRenderer = Neos.Fusion:RawArray {
+				itemRenderer = Neos.Fusion:DataStructure {
 					__node = ${feature}
 					title = Neos.Neos:Editable {
 						property = 'title'
@@ -36,7 +36,7 @@ prototype(Neos.NeosIo.FeatureList:FeatureList) < prototype(Neos.Neos:ContentComp
 					links = Neos.Fusion:RawCollection {
 						collection = ${q(feature).property('relatedPackages')}
 						itemName = 'relatedPackage'
-						itemRenderer = Neos.Fusion:RawArray {
+						itemRenderer = Neos.Fusion:DataStructure {
 							label = ${q(relatedPackage).property('title')}
 							uri = Neos.Neos:NodeUri {
 								node = ${relatedPackage}
