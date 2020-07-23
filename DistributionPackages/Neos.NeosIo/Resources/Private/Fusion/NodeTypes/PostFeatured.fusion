@@ -40,9 +40,11 @@ prototype(Neos.NeosIo:PostFeatured) < prototype(Neos.Neos:ContentComponent) {
 
     @cache {
         mode = 'cached'
-
+        entryIdentifier {
+            node = ${node}
+        }
         entryTags {
-            1 = ${'NodeType_Neos.NeosIo:Post'}
+            post = ${Neos.Caching.nodeTag(post)}
         }
     }
 }

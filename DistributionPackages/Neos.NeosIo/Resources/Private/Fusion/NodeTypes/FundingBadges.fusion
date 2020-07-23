@@ -19,7 +19,7 @@ prototype(Neos.NeosIo:FundingBadges) < prototype(Neos.Neos:Content) {
             node = ${node}
         }
         entryTags {
-            1 = ${'Node_' + node.identifier}
+            1 = ${Neos.Caching.nodeTag(node)}
         }
     }
 }

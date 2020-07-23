@@ -17,6 +17,7 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
 
         content.keyVisual = Neos.NeosIo:KeyVisual {
             keyVisualImage = ${q(documentNode).property('keyVisualImage')}
+            keyVisualImageSmall = ${q(documentNode).property('keyVisualImageSmall')}
             isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
         }
 
@@ -27,5 +28,5 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
         `
     }
 
-    @cache.entryTags.site = ${'Node_' + site.identifier}
+    @cache.entryTags.site = ${Neos.Caching.nodeTag(site)}
 }

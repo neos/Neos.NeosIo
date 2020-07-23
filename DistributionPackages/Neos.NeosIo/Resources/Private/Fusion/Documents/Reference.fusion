@@ -7,7 +7,7 @@ prototype(Neos.NeosIo:Reference) < prototype(Neos.NeosIo:DefaultPage) {
 
     @cache {
         entryTags {
-            reference = 'NodeTypes_Neos.NeosIo:Reference'
+            reference = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Reference')}
         }
     }
 }
