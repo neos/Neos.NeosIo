@@ -2,6 +2,7 @@
 prototype(Neos.NeosIo:KeyVisual.ImageRenderer) < prototype(Neos.NeosIo:KeyVisual.AbstractRenderer) {
     // "props.keyVisualImage" on the right side here is set inside Neos.NeosIo:KeyVisual (as this fusion object here is the renderer inside Neos.NeosIo:KeyVisual)
     keyVisualImage = ${props.keyVisualImage}
+    keyVisualImageSmall = ${props.keyVisualImageSmall || props.keyVisualImage}
 
     previewImageUri = Neos.Neos:ImageUri {
         asset = ${props.keyVisualImage}
@@ -34,7 +35,7 @@ prototype(Neos.NeosIo:KeyVisual.ImageRenderer) < prototype(Neos.NeosIo:KeyVisual
         }
 
         mediumRes = Neos.Neos:ImageUri {
-            asset = ${props.keyVisualImage}
+            asset = ${props.keyVisualImageSmall}
             maximumWidth = 658
             maximumHeight = 658
             allowCropping = true
