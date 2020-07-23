@@ -54,3 +54,10 @@ Neos_Neos_GoogleAnalytics_Tokens:
     password: '%env:BEACH_REDIS_PASSWORD%'
     port: '6379'
     database: 7
+Flowpack_FullPageCache_Entries:
+  backend: 'Neos\Cache\Backend\RedisBackend'
+  backendOptions:
+    hostname: '%env:BEACH_REDIS_HOST%'
+    password: '%env:BEACH_REDIS_PASSWORD%'
+    port: '6379'
+    database: 8
