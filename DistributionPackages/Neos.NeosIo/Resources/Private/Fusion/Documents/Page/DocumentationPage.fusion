@@ -21,6 +21,10 @@ prototype(Neos.NeosIo:DocumentationPage) < prototype(Neos.NeosIo:DefaultPage) {
             main = Neos.Neos:PrimaryContent {
                 nodePath = 'main'
             }
+
+            prototype(Neos.NodeTypes:Text) {
+                text.@process.replaceIcons = Neos.NeosIo:DocumentationContentIconProcessor
+            }
         }
     }
 }
