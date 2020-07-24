@@ -22,7 +22,7 @@ postRss = Neos.Fusion:Http.Message {
 root {
     postRss {
         position = 'before format'
-        condition = ${request.parentRequest.uri.path == '/rss.xml'}
+        condition = ${request.parentRequest.uri.path == '/rss.xml' || request.parentRequest.uri.path == '/de/rss.xml'}
         renderPath = '/postRss'
     }
 }
