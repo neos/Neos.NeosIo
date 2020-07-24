@@ -2,7 +2,7 @@ error {
     @context.notfoundDocument = ${q(site).children('[uriPathSegment = "404"]').get(0)}
     4xx {
         dimensions = Neos.NeosIo:ExtractDimensions
-        @context.notfoundDocument = ${q(site).context({'dimensions': this.dimensions.dimensions, 'targetDimensions': this.dimensions.targetDimensions}).children('[instanceof Neos.Neos:Document]').filter('[uriPathSegment="404"]').get(0)}
+        @context.notfoundDocument = ${q(site).context({'dimensions': this.dimensions.dimensions, 'targetDimensions': this.dimensions.targetDimensions}).children('[instanceof Neos.Neos:Document][uriPathSegment="404"]').get(0)}
         @position = 'start'
         condition = ${statusCode >= 400 && statusCode < 500 && notfoundDocument}
         renderer = Neos.Fusion:Renderer {

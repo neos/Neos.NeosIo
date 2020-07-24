@@ -1,20 +1,29 @@
-prototype(Neos.NeosIo:TeamListing) < prototype(Neos.Neos:Content) {
-    sectionName = 'Main'
-    attributes.class = 'vertical-feature-block'
-
-    teamListingFilter = ${q(node).property('teamListingFilter')}
-    @context.teamListingFilter = ${this.teamListingFilter}
-
-    teamName = ${q(node).property('teamName')}
-    @context.teamName = ${this.teamName}
-
-    teamFilterOrNameSet = ${!String.isBlank(teamListingFilter) || !String.isBlank(teamName)}
-
-    groups = Neos.Fusion:Collection {
-        collection = ${q(site).crowdGroups().filter(!String.isBlank(teamName) ? '[name = ' + teamName + ']' : '[neos_group_type = ' + teamListingFilter + ']').get()}
-        itemRenderer = Neos.NeosIo:CrowdGroup
-        itemName = 'group'
+prototype(Neos.NeosIo:TeamListing) < prototype(Neos.Neos:ContentComponent) {
+    title = Neos.Neos:Editable {
+        property = 'title'
     }
+    teamListingFilter = ${q(node).property('teamListingFilter')}
+    teamName = ${q(node).property('teamName')}
+    teamFilterOrNameSet = ${!String.isBlank(this.teamListingFilter) || !String.isBlank(this.teamName)}
+    headerLevel = ${q(node).property('headerLevel') || 'h3'}
+    groups = ${q(site).crowdGroups().filter(!String.isBlank(this.teamName) ? '[name = ' + this.teamName + ']' : '[neos_group_type = ' + this.teamListingFilter + ']').get()}
+
+    renderer = afx`
+        <div class="vertical-feature-block">
+            {props.title}
+
+            <Neos.Fusion:Collection collection={props.groups} itemName="group">
+                <Neos.NeosIo:CrowdGroup
+                    group={group}
+                    teamName={props.teamName}
+                    headerLevel={props.headerLevel}
+                />
+            </Neos.Fusion:Collection>
+
+            <p @if.noGroups={!props.groups}>No groups found</p>
+            <div class="teamOverlay"></div>
+        </div>
+    `
 
     @cache {
         mode = 'cached'
@@ -23,7 +32,7 @@ prototype(Neos.NeosIo:TeamListing) < prototype(Neos.Neos:Content) {
             node = ${node}
         }
         entryTags {
-            1 = ${'Node_' + node.identifier}
+            1 = ${Neos.Caching.nodeTag(node)}
         }
     }
 }

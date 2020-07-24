@@ -1,4 +1,3 @@
-
 'Neos.NeosIo:TeamListing':
   superTypes:
     'Neos.Neos:Content': true
@@ -13,6 +12,25 @@
           label: 'Plugin options'
           position: 5
   properties:
+    headerLevel:
+      type: string
+      ui:
+        label: 'Header level for the team headings'
+        reloadIfChanged: true
+        inspector:
+          group: options
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            placeholder: 'Select one'
+            values:
+              '':
+                label: 'Default (h3)'
+              h2:
+                label: 'h2'
+              h3:
+                label: 'h3'
+              h4:
+                label: 'h4'
     teamListingFilter:
       type: string
       ui:

@@ -21,7 +21,6 @@
           'Neos.NodeTypes:TwoColumn': TRUE
           'Neos.NodeTypes:Image': TRUE
           'GoE.Neos:Content.Video': TRUE
-
   ui:
     inspector:
       groups:
@@ -29,15 +28,22 @@
           label: 'Keyvisual'
           position: 10
   properties:
-    'keyVisualImage':
+    keyVisualImage:
       type: Neos\Media\Domain\Model\ImageInterface
       ui:
         label: 'Image for the Keyvisual-Section'
-        reloadIfChanged: TRUE
+        reloadIfChanged: true
         inspector:
           group: 'keyVisual'
-          position: 1
-    'isKeyVisualContentsInverted':
+    keyVisualImageSmall:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Mobile image for the Keyvisual-Section'
+        reloadIfChanged: true
+        inspector:
+          group: 'keyVisual'
+          position: 'after keyVisualImage'
+    isKeyVisualContentsInverted:
       type: boolean
       ui:
         label: 'Invert the text-color for the Keyvisual contents'
