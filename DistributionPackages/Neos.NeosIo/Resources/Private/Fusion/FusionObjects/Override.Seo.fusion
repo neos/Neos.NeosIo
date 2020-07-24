@@ -15,3 +15,7 @@ prototype(Neos.Seo:TwitterCard) {
         }
     }
 }
+
+prototype(Neos.Seo:AlternateLanguageLinks) {
+    @if.hideIfMetaRobotsNoIndexIsSet = ${q(this.node).property('metaRobotsNoindex') || q(this.node).is('[instanceof Neos.Seo:NoindexMixin]') ? false : true}
+}
