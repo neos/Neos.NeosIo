@@ -15,3 +15,14 @@ prototype(Neos.Seo:TwitterCard) {
         }
     }
 }
+
+// remove hreflang completely if the current node has "noindex" set
+prototype(Neos.Seo:AlternateLanguageLinks) {
+    @if.hasMetaRobotsNoIndexNotSet = ${q(this.node).property('metaRobotsNoindex') || q(this.node).is('[instanceof Neos.Seo:NoindexMixin]') ? false : true}
+}
+
+// remove link to translation if a target node has "noindex" set
+prototype(Neos.Seo:AlternateLanguageLink) {
+    @if.hasMetaRobotsNoIndexNotSet = ${q(this.node).property('metaRobotsNoindex') || q(this.node).is('[instanceof Neos.Seo:NoindexMixin]') ? false : true}
+    @if.hasNoForeignCanonical = ${String.isBlank(q(this.node).property('canonicalLink'))}
+}
