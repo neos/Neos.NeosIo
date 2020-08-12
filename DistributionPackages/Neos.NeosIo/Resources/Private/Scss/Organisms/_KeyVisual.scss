@@ -51,7 +51,24 @@
 		transform: translateX(-50%) translateY(-50%);
 	}
 
-	.keyVisual--large & {
+  h1, h2, h3,
+  h4, h5, h6,
+  .h1, .h2, .h3,
+  .h4, .h5, .h6 {
+    font-weight: 400;
+    text-shadow: 0px 0px 3px color-adjust($base-text-color, 100%);
+  }
+
+  &.u-invertText {
+    h1, h2, h3,
+    h4, h5, h6,
+    .h1, .h2, .h3,
+    .h4, .h5, .h6 {
+      text-shadow: 0px 1px 1px $headingsColor;
+    }
+  }
+
+  .keyVisual--large & {
 		height: 70vh;
 	}
 
