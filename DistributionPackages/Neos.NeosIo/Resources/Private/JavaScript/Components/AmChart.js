@@ -19,7 +19,7 @@ const config = {
     precision: 1,
     graph: {
         fillAlphas: 1,
-        balloonText: '<b>[[task]]</b>: [[open]]-[[value]]'
+        balloonText: '[[task]]'
     },
     rotate: true,
     categoryField: 'version',
@@ -45,7 +45,7 @@ const config = {
         enabled: true,
         divId: 'exportContainer',
         position: 'bottom-right',
-        fileName: 'typo3-support-times',
+        fileName: 'neos-support-times',
         menu: ['PNG', 'PDF', 'SVG']
     }
 };

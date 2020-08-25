@@ -2,6 +2,7 @@
   superTypes:
     'Neos.Neos:Content': true
     'Neos.Neos:ContentCollection': true
+  label: "${q(node).property('version')}"
   ui:
     label: 'Release Version'
     icon: icon-calendar-week
@@ -19,6 +20,8 @@
   properties:
     version:
       type: string
+      options:
+        showInCreationDialog: true
       ui:
         label: 'Version'
         help:
@@ -26,3 +29,33 @@
         reloadIfChanged: true
         inspector:
           group: 'releasePlan'
+    releaseDate:
+      type: DateTime
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Release date'
+        reloadIfChanged: true
+        inspector:
+          group: 'releasePlan'
+          editor: 'Neos.Neos/Inspector/Editors/DateTimeEditor'
+    activeSupportUntil:
+      type: DateTime
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'End of active support'
+        reloadIfChanged: true
+        inspector:
+          group: 'releasePlan'
+          editor: 'Neos.Neos/Inspector/Editors/DateTimeEditor'
+    endOfLife:
+      type: DateTime
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'End of life'
+        reloadIfChanged: true
+        inspector:
+          group: 'releasePlan'
+          editor: 'Neos.Neos/Inspector/Editors/DateTimeEditor'
