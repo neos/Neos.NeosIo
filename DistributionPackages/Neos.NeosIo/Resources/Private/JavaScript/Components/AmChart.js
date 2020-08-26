@@ -14,7 +14,7 @@ const config = {
     type: 'gantt',
     theme: 'light',
     period: 'YYYY',
-    dataDateFormat: 'YYYY-MM',
+    dataDateFormat: 'YYYY-MM-DD',
     columnWidth: 0.65,
     precision: 1,
     graph: {
