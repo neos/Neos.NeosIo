@@ -22,15 +22,18 @@ Neos:
           targetOptions:
             relativeSymlinks: true
 
-    session:
-      inactivityTimeout: 0
-
 Flowpack:
   ElasticSearch:
     clients:
       default:
-        - host: 'neosio_elasticsearch'
-        - host: 'neosio_elasticsearch'
+        - host: '%env:ELASTICSEARCH_HOSTNAME%'
+          port: '%env:ELASTICSEARCH_PORT%'
+          username: '%env:ELASTICSEARCH_USERNAME%'
+          password: '%env:ELASTICSEARCH_PASSWORD%'
+        - host: '%env:ELASTICSEARCH_HOSTNAME%'
+          port: '%env:ELASTICSEARCH_PORT%'
+          username: '%env:ELASTICSEARCH_USERNAME%'
+          password: '%env:ELASTICSEARCH_PASSWORD%'
 
     indexes:
       default:

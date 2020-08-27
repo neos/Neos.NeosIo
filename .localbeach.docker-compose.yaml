@@ -1,52 +1,70 @@
-version: '3'
+version: '3.7'
 
 networks:
   local_beach:
     external:
       name: local_beach
 
+volumes:
+  application:
+    name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}-application
+    driver: local
+
 services:
   webserver:
-    image: ${BEACH_WEBSERVER_IMAGE:-flownative/beach-nginx}:${BEACH_WEBSERVER_IMAGE_VERSION:-latest}
+    image: ${BEACH_WEBSERVER_IMAGE:-flownative/nginx}:${BEACH_WEBSERVER_IMAGE_VERSION:-3}
     container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_webserver
     networks:
       - local_beach
     ports:
-      - "80"
+      - "8080"
+      - "8081"
+      - "8082"
     volumes:
-      - .:/application:delegated
+      - application:/application
+      - ./Data/Persistent:/application/Data/Persistent:delegated
+      - ./Web:/application/Web:delegated
     environment:
       - VIRTUAL_HOST=${BEACH_VIRTUAL_HOSTS:?Please specify Beach virtual hosts as BEACH_VIRTUAL_HOSTS}
-      - BEACH_PHP_FPM_HOST=${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_php.local_beach
+      - VIRTUAL_PORT=8080
+      - BEACH_PHP_FPM_HOST=${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_php
       - BEACH_FLOW_BASE_CONTEXT=${BEACH_FLOW_BASE_CONTEXT:-Development}
       - BEACH_FLOW_SUB_CONTEXT=${BEACH_FLOW_SUB_CONTEXT:-Instance}
       - BEACH_PHP_MEMORY_LIMIT=${BEACH_PHP_MEMORY_LIMIT:-750M}
       - BEACH_PERSISTENT_RESOURCES_FALLBACK_BASE_URI=${BEACH_PERSISTENT_RESOURCES_FALLBACK_BASE_URI:-}
+      - FLOW_HTTP_TRUSTED_PROXIES=*
+      - NGINX_CACHE_ENABLE=false
 
-
-  php:
-    image: ${BEACH_PHP_IMAGE:-flownative/beach-phpfpm}:${BEACH_PHP_IMAGE_VERSION:-latest}
-    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_php
+  devkit:
+    image: flownative/localbeach-devkit:0
+    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_devkit
     networks:
       - local_beach
-    ports:
-      - "${BEACH_SSH_PORT:-2222}:22"
+    volumes:
+      - application:/application
+      - .:/application-on-host:delegated
+
+  php:
+    image: ${BEACH_PHP_IMAGE:-flownative/beach-php}:${BEACH_PHP_IMAGE_VERSION:-7.4}
+    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_php
+
+    networks:
+      - local_beach
     depends_on:
       - webserver
       - redis
+      - devkit
+    security_opt:
+      - no-new-privileges
     volumes:
+      - application:/application
       - ./Data/Persistent:/application/Data/Persistent:delegated
       - ./Data/Logs:/application/Data/Logs:delegated
       - ./Data/DoctrineMigrations:/application/Data/DoctrineMigrations
-      - .:/application-on-host:delegated
-      - ./.LocalBeach/secrets:/secrets
-      - ./.LocalBeach/home:/home/beach
       - ./Web:/application/Web:delegated
     environment:
-      - BEACH_PHP_FPM_ENABLE=true
-      - BEACH_REMOTE_ENABLE=true
-      - BEACH_REMOTE_AUTHORIZED_KEYS=${BEACH_REMOTE_AUTHORIZED_KEYS:?Please add your base64-encoded public ssh key to BEACH_REMOTE_AUTHORIZED_KEYS, for example in your global shell profile}
-      - BEACH_REMOTE_ENVIRONMENT_VARIABLE_NAMES=${BEACH_REMOTE_ENVIRONMENT_VARIABLE_NAMES:-RkxPV19DT05URVhUCkJFQUNIX0ZMT1dfU1VCX0NPTlRFWFQKQkVBQ0hfREVQTE9ZTUVOVF9KT0JfSURFTlRJRklFUgpCRUFDSF9JTlNUQU5DRV9JREVOVElGSUVSCkJFQUNIX1BIUF9NRU1PUllfTElNSVQKQkVBQ0hfUEhQX1RJTUVaT05FCkJFQUNIX0ZMT1dfU1VCX0NPTlRFWFQKQkVBQ0hfREFUQUJBU0VfREFUQV9TT1VSQ0VfTkFNRQpCRUFDSF9EQVRBQkFTRV9IT1NUCkJFQUNIX0RBVEFCQVNFX05BTUUKQkVBQ0hfREFUQUJBU0VfVVNFUk5BTUUKQkVBQ0hfREFUQUJBU0VfUEFTU1dPUkQKQkVBQ0hfREFUQUJBU0VfUE9SVApCRUFDSF9XRUJTRVJWRVJfUE9SVApCRUFDSF9TSVRFX1VSSV9TQ0hFTUUKQkVBQ0hfU0lURV9QUklNQVJZX0RPTUFJTgpCRUFDSF9TSVRFX0JBU0VfVVJJCkJFQUNIX1JFRElTX0hPU1QKQkVBQ0hfUkVESVNfUEFTU1dPUkQKQkVBQ0hfUkVESVNfUE9SVApCRUFDSF9HT09HTEVfQ0xPVURfU1RPUkFHRV9TRVJWSUNFX0FDQ09VTlRfSURFTlRJRklFUgpCRUFDSF9HT09HTEVfQ0xPVURfU1RPUkFHRV9TRVJWSUNFX0FDQ09VTlRfUFJJVkFURV9LRVkKQkVBQ0hfR09PR0xFX0NMT1VEX1NUT1JBR0VfU1RPUkFHRV9CVUNLRVQKQkVBQ0hfR09PR0xFX0NMT1VEX1NUT1JBR0VfVEFSR0VUX0JVQ0tFVApCRUFDSF9HT09HTEVfQ0xPVURfU1RPUkFHRV9SRUdJT04KQkVBQ0hfUEhQX1RJTUVaT05F}
+      - BEACH_WAIT_FOR_SYNC=true
+      - BEACH_INSTANCE_NAME=${BEACH_PROJECT_NAME}
       - BEACH_FLOW_BASE_CONTEXT=${BEACH_FLOW_BASE_CONTEXT:-Development}
       - BEACH_FLOW_SUB_CONTEXT=${BEACH_FLOW_SUB_CONTEXT:-Instance}
       - BEACH_DATABASE_HOST=${BEACH_DATABASE_HOST:-local_beach_database.local_beach}
@@ -58,12 +76,16 @@ services:
       - BEACH_REDIS_PORT=${BEACH_REDIS_PORT:-6379}
       - BEACH_REDIS_PASSWORD=${BEACH_REDIS_PASSWORD:-password}
       - BEACH_PHP_MEMORY_LIMIT=${BEACH_PHP_MEMORY_LIMIT:-750M}
-      - BEACH_SYNCD_ENABLE=true
-      - BEACH_APPLICATION_USER_SERVICE_ENABLE=false
       - BEACH_PHP_TIMEZONE=${BEACH_PHP_TIMEZONE:-UTC}
+      - BEACH_APPLICATION_USER_SERVICE_ENABLE=${BEACH_APPLICATION_USER_SERVICE_ENABLE:-false}
+      - BEACH_APPLICATION_STARTUP_SCRIPTS_ENABLE=${BEACH_APPLICATION_STARTUP_SCRIPTS_ENABLE:-false}
+      - ELASTICSEARCH_HOSTNAME=${ELASTICSEARCH_HOSTNAME:-${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_elasticsearch.local_beach}
+      - ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT:-9200}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME:-elastic}
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD:-}
 
   redis:
-    image: ${BEACH_REDIS_IMAGE:-flownative/beach-redis}:${BEACH_REDIS_IMAGE_VERSION:-latest}
+    image: ${BEACH_REDIS_IMAGE:-flownative/redis}:${BEACH_REDIS_IMAGE_VERSION:-latest}
     container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_redis
     networks:
       - local_beach
@@ -75,19 +97,3 @@ services:
       interval: 1s
       timeout: 5s
       retries: 120
-
-  elasticsearch:
-    image: ${BEACH_ELASTICSEARCH_IMAGE:-flownative/elasticsearch}:${BEACH_ELASTICSEARCH_IMAGE_VERSION:-2.4}
-    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_elasticsearch
-    networks:
-      - local_beach
-    volumes:
-      - ./.LocalBeach/elasticsearch:/data
-    environment:
-      - ELASTICSEARCH_CLUSTER_NAME=${ELASTICSEARCH_CLUSTER_NAME:-elasticsearch-default}
-      - ELASTICSEARCH_NODE_MASTER=${ELASTICSEARCH_NODE_MASTER:-true}
-      - ELASTICSEARCH_NODE_DATA=${ELASTICSEARCH_NODE_DATA:-true}
-      - ELASTICSEARCH_NODE_NAME=${ELASTICSEARCH_NODE_NAME:-}
-      - ELASTICSEARCH_HTTP_ENABLE=${ELASTICSEARCH_HTTP_ENABLE:-true}
-      - ELASTICSEARCH_HTTP_CORS_ENABLE=${ELASTICSEARCH_HTTP_CORS_ENABLE:-true}
-      - ELASTICSEARCH_HTTP_CORS_ALLOW_ORIGIN=${ELASTICSEARCH_HTTP_CORS_ALLOW_ORIGIN:-*}
