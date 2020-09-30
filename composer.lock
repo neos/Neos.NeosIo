@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b7a20268fde33e3ba76f279847dee73",
+    "content-hash": "160d0d46160cc293a5f66307334a02c1",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -5695,6 +5695,30 @@
             "description": "neos.io site package"
         },
         {
+            "name": "neos/neosio-casestudies",
+            "version": "dev-feature/references",
+            "dist": {
+                "type": "path",
+                "url": "./DistributionPackages/Neos.NeosIo.CaseStudies",
+                "reference": "93bbf4b200c5dd0be9a8b32e11c15a850e347b7d"
+            },
+            "require": {
+                "neos/neos": "*"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "neos": {
+                    "package-key": "Neos.NeosIo.CaseStudies"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Neos\\NeosIo\\CaseStudies\\": "Classes/"
+                }
+            },
+            "description": "References and CaseStudies for neos.io"
+        },
+        {
             "name": "neos/neosio-featurelist",
             "version": "dev-master",
             "dist": {
@@ -10577,7 +10601,8 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "webexcess/openstreetmap": 20
+        "webexcess/openstreetmap": 20,
+        "neos/neosio-casestudies": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
