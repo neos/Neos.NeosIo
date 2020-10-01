@@ -4,6 +4,7 @@ interface Provider {
     description: string;
     website: string;
     logo?: string;
+    bannerImage?: string;
     typesOfService: string[];
     street: string;
     city: string;
@@ -14,4 +15,5 @@ interface Provider {
     latitude: number;
     longitude: number;
     searchText: string;
+    badges?: string[];
 }

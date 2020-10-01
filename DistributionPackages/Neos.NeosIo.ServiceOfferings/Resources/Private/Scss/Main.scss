@@ -74,46 +74,86 @@
 
 .service-providers {
   &__list {
-    table {
-      width: 100%;
+    .grid-switcher {
+      border: 1pt solid #eee;
+      border-radius: 3px;
+      cursor: pointer;
+      display: inline-block;
+      padding: 0.7rem;
     }
 
-    tr {
-      border-bottom: 1pt solid #eeeeee;
+    .grid-switcher.selected {
+      border-color: #666;
     }
 
-    tbody tr:last-child {
-      border-bottom: none;
-    }
 
-    th {
-      user-select: none;
-      white-space: nowrap;
-    }
-
-    th,
-    td {
-      padding: .4rem 1rem .4rem 0;
-    }
-
-    &-entry {
-      &__title {
-        width: 30%;
+    .imageTeaser {
+      background: #eee;
+      color: #666;
+      &:before {
+        background: #eee;
       }
+    }
 
-      &__location {
-        address {
-          font-style: normal;
+    .service-providers__badge {
+      max-width: 120px;
+    }
+
+    .service-providers__grid-logo {
+      display: block;
+      max-width: 100px;
+      max-height: 50px;
+    }
+    .service-providers__grid-tableview,
+    .service-providers__grid-gridview {
+      .service-providers__grid-row {
+        &.remove-border {
+          border: 0;
+        }
+      }
+    }
+
+    .service-providers__grid-tableview {
+      .service-providers__grid-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 1rem;
+        border-top: 1pt solid #eee;
+        &.form {
+          .service-providers__grid-cell {
+            padding-bottom: 0;
+          }
+        }
+      }
+      .service-providers__grid-cell {
+        padding: 1rem;
+        z-index: 2;
+        &.service-providers__header {
+          padding-top: 0;
         }
       }
 
-      &__services {
+    }
 
+    .service-providers__grid-gridview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 2rem;
+
+      .service-providers__grid-row {
+        padding: 2rem;
+        position: relative;
+        display:grid;
+        grid-template-rows: 0 1fr 3rem 3rem;
+        border: 1px solid #eee;
+      }
+      .service-providers__badge {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        max-width: 80px;
       }
 
-      &__size {
-
-      }
     }
   }
 

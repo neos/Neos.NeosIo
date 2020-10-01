@@ -9,9 +9,16 @@
     icon: icon-globe
     inspector:
       groups:
-        properties:
-          label: 'Reference properties'
+        case-studies:
+          label: 'Case properties'
+          tab: 'case-studies'
+          icon: icon-globe
           position: 1
+      tabs:
+        case-studies:
+          label: 'Case properties'
+          position: 'start'
+          icon: icon-globe
   properties:
     url:
       type: string
@@ -19,7 +26,7 @@
         label: 'Project URL'
         reloadIfChanged: true
         inspector:
-          group: properties
+          group: 'case-studies'
           editor: Neos.Neos/Inspector/Editors/LinkEditor
           position: 10
     image:
@@ -28,7 +35,7 @@
         label: 'Add reference screenshot'
         reloadIfChanged: true
         inspector:
-          group: properties
+          group: 'case-studies'
           position: 20
     projectType:
       type: reference
@@ -36,7 +43,7 @@
         label: 'Choose project type'
         reloadIfChanged: true
         inspector:
-          group: properties
+          group: 'case-studies'
           editorOptions:
             nodeTypes:
               - 'Neos.NeosIo:ReferenceType'
@@ -47,7 +54,7 @@
       ui:
         label: 'Launch date'
         inspector:
-          group: properties
+          group: 'case-studies'
       validation:
         Neos.Neos/Validation/DateTimeValidator: {  }
       search:
@@ -57,7 +64,7 @@
       ui:
         label: 'Date published'
         inspector:
-          group: properties
+          group: 'case-studies'
       validation:
         Neos.Neos/Validation/DateTimeValidator: {  }
       search:
@@ -70,7 +77,7 @@
         label: 'Project volume'
         inspector:
           editor: Content/Inspector/Editors/SelectBoxEditor
-          group: properties
+          group: 'case-studies'
           editorOptions:
             values:
               1:
@@ -91,4 +98,4 @@
       ui:
         label: Featured
         inspector:
-          group: properties
+          group: 'case-studies'
