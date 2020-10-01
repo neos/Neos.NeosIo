@@ -70,18 +70,21 @@ export default function ProviderListing() {
 
     return (
         <div>
-            <div class="form form--inline">
-                <div className="form__item">
-                </div>
-
-                <div className="form__item">
-                </div>
-
-                <div className="form__item">
-                </div>
-            </div>
             <div>
                 <header class="service-providers__grid-tableview">
+                    <div class="service-providers__grid-row remove-border">
+                        <div class="service-providers__grid-cell">
+                        </div>
+                        <div class="service-providers__header service-providers__grid-cell">
+                            <span className="service-providers__header--sortable" onClick={() => sortBy('title')}>Name&nbsp;<i className={'fas ' + (sorting == 'title' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } /></span>
+                        </div>
+                        <div class="service-providers__header service-providers__grid-cell ">
+                            <span className="service-providers__header--sortable" onClick={() => sortBy('city')}>Location&nbsp;<i className={'fas ' + (sorting == 'city' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } /></span>
+                        </div>
+                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable">
+                            <span className="service-providers__header--sortable" onClick={() => sortBy('size')}>Size&nbsp;<i className={'fas ' + (sorting == 'size' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } /></span>
+                        </div>
+                    </div>
                     <div class="service-providers__grid-row remove-border form form--inline">
                         <div class="service-providers__grid-cell">
                             <div className="form__item">
@@ -121,19 +124,6 @@ export default function ProviderListing() {
                                 {sizes.map(size => <option key={size} value={size}>{size}</option>)}
                             </select>
 
-                        </div>
-                    </div>
-                    <div class="service-providers__grid-row remove-border">
-                        <div class="service-providers__grid-cell">
-                        </div>
-                        <div class="service-providers__header service-providers__grid-cell">
-                            <span className="service-providers__header--sortable" onClick={() => sortBy('title')}>Name&nbsp;<i class="fas fa-sort"/></span>
-                        </div>
-                        <div class="service-providers__header service-providers__grid-cell ">
-                            <span className="service-providers__header--sortable" onClick={() => sortBy('city')}>Location&nbsp;<i class="fas fa-sort"/></span>
-                        </div>
-                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable">
-                            <span className="service-providers__header--sortable" onClick={() => sortBy('size')}>Size&nbsp;<i class="fas fa-sort"/></span>
                         </div>
                     </div>
                 </header>
