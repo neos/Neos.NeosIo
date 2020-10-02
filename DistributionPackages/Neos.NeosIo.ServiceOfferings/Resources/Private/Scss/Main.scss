@@ -110,6 +110,11 @@
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 1rem;
         border-top: 1pt solid #eee;
+        @media(max-width: 1023px) {
+          grid-template-columns: none;
+          grid-template-rows: 1fr;
+        }
+
         &.form {
           .service-providers__grid-cell {
             padding-top: 0;
@@ -130,6 +135,13 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 2rem;
+      @media(max-width: 1023px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media(max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
 
       .service-providers__grid-row {
         padding: 2rem;
@@ -176,5 +188,12 @@
   .service-provider-popup__more {
     display: block;
     margin-top: 1rem;
+  }
+}
+
+
+@media(max-width: 1023px) {
+  .hide-md-down {
+    display:none;
   }
 }

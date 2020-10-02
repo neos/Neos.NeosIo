@@ -3,7 +3,8 @@ import * as React from "preact/compat";
 import {useContext, useEffect, useMemo, useState} from "preact/hooks";
 import CasesData from "./Context/CasesData";
 import TranslationData from "./Context/TranslationData";
-import CaseStudy from "./Components/CaseStudy";
+import CaseStudyTable from "./Components/CaseStudyTable";
+import CaseStudyGrid from "./Components/CaseStudyGrid";
 import {SortDirection, sortObjects} from "./Helper/Sorter";
 
 const projectVolumesValueMap = {
@@ -16,15 +17,15 @@ const projectVolumesValueMap = {
 };
 
 export default function CaseStudyListing() {
-    const casesData: CaseStudy[] = useContext(CasesData);
+    const casesData: CaseStudyTable[] = useContext(CasesData);
     const translationData: string[] = useContext(TranslationData);
 
     // Filter entries
-    const industries: string[] = useMemo(() => casesData.reduce((carry: string[], caseStudy: CaseStudy) => {
+    const industries: string[] = useMemo(() => casesData.reduce((carry: string[], caseStudy: CaseStudyTable) => {
         carry.push(caseStudy.projectType);
         return carry;
     }, []).filter((v, i, a) => v && a.indexOf(v) === i), [casesData]);
-    const projectVolumes: number[] = useMemo(() => casesData.reduce((carry: number[], caseStudy: CaseStudy) => {
+    const projectVolumes: number[] = useMemo(() => casesData.reduce((carry: number[], caseStudy: CaseStudyTable) => {
         carry.push(caseStudy.projectVolume);
         return carry;
     }, []).filter((v, i, a) => v && a.indexOf(v) === i), [casesData]);
@@ -76,29 +77,29 @@ export default function CaseStudyListing() {
                 <header class="cases__grid-tableview">
                     <div class="cases__grid-row remove-border">
                         <div class="cases__header cases__grid-cell">
-                            <strong>{translationData['numberOfEntriesShown']}: {caseStudies.length}</strong>
+                            <strong>{translationData['numberOfEntriesShown']}:&nbsp;{caseStudies.length}</strong>
                         </div>
                         <div
-                            class="cases__header cases__grid-cell cases__header--sortable"
+                            class="cases__header cases__grid-cell cases__header--sortable hide-md-down"
                             onclick={() => sortBy('datePublished')}>
                             {translationData['sortBy']['datePublished']}&nbsp;<i
                             className={'fas ' + (sorting == 'datePublished' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
                         </div>
                         <div
-                            class="cases__header cases__grid-cell cases__header--sortable"
+                            class="cases__header cases__grid-cell cases__header--sortable hide-md-down"
                             onclick={() => sortBy('launchDate')}>
                             {translationData['sortBy']['launchDate']}&nbsp;<i
                             className={'fas ' + (sorting == 'launchDate' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
                         </div>
                         <div
-                            class="cases__header cases__grid-cell cases__header--sortable"
+                            class="cases__header cases__grid-cell cases__header--sortable hide-md-down"
                             onclick={() => sortBy('projectVolume')}>
                             {translationData['sortBy']['projectVolume']}&nbsp;<i
                             className={'fas ' + (sorting == 'projectVolume' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
                         </div>
                     </div>
                     <div class="cases__grid-row remove-border form form--inline">
-                        <div class="cases__grid-cell">
+                        <div class="cases__grid-cell hide-md-down">
                             <div className="form__item">
                                 <i className={'grid-switcher fas fa-th-large' + (grid ? ' selected' : '')}
                                    onclick={e => switchToGrid(true)}
@@ -120,7 +121,7 @@ export default function CaseStudyListing() {
                                 <label for="cases-search"><i class="fas fa-search"/></label>
                             </div>
                         </div>
-                        <div class="cases__grid-cell">
+                        <div class="cases__grid-cell hide-md-down">
                             <div className="form__item">
                                 <select id="filter-industries"
                                         class="textInput"
@@ -130,7 +131,7 @@ export default function CaseStudyListing() {
                                 </select>
                             </div>
                         </div>
-                        <div class="cases__grid-cell">
+                        <div class="cases__grid-cell hide-md-down">
                             <select id="filter-volume"
                                     class="textInput"
                                     onchange={e => filterByProjectVolume(e.target['value'])}>
@@ -142,7 +143,7 @@ export default function CaseStudyListing() {
                     </div>
                 </header>
                 <section className={grid ? 'cases__grid-gridview' : 'cases__grid-tableview'}>
-                    {caseStudies.length ? caseStudies.map(caseStudy => <CaseStudy caseStudy={caseStudy} />) : (
+                    {caseStudies.length ? caseStudies.map(caseStudy => (grid ? <CaseStudyGrid caseStudy={caseStudy} /> : <CaseStudyTable caseStudy={caseStudy} />)) : (
                         <div className="cases__grid-row">
                             {translationData['noCasesFound']}
                         </div>

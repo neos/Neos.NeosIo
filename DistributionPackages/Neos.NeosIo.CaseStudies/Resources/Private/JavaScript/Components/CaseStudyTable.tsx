@@ -10,9 +10,9 @@ const projectVolumesValueMap = {
     25: '> 3000h'
 };
 
-export default function CaseStudy({caseStudy}: {caseStudy: CaseStudy}) {
+export default function CaseStudyTable({caseStudy}: {caseStudy: CaseStudy}) {
     return (
-        <div key={caseStudy.identifier} className="cases__grid-row">
+        <div key={caseStudy.identifier} className={'cases__grid-row' + (caseStudy.featured ? ' references__item--featured' : '')}>
             <div className="cases__grid-cell">
                 {caseStudy.image
                     ?

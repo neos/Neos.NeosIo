@@ -10,7 +10,7 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
             search = ${Translation.translate('caseListing.search', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
             tableView = ${Translation.translate('caseListing.tableView', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
             gridView = ${Translation.translate('caseListing.gridView', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-            noProvidersFound = ${Translation.translate('caseListing.noProvidersFound', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+            noCasesFound = ${Translation.translate('caseListing.noCasesFound', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
             numberOfEntriesShown = ${Translation.translate('caseListing.numberOfEntriesShown', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
             sortBy = Neos.Fusion:DataStructure {
                 featured = ${Translation.translate('caseListing.sortBy.featured', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
@@ -39,8 +39,9 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
                 searchText = ${String.toLowerCase(Array.join([this.title, this.url, this.projectType], ' '))}
                 launchDate = ${Date.format(q(case).property('launchDate'), 'U')}
                 datePublished = ${Date.format(q(case).property('datePublished'), 'U')}
-                projectVolume = ${q(case).property('projectVolume') || 0}
-                featured = ${q(case).property('featured') || 0}
+                projectVolume = ${q(case).property('projectVolume') || 1}
+                featured = ${q(case).property('featured') || Neos.Node.isOfType(case, 'Neos.NeosIo:Reference.CaseStudy') || 0}
+                // check for type "CaseStudy" which will automatically be featured
             }
         }
 

@@ -46,6 +46,10 @@
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 0.1rem;
         border-top: 1pt solid #eee;
+        @media(max-width: 1023px) {
+          grid-template-columns: none;
+          grid-template-rows: 1fr;
+        }
         &.form {
           .cases__grid-cell {
             padding-top: 0;
@@ -66,6 +70,13 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 2rem;
+      @media(max-width: 1023px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media(max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
 
       .cases__overlay {
         background-color: rgba(0, 0, 0, 0.4);
@@ -104,5 +115,11 @@
     &:hover {
       color: black;
     }
+  }
+}
+
+@media(max-width: 1023px) {
+  .hide-md-down {
+    display:none;
   }
 }

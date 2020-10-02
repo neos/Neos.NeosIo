@@ -74,24 +74,24 @@ export default function ProviderListing() {
         <div>
             <div>
                 <header class="service-providers__grid-tableview">
-                    <div class="service-providers__grid-row remove-border">
-                        <div class="service-providers__grid-cell">
+                    <div class="service-providers__grid-row remove-border ">
+                        <div class="service-providers__grid-cell hide-md-down">
                         </div>
-                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable"
+                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable hide-md-down"
                              onClick={() => sortBy('title')}>
                             {translationData['name']}&nbsp;<i className={'fas ' + (sorting == 'title' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } />
                         </div>
-                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable"
+                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable hide-md-down"
                              onClick={() => sortBy('city')}>
                             {translationData['location']}&nbsp;<i className={'fas ' + (sorting == 'city' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } />
                         </div>
-                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable"
+                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable hide-md-down"
                              onClick={() => sortBy('size')}>
                             {translationData['size']}&nbsp;<i className={'fas ' + (sorting == 'size' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } />
                         </div>
                     </div>
                     <div class="service-providers__grid-row remove-border form form--inline">
-                        <div class="service-providers__grid-cell">
+                        <div class="service-providers__grid-cell hide-md-down">
                             <div className="form__item">
                                 <i className={'grid-switcher fas fa-th-list' + (grid ? '' : ' selected')}
                                    onclick={e => switchToGrid(false)}
@@ -113,7 +113,7 @@ export default function ProviderListing() {
                                 <label for="service-provider-search"><i class="fas fa-search"/></label>
                             </div>
                         </div>
-                        <div class="service-providers__grid-cell">
+                        <div class="service-providers__grid-cell hide-md-down">
                             <div className="form__item">
                                 <select id="redirects-filter-status-code"
                                         class="textInput"
@@ -123,7 +123,7 @@ export default function ProviderListing() {
                                 </select>
                             </div>
                         </div>
-                        <div class="service-providers__grid-cell">
+                        <div class="service-providers__grid-cell hide-md-down">
                             <select id="redirects-filter-size"
                                     class="textInput"
                                     onchange={e => filterBySize(e.target['value'])}>
