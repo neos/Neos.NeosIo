@@ -2,6 +2,7 @@ import {h} from 'preact';
 import * as React from "preact/compat";
 import {useContext, useEffect, useMemo, useState} from "preact/hooks";
 import ProviderData from "./Context/ProviderData";
+import TranslationData from "./Context/TranslationData";
 import ProviderListEntry from "./Components/ProviderListEntry";
 import {SortDirection, sortObjects} from "./Helper/Sorter";
 
@@ -16,6 +17,7 @@ const sizeValueMap = {
 
 export default function ProviderListing() {
     const providerData: Provider[] = useContext(ProviderData);
+    const translationData: string[] = useContext(TranslationData);
 
     // Filter entries
     const countries: string[] = useMemo(() => providerData.reduce((carry: string[], provider: Provider) => {
@@ -75,32 +77,37 @@ export default function ProviderListing() {
                     <div class="service-providers__grid-row remove-border">
                         <div class="service-providers__grid-cell">
                         </div>
-                        <div class="service-providers__header service-providers__grid-cell">
-                            <span className="service-providers__header--sortable" onClick={() => sortBy('title')}>Name&nbsp;<i className={'fas ' + (sorting == 'title' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } /></span>
+                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable"
+                             onClick={() => sortBy('title')}>
+                            {translationData['name']}&nbsp;<i className={'fas ' + (sorting == 'title' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } />
                         </div>
-                        <div class="service-providers__header service-providers__grid-cell ">
-                            <span className="service-providers__header--sortable" onClick={() => sortBy('city')}>Location&nbsp;<i className={'fas ' + (sorting == 'city' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } /></span>
+                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable"
+                             onClick={() => sortBy('city')}>
+                            {translationData['location']}&nbsp;<i className={'fas ' + (sorting == 'city' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } />
                         </div>
-                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable">
-                            <span className="service-providers__header--sortable" onClick={() => sortBy('size')}>Size&nbsp;<i className={'fas ' + (sorting == 'size' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } /></span>
+                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable"
+                             onClick={() => sortBy('size')}>
+                            {translationData['size']}&nbsp;<i className={'fas ' + (sorting == 'size' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } />
                         </div>
                     </div>
                     <div class="service-providers__grid-row remove-border form form--inline">
                         <div class="service-providers__grid-cell">
                             <div className="form__item">
                                 <i className={'grid-switcher fas fa-th-list' + (grid ? '' : ' selected')}
-                                   onclick={e => switchToGrid(false)}></i>
+                                   onclick={e => switchToGrid(false)}
+                                   title={translationData['tableView']}></i>
                             </div>
                             <div className="form__item">
                                 <i className={'grid-switcher fas fa-th-large' + (grid ? ' selected' : '')}
-                                   onclick={e => switchToGrid(true)}></i>
+                                   onclick={e => switchToGrid(true)}
+                                   title={translationData['gridView']}></i>
                             </div>
                         </div>
                         <div class="service-providers__grid-cell">
                             <div className="form__item">
                                 <input type="text"
                                        id="service-provider-search"
-                                       placeholder="Search..."
+                                       placeholder={translationData['search']}
                                        class="textInput"
                                        onkeyup={e => search(e.target['value'])}/>&nbsp;
                                 <label for="service-provider-search"><i class="fas fa-search"/></label>
@@ -111,7 +118,7 @@ export default function ProviderListing() {
                                 <select id="redirects-filter-status-code"
                                         class="textInput"
                                         onchange={e => filterByCountry(e.target['value'])}>
-                                    <option value="">All countries</option>
+                                    <option value="">{translationData['chooseCountry']}</option>
                                     {countries.map(country => <option key={country} value={country}>{country}</option>)}
                                 </select>
                             </div>
@@ -120,7 +127,7 @@ export default function ProviderListing() {
                             <select id="redirects-filter-size"
                                     class="textInput"
                                     onchange={e => filterBySize(e.target['value'])}>
-                                <option value="">Any size</option>
+                                <option value="">{translationData['chooseSize']}</option>
                                 {sizes.map(size => <option key={size} value={size}>{size}</option>)}
                             </select>
 
@@ -129,8 +136,8 @@ export default function ProviderListing() {
                 </header>
                 <section className={grid ? 'service-providers__grid-gridview' : 'service-providers__grid-tableview'}>
                     {providers.length ? providers.map(provider => <ProviderListEntry provider={provider}/>) : (
-                        <div>
-                            <div colSpan={4}>No matching providers found</div>
+                        <div className="service-providers__grid-row">
+                            {translationData['noProvidersFound']}
                         </div>
                     )}
                 </section>

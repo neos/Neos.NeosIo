@@ -4,6 +4,18 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
     renderer = Neos.Fusion:Component {
         @apply.props = ${props}
 
+        translationData = Neos.Fusion:DataStructure {
+            name = ${Translation.translate('serviceListing.name', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+            location = ${Translation.translate('serviceListing.location', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+            size = ${Translation.translate('serviceListing.size', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+            search = ${Translation.translate('serviceListing.search', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+            chooseCountry = ${Translation.translate('serviceListing.chooseCountry', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+            chooseSize = ${Translation.translate('serviceListing.chooseSize', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+            tableView = ${Translation.translate('serviceListing.tableView', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+            gridView = ${Translation.translate('serviceListing.gridView', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+            noProvidersFound = ${Translation.translate('serviceListing.noProvidersFound', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+        }
+
         serviceProvidersData = Neos.Fusion:Map {
             items = ${props.serviceProviders}
             itemName = 'serviceProvider'
@@ -54,7 +66,9 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
 
         renderer = afx`
             <div class="service-providers__list" id="service-providers-listing"
-                 data-provider-data={Json.stringify(props.serviceProvidersData)}>
+                 data-provider-data={Json.stringify(props.serviceProvidersData)}
+                 data-translation-data={Json.stringify(props.translationData)}
+            >
             </div>
         `
     }
