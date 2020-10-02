@@ -17,7 +17,7 @@ const projectVolumesValueMap = {
 };
 
 export default function CaseStudyListing() {
-    const casesData: CaseStudyTableRow[] = useContext(CasesData);
+    const casesData: CaseStudy[] = useContext(CasesData);
     const translationData: string[] = useContext(TranslationData);
 
     // Filter entries
