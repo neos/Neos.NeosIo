@@ -27,7 +27,7 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
             itemRenderer = Neos.Fusion:DataStructure {
                 identifier = ${case.identifier}
                 title = ${q(case).property('title')}
-                url = ${q(case).property('url')}
+                url = ${q(case).property('url') ? q(case).property('url') : 'node://' + case.identifier}
                 url.@process.convertUris = Neos.Neos:ConvertUris {
                     absolute = true
                 }
@@ -42,7 +42,6 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
                 datePublished = ${Date.format(q(case).property('datePublished'), 'U')}
                 projectVolume = ${q(case).property('projectVolume') || 1}
                 featured = ${q(case).property('featured') || Neos.Node.isOfType(case, 'Neos.NeosIo:Reference.CaseStudy') || 0}
-                // check for type "CaseStudy" which will automatically be featured
             }
         }
 
