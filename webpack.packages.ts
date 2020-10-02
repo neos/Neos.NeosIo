@@ -20,6 +20,15 @@ const packages = [
             'react-dom': 'preact/compat'
         }
     },
+    {
+        packageName: 'Neos.NeosIo.CaseStudies',
+        filename: 'Main.tsx',
+        alias: {
+            react: 'preact/compat',
+            'react-dom/test-utils': 'preact/test-utils',
+            'react-dom': 'preact/compat'
+        }
+    },
     { packageName: 'Neos.MarketPlace' },
     { packageName: 'Neos.NeosConIo' },
     { packageName: 'Neos.NeosIo' }
