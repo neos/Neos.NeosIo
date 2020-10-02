@@ -22,7 +22,7 @@ export default function CaseStudyTableRow({caseStudy}: {caseStudy: CaseStudy}) {
             </div>
             <div className="cases__grid-cell cases__overlay">
                 <p>
-                    <i class="fas fa-industry"></i> {caseStudy.launchDateFormatted}
+                    {caseStudy.launchDateFormatted ? <i class="fas fa-rocket"></i> : ''} {caseStudy.launchDateFormatted}
                 </p>
             </div>
             <div className="cases__grid-cell cases__overlay">

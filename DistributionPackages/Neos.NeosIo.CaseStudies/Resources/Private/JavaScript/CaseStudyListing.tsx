@@ -79,26 +79,18 @@ export default function CaseStudyListing() {
                         <div class="cases__header cases__grid-cell">
                             <strong>{translationData['numberOfEntriesShown']}:&nbsp;{caseStudies.length}</strong>
                         </div>
-                        <div
-                            class="cases__header cases__grid-cell cases__header--sortable hide-md-down"
-                            onclick={() => sortBy('launchDate')}>
-                            {translationData['sortBy']['launchDate']}&nbsp;<i
-                            className={'fas ' + (sorting == 'launchDate' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
+                        <div class="cases__header cases__grid-cell">
+                        </div>
+                        <div class="cases__header cases__grid-cell">
                         </div>
                         <div
-                            class="cases__header cases__grid-cell cases__header--sortable hide-md-down"
+                            class="cases__header cases__grid-cell cases__header--sortable pull-right hide-md-down"
                             onclick={() => sortBy('datePublished')}>
                             {translationData['sortBy']['datePublished']}&nbsp;<i
                             className={'fas ' + (sorting == 'datePublished' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
                         </div>
-                        <div
-                            class="cases__header cases__grid-cell cases__header--sortable hide-md-down"
-                            onclick={() => sortBy('projectVolume')}>
-                            {translationData['sortBy']['projectVolume']}&nbsp;<i
-                            className={'fas ' + (sorting == 'projectVolume' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
-                        </div>
                     </div>
-                    <div class="cases__grid-row remove-border form form--inline">
+                    <div class="cases__grid-row form form--inline">
                         <div class="cases__grid-cell hide-md-down">
                             <div className="form__item">
                                 <i className={'grid-switcher fas fa-th-large' + (grid ? ' selected' : '')}
