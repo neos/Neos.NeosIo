@@ -1,6 +1,4 @@
-prototype(Neos.NeosIo:Reference.ShowCaseItem) < prototype(Neos.NeosIo:ReferenceItem) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Reference.ShowCase.html'
-
+prototype(Neos.NeosIo:Reference.ShowCaseItem) < prototype(Neos.Neos:ContentComponent) {
     node = ${node}
     url = ${q(node).property('url')}
     image = ${q(node).property('image')}
@@ -8,10 +6,33 @@ prototype(Neos.NeosIo:Reference.ShowCaseItem) < prototype(Neos.NeosIo:ReferenceI
     title = ${q(node).property('title')}
     alternativeText = ${q(node).property('title')}
 
-    projectVolume = ${q(node).property('projectVolume')}
-    projectVolume.@process {
-        isKnown = ${value > 1 ? value : false}
+    projectVolume = Neos.Fusion:Case {
+        default {
+            condition = ${true}
+            renderer = 'n/a'
+        }
+        5 {
+            condition = ${q(node).property('projectVolume') == 5}
+            renderer = '< 100h'
+        }
+        10 {
+            condition = ${q(node).property('projectVolume') == 10}
+            renderer = '100 - 499h'
+        }
+        15 {
+            condition = ${q(node).property('projectVolume') == 15}
+            renderer = '500 - 999h'
+        }
+        20 {
+            condition = ${q(node).property('projectVolume') == 20}
+            renderer = '1000 - 3000h'
+        }
+        25 {
+            condition = ${q(node).property('projectVolume') == 25}
+            renderer = '> 3000h'
+        }
     }
+
     projectType = ${q(q(node).property('projectType')).property('title')}
 
 
@@ -30,4 +51,16 @@ prototype(Neos.NeosIo:Reference.ShowCaseItem) < prototype(Neos.NeosIo:ReferenceI
         maximumwidth = '561'
         allowCropping = true
     }
+
+    renderer = afx`
+            <h1>{title}</h1>
+            {props.imageTag}
+            <ul>
+                <li @if.hasLaunchDate={props.launchDate}><i class="fas fa-rocket"></i>{Date.format(props.launchDate,'d.m.Y')}</li>
+                <li @if.hasProjectVolume={props.projectVolume}>
+                        <i class="fas fa-users"></i>{props.projectVolume}
+                </li>
+                <li @if.hasProjectType={props.projectType}><i class="fas fa-industry"></i> {props.projectType}</li>
+            </ul>
+    `
 }

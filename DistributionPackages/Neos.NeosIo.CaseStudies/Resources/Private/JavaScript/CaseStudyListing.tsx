@@ -3,8 +3,8 @@ import * as React from "preact/compat";
 import {useContext, useEffect, useMemo, useState} from "preact/hooks";
 import CasesData from "./Context/CasesData";
 import TranslationData from "./Context/TranslationData";
-import CaseStudyTable from "./Components/CaseStudyTable";
-import CaseStudyGrid from "./Components/CaseStudyGrid";
+import CaseStudyTableRow from "./Components/CaseStudyTableRow";
+import CaseStudyGridItem from "./Components/CaseStudyGridItem";
 import {SortDirection, sortObjects} from "./Helper/Sorter";
 
 const projectVolumesValueMap = {
@@ -17,15 +17,15 @@ const projectVolumesValueMap = {
 };
 
 export default function CaseStudyListing() {
-    const casesData: CaseStudyTable[] = useContext(CasesData);
+    const casesData: CaseStudyTableRow[] = useContext(CasesData);
     const translationData: string[] = useContext(TranslationData);
 
     // Filter entries
-    const industries: string[] = useMemo(() => casesData.reduce((carry: string[], caseStudy: CaseStudyTable) => {
+    const industries: string[] = useMemo(() => casesData.reduce((carry: string[], caseStudy: CaseStudyTableRow) => {
         carry.push(caseStudy.projectType);
         return carry;
     }, []).filter((v, i, a) => v && a.indexOf(v) === i), [casesData]);
-    const projectVolumes: number[] = useMemo(() => casesData.reduce((carry: number[], caseStudy: CaseStudyTable) => {
+    const projectVolumes: number[] = useMemo(() => casesData.reduce((carry: number[], caseStudy: CaseStudyTableRow) => {
         carry.push(caseStudy.projectVolume);
         return carry;
     }, []).filter((v, i, a) => v && a.indexOf(v) === i), [casesData]);
@@ -81,15 +81,15 @@ export default function CaseStudyListing() {
                         </div>
                         <div
                             class="cases__header cases__grid-cell cases__header--sortable hide-md-down"
-                            onclick={() => sortBy('datePublished')}>
-                            {translationData['sortBy']['datePublished']}&nbsp;<i
-                            className={'fas ' + (sorting == 'datePublished' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
-                        </div>
-                        <div
-                            class="cases__header cases__grid-cell cases__header--sortable hide-md-down"
                             onclick={() => sortBy('launchDate')}>
                             {translationData['sortBy']['launchDate']}&nbsp;<i
                             className={'fas ' + (sorting == 'launchDate' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
+                        </div>
+                        <div
+                            class="cases__header cases__grid-cell cases__header--sortable hide-md-down"
+                            onclick={() => sortBy('datePublished')}>
+                            {translationData['sortBy']['datePublished']}&nbsp;<i
+                            className={'fas ' + (sorting == 'datePublished' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
                         </div>
                         <div
                             class="cases__header cases__grid-cell cases__header--sortable hide-md-down"
@@ -143,7 +143,7 @@ export default function CaseStudyListing() {
                     </div>
                 </header>
                 <section className={grid ? 'cases__grid-gridview' : 'cases__grid-tableview'}>
-                    {caseStudies.length ? caseStudies.map(caseStudy => (grid ? <CaseStudyGrid caseStudy={caseStudy} /> : <CaseStudyTable caseStudy={caseStudy} />)) : (
+                    {caseStudies.length ? caseStudies.map(caseStudy => (grid ? <CaseStudyGridItem caseStudy={caseStudy} /> : <CaseStudyTableRow caseStudy={caseStudy} />)) : (
                         <div className="cases__grid-row">
                             {translationData['noCasesFound']}
                         </div>

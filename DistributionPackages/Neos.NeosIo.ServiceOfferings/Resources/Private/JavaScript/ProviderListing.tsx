@@ -3,8 +3,13 @@ import * as React from "preact/compat";
 import {useContext, useEffect, useMemo, useState} from "preact/hooks";
 import ProviderData from "./Context/ProviderData";
 import TranslationData from "./Context/TranslationData";
-import ProviderListEntry from "./Components/ProviderListEntry";
+import ProviderListGridItem from "./Components/ProviderListGridItem";
+import ProviderListTableRow from "./Components/ProviderListTableRow";
 import {SortDirection, sortObjects} from "./Helper/Sorter";
+import CaseStudyGridItem
+    from "../../../../Neos.NeosIo.CaseStudies/Resources/Private/JavaScript/Components/CaseStudyGridItem";
+import CaseStudyTableRow
+    from "../../../../Neos.NeosIo.CaseStudies/Resources/Private/JavaScript/Components/CaseStudyTableRow";
 
 const sizeValueMap = {
     '': 99,
@@ -36,7 +41,7 @@ export default function ProviderListing() {
     const [sorting, setSorting] = useState('');
     const [sortingDirection, setSortingDirection] = useState(SortDirection.Asc);
     const [providers, setProviders] = useState(providerData);
-    const [grid, setGrid] = useState(false);
+    const [grid, setGrid] = useState(true);
 
     // Callbacks
     const search = (word: string) => setSearchWord(word.toLowerCase());
@@ -93,14 +98,14 @@ export default function ProviderListing() {
                     <div class="service-providers__grid-row remove-border form form--inline">
                         <div class="service-providers__grid-cell hide-md-down">
                             <div className="form__item">
-                                <i className={'grid-switcher fas fa-th-list' + (grid ? '' : ' selected')}
-                                   onclick={e => switchToGrid(false)}
-                                   title={translationData['tableView']}></i>
-                            </div>
-                            <div className="form__item">
                                 <i className={'grid-switcher fas fa-th-large' + (grid ? ' selected' : '')}
                                    onclick={e => switchToGrid(true)}
                                    title={translationData['gridView']}></i>
+                            </div>
+                            <div className="form__item">
+                                <i className={'grid-switcher fas fa-th-list' + (grid ? '' : ' selected')}
+                                   onclick={e => switchToGrid(false)}
+                                   title={translationData['tableView']}></i>
                             </div>
                         </div>
                         <div class="service-providers__grid-cell">
@@ -135,7 +140,7 @@ export default function ProviderListing() {
                     </div>
                 </header>
                 <section className={grid ? 'service-providers__grid-gridview' : 'service-providers__grid-tableview'}>
-                    {providers.length ? providers.map(provider => <ProviderListEntry provider={provider}/>) : (
+                    {providers.length ? providers.map(provider => (grid ? <ProviderListGridItem provider={provider}/> : <ProviderListTableRow provider={provider}/>)) : (
                         <div className="service-providers__grid-row">
                             {translationData['noProvidersFound']}
                         </div>

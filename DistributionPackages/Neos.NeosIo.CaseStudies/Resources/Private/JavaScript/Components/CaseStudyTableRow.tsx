@@ -10,22 +10,19 @@ const projectVolumesValueMap = {
     25: '> 3000h'
 };
 
-export default function CaseStudyTable({caseStudy}: {caseStudy: CaseStudy}) {
+export default function CaseStudyTableRow({caseStudy}: {caseStudy: CaseStudy}) {
     return (
         <div key={caseStudy.identifier} className={'cases__grid-row' + (caseStudy.featured ? ' references__item--featured' : '')}>
             <div className="cases__grid-cell">
-                {caseStudy.image
-                    ?
-                    <img src="/_Resources/Static/Packages/Neos.NeosIo/Images/Loader.svg" data-image-normal={caseStudy.image} class="imageTeaser__image" loading="lazy" title={caseStudy.title} alt={caseStudy.title} />
-                    : ''
-                }
-
-            </div>
-            <div className="cases__grid-cell cases__overlay">
                 <p>
                     <a href={caseStudy.url} title={caseStudy.title} target="_blank" rel="noopener">
                         {caseStudy.title}
                     </a>
+                </p>
+            </div>
+            <div className="cases__grid-cell cases__overlay">
+                <p>
+                    <i class="fas fa-industry"></i> {caseStudy.launchDateFormatted}
                 </p>
             </div>
             <div className="cases__grid-cell cases__overlay">

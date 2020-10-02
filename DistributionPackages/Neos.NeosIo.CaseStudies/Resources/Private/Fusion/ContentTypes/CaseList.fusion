@@ -38,6 +38,7 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
                 projectType = ${q(q(case).property('projectType')).property('title')}
                 searchText = ${String.toLowerCase(Array.join([this.title, this.url, this.projectType], ' '))}
                 launchDate = ${Date.format(q(case).property('launchDate'), 'U')}
+                launchDateFormatted = ${Date.format(q(case).property('launchDate'), 'd.m.Y')}
                 datePublished = ${Date.format(q(case).property('datePublished'), 'U')}
                 projectVolume = ${q(case).property('projectVolume') || 1}
                 featured = ${q(case).property('featured') || Neos.Node.isOfType(case, 'Neos.NeosIo:Reference.CaseStudy') || 0}

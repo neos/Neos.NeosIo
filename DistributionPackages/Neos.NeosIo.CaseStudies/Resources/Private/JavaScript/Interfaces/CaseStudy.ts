@@ -3,6 +3,7 @@ interface CaseStudy {
     title: string;
     datePublished?: number;
     launchDate?: number;
+    launchDateFormatted?: string;
     featured: boolean;
     image?: string;
     projectType?: string;

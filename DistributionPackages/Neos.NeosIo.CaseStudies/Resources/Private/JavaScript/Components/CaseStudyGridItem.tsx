@@ -10,7 +10,7 @@ const projectVolumesValueMap = {
     25: '> 3000h'
 };
 
-export default function CaseStudyGrid({caseStudy}: {caseStudy: CaseStudy}) {
+export default function CaseStudyGridItem({caseStudy}: {caseStudy: CaseStudy}) {
     return (
         <a key={caseStudy.identifier} class={'imageTeaser imageTeaser--isLink' + (caseStudy.featured ? ' references__item--featured' : '')} href={caseStudy.url} target="_blank" rel="noopener">
             {caseStudy.image
