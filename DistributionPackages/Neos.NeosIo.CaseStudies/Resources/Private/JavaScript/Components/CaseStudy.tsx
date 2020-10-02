@@ -23,9 +23,9 @@ export default function CaseStudy({caseStudy}: {caseStudy: CaseStudy}) {
             </div>
             <div className="cases__grid-cell cases__overlay">
                 <p>
-                    <strong><a href={caseStudy.url} title={caseStudy.title} target="_blank" rel="noopener">
+                    <a href={caseStudy.url} title={caseStudy.title} target="_blank" rel="noopener">
                         {caseStudy.title}
-                    </a></strong>
+                    </a>
                 </p>
             </div>
             <div className="cases__grid-cell cases__overlay">
