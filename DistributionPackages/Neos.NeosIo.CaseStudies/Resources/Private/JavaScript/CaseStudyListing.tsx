@@ -21,14 +21,14 @@ export default function CaseStudyListing() {
     const translationData: string[] = useContext(TranslationData);
 
     // Filter entries
-    const industries: string[] = useMemo(() => casesData.reduce((carry: string[], caseStudy: CaseStudyTableRow) => {
+    const industries: string[] = useMemo(() => casesData.reduce((carry: string[], caseStudy: CaseStudy) => {
         carry.push(caseStudy.projectType);
         return carry;
-    }, []).filter((v, i, a) => v && a.indexOf(v) === i), [casesData]);
-    const projectVolumes: number[] = useMemo(() => casesData.reduce((carry: number[], caseStudy: CaseStudyTableRow) => {
+    }, []).filter((v, i, a) => v && a.indexOf(v) === i).sort(), [casesData]);
+    const projectVolumes: number[] = useMemo(() => casesData.reduce((carry: number[], caseStudy: CaseStudy) => {
         carry.push(caseStudy.projectVolume);
         return carry;
-    }, []).filter((v, i, a) => v && a.indexOf(v) === i), [casesData]);
+    }, []).sort((a,b) => a-b).filter((v, i, a) => !i || v != a[i -1]), [casesData]);
 
     // State hooks
     const [searchWord, setSearchWord] = useState('');
