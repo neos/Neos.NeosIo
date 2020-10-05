@@ -1,0 +1,123 @@
+
+.cases {
+  &__list {
+    .imageTeaser__image {
+      opacity: 0.8;
+    }
+    .cases-search {
+      width: 75%;
+    }
+    .pull-right {
+      text-align:right;
+    }
+    .grid-switcher {
+      border: 1pt solid #eee;
+      border-radius: 3px;
+      cursor: pointer;
+      display: inline-block;
+      padding: 0.7rem;
+    }
+
+    .grid-switcher.selected {
+      border-color: #666;
+    }
+
+    .cases__badge {
+      max-width: 120px;
+    }
+
+    .cases__grid-logo {
+      display: block;
+      max-width: 100px;
+      max-height: 50px;
+    }
+    .cases__grid-tableview,
+    .cases__grid-gridview {
+      .cases__grid-row {
+        &.remove-border {
+          border: 0;
+        }
+      }
+    }
+
+    .cases__grid-tableview {
+      .imageTeaser__image {
+        display: none;
+      }
+      .cases__grid-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 0.1rem;
+        border-top: 1pt solid #eee;
+        @media(max-width: 1023px) {
+          grid-template-columns: none;
+          grid-template-rows: 1fr;
+        }
+      }
+      .cases__grid-cell {
+        padding: 1rem;
+        z-index: 2;
+        &.cases__header {
+          padding-bottom: 0.5rem;
+        }
+      }
+
+    }
+
+    .cases__grid-gridview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 2rem;
+      @media(max-width: 1023px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media(max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+
+      .cases__overlay {
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 2;
+        padding: 0.5rem 1rem;
+        a {
+          font-weight: bold;
+        }
+        p,a {
+          color: #fff;
+          margin-bottom: 0;
+        }
+      }
+
+      .cases__grid-row {
+        padding-top: 4rem;
+        position: relative;
+        display:grid;
+        grid-template-rows: 0 3rem 3rem 3rem;
+        border: 1px solid #eee;
+        overflow: hidden;
+      }
+      .cases__badge {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        max-width: 80px;
+      }
+
+    }
+  }
+
+  &__header--sortable {
+    cursor: pointer;
+
+    &:hover {
+      color: black;
+    }
+  }
+}
+
+@media(max-width: 1023px) {
+  .hide-md-down {
+    display:none;
+  }
+}

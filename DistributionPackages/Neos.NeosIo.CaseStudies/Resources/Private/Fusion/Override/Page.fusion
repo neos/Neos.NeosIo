@@ -1,0 +1,29 @@
+prototype(Neos.Neos:Page) {
+    head.stylesheets {
+        caseStudiesStyleSheet = Neos.Fusion:Tag {
+            tagName = 'link'
+            attributes {
+                rel = 'stylesheet'
+                href = Neos.Fusion:ResourceUri {
+                    path = 'resource://Neos.NeosIo.CaseStudies/Public/Styles/Main.css'
+                }
+                media = 'print'
+                onload = 'this.media=\'all\';'
+            }
+            @if.caseStudyListingPresent = ${q(documentNode).children().find('[instanceof Neos.NeosIo.CaseStudies:Content.CaseList]')}
+        }
+    }
+
+    body.javascripts {
+        caseStudies = Neos.Fusion:Tag {
+            tagName = 'script'
+            attributes {
+                src = Neos.Fusion:ResourceUri {
+                    path = 'resource://Neos.NeosIo.CaseStudies/Public/Scripts/Main.js'
+                }
+            }
+            @if.caseStudyListingPresent = ${q(documentNode).children().find('[instanceof Neos.NeosIo.CaseStudies:Content.CaseList]')}
+        }
+
+    }
+}

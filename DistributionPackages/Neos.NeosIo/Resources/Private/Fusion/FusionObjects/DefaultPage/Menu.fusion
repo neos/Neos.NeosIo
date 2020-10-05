@@ -3,7 +3,7 @@ prototype(Neos.NeosIo:DefaultPage.Menu) < prototype(Neos.Neos:Menu) {
     entryLevel = 1
     maximumLevels = 2
     attributes.class = 'nav siteHeader__nav offCanvas__nav'
-    filter = 'Neos.Neos:Document, !Neos.NeosIo:Reference'
+    filter = 'Neos.Neos:Document, !Neos.NeosIo:Reference.ShowCase'
     @cache.entryIdentifier.documentNode = ${site}
     subNavClasses = 'nav nav--stacked siteHeader__dropDownNav offCanvas__categoryList'
 }

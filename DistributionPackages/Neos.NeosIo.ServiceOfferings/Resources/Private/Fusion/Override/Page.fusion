@@ -7,6 +7,8 @@ prototype(Neos.Neos:Page) {
                 href = Neos.Fusion:ResourceUri {
                     path = 'resource://Neos.NeosIo.ServiceOfferings/Public/Styles/Main.css'
                 }
+                media = 'print'
+                onload = 'this.media=\'all\';'
             }
             @if.onServiceProviderPage = ${q(documentNode).is('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection],[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
             @position = 'before openStreetMap'
