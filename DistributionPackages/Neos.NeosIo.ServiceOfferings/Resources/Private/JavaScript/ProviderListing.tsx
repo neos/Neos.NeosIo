@@ -96,7 +96,7 @@ export default function ProviderListing() {
                         </div>
                     </div>
                     <div class="service-providers__grid-row remove-border form form--inline">
-                        <div class="service-providers__grid-cell hide-md-down">
+                        <div class="service-providers__grid-cell">
                             <div className="form__item">
                                 <i className={'grid-switcher fas fa-th-large' + (grid ? ' selected' : '')}
                                    onclick={e => switchToGrid(true)}

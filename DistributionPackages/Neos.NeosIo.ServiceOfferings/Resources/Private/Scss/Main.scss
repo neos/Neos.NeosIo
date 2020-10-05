@@ -82,6 +82,11 @@
       padding: 0.7rem;
     }
 
+    &-entry__logo {
+      display: flex;
+      align-items: center;
+    }
+
     .grid-switcher.selected {
       border-color: #666;
     }
@@ -108,24 +113,38 @@
       .service-providers__grid-row {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-gap: 1rem;
         border-top: 1pt solid #eee;
+        padding: 1rem;
+
         @media(max-width: 1023px) {
           grid-template-columns: none;
           grid-template-rows: 1fr;
+          grid-gap: 1rem;
         }
 
         &.form {
+          padding: 0;
+          grid-template-columns: repeat(4, auto);
+
           .service-providers__grid-cell {
             padding-top: 0;
           }
         }
+
+        .form__item {
+          display: inline-block;
+          white-space: nowrap;
+        }
       }
       .service-providers__grid-cell {
-        padding: 1rem;
         z-index: 2;
+
         &.service-providers__header {
           padding-bottom: 0.5rem;
+        }
+
+        p:last-child {
+          margin-bottom: 0;
         }
       }
 
@@ -135,6 +154,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 2rem;
+
       @media(max-width: 1023px) {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -144,19 +164,43 @@
       }
 
       .service-providers__grid-row {
-        padding: 2rem;
+        padding: 1rem;
         position: relative;
         display:grid;
-        grid-template-rows: 0 1fr 3rem 3rem;
+        grid-template-rows: 1fr auto auto;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+        'description description'
+        'location badge'
+        'size badge';
         border: 1px solid #eee;
+
+        @media(min-width: 1024px) {
+          padding: 2rem;
+        }
       }
+
       .service-providers__badge {
-        position: absolute;
-        right: 1rem;
-        bottom: 1rem;
         max-width: 80px;
       }
 
+      .service-providers__list-entry__description {
+        grid-area: description;
+        overflow-x: auto;
+      }
+
+      .service-providers__list-entry__location {
+        grid-area: location;
+      }
+
+      .service-providers__list-entry__size {
+        grid-area: size;
+      }
+
+      .service-providers__list-entry__badge {
+        grid-area: badge;
+        justify-self: flex-end;
+      }
     }
   }
 
