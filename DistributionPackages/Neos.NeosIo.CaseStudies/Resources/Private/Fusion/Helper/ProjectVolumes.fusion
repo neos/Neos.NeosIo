@@ -1,0 +1,27 @@
+prototype(Neos.NeosIo.CaseStudies:Helper.ProjectVolumes) < prototype(Neos.Fusion:Case) {
+    default {
+        condition = ${true}
+        renderer = 'n/a'
+    }
+    5 {
+        condition = ${q(node).property('projectVolume') == 5}
+        renderer = '< 100h'
+    }
+    10 {
+        condition = ${q(node).property('projectVolume') == 10}
+        renderer = '100 - 499h'
+    }
+    15 {
+        condition = ${q(node).property('projectVolume') == 15}
+        renderer = '500 - 999h'
+    }
+    20 {
+        condition = ${q(node).property('projectVolume') == 20}
+        renderer = '1000 - 3000h'
+    }
+    25 {
+        condition = ${q(node).property('projectVolume') == 25}
+        renderer = '> 3000h'
+    }
+
+}

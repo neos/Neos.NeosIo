@@ -1,0 +1,57 @@
+prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
+    title = ${q(case).property('title')}
+    alternativeText = ${q(case).property('title')}
+    image = ${q(case).property('image')}
+    url = ${q(case).property('url') ? q(case).property('url') : 'node://' + case.identifier}
+    url.@process.convertUris = Neos.Neos:ConvertUris {
+        absolute = true
+    }
+    datePublished = ${q(case).property('datePublished')}
+    launchDate = ${q(case).property('launchDate')}
+    projectVolume = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes
+    projectType = ${q(q(case).property('projectType')).property('title')}
+    featured = ${q(case).property('featured')}
+
+    @context {
+        title = ${this.title}
+        alternativeText = ${this.alternativeText}
+    }
+
+    imageTag = Neos.NeosIo:Component.LazyLoadImage {
+        image = ${q(case).property('image')}
+        title = ${title}
+        alternativeText = ${alternativeText}
+        className = 'imageTeaser__image'
+        maximumHeight = '450'
+        maximumwidth = '700'
+        allowCropping = true
+    }
+
+    renderer = afx`
+        <div class="references__item gi u-w1/1 u-wm1/2 u-wl1/2">
+            <a href={props.url} target="_blank" rel="noopener" class="imageTeaser imageTeaser--isLink">
+                {props.imageTag}
+                <div class="imageTeaser__contents u-invertText">
+                    <h3 class="imageTeaser__contents__heading">{props.title}</h3>
+                    <footer class="references__data">
+                        <span @if.hasLaunchDate={props.launchDate}><i class="fas fa-rocket"></i>{Date.format(props.launchDate,'d.m.Y')}</span>
+                        <span @if.hasProjectVolume={props.projectVolume}>
+                            <i class="fas fa-users"></i>{props.projectVolume}
+                        </span>
+                        <span @if.hasProjectType={props.projectType}><i class="fas fa-industry"></i> {props.projectType}</span>
+                    </footer>
+                </div>
+            </a>
+        </div>
+    `
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${case}
+        }
+        entryTags {
+            node = ${Neos.Caching.nodeTag(case)}
+        }
+    }
+}
