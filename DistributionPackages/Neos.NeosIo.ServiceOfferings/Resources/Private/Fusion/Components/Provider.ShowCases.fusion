@@ -8,7 +8,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.ShowCases) < prototype
             <h2>Showcases</h2>
             <div class="references__list g">
                 <Neos.Fusion:Loop items={props.showCases} itemName="showCase">
-                    <Neos.NeosIo:Reference.List.Item @context.node={showCase}/>
+                    <Neos.NeosIo:Reference.List.Item @context.case={showCase}/>
                 </Neos.Fusion:Loop>
             </div>
         </section>
