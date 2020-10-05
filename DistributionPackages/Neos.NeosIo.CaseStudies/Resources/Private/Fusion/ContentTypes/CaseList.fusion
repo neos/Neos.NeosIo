@@ -1,0 +1,56 @@
+prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:ContentComponent) {
+    cases = ${q(site).find('[instanceof Neos.NeosIo:Reference]').get()}
+
+    renderer = Neos.Fusion:Component {
+        @apply.props = ${props}
+
+        translationData = Neos.Fusion:DataStructure {
+            chooseProjectVolume = ${Translation.translate('caseListing.chooseProjectVolume', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+            chooseIndustry = ${Translation.translate('caseListing.chooseIndustry', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+            search = ${Translation.translate('caseListing.search', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+            tableView = ${Translation.translate('caseListing.tableView', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+            gridView = ${Translation.translate('caseListing.gridView', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+            noCasesFound = ${Translation.translate('caseListing.noCasesFound', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+            numberOfEntriesShown = ${Translation.translate('caseListing.numberOfEntriesShown', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+            sortBy = Neos.Fusion:DataStructure {
+                featured = ${Translation.translate('caseListing.sortBy.featured', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+                launchDate = ${Translation.translate('caseListing.sortBy.launchDate', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+                datePublished = ${Translation.translate('caseListing.sortBy.datePublished', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+                projectVolume = ${Translation.translate('caseListing.sortBy.projectVolume', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+            }
+
+        }
+
+        casesData = Neos.Fusion:Map {
+            items = ${props.cases}
+            itemName = 'case'
+            itemRenderer = Neos.Fusion:DataStructure {
+                identifier = ${case.identifier}
+                title = ${q(case).property('title')}
+                url = ${q(case).property('url') ? q(case).property('url') : 'node://' + case.identifier}
+                url.@process.convertUris = Neos.Neos:ConvertUris {
+                    absolute = true
+                }
+                image = Neos.Neos:ImageUri {
+                    asset = ${q(case).property('image')}
+                    @if.hasBannerImage = ${q(case).property('image')}
+                }
+                projectType = ${q(q(case).property('projectType')).property('title')}
+                searchText = ${String.toLowerCase(Array.join([this.title, this.url, this.projectType], ' '))}
+                launchDate = ${Date.format(q(case).property('launchDate'), 'U')}
+                launchDateFormatted = ${q(case).property('launchDate') ? Date.format(q(case).property('launchDate'), 'd.m.Y') : ''}
+                datePublished = ${Date.format(q(case).property('datePublished'), 'U')}
+                projectVolume = ${q(case).property('projectVolume') || 1}
+                featured = ${q(case).property('featured') || Neos.Node.isOfType(case, 'Neos.NeosIo:Reference.CaseStudy') || 0}
+            }
+        }
+
+        renderer = afx`
+            <div class="cases__list" id="cases-listing"
+                 data-cases-data={Json.stringify(props.casesData)}
+                 data-translation-data={Json.stringify(props.translationData)}
+            >
+            </div>
+        `
+    }
+}
