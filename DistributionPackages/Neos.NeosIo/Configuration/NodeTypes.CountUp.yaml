@@ -26,6 +26,9 @@
             placeholder: prefix
     number:
       type: string
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator': []
+        'Neos.Neos/Validation/IntegerValidator': []
       defaultValue: '101'
       ui:
         inlineEditable: true
