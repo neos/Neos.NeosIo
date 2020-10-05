@@ -4,11 +4,6 @@
     'Neos.NodeTypes:Page': true
     'Neos.NodeTypes:ImageMixin': true
     'Neos.NodeTypes:ImageCaptionMixin': true
-    'Neos.Seo:TitleTagMixin': true
-    'Neos.Seo:TwitterCardMixin': true
-    'Neos.Seo:CanonicalLinkMixin': true
-    'Neos.Seo:OpenGraphMixin': true
-    'Neos.Seo:XmlSitemapMixin': true
     'Neos.NeosIo:KeyVisualMixin': true
   ui:
     label: Post
@@ -24,9 +19,6 @@
         image:
           position: 40
           collapsed: true
-        seometa:
-          position: 50
-          tab: null
   properties:
     datePublished:
       type: DateTime
@@ -128,11 +120,3 @@
           editorOptions:
             nodeTypes:
               - 'Neos.Neos:Document'
-    metaRobotsNoindex:
-      ui:
-        inspector:
-          group: null
-    metaRobotsNofollow:
-      ui:
-        inspector:
-          group: null
