@@ -1,11 +1,7 @@
-prototype(Neos.NeosIo:PageStyles) < prototype(Neos.Fusion:Array) {
+prototype(Neos.NeosIo:PageStyles) < prototype(Neos.Fusion:Join) {
     main = afx`
         <link rel="stylesheet" @children="attributes.href">
             <Neos.Fusion:ResourceUri path="resource://Neos.NeosIo/Public/Styles/Main.css"/>
         </link>
-    `
-
-    fonts = afx`
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans:300,200,200italic,300italic,400,400italic"/>
     `
 }
