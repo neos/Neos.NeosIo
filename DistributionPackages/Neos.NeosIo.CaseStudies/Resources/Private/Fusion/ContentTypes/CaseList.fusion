@@ -33,6 +33,11 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
                 }
                 image = Neos.Neos:ImageUri {
                     asset = ${q(case).property('image')}
+                    width = 662
+                    height = 312
+                    allowCropping = true
+                    async = true
+                    quality = 90
                     @if.hasBannerImage = ${q(case).property('image')}
                 }
                 projectType = ${q(q(case).property('projectType')).property('title')}
