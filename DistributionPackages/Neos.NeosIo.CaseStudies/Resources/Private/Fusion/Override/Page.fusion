@@ -21,9 +21,9 @@ prototype(Neos.Neos:Page) {
                 src = Neos.Fusion:ResourceUri {
                     path = 'resource://Neos.NeosIo.CaseStudies/Public/Scripts/Main.js'
                 }
+                defer = true
             }
             @if.caseStudyListingPresent = ${q(documentNode).children().find('[instanceof Neos.NeosIo.CaseStudies:Content.CaseList]')}
         }
-
     }
 }
