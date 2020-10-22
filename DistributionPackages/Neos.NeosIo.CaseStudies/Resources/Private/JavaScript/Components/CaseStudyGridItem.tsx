@@ -15,7 +15,7 @@ export default function CaseStudyGridItem({caseStudy}: {caseStudy: CaseStudy}) {
         <a key={caseStudy.identifier} class={'imageTeaser imageTeaser--isLink' + (caseStudy.featured ? ' references__item--featured' : '')} href={caseStudy.url} target="_blank" rel="noopener">
             {caseStudy.image
                 ?
-                <img src="/_Resources/Static/Packages/Neos.NeosIo/Images/Loader.svg" data-image-normal={caseStudy.image} class="imageTeaser__image" loading="lazy" title={caseStudy.title} alt={caseStudy.title} />
+                <img data-src={caseStudy.image} class="imageTeaser__image lazy" title={caseStudy.title} alt={caseStudy.title} />
                 : ''
             }
                 <div class="imageTeaser__contents u-invertText">
