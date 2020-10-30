@@ -12,8 +12,6 @@ namespace Neos\MarketPlace\Domain\Model;
  */
 
 use Cocur\Slugify\Slugify;
-use Packagist\Api\Result\Package;
-use Neos\Flow\Annotations as Flow;
 
 /**
  * Package Tree by vendor

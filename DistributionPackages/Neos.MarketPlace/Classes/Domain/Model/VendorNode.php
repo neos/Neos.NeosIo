@@ -11,15 +11,7 @@ namespace Neos\MarketPlace\Domain\Model;
  * source code.
  */
 
-use Neos\MarketPlace\Exception;
-use Packagist\Api\Result\Package;
-use Neos\Flow\Annotations as Flow;
-use Neos\Neos\Domain\Service\ContentContext;
-use Neos\Neos\Domain\Service\ContentContextFactory;
 use Neos\ContentRepository\Domain\Model\Node;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\ContentRepository\Domain\Model\NodeTemplate;
-use Neos\ContentRepository\Domain\Service\NodeTypeManager;
 
 /**
  * VendorNode

@@ -12,7 +12,6 @@ namespace Neos\MarketPlace\Domain\Model;
  */
 
 use Neos\MarketPlace\Domain\Repository\PackageRepository;
-use Packagist\Api\Result\Package;
 use Neos\Flow\Annotations as Flow;
 
 /**

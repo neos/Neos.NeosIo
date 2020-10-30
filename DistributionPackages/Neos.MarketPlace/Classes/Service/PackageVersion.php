@@ -11,7 +11,6 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
-use Packagist\Api\Result\Package;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
 use Neos\ContentRepository\Domain\Model\NodeInterface;

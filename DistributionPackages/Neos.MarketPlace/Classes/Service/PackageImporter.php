@@ -11,7 +11,6 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
-use Neos\Flow\Property\PropertyMappingConfiguration;
 use Neos\MarketPlace\Domain\Model\Storage;
 use Neos\MarketPlace\Domain\Repository\PackageRepository;
 use Neos\MarketPlace\Property\TypeConverter\PackageConverter;

@@ -12,7 +12,6 @@ namespace Neos\MarketPlace\Domain\Model;
  */
 
 use Neos\MarketPlace\Exception;
-use Packagist\Api\Result\Package;
 use Neos\Flow\Annotations as Flow;
 use Neos\Neos\Domain\Service\ContentContext;
 use Neos\Neos\Domain\Service\ContentContextFactory;

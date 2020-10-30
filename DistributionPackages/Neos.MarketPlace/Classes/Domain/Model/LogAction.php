@@ -11,8 +11,6 @@ namespace Neos\MarketPlace\Domain\Model;
  * source code.
  */
 
-use Neos\Flow\Annotations as Flow;
-
 /**
  * @api
  */

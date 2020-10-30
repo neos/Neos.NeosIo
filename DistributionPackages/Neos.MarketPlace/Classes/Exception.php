@@ -11,9 +11,6 @@ namespace Neos\MarketPlace;
  * source code.
  */
 
-use Packagist\Api\Result\Package;
-use Neos\Flow\Annotations as Flow;
-
 /**
  * Exception
  */

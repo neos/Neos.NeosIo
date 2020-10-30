@@ -11,7 +11,6 @@ namespace Neos\MarketPlace\Eel;
  * source code.
  */
 
-use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\ActionRequest;
 use Neos\Utility\Arrays;
 use Neos\Utility\Unicode\Functions;
