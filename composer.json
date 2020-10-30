@@ -41,6 +41,16 @@
         "post-update-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
         "post-install-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
         "post-package-update":"Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall",
-        "post-package-install":"Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall"
+        "post-package-install":"Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall",
+        "prune-domains": "@php ./flow domain:delete --hostname '*' ; exit 0",
+        "prime-localbeach": [
+            "@prune-domains",
+            "@php ./flow domain:add --site-node-name neosio --hostname neosio.localbeach.net",
+            "@php ./flow domain:add --site-node-name flowneosio --hostname flowio.localbeach.net",
+            "@php ./flow domain:add --site-node-name neosconio --hostname neoscon.localbeach.net"
+        ]
+    },
+    "scripts-descriptions": {
+        "prime-localbeach": "Primes the Local Beach Neos setup"
     }
 }
