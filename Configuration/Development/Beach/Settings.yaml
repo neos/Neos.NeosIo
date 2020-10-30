@@ -12,26 +12,16 @@ Neos:
         password: '%env:BEACH_DATABASE_PASSWORD%'
         port: '%env:BEACH_DATABASE_PORT%'
 
-    resource:
-      targets:
-        localWebDirectoryStaticResourcesTarget:
-          targetOptions:
-            relativeSymlinks: true
-
-        localWebDirectoryPersistentResourcesTarget:
-          targetOptions:
-            relativeSymlinks: true
-
 Flowpack:
   ElasticSearch:
     clients:
       default:
         - host: '%env:ELASTICSEARCH_HOSTNAME%'
-          port: '%env:ELASTICSEARCH_PORT%'
+          port: 9200
           username: '%env:ELASTICSEARCH_USERNAME%'
           password: '%env:ELASTICSEARCH_PASSWORD%'
         - host: '%env:ELASTICSEARCH_HOSTNAME%'
-          port: '%env:ELASTICSEARCH_PORT%'
+          port: 9200
           username: '%env:ELASTICSEARCH_USERNAME%'
           password: '%env:ELASTICSEARCH_PASSWORD%'
 
@@ -50,7 +40,3 @@ Flowpack:
                 char_filter: [ 'html_strip' ]
                 type: 'custom'
                 tokenizer: 'standard'
-
-    ContentRepositoryAdaptor:
-      driver:
-        version: 2.x
