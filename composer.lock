@@ -6440,7 +6440,7 @@
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosIo",
-                "reference": "9bd5ea49cdcc5f15cea89ea8da8d7c67609b7312"
+                "reference": "3b96b5798fb816b4e465cf1eaf2ac92b8cd5cd28"
             },
             "require": {
                 "flownative/gravatar": "^2.0",
@@ -6469,8 +6469,8 @@
                 "neos/swiftmailer": "^7.1",
                 "networkteam/neos-mailobfuscator": "^3.0",
                 "punktde/codeview": "^1.1",
-                "sitegeist/monocle": "^4.6",
-                "sitegeist/silhouettes": "^1.1",
+                "sitegeist/monocle": "^7.0",
+                "sitegeist/silhouettes": "^2.0",
                 "yoast/yoast-seo-for-neos": "^1.1"
             },
             "type": "neos-site",
@@ -10633,20 +10633,21 @@
         },
         {
             "name": "sitegeist/monocle",
-            "version": "v4.6.2",
+            "version": "v7.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sitegeist/Sitegeist.Monocle.git",
-                "reference": "e50257b8de7a9363b46fa2f35d4f95d70463f784"
+                "reference": "236595cc2cc4500dfc3b4e510bbe7d0d159bef15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sitegeist/Sitegeist.Monocle/zipball/e50257b8de7a9363b46fa2f35d4f95d70463f784",
-                "reference": "e50257b8de7a9363b46fa2f35d4f95d70463f784",
+                "url": "https://api.github.com/repos/sitegeist/Sitegeist.Monocle/zipball/236595cc2cc4500dfc3b4e510bbe7d0d159bef15",
+                "reference": "236595cc2cc4500dfc3b4e510bbe7d0d159bef15",
                 "shasum": ""
             },
             "require": {
-                "neos/neos": "*"
+                "guzzlehttp/psr7": "^1.4",
+                "neos/neos": "~5.0 || dev-master"
             },
             "type": "neos-plugin",
             "extra": {
@@ -10717,12 +10718,23 @@
                     "Neos.Neos-20161219122512",
                     "Neos.Fusion-20161219130100",
                     "Neos.Neos-20161220163741",
-                    "Neos.Fusion-20170120013047"
+                    "Neos.Fusion-20170120013047",
+                    "Neos.Neos-20170115114620",
+                    "Neos.Flow-20170125103800",
+                    "Neos.Seo-20170127154600",
+                    "Neos.Flow-20170127183102",
+                    "Neos.Fusion-20180211175500",
+                    "Neos.Fusion-20180211184832",
+                    "Neos.Flow-20180415105700",
+                    "Neos.Neos-20180907103800",
+                    "Neos.Neos.Ui-20190319094900",
+                    "Neos.Flow-20190425144900",
+                    "Neos.Flow-20190515215000"
                 ]
             },
             "autoload": {
-                "psr-0": {
-                    "Sitegeist\\Monocle": "Classes"
+                "psr-4": {
+                    "Sitegeist\\Monocle\\": "Classes"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -10731,13 +10743,13 @@
             ],
             "authors": [
                 {
-                    "name": "Wilhelm Behncke",
-                    "email": "behncke@sitegeist.de",
+                    "name": "Martin Ficzel",
+                    "email": "ficzel@sitegeist.de",
                     "role": "Developer"
                 },
                 {
-                    "name": "Martin Ficzel",
-                    "email": "ficzel@sitegeist.de",
+                    "name": "Wilhelm Behncke",
+                    "email": "behncke@sitegeist.de",
                     "role": "Developer"
                 }
             ],
@@ -10746,26 +10758,26 @@
                 "issues": "https://github.com/sitegeist/Sitegeist.Monocle/issues",
                 "source": "https://github.com/sitegeist/Sitegeist.Monocle/tree/master"
             },
-            "time": "2019-01-31T08:03:22+00:00"
+            "time": "2020-09-03T14:59:02+00:00"
         },
         {
             "name": "sitegeist/silhouettes",
-            "version": "v1.1.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sitegeist/Sitegeist.Silhouettes.git",
-                "reference": "6f98517d5f347b3234e7b83493ea581bfc80c077"
+                "reference": "24a3a897f69a3556b09b12ecbf3dfbaecc47f1de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sitegeist/Sitegeist.Silhouettes/zipball/6f98517d5f347b3234e7b83493ea581bfc80c077",
-                "reference": "6f98517d5f347b3234e7b83493ea581bfc80c077",
+                "url": "https://api.github.com/repos/sitegeist/Sitegeist.Silhouettes/zipball/24a3a897f69a3556b09b12ecbf3dfbaecc47f1de",
+                "reference": "24a3a897f69a3556b09b12ecbf3dfbaecc47f1de",
                 "shasum": ""
             },
             "require": {
-                "neos/content-repository": "^3.0 || ^4.0 || ^5.0 || dev-master",
-                "neos/neos": "^3.0 || ^4.0 || ^5.0 || dev-master",
-                "neos/utility-arrays": "^4.0 || ^5.0 || ^6.0 || dev-master"
+                "neos/content-repository": "^4.0 || ^5.0 || dev-master",
+                "neos/neos-ui": "^4.0 || ^5.0 || dev-master",
+                "neos/utility-arrays": "^5.0 || ^6.0 || dev-master"
             },
             "type": "neos-package",
             "extra": {
@@ -10785,9 +10797,9 @@
             "description": "Preconfigure property-silhuettes that can be applied to various properties of multiple NodeTypes.",
             "support": {
                 "issues": "https://github.com/sitegeist/Sitegeist.Silhouettes/issues",
-                "source": "https://github.com/sitegeist/Sitegeist.Silhouettes/tree/v1.1.0"
+                "source": "https://github.com/sitegeist/Sitegeist.Silhouettes/tree/master"
             },
-            "time": "2020-04-06T15:41:14+00:00"
+            "time": "2020-08-20T14:20:23+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
