@@ -3,27 +3,27 @@
   superTypes:
     'Neos.Neos:Content': true
   ui:
-    label: 'Badge'
-    icon: 'icon-credit-card'
+    label: Badge
+    icon: icon-credit-card
     inlineEditable: true
     inspector:
       groups:
         properties:
           label: 'Badge properties'
           position: 1
-          icon: 'icon-gears'
+          icon: icon-gears
   properties:
     highlight:
       type: boolean
       ui:
-        label: 'Highlight'
+        label: Highlight
         reloadIfChanged: true
         inspector:
           group: properties
     link:
       type: string
       ui:
-        label: 'URL'
+        label: URL
         reloadIfChanged: true
         inspector:
           group: properties
@@ -46,9 +46,9 @@
             formatting:
               strong: true
               em: true
-              u: true
               sub: true
               sup: true
+              underline: true
             placeholder: 'Enter the description for this badge'
     linkText:
       type: string
