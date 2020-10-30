@@ -69,7 +69,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
                         'description^2',
                         'lastVersion.keywords.name^10',
                         'lastVersion.keywords.tag^12',
-                        '__fulltext.*'
+                        'neos_fulltext.*'
                     ],
                     'query' => str_replace('/', '\\/', $searchWord),
                     'default_operator' => 'AND',
@@ -108,7 +108,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
                         [
                             'filter' => [
                                 'term' => [
-                                    '__typeAndSupertypes' => 'Neos.MarketPlace:Vendor'
+                                    'neos_type_and_supertypes' => 'Neos.MarketPlace:Vendor'
                                 ],
                             ],
                             'weight' => 1.2
