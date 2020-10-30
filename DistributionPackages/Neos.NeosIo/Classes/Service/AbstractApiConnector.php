@@ -11,6 +11,8 @@ use Neos\Cache\Frontend\VariableFrontend;
 use Neos\Flow\Http\Client\Browser;
 use Neos\Flow\Http\Client\CurlEngine;
 use Neos\Flow\Http\Uri;
+use Neos\Flow\Log\Utility\LogEnvironment;
+use Psr\Log\LoggerInterface;
 
 /**
  * Abstract base class for api connectors.
@@ -54,9 +56,9 @@ abstract class AbstractApiConnector
     /**
      * @Flow\Inject
      *
-     * @var \Neos\Flow\Log\SystemLoggerInterface
+     * @var LoggerInterface
      */
-    protected $systemLogger;
+    protected $logger;
 
     /**
      * Creates a valid cache identifier.
@@ -120,8 +122,8 @@ abstract class AbstractApiConnector
         $response = $browser->request($requestUri, 'GET');
 
         if ($response->getStatusCode() !== 200) {
-            $this->systemLogger->log(sprintf('Get request to Api failed with code "%s"!', $response->getStatus()),
-                LOG_ERR, 1453193835);
+            $this->logger->error(sprintf('Get request to Api failed with code "%s"!', $response->getStatus()),
+                LogEnvironment::fromMethodName(__METHOD__));
         }
 
         return $response !== false ? json_decode($response, true) : $response;
@@ -143,8 +145,8 @@ abstract class AbstractApiConnector
         $response = $browser->request($requestUri, 'POST', [], [], [], json_encode($data));
 
         if (!in_array($response->getStatusCode(), [200, 204])) {
-            $this->systemLogger->log(sprintf('Post request to Api failed with message "%s"!', $response->getStatus()),
-                LOG_ERR, 1457091548);
+            $this->logger->error(sprintf('Post request to Api failed with message "%s"!', $response->getStatus()),
+                LogEnvironment::fromMethodName(__METHOD__));
             return false;
         }
         return true;
