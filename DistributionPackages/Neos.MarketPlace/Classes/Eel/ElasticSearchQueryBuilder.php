@@ -29,7 +29,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
      * @return QueryInterface
      * @throws \Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception\QueryBuildingException
      */
-    public function getRequest()
+    public function getRequest(): QueryInterface
     {
         $request = parent::getRequest();
         $copiedRequest = clone $request;
@@ -47,7 +47,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
      * @return QueryBuilderInterface
      * @throws \Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception\QueryBuildingException
      */
-    public function fulltext($searchWord, array $options = [])
+    public function fulltext(string $searchWord, array $options = []): QueryBuilderInterface
     {
         $searchWord = trim($searchWord);
         if ($searchWord === '') {
