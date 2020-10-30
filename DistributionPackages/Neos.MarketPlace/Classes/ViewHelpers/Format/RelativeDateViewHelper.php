@@ -20,18 +20,30 @@ use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
 class RelativeDateViewHelper extends AbstractViewHelper
 {
     /**
+     * Initialize arguments
+     *
+     * @return void
+     * @api
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('date', \DateTimeInterface::class, 'the URI that will be put in the href attribute of the rendered link tag');
+        $this->registerArgument('compact', 'string', 'Open the linked document in new Tab', false, false);
+    }
+
+    /**
      * Renders a DateTime formatted relative to the current date.
      * Shows the time if the date is the current date.
      * Shows the month and date if the date is the current year.
      * Shows the year/month/date if the date is not the current year.
      *
-     * @param \DateTime $date
-     * @param boolean $compact
      * @return string an <img...> html tag
      * @throws \InvalidArgumentException
      */
-    public function render(\DateTime $date = null, $compact = false)
+    public function render()
     {
+        $date = $this->arguments['date'];
+        $compact = $this->arguments['compact'];
         if ($date === null) {
             $date = $this->renderChildren();
         }
