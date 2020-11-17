@@ -5,12 +5,14 @@ prototype(Neos.MarketPlace:VendorRenderer) < prototype(Neos.Neos:Content) {
         class = 'market-block'
     }
 
+    title = ${q(node).property('title')}
+
     main = Neos.Neos:ContentCollection {
         nodePath = 'main'
     }
 
-    packages = Neos.Fusion:Collection {
-        collection = ${q(node).children('[instanceof Neos.MarketPlace:Package]')}
+    packages = Neos.Fusion:Loop {
+        items = ${q(node).children('[instanceof Neos.MarketPlace:Package]')}
         itemName = 'node'
         itemRenderer = Neos.MarketPlace:PackageSearchResult
     }

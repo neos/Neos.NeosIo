@@ -2,6 +2,7 @@
 namespace Neos\NeosIo\Eel\Helper;
 
 use Neos\Flow\Annotations as Flow;
+use Neos\Neos\Domain\Model\User;
 use Neos\Neos\Domain\Repository\UserRepository;
 
 class DataHelper extends \Neos\Eel\Helper\ArrayHelper

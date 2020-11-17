@@ -1,4 +1,3 @@
-prototype(Neos.MarketPlace:VersionPreview) >
 prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Tag) {
     version = ${String.isBlank(request.arguments.version) ? null : String.trim(request.arguments.version)}
     @context.version = ${this.version ? this.version : 'latest'}
@@ -6,9 +5,9 @@ prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Tag) {
     findByVersionQuery = ${q(node).find('versions').find('[instanceof Neos.MarketPlace:Version][version = "' + this.version + '"]').first()}
     findLastVersionQuery = Neos.MarketPlace:LastVersionQuery
 
-    collection = ${this.version ? this.findByVersionQuery : this.findLastVersionQuery}
+    items = ${this.version ? this.findByVersionQuery : this.findLastVersionQuery}
 
-    @context.collection = ${this.collection}
+    @context.items = ${this.items}
 
     tagName = 'section'
 
@@ -19,8 +18,8 @@ prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Tag) {
         data-path = ${node.path}
     }
 
-    content = Neos.Fusion:Collection {
-        collection = ${collection}
+    content = Neos.Fusion:Loop {
+        items = ${items}
         itemRenderer = Neos.MarketPlace:Version
         itemName = 'node'
     }

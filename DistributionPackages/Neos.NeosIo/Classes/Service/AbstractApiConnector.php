@@ -113,7 +113,7 @@ abstract class AbstractApiConnector
      *
      * @param string $actionName
      * @param array $additionalParameters
-     * @return array
+     * @return array|false
      */
     protected function fetchJsonData($actionName, array $additionalParameters = [])
     {

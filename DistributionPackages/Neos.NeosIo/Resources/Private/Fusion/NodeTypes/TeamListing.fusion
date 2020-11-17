@@ -12,13 +12,13 @@ prototype(Neos.NeosIo:TeamListing) < prototype(Neos.Neos:ContentComponent) {
         <div class="vertical-feature-block">
             {props.title}
 
-            <Neos.Fusion:Collection collection={props.groups} itemName="group">
+            <Neos.Fusion:Loop items={props.groups} itemName="group">
                 <Neos.NeosIo:CrowdGroup
                     group={group}
                     teamName={props.teamName}
                     headerLevel={props.headerLevel}
                 />
-            </Neos.Fusion:Collection>
+            </Neos.Fusion:Loop>
 
             <p @if.noGroups={!props.groups}>No groups found</p>
             <div class="teamOverlay"></div>

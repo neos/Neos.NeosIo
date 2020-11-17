@@ -23,16 +23,16 @@ prototype(Neos.NeosIo.FeatureList:Molecule.Feature) < prototype(Neos.Fusion:Comp
 			</div>
 			<div class="feature__description">{props.featureData.description}</div>
 			<div class="feature__links" @if.has={props.featureData.links}>
-				<Neos.Fusion:Collection collection={props.featureData.links} itemName="link" @children="itemRenderer" >
+				<Neos.Fusion:Loop items={props.featureData.links} itemName="link" @children="itemRenderer" >
 					<a class="feature__links__item" href={link.uri} title={link.label}>{link.label} </a>
-				</Neos.Fusion:Collection>
+				</Neos.Fusion:Loop>
 			</div>
 		</div>
 	`
 }
 
 
-prototype(Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData) < prototype(Neos.Fusion:RawArray) {
+prototype(Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData) < prototype(Neos.Fusion:DataStructure) {
 	title = ${String.crop(
 		'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
 		Math.randomInt(20,50)
@@ -43,7 +43,7 @@ prototype(Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData) < prototype(Neos
 	)}
 	isCoreFeature = ${Math.randomInt(0, 5) > 2}
 	isCommunityFeature = ${Math.randomInt(0, 5) > 2}
-	links = Neos.Fusion:RawArray {
+	links = Neos.Fusion:DataStructure {
 		01 = ${{"label":"sitegeist/monocle", "uri": "https://www.neos.io/download-and-extend/packages/sitegeist/sitegeist-monocle.html" }}
 		02 = ${{"label":"flownative/anchorlinks", "uri": "https://www.neos.io/download-and-extend/packages/flownative/flownative-anchorlinks.html" }}
 		03 = ${{"label":"flownative/anchorlinks", "uri": "https://www.neos.io/download-and-extend/packages/flownative/flownative-anchorlinks.html" }}

@@ -1,0 +1,4 @@
+prototype(Neos.NeosIo:Youtube) < prototype(Neos.Neos:Content) {
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Youtube.html'
+    video = ${q(node).property('video')}
+}

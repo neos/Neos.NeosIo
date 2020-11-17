@@ -14,7 +14,7 @@ prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
         video = ${q(node).property('video')}
 
         speakerList = Neos.NeosConIo:SpeakerList {
-            collection = ${node.properties.speakers}
+            items = ${node.properties.speakers}
         }
 
         talkDate = ${Neos.NeosConIo.Date.timezone(q(node).property('talkDate'), 'Europe/Berlin')}
@@ -22,7 +22,7 @@ prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
         talkListVisible = ${node.properties.relatedTalks && Array.length(node.properties.relatedTalks) > 0}
 
         talkList = Neos.NeosConIo:TalkList {
-            collection = ${node.properties.relatedTalks}
+            items = ${node.properties.relatedTalks}
             itemRenderer.@if.talkHasCorrectEvent = true
         }
 
