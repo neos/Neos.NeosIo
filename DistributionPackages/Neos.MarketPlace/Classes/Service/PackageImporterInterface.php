@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Service;
 
 /*
@@ -25,36 +27,36 @@ interface PackageImporterInterface
     /**
      * @param Package $package
      * @param Storage $storage
-     * @param boolean $force
+     * @param bool $force
      * @return NodeInterface
      */
-    public function process(Package $package, Storage $storage, $force = false);
+    public function process(Package $package, Storage $storage, bool $force = false): NodeInterface;
 
     /**
      * @return array
      */
-    public function getProcessedPackages();
+    public function getProcessedPackages(): array;
 
     /**
-     * @return integer
+     * @return int
      */
-    public function getProcessedPackagesCount();
+    public function getProcessedPackagesCount(): int;
 
     /**
      * Remove local package not preset in the processed packages list
      *
      * @param Storage $storage
-     * @param callable $callback function called after the package removal
-     * @return integer
+     * @param callable|null $callback function called after the package removal
+     * @return int
      */
-    public function cleanupPackages(Storage $storage, callable $callback = null);
+    public function cleanupPackages(Storage $storage, callable $callback = null): int;
 
     /**
      * Remove vendors without packages
      *
      * @param Storage $storage
-     * @param callable $callback function called after the vendor removal
-     * @return integer
+     * @param callable|null $callback function called after the vendor removal
+     * @return int
      */
-    public function cleanupVendors(Storage $storage, callable $callback = null);
+    public function cleanupVendors(Storage $storage, callable $callback = null): int;
 }

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Domain\Model;
 
 /*
@@ -53,17 +55,16 @@ class Packages
     /**
      * @return \Generator
      */
-    public function packages()
+    public function packages(): \Generator
     {
         $vendors = array_keys(array_filter($this->vendors));
         foreach ($vendors as $vendor) {
             $packages = $this->packageRepository->findByVendor($vendor);
             foreach ($packages as $packageKey) {
-                if ($this->isPackageBlacklisted($packageKey) || in_array($packageKey, $this->processedPackages)) {
+                if ($this->isPackageBlacklisted($packageKey) || in_array($packageKey, $this->processedPackages, true)) {
                     continue;
                 }
-                $package = $this->packageRepository->findByPackageKey($packageKey);
-                yield $package;
+                yield $this->packageRepository->findByPackageKey($packageKey);
                 $this->processedPackages[] = $packageKey;
             }
         }
@@ -72,11 +73,10 @@ class Packages
         foreach ($packageTypes as $type) {
             $packages = $this->packageRepository->findByPackageType($type);
             foreach ($packages as $packageKey) {
-                if ($this->isPackageBlacklisted($packageKey) || in_array($packageKey, $this->processedPackages)) {
+                if ($this->isPackageBlacklisted($packageKey) || in_array($packageKey, $this->processedPackages, true)) {
                     continue;
                 }
-                $package = $this->packageRepository->findByPackageKey($packageKey);
-                yield $package;
+                yield $this->packageRepository->findByPackageKey($packageKey);
                 $this->processedPackages[] = $packageKey;
             }
         }
@@ -86,9 +86,9 @@ class Packages
      * @param string $packageKey
      * @return boolean
      */
-    protected function isPackageBlacklisted($packageKey)
+    protected function isPackageBlacklisted(string $packageKey): bool
     {
         $blacklist = array_keys(array_filter($this->packageBlackList));
-        return in_array($packageKey, $blacklist);
+        return in_array($packageKey, $blacklist, true);
     }
 }

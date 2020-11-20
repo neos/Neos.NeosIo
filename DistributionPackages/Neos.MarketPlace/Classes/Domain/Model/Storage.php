@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Domain\Model;
 
 /*
@@ -57,7 +59,7 @@ class Storage
     /**
      * @param string $workspaceName
      */
-    public function __construct($workspaceName = 'live')
+    public function __construct(string $workspaceName = 'live')
     {
         $this->workspaceName = $workspaceName;
     }
@@ -66,7 +68,7 @@ class Storage
      * @return NodeInterface
      * @throws Exception
      */
-    public function node()
+    public function node(): NodeInterface
     {
         if ($this->node !== null) {
             return $this->node;
@@ -82,8 +84,11 @@ class Storage
     /**
      * @param string $vendor
      * @return NodeInterface
+     * @throws Exception
+     * @throws \Neos\ContentRepository\Exception\NodeTypeNotFoundException
+     * @throws Exception
      */
-    public function createVendor($vendor)
+    public function createVendor(string $vendor): NodeInterface
     {
         $vendor = Slug::create($vendor);
         $node = $this->node()->getNode($vendor);
@@ -104,7 +109,7 @@ class Storage
      * @param string $workspaceName
      * @return ContentContext
      */
-    protected function createContext($workspaceName)
+    protected function createContext(string $workspaceName): ContentContext
     {
         $contextProperties = [
             'workspaceName' => $workspaceName,

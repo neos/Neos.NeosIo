@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Domain\Model;
 
 /*
@@ -20,13 +22,15 @@ use Neos\ContentRepository\Domain\Model\Node;
  */
 class PackageNode extends Node
 {
-
     /**
      * @return \DateTime
+     * @throws \Neos\ContentRepository\Exception\NodeException
+     * @throws \Neos\ContentRepository\Exception\NodeTypeNotFoundException
+     * @throws \Neos\Flow\Property\Exception
+     * @throws \Neos\Flow\Security\Exception
      */
-    public function getLastActivity()
+    public function getLastActivity(): \DateTime
     {
         return $this->getProperty('lastActivity');
     }
-
 }

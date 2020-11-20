@@ -16,7 +16,6 @@ use Github\Api\Repository\Contents;
 use Github\Client;
 use Github\Exception\ApiLimitExceedException;
 use Github\Exception\RuntimeException;
-use Github\HttpClient\CachedHttpClient;
 use Neos\MarketPlace\Domain\Model\PackageNode;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
@@ -34,6 +33,7 @@ use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\ContentRepository\Domain\Model\NodeTemplate;
 use Neos\ContentRepository\Domain\Service\NodeTypeManager;
 use Neos\Fusion\Core\Cache\ContentCache;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Convert package from packagist to node
@@ -76,7 +76,7 @@ class PackageConverter extends AbstractTypeConverter
 
     /**
      * @Flow\InjectConfiguration(path="github")
-     * @var string
+     * @var array
      */
     protected $githubSettings;
 
@@ -93,12 +93,31 @@ class PackageConverter extends AbstractTypeConverter
     protected $contentCache;
 
     /**
+     * @var CacheItemPoolInterface
+     * @ Flow\Inject(lazy=false)
+     */
+    protected $gitHubApiCachePool;
+
+    protected function initializeObject() {
+        $environmentConfiguration = new \Neos\Cache\EnvironmentConfiguration('GitHubApi', FLOW_PATH_DATA);
+        $cacheFactory = new \Neos\Cache\Psr\Cache\CacheFactory(
+            $environmentConfiguration
+        );
+
+        // Create a PSR-6 compatible cache
+        $this->gitHubApiCachePool = $cacheFactory->create(
+            'GitHubApiCache',
+            \Neos\Cache\Backend\SimpleFileBackend::class
+        );
+    }
+
+    /**
      * Converts $source to a node
      *
      * @param string|integer|array $source the string to be converted
      * @param string $targetType
      * @param array $convertedChildProperties not used currently
-     * @param PropertyMappingConfigurationInterface $configuration
+     * @param PropertyMappingConfigurationInterface|null $configuration
      * @return NodeInterface
      */
     public function convertFrom($source, $targetType, array $convertedChildProperties = [], PropertyMappingConfigurationInterface $configuration = null)
@@ -202,10 +221,9 @@ class PackageConverter extends AbstractTypeConverter
             // todo make it a bit more clever
             $repository = str_replace('.git', '', $repository);
             preg_match("#(.*)://github.com/(.*)#", $repository, $matches);
-            list($organization, $repository) = explode('/', $matches[2]);
-            $client = new Client(
-                new CachedHttpClient(['cache_dir' => $this->githubSettings['cacheDirectory']])
-            );
+            [$organization, $repository] = explode('/', $matches[2]);
+            $client = new Client();
+            $client->addCache($this->gitHubApiCachePool);
             $client->authenticate($this->githubSettings['account'], $this->githubSettings['password']);
             try {
                 $meta = $client->repositories()->show($organization, $repository);
@@ -239,14 +257,8 @@ class PackageConverter extends AbstractTypeConverter
     protected function handleGithubReadme($oganization, $repository, NodeInterface $node)
     {
         try {
-            $httpClient = new CachedHttpClient([
-                'cache_dir' => $this->githubSettings['cacheDirectory']
-            ]);
-            $httpClient->setHeaders([
-                'Accept' => 'application/vnd.github.VERSION.html'
-            ]);
-
-            $client = new Client($httpClient);
+            $client = new Client();
+            $client->addCache($this->gitHubApiCachePool);
             $client->authenticate($this->githubSettings['account'], $this->githubSettings['password']);
 
             $contents = new Contents($client);

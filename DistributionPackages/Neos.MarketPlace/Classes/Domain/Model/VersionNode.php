@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Domain\Model;
 
 /*
@@ -22,34 +24,49 @@ class VersionNode extends Node
 {
     /**
      * @return integer
+     * @throws \Neos\ContentRepository\Exception\NodeException
+     * @throws \Neos\ContentRepository\Exception\NodeTypeNotFoundException
+     * @throws \Neos\Flow\Property\Exception
+     * @throws \Neos\Flow\Security\Exception
      */
-    public function getVersionNormalized()
+    public function getVersionNormalized(): int
     {
         return $this->getProperty('versionNormalized');
     }
 
     /**
      * @return integer
+     * @throws \Neos\ContentRepository\Exception\NodeException
+     * @throws \Neos\ContentRepository\Exception\NodeTypeNotFoundException
+     * @throws \Neos\Flow\Property\Exception
+     * @throws \Neos\Flow\Security\Exception
      */
-    public function getVersion()
+    public function getVersion(): int
     {
         return $this->getProperty('version');
     }
 
     /**
      * @return integer
+     * @throws \Neos\ContentRepository\Exception\NodeException
+     * @throws \Neos\ContentRepository\Exception\NodeTypeNotFoundException
+     * @throws \Neos\Flow\Property\Exception
+     * @throws \Neos\Flow\Security\Exception
      */
-    public function getStability()
+    public function getStability(): int
     {
         return $this->getProperty('stability');
     }
 
     /**
      * @return \DateTime
+     * @throws \Neos\ContentRepository\Exception\NodeException
+     * @throws \Neos\ContentRepository\Exception\NodeTypeNotFoundException
+     * @throws \Neos\Flow\Property\Exception
+     * @throws \Neos\Flow\Security\Exception
      */
-    public function getLastActivity()
+    public function getLastActivity(): \DateTime
     {
         return $this->getProperty('time');
     }
-
 }

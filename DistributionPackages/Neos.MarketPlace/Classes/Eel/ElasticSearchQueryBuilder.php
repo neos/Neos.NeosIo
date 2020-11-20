@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Eel;
 
 /*
@@ -149,7 +151,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
                     ],
                     'score_mode' => 'avg',
                     'boost_mode' => 'multiply',
-                    'query' => $request['query']
+                    'query' => $request->toArray()['query']
                 ]
             ]);
     }

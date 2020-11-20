@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Service;
 
 /*
@@ -26,8 +28,9 @@ class PackageVersion
     /**
      * @param NodeInterface $node
      * @return array
+     * @throws \Neos\Eel\Exception
      */
-    public function extractVersions(NodeInterface $node)
+    public function extractVersions(NodeInterface $node): array
     {
         $data = [];
         $query = new FlowQuery([$node]);
@@ -46,21 +49,23 @@ class PackageVersion
     /**
      * @param NodeInterface $node
      * @return NodeInterface
+     * @throws \Neos\ContentRepository\Exception\NodeException
+     * @throws \Neos\Eel\Exception
      */
-    public function extractLastVersion(NodeInterface $node)
+    public function extractLastVersion(NodeInterface $node): ?NodeInterface
     {
         $versions = $this->extractVersions($node);
-        usort($versions, function(NodeInterface $a, NodeInterface $b) {
+        usort($versions, static function(NodeInterface $a, NodeInterface $b) {
             /** @var \DateTime $aTime */
             $aTime = $a->getProperty('time');
             /** @var \DateTime $bTime */
             $bTime = $b->getProperty('time');
             if ($aTime === false || $bTime === false) {
-            		return -1;
-			}
+                return -1;
+        }
             return $bTime->getTimestamp() - $aTime->getTimestamp();
         });
-        $stableVersions = array_filter($versions, function(NodeInterface $version) {
+        $stableVersions = array_filter($versions, static function(NodeInterface $version) {
             return $version->getProperty('stability') === true;
         });
         if (count($stableVersions) > 0) {

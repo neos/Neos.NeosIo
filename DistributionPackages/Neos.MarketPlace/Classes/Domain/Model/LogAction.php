@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Domain\Model;
 
 /*
@@ -16,13 +18,13 @@ namespace Neos\MarketPlace\Domain\Model;
  */
 class LogAction
 {
-    const SINGLE_PACKAGE_SYNC_STARTED = 'SinglePackageSyncStarted';
+    public const SINGLE_PACKAGE_SYNC_STARTED = 'SinglePackageSyncStarted';
 
-    const SINGLE_PACKAGE_SYNC_FINISHED = 'SinglePackageSyncFinished';
+    public const SINGLE_PACKAGE_SYNC_FINISHED = 'SinglePackageSyncFinished';
 
-    const SINGLE_PACKAGE_SYNC_FAILED = 'SinglePackageSyncFailed';
+    public const SINGLE_PACKAGE_SYNC_FAILED = 'SinglePackageSyncFailed';
 
-    const FULL_SYNC_STARTED = 'FullSyncStarted';
+    public const FULL_SYNC_STARTED = 'FullSyncStarted';
 
-    const FULL_SYNC_FINISHED = 'FullSyncFinished';
+    public const FULL_SYNC_FINISHED = 'FullSyncFinished';
 }

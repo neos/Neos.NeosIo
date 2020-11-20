@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Eel;
 
 /*
@@ -22,7 +24,6 @@ use Neos\ContentRepository\Search\Eel;
  */
 class IndexingHelper extends Eel\IndexingHelper
 {
-
     /**
      * @var array
      * @Flow\InjectConfiguration(path="typeMapping")
@@ -39,24 +40,22 @@ class IndexingHelper extends Eel\IndexingHelper
      * @param string $packageType
      * @return string
      */
-    public function packageTypeMapping($packageType)
+    public function packageTypeMapping(string $packageType): string
     {
-        if (isset($this->packageTypes[$packageType])) {
-            return $this->packageTypes[$packageType];
-        }
-        return $packageType;
+        return $this->packageTypes[$packageType] ?? $packageType;
     }
 
     /**
      * @param NodeInterface $node
      * @return array
+     * @throws \Neos\Eel\Exception
      */
-    public function extractVersions(NodeInterface $node)
+    public function extractVersions(NodeInterface $node): array
     {
         $data = [];
+        /** @var NodeInterface[] $versions */
         $versions = $this->packageVersion->extractVersions($node);
 
-        /** @var NodeInterface $versionNode */
         foreach ($versions as $versionNode) {
             $data[] = $this->prepareVersion($versionNode);
         }
@@ -65,10 +64,11 @@ class IndexingHelper extends Eel\IndexingHelper
     }
 
     /**
-     * @param NodeInterface $versionNode
+     * @param NodeInterface|null $versionNode
      * @return array
+     * @throws \Neos\ContentRepository\Exception\NodeException
      */
-    public function prepareVersion(NodeInterface $versionNode = null)
+    public function prepareVersion(NodeInterface $versionNode = null): array
     {
         if ($versionNode === null) {
             return [];
@@ -92,8 +92,10 @@ class IndexingHelper extends Eel\IndexingHelper
     /**
      * @param NodeInterface $node
      * @return array
+     * @throws \Neos\Eel\Exception
+     * @throws \Neos\ContentRepository\Exception\NodeException
      */
-    public function extractMaintainers(NodeInterface $node)
+    public function extractMaintainers(NodeInterface $node): array
     {
         $data = [];
         $query = new FlowQuery([$node]);
@@ -117,7 +119,7 @@ class IndexingHelper extends Eel\IndexingHelper
      * @param string $value
      * @return array
      */
-    public function trimExplode($value)
+    protected function trimExplode(string $value): array
     {
         return array_filter(array_map('trim', explode(',', $value)));
     }

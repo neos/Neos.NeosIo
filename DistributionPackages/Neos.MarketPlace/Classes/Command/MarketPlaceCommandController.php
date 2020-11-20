@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Neos\MarketPlace\Command;
 
@@ -24,7 +25,6 @@ use Packagist\Api\Result\Package;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\CommandController;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\ContentRepository\Search\Indexer\NodeIndexingManager;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -37,12 +37,6 @@ class MarketPlaceCommandController extends CommandController
      * @Flow\Inject
      */
     protected $importer;
-
-    /**
-     * @var NodeIndexingManager
-     * @Flow\Inject
-     */
-    protected $nodeIndexingManager;
 
     /**
      * @var LoggerInterface
@@ -65,18 +59,17 @@ class MarketPlaceCommandController extends CommandController
     /**
      * Sync packages from Packagist
      *
-     * @param string $package Sync only the given package
-     * @param boolean $disableIndexing Disable live indexing
+     * @param string|null $package Sync only the given package
      * @param boolean $force Force sync even if the package is not update on packagist
      * @return void
      */
-    public function syncCommand($package = null, $disableIndexing = false, $force = false)
+    public function syncCommand(string $package = null, bool $force = false): void
     {
         $beginTime = microtime(true);
 
         $sync = function () use ($package, $beginTime, $force) {
             $hasError = false;
-            $elapsedTime = function ($timer = null) use ($beginTime) {
+            $elapsedTime = static function ($timer = null) use ($beginTime) {
                 return microtime(true) - ($timer ?: $beginTime);
             };
             $count = 0;
@@ -150,11 +143,7 @@ class MarketPlaceCommandController extends CommandController
         };
 
 
-        if ($disableIndexing === true) {
-            $this->nodeIndexingManager->withoutIndexing($sync);
-        } else {
-            $sync();
-        }
+        $sync();
     }
 
     /**
@@ -162,7 +151,7 @@ class MarketPlaceCommandController extends CommandController
      *
      * @param Storage $storage
      */
-    protected function cleanupPackages(Storage $storage)
+    protected function cleanupPackages(Storage $storage): void
     {
         $this->outputLine();
         $this->outputLine('Cleanup packages ...');
@@ -180,7 +169,7 @@ class MarketPlaceCommandController extends CommandController
      *
      * @param Storage $storage
      */
-    protected function cleanupVendors(Storage $storage)
+    protected function cleanupVendors(Storage $storage): void
     {
         $this->outputLine();
         $this->outputLine('Cleanup vendors ...');

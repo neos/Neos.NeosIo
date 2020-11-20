@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\ViewHelpers\Format;
 
 /*
@@ -40,7 +42,7 @@ class RelativeDateViewHelper extends AbstractViewHelper
      * @return string an <img...> html tag
      * @throws \InvalidArgumentException
      */
-    public function render()
+    public function render(): string
     {
         $date = $this->arguments['date'];
         $compact = $this->arguments['compact'];
@@ -56,17 +58,17 @@ class RelativeDateViewHelper extends AbstractViewHelper
             $hours = $date->diff($now)->h;
             if ($hours > 1) {
                 return $compact ? $hours . ' hours ago' : 'Last activity ' .  $hours . ' hours ago';
-            } else {
-                return $compact ? 'One hour ago' : 'Last activity one hour ago';
             }
+
+            return $compact ? 'One hour ago' : 'Last activity one hour ago';
         }
         $days = $now->diff($date)->format('%a');
         if ($days < 30) {
             if ($days > 1) {
                 return $compact ? $days . ' days ago' : 'Last activity ' .  $days . ' days ago';
-            } else {
-                return $compact ? 'Yesterday' : 'Last activity yesterday';
             }
+
+            return $compact ? 'Yesterday' : 'Last activity yesterday';
         }
 
         return $compact ? $date->format('n M Y') : 'Last activity on ' . $date->format('n F Y');

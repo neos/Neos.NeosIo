@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Eel;
 
 /*
@@ -24,25 +26,28 @@ class CachingHelper extends TypoScriptCachingHelper
     /**
      * @param ActionRequest $request
      * @param string $argumentName
-     * @return string
+     * @return string|null
+     * @throws \Neos\Flow\Mvc\Exception\NoSuchArgumentException
+     * @throws \JsonException
      */
-    public function paginationCacheKey(ActionRequest $request, $argumentName = '--browse')
+    public function paginationCacheKey(ActionRequest $request, string $argumentName = '--browse'): ?string
     {
-        $request = $request->getParentRequest() ? $request->getParentRequest() : $request;
+        $request = $request->getParentRequest() ?: $request;
         if (!$request->hasArgument($argumentName)) {
             return null;
         }
         $arguments = $request->getArgument($argumentName);
         $arguments = array_map('trim', array_filter($arguments));
         Arrays::sortKeysRecursively($arguments);
-        return md5(json_encode($arguments));
+        return md5(json_encode($arguments, JSON_THROW_ON_ERROR));
     }
 
     /**
      * @param string $query
      * @return string
      */
-    public function queryCacheKey($query) {
+    public function queryCacheKey(string $query): string
+    {
         return md5(Functions::strtolower(trim($query)));
     }
 }
