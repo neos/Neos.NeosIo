@@ -13,6 +13,10 @@ namespace Neos\MarketPlace\Domain\Model;
  * source code.
  */
 
+use Neos\ContentRepository\Domain\Projection\Content\TraversableNodeInterface;
+use Neos\ContentRepository\Domain\Service\Context;
+use Neos\ContentRepository\Exception\NodeConfigurationException;
+use Neos\ContentRepository\Exception\NodeTypeNotFoundException;
 use Neos\MarketPlace\Exception;
 use Neos\Flow\Annotations as Flow;
 use Neos\Neos\Domain\Service\ContentContext;
@@ -52,7 +56,7 @@ class Storage
     protected $workspaceName;
 
     /**
-     * @var NodeInterface
+     * @var TraversableNodeInterface
      */
     protected $node;
 
@@ -65,10 +69,10 @@ class Storage
     }
 
     /**
-     * @return NodeInterface
+     * @return TraversableNodeInterface|NodeInterface
      * @throws Exception
      */
-    public function node(): NodeInterface
+    public function node(): TraversableNodeInterface
     {
         if ($this->node !== null) {
             return $this->node;
@@ -83,12 +87,13 @@ class Storage
 
     /**
      * @param string $vendor
-     * @return NodeInterface
+     * @return TraversableNodeInterface|NodeInterface
      * @throws Exception
-     * @throws \Neos\ContentRepository\Exception\NodeTypeNotFoundException
+     * @throws NodeTypeNotFoundException
      * @throws Exception
+     * @throws NodeConfigurationException
      */
-    public function createVendor(string $vendor): NodeInterface
+    public function createVendor(string $vendor): TraversableNodeInterface
     {
         $vendor = Slug::create($vendor);
         $node = $this->node()->getNode($vendor);
@@ -107,7 +112,7 @@ class Storage
      * Creates a content context for given workspace and language identifiers
      *
      * @param string $workspaceName
-     * @return ContentContext
+     * @return ContentContext|Context
      */
     protected function createContext(string $workspaceName): ContentContext
     {

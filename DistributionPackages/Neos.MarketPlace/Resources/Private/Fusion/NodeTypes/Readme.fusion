@@ -1,0 +1,5 @@
+prototype(Neos.MarketPlace:Readme) < prototype(Neos.Fusion:Template) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Readme.html'
+
+    source = ${q(node).property('source')}
+}

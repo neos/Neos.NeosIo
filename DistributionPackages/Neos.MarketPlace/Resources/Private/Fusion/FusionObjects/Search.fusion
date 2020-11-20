@@ -1,7 +1,7 @@
 root {
     @cache {
         entryIdentifier {
-            searchQuery = ${MarketCaching.queryCacheKey(request.arguments.search)}
+            searchQuery = ${MarketCaching.queryCacheKey(String.toString(request.arguments.search))}
             searchPagination = ${MarketCaching.paginationCacheKey(request)}
         }
 
@@ -12,7 +12,7 @@ root {
 prototype(Neos.MarketPlace:RepositoryStorage) {
     @cache {
         entryIdentifier {
-            searchQuery = ${MarketCaching.queryCacheKey(request.arguments.search)}
+            searchQuery = ${MarketCaching.queryCacheKey(String.toString(request.arguments.search))}
             searchPagination = ${MarketCaching.paginationCacheKey(request)}
         }
 
@@ -20,7 +20,6 @@ prototype(Neos.MarketPlace:RepositoryStorage) {
     }
 }
 
-prototype(Neos.MarketPlace:Search) >
 prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
     templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Search.html'
 
@@ -73,7 +72,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
 
         entryIdentifier {
             documentNode = ${documentNode}
-            searchQuery = ${MarketCaching.queryCacheKey(request.arguments.search)}
+            searchQuery = ${MarketCaching.queryCacheKey(String.toString(request.arguments.search))}
             searchPagination = ${MarketCaching.paginationCacheKey(request)}
         }
 

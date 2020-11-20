@@ -7,7 +7,7 @@ prototype(Neos.MarketPlace:Vendor) < prototype(Neos.MarketPlace:DefaultPage) {
         content {
             main = Neos.Fusion:Join {
                 search = Neos.MarketPlace:Search {
-                    showResult = ${false}
+                    showResult = false
                 }
                 vendor = Neos.MarketPlace:VendorRenderer
             }

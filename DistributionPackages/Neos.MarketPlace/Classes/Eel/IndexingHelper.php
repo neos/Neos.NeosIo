@@ -116,12 +116,12 @@ class IndexingHelper extends Eel\IndexingHelper
     }
 
     /**
-     * @param string $value
+     * @param string|null $value
      * @return array
      */
-    protected function trimExplode(string $value): array
+    public function trimExplode(?string $value): array
     {
-        return array_filter(array_map('trim', explode(',', $value)));
+        return array_filter(array_map('trim', explode(',', (string)$value)));
     }
 
 }

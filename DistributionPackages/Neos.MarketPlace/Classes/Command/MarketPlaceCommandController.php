@@ -67,83 +67,79 @@ class MarketPlaceCommandController extends CommandController
     {
         $beginTime = microtime(true);
 
-        $sync = function () use ($package, $beginTime, $force) {
-            $hasError = false;
-            $elapsedTime = static function ($timer = null) use ($beginTime) {
-                return microtime(true) - ($timer ?: $beginTime);
-            };
-            $count = 0;
-            $this->outputLine();
-            $this->outputLine('Synchronize with Packagist ...');
-            $this->outputLine('------------------------------');
-            $storage = new Storage();
+        $hasError = false;
+        $elapsedTime = static function ($timer = null) use ($beginTime) {
+            return microtime(true) - ($timer ?: $beginTime);
+        };
+        $count = 0;
+        $this->outputLine();
+        $this->outputLine('Synchronize with Packagist ...');
+        $this->outputLine('------------------------------');
+        $storage = new Storage();
 
-            $process = function (Package $package) use ($storage, &$count, $force) {
-                $count++;
-                $this->outputLine(sprintf('  %d/ %s (%s)', $count, $package->getName(), $package->getTime()));
-                $this->importer->process($package, $storage, $force);
+        $process = function (Package $package) use ($storage, &$count, $force) {
+            $count++;
+            $this->outputLine(sprintf('  %d/ %s (%s)', $count, $package->getName(), $package->getTime()));
+            $this->importer->process($package, $storage, $force);
 
-                if ($count % 10 === 0) {
-                    $this->persistenceManager->persistAll();
-                }
-            };
+            if ($count % 10 === 0) {
+                $this->persistenceManager->persistAll();
+                $this->persistenceManager->clearState();
+            }
+        };
 
-            if ($package === null) {
-                $this->logger->info(sprintf('action=%s', LogAction::FULL_SYNC_STARTED), LogEnvironment::fromMethodName(__METHOD__));
-                $packages = new Packages();
-                foreach ($packages->packages() as $package) {
-                    $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED, $package->getName()), LogEnvironment::fromMethodName(__METHOD__));
-                    $timer = microtime(true);
-                    try {
-                        $process($package);
-                        $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED, $package->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
-                    } catch (\Exception $exception) {
-                        $this->logger->error(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FAILED, $package->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
-                        $logMessage = $this->throwableStorage->logThrowable($exception);
-                        $this->logger->error($logMessage, LogEnvironment::fromMethodName(__METHOD__));
-                        $hasError = true;
-                    }
-                }
-                $this->cleanupPackages($storage);
-                $this->cleanupVendors($storage);
-                $this->logger->info(sprintf('action=%s duration=%f', LogAction::FULL_SYNC_FINISHED, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
-
-                $this->outputLine();
-                $this->outputLine(sprintf('%d package(s) imported with success', $this->importer->getProcessedPackagesCount()));
-            } else {
-                $packageKey = $package;
-                $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED, $package), LogEnvironment::fromMethodName(__METHOD__));
+        if ($package === null) {
+            $this->logger->info(sprintf('action=%s', LogAction::FULL_SYNC_STARTED), LogEnvironment::fromMethodName(__METHOD__));
+            $packages = new Packages();
+            foreach ($packages->packages() as $package) {
+                $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED, $package->getName()), LogEnvironment::fromMethodName(__METHOD__));
+                $timer = microtime(true);
                 try {
-                    $client = new Client();
-                    $package = $client->get($package);
                     $process($package);
-                    $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED, $packageKey, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
+                    $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED, $package->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
                 } catch (\Exception $exception) {
-                    $this->logger->error(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FAILED, $packageKey, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
+                    $this->logger->error(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FAILED, $package->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
                     $logMessage = $this->throwableStorage->logThrowable($exception);
                     $this->logger->error($logMessage, LogEnvironment::fromMethodName(__METHOD__));
                     $hasError = true;
                 }
-
-                $this->outputLine();
-                if ($hasError) {
-                    $this->outputLine(sprintf('Package "%s" import failed', $packageKey));
-                } else {
-                    $this->outputLine(sprintf('Package "%s" imported with success', $packageKey));
-                }
             }
+            $this->cleanupPackages($storage);
+            $this->cleanupVendors($storage);
+            $this->logger->info(sprintf('action=%s duration=%f', LogAction::FULL_SYNC_FINISHED, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
 
-            if ($hasError) {
-                $this->outputLine();
-                $this->outputLine('Check your log, we have some trouble to sync some pages ...');
+            $this->outputLine();
+            $this->outputLine(sprintf('%d package(s) imported with success', $this->importer->getProcessedPackagesCount()));
+        } else {
+            $packageKey = $package;
+            $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED, $package), LogEnvironment::fromMethodName(__METHOD__));
+            try {
+                $client = new Client();
+                $package = $client->get($package);
+                $process($package);
+                $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED, $packageKey, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
+            } catch (\Exception $exception) {
+                $this->logger->error(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FAILED, $packageKey, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
+                $logMessage = $this->throwableStorage->logThrowable($exception);
+                $this->logger->error($logMessage, LogEnvironment::fromMethodName(__METHOD__));
+                $hasError = true;
             }
 
             $this->outputLine();
-            $this->outputLine(sprintf('Duration: %f seconds', $elapsedTime()));
-        };
+            if ($hasError) {
+                $this->outputLine(sprintf('Package "%s" import failed', $packageKey));
+            } else {
+                $this->outputLine(sprintf('Package "%s" imported with success', $packageKey));
+            }
+        }
 
+        if ($hasError) {
+            $this->outputLine();
+            $this->outputLine('Check your log, we have some trouble to sync some pages ...');
+        }
 
-        $sync();
+        $this->outputLine();
+        $this->outputLine(sprintf('Duration: %f seconds', $elapsedTime()));
     }
 
     /**
