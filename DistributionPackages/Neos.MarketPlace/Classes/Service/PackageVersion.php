@@ -32,18 +32,11 @@ class PackageVersion
      */
     public function extractVersions(NodeInterface $node): array
     {
-        $data = [];
         $query = new FlowQuery([$node]);
-        $query = $query
+        return $query
             ->find('versions')
-            ->find('[instanceof Neos.MarketPlace:Version]');
-
-        /** @var NodeInterface $versionNode */
-        foreach ($query as $versionNode) {
-            $data[] = $versionNode;
-        }
-
-        return $data;
+            ->find('[instanceof Neos.MarketPlace:Version]')
+            ->get();
     }
 
     /**

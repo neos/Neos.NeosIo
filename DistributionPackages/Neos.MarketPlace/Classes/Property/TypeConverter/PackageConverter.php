@@ -21,32 +21,30 @@ use Neos\Cache\Backend\SimpleFileBackend;
 use Neos\Cache\EnvironmentConfiguration;
 use Neos\Cache\Exception\InvalidBackendException;
 use Neos\Cache\Psr\Cache\CacheFactory;
+use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\ContentRepository\Domain\Model\NodeTemplate;
 use Neos\ContentRepository\Domain\NodeAggregate\NodeName;
 use Neos\ContentRepository\Domain\NodeType\NodeTypeConstraintFactory;
-use Neos\ContentRepository\Domain\NodeType\NodeTypeConstraints;
-use Neos\ContentRepository\Domain\Projection\Content\TraversableNodeInterface;
+use Neos\ContentRepository\Domain\Service\NodeTypeManager;
 use Neos\ContentRepository\Exception\NodeConfigurationException;
 use Neos\ContentRepository\Exception\NodeException;
 use Neos\ContentRepository\Exception\NodeTypeNotFoundException;
+use Neos\Eel\FlowQuery\FlowQuery;
+use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Log\Utility\LogEnvironment;
+use Neos\Flow\Property\Exception\InvalidPropertyMappingConfigurationException;
+use Neos\Flow\Property\PropertyMappingConfigurationInterface;
+use Neos\Flow\Property\TypeConverter\AbstractTypeConverter;
 use Neos\Flow\Security\Exception;
+use Neos\Fusion\Core\Cache\ContentCache;
 use Neos\MarketPlace\Domain\Model\PackageNode;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
 use Neos\MarketPlace\Domain\Model\VersionNode;
 use Neos\MarketPlace\Service\PackageVersion;
 use Neos\MarketPlace\Utility\VersionNumber;
-use Packagist\Api\Result\Package;
-use Neos\Eel\FlowQuery\FlowQuery;
-use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Property\Exception\InvalidPropertyMappingConfigurationException;
-use Neos\Flow\Property\PropertyMappingConfigurationInterface;
-use Neos\Flow\Property\TypeConverter\AbstractTypeConverter;
 use Neos\Utility\Arrays;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\ContentRepository\Domain\Model\NodeTemplate;
-use Neos\ContentRepository\Domain\Service\NodeTypeManager;
-use Neos\Fusion\Core\Cache\ContentCache;
+use Packagist\Api\Result\Package;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 
@@ -233,13 +231,13 @@ class PackageConverter extends AbstractTypeConverter
 
     /**
      * @param Package $package
-     * @param TraversableNodeInterface $node
+     * @param NodeInterface $node
      * @throws Exception
      * @throws NodeException
      * @throws NodeTypeNotFoundException
      * @throws \Neos\Flow\Property\Exception
      */
-    protected function handleDownloads(Package $package, TraversableNodeInterface $node): void
+    protected function handleDownloads(Package $package, NodeInterface $node): void
     {
         $downloads = $package->getDownloads();
         if (!$downloads instanceof Package\Downloads) {
@@ -254,13 +252,13 @@ class PackageConverter extends AbstractTypeConverter
 
     /**
      * @param Package $package
-     * @param TraversableNodeInterface $node
+     * @param NodeInterface $node
      * @throws Exception
      * @throws NodeException
      * @throws NodeTypeNotFoundException
      * @throws \Neos\Flow\Property\Exception
      */
-    protected function handleGithubMetrics(Package $package, TraversableNodeInterface $node): void
+    protected function handleGithubMetrics(Package $package, NodeInterface $node): void
     {
         if ($package->isAbandoned()) {
             $this->resetGithubMetrics($node);
@@ -310,12 +308,12 @@ class PackageConverter extends AbstractTypeConverter
     /**
      * @param string $organization
      * @param string $repository
-     * @param TraversableNodeInterface $node
+     * @param NodeInterface $node
      * @throws Exception
      * @throws NodeTypeNotFoundException
      * @throws \Neos\Flow\Property\Exception
      */
-    protected function handleGithubReadme(string $organization, string $repository, TraversableNodeInterface $node): void
+    protected function handleGithubReadme(string $organization, string $repository, NodeInterface $node): void
     {
         try {
             $readmeNode = $node->findNamedChildNode(NodeName::fromString('readme'));
@@ -376,13 +374,13 @@ class PackageConverter extends AbstractTypeConverter
     }
 
     /**
-     * @param TraversableNodeInterface $node
+     * @param NodeInterface $node
      * @throws Exception
      * @throws NodeException
      * @throws NodeTypeNotFoundException
      * @throws \Neos\Flow\Property\Exception
      */
-    protected function resetGithubMetrics(TraversableNodeInterface $node): void
+    protected function resetGithubMetrics(NodeInterface $node): void
     {
         $this->updateNodeProperties($node, [
             'githubStargazers' => 0,
@@ -436,14 +434,14 @@ class PackageConverter extends AbstractTypeConverter
 
     /**
      * @param Package $package
-     * @param TraversableNodeInterface $node
-     * @return TraversableNodeInterface
+     * @param NodeInterface $node
+     * @return NodeInterface
      * @throws Exception
      * @throws NodeException
      * @throws NodeTypeNotFoundException
      * @throws \Neos\Flow\Property\Exception
      */
-    protected function update(Package $package, TraversableNodeInterface $node): TraversableNodeInterface
+    protected function update(Package $package, NodeInterface $node): NodeInterface
     {
         $this->updateNodeProperties($node, [
             'description' => $package->getDescription(),
@@ -457,53 +455,52 @@ class PackageConverter extends AbstractTypeConverter
 
     /**
      * @param Package $package
-     * @param TraversableNodeInterface $node
+     * @param NodeInterface $node
      * @throws Exception
      * @throws NodeConfigurationException
      * @throws NodeTypeNotFoundException
      * @throws \Neos\Eel\Exception
      * @throws \Neos\Flow\Property\Exception
      */
-    protected function createOrUpdateMaintainers(Package $package, TraversableNodeInterface $node): void
+    protected function createOrUpdateMaintainers(Package $package, NodeInterface $node): void
     {
         $upstreamMaintainers = array_map(static function (Package\Maintainer $maintainer) {
             return Slug::create($maintainer->getName());
         }, $package->getMaintainers());
-        $maintainerStorage = $node->findNamedChildNode(NodeName::fromString('maintainers'));
+        $maintainerStorage = $node->getNode('maintainers');
         $maintainers = new FlowQuery([$maintainerStorage]);
         $maintainers = $maintainers->children('[instanceof Neos.MarketPlace:Maintainer]');
         foreach ($maintainers as $maintainer) {
             /** @var NodeInterface $maintainer */
-            if (in_array($maintainer->getNodeName(), $upstreamMaintainers, true)) {
+            if (in_array($maintainer->getName(), $upstreamMaintainers, true)) {
                 continue;
             }
             $maintainer->remove();
         }
 
         foreach ($package->getMaintainers() as $maintainer) {
-            /** @var Package\Maintainer $maintainer */
+            $name = Slug::create($maintainer->getName());
+            $node = $maintainerStorage->getNode($name);
             $data = [
                 'title' => $maintainer->getName(),
                 'email' => $maintainer->getEmail(),
                 'homepage' => $maintainer->getHomepage()
             ];
-            $name = Slug::create($maintainer->getName());
-            try {
-                $node = $maintainerStorage->findNamedChildNode(NodeName::fromString($name));
-                $this->updateNodeProperties($node, $data);
-            } catch (NodeException $exception) {
+            if ($node === null) {
                 $nodeTemplate = new NodeTemplate();
                 $nodeTemplate->setNodeType($this->nodeTypeManager->getNodeType('Neos.MarketPlace:Maintainer'));
                 $nodeTemplate->setName($name);
                 $this->setNodeTemplateProperties($nodeTemplate, $data);
                 $maintainerStorage->createNodeFromTemplate($nodeTemplate);
+            } else {
+                $this->updateNodeProperties($node, $data);
             }
         }
     }
 
     /**
      * @param Package $package
-     * @param TraversableNodeInterface $node
+     * @param NodeInterface $node
      * @throws Exception
      * @throws NodeConfigurationException
      * @throws NodeTypeNotFoundException
@@ -512,17 +509,17 @@ class PackageConverter extends AbstractTypeConverter
      * @throws \Neos\Flow\Property\Exception
      * @throws NodeException
      */
-    protected function createOrUpdateVersions(Package $package, TraversableNodeInterface $node): void
+    protected function createOrUpdateVersions(Package $package, NodeInterface $node): void
     {
         $upstreamVersions = array_map(static function ($version) {
             return Slug::create($version);
         }, array_keys($package->getVersions()));
-        $versionStorage = $node->findNamedChildNode(NodeName::fromString('versions'));
+        $versionStorage = $node->getNode('versions');
         $versions = new FlowQuery([$versionStorage]);
         $versions = $versions->children('[instanceof Neos.MarketPlace:Version]');
         foreach ($versions as $version) {
             /** @var NodeInterface $version */
-            if (in_array($version->getNodeName(), $upstreamVersions, true)) {
+            if (in_array($version->getName(), $upstreamVersions, true)) {
                 continue;
             }
             $version->remove();
@@ -533,7 +530,8 @@ class PackageConverter extends AbstractTypeConverter
             $stabilityLevel = VersionNumber::getStabilityLevel($version->getVersionNormalized());
             $versionNormalized = VersionNumber::toInteger($version->getVersionNormalized());
 
-            /** @var Package\Version $version */
+            $name = Slug::create($version->getVersion());
+            $node = $versionStorage->getNode($name);
             $data = [
                 'version' => $version->getVersion(),
                 'description' => $version->getDescription(),
@@ -556,30 +554,28 @@ class PackageConverter extends AbstractTypeConverter
             switch ($stabilityLevel) {
                 case 'stable':
                     $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:ReleasedVersion');
-                    break;
+                break;
                 case 'dev':
                     $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:DevelopmentVersion');
-                    break;
+                break;
                 default:
                     $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:PrereleasedVersion');
             }
-            $name = Slug::create($version->getVersion());
-            try {
-                $node = $versionStorage->findNamedChildNode(NodeName::fromString($name));
-                if ($node->getNodeType()->getName() !== $nodeType->getName()) {
-                    $node->setNodeType($nodeType);
-                }
-                $this->updateNodeProperties($node, $data);
-            } catch (NodeException $e) {
+            if ($node === null) {
                 $nodeTemplate = new NodeTemplate();
                 $nodeTemplate->setNodeType($nodeType);
                 $nodeTemplate->setName($name);
                 $this->setNodeTemplateProperties($nodeTemplate, $data);
                 $node = $versionStorage->createNodeFromTemplate($nodeTemplate);
+            } else {
+                if ($node->getNodeType()->getName() !== $nodeType->getName()) {
+                    $node->setNodeType($nodeType);
+                }
+                $this->updateNodeProperties($node, $data);
             }
 
             if ($version->getSource()) {
-                $source = $node->findNamedChildNode(NodeName::fromString('source'));
+                $source = $node->getNode('source');
                 $this->updateNodeProperties($source, [
                     'type' => $version->getSource()->getType(),
                     'reference' => $version->getSource()->getReference(),
@@ -588,7 +584,7 @@ class PackageConverter extends AbstractTypeConverter
             }
 
             if ($version->getDist()) {
-                $dist = $node->findNamedChildNode(NodeName::fromString('dist'));
+                $dist = $node->getNode('dist');
                 $this->updateNodeProperties($dist, [
                     'type' => $version->getDist()->getType(),
                     'reference' => $version->getDist()->getReference(),
@@ -630,16 +626,15 @@ class PackageConverter extends AbstractTypeConverter
     }
 
     /**
-     * @param TraversableNodeInterface $vendorNode
+     * @param NodeInterface $vendorNode
      * @throws NodeException
      * @throws NodeTypeNotFoundException
      * @throws \Neos\Flow\Property\Exception
      * @throws Exception
      */
-    protected function getVendorLastActivity(TraversableNodeInterface $vendorNode): void
+    protected function getVendorLastActivity(NodeInterface $vendorNode): void
     {
-        $constraint = $this->nodeTypeConstraintFactory->parseFilterString('Neos.MarketPlace:Package');
-        $packages = $vendorNode->findChildNodes($constraint);
+        $packages = $vendorNode->getChildNodes('Neos.MarketPlace:Package');
 
         $sortedPackages = [];
         /** @var PackageNode $package */
@@ -669,14 +664,14 @@ class PackageConverter extends AbstractTypeConverter
     }
 
     /**
-     * @param TraversableNodeInterface $node
+     * @param NodeInterface $node
      * @param array $data
      * @throws Exception
      * @throws NodeException
      * @throws NodeTypeNotFoundException
      * @throws \Neos\Flow\Property\Exception
      */
-    protected function updateNodeProperties(TraversableNodeInterface $node, array $data): void
+    protected function updateNodeProperties(NodeInterface $node, array $data): void
     {
         foreach ($data as $propertyName => $propertyValue) {
             $this->updateNodeProperty($node, $propertyName, $propertyValue);
@@ -684,7 +679,7 @@ class PackageConverter extends AbstractTypeConverter
     }
 
     /**
-     * @param TraversableNodeInterface $node
+     * @param NodeInterface $node
      * @param string $propertyName
      * @param mixed $propertyValue
      * @throws Exception
@@ -692,7 +687,7 @@ class PackageConverter extends AbstractTypeConverter
      * @throws NodeTypeNotFoundException
      * @throws \Neos\Flow\Property\Exception
      */
-    protected function updateNodeProperty(TraversableNodeInterface $node, string $propertyName, $propertyValue): void
+    protected function updateNodeProperty(NodeInterface $node, string $propertyName, $propertyValue): void
     {
         if (isset($node->getProperties()[$propertyName])) {
             if ($propertyValue instanceof \DateTime) {

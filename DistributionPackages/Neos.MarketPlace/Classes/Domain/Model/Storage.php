@@ -13,17 +13,15 @@ namespace Neos\MarketPlace\Domain\Model;
  * source code.
  */
 
-use Neos\ContentRepository\Domain\Projection\Content\TraversableNodeInterface;
-use Neos\ContentRepository\Domain\Service\Context;
-use Neos\ContentRepository\Exception\NodeConfigurationException;
-use Neos\ContentRepository\Exception\NodeTypeNotFoundException;
-use Neos\MarketPlace\Exception;
-use Neos\Flow\Annotations as Flow;
-use Neos\Neos\Domain\Service\ContentContext;
-use Neos\Neos\Domain\Service\ContentContextFactory;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\ContentRepository\Domain\Model\NodeTemplate;
+use Neos\ContentRepository\Domain\Service\Context;
 use Neos\ContentRepository\Domain\Service\NodeTypeManager;
+use Neos\ContentRepository\Exception\NodeTypeNotFoundException;
+use Neos\Flow\Annotations as Flow;
+use Neos\MarketPlace\Exception;
+use Neos\Neos\Domain\Service\ContentContext;
+use Neos\Neos\Domain\Service\ContentContextFactory;
 
 /**
  * Storage
@@ -56,7 +54,7 @@ class Storage
     protected $workspaceName;
 
     /**
-     * @var TraversableNodeInterface
+     * @var NodeInterface
      */
     protected $node;
 
@@ -69,10 +67,10 @@ class Storage
     }
 
     /**
-     * @return TraversableNodeInterface|NodeInterface
+     * @return NodeInterface
      * @throws Exception
      */
-    public function node(): TraversableNodeInterface
+    public function node(): NodeInterface
     {
         if ($this->node !== null) {
             return $this->node;
@@ -87,13 +85,11 @@ class Storage
 
     /**
      * @param string $vendor
-     * @return TraversableNodeInterface|NodeInterface
+     * @return NodeInterface
      * @throws Exception
      * @throws NodeTypeNotFoundException
-     * @throws Exception
-     * @throws NodeConfigurationException
      */
-    public function createVendor(string $vendor): TraversableNodeInterface
+    public function createVendor(string $vendor): NodeInterface
     {
         $vendor = Slug::create($vendor);
         $node = $this->node()->getNode($vendor);
