@@ -57,10 +57,10 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
         }
         $this->hasFulltext = true;
 
-        $this->request->setValueByPath('query.filtered.query.bool.must', []);
-        $this->request->setValueByPath('query.filtered.query.bool.should', []);
-        $this->request->setValueByPath('query.filtered.query.bool.minimum_should_match', 1);
-        $this->request->appendAtPath('query.filtered.query.bool.should', [
+        $this->request->setValueByPath('query.bool.filter.bool.must', []);
+        $this->request->setValueByPath('query.bool.filter.bool.should', []);
+        $this->request->setValueByPath('query.bool.filter.bool.minimum_should_match', 1);
+        $this->request->appendAtPath('query.bool.filter.bool.should', [
             [
                 'query_string' => [
                     'fields' => [
@@ -90,7 +90,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
      */
     protected static function skipAbandonedPackages(QueryInterface $request): void
     {
-        $request->appendAtPath('query.filtered.filter.bool.must_not', [
+        $request->appendAtPath('query.bool.filter.bool.must_not', [
             'exists' => [
                 'field' => 'abandoned'
             ]
