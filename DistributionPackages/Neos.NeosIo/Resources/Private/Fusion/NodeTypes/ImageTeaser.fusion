@@ -2,6 +2,7 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:Content) {
     templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/ImageTeaser.html'
     sectionName = 'main'
 
+    link = ${q(node).property('link')}
     link.@process.convertUris = Neos.Neos:ConvertUris {
         absolute = true
     }
@@ -13,6 +14,7 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:Content) {
     text = ${q(node).property('text')}
     fallbackImageUrl = null
     className = null
+    openInNewTab = ${q(node).property('openInNewTab')}
 
     @context {
         title = ${this.title}
