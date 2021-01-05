@@ -29,7 +29,7 @@ class PackageNode extends Node
      * @throws \Neos\Flow\Property\Exception
      * @throws \Neos\Flow\Security\Exception
      */
-    public function getLastActivity(): \DateTime
+    public function getLastActivity(): ?\DateTime
     {
         return $this->getProperty('lastActivity');
     }
