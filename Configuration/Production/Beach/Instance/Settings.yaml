@@ -58,13 +58,13 @@ Flowpack:
     clients:
       default:
        - host: '%env:BEACH_ELASTICSEARCH_HOSTNAME%'
-         port: '%env:BEACH_ELASTICSEARCH_PORT%'
-         username: '%env:BEACH_ELASTICSEARCH_USERNAME%'
-         password: '%env:BEACH_ELASTICSEARCH_PASSWORD%'
+         scheme: 'https'
+         # should come from env var, but has to be int…
+         #port: '%env:BEACH_ELASTICSEARCH_PORT%'
+         port: 9243
        - host: '%env:BEACH_ELASTICSEARCH_HOSTNAME%'
-         port: '%env:BEACH_ELASTICSEARCH_PORT%'
-         username: '%env:BEACH_ELASTICSEARCH_USERNAME%'
-         password: '%env:BEACH_ELASTICSEARCH_PASSWORD%'
+         scheme: 'https'
+         port: 9243
 
     indexes:
       default:
