@@ -74,22 +74,19 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
         $this->request->setValueByPath('query.bool.filter.bool.should', []);
         $this->request->setValueByPath('query.bool.filter.bool.minimum_should_match', 1);
         $this->request->appendAtPath('query.bool.filter.bool.should', [
-            [
-                'query_string' => [
-                    'fields' => [
-                        'title^10',
-                        '__composerVendor^5',
-                        '__maintainers.name^5',
-                        '__maintainers.tag^8',
-                        'description^2',
-                        'lastVersion.keywords.name^10',
-                        'lastVersion.keywords.tag^12',
-                        'neos_fulltext.*'
-                    ],
-                    'query' => str_replace('/', '\\/', $searchWord),
-                    'default_operator' => 'AND',
-                    'use_dis_max' => true
-                ]
+            'query_string' => [
+                'fields' => [
+                    'title^10',
+                    '__composerVendor^5',
+                    '__maintainers.name^5',
+                    '__maintainers.tag^8',
+                    'description^2',
+                    'lastVersion.keywords.name^10',
+                    'lastVersion.keywords.tag^12',
+                    'neos_fulltext.*'
+                ],
+                'query' => str_replace('/', '\\/', $searchWord),
+                'default_operator' => 'AND'
             ]
         ]);
 
