@@ -6,7 +6,7 @@
 
 Clone the repository, and setup Neos as always.
 
-__Note: We require [nvm](https://github.com/creationix/nvm#install-script) as well as the `yarn` binary to be installed on your system.
+_Note: We require [nvm](https://github.com/creationix/nvm#install-script) as well as the `yarn` binary to be installed on your system._
 
 ## Building the assets
 
