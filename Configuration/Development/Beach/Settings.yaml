@@ -37,15 +37,16 @@ Flowpack:
     indexes:
       default:
         'wwwneosio-development':
-          analysis:
-            filter:
-              autocompleteFilter:
-                max_shingle_size: 5
-                min_shingle_size: 2
-                type: 'shingle'
-            analyzer:
-              autocomplete:
-                filter: [ 'lowercase', 'autocompleteFilter' ]
-                char_filter: [ 'html_strip' ]
-                type: 'custom'
-                tokenizer: 'standard'
+          settings:
+            analysis:
+              filter:
+                autocompleteFilter:
+                  max_shingle_size: 5
+                  min_shingle_size: 2
+                  type: 'shingle'
+              analyzer:
+                autocomplete:
+                  filter: [ 'lowercase', 'autocompleteFilter' ]
+                  char_filter: [ 'html_strip' ]
+                  type: 'custom'
+                  tokenizer: 'standard'

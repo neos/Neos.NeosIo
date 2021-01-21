@@ -33,7 +33,6 @@
       search:
         elasticSearchMapping:
           type: long
-          index: not_analyzed
       ui:
         label: i18n
         inspector:
@@ -44,7 +43,6 @@
       search:
         elasticSearchMapping:
           type: boolean
-          index: not_analyzed
       ui:
         label: i18n
         inspector:
@@ -53,8 +51,7 @@
       type: string
       search:
         elasticSearchMapping:
-          type: string
-          index: not_analyzed
+          type: keyword
       ui:
         label: i18n
         inspector:
@@ -90,20 +87,16 @@
       search:
         indexing: '${MarketIndexing.trimExplode(q(node).property(''keywords''))}'
         elasticSearchMapping:
-          type: multi_field
+          type: text
           fields:
             name:
-              type: string
-              include_in_all: true
+              type: text
             tag:
-              type: string
-              index: not_analyzed
-              include_in_all: true
+              type: keyword
             suggestion:
               type: completion
               analyzer: simple
               search_analyzer: simple
-              payloads: true
     homepage:
       type: string
       ui:

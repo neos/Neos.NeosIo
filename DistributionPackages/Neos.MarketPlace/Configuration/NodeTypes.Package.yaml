@@ -36,10 +36,6 @@
   properties:
     title:
       type: string
-      search:
-        elasticSearchMapping:
-          type: string
-          include_in_all: true
       ui:
         reloadIfChanged: true
         inspector:
@@ -47,10 +43,6 @@
         label: i18n
     description:
       type: string
-      search:
-        elasticSearchMapping:
-          type: string
-          include_in_all: true
       ui:
         reloadIfChanged: true
         inspector:
@@ -75,8 +67,7 @@
       type: string
       search:
         elasticSearchMapping:
-          type: string
-          include_in_all: true
+          type: text
       ui:
         reloadIfChanged: true
         inspector:
@@ -101,7 +92,6 @@
         indexing: '${Date.format(node.lastActivity, "Y-m-d\TH:i:sP")}'
         elasticSearchMapping:
           type: date
-          include_in_all: false
           format: date_time_no_millis
     lastVersion:
       type: reference
@@ -118,35 +108,30 @@
           type: object
           properties:
             name:
-              type: string
+              type: text
             description:
-              type: string
+              type: text
             keywords:
-              type: multi_field
+              type: text
               fields:
                 name:
-                  type: string
-                  include_in_all: true
+                  type: text
                 tag:
-                  type: string
-                  index: not_analyzed
-                  include_in_all: true
+                  type: keyword
                 suggestion:
                   type: completion
                   analyzer: simple
                   search_analyzer: simple
-                  payloads: true
             homepage:
-              type: string
+              type: text
             version:
-              type: string
+              type: text
             versionNormalized:
               type: long
             stability:
               type: boolean
             stabilityLevel:
-              type: string
-              index: not_analyzed
+              type: keyword
             time:
               type: date
               format: date_time_no_millis
@@ -222,30 +207,23 @@
       search:
         indexing: '${q(node).property(''title'')}'
         elasticSearchMapping:
-          type: multi_field
+          type: text
           fields:
             name:
-              type: string
-              include_in_all: true
+              type: text
             tag:
-              type: string
-              index: not_analyzed
-              include_in_all: true
+              type: keyword
             suggestion:
               type: completion
               analyzer: simple
               search_analyzer: simple
-              payloads: true
     __composerVendor:
       search:
         indexing: '${Array.first(String.split(q(node).property(''title''), ''/''))}'
         elasticSearchMapping:
-          type: string
-          include_in_all: true
+          type: text
     __packageType:
       search:
         indexing: '${MarketIndexing.packageTypeMapping(q(node).property(''type''))}'
         elasticSearchMapping:
-          type: string
-          index: not_analyzed
-          include_in_all: true
+          type: keyword

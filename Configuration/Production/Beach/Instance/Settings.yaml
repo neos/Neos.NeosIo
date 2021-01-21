@@ -73,15 +73,16 @@ Flowpack:
     indexes:
       default:
         'wwwneosio-production':    # custom index name, NOTE THIS SHOULD NOT BE HARDCODED ON BEACH
-          analysis:
-            filter:
-              autocompleteFilter:
-                max_shingle_size: 5
-                min_shingle_size: 2
-                type: 'shingle'
-            analyzer:
-              autocomplete:
-                filter: [ 'lowercase', 'autocompleteFilter' ]
-                char_filter: [ 'html_strip' ]
-                type: 'custom'
-                tokenizer: 'standard'
+          settings:
+            analysis:
+              filter:
+                autocompleteFilter:
+                  max_shingle_size: 5
+                  min_shingle_size: 2
+                  type: 'shingle'
+              analyzer:
+                autocomplete:
+                  filter: [ 'lowercase', 'autocompleteFilter' ]
+                  char_filter: [ 'html_strip' ]
+                  type: 'custom'
+                  tokenizer: 'standard'
