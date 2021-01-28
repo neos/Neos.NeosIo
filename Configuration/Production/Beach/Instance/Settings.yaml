@@ -74,6 +74,10 @@ Flowpack:
       default:
         'wwwneosio-production':    # custom index name, NOTE THIS SHOULD NOT BE HARDCODED ON BEACH
           settings:
+            index:
+              mapping:
+                total_fields:
+                  limit: 2000
             analysis:
               filter:
                 autocompleteFilter:
