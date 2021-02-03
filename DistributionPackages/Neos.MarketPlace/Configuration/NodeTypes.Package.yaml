@@ -202,7 +202,12 @@
         label: i18n
     __readme:
       search:
+        indexing: '${String.stripTags(q(node).find(''readme'').first().property(''source''))}'
         fulltextExtractor: '${Indexing.extractHtmlTags(q(node).find(''readme'').first().property(''source''))}'
+    __maintainers:
+      search:
+        indexing: '${q(node).find(''maintainers'').first().property(''title'')}'
+        fulltextExtractor: '${Indexing.extractHtmlTags(q(node).find(''maintainers'').first().property(''title''))}'
     __packageKey:
       search:
         indexing: '${q(node).property(''title'')}'

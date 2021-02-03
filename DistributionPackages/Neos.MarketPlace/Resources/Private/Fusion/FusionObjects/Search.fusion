@@ -46,7 +46,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
             @position = '30'
         }
         fulltextAndSort {
-            expression = ${this.hasSearchQuery ? value.fulltext('*' + String.replace(this.searchTerm, '"', '') + '*') : value.fulltext('*').sortDesc('lastActivity')}
+            expression = ${this.hasSearchQuery ? value.fulltext('*' + String.replace(this.searchTerm, '"', '') + '*') : value.sortDesc('lastActivity')}
             @position = '10'
         }
         log {
