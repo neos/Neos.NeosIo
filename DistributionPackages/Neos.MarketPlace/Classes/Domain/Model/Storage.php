@@ -48,19 +48,13 @@ class Storage
      */
     protected $repository;
 
-    /**
-     * @var string
-     */
-    protected $workspaceName;
+    protected string $workspaceName;
 
     /**
      * @var NodeInterface
      */
     protected $node;
 
-    /**
-     * @param string $workspaceName
-     */
     public function __construct(string $workspaceName = 'live')
     {
         $this->workspaceName = $workspaceName;
@@ -72,13 +66,12 @@ class Storage
      */
     public function node(): NodeInterface
     {
-        if ($this->node !== null) {
-            return $this->node;
-        }
         $context = $this->createContext($this->workspaceName);
-        $this->node = $context->getNodeByIdentifier($this->repository['identifier']);
         if ($this->node === null) {
-            throw new Exception('Repository node not found', 1457507995);
+            $this->node = $context->getNodeByIdentifier($this->repository['identifier']);
+            if ($this->node === null) {
+                throw new Exception('Repository node not found', 1457507995);
+            }
         }
         return $this->node;
     }

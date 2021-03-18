@@ -13,13 +13,11 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
-use Neos\MarketPlace\Domain\Model\Storage;
-use Neos\MarketPlace\Property\TypeConverter\PackageConverter;
-use Packagist\Api\Result\Package;
+use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Property\PropertyMapper;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\MarketPlace\Domain\Model\Storage;
+use Packagist\Api\Result\Package;
 
 /**
  * Package Importer
@@ -27,36 +25,39 @@ use Neos\ContentRepository\Domain\Model\NodeInterface;
  * @Flow\Scope("singleton")
  * @api
  */
-class PackageImporter implements PackageImporterInterface
+class PackageImporter
 {
-    /**
-     * @var PropertyMapper
-     * @Flow\Inject
-     */
-    protected $propertyMapper;
+    private bool $forceUpdates = false;
 
-    /**
-     * @var array
-     */
-    protected $processedPackages = [];
+    private Storage $storage;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function process(Package $package, Storage $storage, bool $force = false): NodeInterface
+    private array $processedPackages = [];
+
+    public function useStorage(Storage $storage): void
     {
-        $configuration = $this->propertyMapper->buildPropertyMappingConfiguration();
-        $configuration->setTypeConverterOption(
-            PackageConverter::class,
-            PackageConverter::STORAGE,
-            $storage
-        );
-        $configuration->setTypeConverterOption(
-            PackageConverter::class,
-            PackageConverter::FORCE,
-            $force
-        );
-        $node = $this->propertyMapper->convert($package, NodeInterface::class, $configuration);
+        $this->storage = $storage;
+    }
+
+    public function forceUpdates(bool $forceUpdates): void
+    {
+        $this->forceUpdates = $forceUpdates;
+    }
+
+    private function getConverter(): PackageConverter
+    {
+        if (!isset($this->converter)) {
+            if (!isset($this->storage)) {
+                throw new \RuntimeException('No storage set', 1616084519);
+            }
+            $this->converter = new PackageConverter($this->storage, $this->forceUpdates);
+        }
+
+        return $this->converter;
+    }
+
+    public function process(Package $package): NodeInterface
+    {
+        $node = $this->getConverter()->convert($package);
         $this->processedPackages[$package->getName()] = true;
         return $node;
     }
@@ -100,10 +101,9 @@ class PackageImporter implements PackageImporterInterface
      * @param callable|null $callback function called after the vendor removal
      * @return integer
      * @throws \Neos\Eel\Exception
-     * @throws \Neos\Eel\Exception
      * @throws \Neos\MarketPlace\Exception
      */
-    public function cleanupVendors(Storage $storage, callable $callback = null): int
+    public function cleanupVendors(Storage $storage, ?callable $callback = null): int
     {
         $count = 0;
         $storageNode = $storage->node();
@@ -126,17 +126,11 @@ class PackageImporter implements PackageImporterInterface
         return $count;
     }
 
-    /**
-     * @return array
-     */
     public function getProcessedPackages(): array
     {
         return array_keys(array_filter($this->processedPackages));
     }
 
-    /**
-     * @return integer
-     */
     public function getProcessedPackagesCount(): int
     {
         return count($this->getProcessedPackages());
