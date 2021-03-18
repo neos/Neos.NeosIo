@@ -64,11 +64,6 @@ Flowpack:
          port: 9243
          username: '%env:BEACH_ELASTICSEARCH_USERNAME%'
          password: '%env:BEACH_ELASTICSEARCH_PASSWORD%'
-       - host: '%env:BEACH_ELASTICSEARCH_HOSTNAME%'
-         scheme: 'https'
-         port: 9243
-         username: '%env:BEACH_ELASTICSEARCH_USERNAME%'
-         password: '%env:BEACH_ELASTICSEARCH_PASSWORD%'
 
     indexes:
       default:
@@ -90,3 +85,7 @@ Flowpack:
                   char_filter: [ 'html_strip' ]
                   type: 'custom'
                   tokenizer: 'standard'
+
+    ContentRepositoryAdaptor:
+      driver:
+        version: '7.x'

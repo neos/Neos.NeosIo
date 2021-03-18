@@ -29,10 +29,6 @@ Flowpack:
           port: 9200
           username: '%env:ELASTICSEARCH_USERNAME%'
           password: '%env:ELASTICSEARCH_PASSWORD%'
-        - host: '%env:ELASTICSEARCH_HOSTNAME%'
-          port: 9200
-          username: '%env:ELASTICSEARCH_USERNAME%'
-          password: '%env:ELASTICSEARCH_PASSWORD%'
 
     indexes:
       default:
@@ -50,3 +46,11 @@ Flowpack:
                   char_filter: [ 'html_strip' ]
                   type: 'custom'
                   tokenizer: 'standard'
+
+    ContentRepositoryAdaptor:
+      driver:
+        version: '7.x'
+
+  FullPageCache:
+    # disable full page caching
+    enabled: false
