@@ -23,6 +23,7 @@ use Neos\MarketPlace\Domain\Model\LogAction;
 use Neos\MarketPlace\Domain\Model\Packages;
 use Neos\MarketPlace\Domain\Model\Storage;
 use Neos\MarketPlace\Service\PackageImporter;
+use Neos\Neos\Domain\Service\ContentContextFactory;
 use Packagist\Api\Client;
 use Packagist\Api\Result\Package;
 use Psr\Log\LoggerInterface;
@@ -37,6 +38,12 @@ class MarketPlaceCommandController extends CommandController
      * @Flow\Inject
      */
     protected $importer;
+
+    /**
+     * @var ContentContextFactory
+     * @Flow\Inject
+     */
+    protected $contextFactory;
 
     /**
      * @var LoggerInterface
@@ -86,6 +93,9 @@ class MarketPlaceCommandController extends CommandController
 
             if ($count % 10 === 0) {
                 $this->persistenceManager->persistAll();
+                foreach ($this->contextFactory->getInstances() as $contextInstance) {
+                    $contextInstance->getFirstLevelNodeCache()->flush();
+                }
                 $this->persistenceManager->clearState();
             }
         };
