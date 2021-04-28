@@ -2,17 +2,17 @@ import { component } from '@reduct/component';
 import propTypes from '@reduct/nitpick';
 import lighten from 'lightness';
 import { loadJs } from '../Utilities';
+import amCharts from "amcharts3/amcharts/amcharts";
+import amChartsSerial from "amcharts3/amcharts/serial";
+import amChartsLight from "amcharts3/amcharts/themes/light";
+import amChartGantt from "amcharts3/amcharts/gantt";
 
-const dependencies = [
-    'https://www.amcharts.com/lib/3/amcharts.js',
-    'https://www.amcharts.com/lib/3/serial.js',
-    'https://www.amcharts.com/lib/3/themes/light.js',
-    'https://www.amcharts.com/lib/3/gantt.js'
-];
 const themeColor = '#26224C';
+
 const config = {
     type: 'gantt',
     theme: 'light',
+    pathToImages: '/_Resources/Static/Packages/Neos.NeosIo/Images/AmCharts/',
     period: 'YYYY',
     dataDateFormat: 'YYYY-MM-DD',
     columnWidth: 0.65,
@@ -58,8 +58,7 @@ export default class AmChart {
         // Hence AmCharts relies on element id's, we generate a random one.
         this.el.setAttribute('id', `amChart__${Math.random() * 1000}`);
 
-        this.loadDependencies()
-            .then(() => this.initializeGlobals())
+        this.initializeGlobals()
             .then(() => this.render());
     }
 
@@ -67,22 +66,6 @@ export default class AmChart {
         return {
             dataSelector: '[data-json]'
         };
-    }
-
-    loadDependencies() {
-        return new Promise(resolve => {
-            dependencies.reduce((prev, cur) => {
-                const isLast = cur === dependencies[dependencies.length - 1];
-
-                return prev
-                    .then(() => loadJs(cur))
-                    .then(() => {
-                        if (isLast) {
-                            resolve();
-                        }
-                    });
-            }, Promise.resolve());
-        });
     }
 
     initializeGlobals() {
