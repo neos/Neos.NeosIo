@@ -5,9 +5,9 @@ prototype(Neos.MarketPlace:Vendor) < prototype(Neos.MarketPlace:DefaultPage) {
             subMenu = Neos.MarketPlace:Vendor.SubMenu
         }
         content {
-            main = Neos.Fusion:Array {
+            main = Neos.Fusion:Join {
                 search = Neos.MarketPlace:Search {
-                    showResult = ${false}
+                    showResult = false
                 }
                 vendor = Neos.MarketPlace:VendorRenderer
             }

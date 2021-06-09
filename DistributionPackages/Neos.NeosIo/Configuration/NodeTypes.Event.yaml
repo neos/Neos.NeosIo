@@ -1,51 +1,52 @@
+
 'Neos.NeosIo:Event':
   superTypes:
     'Neos.Neos:Document': true
     'Neos.NeosIo:KeyVisualMixin': true
   ui:
     label: 'Neos Event'
-    icon: 'icon-calendar'
+    icon: icon-calendar
     inlineEditable: true
     inspector:
       groups:
-        'event':
-          label: 'Event'
-          icon: 'icon-calendar'
+        event:
+          label: Event
+          icon: icon-calendar
   properties:
-    'type':
+    type:
       type: string
       validation:
-        'Neos.Neos/Validation/NotEmptyValidator': []
+        Neos.Neos/Validation/NotEmptyValidator: {  }
       options:
         showInCreationDialog: true
       ui:
         label: 'Event type'
         reloadIfChanged: true
         inspector:
-          group: 'event'
-          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          group: event
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             values:
-              'conference':
+              conference:
                 label: 'Conference / Marketing'
-              'meetup':
-                label: 'Meetup'
-              'sprint':
-                label: 'Sprint'
-    'startDate':
+              meetup:
+                label: Meetup
+              sprint:
+                label: Sprint
+    startDate:
       type: DateTime
       validation:
-        'Neos.Neos/Validation/NotEmptyValidator': []
+        Neos.Neos/Validation/NotEmptyValidator: {  }
       options:
         showInCreationDialog: true
       ui:
         label: 'Event start date'
         reloadIfChanged: true
         inspector:
-          group: 'event'
+          group: event
           editorOptions:
-            format: 'd.m.Y'
-    'endDate':
+            format: d.m.Y
+    endDate:
       type: DateTime
       options:
         showInCreationDialog: true
@@ -53,10 +54,10 @@
         label: 'Event end date (optional)'
         reloadIfChanged: true
         inspector:
-          group: 'event'
+          group: event
           editorOptions:
-            format: 'd.m.Y'
-    'location':
+            format: d.m.Y
+    location:
       type: string
       options:
         showInCreationDialog: true
@@ -66,7 +67,7 @@
         inline:
           editorOptions:
             placeholder: 'Event location'
-    'url':
+    url:
       type: string
       options:
         showInCreationDialog: true
@@ -74,9 +75,9 @@
         label: 'Event URL (optional)'
         reloadIfChanged: true
         inspector:
-          group: 'event'
-          editor: 'Neos.Neos/Inspector/Editors/LinkEditor'
-    'organizer':
+          group: event
+          editor: Neos.Neos/Inspector/Editors/LinkEditor
+    organizer:
       type: string
       options:
         showInCreationDialog: true
@@ -93,7 +94,7 @@
               targetBlank: true
             formatting:
               a: true
-    'description':
+    description:
       type: string
       ui:
         inlineEditable: true
@@ -107,7 +108,6 @@
               relNofollow: true
               targetBlank: true
             formatting:
-              u: true
               sub: true
               sup: true
               p: true
@@ -121,3 +121,4 @@
               a: true
               strong: true
               em: true
+              underline: true

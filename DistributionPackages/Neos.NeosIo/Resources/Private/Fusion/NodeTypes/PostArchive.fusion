@@ -1,4 +1,3 @@
-prototype(Neos.NeosIo:PostArchive) >
 prototype(Neos.NeosIo:PostArchive) < prototype(Flowpack.Listable:PaginatedCollection) {
     collection = ${q(site).find('[instanceof Neos.NeosIo:Post]').get()}
     itemsPerPage = 15

@@ -15,8 +15,8 @@ prototype(Neos.MarketPlace:VersionMenu) < prototype(Neos.Fusion:Template) {
 
     title = 'Released Versions'
 
-    versions = Neos.Fusion:Collection {
-        collection = ${versions}
+    versions = Neos.Fusion:Loop {
+        items = ${versions}
         itemRenderer = Neos.MarketPlace:VersionMenuItem
         itemName = 'node'
     }

@@ -1,6 +1,6 @@
-prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Collection) {
-    // API to the outside: "collection" to render
-    collection = ${q(site).find('[instanceof Neos.NeosConIo:Speaker]').arrayPropertyContains("event", q(node).property('eventToShowSpeakersFor'))}
+prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Loop) {
+    // API to the outside: "items" to render
+    items = ${q(site).find('[instanceof Neos.NeosConIo:Speaker]').arrayPropertyContains("event", q(node).property('eventToShowSpeakersFor'))}
 
     @context.eventToFilter = ${q(node).property('eventToShowSpeakersFor')}
     @process.wrapWithUl = ${'<ul class="speaker__speakerList">' + value + '</ul>'}

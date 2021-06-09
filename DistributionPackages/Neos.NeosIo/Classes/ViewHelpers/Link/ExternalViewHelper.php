@@ -19,19 +19,20 @@ class ExternalViewHelper extends AbstractTagBasedViewHelper
     public function initializeArguments()
     {
         $this->registerUniversalTagAttributes();
+        $this->registerArgument('uri', 'string', 'the URI that will be put in the href attribute of the rendered link tag', true);
+        $this->registerArgument('defaultScheme', 'string', 'Open the linked document in new Tab', false, 'http');
         $this->registerArgument('openInNewTab', 'boolean', 'Open the linked document in new Tab', false, false);
         $this->registerArgument('noLinkWhen', 'boolean', 'Only renders the link if condition evaluates to FALSE', false, false);
     }
 
     /**
-     * @param string $uri the URI that will be put in the href attribute of the rendered link tag
-     * @param string $defaultScheme scheme the href attribute will be prefixed with if specified $uri does not contain a scheme already
-     *
      * @return string Rendered link
      * @api
      */
-    public function render($uri, $defaultScheme = 'http')
+    public function render()
     {
+        $uri = $this->arguments['uri'];
+        $defaultScheme = $this->arguments['defaultScheme'];
         if (!$this->arguments['noLinkWhen'] && !empty(trim($uri))) {
             $scheme = parse_url($uri, PHP_URL_SCHEME);
             $host = parse_url($uri, PHP_URL_HOST);

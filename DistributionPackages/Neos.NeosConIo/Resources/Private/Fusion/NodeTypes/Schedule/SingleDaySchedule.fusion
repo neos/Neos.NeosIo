@@ -4,7 +4,7 @@ prototype(Neos.NeosConIo:SingleDaySchedule) < prototype(Neos.Neos:ContentCompone
 
     @context {
         event = ${q(node).property('event')}
-        days = Neos.Fusion:RawArray {
+        days = Neos.Fusion:DataStructure {
            day1 = ${q(node).property('event') && q(q(node).property('event')).property('eventDate')}
         }
     }
@@ -28,7 +28,7 @@ prototype(Neos.NeosConIo:SingleDaySchedule) < prototype(Neos.Neos:ContentCompone
 
     renderer = afx`
         <div class="schedule" data-component="Schedule">
-            <Neos.Fusion:Collection collection={props.days} itemName="day" @children="itemRenderer">
+            <Neos.Fusion:Loop items={props.days} itemName="day" @children="itemRenderer">
                 <h3 class="conferenceDayTitle">{Date.format(day, 'd M Y')}</h3>
                 <div class="conferenceDaySubtitle">
 
@@ -36,7 +36,7 @@ prototype(Neos.NeosConIo:SingleDaySchedule) < prototype(Neos.Neos:ContentCompone
                 <div class="talks">
                     <Neos.NeosConIo:Schedule.Talks day={day} />
                 </div>
-            </Neos.Fusion:Collection>
+            </Neos.Fusion:Loop>
         </div>
     `
 }

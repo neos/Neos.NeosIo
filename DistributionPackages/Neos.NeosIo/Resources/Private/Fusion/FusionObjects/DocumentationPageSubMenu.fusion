@@ -16,9 +16,9 @@ prototype(Neos.NeosIo:DocumentationPageSubMenu) < prototype(Neos.Neos:Menu) {
     }
     templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/DocumentationPageSubMenu.html'
 
-    itemCollection = Neos.Fusion:RawCollection {
+    itemCollection = Neos.Fusion:Map {
         # The first documentation page is the documentation root, show all pages below
-        collection = ${q(site).find('[instanceof Neos.NeosIo:DocumentationPage]').first().children().filter('[instanceof Neos.NeosIo:DocumentationPage]')}
+        items = ${q(site).find('[instanceof Neos.NeosIo:DocumentationPage]').first().children().filter('[instanceof Neos.NeosIo:DocumentationPage]')}
         itemRenderer = Neos.NeosIo:DocumentationPageSubMenuItemRenderer
     }
 

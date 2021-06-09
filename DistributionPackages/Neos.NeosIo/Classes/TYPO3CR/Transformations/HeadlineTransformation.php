@@ -1,7 +1,6 @@
 <?php
 namespace Neos\NeosIo\TYPO3CR\Transformations;
 
-use Neos\Flow\Annotations as Flow;
 use Neos\ContentRepository\Domain\Model\NodeData;
 use Neos\ContentRepository\Migration\Transformations\AbstractTransformation;
 

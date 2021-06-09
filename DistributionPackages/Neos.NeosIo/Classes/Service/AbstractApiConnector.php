@@ -6,11 +6,13 @@ namespace Neos\NeosIo\Service;
  * The Neos project is licensed under GPL v3 or later
  */
 
+use GuzzleHttp\Psr7\Uri;
 use Neos\Flow\Annotations as Flow;
 use Neos\Cache\Frontend\VariableFrontend;
 use Neos\Flow\Http\Client\Browser;
 use Neos\Flow\Http\Client\CurlEngine;
-use Neos\Flow\Http\Uri;
+use Neos\Flow\Log\Utility\LogEnvironment;
+use Psr\Log\LoggerInterface;
 
 /**
  * Abstract base class for api connectors.
@@ -54,9 +56,9 @@ abstract class AbstractApiConnector
     /**
      * @Flow\Inject
      *
-     * @var \Neos\Flow\Log\SystemLoggerInterface
+     * @var LoggerInterface
      */
-    protected $systemLogger;
+    protected $logger;
 
     /**
      * Creates a valid cache identifier.
@@ -111,7 +113,7 @@ abstract class AbstractApiConnector
      *
      * @param string $actionName
      * @param array $additionalParameters
-     * @return array
+     * @return array|false
      */
     protected function fetchJsonData($actionName, array $additionalParameters = [])
     {
@@ -120,11 +122,13 @@ abstract class AbstractApiConnector
         $response = $browser->request($requestUri, 'GET');
 
         if ($response->getStatusCode() !== 200) {
-            $this->systemLogger->log(sprintf('Get request to Api failed with code "%s"!', $response->getStatus()),
-                LOG_ERR, 1453193835);
+            $this->logger->error(sprintf('Get request to Api failed with code "%s"!', $response->getStatusCode()),
+                LogEnvironment::fromMethodName(__METHOD__));
+
+            return false;
         }
 
-        return $response !== false ? json_decode($response, true) : $response;
+        return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
@@ -143,8 +147,8 @@ abstract class AbstractApiConnector
         $response = $browser->request($requestUri, 'POST', [], [], [], json_encode($data));
 
         if (!in_array($response->getStatusCode(), [200, 204])) {
-            $this->systemLogger->log(sprintf('Post request to Api failed with message "%s"!', $response->getStatus()),
-                LOG_ERR, 1457091548);
+            $this->logger->error(sprintf('Post request to Api failed with message "%s"!', $response->getStatusCode()),
+                LogEnvironment::fromMethodName(__METHOD__));
             return false;
         }
         return true;
@@ -179,8 +183,8 @@ abstract class AbstractApiConnector
     protected function buildRequestUri($actionName, array $additionalParameters = [])
     {
         $requestUri = new Uri($this->apiSettings['apiUrl']);
-        $requestUri->setPath($requestUri->getPath() . $this->apiSettings['actions'][$actionName]);
-        $requestUri->setQuery(http_build_query(array_merge($this->apiSettings['parameters'], $additionalParameters)));
+        $requestUri = $requestUri->withPath($requestUri->getPath() . $this->apiSettings['actions'][$actionName]);
+        $requestUri = $requestUri->withQuery(http_build_query(array_merge($this->apiSettings['parameters'], $additionalParameters)));
         return $requestUri;
     }
 }

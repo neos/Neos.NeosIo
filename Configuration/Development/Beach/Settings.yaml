@@ -12,45 +12,45 @@ Neos:
         password: '%env:BEACH_DATABASE_PASSWORD%'
         port: '%env:BEACH_DATABASE_PORT%'
 
-    resource:
-      targets:
-        localWebDirectoryStaticResourcesTarget:
-          targetOptions:
-            relativeSymlinks: true
+  NeosIo:
+    crowdApi:
+      username: '%env:CROWD_API_USERNAME%'
+      password: '%env:CROWD_API_PASSWORD%'
 
-        localWebDirectoryPersistentResourcesTarget:
-          targetOptions:
-            relativeSymlinks: true
+  MarketPlace:
+    github:
+      token: '%env:GITHUB_API_TOKEN%'
 
 Flowpack:
   ElasticSearch:
     clients:
       default:
         - host: '%env:ELASTICSEARCH_HOSTNAME%'
-          port: '%env:ELASTICSEARCH_PORT%'
-          username: '%env:ELASTICSEARCH_USERNAME%'
-          password: '%env:ELASTICSEARCH_PASSWORD%'
-        - host: '%env:ELASTICSEARCH_HOSTNAME%'
-          port: '%env:ELASTICSEARCH_PORT%'
+          port: 9200
           username: '%env:ELASTICSEARCH_USERNAME%'
           password: '%env:ELASTICSEARCH_PASSWORD%'
 
     indexes:
       default:
         'wwwneosio-development':
-          analysis:
-            filter:
-              autocompleteFilter:
-                max_shingle_size: 5
-                min_shingle_size: 2
-                type: 'shingle'
-            analyzer:
-              autocomplete:
-                filter: [ 'lowercase', 'autocompleteFilter' ]
-                char_filter: [ 'html_strip' ]
-                type: 'custom'
-                tokenizer: 'standard'
+          settings:
+            analysis:
+              filter:
+                autocompleteFilter:
+                  max_shingle_size: 4
+                  min_shingle_size: 2
+                  type: 'shingle'
+              analyzer:
+                autocomplete:
+                  filter: [ 'lowercase', 'autocompleteFilter' ]
+                  char_filter: [ 'html_strip' ]
+                  type: 'custom'
+                  tokenizer: 'standard'
 
     ContentRepositoryAdaptor:
       driver:
-        version: 2.x
+        version: '7.x'
+
+  FullPageCache:
+    # disable full page caching
+    enabled: false

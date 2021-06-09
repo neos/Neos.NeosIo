@@ -1,4 +1,4 @@
-postRss = Neos.Fusion:Http.Message {
+xml = Neos.Fusion:Http.Message {
     feed = Neos.Fusion:Template {
         templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/PostRss.xml'
         posts = ${q(site).find('[instanceof Neos.NeosIo:Post]').sort('datePublished').slice(0, 20).get()}
@@ -20,9 +20,9 @@ postRss = Neos.Fusion:Http.Message {
 }
 
 root {
-    postRss {
+    xml {
         position = 'before format'
-        condition = ${request.parentRequest.uri.path == '/rss.xml' || request.parentRequest.uri.path == '/de/rss.xml'}
-        renderPath = '/postRss'
+        condition = ${request.parentRequest.uri.path == 'rss.xml' || request.parentRequest.uri.path == 'de/rss.xml'}
+        renderPath = '/xml'
     }
 }

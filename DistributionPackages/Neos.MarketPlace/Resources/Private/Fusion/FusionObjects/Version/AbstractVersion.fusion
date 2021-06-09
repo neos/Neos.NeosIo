@@ -1,0 +1,24 @@
+// this is based on the abstract Neos.MarketPlace:Version nodetype
+
+prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Neos:Content) {
+    templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Version.html'
+
+    version = ${q(node).property('version')}
+    versionNormalized = ${q(node).property('versionNormalized')}
+    stability = ${q(node).property('stability')}
+    stabilityLevel = ${q(node).property('stabilityLevel')}
+    description = ${q(node).property('description')}
+    keywords = ${q(node).property('keywords')}
+    homepage = ${q(node).property('homepage')}
+    license = ${q(node).property('license')}
+    type = ${q(node).property('type')}
+    time = ${q(node).property('time')}
+    abandoned = ${q(node).property('abandoned')}
+    bin = ${q(node).property('bin')}
+    provide = ${q(node).property('provide')}
+    require = ${q(node).property('require')}
+    requireDev = ${q(node).property('requireDev')}
+    suggest = ${q(node).property('suggest')}
+    conflict = ${q(node).property('conflict')}
+    replace = ${q(node).property('replace')}
+}

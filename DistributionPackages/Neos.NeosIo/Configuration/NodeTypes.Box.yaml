@@ -12,9 +12,12 @@
         nodeTypes:
           '*': false
           'Neos.NodeTypes:Text': true
-          'Neos.NodeTypes:ContentReferences': true
+          'Neos.NodeTypes.ContentReferences:ContentReferences': true
           'Neos.NeosIo:Button': true
           'Neos.NeosIo:CountUp': true
+  options:
+    fusion:
+      prototypeGenerator: Neos\Neos\Domain\Service\DefaultPrototypeGenerator
   ui:
     label: Box
     icon: icon-archive

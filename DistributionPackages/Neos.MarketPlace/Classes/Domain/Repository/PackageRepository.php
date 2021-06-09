@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Domain\Repository;
 
 /*
@@ -27,7 +29,7 @@ class PackageRepository
      * @param string $packageKey
      * @return Package
      */
-    public function findByPackageKey($packageKey)
+    public function findByPackageKey(string $packageKey): Package
     {
         $client = new Client();
         return $client->get($packageKey);
@@ -37,7 +39,7 @@ class PackageRepository
      * @param string $type
      * @return array
      */
-    public function findByPackageType($type)
+    public function findByPackageType(string $type): array
     {
         $client = new Client();
         return $client->all(['type' => $type]);
@@ -47,7 +49,7 @@ class PackageRepository
      * @param string $vendor
      * @return array
      */
-    public function findByVendor($vendor)
+    public function findByVendor(string $vendor): array
     {
         $client = new Client();
         return $client->all(['vendor' => $vendor]);

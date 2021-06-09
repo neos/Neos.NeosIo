@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\FusionObjects;
 
 /*
@@ -41,7 +43,7 @@ class PackageUriImplementation extends AbstractFusionObject
     /**
      * @return string
      */
-    public function getPackageKey()
+    public function getPackageKey(): string
     {
         return $this->fusionValue('packageKey');
     }
@@ -49,7 +51,7 @@ class PackageUriImplementation extends AbstractFusionObject
     /**
      * @return NodeInterface
      */
-    public function getNode()
+    public function getNode(): NodeInterface
     {
         return $this->fusionValue('node');
     }
@@ -57,8 +59,13 @@ class PackageUriImplementation extends AbstractFusionObject
     /**
      * @return string The rendered URI or NULL if no URI could be resolved for the given node
      * @throws NeosException
+     * @throws \Neos\Flow\Http\Exception
+     * @throws \Neos\Flow\Mvc\Routing\Exception\MissingActionNameException
+     * @throws \Neos\Flow\Persistence\Exception\IllegalObjectTypeException
+     * @throws \Neos\Flow\Property\Exception
+     * @throws \Neos\Flow\Security\Exception
      */
-    public function evaluate()
+    public function evaluate(): string
     {
         $packageKey = $this->getPackageKey();
         $packageKeyParts = explode('-', $packageKey);
@@ -67,7 +74,6 @@ class PackageUriImplementation extends AbstractFusionObject
         }
         $title = Slug::create($packageKey);
         $packageNodes = $this->nodeSearchService->findByProperties(['uriPathSegment' => $title], ['Neos.MarketPlace:Package'], $this->getNode()->getContext());
-        /** @var NodeInterface $packageNode */
         $packageNode = reset($packageNodes);
         if ($packageNode) {
             return $this->linkingService->createNodeUri(

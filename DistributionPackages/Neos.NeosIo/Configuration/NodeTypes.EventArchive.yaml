@@ -1,9 +1,10 @@
+
 'Neos.NeosIo:EventArchive':
   superTypes:
     'Neos.Neos:Document': true
   ui:
     label: 'Neos Event Archive'
-    icon: 'icon-archive'
+    icon: icon-archive
     inlineEditable: true
   constraints:
     nodeTypes:
@@ -19,14 +20,13 @@
           '*': false
           'Neos.NeosIo:SemanticSection': true
   properties:
-    'noEntriesNotice':
+    noEntriesNotice:
       type: string
       inlineEditable: true
       ui:
         inline:
           editorOptions:
             formatting:
-              u: true
               sub: true
               sup: true
               p: false
@@ -38,4 +38,5 @@
               a: true
               strong: true
               em: true
+              underline: true
             placeholder: 'No entries notice (optional)'

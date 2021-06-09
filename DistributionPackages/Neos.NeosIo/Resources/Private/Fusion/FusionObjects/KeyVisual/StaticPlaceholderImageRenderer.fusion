@@ -8,7 +8,7 @@ prototype(Neos.NeosIo:KeyVisual.StaticPlaceholderImageRenderer) < prototype(Neos
 
     previewImageUri = ${staticUrlPrefix + "-5w.jpg"}
     highQualityImageUri = ${staticUrlPrefix + "-1500w.jpg"}
-    imageSrcSet = Neos.Fusion:Array {
+    imageSrcSet = Neos.Fusion:Join {
         ultraHighRes = ${staticUrlPrefix + "-1920w.jpg 1920w, "}
         highRes = ${staticUrlPrefix + "-1280w.jpg 1280w, "}
         mediumRes = ${staticUrlPrefix + "-658w.jpg 658w"}

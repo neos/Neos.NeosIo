@@ -11,9 +11,9 @@ prototype(Neos.MarketPlace:PackageReadme) < prototype(Neos.Fusion:Template) {
     readmeSource = ${q(documentNode).find('readme').first().property('source')}
     hasReadme = ${this.readmeSource != '<p>Enter HTML here</p>' && String.isBlank(this.readmeSource) == false}
 
-    readme = Neos.Fusion:Collection {
+    readme = Neos.Fusion:Loop {
+        items = ${q(documentNode).find('readme')}
         itemName = 'node'
         itemRenderer = Neos.Neos:ContentCase
-        collection = ${q(documentNode).find('readme')}
     }
 }

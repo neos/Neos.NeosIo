@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Eel\FlowQueryOperations;
 
 /*
@@ -13,7 +15,6 @@ namespace Neos\MarketPlace\Eel\FlowQueryOperations;
 
 use Neos\Eel\FlowQuery\FlowQueryException;
 use Neos\Eel\FlowQuery\Operations\AbstractOperation;
-use Neos\Flow\Annotations as Flow;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\ContentRepository\Domain\Model\Node;
@@ -40,7 +41,7 @@ class SortOperation extends AbstractOperation {
     /**
      * {@inheritdoc}
      *
-     * We can only handle TYPO3CR Nodes.
+     * We can only handle CR Nodes.
      *
      * @param mixed $context
      * @return boolean
@@ -55,39 +56,44 @@ class SortOperation extends AbstractOperation {
      * @param FlowQuery $flowQuery the FlowQuery object
      * @param array $arguments the arguments for this operation
      * @return mixed
+     * @throws FlowQueryException
+     * @throws \Neos\ContentRepository\Exception\NodeException
+     * @throws \Neos\ContentRepository\Exception\NodeTypeNotFoundException
+     * @throws \Neos\Flow\Property\Exception
+     * @throws \Neos\Flow\Security\Exception
      */
     public function evaluate(FlowQuery $flowQuery, array $arguments) {
         if (!isset($arguments[0]) || empty($arguments[0])) {
             throw new FlowQueryException('sort() needs property name by which nodes should be sorted', 1332492263);
-        } else {
-            $nodes = $flowQuery->getContext();
-            $sortByPropertyPath = $arguments[0];
-            $sortOrder = 'DESC';
-            if (isset($arguments[1]) && !empty($arguments[1]) && in_array($arguments[1], array('ASC', 'DESC'))) {
-                $sortOrder = $arguments[1];
-            }
-
-            $sortedNodes = array();
-            $sortSequence = array();
-            $nodesByIdentifier = array();
-            /** @var Node $node */
-            foreach ($nodes as $node) {
-                $propertyValue = $node->getProperty($sortByPropertyPath);
-                if ($propertyValue instanceof \DateTime) {
-                    $propertyValue = $propertyValue->getTimestamp();
-                }
-                $sortSequence[$node->getIdentifier()] = $propertyValue;
-                $nodesByIdentifier[$node->getIdentifier()] = $node;
-            }
-            if ($sortOrder === 'DESC') {
-                arsort($sortSequence);
-            } else {
-                asort($sortSequence);
-            }
-            foreach ($sortSequence as $nodeIdentifier => $value) {
-                $sortedNodes[] = $nodesByIdentifier[$nodeIdentifier];
-            }
-            $flowQuery->setContext($sortedNodes);
         }
+
+        $nodes = $flowQuery->getContext();
+        $sortByPropertyPath = $arguments[0];
+        $sortOrder = 'DESC';
+        if (isset($arguments[1]) && !empty($arguments[1]) && in_array($arguments[1], array('ASC', 'DESC'))) {
+            $sortOrder = $arguments[1];
+        }
+
+        $sortedNodes = array();
+        $sortSequence = array();
+        $nodesByIdentifier = array();
+        /** @var Node $node */
+        foreach ($nodes as $node) {
+            $propertyValue = $node->getProperty($sortByPropertyPath);
+            if ($propertyValue instanceof \DateTime) {
+                $propertyValue = $propertyValue->getTimestamp();
+            }
+            $sortSequence[$node->getIdentifier()] = $propertyValue;
+            $nodesByIdentifier[$node->getIdentifier()] = $node;
+        }
+        if ($sortOrder === 'DESC') {
+            arsort($sortSequence);
+        } else {
+            asort($sortSequence);
+        }
+        foreach ($sortSequence as $nodeIdentifier => $value) {
+            $sortedNodes[] = $nodesByIdentifier[$nodeIdentifier];
+        }
+        $flowQuery->setContext($sortedNodes);
     }
 }

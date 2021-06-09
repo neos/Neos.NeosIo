@@ -12,7 +12,6 @@ namespace Neos\NeosConIo\Eel;
  * source code.
  */
 
-use Neos\Flow\Annotations as Flow;
 use Neos\Eel\ProtectedContextAwareInterface;
 
 class DateHelper implements ProtectedContextAwareInterface

@@ -62,22 +62,22 @@ class SortByPropertyOperation extends AbstractOperation
     {
         if (!isset($arguments[0]) || empty($arguments[0])) {
             throw new FlowQueryException('sort() needs property name by which entries should be sorted', 1581928004);
-        } else {
-            $items = $flowQuery->getContext();
-            $propertyName = $arguments[0];
-
-            uasort($items, function (array $a, array $b) use ($propertyName) {
-                if ($a[$propertyName] == $b[$propertyName]) {
-                    return 0;
-                }
-                return ($a[$propertyName] < $b[$propertyName]) ? -1 : 1;
-            });
-
-            if (isset($arguments[1]) && !empty($arguments[1]) && $arguments[1] === 'DESC') {
-                $items = array_reverse($items);
-            }
-
-            $flowQuery->setContext($items);
         }
+
+        $items = $flowQuery->getContext();
+        $propertyName = $arguments[0];
+
+        uasort($items, static function (array $a, array $b) use ($propertyName) {
+            if ($a[$propertyName] === $b[$propertyName]) {
+                return 0;
+            }
+            return ($a[$propertyName] < $b[$propertyName]) ? -1 : 1;
+        });
+
+        if (isset($arguments[1]) && !empty($arguments[1]) && $arguments[1] === 'DESC') {
+            $items = array_reverse($items);
+        }
+
+        $flowQuery->setContext($items);
     }
 }

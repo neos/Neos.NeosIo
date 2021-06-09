@@ -1,7 +1,7 @@
 prototype(Neos.NeosIo.FeatureList:FeatureList) < prototype(Neos.Neos:ContentComponent) {
 
-	featureGroups = Neos.Fusion:RawCollection {
-		collection = ${q(node).children('[instanceof Neos.NeosIo.FeatureList:FeatureGroup]')}
+	featureGroups = Neos.Fusion:Map {
+        items = ${q(node).children('[instanceof Neos.NeosIo.FeatureList:FeatureGroup]')}
 		itemName = 'featureGroup'
 		itemRenderer = Neos.Fusion:DataStructure {
 			__node = ${featureGroup}
@@ -18,8 +18,8 @@ prototype(Neos.NeosIo.FeatureList:FeatureList) < prototype(Neos.Neos:ContentComp
 				asset = ${q(featureGroup).property('image')}
 				maximumWidth = 60
 			}
-			features = Neos.Fusion:RawCollection {
-				collection = ${q(featureGroup).children('[instanceof Neos.NeosIo.FeatureList:Feature]').add(q(featureGroup).property('features'))}
+			features = Neos.Fusion:Map {
+                items = ${q(featureGroup).children('[instanceof Neos.NeosIo.FeatureList:Feature]').add(q(featureGroup).property('features'))}
 				itemName = 'feature'
 				itemRenderer = Neos.Fusion:DataStructure {
 					__node = ${feature}
@@ -33,8 +33,8 @@ prototype(Neos.NeosIo.FeatureList:FeatureList) < prototype(Neos.Neos:ContentComp
 					}
 					isCoreFeature = ${q(feature).property('isCoreFeature')}
 					isCommunityFeature = ${q(feature).property('isCommunityFeature')}
-					links = Neos.Fusion:RawCollection {
-						collection = ${q(feature).property('relatedPackages')}
+					links = Neos.Fusion:Map {
+                        items = ${q(feature).property('relatedPackages')}
 						itemName = 'relatedPackage'
 						itemRenderer = Neos.Fusion:DataStructure {
 							label = ${q(relatedPackage).property('title')}

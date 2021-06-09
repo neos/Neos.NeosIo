@@ -1,18 +1,19 @@
+
 'Neos.NeosIo:Event.List':
   superTypes:
     'Neos.Neos:Content': true
   ui:
     label: 'Neos Event List'
-    icon: 'icon-calendar'
+    icon: icon-calendar
     inlineEditable: true
-    group: 'special'
+    group: special
     inspector:
       groups:
-        'event':
-          label: 'Event'
-          icon: 'icon-calendar'
+        event:
+          label: Event
+          icon: icon-calendar
   properties:
-    'type':
+    type:
       type: string
       options:
         showInCreationDialog: true
@@ -20,19 +21,19 @@
         label: 'Event type to show'
         reloadIfChanged: true
         inspector:
-          group: 'event'
-          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          group: event
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             values:
               '':
-                label: 'All'
-              'conference':
+                label: All
+              conference:
                 label: 'Conference / Marketing'
-              'meetup':
-                label: 'Meetup'
-              'sprint':
-                label: 'Sprint'
-    'mode':
+              meetup:
+                label: Meetup
+              sprint:
+                label: Sprint
+    mode:
       type: string
       options:
         showInCreationDialog: true
@@ -40,41 +41,40 @@
         label: 'Mode of the list'
         reloadIfChanged: true
         inspector:
-          group: 'event'
-          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          group: event
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             values:
               '':
                 label: 'All events'
-              'upcoming':
+              upcoming:
                 label: 'Only upcoming events'
-              'archive':
+              archive:
                 label: 'Only past events (archive)'
-    'limit':
+    limit:
       type: integer
       defaultValue: 0
       ui:
         label: 'Max number to show (0 = no limit)'
         inspector:
-          group: 'event'
-    'sourceFolder':
+          group: event
+    sourceFolder:
       type: reference
       ui:
         label: 'Folder to show events from'
         reloadIfChanged: true
         inspector:
-          group: 'event'
+          group: event
           editorOptions:
             nodeTypes:
               - 'Neos.Neos:Document'
-    'noEntriesNotice':
+    noEntriesNotice:
       type: string
       inlineEditable: true
       ui:
         inline:
           editorOptions:
             formatting:
-              u: true
               sub: true
               sup: true
               p: false
@@ -86,4 +86,5 @@
               a: true
               strong: true
               em: true
+              underline: true
             placeholder: 'No entries notice (optional)'

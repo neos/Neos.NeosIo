@@ -1,5 +1,11 @@
 prototype(Neos.NeosIo:Quote) < prototype(Neos.Neos:Content) {
-    title = ${node.properties.author}
+    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Quote.html'
+
+    quote = ${q(node).property('quote')}
+    title = ${q(node).property('author')}
+    author = ${q(node).property('author')}
+    authorAvatar = ${q(node).property('authorAvatar')}
+    alternativeText = ${q(node).property('alternativeText')}
     alternativeText = ${String.isBlank(value) ? node.properties.image.label : value}
-    alternativeText.@process.authorNameFallback = ${node.properties.author}
+    alternativeText.@process.authorNameFallback = ${q(node).property('author')}
 }
