@@ -428,7 +428,7 @@ class PackageConverter
         /** @noinspection PhpUndefinedMethodInspection */
         $maintainers = (new FlowQuery([$maintainerStorage]))->children('[instanceof Neos.MarketPlace:Maintainer]');
         foreach ($maintainers as $maintainer) {
-            if (in_array($maintainer->getNodeName(), $upstreamMaintainers, true)) {
+            if (in_array($maintainer->getNodeName(), $upstreamMaintainers)) {
                 continue;
             }
             $maintainer->remove();
@@ -472,7 +472,7 @@ class PackageConverter
         /** @noinspection PhpUndefinedMethodInspection */
         $versions = (new FlowQuery([$versionStorage]))->children('[instanceof Neos.MarketPlace:Version]');
         foreach ($versions as $version) {
-            if (in_array($version->getNodeName(), $upstreamVersions, true)) {
+            if (in_array($version->getNodeName(), $upstreamVersions)) {
                 continue;
             }
             $version->remove();
