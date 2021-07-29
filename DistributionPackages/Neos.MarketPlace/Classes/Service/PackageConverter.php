@@ -263,7 +263,7 @@ class PackageConverter
                 'githubWatchers' => (integer)Arrays::getValueByPath($meta, 'watchers_count'),
                 'githubForks' => (integer)Arrays::getValueByPath($meta, 'forks_count'),
                 'githubIssues' => (integer)Arrays::getValueByPath($meta, 'open_issues_count'),
-                'githubAvatar' => trim(Arrays::getValueByPath($meta, 'organization.avatar_url'))
+                'githubAvatar' => trim((string)Arrays::getValueByPath($meta, 'organization.avatar_url'))
             ]);
             $this->handleGithubReadme($organization, $repository, $node);
         }
