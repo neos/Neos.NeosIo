@@ -53,7 +53,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
     public function nodeType(string $nodeType): QueryBuilderInterface
     {
         // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
-        return $this->queryFilter('match', ['neos_type_and_supertypes' => $nodeType]);
+        return $this->queryFilter('term', ['neos_type_and_supertypes' => $nodeType]);
     }
 
     /**
