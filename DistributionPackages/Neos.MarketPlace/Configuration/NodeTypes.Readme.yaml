@@ -1,10 +1,16 @@
 'Neos.MarketPlace:Readme':
   superTypes:
-    'Neos.NodeTypes.Html:Html': true
+    'Neos.Neos:Content': true
   ui:
     label: i18n
     group: marketplace
+    icon: 'icon-code'
+    position: 500
   properties:
-    source:
+    readmeSource:
+      type: string
+      defaultValue: ''
       search:
+        elasticSearchMapping:
+          type: text
         fulltextExtractor: '${Indexing.extractHtmlTags(value)}'

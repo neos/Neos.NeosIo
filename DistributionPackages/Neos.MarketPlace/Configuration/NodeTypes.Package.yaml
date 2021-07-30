@@ -201,8 +201,8 @@
         label: i18n
     __readme:
       search:
-        indexing: '${String.stripTags(q(node).find(''readme'').first().property(''source''))}'
-        fulltextExtractor: '${Indexing.extractHtmlTags(q(node).find(''readme'').first().property(''source''))}'
+        indexing: '${String.stripTags(q(node).find(''readme'').first().property(''readmeSource''))}'
+        fulltextExtractor: '${Indexing.extractHtmlTags(q(node).find(''readme'').first().property(''readmeSource''))}'
     __maintainers:
       search:
         indexing: '${q(node).find(''maintainers'').first().property(''title'')}'

@@ -314,7 +314,7 @@ class PackageConverter
         }
 
         $content = $this->postprocessGithubReadme($organization, $repository, $rendered);
-        $readmeNode->setProperty('source', $content);
+        $readmeNode->setProperty('readmeSource', $content);
     }
 
     /**
