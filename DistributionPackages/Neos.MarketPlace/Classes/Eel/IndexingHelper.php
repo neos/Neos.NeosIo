@@ -37,12 +37,15 @@ class IndexingHelper extends Eel\IndexingHelper
     protected $packageVersion;
 
     /**
-     * @param string $packageType
+     * @param string|null $packageType
      * @return string
      */
-    public function packageTypeMapping(string $packageType): string
+    public function packageTypeMapping(?string $packageType): string
     {
-        return $this->packageTypes[$packageType] ?? $packageType;
+        if ($packageType === null) {
+            return '[null]';
+        }
+        return (string)($this->packageTypes[$packageType] ?? $packageType);
     }
 
     /**
