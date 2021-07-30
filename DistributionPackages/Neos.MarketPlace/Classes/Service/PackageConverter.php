@@ -24,7 +24,6 @@ use Neos\Cache\EnvironmentConfiguration;
 use Neos\Cache\Exception\InvalidBackendException;
 use Neos\Cache\Psr\Cache\CacheFactory;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\ContentRepository\Domain\Model\NodeTemplate;
 use Neos\ContentRepository\Domain\NodeAggregate\NodeName;
 use Neos\ContentRepository\Domain\Projection\Content\TraversableNodeInterface;
 use Neos\ContentRepository\Domain\Service\NodeTypeManager;
@@ -386,12 +385,9 @@ class PackageConverter
             'favers' => $package->getFavers()
         ];
 
-        $nodeTemplate = new NodeTemplate();
-        $nodeTemplate->setNodeType($this->nodeTypeManager->getNodeType('Neos.MarketPlace:Package'));
-        $nodeTemplate->setName($name);
-        $this->setNodeTemplateProperties($nodeTemplate, $data);
-
-        return $parentNode->createNodeFromTemplate($nodeTemplate);
+        $node = $parentNode->createNode($name, $this->nodeTypeManager->getNodeType('Neos.MarketPlace:Package'));
+        $this->setNodeProperties($node, $data);
+        return $node;
     }
 
     /**
@@ -443,11 +439,8 @@ class PackageConverter
                 'homepage' => $maintainer->getHomepage()
             ];
             if ($node === null) {
-                $nodeTemplate = new NodeTemplate();
-                $nodeTemplate->setNodeType($this->nodeTypeManager->getNodeType('Neos.MarketPlace:Maintainer'));
-                $nodeTemplate->setName($name);
-                $this->setNodeTemplateProperties($nodeTemplate, $data);
-                $maintainerStorage->createNodeFromTemplate($nodeTemplate);
+                $node = $maintainerStorage->createNode($name, $this->nodeTypeManager->getNodeType('Neos.MarketPlace:Maintainer'));
+                $this->setNodeProperties($node, $data);
             } else {
                 $this->updateNodeProperties($node, $data);
             }
@@ -515,11 +508,8 @@ class PackageConverter
                     $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:PrereleasedVersion');
             }
             if ($node === null) {
-                $nodeTemplate = new NodeTemplate();
-                $nodeTemplate->setNodeType($nodeType);
-                $nodeTemplate->setName($name);
-                $this->setNodeTemplateProperties($nodeTemplate, $data);
-                $node = $versionStorage->createNodeFromTemplate($nodeTemplate);
+                $node = $versionStorage->createNode($name, $nodeType);
+                $this->setNodeProperties($node, $data);
             } else {
                 if ($node->getNodeType()->getName() !== $nodeType->getName()) {
                     $node->setNodeType($nodeType);
@@ -598,13 +588,13 @@ class PackageConverter
     }
 
     /**
-     * @param NodeTemplate $template
+     * @param NodeInterface $node
      * @param array $data
      */
-    protected function setNodeTemplateProperties(NodeTemplate $template, array $data): void
+    protected function setNodeProperties(NodeInterface $node, array $data): void
     {
         foreach ($data as $propertyName => $propertyValue) {
-            $template->setProperty($propertyName, $propertyValue);
+            $node->setProperty($propertyName, $propertyValue);
         }
     }
 

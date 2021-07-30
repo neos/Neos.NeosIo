@@ -14,7 +14,6 @@ namespace Neos\MarketPlace\Domain\Model;
  */
 
 use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\ContentRepository\Domain\Model\NodeTemplate;
 use Neos\ContentRepository\Domain\Service\Context;
 use Neos\ContentRepository\Domain\Service\NodeTypeManager;
 use Neos\ContentRepository\Exception\NodeTypeNotFoundException;
@@ -86,15 +85,14 @@ class Storage
     {
         $vendor = Slug::create($vendor);
         $node = $this->node()->getNode($vendor);
-        if ($node !== null) {
-            return $node;
+
+        if ($node === null) {
+            $node = $this->node()->createNode($vendor, $this->nodeTypeManager->getNodeType('Neos.MarketPlace:Vendor'));
+            $node->setProperty('uriPathSegment', $vendor);
+            $node->setProperty('title', $vendor);
         }
-        $nodeTemplate = new NodeTemplate();
-        $nodeTemplate->setNodeType($this->nodeTypeManager->getNodeType('Neos.MarketPlace:Vendor'));
-        $nodeTemplate->setName($vendor);
-        $nodeTemplate->setProperty('uriPathSegment', $vendor);
-        $nodeTemplate->setProperty('title', $vendor);
-        return $this->node()->createNodeFromTemplate($nodeTemplate);
+
+        return $node;
     }
 
     /**
