@@ -94,9 +94,9 @@ class PackageConverter
 
     private Storage $storage;
 
-    public function __construct(Storage $storage, bool $forceUpdate)
+    public function __construct(bool $forceUpdate)
     {
-        $this->storage = $storage;
+        $this->storage = new Storage();
         $this->forceUpdate = $forceUpdate;
     }
 

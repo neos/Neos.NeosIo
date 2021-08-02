@@ -29,35 +29,16 @@ class PackageImporter
 {
     private bool $forceUpdates = false;
 
-    private Storage $storage;
-
     private array $processedPackages = [];
-
-    public function useStorage(Storage $storage): void
-    {
-        $this->storage = $storage;
-    }
 
     public function forceUpdates(bool $forceUpdates): void
     {
         $this->forceUpdates = $forceUpdates;
     }
 
-    private function getConverter(): PackageConverter
-    {
-        if (!isset($this->converter)) {
-            if (!isset($this->storage)) {
-                throw new \RuntimeException('No storage set', 1616084519);
-            }
-            $this->converter = new PackageConverter($this->storage, $this->forceUpdates);
-        }
-
-        return $this->converter;
-    }
-
     public function process(Package $package): NodeInterface
     {
-        $node = $this->getConverter()->convert($package);
+        $node = (new PackageConverter($this->forceUpdates))->convert($package);
         $this->processedPackages[$package->getName()] = true;
         return $node;
     }
@@ -65,17 +46,14 @@ class PackageImporter
     /**
      * Remove local package not preset in the processed packages list
      *
-     * @param Storage $storage
-     * @param callable|null $callback function called after the package removal
-     * @return integer
      * @throws \Neos\Eel\Exception
      * @throws \Neos\ContentRepository\Exception\NodeException
      * @throws \Neos\MarketPlace\Exception
      */
-    public function cleanupPackages(Storage $storage, callable $callback = null): int
+    public function cleanupPackages(?callable $callback = null): int
     {
         $count = 0;
-        $storageNode = $storage->node();
+        $storageNode = (new Storage())->node();
         $query = new FlowQuery([$storageNode]);
         $query = $query->find('[instanceof Neos.MarketPlace:Package]');
         $upstreamPackages = $this->getProcessedPackages();
@@ -97,16 +75,13 @@ class PackageImporter
     /**
      * Remove vendors without packages
      *
-     * @param Storage $storage
-     * @param callable|null $callback function called after the vendor removal
-     * @return integer
      * @throws \Neos\Eel\Exception
      * @throws \Neos\MarketPlace\Exception
      */
-    public function cleanupVendors(Storage $storage, ?callable $callback = null): int
+    public function cleanupVendors(?callable $callback = null): int
     {
         $count = 0;
-        $storageNode = $storage->node();
+        $storageNode = (new Storage())->node();
         $query = new FlowQuery([$storageNode]);
         $query = $query->find('[instanceof Neos.MarketPlace:Vendor]');
         foreach ($query as $vendor) {

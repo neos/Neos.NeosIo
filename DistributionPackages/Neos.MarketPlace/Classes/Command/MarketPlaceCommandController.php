@@ -21,7 +21,6 @@ use Neos\Flow\Log\Utility\LogEnvironment;
 use Neos\Flow\Persistence\Doctrine\PersistenceManager;
 use Neos\MarketPlace\Domain\Model\LogAction;
 use Neos\MarketPlace\Domain\Model\Packages;
-use Neos\MarketPlace\Domain\Model\Storage;
 use Neos\MarketPlace\Service\PackageImporter;
 use Neos\Neos\Domain\Service\ContentContextFactory;
 use Packagist\Api\Client;
@@ -82,23 +81,8 @@ class MarketPlaceCommandController extends CommandController
         $this->outputLine();
         $this->outputLine('Synchronize with Packagist ...');
         $this->outputLine('------------------------------');
-        $storage = new Storage();
-        $this->importer->useStorage($storage);
+
         $this->importer->forceUpdates($force);
-
-        $process = function (Package $package) use (&$count) {
-            $count++;
-            $this->outputLine(sprintf('  %d/ %s (%s)', $count, $package->getName(), $package->getTime()));
-            $this->importer->process($package);
-
-            if ($count % 10 === 0) {
-                $this->persistenceManager->persistAll();
-                foreach ($this->contextFactory->getInstances() as $contextInstance) {
-                    $contextInstance->getFirstLevelNodeCache()->flush();
-                }
-                $this->persistenceManager->clearState();
-            }
-        };
 
         if ($package === '') {
             $this->logger->info(sprintf('action=%s', LogAction::FULL_SYNC_STARTED), LogEnvironment::fromMethodName(__METHOD__));
@@ -107,7 +91,7 @@ class MarketPlaceCommandController extends CommandController
                 $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED, $packagistPackage->getName()), LogEnvironment::fromMethodName(__METHOD__));
                 $timer = microtime(true);
                 try {
-                    $process($packagistPackage);
+                    $this->processPackage($packagistPackage, $count);
                     $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED, $packagistPackage->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
                 } catch (\Exception $exception) {
                     $this->logger->error(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FAILED, $packagistPackage->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
@@ -116,8 +100,8 @@ class MarketPlaceCommandController extends CommandController
                     $hasError = true;
                 }
             }
-            $this->cleanupPackages($storage);
-            $this->cleanupVendors($storage);
+            $this->cleanupPackages();
+            $this->cleanupVendors();
             $this->logger->info(sprintf('action=%s duration=%f', LogAction::FULL_SYNC_FINISHED, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
 
             $this->outputLine();
@@ -127,7 +111,7 @@ class MarketPlaceCommandController extends CommandController
             $client = new Client();
             try {
                 $packagistPackage = $client->get($package);
-                $process($packagistPackage);
+                $this->processPackage($packagistPackage, $count);
                 $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED, $package, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
             } catch (\Exception $exception) {
                 $this->logger->error(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FAILED, $package, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
@@ -153,17 +137,28 @@ class MarketPlaceCommandController extends CommandController
         $this->outputLine(sprintf('Duration: %f seconds', $elapsedTime()));
     }
 
+    private function processPackage(Package $package, int &$count): void
+    {
+        $count++;
+        $this->outputLine(sprintf('  %d/ %s (%s)', $count, $package->getName(), $package->getTime()));
+
+        $this->importer->process($package);
+        if ($count % 10 === 0) {
+            $this->persistenceManager->persistAll();
+            $this->contextFactory->reset();
+            $this->persistenceManager->clearState();
+        }
+    }
+
     /**
      * Remove packages that don't exist on Packagist
-     *
-     * @param Storage $storage
      */
-    protected function cleanupPackages(Storage $storage): void
+    protected function cleanupPackages(): void
     {
         $this->outputLine();
         $this->outputLine('Cleanup packages ...');
         $this->outputLine('--------------------');
-        $count = $this->importer->cleanupPackages($storage, function (NodeInterface $package) {
+        $count = $this->importer->cleanupPackages(function (NodeInterface $package) {
             $this->outputLine(sprintf('%s deleted', $package->getLabel()));
         });
         if ($count > 0) {
@@ -173,15 +168,13 @@ class MarketPlaceCommandController extends CommandController
 
     /**
      * Remove vendors that don't exist on Packagist or contains no packages
-     *
-     * @param Storage $storage
      */
-    protected function cleanupVendors(Storage $storage): void
+    protected function cleanupVendors(): void
     {
         $this->outputLine();
         $this->outputLine('Cleanup vendors ...');
         $this->outputLine('-------------------');
-        $count = $this->importer->cleanupVendors($storage, function (NodeInterface $vendor) {
+        $count = $this->importer->cleanupVendors(function (NodeInterface $vendor) {
             $this->outputLine(sprintf('%s deleted', $vendor->getLabel()));
         });
         if ($count > 0) {
