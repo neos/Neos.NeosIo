@@ -13,6 +13,12 @@ module.exports = {
                 loose: true
             }
         ],
+        [
+            "@babel/plugin-proposal-private-methods",
+            {
+                "loose": true
+            }
+        ],
         '@babel/proposal-object-rest-spread',
 
         [

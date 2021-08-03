@@ -77,9 +77,7 @@ function config(
             ? {
                   minimizer: [
                       new TerserPlugin({
-                          cache: true,
-                          parallel: true,
-                          sourceMap: hasSourceMap
+                          parallel: true
                       })
                   ]
               }
@@ -120,9 +118,6 @@ function config(
                             options: {
                                 sourceMap: hasSourceMap
                             }
-                        },
-                        {
-                            loader: 'cache-loader'
                         },
                         {
                             loader: 'sass-loader',
