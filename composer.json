@@ -4,10 +4,7 @@
     "license": "GPL-3.0-or-later",
     "config": {
         "vendor-dir": "Packages/Libraries",
-        "bin-dir": "bin",
-        "platform": {
-            "php": "7.3"
-        }
+        "bin-dir": "bin"
     },
     "require": {
         "neos/neosio": "*",
@@ -20,8 +17,12 @@
 
         "flownative/google-cloudstorage": "^5.0",
         "rokka/imagine-vips": "^0.10",
-        "wwwision/neos-creationdialogproperties": "^0.5.0",
-        "webexcess/openstreetmap": "dev-master as 1.2.1"
+        "wwwision/neos-creationdialogproperties": "^0.6.2",
+        "webexcess/openstreetmap": "dev-master as 1.2.1",
+        "ocramius/package-versions": "1.9.*"
+    },
+    "require-dev": {
+      "roave/security-advisories": "dev-master"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -29,20 +30,22 @@
         {
             "type": "path",
             "url": "./DistributionPackages/*"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/kdambekalns/OutOfBandRendering.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/sbruggmann/openstreetmap.git"
         }
     ],
     "scripts": {
         "post-update-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
         "post-install-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
         "post-package-update":"Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall",
-        "post-package-install":"Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall"
+        "post-package-install":"Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall",
+        "prune-domains": "@php ./flow domain:delete --hostname '*' ; exit 0",
+        "prime-localbeach": [
+            "@prune-domains",
+            "@php ./flow domain:add --site-node-name neosio --hostname neosio.localbeach.net",
+            "@php ./flow domain:add --site-node-name flowneosio --hostname flowio.localbeach.net",
+            "@php ./flow domain:add --site-node-name neosconio --hostname neoscon.localbeach.net"
+        ]
+    },
+    "scripts-descriptions": {
+        "prime-localbeach": "Primes the Local Beach Neos setup"
     }
 }

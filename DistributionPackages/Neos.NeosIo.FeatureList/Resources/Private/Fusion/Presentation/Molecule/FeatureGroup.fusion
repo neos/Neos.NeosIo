@@ -16,21 +16,21 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) < prototype(Neos.Fusion
 			</div>
 			<div class="featureGroup__description" @if.has={props.featureGroupData.description}>{props.featureGroupData.description}</div>
 			<div class="featureGroup__features">
-				<Neos.Fusion:Collection collection={props.featureGroupData.features} itemName="feature" @children="itemRenderer" >
+				<Neos.Fusion:Loop items={props.featureGroupData.features} itemName="feature" @children="itemRenderer" >
 					<Neos.NeosIo.FeatureList:Molecule.Feature featureData={feature} />
-				</Neos.Fusion:Collection>
+				</Neos.Fusion:Loop>
 			</div>
 		</div>
 	`
 }
 
-prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup.ExampleData) < prototype(Neos.Fusion:RawArray) {
+prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup.ExampleData) < prototype(Neos.Fusion:DataStructure) {
 	title = 'Feature Group Title'
 	description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
 	image = Neos.Fusion:ResourceUri {
 		path = 'resource://Neos.Neos/Public/Images/dummy-image.svg'
 	}
-	features = Neos.Fusion:RawArray {
+	features = Neos.Fusion:DataStructure {
 		01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 		02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 		03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData

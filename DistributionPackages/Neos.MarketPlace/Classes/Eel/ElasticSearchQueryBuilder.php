@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Eel;
 
 /*
@@ -29,7 +31,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
      * @return QueryInterface
      * @throws \Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception\QueryBuildingException
      */
-    public function getRequest()
+    public function getRequest(): QueryInterface
     {
         $request = parent::getRequest();
         $copiedRequest = clone $request;
@@ -42,12 +44,25 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
     }
 
     /**
+     * Override this method since it returns no results
+     *
+     * @param string $nodeType the node type to filter for
+     * @return ElasticSearchQueryBuilder
+     * @throws QueryBuildingException
+     */
+    public function nodeType(string $nodeType): QueryBuilderInterface
+    {
+        // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
+        return $this->queryFilter('term', ['neos_type_and_supertypes' => $nodeType]);
+    }
+
+    /**
      * @param string $searchWord
      * @param array $options Options to configure the query_string, see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-query-string-query.html
      * @return QueryBuilderInterface
      * @throws \Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception\QueryBuildingException
      */
-    public function fulltext($searchWord, array $options = [])
+    public function fulltext(string $searchWord, array $options = []): QueryBuilderInterface
     {
         $searchWord = trim($searchWord);
         if ($searchWord === '') {
@@ -55,26 +70,23 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
         }
         $this->hasFulltext = true;
 
-        $this->request->setValueByPath('query.filtered.query.bool.must', []);
-        $this->request->setValueByPath('query.filtered.query.bool.should', []);
-        $this->request->setValueByPath('query.filtered.query.bool.minimum_should_match', 1);
-        $this->request->appendAtPath('query.filtered.query.bool.should', [
-            [
-                'query_string' => [
-                    'fields' => [
-                        'title^10',
-                        '__composerVendor^5',
-                        '__maintainers.name^5',
-                        '__maintainers.tag^8',
-                        'description^2',
-                        'lastVersion.keywords.name^10',
-                        'lastVersion.keywords.tag^12',
-                        '__fulltext.*'
-                    ],
-                    'query' => str_replace('/', '\\/', $searchWord),
-                    'default_operator' => 'AND',
-                    'use_dis_max' => true
-                ]
+        $this->request->setValueByPath('query.bool.filter.bool.must', []);
+        $this->request->setValueByPath('query.bool.filter.bool.should', []);
+        $this->request->setValueByPath('query.bool.filter.bool.minimum_should_match', 1);
+        $this->request->appendAtPath('query.bool.filter.bool.should', [
+            'multi_match' => [
+                'fields' => [
+                    'title^10',
+                    '__composerVendor^5',
+                    '__maintainers.name^5',
+                    '__maintainers.tag^8',
+                    'description^2',
+                    'lastVersion.keywords.name^10',
+                    'lastVersion.keywords.tag^12',
+                    'neos_fulltext.*'
+                ],
+                'query' => str_replace('/', '\\/', $searchWord),
+                'operator' => 'AND'
             ]
         ]);
 
@@ -88,7 +100,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
      */
     protected static function skipAbandonedPackages(QueryInterface $request): void
     {
-        $request->appendAtPath('query.filtered.filter.bool.must_not', [
+        $request->appendAtPath('query.bool.filter.bool.must_not', [
             'exists' => [
                 'field' => 'abandoned'
             ]
@@ -108,7 +120,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
                         [
                             'filter' => [
                                 'term' => [
-                                    '__typeAndSupertypes' => 'Neos.MarketPlace:Vendor'
+                                    'neos_type_and_supertypes' => 'Neos.MarketPlace:Vendor'
                                 ],
                             ],
                             'weight' => 1.2
@@ -149,7 +161,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
                     ],
                     'score_mode' => 'avg',
                     'boost_mode' => 'multiply',
-                    'query' => $request['query']
+                    'query' => $request->toArray()['query']
                 ]
             ]);
     }

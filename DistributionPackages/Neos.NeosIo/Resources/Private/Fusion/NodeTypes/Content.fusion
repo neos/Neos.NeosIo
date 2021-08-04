@@ -1,4 +1,4 @@
-prototype(Neos.Neos:Content) < prototype(Neos.Fusion:Template) {
+prototype(Neos.Neos:Content) {
     attributes.class.@process.displaySmallMq = ${q(node).property('displaySmallMq') ? value + ' ' + 'mOnly' : value}
     attributes.class.@process.displayLargeMq = ${q(node).property('displayLargeMq') ? value + ' ' + 'lOnly' : value}
     attributes.class.@process.displayAllMq = ${q(node).property('displayAllMq') ? value + ' ' + 'ml' : value}

@@ -1,5 +1,6 @@
 Neos:
   MarketPlace:
+    # composer types to include, optional with a mapping to a current type
     typeMapping:
       neos-plugin: neos-plugin
       typo3-flow-build: neos-build
@@ -29,13 +30,15 @@ Neos:
       identifier: 9127231f-d1b8-440f-8ef7-b05f760178fb
     github:
       cacheDirectory: '%FLOW_PATH_DATA%Github/Cache'
-      account: username
-      password: password
+      # Please create a personal access token to access this endpoint: http://github.com/settings/tokens
+      token: set-token
+
   Flow:
     mvc:
       routes:
         Neos.MarketPlace:
           position: 'before Neos.Neos'
+
   Neos:
     nodeTypes:
       groups:
@@ -51,14 +54,19 @@ Neos:
     fusion:
       autoInclude:
         Neos.MarketPlace: true
+
   ContentRepository:
     Search:
+      realtimeIndexing:
+        enabled: true
       defaultContext:
         MarketIndexing: Neos\MarketPlace\Eel\IndexingHelper
+
   Fusion:
     defaultContext:
       MarketPlaceSearch: Neos\MarketPlace\Eel\ElasticSearchQueryBuilder
       MarketCaching: Neos\MarketPlace\Eel\CachingHelper
+
 Ttree:
   OutOfBandRendering:
     presets:

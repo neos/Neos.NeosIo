@@ -1,9 +1,8 @@
-prototype(Neos.MarketPlace:Tags) >
 prototype(Neos.MarketPlace:Tags) < prototype(Neos.Fusion:Tag) {
     @context.data = ${String.split(this.data, ', ')}
     tagName = 'ul'
-    content = Neos.Fusion:Collection {
-        collection = ${data}
+    content = Neos.Fusion:Loop {
+        items = ${data}
         itemName = 'keyword'
         itemRenderer = Neos.Fusion:Tag {
             tagName = 'li'

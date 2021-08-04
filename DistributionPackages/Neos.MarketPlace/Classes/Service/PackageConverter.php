@@ -1,5 +1,7 @@
 <?php
-namespace Neos\MarketPlace\Property\TypeConverter;
+declare(strict_types=1);
+
+namespace Neos\MarketPlace\Service;
 
 /*
  * This file is part of the Neos.MarketPlace package.
@@ -11,47 +13,43 @@ namespace Neos\MarketPlace\Property\TypeConverter;
  * source code.
  */
 
-use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Indexer\NodeIndexer;
 use Github\Api\Repository\Contents;
 use Github\Client;
 use Github\Exception\ApiLimitExceedException;
+use Github\Exception\ExceptionInterface as GithubException;
 use Github\Exception\RuntimeException;
-use Github\HttpClient\CachedHttpClient;
-use Neos\MarketPlace\Domain\Model\PackageNode;
-use Neos\MarketPlace\Domain\Model\Slug;
-use Neos\MarketPlace\Domain\Model\Storage;
-use Neos\MarketPlace\Domain\Model\VersionNode;
-use Neos\MarketPlace\Service\PackageVersion;
-use Neos\MarketPlace\Utility\VersionNumber;
-use Packagist\Api\Result\Package;
+use Neos\Cache\Backend\SimpleFileBackend;
+use Neos\Cache\EnvironmentConfiguration;
+use Neos\Cache\Exception\InvalidBackendException;
+use Neos\Cache\Psr\Cache\CacheFactory;
+use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\ContentRepository\Domain\NodeAggregate\NodeName;
+use Neos\ContentRepository\Domain\Projection\Content\TraversableNodeInterface;
+use Neos\ContentRepository\Domain\Service\NodeTypeManager;
+use Neos\ContentRepository\Exception\NodeException;
+use Neos\ContentRepository\Exception\NodeTypeNotFoundException;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Log\Utility\LogEnvironment;
 use Neos\Flow\Property\Exception\InvalidPropertyMappingConfigurationException;
-use Neos\Flow\Property\Exception\TypeConverterException;
-use Neos\Flow\Property\PropertyMappingConfigurationInterface;
-use Neos\Flow\Property\TypeConverter\AbstractTypeConverter;
-use Neos\Utility\Arrays;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\ContentRepository\Domain\Model\NodeTemplate;
-use Neos\ContentRepository\Domain\Service\NodeTypeManager;
+use Neos\Flow\Security\Exception;
 use Neos\Fusion\Core\Cache\ContentCache;
+use Neos\MarketPlace\Domain\Model\Slug;
+use Neos\MarketPlace\Domain\Model\Storage;
+use Neos\MarketPlace\Utility\VersionNumber;
+use Neos\Utility\Arrays;
+use Packagist\Api\Result\Package;
+use Psr\Cache\CacheItemPoolInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Convert package from packagist to node
  *
  * @api
  */
-class PackageConverter extends AbstractTypeConverter
+class PackageConverter
 {
-    /**
-     * @var string
-     */
-    const STORAGE = 'storage';
-
-    /**
-     * @var string
-     */
-    const FORCE = 'force';
+    private const DATE_FORMAT = 'Y-m-d\TH:i:sO';
 
     /**
      * @var NodeTypeManager
@@ -66,26 +64,10 @@ class PackageConverter extends AbstractTypeConverter
     protected $packageVersion;
 
     /**
-     * @var array<string>
-     */
-    protected $sourceTypes = [Package::class];
-
-    /**
-     * @var string
-     */
-    protected $targetType = NodeInterface::class;
-
-    /**
      * @Flow\InjectConfiguration(path="github")
-     * @var string
+     * @var array
      */
-    protected $githubSettings;
-
-    /**
-     * @var NodeIndexer
-     * @Flow\Inject
-     */
-    protected $nodeIndexer;
+    protected array $githubSettings = [];
 
     /**
      * @var ContentCache
@@ -93,34 +75,72 @@ class PackageConverter extends AbstractTypeConverter
      */
     protected $contentCache;
 
+    private CacheItemPoolInterface $gitHubApiCachePool;
+
+    /**
+     * @Flow\Inject
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    private bool $forceUpdate;
+
+    private Storage $storage;
+
+    public function __construct(bool $forceUpdate)
+    {
+        $this->storage = new Storage();
+        $this->forceUpdate = $forceUpdate;
+    }
+
+    /**
+     * @return void
+     * @throws InvalidBackendException
+     */
+    protected function initializeObject(): void
+    {
+        $environmentConfiguration = new EnvironmentConfiguration('GitHubApi', FLOW_PATH_DATA);
+        $cacheFactory = new CacheFactory(
+            $environmentConfiguration
+        );
+
+        // Create a PSR-6 compatible cache
+        $this->gitHubApiCachePool = $cacheFactory->create(
+            'GitHubApiCache',
+            SimpleFileBackend::class
+        );
+    }
+
     /**
      * Converts $source to a node
      *
-     * @param string|integer|array $source the string to be converted
-     * @param string $targetType
-     * @param array $convertedChildProperties not used currently
-     * @param PropertyMappingConfigurationInterface $configuration
+     * @param Package $package
      * @return NodeInterface
+     * @throws Exception
+     * @throws InvalidPropertyMappingConfigurationException
+     * @throws NodeTypeNotFoundException
+     * @throws \Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception
+     * @throws \JsonException
+     * @throws \Neos\Eel\Exception
+     * @throws \Neos\Flow\Property\Exception
+     * @throws \Neos\MarketPlace\Exception
+     * @throws NodeException
      */
-    public function convertFrom($source, $targetType, array $convertedChildProperties = [], PropertyMappingConfigurationInterface $configuration = null)
+    public function convert(Package $package): NodeInterface
     {
-        /** @var Package $package */
-        $package = $source;
-        $storage = $this->getStorage($configuration);
-        $force = $this->getForce($configuration);
         $vendor = explode('/', $package->getName())[0];
-        $identifier = Slug::create($package->getName());
-        $vendorNode = $storage->createVendor($vendor);
-        /** @var PackageNode $packageNode */
-        $packageNode = $vendorNode->getNode($identifier);
-        if ($packageNode === null) {
-            $node = $this->create($package, $vendorNode);
-        } else {
-            if ($this->packageRequireUpdate($package, $packageNode) || $force === true) {
+        $packageNameSlug = Slug::create($package->getName());
+        $vendorNode = $this->storage->createVendor($vendor);
+        try {
+            /** @var NodeInterface $packageNode */
+            $packageNode = $vendorNode->findNamedChildNode(NodeName::fromString($packageNameSlug));
+            if ($this->forceUpdate === true || $this->packageRequireUpdate($package, $packageNode)) {
                 $node = $this->update($package, $packageNode);
             } else {
                 return $packageNode;
             }
+        } /** @noinspection BadExceptionsProcessingInspection */ catch (NodeException $exception) {
+            $node = $this->create($package, $vendorNode);
         }
 
         $this->createOrUpdateMaintainers($package, $node);
@@ -134,38 +154,36 @@ class PackageConverter extends AbstractTypeConverter
 
         $this->handleAbandonedPackageOrVersion($package, $node);
 
-        $this->nodeIndexer->indexNode($node);
-        $this->contentCache->flushByTag('Node_' . $node->getIdentifier());
+        $this->contentCache->flushByTag('Node_' . $node->getNodeAggregateIdentifier()->getCacheEntryIdentifier());
 
         return $node;
     }
 
     /**
      * @param Package $package
-     * @param PackageNode $packageNode
-     * @return boolean
+     * @param NodeInterface $packageNode
+     * @return bool
+     * @throws NodeException
      */
-    protected function packageRequireUpdate(Package $package, PackageNode $packageNode)
+    protected function packageRequireUpdate(Package $package, NodeInterface $packageNode): bool
     {
         $lastActivities = [];
-        /** @var Package\Version $version */
         foreach ($package->getVersions() as $version) {
             $time = $version->getTime();
             if ($time === null) {
                 continue;
             }
-            $time = \DateTime::createFromFormat(\DateTime::ISO8601, $time);
+            $time = \DateTime::createFromFormat(self::DATE_FORMAT, $time);
             $lastActivities[$time->getTimestamp()] = $time;
         }
         krsort($lastActivities);
-        $lastActivity = reset($lastActivities);
-        if (!$lastActivity) {
-            $lastActivity = new \DateTime();
-        }
+        $lastActivity = reset($lastActivities) ?: new \DateTime();
+        $lastRecordedActivity = $packageNode->getProperty('lastActivity');
+
         return (
-            !($packageNode->getLastActivity() instanceof \DateTime)
-            || $lastActivity > $packageNode->getLastActivity()
-            || intval($package->getFavers()) !== $packageNode->getProperty('favers')
+            !($lastRecordedActivity instanceof \DateTime)
+            || $lastActivity > $lastRecordedActivity
+            || (int)$package->getFavers() !== $packageNode->getProperty('favers')
             || $package->getDownloads()->getTotal() !== $packageNode->getProperty('downloadTotal')
         );
     }
@@ -174,7 +192,7 @@ class PackageConverter extends AbstractTypeConverter
      * @param Package $package
      * @param NodeInterface $node
      */
-    protected function handleDownloads(Package $package, NodeInterface $node)
+    protected function handleDownloads(Package $package, NodeInterface $node): void
     {
         $downloads = $package->getDownloads();
         if (!$downloads instanceof Package\Downloads) {
@@ -190,8 +208,12 @@ class PackageConverter extends AbstractTypeConverter
     /**
      * @param Package $package
      * @param NodeInterface $node
+     * @throws Exception
+     * @throws NodeException
+     * @throws NodeTypeNotFoundException
+     * @throws \Neos\Flow\Property\Exception
      */
-    protected function handleGithubMetrics(Package $package, NodeInterface $node)
+    protected function handleGithubMetrics(Package $package, NodeInterface $node): void
     {
         if ($package->isAbandoned()) {
             $this->resetGithubMetrics($node);
@@ -202,78 +224,100 @@ class PackageConverter extends AbstractTypeConverter
             }
             // todo make it a bit more clever
             $repository = str_replace('.git', '', $repository);
-            preg_match("#(.*)://github.com/(.*)#", $repository, $matches);
-            list($organization, $repository) = explode('/', $matches[2]);
-            $client = new Client(
-                new CachedHttpClient(['cache_dir' => $this->githubSettings['cacheDirectory']])
-            );
-            $client->authenticate($this->githubSettings['account'], $this->githubSettings['password']);
+            preg_match('#(.*)://github.com/(.*)#', $repository, $matches);
+            [$organization, $repository] = explode('/', $matches[2]);
+            $client = new Client();
+            $client->addCache($this->gitHubApiCachePool);
+            $client->authenticate($this->githubSettings['token'], null, Client::AUTH_ACCESS_TOKEN);
             try {
                 $meta = $client->repositories()->show($organization, $repository);
                 if (!is_array($meta)) {
+                    $this->logger->warning(sprintf('no repository info returned for %s', $repository), LogEnvironment::fromMethodName(__METHOD__));
                     return;
                 }
-                $this->updateNodeProperties($node, [
-                    'githubStargazers' => (integer)Arrays::getValueByPath($meta, 'stargazers_count'),
-                    'githubWatchers' => (integer)Arrays::getValueByPath($meta, 'watchers_count'),
-                    'githubForks' => (integer)Arrays::getValueByPath($meta, 'forks_count'),
-                    'githubIssues' => (integer)Arrays::getValueByPath($meta, 'open_issues_count'),
-                    'githubAvatar' => trim(Arrays::getValueByPath($meta, 'organization.avatar_url'))
-                ]);
-                $this->handleGithubReadme($organization, $repository, $node);
             } catch (ApiLimitExceedException $exception) {
                 // Skip the processing if we hit the API rate limit
+                $this->logger->warning($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
+                return;
             } catch (RuntimeException $exception) {
                 if ($exception->getMessage() === 'Not Found') {
+                    $this->logger->warning(sprintf('Repository %s not found.', $repository), LogEnvironment::fromMethodName(__METHOD__));
                     // todo special handling of not found repository ?
                     $this->resetGithubMetrics($node);
+                    return;
                 }
-            }
-        }
-    }
-
-    /**
-     * @param string $oganization
-     * @param string $repository
-     * @param NodeInterface $node
-     */
-    protected function handleGithubReadme($oganization, $repository, NodeInterface $node)
-    {
-        try {
-            $httpClient = new CachedHttpClient([
-                'cache_dir' => $this->githubSettings['cacheDirectory']
-            ]);
-            $httpClient->setHeaders([
-                'Accept' => 'application/vnd.github.VERSION.html'
-            ]);
-
-            $client = new Client($httpClient);
-            $client->authenticate($this->githubSettings['account'], $this->githubSettings['password']);
-
-            $contents = new Contents($client);
-            $content = $contents->readme($oganization, $repository);
-            $content = $this->postprocessGithubReadme($oganization, $repository, $content);
-
-            $readmeNode = $node->getNode('readme');
-            if ($readmeNode === null) {
+                $this->logger->warning($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
                 return;
             }
-            $readmeNode->setProperty('source', $content);
-        } catch (\Exception $exception) {
-
+            $this->updateNodeProperties($node, [
+                'githubStargazers' => (integer)Arrays::getValueByPath($meta, 'stargazers_count'),
+                'githubWatchers' => (integer)Arrays::getValueByPath($meta, 'watchers_count'),
+                'githubForks' => (integer)Arrays::getValueByPath($meta, 'forks_count'),
+                'githubIssues' => (integer)Arrays::getValueByPath($meta, 'open_issues_count'),
+                'githubAvatar' => trim((string)Arrays::getValueByPath($meta, 'organization.avatar_url'))
+            ]);
+            $this->handleGithubReadme($organization, $repository, $node);
         }
     }
 
     /**
-     * @param string $oganization
+     * @param string $organization
+     * @param string $repository
+     * @param NodeInterface $node
+     * @throws Exception
+     * @throws NodeTypeNotFoundException
+     * @throws \Neos\Flow\Property\Exception
+     * @throws NodeException
+     */
+    protected function handleGithubReadme(string $organization, string $repository, NodeInterface $node): void
+    {
+        try {
+            $readmeNode = $node->findNamedChildNode(NodeName::fromString('readme'));
+        } /** @noinspection BadExceptionsProcessingInspection */ catch (NodeException $exception) {
+            return;
+        }
+
+        try {
+            $client = new Client();
+            $client->addCache($this->gitHubApiCachePool);
+            $client->authenticate($this->githubSettings['token'], null, Client::AUTH_ACCESS_TOKEN);
+        } catch (\Exception $exception) {
+            $this->logger->error($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
+            return;
+        }
+        try {
+            $contents = new Contents($client);
+            $metadata = $contents->readme($organization, $repository);
+            $rendered = $client->api('markdown')->render(file_get_contents($metadata['download_url']));
+        } catch (ApiLimitExceedException $exception) {
+            // Skip the processing if we hit the API rate limit
+            $this->logger->warning($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
+            return;
+        } catch (RuntimeException $exception) {
+            if ($exception->getMessage() === 'Not Found') {
+                return;
+            }
+            $this->logger->warning($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
+            return;
+        } catch (GithubException $exception) {
+            $this->logger->error($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
+            return;
+        }
+
+        $content = $this->postprocessGithubReadme($organization, $repository, $rendered);
+        $readmeNode->setProperty('readmeSource', $content);
+    }
+
+    /**
+     * @param string $organization
      * @param string $repository
      * @param string $content
      * @return string
      */
-    protected function postprocessGithubReadme($oganization, $repository, $content)
+    protected function postprocessGithubReadme(string $organization, string $repository, string $content): string
     {
         $content = trim($content);
-        $domain = 'https://raw.githubusercontent.com/' . $oganization . '/' . $repository . '/master/';
+        $domain = 'https://raw.githubusercontent.com/' . $organization . '/' . $repository . '/master/';
         $r = [
             '#<svg aria-hidden="true" class="octicon octicon-link"[^>]*>.*?<\s*/\s*svg>#msi' => '',
             '#<a[^>]*><\s*/\s*a>#msi' => '',
@@ -288,7 +332,7 @@ class PackageConverter extends AbstractTypeConverter
     /**
      * @param NodeInterface $node
      */
-    protected function resetGithubMetrics(NodeInterface $node)
+    protected function resetGithubMetrics(NodeInterface $node): void
     {
         $this->updateNodeProperties($node, [
             'githubStargazers' => 0,
@@ -302,10 +346,11 @@ class PackageConverter extends AbstractTypeConverter
     /**
      * @param Package $package
      * @param NodeInterface $node
+     * @throws NodeException
      */
-    protected function handleAbandonedPackageOrVersion(Package $package, NodeInterface $node)
+    protected function handleAbandonedPackageOrVersion(Package $package, NodeInterface $node): void
     {
-        if (trim($node->getProperty('abandoned')) === '' && $package->isAbandoned()) {
+        if ($package->isAbandoned() && trim((string)$node->getProperty('abandoned')) === '') {
             $node->setProperty('abandoned', (string)$package->isAbandoned());
             $this->emitPackageAbandoned($node);
         } else {
@@ -317,25 +362,23 @@ class PackageConverter extends AbstractTypeConverter
      * @param Package $package
      * @param NodeInterface $parentNode
      * @return NodeInterface
+     * @throws NodeTypeNotFoundException
      */
-    protected function create(Package $package, NodeInterface $parentNode)
+    protected function create(Package $package, NodeInterface $parentNode): NodeInterface
     {
         $name = Slug::create($package->getName());
-        $nodeTemplate = new NodeTemplate();
-        $time = \DateTime::createFromFormat(\DateTime::ISO8601, $package->getTime());
-        $nodeTemplate->setName($name);
-        $nodeTemplate->setNodeType($this->nodeTypeManager->getNodeType('Neos.MarketPlace:Package'));
         $data = [
             'uriPathSegment' => $name,
             'title' => $package->getName(),
             'description' => $package->getDescription(),
-            'time' => $time,
+            'time' => \DateTime::createFromFormat(self::DATE_FORMAT, $package->getTime()),
             'type' => $package->getType(),
             'repository' => $package->getRepository(),
             'favers' => $package->getFavers()
         ];
-        $this->setNodeTemplateProperties($nodeTemplate, $data);
-        $node = $parentNode->createNodeFromTemplate($nodeTemplate);
+
+        $node = $parentNode->createNode($name, $this->nodeTypeManager->getNodeType('Neos.MarketPlace:Package'));
+        $this->setNodeProperties($node, $data);
         return $node;
     }
 
@@ -344,11 +387,11 @@ class PackageConverter extends AbstractTypeConverter
      * @param NodeInterface $node
      * @return NodeInterface
      */
-    protected function update(Package $package, NodeInterface $node)
+    protected function update(Package $package, NodeInterface $node): NodeInterface
     {
         $this->updateNodeProperties($node, [
             'description' => $package->getDescription(),
-            'time' => \DateTime::createFromFormat(\DateTime::ISO8601, $package->getTime()),
+            'time' => \DateTime::createFromFormat(self::DATE_FORMAT, $package->getTime()),
             'type' => $package->getType(),
             'repository' => $package->getRepository(),
             'favers' => $package->getFavers()
@@ -359,25 +402,27 @@ class PackageConverter extends AbstractTypeConverter
     /**
      * @param Package $package
      * @param NodeInterface $node
+     * @throws NodeTypeNotFoundException
+     * @throws \Neos\Eel\Exception
+     * @throws NodeException
      */
-    protected function createOrUpdateMaintainers(Package $package, NodeInterface $node)
+    protected function createOrUpdateMaintainers(Package $package, NodeInterface $node): void
     {
-        $upstreamMaintainers = array_map(function (Package\Maintainer $maintainer) {
+        $upstreamMaintainers = array_map(static function (Package\Maintainer $maintainer) {
             return Slug::create($maintainer->getName());
         }, $package->getMaintainers());
         $maintainerStorage = $node->getNode('maintainers');
-        $maintainers = new FlowQuery([$maintainerStorage]);
-        $maintainers = $maintainers->children('[instanceof Neos.MarketPlace:Maintainer]');
+        /** @var TraversableNodeInterface[] $maintainers */
+        /** @noinspection PhpUndefinedMethodInspection */
+        $maintainers = (new FlowQuery([$maintainerStorage]))->children('[instanceof Neos.MarketPlace:Maintainer]');
         foreach ($maintainers as $maintainer) {
-            /** @var NodeInterface $maintainer */
-            if (in_array($maintainer->getName(), $upstreamMaintainers)) {
+            if (in_array($maintainer->getNodeName(), $upstreamMaintainers)) {
                 continue;
             }
             $maintainer->remove();
         }
 
         foreach ($package->getMaintainers() as $maintainer) {
-            /** @var Package\Maintainer $maintainer */
             $name = Slug::create($maintainer->getName());
             $node = $maintainerStorage->getNode($name);
             $data = [
@@ -386,11 +431,8 @@ class PackageConverter extends AbstractTypeConverter
                 'homepage' => $maintainer->getHomepage()
             ];
             if ($node === null) {
-                $nodeTemplate = new NodeTemplate();
-                $nodeTemplate->setNodeType($this->nodeTypeManager->getNodeType('Neos.MarketPlace:Maintainer'));
-                $nodeTemplate->setName($name);
-                $this->setNodeTemplateProperties($nodeTemplate, $data);
-                $maintainerStorage->createNodeFromTemplate($nodeTemplate);
+                $node = $maintainerStorage->createNode($name, $this->nodeTypeManager->getNodeType('Neos.MarketPlace:Maintainer'));
+                $this->setNodeProperties($node, $data);
             } else {
                 $this->updateNodeProperties($node, $data);
             }
@@ -400,31 +442,32 @@ class PackageConverter extends AbstractTypeConverter
     /**
      * @param Package $package
      * @param NodeInterface $node
+     * @throws NodeTypeNotFoundException
+     * @throws \JsonException
+     * @throws \Neos\Eel\Exception
+     * @throws NodeException
      */
-    protected function createOrUpdateVersions(Package $package, NodeInterface $node)
+    protected function createOrUpdateVersions(Package $package, NodeInterface $node): void
     {
-        $upstreamVersions = array_map(function ($version) {
+        $upstreamVersions = array_map(static function ($version) {
             return Slug::create($version);
         }, array_keys($package->getVersions()));
         $versionStorage = $node->getNode('versions');
-        $versions = new FlowQuery([$versionStorage]);
-        $versions = $versions->children('[instanceof Neos.MarketPlace:Version]');
+        /** @var TraversableNodeInterface[] $versions */
+        /** @noinspection PhpUndefinedMethodInspection */
+        $versions = (new FlowQuery([$versionStorage]))->children('[instanceof Neos.MarketPlace:Version]');
         foreach ($versions as $version) {
-            /** @var NodeInterface $version */
-            if (in_array($version->getName(), $upstreamVersions)) {
+            if (in_array($version->getNodeName(), $upstreamVersions)) {
                 continue;
             }
             $version->remove();
         }
 
-
-        /** @var Package\Version $version */
         foreach ($package->getVersions() as $version) {
             $versionStability = VersionNumber::isVersionStable($version->getVersionNormalized());
             $stabilityLevel = VersionNumber::getStabilityLevel($version->getVersionNormalized());
             $versionNormalized = VersionNumber::toInteger($version->getVersionNormalized());
 
-            /** @var Package\Version $version */
             $name = Slug::create($version->getVersion());
             $node = $versionStorage->getNode($name);
             $data = [
@@ -437,7 +480,7 @@ class PackageConverter extends AbstractTypeConverter
                 'stabilityLevel' => $stabilityLevel,
                 'license' => $this->arrayToStringCaster($version->getLicense()),
                 'type' => $version->getType(),
-                'time' => \DateTime::createFromFormat(\DateTime::ISO8601, $version->getTime()),
+                'time' => \DateTime::createFromFormat(self::DATE_FORMAT, $version->getTime()),
                 'provide' => $this->arrayToJsonCaster($version->getProvide()),
                 'bin' => $this->arrayToJsonCaster($version->getBin()),
                 'require' => $this->arrayToJsonCaster($version->getRequire()),
@@ -449,19 +492,16 @@ class PackageConverter extends AbstractTypeConverter
             switch ($stabilityLevel) {
                 case 'stable':
                     $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:ReleasedVersion');
-                    break;
+                break;
                 case 'dev':
                     $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:DevelopmentVersion');
-                    break;
+                break;
                 default:
                     $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:PrereleasedVersion');
             }
             if ($node === null) {
-                $nodeTemplate = new NodeTemplate();
-                $nodeTemplate->setNodeType($nodeType);
-                $nodeTemplate->setName($name);
-                $this->setNodeTemplateProperties($nodeTemplate, $data);
-                $node = $versionStorage->createNodeFromTemplate($nodeTemplate);
+                $node = $versionStorage->createNode($name, $nodeType);
+                $this->setNodeProperties($node, $data);
             } else {
                 if ($node->getNodeType()->getName() !== $nodeType->getName()) {
                     $node->setNodeType($nodeType);
@@ -492,60 +532,61 @@ class PackageConverter extends AbstractTypeConverter
 
     /**
      * @param NodeInterface $packageNode
+     * @throws NodeException
+     * @throws \Neos\Eel\Exception
      */
-    protected function getPackageLastActivity(NodeInterface $packageNode)
+    protected function getPackageLastActivity(NodeInterface $packageNode): void
     {
-        $versions = $packageNode->getNode('versions')->getChildNodes();
+        /** @var NodeInterface[] $versions */
+        $versions = $packageNode->findNamedChildNode(NodeName::fromString('versions'))->findChildNodes();
 
         $sortedVersions = [];
-        /** @var VersionNode $version */
         foreach ($versions as $version) {
-            $lastActivity = $version->getLastActivity();
+            $lastActivity = $version->getProperty('time');
             if (!$lastActivity instanceof \DateTime) {
                 continue;
             }
-            $sortedVersions[$version->getLastActivity()->getTimestamp()] = $version;
+            $sortedVersions[$version->getProperty('time')->getTimestamp()] = $version;
         }
         krsort($sortedVersions);
-        /** @var VersionNode $lastActiveVersion */
+        /** @var NodeInterface $lastActiveVersion */
         $lastActiveVersion = reset($sortedVersions);
 
-        $packageNode->setProperty('lastActivity', $lastActiveVersion->getLastActivity());
+        $packageNode->setProperty('lastActivity', $lastActiveVersion->getProperty('time'));
         $lastVersion = $this->packageVersion->extractLastVersion($packageNode);
         $packageNode->setProperty('lastVersion', $lastVersion);
     }
 
     /**
      * @param NodeInterface $vendorNode
+     * @throws NodeException
      */
-    protected function getVendorLastActivity(NodeInterface $vendorNode)
+    protected function getVendorLastActivity(NodeInterface $vendorNode): void
     {
         $packages = $vendorNode->getChildNodes('Neos.MarketPlace:Package');
 
         $sortedPackages = [];
-        /** @var PackageNode $package */
-        foreach ($packages as $package) {
-            $lastActivity = $package->getLastActivity();
+        foreach ($packages as $packageNode) {
+            $lastActivity = $packageNode->getProperty('lastActivity');
             if (!$lastActivity instanceof \DateTime) {
                 continue;
             }
-            $sortedPackages[$lastActivity->getTimestamp()] = $package;
+            $sortedPackages[$lastActivity->getTimestamp()] = $packageNode;
         }
         krsort($sortedPackages);
-        /** @var PackageNode $lastActiveVersion */
         $lastActivePackage = reset($sortedPackages);
 
-        $vendorNode->setProperty('lastActivity', $lastActivePackage->getLastActivity());
+        $vendorNode->setProperty('lastActivity', $lastActivePackage->getProperty('lastActivity'));
     }
 
     /**
-     * @param NodeTemplate $template
+     * @param NodeInterface $node
      * @param array $data
      */
-    protected function setNodeTemplateProperties(NodeTemplate $template, array $data)
+    protected function setNodeProperties(NodeInterface $node, array $data): void
     {
         foreach ($data as $propertyName => $propertyValue) {
-            $template->setProperty($propertyName, $propertyValue);
+            $node->setProperty($propertyName, $propertyValue);
         }
     }
 
@@ -553,7 +594,7 @@ class PackageConverter extends AbstractTypeConverter
      * @param NodeInterface $node
      * @param array $data
      */
-    protected function updateNodeProperties(NodeInterface $node, array $data)
+    protected function updateNodeProperties(NodeInterface $node, array $data): void
     {
         foreach ($data as $propertyName => $propertyValue) {
             $this->updateNodeProperty($node, $propertyName, $propertyValue);
@@ -565,76 +606,38 @@ class PackageConverter extends AbstractTypeConverter
      * @param string $propertyName
      * @param mixed $propertyValue
      */
-    protected function updateNodeProperty(NodeInterface $node, $propertyName, $propertyValue)
+    protected function updateNodeProperty(NodeInterface $node, string $propertyName, $propertyValue): void
     {
         if (isset($node->getProperties()[$propertyName])) {
             if ($propertyValue instanceof \DateTime) {
                 if ($node->getProperties()[$propertyName]->getTimestamp() === $propertyValue->getTimestamp()) {
                     return;
                 }
-            } else {
-                if ($node->getProperties()[$propertyName] === $propertyValue) {
-                    return;
-                }
+            } elseif ($node->getProperties()[$propertyName] === $propertyValue) {
+                return;
             }
         }
         $node->setProperty($propertyName, $propertyValue);
     }
 
     /**
-     * Determines the default date format to use for the conversion.
-     * If no format is specified in the mapping configuration DEFAULT_DATE_FORMAT is used.
-     *
-     * @param PropertyMappingConfigurationInterface $configuration
-     * @return Storage
-     * @throws InvalidPropertyMappingConfigurationException
-     */
-    protected function getStorage(PropertyMappingConfigurationInterface $configuration = null): Storage
-    {
-        if ($configuration === null) {
-            throw new InvalidPropertyMappingConfigurationException('Missing property configuration', 1457516367);
-        }
-        $storage = $configuration->getConfigurationValue(PackageConverter::class, self::STORAGE);
-        if (!$storage instanceof Storage) {
-            throw new InvalidPropertyMappingConfigurationException('Storage must be a NodeInterface instances', 1457516377);
-        }
-        return $storage;
-    }
-
-    /**
-     * Is force mode enabled
-     *
-     * If force mode is enabled the package is update regardless the last updated version.
-     *
-     * @param PropertyMappingConfigurationInterface|null $configuration
-     * @return bool
-     * @throws InvalidPropertyMappingConfigurationException
-     */
-    protected function getForce(PropertyMappingConfigurationInterface $configuration = null)
-    {
-        if ($configuration === null) {
-            throw new InvalidPropertyMappingConfigurationException('Missing property configuration', 1457516367);
-        }
-        return (boolean)$configuration->getConfigurationValue(PackageConverter::class, self::FORCE);
-    }
-
-    /**
-     * @param array $value
+     * @param array|null $value
      * @return string
      */
-    protected function arrayToStringCaster($value)
+    protected function arrayToStringCaster(?array $value): string
     {
         $value = $value ?: [];
         return implode(', ', $value);
     }
 
     /**
-     * @param array $value
+     * @param array|null $value
      * @return string|null
+     * @throws \JsonException
      */
-    protected function arrayToJsonCaster($value)
+    protected function arrayToJsonCaster(?array $value): ?string
     {
-        return $value ? json_encode($value, JSON_PRETTY_PRINT) : null;
+        return $value ? json_encode($value, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT) : null;
     }
 
     /**
@@ -644,7 +647,7 @@ class PackageConverter extends AbstractTypeConverter
      * @param NodeInterface $node
      * @return void
      */
-    protected function emitPackageAbandoned(NodeInterface $node)
+    protected function emitPackageAbandoned(NodeInterface $node): void
     {
     }
 }
