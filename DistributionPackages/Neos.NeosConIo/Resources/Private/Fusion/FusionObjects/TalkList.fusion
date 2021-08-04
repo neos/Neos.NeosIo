@@ -1,6 +1,6 @@
-prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Collection) {
-    // API to the outside: "collection" to render
-    collection = ${q(site).find('[instanceof Neos.NeosConIo:Talk]')}
+prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Loop) {
+    // API to the outside: "items" to render
+    items = ${q(site).find('[instanceof Neos.NeosConIo:Talk]')}
 
     @context.eventToFilter = ${node.properties.eventToShowTalksFor}
     @process.wrapWithUl = ${'<ul class="talkList">' + value + '</ul>'}

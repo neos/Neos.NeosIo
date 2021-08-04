@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Domain\Model;
 
 /*
@@ -11,14 +13,14 @@ namespace Neos\MarketPlace\Domain\Model;
  * source code.
  */
 
-use Neos\MarketPlace\Exception;
-use Packagist\Api\Result\Package;
+use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\ContentRepository\Domain\Service\Context;
+use Neos\ContentRepository\Domain\Service\NodeTypeManager;
+use Neos\ContentRepository\Exception\NodeTypeNotFoundException;
 use Neos\Flow\Annotations as Flow;
+use Neos\MarketPlace\Exception;
 use Neos\Neos\Domain\Service\ContentContext;
 use Neos\Neos\Domain\Service\ContentContextFactory;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\ContentRepository\Domain\Model\NodeTemplate;
-use Neos\ContentRepository\Domain\Service\NodeTypeManager;
 
 /**
  * Storage
@@ -45,20 +47,14 @@ class Storage
      */
     protected $repository;
 
-    /**
-     * @var string
-     */
-    protected $workspaceName;
+    protected string $workspaceName;
 
     /**
      * @var NodeInterface
      */
     protected $node;
 
-    /**
-     * @param string $workspaceName
-     */
-    public function __construct($workspaceName = 'live')
+    public function __construct(string $workspaceName = 'live')
     {
         $this->workspaceName = $workspaceName;
     }
@@ -67,15 +63,14 @@ class Storage
      * @return NodeInterface
      * @throws Exception
      */
-    public function node()
+    public function node(): NodeInterface
     {
-        if ($this->node !== null) {
-            return $this->node;
-        }
         $context = $this->createContext($this->workspaceName);
-        $this->node = $context->getNodeByIdentifier($this->repository['identifier']);
         if ($this->node === null) {
-            throw new Exception('Repository node not found', 1457507995);
+            $this->node = $context->getNodeByIdentifier($this->repository['identifier']);
+            if ($this->node === null) {
+                throw new Exception('Repository node not found', 1457507995);
+            }
         }
         return $this->node;
     }
@@ -83,29 +78,30 @@ class Storage
     /**
      * @param string $vendor
      * @return NodeInterface
+     * @throws Exception
+     * @throws NodeTypeNotFoundException
      */
-    public function createVendor($vendor)
+    public function createVendor(string $vendor): NodeInterface
     {
         $vendor = Slug::create($vendor);
         $node = $this->node()->getNode($vendor);
-        if ($node !== null) {
-            return $node;
+
+        if ($node === null) {
+            $node = $this->node()->createNode($vendor, $this->nodeTypeManager->getNodeType('Neos.MarketPlace:Vendor'));
+            $node->setProperty('uriPathSegment', $vendor);
+            $node->setProperty('title', $vendor);
         }
-        $nodeTemplate = new NodeTemplate();
-        $nodeTemplate->setNodeType($this->nodeTypeManager->getNodeType('Neos.MarketPlace:Vendor'));
-        $nodeTemplate->setName($vendor);
-        $nodeTemplate->setProperty('uriPathSegment', $vendor);
-        $nodeTemplate->setProperty('title', $vendor);
-        return $this->node()->createNodeFromTemplate($nodeTemplate);
+
+        return $node;
     }
 
     /**
      * Creates a content context for given workspace and language identifiers
      *
      * @param string $workspaceName
-     * @return ContentContext
+     * @return ContentContext|Context
      */
-    protected function createContext($workspaceName)
+    protected function createContext(string $workspaceName): ContentContext
     {
         $contextProperties = [
             'workspaceName' => $workspaceName,

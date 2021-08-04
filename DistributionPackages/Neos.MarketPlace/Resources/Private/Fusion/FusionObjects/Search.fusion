@@ -1,7 +1,7 @@
 root {
     @cache {
         entryIdentifier {
-            searchQuery = ${MarketCaching.queryCacheKey(request.arguments.search)}
+            searchQuery = ${MarketCaching.queryCacheKey(String.toString(request.arguments.search))}
             searchPagination = ${MarketCaching.paginationCacheKey(request)}
         }
 
@@ -12,7 +12,7 @@ root {
 prototype(Neos.MarketPlace:RepositoryStorage) {
     @cache {
         entryIdentifier {
-            searchQuery = ${MarketCaching.queryCacheKey(request.arguments.search)}
+            searchQuery = ${MarketCaching.queryCacheKey(String.toString(request.arguments.search))}
             searchPagination = ${MarketCaching.paginationCacheKey(request)}
         }
 
@@ -20,7 +20,6 @@ prototype(Neos.MarketPlace:RepositoryStorage) {
     }
 }
 
-prototype(Neos.MarketPlace:Search) >
 prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
     templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Search.html'
 
@@ -39,20 +38,27 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
 
     hasSearchQuery = ${String.isBlank(request.arguments.search) ? false : true}
 
-    query = ${MarketPlaceSearch.query(documentNode)}
+    marketPlaceQuery = ${MarketPlaceSearch.query(documentNode)}
 
-    query.@process.nodeType = ${value.nodeType('Neos.MarketPlace:Package')}
-
-    query.@process.fulltext = ${this.hasSearchQuery ? value.fulltext('*' + String.replace(this.searchTerm, '"', '') + '*') : value}
-
-    query.@process.sort = ${this.hasSearchQuery ? value : value.sortDesc('lastActivity')}
-
-    query.@process.log = ${value.log('marketplace')}
+    marketPlaceQuery.@process {
+        nodeType {
+            expression = ${value.nodeType('Neos.MarketPlace:Package')}
+            @position = '30'
+        }
+        fulltextAndSort {
+            expression = ${this.hasSearchQuery ? value.fulltext('*' + String.replace(this.searchTerm, '"', '') + '*') : value.sortDesc('lastActivity')}
+            @position = '10'
+        }
+        log {
+            expression = ${value.log('marketplace')}
+            @position = 'end'
+        }
+    }
 
     showResult = ${true}
 
-    searchQuery = ${this.query}
-    totalSearchResults = ${this.query.execute().count()}
+    searchQuery = ${this.marketPlaceQuery}
+    totalSearchResults = ${this.marketPlaceQuery.execute().count()}
 
     prototype(Flowpack.SearchPlugin:Search.Form) {
         templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Search.Form.html'
@@ -73,7 +79,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
 
         entryIdentifier {
             documentNode = ${documentNode}
-            searchQuery = ${MarketCaching.queryCacheKey(request.arguments.search)}
+            searchQuery = ${MarketCaching.queryCacheKey(String.toString(request.arguments.search))}
             searchPagination = ${MarketCaching.paginationCacheKey(request)}
         }
 

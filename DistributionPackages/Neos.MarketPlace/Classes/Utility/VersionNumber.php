@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Utility;
 
 /*
@@ -11,9 +13,6 @@ namespace Neos\MarketPlace\Utility;
  * source code.
  */
 
-use Packagist\Api\Result\Package;
-use Neos\Flow\Annotations as Flow;
-
 /**
  * Version Number Utility
  */
@@ -24,7 +23,7 @@ class VersionNumber
      * @param string $versionNormalized
      * @return boolean
      */
-    public static function isVersionStable($versionNormalized)
+    public static function isVersionStable(string $versionNormalized): bool
     {
         $versionNormalized = explode('-', $versionNormalized);
         return isset($versionNormalized[1]) ? false : true;
@@ -34,7 +33,7 @@ class VersionNumber
      * @param string $versionNormalized
      * @return string
      */
-    public static function getStabilityLevel($versionNormalized)
+    public static function getStabilityLevel(string $versionNormalized): string
     {
         $versionNormalized = explode('-', $versionNormalized);
         if (count($versionNormalized) === 0) {
@@ -50,14 +49,14 @@ class VersionNumber
      * @param string $versionNormalized
      * @return integer
      */
-    public static function toInteger($versionNormalized)
+    public static function toInteger(string $versionNormalized): int
     {
         $versionNormalized = explode('-', $versionNormalized);
         $versionParts = explode('.', $versionNormalized[0]);
         $version = $versionParts[0];
         for ($i = 1; $i < 4; $i++) {
             if (!empty($versionParts[$i])) {
-                $version .= str_pad((int)$versionParts[$i], 3, '0', STR_PAD_LEFT);
+                $version .= str_pad((string)(int)$versionParts[$i], 3, '0', STR_PAD_LEFT);
             } else {
                 $version .= '000';
             }

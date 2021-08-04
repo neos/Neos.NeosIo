@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace\Domain\Model;
 
 /*
@@ -12,8 +14,6 @@ namespace Neos\MarketPlace\Domain\Model;
  */
 
 use Cocur\Slugify\Slugify;
-use Packagist\Api\Result\Package;
-use Neos\Flow\Annotations as Flow;
 
 /**
  * Package Tree by vendor
@@ -26,7 +26,7 @@ class Slug
      * @param string $string
      * @return string
      */
-    public static function create($string)
+    public static function create(string $string): string
     {
         $slugify = new Slugify();
         return $slugify->slugify($string);

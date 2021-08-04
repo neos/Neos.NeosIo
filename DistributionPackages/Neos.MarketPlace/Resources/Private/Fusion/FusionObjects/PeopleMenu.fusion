@@ -7,8 +7,8 @@ prototype(Neos.MarketPlace:PeopleMenu) < prototype(Neos.Fusion:Tag) {
     attributes {
         class = 'nav nav--stacked'
     }
-    content = Neos.Fusion:Collection {
-        collection = ${q(documentNode).find(path).find('[instanceof Neos.MarketPlace:People]')}
+    content = Neos.Fusion:Loop {
+        items = ${q(documentNode).find(path).find('[instanceof Neos.MarketPlace:People]')}
         itemRenderer = Neos.MarketPlace:PeopleMenuItem
         itemName = 'node'
     }

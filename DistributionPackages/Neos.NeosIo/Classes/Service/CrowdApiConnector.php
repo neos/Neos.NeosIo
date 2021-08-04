@@ -7,6 +7,7 @@ namespace Neos\NeosIo\Service;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Log\Utility\LogEnvironment;
 
 /**
  * @Flow\Scope("singleton")
@@ -32,7 +33,7 @@ class CrowdApiConnector extends AbstractApiConnector
         $groups = $useCache ? $this->getItem($cacheKey) : false;
         if ($groups === false) {
             $groups = [];
-            $this->systemLogger->log(sprintf('Fetching groups from Crowd Api'), LOG_INFO, 1456818441);
+            $this->logger->info(sprintf('Fetching groups from Crowd Api'), LogEnvironment::fromMethodName(__METHOD__));
             $searchResult = $this->fetchJsonData('search', [
                 'entity-type' => 'group',
                 'expand' => 'group,attributes'
@@ -41,7 +42,7 @@ class CrowdApiConnector extends AbstractApiConnector
             if (is_array($searchResult) && array_key_exists('groups', $searchResult)) {
                $groups = $this->storeGroups($searchResult['groups']);
             } else {
-                $this->systemLogger->log(sprintf('Unknown error when fetching groups from Crowd Api, see system log'), LOG_ERR, 1456973717);
+                $this->logger->error(sprintf('Unknown error when fetching groups from Crowd Api, see system log'), LogEnvironment::fromMethodName(__METHOD__));
             }
         }
 
@@ -152,7 +153,7 @@ class CrowdApiConnector extends AbstractApiConnector
         $user = $useCache ? $this->getItem($cacheKey) : false;
 
         if ($user === false) {
-            $this->systemLogger->log('Fetching user from Crowd Api', LOG_INFO, 1456818440);
+            $this->logger->info('Fetching user from Crowd Api', LogEnvironment::fromMethodName(__METHOD__));
             $userData = $this->fetchJsonData('getUser', [
                 'username' => $userName,
                 'expand' => 'attributes'
@@ -161,8 +162,8 @@ class CrowdApiConnector extends AbstractApiConnector
             if (is_array($userData) && $userData['active']) {
                 $user = $this->storeUser($userData);
             } else {
-                $this->systemLogger->log('Unknown error when fetching groups from Crowd Api, see system log',
-                    LOG_ERR, 1456973717);
+                $this->logger->error('Unknown error when fetching groups from Crowd Api, see system log',
+                    LogEnvironment::fromMethodName(__METHOD__));
             }
         }
 

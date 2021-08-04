@@ -10,41 +10,41 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList) < prototype(Neos.Fusion:
 
 	renderer = afx`
 		<div class="featureList">
-			<Neos.Fusion:Collection collection={props.featureGroups} itemName="featureGroup" @children="itemRenderer" >
+			<Neos.Fusion:Loop items={props.featureGroups} itemName="featureGroup" @children="itemRenderer" >
 				<Neos.NeosIo.FeatureList:Molecule.FeatureGroup featureGroupData={featureGroup} />
-			</Neos.Fusion:Collection>
+			</Neos.Fusion:Loop>
 		</div>
 	`
 }
 
-prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList.ExampleData) < prototype(Neos.Fusion:RawArray) {
-	01 = Neos.Fusion:RawArray {
+prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList.ExampleData) < prototype(Neos.Fusion:DataStructure) {
+	01 = Neos.Fusion:DataStructure {
 		title = 'Feature Group 1'
 		image = Neos.Fusion:ResourceUri {
 			path = 'resource://Neos.Neos/Public/Images/dummy-image.svg'
 		}
-		features = Neos.Fusion:RawArray {
+		features = Neos.Fusion:DataStructure {
 			01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 			02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 			03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 			04 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 		}
 	}
-	02 = Neos.Fusion:RawArray {
+	02 = Neos.Fusion:DataStructure {
 		title = 'Feature Group 2'
 		image = Neos.Fusion:ResourceUri {
 			path = 'resource://Neos.Neos/Public/Images/dummy-image.svg'
 		}
 		description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-		features = Neos.Fusion:RawArray {
+		features = Neos.Fusion:DataStructure {
 			01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 			02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 		}
 	}
-	03 = Neos.Fusion:RawArray {
+	03 = Neos.Fusion:DataStructure {
 		title = 'Feature Group 3'
 		image = null
-		features = Neos.Fusion:RawArray {
+		features = Neos.Fusion:DataStructure {
 			01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 			02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
 		}

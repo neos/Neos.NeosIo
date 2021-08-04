@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\MarketPlace;
 
 /*
@@ -10,9 +12,6 @@ namespace Neos\MarketPlace;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
-use Packagist\Api\Result\Package;
-use Neos\Flow\Annotations as Flow;
 
 /**
  * Exception

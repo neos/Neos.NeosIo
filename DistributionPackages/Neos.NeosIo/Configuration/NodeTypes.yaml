@@ -7,7 +7,12 @@
     nodeTypes:
       'Neos.NeosIo:RootPage': false
       'Neos.NeosIo:FooterContainer': false
-
+  properties:
+    'neos_fulltext_parts':
+      search:
+        elasticSearchMapping:
+          type: flattened
+          enabled: null
 
 'Neos.NodeTypes:Page':
   superTypes:
@@ -82,13 +87,13 @@
             formatting:
               h4: true
               h5: true
-'Neos.NodeTypes:AssetList':
+'Neos.NodeTypes.AssetList:AssetList':
   ui:
     label: 'File list'
-'Neos.NodeTypes:Form':
+'Neos.NodeTypes.Form:Form':
   ui:
     group: special
-'Neos.NodeTypes:Html':
+'Neos.NodeTypes.Html:Html':
   ui:
     group: special
 
