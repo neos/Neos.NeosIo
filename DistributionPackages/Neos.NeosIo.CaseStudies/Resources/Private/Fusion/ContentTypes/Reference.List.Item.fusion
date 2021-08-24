@@ -8,7 +8,9 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
     }
     datePublished = ${q(case).property('datePublished')}
     launchDate = ${q(case).property('launchDate')}
-    projectVolume = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes
+    projectVolume = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes {
+        @context.node = ${case}
+    }
     projectType = ${q(q(case).property('projectType')).property('title')}
     featured = ${q(case).property('featured')}
 
