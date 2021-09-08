@@ -1,4 +1,8 @@
-prototype(Neos.NeosIo:Component.SiteFooter) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosIo:Component.SiteFooter) < prototype(Neos.Fusion:Renderer) {
+    renderPath = '/siteFooter'
+}
+
+prototype(Neos.NeosIo:Component.SiteFooter.Renderer) < prototype(Neos.Fusion:Component) {
     className = 'siteFooter u-invertText print-hidden'
     siteName = 'Neos'
     githubRepositoryEndpoint = 'repos/Neos/neos-development-collection/stats/contributors'
@@ -62,3 +66,5 @@ prototype(Neos.NeosIo:Component.SiteFooter) < prototype(Neos.Fusion:Component) {
         }
     }
 }
+
+siteFooter = Neos.NeosIo:Component.SiteFooter.Renderer
