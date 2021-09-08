@@ -1,6 +1,4 @@
-prototype(Neos.NodeTypes:Image) {
-    partialRootPath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Partials'
-
+prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     title.@process.filenameFallback = ${String.isBlank(value) ? q(node).property('image').label : value}
 
     alternativeText = ${q(node).property('alternativeText')}
@@ -25,25 +23,65 @@ prototype(Neos.NodeTypes:Image) {
         absolute = true
     }
 
-    @context {
-        image = ${this.image}
-        title = ${this.title}
-        alternativeText = ${this.alternativeText}
-        imageClassName = ${this.imageClassName}
-        maximumHeight = ${this.maximumHeight}
-        maximumWidth = ${this.maximumWidth}
-        allowUpScaling = ${this.allowUpScaling}
-        allowCropping = ${this.allowCropping}
+    caption >
+    caption = Neos.Neos:Editable {
+        property = 'caption'
+        block = false
+        renderer.fallback {
+            @position = 'after editable'
+            condition = ${!q(node).property('caption') && q(node).property('image').caption}
+            renderer = ${q(node).property('image').caption}
+            @process.convertUris = Neos.Neos:ConvertUris
+        }
     }
 
-    imageTag = Neos.NeosIo:Component.LazyLoadImage {
-        image = ${image}
-        title = ${title}
-        alternativeText = ${alternativeText}
-        className = ${imageClassName}
-        maximumHeight = ${maximumHeight}
-        maximumWidth = ${maximumWidth}
-        allowUpScaling = ${allowUpScaling}
-        allowCropping = ${allowCropping}
+    renderer.@context.image = Neos.Fusion:Case {
+        lazyload {
+            condition = ${props.image}
+            renderer = Neos.NeosIo:Component.LazyLoadImage {
+                image = ${props.image}
+                title = ${props.title}
+                alternativeText = ${props.alternativeText}
+                className = ${props.imageClassName}
+                maximumHeight = ${props.maximumHeight}
+                maximumWidth = ${props.maximumWidth}
+                allowUpScaling = ${props.allowUpScaling}
+                allowCropping = ${props.allowCropping}
+            }
+        }
+        fallback {
+            condition = ${!props.image && node.context.inBackend}
+            renderer = afx`
+                <img
+                    title="Dummy image"
+                    alt="Dummy image"
+                    class="neos-handle"
+                    @children="attributes.src"
+                >
+                    <Neos.Fusion:ResourceUri package="Neos.Neos" path="Images/dummy-image.svg" />
+                </img>
+            `
+        }
     }
+
+    renderer = afx`
+        <div class="neos-nodetypes-image">
+            <figure class={props.imageClassName}>
+                <a
+                    href={props.link}
+                    href.@if.live={!node.context.inBackend}
+                    target={props.openInNewTab && '_blank'}
+                    rel={props.openInNewTab && 'noopener'}
+                    title={props.title}
+                    @if.set={props.link}
+                >
+                    {image}
+                </a>
+                {!props.link ? image : ''}
+                <figcaption @if.set={props.caption}>
+                    {props.caption}
+                </figcaption>
+            </figure>
+        </div>
+    `
 }
