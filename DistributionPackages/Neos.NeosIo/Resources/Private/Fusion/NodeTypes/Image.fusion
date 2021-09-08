@@ -15,8 +15,8 @@ prototype(Neos.NodeTypes:Image) {
     }
 
     maximumHeight = null
-    // The maximum page width
-    maximumWidth = ${1096 * 2}
+    // The maximum page width 1096 * 2
+    maximumWidth = 2192
 
     maximumHeight.@process.override = ${q(node).property('customHeight') || value}
     maximumWidth.@process.override = ${q(node).property('customHeight') ? null : value}
