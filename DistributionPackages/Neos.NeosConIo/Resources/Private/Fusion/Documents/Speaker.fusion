@@ -45,9 +45,9 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
                 attributes.class = 'talkList__item'
                 content = Neos.NeosIo:ImageTeaser {
                     // node is the talk here
-                    title = ${node.properties.title}
-                    image = ${node.properties.thumbnail}
-                    fallbackImageUrl = ${(node.properties.video && !node.properties.thumbnail) ? "https://img.youtube.com/vi/" + node.properties.video + "/maxresdefault.jpg" : null}
+                    title = ${q(node).property('title')}
+                    image = ${q(node).property('thumbnail')}
+                    fallbackImageUrl = ${(q(node).property('video') && !q(node).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(node).property('video') + "/maxresdefault.jpg" : null}
                     text = ${""}
                     className = 'imageTeaser--relatedTalk'
                     link = Neos.Neos:NodeUri {

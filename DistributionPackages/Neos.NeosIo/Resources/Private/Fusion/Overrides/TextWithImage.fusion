@@ -1,0 +1,11 @@
+prototype(Neos.NodeTypes:TextWithImage) < prototype(Neos.NodeTypes:Image) {
+    text >
+    text = Neos.Neos:Editable {
+        property = 'text'
+    }
+
+    renderer {
+        attributes.class = 'neos-nodetypes-textwithimage'
+        content.@process.appendText = ${value + props.text}
+    }
+}

@@ -1,0 +1,11 @@
+'Neos.Neos:Document':
+  constraints:
+    nodeTypes:
+      'Neos.NeosIo:RootPage': false
+      'Neos.NeosIo:FooterContainer': false
+  properties:
+    neos_fulltext_parts:
+      search:
+        elasticSearchMapping:
+          type: flattened
+          enabled: null

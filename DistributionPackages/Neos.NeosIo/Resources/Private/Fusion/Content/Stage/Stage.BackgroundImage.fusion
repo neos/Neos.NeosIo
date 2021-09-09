@@ -1,0 +1,60 @@
+prototype(Neos.NeosIo:Stage.BackgroundImage) < prototype(Neos.Fusion:Component) {
+    title = ''
+    title.@process.filenameFallback = ${String.isBlank(value) ? this.backgroundImage.label : value}
+
+    altText = ''
+    altText.@process.filenameFallback = ${String.isBlank(value) ? this.backgroundImage.label : value}
+
+    backgroundShadePercentage = ''
+    backgroundImage = null
+
+    renderer = Neos.Fusion:Tag {
+        tagName = 'img'
+        attributes {
+            class = Neos.Fusion:DataStructure {
+                main = 'stage__bg'
+                shade = ${'stage__bg--shade-' + props.backgroundShadePercentage}
+                shade.@if.hasShadeActive = ${props.backgroundShadePercentage}
+            }
+            title = ${props.title}
+            alt = ${props.altText}
+            src = Neos.Neos:ImageUri {
+                asset = ${props.backgroundImage}
+                maximumWidth = 5
+                maximumHeight = 5
+            }
+            data-src = Neos.Neos:ImageUri {
+                asset = ${props.backgroundImage}
+                maximumWidth = 1280
+                maximumHeight = 600
+            }
+            data-srcset = Neos.Fusion:Join {
+                large = Neos.Neos:ImageUri {
+                    image = ${props.backgroundImage}
+                    maximumWidth = '1920'
+                    maximumHeight = '1000'
+                }
+                sizeLarge = '1920w,'
+
+                medium = Neos.Neos:ImageUri {
+                    image = ${props.backgroundImage}
+                    maximumWidth = '1280'
+                    maximumHeight = '0'
+                }
+                sizeMedium = '1280w,'
+
+                small = Neos.Neos:ImageUri {
+                    image = ${props.backgroundImage}
+                    maximumWidth = '658'
+                    maximumHeight = '658'
+                    allowCropping = true
+                }
+                sizeSmall = '658w'
+            }
+            data-component = 'ProgressiveImage'
+        }
+    }
+
+    @if.hasBackgroundImage = ${this.backgroundImage}
+}
+

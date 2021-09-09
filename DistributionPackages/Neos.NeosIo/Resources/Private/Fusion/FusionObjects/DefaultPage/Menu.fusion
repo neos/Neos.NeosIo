@@ -1,9 +1,28 @@
-prototype(Neos.NeosIo:DefaultPage.Menu) < prototype(Neos.Neos:Menu) {
+prototype(Neos.NeosIo:DefaultPage.Menu) < prototype(Neos.Fusion:Renderer) {
+    renderPath = '/mainNavigation'
+}
+
+prototype(Neos.NeosIo:DefaultPage.Menu.Renderer) < prototype(Neos.Neos:Menu) {
     templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/Menu.html'
     entryLevel = 1
     maximumLevels = 2
     attributes.class = 'nav siteHeader__nav offCanvas__nav'
     filter = 'Neos.Neos:Document, !Neos.NeosIo:Reference.ShowCase'
-    @cache.entryIdentifier.documentNode = ${site}
     subNavClasses = 'nav nav--stacked siteHeader__dropDownNav offCanvas__categoryList'
+
+    active.attributes >
+    current.attributes >
+    normal.attributes >
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            documentNode = ${site}
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTypeTag('Neos.Neos:Document', site)}
+        }
+    }
 }
+
+mainNavigation = Neos.NeosIo:DefaultPage.Menu.Renderer

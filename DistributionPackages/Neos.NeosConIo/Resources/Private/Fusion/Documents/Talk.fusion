@@ -14,23 +14,23 @@ prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
         video = ${q(node).property('video')}
 
         speakerList = Neos.NeosConIo:SpeakerList {
-            items = ${node.properties.speakers}
+            items = ${q(node).property('speakers')}
         }
 
-        talkDate = ${Neos.NeosConIo.Date.timezone(q(node).property('talkDate'), 'Europe/Berlin')}
+        talkDate = ${Neos.NeosConIo.Date.timezone(this.talkDate, 'Europe/Berlin')}
 
-        talkListVisible = ${node.properties.relatedTalks && Array.length(node.properties.relatedTalks) > 0}
+        talkListVisible = ${this.relatedTalks}
 
         talkList = Neos.NeosConIo:TalkList {
-            items = ${node.properties.relatedTalks}
+            items = ${q(node).property('relatedTalks')}
             itemRenderer.@if.talkHasCorrectEvent = true
         }
 
         video = Neos.NeosIo:Youtube {
-            video = ${node.properties.video}
+            video = ${q(node).property('video')}
         }
 
-        roomName = ${q(q(node).property('room')).property('name')}
+        roomName = ${q(this.room).property('name')}
     }
 }
 

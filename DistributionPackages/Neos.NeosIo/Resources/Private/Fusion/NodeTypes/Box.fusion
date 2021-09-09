@@ -1,7 +1,17 @@
-prototype(Neos.NeosIo:Box) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Box.html'
+prototype(Neos.NeosIo:Box) < prototype(Neos.Neos:ContentComponent) {
+    style = ${q(node).property('style')}
 
-    contents = Neos.Neos:PrimaryContent {
-        nodePath = 'contents'
-    }
+    icon = ${this.style == 'attention' ? 'exclamation' : this.style}
+    icon.@process.prefix = ${'fa-' + value}
+    icon.@process.prefix.@if.set = ${this.style}
+
+    renderer = afx`
+        <div class="box">
+            <i
+               aria-label="Info Box Icon"
+               class={['box__icon', 'inline-icon', 'fas', 'fa-inverse', props.icon]}
+            ></i>
+            <Neos.Neos:ContentCollection nodePath="contents" />
+        </div>
+    `
 }

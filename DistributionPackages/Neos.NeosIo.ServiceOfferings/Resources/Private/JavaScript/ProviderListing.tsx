@@ -6,10 +6,6 @@ import TranslationData from "./Context/TranslationData";
 import ProviderListGridItem from "./Components/ProviderListGridItem";
 import ProviderListTableRow from "./Components/ProviderListTableRow";
 import {SortDirection, sortObjects} from "./Helper/Sorter";
-import CaseStudyGridItem
-    from "../../../../Neos.NeosIo.CaseStudies/Resources/Private/JavaScript/Components/CaseStudyGridItem";
-import CaseStudyTableRow
-    from "../../../../Neos.NeosIo.CaseStudies/Resources/Private/JavaScript/Components/CaseStudyTableRow";
 
 const sizeValueMap = {
     '': 99,
@@ -33,11 +29,16 @@ export default function ProviderListing() {
         carry.push(provider.size);
         return carry;
     }, []).filter((v, i, a) => v && a.indexOf(v) === i), [providerData]);
+    const serviceTypes: string[] = useMemo(() => providerData.reduce((carry: string[], provider: Provider) => {
+        carry.push(...provider.typesOfService);
+        return carry;
+    }, []).filter((v, i, a) => v && a.indexOf(v) === i), [providerData]);
 
     // State hooks
     const [searchWord, setSearchWord] = useState('');
     const [countryFilter, setCountryFilter] = useState('');
     const [sizeFilter, setSizeFilter] = useState('');
+    const [serviceTypeFilter, setServiceTypeFilter] = useState('');
     const [sorting, setSorting] = useState('');
     const [sortingDirection, setSortingDirection] = useState(SortDirection.Asc);
     const [providers, setProviders] = useState(providerData);
@@ -47,6 +48,7 @@ export default function ProviderListing() {
     const search = (word: string) => setSearchWord(word.toLowerCase());
     const filterByCountry = (country: string) => setCountryFilter(country);
     const filterBySize = (size: string) => setSizeFilter(size);
+    const filterByServiceType = (serviceType: string) => setServiceTypeFilter(serviceType);
     const sortBy = (property: string) => {
         if (property !== sorting) {
             setSortingDirection(SortDirection.Asc);
@@ -62,6 +64,7 @@ export default function ProviderListing() {
         let filteredProviders = providerData.filter(provider => {
             return (!searchWord || provider.searchText.includes(searchWord))
                 && (!countryFilter || provider.country == countryFilter)
+                && (!serviceTypeFilter || provider.typesOfService.includes(serviceTypeFilter))
                 && (!sizeFilter || provider.size == sizeFilter);
         });
         if (sorting) {
@@ -73,43 +76,35 @@ export default function ProviderListing() {
             );
         }
         setProviders(filteredProviders);
-    }, [searchWord, countryFilter, sizeFilter, sorting, sortingDirection]);
+    }, [searchWord, countryFilter, sizeFilter, serviceTypeFilter, sorting, sortingDirection]);
 
     return (
         <div>
             <div>
                 <header class="service-providers__grid-tableview">
-                    <div class="service-providers__grid-row remove-border ">
-                        <div class="service-providers__grid-cell hide-md-down">
-                        </div>
-                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable hide-md-down"
-                             onClick={() => sortBy('title')}>
-                            {translationData['name']}&nbsp;<i className={'fas ' + (sorting == 'title' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } />
-                        </div>
-                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable hide-md-down"
-                             onClick={() => sortBy('city')}>
-                            {translationData['location']}&nbsp;<i className={'fas ' + (sorting == 'city' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } />
-                        </div>
-                        <div class="service-providers__header service-providers__grid-cell service-providers__header--sortable hide-md-down"
-                             onClick={() => sortBy('size')}>
-                            {translationData['size']}&nbsp;<i className={'fas ' + (sorting == 'size' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort') } />
-                        </div>
-                    </div>
                     <div class="service-providers__grid-row remove-border form form--inline">
                         <div class="service-providers__grid-cell">
-                            <div className="form__item">
-                                <i className={'grid-switcher fas fa-th-large' + (grid ? ' selected' : '')}
+                            <div class="form__item">
+                                <i class={'grid-switcher fas fa-th-large' + (grid ? ' selected' : '')}
                                    onclick={e => switchToGrid(true)}
                                    title={translationData['gridView']}></i>
                             </div>
                             <div className="form__item">
-                                <i className={'grid-switcher fas fa-th-list' + (grid ? '' : ' selected')}
+                                <i class={'grid-switcher fas fa-th-list' + (grid ? '' : ' selected')}
                                    onclick={e => switchToGrid(false)}
                                    title={translationData['tableView']}></i>
                             </div>
+                            <div className="form__item">
+                                <i class={'grid-switcher fas fa-sort-alpha-' + (sortingDirection === SortDirection.Desc ? 'up' : 'down')}
+                                   onclick={() => sortBy('title')}
+                                   title={translationData['name']}></i>
+                            </div>
+                            <div className="form__item" title={`${providers.length} ${translationData['providers']}`}>
+                                {providers.length} <i class="fas fa-user-ninja"></i>
+                            </div>
                         </div>
                         <div class="service-providers__grid-cell">
-                            <div className="form__item">
+                            <div class="form__item">
                                 <input type="text"
                                        id="service-provider-search"
                                        placeholder={translationData['search']}
@@ -135,7 +130,14 @@ export default function ProviderListing() {
                                 <option value="">{translationData['chooseSize']}</option>
                                 {sizes.map(size => <option key={size} value={size}>{size}</option>)}
                             </select>
-
+                        </div>
+                        <div class="service-providers__grid-cell hide-md-down">
+                            <select id="redirects-filter-service-type"
+                                    class="textInput"
+                                    onchange={e => filterByServiceType(e.target['value'])}>
+                                <option value="">{translationData['chooseServiceType']}</option>
+                                {serviceTypes.map(serviceType => <option key={serviceType} value={serviceType}>{serviceType}</option>)}
+                            </select>
                         </div>
                     </div>
                 </header>

@@ -80,15 +80,17 @@
       cursor: pointer;
       display: inline-block;
       padding: 0.7rem;
+      transition: border-color .1s ease-in;
+
+      &:hover,
+      &.selected {
+        border-color: #666;
+      }
     }
 
     &-entry__logo {
       display: flex;
       align-items: center;
-    }
-
-    .grid-switcher.selected {
-      border-color: #666;
     }
 
     .service-providers__badge {
@@ -124,7 +126,8 @@
 
         &.form {
           padding: 0;
-          grid-template-columns: repeat(4, auto);
+          grid-template-columns: repeat(5, auto);
+          justify-content: space-between;
 
           .service-providers__grid-cell {
             padding-top: 0;

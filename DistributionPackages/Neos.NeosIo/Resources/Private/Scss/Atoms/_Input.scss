@@ -65,6 +65,13 @@ input, textarea {
   font-size: rs(14, $unit: rem);
   font-family: $brand-font-family;
 	color: lighten($base-text-color, 5%);
+
+  cursor: pointer;
+  transition: border-color .1s ease-in;
+
+  &:hover {
+    border-color: #666;
+  }
 }
 .textInput {
 	@include textInput();
