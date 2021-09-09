@@ -80,15 +80,17 @@
       cursor: pointer;
       display: inline-block;
       padding: 0.7rem;
+      transition: border-color .1s ease-in;
+
+      &:hover,
+      &.selected {
+        border-color: #666;
+      }
     }
 
     &-entry__logo {
       display: flex;
       align-items: center;
-    }
-
-    .grid-switcher.selected {
-      border-color: #666;
     }
 
     .service-providers__badge {
