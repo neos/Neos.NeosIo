@@ -15,6 +15,7 @@ namespace Neos\MarketPlace\Eel;
 
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Driver\QueryInterface;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Eel;
+use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception\QueryBuildingException;
 use Neos\ContentRepository\Search\Search\QueryBuilderInterface;
 
 /**
@@ -29,7 +30,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
 
     /**
      * @return QueryInterface
-     * @throws \Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception\QueryBuildingException
+     * @throws QueryBuildingException
      */
     public function getRequest(): QueryInterface
     {
@@ -60,23 +61,22 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
      * @param string $searchWord
      * @param array $options Options to configure the query_string, see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-query-string-query.html
      * @return QueryBuilderInterface
-     * @throws \Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception\QueryBuildingException
      */
     public function fulltext(string $searchWord, array $options = []): QueryBuilderInterface
     {
-        $searchWord = trim($searchWord);
+        $searchWord = str_replace('/', '\\/', trim($searchWord));
         if ($searchWord === '') {
             return $this;
         }
         $this->hasFulltext = true;
 
         $this->request->setValueByPath('query.bool.filter.bool.must', []);
-        $this->request->setValueByPath('query.bool.filter.bool.should', []);
         $this->request->setValueByPath('query.bool.filter.bool.minimum_should_match', 1);
-        $this->request->appendAtPath('query.bool.filter.bool.should', [
+        $this->request->setValueByPath('query.bool.filter.bool.should', [
             'multi_match' => [
                 'fields' => [
                     'title^10',
+                    '__title^10',
                     '__composerVendor^5',
                     '__maintainers.name^5',
                     '__maintainers.tag^8',
@@ -85,7 +85,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
                     'lastVersion.keywords.tag^12',
                     'neos_fulltext.*'
                 ],
-                'query' => str_replace('/', '\\/', $searchWord),
+                'query' => $searchWord,
                 'operator' => 'AND'
             ]
         ]);
@@ -96,7 +96,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
     /**
      * @param QueryInterface $request
      * @return void
-     * @throws \Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception\QueryBuildingException
+     * @throws QueryBuildingException
      */
     protected static function skipAbandonedPackages(QueryInterface $request): void
     {

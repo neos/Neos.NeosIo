@@ -1,0 +1,44 @@
+Neos:
+  ContentRepository:
+    Search:
+      realtimeIndexing:
+        enabled: true
+      indexAllWorkspaces: false
+      elasticSearch:
+        indexName: wwwneosio
+
+Flowpack:
+  ElasticSearch:
+    ContentRepositoryAdaptor:
+      driver:
+        version: '7.x'
+    indexes:
+      default:
+        wwwneosio:
+          settings:
+            index:
+              mapping:
+                total_fields:
+                  limit: 2000
+            analysis:
+              filter:
+                autocompleteFilter:
+                  max_shingle_size: 4
+                  min_shingle_size: 2
+                  type: 'shingle'
+              tokenizer:
+                ngrams:
+                  type: 'ngram'
+                  min_gram: 2
+                  max_gram: 5
+                  token_chars:
+                    - 'letter'
+                    - 'digit'
+              analyzer:
+                ngrams:
+                  tokenizer: 'ngrams'
+                autocomplete:
+                  filter: [ 'lowercase', 'autocompleteFilter' ]
+                  char_filter: [ 'html_strip' ]
+                  type: 'custom'
+                  tokenizer: 'standard'

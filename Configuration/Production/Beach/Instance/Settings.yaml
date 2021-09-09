@@ -64,28 +64,3 @@ Flowpack:
          port: 9243
          username: '%env:BEACH_ELASTICSEARCH_USERNAME%'
          password: '%env:BEACH_ELASTICSEARCH_PASSWORD%'
-
-    indexes:
-      default:
-        'wwwneosio-production':    # custom index name, NOTE THIS SHOULD NOT BE HARDCODED ON BEACH
-          settings:
-            index:
-              mapping:
-                total_fields:
-                  limit: 2000
-            analysis:
-              filter:
-                autocompleteFilter:
-                  max_shingle_size: 4
-                  min_shingle_size: 2
-                  type: 'shingle'
-              analyzer:
-                autocomplete:
-                  filter: [ 'lowercase', 'autocompleteFilter' ]
-                  char_filter: [ 'html_strip' ]
-                  type: 'custom'
-                  tokenizer: 'standard'
-
-    ContentRepositoryAdaptor:
-      driver:
-        version: '7.x'

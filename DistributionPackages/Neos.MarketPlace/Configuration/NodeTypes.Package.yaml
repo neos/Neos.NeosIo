@@ -40,6 +40,12 @@
         inspector:
           group: document
         label: i18n
+    __title:
+      search:
+        indexing: '${q(node).property(''title'')}'
+        elasticSearchMapping:
+          type: text
+          analyzer: ngrams
     description:
       type: string
       ui:
