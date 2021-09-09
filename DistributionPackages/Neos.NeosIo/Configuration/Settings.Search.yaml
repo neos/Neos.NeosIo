@@ -14,7 +14,7 @@ Flowpack:
         version: '7.x'
     indexes:
       default:
-        wwwneosio:
+        'wwwneosio': &indexConfig
           settings:
             index:
               mapping:
@@ -42,3 +42,4 @@ Flowpack:
                   char_filter: [ 'html_strip' ]
                   type: 'custom'
                   tokenizer: 'standard'
+        'wwwneosio-production': *indexConfig
