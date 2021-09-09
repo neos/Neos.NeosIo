@@ -21,11 +21,15 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
     marketPlaceQuery.@process {
         nodeType {
             expression = ${value.nodeType('Neos.MarketPlace:Package')}
-            @position = '30'
+            @position = 'start'
         }
-        fulltextAndSort {
-            expression = ${this.hasSearchQuery ? value.fulltext('*' + String.replace(this.searchTerm, '"', '') + '*') : value.sortDesc('lastActivity')}
-            @position = '10'
+        fulltext {
+            expression = ${value.fulltext('*' + String.replace(this.searchTerm, '"', ''))}
+            @if.hasQuery = ${this.hasSearchQuery}
+        }
+        sort {
+            expression = ${value.sortDesc('lastActivity')}
+            @if.noQuery = ${!this.hasSearchQuery}
         }
         log {
             expression = ${value.log('marketplace')}

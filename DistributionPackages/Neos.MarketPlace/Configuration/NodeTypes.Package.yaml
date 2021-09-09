@@ -94,7 +94,7 @@
           editorOptions:
             format: 'd-m-Y H:i'
       search:
-        indexing: '${Date.format(node.lastActivity, "Y-m-d\TH:i:sP")}'
+        indexing: '${Date.format(q(node).property(''lastActivity''), "Y-m-d\TH:i:sP")}'
         elasticSearchMapping:
           type: date
           format: date_time_no_millis

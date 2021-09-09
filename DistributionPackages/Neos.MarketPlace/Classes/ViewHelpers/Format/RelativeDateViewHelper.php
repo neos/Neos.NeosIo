@@ -71,6 +71,6 @@ class RelativeDateViewHelper extends AbstractViewHelper
             return $compact ? 'Yesterday' : 'Last activity yesterday';
         }
 
-        return $compact ? $date->format('n M Y') : 'Last activity on ' . $date->format('n F Y');
+        return $compact ? $date->format('d M Y') : 'Last activity on ' . $date->format('d F Y');
     }
 }
