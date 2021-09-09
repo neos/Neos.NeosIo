@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a82dba9c3a47a5bbca52723be7d3be10",
+    "content-hash": "514cdabc5377d4ca6c452cc1a3e88a55",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -4759,7 +4759,7 @@
         },
         {
             "name": "neos/flowneosio",
-            "version": "dev-task/improve-performance",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.FlowNeosIo",
@@ -5051,6 +5051,52 @@
                 }
             ],
             "time": "2021-08-05T11:19:05+00:00"
+        },
+        {
+            "name": "neos/form-builder",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/form-builder.git",
+                "reference": "eb8f4b8e743b28a51ddc237e8d9799159da68405"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/form-builder/zipball/eb8f4b8e743b28a51ddc237e8d9799159da68405",
+                "reference": "eb8f4b8e743b28a51ddc237e8d9799159da68405",
+                "shasum": ""
+            },
+            "require": {
+                "neos/form": "^5.0",
+                "neos/neos": "^5.0 || ^7.0"
+            },
+            "type": "neos-package",
+            "extra": {
+                "neos": {
+                    "package-key": "Neos.Form.Builder"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Neos\\Form\\Builder\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "description": "Flow Form Framework integration into Neos CMS",
+            "support": {
+                "issues": "https://github.com/neos/form-builder/issues",
+                "source": "https://github.com/neos/form-builder/tree/2.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://neosfunding.sandstorm.de/en",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-12-07T16:05:17+00:00"
         },
         {
             "name": "neos/fusion",
@@ -6048,7 +6094,7 @@
         },
         {
             "name": "neos/neosconio",
-            "version": "dev-task/improve-performance",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosConIo",
@@ -6160,11 +6206,11 @@
         },
         {
             "name": "neos/neosio",
-            "version": "dev-task/improve-performance",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosIo",
-                "reference": "e5dfa4ec07aae546147b0f5944a68f39ecc92138"
+                "reference": "4f94b3030fe649e44c24f7cbd9797a67caa1573b"
             },
             "require": {
                 "flownative/gravatar": "^2.0",
@@ -6177,6 +6223,7 @@
                 "flowpack/searchplugin": "^5.0",
                 "goe/neos-package": "^0.1.1",
                 "neos/form": "^5.2",
+                "neos/form-builder": "^2.2",
                 "neos/fusion-afx": "^1.2",
                 "neos/media": "^5.3",
                 "neos/neos": "^5.3",
@@ -6295,7 +6342,7 @@
         },
         {
             "name": "neos/neosio-casestudies",
-            "version": "dev-task/improve-performance",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosIo.CaseStudies",
@@ -6402,7 +6449,7 @@
         },
         {
             "name": "neos/neosio-featurelist",
-            "version": "dev-task/improve-performance",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosIo.FeatureList",
@@ -6514,7 +6561,7 @@
         },
         {
             "name": "neos/neosio-marketplace",
-            "version": "dev-task/improve-performance",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.MarketPlace",
@@ -6632,7 +6679,7 @@
         },
         {
             "name": "neos/neosio-serviceofferings",
-            "version": "dev-task/improve-performance",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosIo.ServiceOfferings",
@@ -10775,6 +10822,55 @@
             "time": "2021-08-19T21:01:38+00:00"
         },
         {
+            "name": "shel/neos-terminal",
+            "version": "0.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sebobo/Shel.Neos.Terminal.git",
+                "reference": "28aed788665895ff93f267bbea9b44fdeb609a86"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sebobo/Shel.Neos.Terminal/zipball/28aed788665895ff93f267bbea9b44fdeb609a86",
+                "reference": "28aed788665895ff93f267bbea9b44fdeb609a86",
+                "shasum": ""
+            },
+            "require": {
+                "neos/neos": "^4.3 || ^5.2 || ^7.0 || dev-master",
+                "neos/neos-ui": "^4.0 || ^5.2 || ^7.0 || dev-master",
+                "php": ">=7.2",
+                "symfony/console": "^4.2 || ^5.1"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "neos": {
+                    "package-key": "Shel.Neos.Terminal"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Shel\\Neos\\Terminal\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Neos CMS Ui terminal for running Eel expressions and other commands",
+            "keywords": [
+                "console",
+                "eel",
+                "flow",
+                "neoscms",
+                "terminal"
+            ],
+            "support": {
+                "issues": "https://github.com/Sebobo/Shel.Neos.Terminal/issues",
+                "source": "https://github.com/Sebobo/Shel.Neos.Terminal/tree/0.5.2"
+            },
+            "time": "2021-05-06T14:20:34+00:00"
+        },
+        {
             "name": "sitegeist/monocle",
             "version": "v7.5.1",
             "source": {
@@ -12681,12 +12777,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "2253b042c4cf1a9413f44a1c224ef2f705517bfb"
+                "reference": "07bff2dda1a042b95afcbdb1542e6123829a4ed6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/2253b042c4cf1a9413f44a1c224ef2f705517bfb",
-                "reference": "2253b042c4cf1a9413f44a1c224ef2f705517bfb",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/07bff2dda1a042b95afcbdb1542e6123829a4ed6",
+                "reference": "07bff2dda1a042b95afcbdb1542e6123829a4ed6",
                 "shasum": ""
             },
             "conflict": {
@@ -12775,7 +12871,7 @@
                 "flarum/tags": "<=0.1-beta.13",
                 "fluidtypo3/vhs": "<5.1.1",
                 "fooman/tcpdf": "<6.2.22",
-                "forkcms/forkcms": "<5.8.3",
+                "forkcms/forkcms": "<=5.9.2",
                 "fossar/tcpdf-parser": "<6.2.22",
                 "francoisjacquet/rosariosis": "<6.5.1",
                 "friendsofsymfony/oauth2-php": "<1.3",
@@ -12902,7 +12998,7 @@
                 "shopware/core": "<=6.4.3",
                 "shopware/platform": "<=6.4.3",
                 "shopware/production": "<=6.3.5.2",
-                "shopware/shopware": "<=5.6.9",
+                "shopware/shopware": "<5.6.10",
                 "showdoc/showdoc": "<=2.9.8",
                 "silverstripe/admin": ">=1.0.3,<1.0.4|>=1.1,<1.1.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
@@ -12930,6 +13026,7 @@
                 "ssddanbrown/bookstack": "<0.29.2",
                 "stormpath/sdk": ">=0,<9.9.99",
                 "studio-42/elfinder": "<2.1.59",
+                "subrion/cms": "<=4.2.1",
                 "sulu/sulu": "<1.6.41|>=2,<2.0.10|>=2.1,<2.1.1",
                 "swiftmailer/swiftmailer": ">=4,<5.4.5",
                 "sylius/admin-bundle": ">=1,<1.0.17|>=1.1,<1.1.9|>=1.2,<1.2.2",
@@ -13071,7 +13168,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-07T23:02:49+00:00"
+            "time": "2021-09-08T18:03:47+00:00"
         },
         {
             "name": "t3n/neos-debug",
