@@ -99,6 +99,9 @@ export default function ProviderListing() {
                                    onclick={() => sortBy('title')}
                                    title={translationData['name']}></i>
                             </div>
+                            <div className="form__item" title={`${providers.length} ${translationData['providers']}`}>
+                                {providers.length} <i class="fas fa-user-ninja"></i>
+                            </div>
                         </div>
                         <div class="service-providers__grid-cell">
                             <div class="form__item">
