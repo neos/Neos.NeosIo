@@ -1,25 +1,3 @@
-root {
-    @cache {
-        entryIdentifier {
-            searchQuery = ${MarketCaching.queryCacheKey(String.toString(request.arguments.search))}
-            searchPagination = ${MarketCaching.paginationCacheKey(request)}
-        }
-
-        maximumLifetime.@process.searchQuery = ${String.isBlank(request.arguments.search) ? '86400' : '3600'}
-    }
-}
-
-prototype(Neos.MarketPlace:RepositoryStorage) {
-    @cache {
-        entryIdentifier {
-            searchQuery = ${MarketCaching.queryCacheKey(String.toString(request.arguments.search))}
-            searchPagination = ${MarketCaching.paginationCacheKey(request)}
-        }
-
-        maximumLifetime = ${String.isBlank(request.arguments.search) ? '86400' : '3600'}
-    }
-}
-
 prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
     templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Search.html'
 
@@ -29,14 +7,14 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
 
     configuration {
         itemsPerPage = 30
-        insertAbove = ${false}
-        insertBelow = ${true}
+        insertAbove = false
+        insertBelow = true
         maximumNumberOfLinks = 5
     }
 
     @context.actionNode = Neos.MarketPlace:ClosestRepositoryStorageNodeQuery
 
-    hasSearchQuery = ${String.isBlank(request.arguments.search) ? false : true}
+    hasSearchQuery = ${!String.isBlank(request.arguments.search)}
 
     marketPlaceQuery = ${MarketPlaceSearch.query(documentNode)}
 
@@ -55,7 +33,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
         }
     }
 
-    showResult = ${true}
+    showResult = true
 
     searchQuery = ${this.marketPlaceQuery}
     totalSearchResults = ${this.marketPlaceQuery.execute().count()}
@@ -75,18 +53,18 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
     }
 
     @cache {
-        mode = 'cached'
+        mode = 'dynamic'
 
         entryIdentifier {
             documentNode = ${documentNode}
-            searchQuery = ${MarketCaching.queryCacheKey(String.toString(request.arguments.search))}
-            searchPagination = ${MarketCaching.paginationCacheKey(request)}
         }
 
-        maximumLifetime = ${String.isBlank(request.arguments.search) ? '86400' : '3600'}
+        maximumLifetime = 3600
+
+        entryDiscriminator = ${!request.arguments.search}
 
         entryTags {
-            1 = ${'Node_' + documentNode.identifier}
+            documentNode = ${Neos.Caching.nodeTag(documentNode)}
         }
     }
 }

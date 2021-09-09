@@ -12,7 +12,7 @@ prototype(Neos.NeosIo:Reference.ShowCase) < prototype(Neos.NeosIo:Reference) {
 
     @cache {
         entryTags {
-            reference = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Reference')}
+            reference = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Reference', node)}
         }
     }
 }

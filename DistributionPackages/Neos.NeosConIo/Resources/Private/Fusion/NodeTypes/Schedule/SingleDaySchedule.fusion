@@ -16,11 +16,11 @@ prototype(Neos.NeosConIo:SingleDaySchedule) < prototype(Neos.Neos:ContentCompone
         }
         tags {
             1 = ${Neos.Caching.nodeTag(node)}
-            2 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk')}
-            3 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event')}
-            4 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Room')}
-            5 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Speaker')}
-            6 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:BreakInSchedule')}
+            2 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', node)}
+            3 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event', node)}
+            4 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Room', node)}
+            5 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Speaker', node)}
+            6 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:BreakInSchedule', node)}
         }
     }
 

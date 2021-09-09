@@ -18,7 +18,7 @@ prototype(Neos.MarketPlace:PackageCountButton) < prototype(Neos.MarketPlace:Butt
         }
 
         entryTags {
-            1 = ${'DescendantOf_' + vendor.identifier}
+            1 = ${Neos.Caching.descendantOfTag(vendor)}
         }
     }
 }

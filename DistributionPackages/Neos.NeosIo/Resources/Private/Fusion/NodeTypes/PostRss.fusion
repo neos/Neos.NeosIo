@@ -11,7 +11,7 @@ xml = Neos.Fusion:Http.Message {
             }
 
             entryTags {
-                1 = ${'NodeType_Neos.NeosIo:Post'}
+                1 = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Post', node)}
             }
         }
     }

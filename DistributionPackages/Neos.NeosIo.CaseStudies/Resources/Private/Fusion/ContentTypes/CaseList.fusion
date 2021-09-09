@@ -65,7 +65,7 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
         }
         entryTags {
             node = ${Neos.Caching.nodeTag(node)}
-            node = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Reference')}
+            node = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Reference', node)}
         }
     }
 
