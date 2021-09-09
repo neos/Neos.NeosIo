@@ -98,6 +98,16 @@
         elasticSearchMapping:
           type: date
           format: date_time_no_millis
+    __neosCompatibility:
+      search:
+        indexing: '${MarketIndexing.extractCompatibility(q(node).children(''versions'').children(''[stability = true]'').get(), "neos/neos")}'
+        elasticSearchMapping:
+          type: version
+    __flowCompatibility:
+      search:
+        indexing: '${MarketIndexing.extractCompatibility(q(node).children(''versions'').children(''[stability = true]'').get(), "neos/flow")}'
+        elasticSearchMapping:
+          type: version
     lastVersion:
       type: reference
       ui:

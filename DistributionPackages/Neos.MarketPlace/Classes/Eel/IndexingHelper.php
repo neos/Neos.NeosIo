@@ -13,6 +13,7 @@ namespace Neos\MarketPlace\Eel;
  * source code.
  */
 
+use Composer\Semver\Semver;
 use Neos\MarketPlace\Service\PackageVersion;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
@@ -29,6 +30,12 @@ class IndexingHelper extends Eel\IndexingHelper
      * @Flow\InjectConfiguration(path="typeMapping")
      */
     protected $packageTypes;
+
+    /**
+     * @var array
+     * @Flow\InjectConfiguration(path="compatibilityCheck")
+     */
+    protected $compatibilityCheck;
 
     /**
      * @var PackageVersion
@@ -90,6 +97,44 @@ class IndexingHelper extends Eel\IndexingHelper
             'time' => $time ? $time->format('Y-m-d\TH:i:sP') : null,
             'timestamp' => $time ? $time->getTimestamp() : 0,
         ];
+    }
+
+    /**
+     * @param array<NodeInterface> $versionNodes
+     * @return array<string>
+     */
+    public function extractCompatibility(array $versionNodes = [], string $packageName = null): array
+    {
+        if (!$versionNodes || !array_key_exists($packageName, $this->compatibilityCheck)) {
+            return [];
+        }
+
+        $compatibleVersions = [];
+        foreach ($versionNodes as $versionNode) {
+            $requireJson = $versionNode->getProperty('require');
+
+            if (!$requireJson) {
+                continue;
+            }
+
+            try {
+                $require = json_decode($requireJson, true, 512, JSON_THROW_ON_ERROR);
+            } catch (\Exception $e) {
+                continue;
+            }
+
+            if (!array_key_exists($packageName, $require)) {
+                continue;
+            }
+
+            foreach ($this->compatibilityCheck[$packageName] as $version) {
+                if (Semver::satisfies($version, $require[$packageName])) {
+                    $compatibleVersions[]= $version;
+                }
+            }
+        }
+
+        return array_values(array_unique($compatibleVersions));
     }
 
     /**

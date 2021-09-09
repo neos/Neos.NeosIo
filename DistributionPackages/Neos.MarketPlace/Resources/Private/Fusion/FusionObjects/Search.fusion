@@ -12,7 +12,13 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
         maximumNumberOfLinks = 5
     }
 
-    @context.actionNode = Neos.MarketPlace:ClosestRepositoryStorageNodeQuery
+    versionFilter = ${request.arguments.version ? String.split(request.arguments.version, '-') : []}
+
+    @context {
+        actionNode = Neos.MarketPlace:ClosestRepositoryStorageNodeQuery
+        selectedPackage = ${this.versionFilter ? this.versionFilter[0] : null}
+        selectedVersion = ${this.versionFilter ? this.versionFilter[1] : null}
+    }
 
     hasSearchQuery = ${!String.isBlank(request.arguments.search)}
 
@@ -26,6 +32,14 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
         fulltext {
             expression = ${value.fulltext('*' + String.replace(this.searchTerm, '"', ''))}
             @if.hasQuery = ${this.hasSearchQuery}
+        }
+        neosCompatibility {
+            expression = ${value.exactMatch('__neosCompatibility', selectedVersion)}
+            @if.neosVersion = ${selectedPackage == 'neos' && selectedVersion}
+        }
+        flowCompatibility {
+            expression = ${value.exactMatch('__flowCompatibility', selectedVersion)}
+            @if.flowVersion = ${selectedPackage == 'flow' && selectedVersion}
         }
         sort {
             expression = ${value.sortDesc('lastActivity')}
@@ -42,12 +56,65 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
     searchQuery = ${this.marketPlaceQuery}
     totalSearchResults = ${this.marketPlaceQuery.execute().count()}
 
-    prototype(Flowpack.SearchPlugin:Search.Form) {
-        templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Search.Form.html'
+    searchForm >
+    searchForm = Neos.Fusion:Component {
+        node = ${site}
+        dimensionCombination = ${Json.stringify(this.node.context.dimensions)}
+        inputClassNames = ''
+        searchWord = ${request.arguments.search}
 
         actionUri = Neos.Neos:NodeUri {
             node = ${actionNode}
         }
+
+        versions = ${Configuration.setting('Neos.MarketPlace.compatibilityCheck')}
+        neosVersions = ${this.versions['neos/neos']}
+        flowVersions = ${this.versions['neos/flow']}
+        maxVersion = ${Configuration.setting('Neos.MarketPlace.latestRelease')}
+
+        renderer = afx`
+            <form class="search-form form--inline" action={props.actionUri} method="get">
+                <input id="search"
+                       type="search"
+                       name="search"
+                       class="textInput"
+                       value={props.searchWord}
+                       placeholder={I18n.translate('Flowpack.SearchPlugin:Main:search')}
+                />
+                <select class="textInput" name="version">
+                    <option value=''>{I18n.translate('Neos.MarketPlace:Main:versionFilter')}</option>
+                    <optgroup label="Neos">
+                        <Neos.Fusion:Loop items={props.neosVersions} itemName="version">
+                            <option
+                                value={'neos-' + version}
+                                selected={selectedPackage == 'neos' && selectedVersion == version}
+                            >
+                                Neos {version}
+                            </option>
+                        </Neos.Fusion:Loop>
+                    </optgroup>
+                    <optgroup label="Flow">
+                        <Neos.Fusion:Loop items={props.flowVersions} itemName="version">
+                            <option
+                                value={'flow-' + version}
+                                selected={selectedPackage == 'flow' && selectedVersion == version}
+                            >
+                                Flow {version}
+                            </option>
+                        </Neos.Fusion:Loop>
+                    </optgroup>
+                </select>
+                <button
+                    type="submit"
+                    class="btn btn--solidPrimary"
+                    title={I18n.translate('Neos.MarketPlace:Main:submit')}
+                >
+                    <div class="btn__content">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </button>
+            </form>
+        `
     }
 
     searchResultRenderer {
@@ -65,7 +132,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
 
         maximumLifetime = 3600
 
-        entryDiscriminator = ${!request.arguments.search}
+        entryDiscriminator = ${!request.arguments.search && !request.arguments.version}
 
         entryTags {
             documentNode = ${Neos.Caching.nodeTag(documentNode)}

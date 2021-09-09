@@ -3,7 +3,6 @@
 
 <article{attributes -> f:format.raw()}>
     <header>
-        {metrics -> f:format.raw()}
         <h4 class="result-list__title"><neos:link.node node="{node}">
             <i class="fas fa-puzzle-piece"></i> {title}</neos:link.node>
             <small>{lastVersionLabel}</small>
@@ -14,5 +13,7 @@
     </f:if>
     <footer class="result-list__meta">
         {lastActivity -> f:format.raw()}
+        &mdash;
+        {metrics -> f:format.raw()}
     </footer>
 </article>
