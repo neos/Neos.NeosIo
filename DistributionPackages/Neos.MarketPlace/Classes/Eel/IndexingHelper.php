@@ -128,8 +128,14 @@ class IndexingHelper extends Eel\IndexingHelper
             }
 
             foreach ($this->compatibilityCheck[$packageName] as $version) {
-                if (Semver::satisfies($version, $require[$packageName])) {
-                    $compatibleVersions[]= $version;
+                try {
+                    if (Semver::satisfies($version, $require[$packageName])) {
+                        $compatibleVersions[]= $version;
+                    }
+                } catch (\Exception $e) {
+                    // Exceptions can be thrown on strings like "self.version"
+                    // might be looked at more closely
+                    continue;
                 }
             }
         }
