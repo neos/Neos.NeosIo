@@ -13,6 +13,7 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
+use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Indexer\NodeIndexer;
 use Github\Api\Repository\Contents;
 use Github\Client;
 use Github\Exception\ApiLimitExceedException;
@@ -68,6 +69,12 @@ class PackageConverter
      * @var array
      */
     protected array $githubSettings = [];
+
+    /**
+     * @var NodeIndexer
+     * @Flow\Inject
+     */
+    protected $nodeIndexer;
 
     /**
      * @var ContentCache
@@ -154,6 +161,7 @@ class PackageConverter
 
         $this->handleAbandonedPackageOrVersion($package, $node);
 
+        $this->nodeIndexer->indexNode($node);
         $this->contentCache->flushByTag('Node_' . $node->getNodeAggregateIdentifier()->getCacheEntryIdentifier());
 
         return $node;
