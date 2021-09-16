@@ -59,7 +59,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     itemName = 'vendor'
                     carryName = 'packageList'
                     itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
-                    @process.unique = ${value ? Carbon.Array.unique(value) : value}
+                    @process.unique = ${value ? Array.unique(value) : value}
                     @process.sort = ${value ? q(value).sort('downloadTotal').get() : value}
                 }
 
