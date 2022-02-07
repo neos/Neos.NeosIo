@@ -6,7 +6,7 @@ prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
         title = ${q(node).property('title')}
         text = ${q(node).property('text')}
         thumbnail = ${q(node).property('thumbnail')}
-        talkDate = ${q(node).property('talkDate')}
+        talkDate = ${Neos.NeosConIo.Date.timezone(q(node).property('talkDate'), 'Europe/Berlin')}
         speakers = ${q(node).property('speakers')}
         event = ${q(node).property('event')}
         relatedTalks = ${q(node).property('relatedTalks')}
@@ -16,8 +16,6 @@ prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
         speakerList = Neos.NeosConIo:SpeakerList {
             items = ${q(node).property('speakers')}
         }
-
-        talkDate = ${Neos.NeosConIo.Date.timezone(this.talkDate, 'Europe/Berlin')}
 
         talkListVisible = ${this.relatedTalks}
 
