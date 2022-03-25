@@ -45,19 +45,6 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
     }
 
     /**
-     * Override this method since it returns no results
-     *
-     * @param string $nodeType the node type to filter for
-     * @return ElasticSearchQueryBuilder
-     * @throws QueryBuildingException
-     */
-    public function nodeType(string $nodeType): QueryBuilderInterface
-    {
-        // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
-        return $this->queryFilter('term', ['neos_type_and_supertypes' => $nodeType]);
-    }
-
-    /**
      * @param string $searchWord
      * @param array $options Options to configure the query_string, see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-query-string-query.html
      * @return QueryBuilderInterface
@@ -70,7 +57,6 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
         }
         $this->hasFulltext = true;
 
-        $this->request->setValueByPath('query.bool.filter.bool.must', []);
         $this->request->setValueByPath('query.bool.filter.bool.minimum_should_match', 1);
         $this->request->setValueByPath('query.bool.filter.bool.should', [
             'multi_match' => [
