@@ -36,7 +36,6 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
     {
         $request = parent::getRequest();
         $copiedRequest = clone $request;
-        self::skipAbandonedPackages($copiedRequest);
         if ($this->hasFulltext !== false) {
             self::enforceFunctionScoring($copiedRequest);
         }
@@ -79,19 +78,6 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
         return $this;
     }
 
-    /**
-     * @param QueryInterface $request
-     * @return void
-     * @throws QueryBuildingException
-     */
-    protected static function skipAbandonedPackages(QueryInterface $request): void
-    {
-        $request->appendAtPath('query.bool.filter.bool.must_not', [
-            'exists' => [
-                'field' => 'abandoned'
-            ]
-        ]);
-    }
 
     /**
      * @param QueryInterface $request

@@ -6,7 +6,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
     }
 
     configuration {
-        itemsPerPage = 30
+        itemsPerPage = 3
         insertAbove = false
         insertBelow = true
         maximumNumberOfLinks = 5
@@ -40,6 +40,9 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
         flowCompatibility {
             expression = ${value.exactMatch('__flowCompatibility', selectedVersion)}
             @if.flowVersion = ${selectedPackage == 'flow' && selectedVersion}
+        }
+        abandoned {
+            expression = ${value.exclude('abandoned', '1')}
         }
         sort {
             expression = ${value.sortDesc('lastActivity')}
