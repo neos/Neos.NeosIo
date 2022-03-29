@@ -41,6 +41,9 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
             expression = ${value.exactMatch('__flowCompatibility', selectedVersion)}
             @if.flowVersion = ${selectedPackage == 'flow' && selectedVersion}
         }
+        abandoned {
+            expression = ${value.exclude('abandoned', '1')}
+        }
         sort {
             expression = ${value.sortDesc('lastActivity')}
             @if.noQuery = ${!this.hasSearchQuery}
