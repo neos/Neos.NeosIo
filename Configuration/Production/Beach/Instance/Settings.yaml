@@ -39,7 +39,7 @@ Neos:
           targetOptions:
             bucket: '%env:BEACH_GOOGLE_CLOUD_STORAGE_PUBLIC_BUCKET%'
             keyPrefix: '/'
-            baseUri: '%env:BEACH_PERSISTENT_RESOURCES_BASE_PATH%'
+            baseUri: '%env:BEACH_PERSISTENT_RESOURCES_BASE_HOST%%env:BEACH_PERSISTENT_RESOURCES_BASE_PATH%'
 
   Imagine:
     driver: 'Vips'
