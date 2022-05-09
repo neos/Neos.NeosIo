@@ -1,6 +1,6 @@
 # Neos.NeosIo
 
-> The official neos.io website package.
+The official neos.io website package.
 
 ## Setup & Installation
 
