@@ -7,8 +7,11 @@ prototype(Neos.NeosIo:MetaTags) < prototype(Neos.Fusion:Component) {
         @process.append = ${(String.endsWith(value, '/') ? value : value + '/') + 'rss.xml'}
     }
 
+    description = ${q(node).property('description')}
+
     renderer = afx`
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content={props.description} @if.hasMetaDescription={props.description} />
         <meta name="apple-itunes-app" content={'app-id=' + props.iOSAppId} @if.enabled={props.showSmartAppBanner}/>
         <link rel="alternate" type="application/rss+xml" title="RSS-Feed" href={props.rssUri}/>
 
