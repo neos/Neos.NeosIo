@@ -48,17 +48,10 @@ class PackageVersion
     public function extractLastVersion(NodeInterface $node): ?NodeInterface
     {
         $versions = $this->extractVersions($node);
-        usort($versions, static function(NodeInterface $a, NodeInterface $b) {
-            /** @var \DateTime $aTime */
-            $aTime = $a->getProperty('time');
-            /** @var \DateTime $bTime */
-            $bTime = $b->getProperty('time');
-            if ($aTime === false || $bTime === false) {
-                return -1;
-        }
-            return $bTime->getTimestamp() - $aTime->getTimestamp();
+        usort($versions, static function (NodeInterface $a, NodeInterface $b) {
+            return $a->getProperty('versionNormalized') <=> $b->getProperty('versionNormalized');
         });
-        $stableVersions = array_filter($versions, static function(NodeInterface $version) {
+        $stableVersions = array_filter($versions, static function (NodeInterface $version) {
             return $version->getProperty('stability') === true;
         });
         if (count($stableVersions) > 0) {
