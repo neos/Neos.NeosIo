@@ -1,0 +1,23 @@
+prototype(Neos.Form:MultiLineText) {
+    fieldContainer.field.attributes.class = 'textInput'
+}
+
+prototype(Neos.Form:SingleLineText) {
+    fieldContainer.field.attributes.class = 'textInput'
+}
+
+prototype(Neos.Form:FileUpload) {
+    fieldContainer.field.attributes.class = 'textInput'
+}
+
+prototype(Neos.Form:ImageUpload) {
+    fieldContainer.field.attributes.class = 'textInput'
+}
+
+prototype(Neos.Form.FusionRenderer:FormNavigationButton) {
+    @context.label = ${this.label}
+
+    content = afx`
+        <div class="btn__content">{label}</div>
+    `
+}
