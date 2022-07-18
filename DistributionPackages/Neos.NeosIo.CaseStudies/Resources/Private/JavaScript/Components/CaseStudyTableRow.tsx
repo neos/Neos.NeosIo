@@ -1,16 +1,10 @@
 import {h} from 'preact';
 import * as React from "preact/compat";
+import getProjectVolume from "../Helper/ProjectVolume";
 
-const projectVolumesValueMap = {
-    1: 'n/a',
-    5: '< 100 h',
-    10: '100 - 499h',
-    15: '500 - 999h',
-    20: '1000 - 3000h',
-    25: '> 3000h'
-};
+const CaseStudyTableRow = ({caseStudy}: {caseStudy: CaseStudy}) => {
+    const projectVolume = getProjectVolume(caseStudy.projectVolume);
 
-export default function CaseStudyTableRow({caseStudy}: {caseStudy: CaseStudy}) {
     return (
         <div key={caseStudy.identifier} className={'cases__grid-row' + (caseStudy.featured ? ' references__item--featured' : '')}>
             <div className="cases__grid-cell">
@@ -25,17 +19,22 @@ export default function CaseStudyTableRow({caseStudy}: {caseStudy: CaseStudy}) {
                     {caseStudy.launchDateFormatted ? <i class="fas fa-rocket"></i> : ''} {caseStudy.launchDateFormatted}
                 </p>
             </div>
-            <div className="cases__grid-cell cases__overlay">
-                <p>
-                    <i class="fas fa-industry"></i> {caseStudy.projectType}
-                </p>
-            </div>
-            <div className="cases__grid-cell cases__overlay">
-                <p>
-                    <i class="fas fa-users"></i> {projectVolumesValueMap[caseStudy.projectVolume]}
-                </p>
-            </div>
+            {caseStudy.projectType && (
+                <div className="cases__grid-cell cases__overlay">
+                    <p>
+                        <i class="fas fa-industry"></i> {caseStudy.projectType}
+                    </p>
+                </div>
+            )}
+            {projectVolume && (
+                <div className="cases__grid-cell cases__overlay">
+                    <p>
+                        <i class="fas fa-users"></i> {projectVolume}
+                    </p>
+                </div>
+            )}
         </div>
-
     )
 }
+
+export default React.memo(CaseStudyTableRow);

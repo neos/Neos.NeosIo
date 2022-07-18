@@ -1,16 +1,10 @@
-import {h} from 'preact';
+import {Fragment, h} from 'preact';
 import * as React from "preact/compat";
+import getProjectVolume from "../Helper/ProjectVolume";
 
-const projectVolumesValueMap = {
-    1: 'n/a',
-    5: '< 100 h',
-    10: '100 - 499h',
-    15: '500 - 999h',
-    20: '1000 - 3000h',
-    25: '> 3000h'
-};
+const CaseStudyGridItem = ({caseStudy}: {caseStudy: CaseStudy}) => {
+    const projectVolume = getProjectVolume(caseStudy.projectVolume);
 
-export default function CaseStudyGridItem({caseStudy}: {caseStudy: CaseStudy}) {
     return (
         <a key={caseStudy.identifier} class={'imageTeaser imageTeaser--isLink' + (caseStudy.featured ? ' references__item--featured' : '')} href={caseStudy.url} target="_blank" rel="noopener">
             {caseStudy.image
@@ -21,10 +15,20 @@ export default function CaseStudyGridItem({caseStudy}: {caseStudy: CaseStudy}) {
                 <div class="imageTeaser__contents u-invertText">
                     <h4 class="imageTeaser__contents__heading">{caseStudy.title}</h4>
                     <footer class="references__data">
-            			<span><i class="fas fa-users"></i>&nbsp;{projectVolumesValueMap[caseStudy.projectVolume]}</span><br />
-                        <span><i class="fas fa-industry"></i>&nbsp;{caseStudy.projectType}</span>
+                        {projectVolume && (
+                            <Fragment>
+                                <span><i class="fas fa-users"></i>&nbsp;{projectVolume}</span><br />
+                            </Fragment>
+                        )}
+                        {caseStudy.projectType && (
+                            <Fragment>
+                                <span><i class="fas fa-industry"></i>&nbsp;{caseStudy.projectType}</span>
+                            </Fragment>
+                        )}
                     </footer>
                 </div>
         </a>
     )
 }
+
+export default React.memo(CaseStudyGridItem);

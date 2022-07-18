@@ -7,17 +7,7 @@ import CaseStudyTableRow from "./Components/CaseStudyTableRow";
 import CaseStudyGridItem from "./Components/CaseStudyGridItem";
 import {SortDirection, sortObjects} from "./Helper/Sorter";
 import LazyLoad from "vanilla-lazyload";
-
-
-const projectVolumesValueMap = {
-    1: 'n/a',
-    5: '< 100 h',
-    10: '100 - 499h',
-    15: '500 - 999h',
-    20: '1000 - 3000h',
-    25: '> 3000h'
-};
-
+import getProjectVolume, {PROJECT_VOLUME_MAP} from "./Helper/ProjectVolume";
 
 export default function CaseStudyListing() {
     const casesData: CaseStudy[] = useContext(CasesData);
@@ -32,7 +22,7 @@ export default function CaseStudyListing() {
     const projectVolumes: number[] = useMemo(() => casesData.reduce((carry: number[], caseStudy: CaseStudy) => {
         carry.push(caseStudy.projectVolume);
         return carry;
-    }, []).sort((a,b) => a-b).filter((v, i, a) => !i || v != a[i -1]), [casesData]);
+    }, []).sort((a, b) => a-b).filter((v, i, a) => !i || v != a[i -1]), [casesData]);
 
     // State hooks
     const [searchWord, setSearchWord] = useState('');
@@ -69,7 +59,7 @@ export default function CaseStudyListing() {
                 filteredCases,
                 sorting,
                 sortingDirection,
-                sorting === 'projectVolume' ? projectVolumesValueMap : null
+                sorting === 'projectVolume' ? PROJECT_VOLUME_MAP : null
             );
         }
         setCaseStudies(filteredCases);
@@ -90,7 +80,7 @@ export default function CaseStudyListing() {
                         </div>
                         <div
                             class="cases__header cases__grid-cell cases__header--sortable pull-right hide-md-down"
-                            onclick={() => sortBy('datePublished')}>
+                            onClick={() => sortBy('datePublished')}>
                             {translationData['sortBy']['datePublished']}&nbsp;<i
                             className={'fas ' + (sorting == 'datePublished' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
                         </div>
@@ -99,12 +89,12 @@ export default function CaseStudyListing() {
                         <div class="cases__grid-cell hide-md-down">
                             <div className="form__item">
                                 <i className={'grid-switcher fas fa-th-large' + (grid ? ' selected' : '')}
-                                   onclick={e => switchToGrid(true)}
+                                   onClick={() => switchToGrid(true)}
                                    title={translationData['gridView']}></i>
                             </div>
                             <div className="form__item">
                                 <i className={'grid-switcher fas fa-th-list' + (grid ? '' : ' selected')}
-                                   onclick={e => switchToGrid(false)}
+                                   onClick={() => switchToGrid(false)}
                                    title={translationData['tableView']}></i>
                             </div>
                         </div>
@@ -114,7 +104,7 @@ export default function CaseStudyListing() {
                                        id="cases-search"
                                        placeholder={translationData['search']}
                                        class="textInput cases-search"
-                                       onkeyup={e => search(e.target['value'])}/>&nbsp;
+                                       onKeyUp={e => search(e.target['value'])}/>&nbsp;
                                 <label for="cases-search"><i class="fas fa-search"/></label>
                             </div>
                         </div>
@@ -122,7 +112,7 @@ export default function CaseStudyListing() {
                             <div className="form__item">
                                 <select id="filter-industries"
                                         class="textInput"
-                                        onchange={e => filterByIndustry(e.target['value'])}>
+                                        onChange={e => filterByIndustry(e.target['value'])}>
                                     <option value="">{translationData['chooseIndustry']}</option>
                                     {industries.map(industry => <option key={industry} value={industry}>{industry}</option>)}
                                 </select>
@@ -131,11 +121,10 @@ export default function CaseStudyListing() {
                         <div class="cases__grid-cell hide-md-down">
                             <select id="filter-volume"
                                     class="textInput"
-                                    onchange={e => filterByProjectVolume(e.target['value'])}>
+                                    onChange={e => filterByProjectVolume(e.target['value'])}>
                                 <option value="">{translationData['chooseProjectVolume']}</option>
-                                {projectVolumes.map(projectVolume => <option key={projectVolume} value={projectVolume}>{projectVolumesValueMap[projectVolume]}</option>)}
+                                {projectVolumes.filter((projectVolume) => projectVolume != 1).map(projectVolume => <option key={projectVolume} value={projectVolume}>{getProjectVolume(projectVolume)}</option>)}
                             </select>
-
                         </div>
                     </div>
                 </header>
