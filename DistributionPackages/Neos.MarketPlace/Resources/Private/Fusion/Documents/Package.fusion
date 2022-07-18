@@ -1,4 +1,13 @@
 prototype(Neos.MarketPlace:Package) < prototype(Neos.MarketPlace:DefaultPage) {
+
+    prototype(Neos.Seo:MetaDescriptionTag) {
+        attributes {
+            content = ${q(node).property('description')}
+            content.@process.crop = ${String.cropAtWord(value, 160, '…')}
+        }
+        @if.isNotBlank = ${!String.isBlank(q(node).property('description'))}
+    }
+
     body {
         templatePath = 'resource://Neos.MarketPlace/Private/Templates/Documents/Package.html'
 
