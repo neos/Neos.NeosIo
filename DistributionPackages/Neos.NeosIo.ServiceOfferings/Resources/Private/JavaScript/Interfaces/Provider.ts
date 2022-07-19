@@ -16,4 +16,5 @@ interface Provider {
     longitude: number;
     searchText: string;
     badges?: string[];
+    awards?: string[];
 }

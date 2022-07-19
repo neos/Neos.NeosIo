@@ -22,6 +22,11 @@ export default function ProviderListEntry({provider}: { provider: Provider }) {
                     <address>{provider.city}, {provider.country}</address>
                 ) : 'N/A'}
                 <i class="fas fa-user-friends"></i> {provider.size ? provider.size : 'N/A'}
+                {provider.awards?.length > 0 && (
+                    <span className="service-providers__list-entry__awards">
+                        {provider.awards.map((award) => <i title={award} class="fa fa-award" />)}
+                    </span>
+                )}
             </div>
             {provider.badges && (
                 <div className="service-providers__grid-cell service-providers__list-entry__badge">
