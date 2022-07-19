@@ -2,7 +2,7 @@ builder:
   steps:
     build-assets:
       executor: docker
-      image: 'flownative/beach-build-toolbox-frontend:latest'
+      image: 'node:16-bullseye '
       script:
-        - cd ${BEACH_BUILD_WORKSPACE_PATH}
+        - pwd
         - ./build.sh
