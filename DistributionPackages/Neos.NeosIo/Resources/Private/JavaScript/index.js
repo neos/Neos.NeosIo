@@ -23,6 +23,7 @@ for (let componentKey in neosConComponents) {
     components[componentKey] = neosConComponents[componentKey];
 }
 
+console.log('New Assets has been builded');
 const run = () => {
     const componentNames = Object.keys(components);
     for (let i = 0; i < componentNames.length; i++) {
