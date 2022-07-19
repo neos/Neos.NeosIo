@@ -1,3 +1,4 @@
+// Global cache optimised implementation
 prototype(Neos.NeosIo:Component.SiteFooter) < prototype(Neos.Fusion:Renderer) {
     renderPath = '/siteFooter'
 }
@@ -14,17 +15,12 @@ prototype(Neos.NeosIo:Component.SiteFooter.Renderer) < prototype(Neos.Fusion:Com
             <Neos.NeosIo:DefaultPage.FooterContent/>
             <hr/>
 
-            <div class="g">
-                <div class="gi u-w1/1 u-wm1/4">
-                    <a href="/" title="Home">
-                        <Neos.NeosIo:Component.BrandLogoOutline size="square"/>
-                    </a>
-                </div>
-                <div class="gi u-w1/1 u-wm1/4">
+            <div class="siteFooter__nav-wrapper">
+                <div>
                     <h6 class="siteFooter__heading">{props.siteName}</h6>
                     <Neos.NeosIo:DefaultPage.FooterMenu/>
                 </div>
-                <div class="gi u-w1/1 u-wm1/4">
+                <div>
                     <h6 class="siteFooter__heading">Community</h6>
                     <ul class="nav nav--stacked siteFooter__nav">
                         <li><a target="_blank" rel="noopener" href="https://discuss.neos.io">discuss.neos.io</a></li>
@@ -33,7 +29,7 @@ prototype(Neos.NeosIo:Component.SiteFooter.Renderer) < prototype(Neos.Fusion:Com
                         <li><a target="_blank" rel="noopener" href="https://translate.neos.io">translate.neos.io</a></li>
                     </ul>
                 </div>
-                <div class="gi u-w1/1 u-wm1/4">
+                <div>
                     <h6 class="siteFooter__heading">Follow {props.siteName}</h6>
                     <ul class="nav nav--stacked siteFooter__nav">
                         <li><a target="_blank" rel="noopener" href="https://github.com/neos"><i class="fab fa-fw fa-github"></i> GitHub</a></li>
@@ -43,6 +39,12 @@ prototype(Neos.NeosIo:Component.SiteFooter.Renderer) < prototype(Neos.Fusion:Com
                     </ul>
                 </div>
             </div>
+
+            <p class="u-alignCenter u-mt1/1">
+                <a href="/" title="Home">
+                    <Neos.NeosIo:Component.BrandLogoOutline size="square"/>
+                </a>
+            </p>
 
             <p class="u-alignCenter u-mt1/1 siteFooter__contribution">
                 {props.licenseText}<br />
