@@ -1,10 +1,5 @@
-import { component } from '@reduct/component';
-import propTypes from '@reduct/nitpick';
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
-//
-// Due to an inconsistency between browsers we need to check the UA and set
-// the document scroll element.
-//
 const scrollDocument =
     /Firefox/.test(navigator.userAgent) ||
     /Trident.*rv[ :]*11\./.test(navigator.userAgent) ||
@@ -38,16 +33,15 @@ function scrollTo(to, duration) {
     }, 10);
 }
 
-@component({
-    targetSelector: propTypes.string.isRequired
-})
-export default class ScrollTo {
-    constructor() {
-        this.target = document.querySelector(this.props.targetSelector);
+class ScrollTo extends BaseComponent {
+
+    constructor(el) {
+        super(el);
+        this.target = document.querySelector(this.targetSelector);
         this.siteHeader = document.querySelector('.siteHeader');
 
         if (!this.target) {
-            throw new Error(`ScrollTo: Cannot find target node with selector "${this.props.targetSelector}"`);
+            throw new Error(`ScrollTo: Cannot find target node with selector "${this.targetSelector}"`);
         }
 
         this.el.addEventListener('click', e => {
@@ -57,7 +51,7 @@ export default class ScrollTo {
         });
     }
 
-    scrollTo() {
+    scrollTo = () => {
         let to = this.target.getBoundingClientRect().top + window.scrollY;
         let current = document.documentElement.scrollTop || document.body.scrollTop;
         if (this.siteHeader && (current > to || window.innerWidth < 1350)) {
@@ -69,3 +63,11 @@ export default class ScrollTo {
         scrollTo(to, 600);
     }
 }
+
+ScrollTo.prototype.props = {
+    target: null,
+    targetSelector: '',
+    siteHeader: null,
+}
+
+export default ScrollTo;

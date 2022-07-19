@@ -1,15 +1,10 @@
-import { component } from '@reduct/component';
-import propTypes from '@reduct/nitpick';
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
-@component({
-    activeClass: propTypes.string.isRequired,
-    targetSelector: propTypes.string.isRequired,
-    targetActiveClass: propTypes.string.isRequired,
-    documentActiveClass: propTypes.string
-})
-export default class ClassToggler {
-    constructor() {
-        this.target = document.querySelector(this.props.targetSelector);
+class ClassToggler extends BaseComponent {
+
+    constructor(el) {
+        super(el);
+        this.target = document.querySelector(this.targetSelector);
 
         this.el.addEventListener('click', e => {
             e.preventDefault();
@@ -18,8 +13,8 @@ export default class ClassToggler {
         });
     }
 
-    toggleClass() {
-        const { activeClass, targetActiveClass, documentActiveClass } = this.props;
+    toggleClass = () => {
+        const { activeClass, targetActiveClass, documentActiveClass } = this;
 
         let otherElementsWithTargetClass = document.querySelectorAll('.' + targetActiveClass);
         let otherElementsWithActiveClass = document.querySelectorAll('.' + activeClass);
@@ -38,11 +33,21 @@ export default class ClassToggler {
             }
         });
 
-        this.el.classList.toggle(activeClass);
-        this.target.classList.toggle(targetActiveClass);
+        self.classList.toggle(activeClass);
+        target.classList.toggle(targetActiveClass);
 
         if (documentActiveClass && documentActiveClass.length) {
             document.documentElement.classList.toggle(documentActiveClass);
         }
     }
 }
+
+ClassToggler.prototype.props = {
+    activeClass: '',
+    targetSelector: '',
+    targetActiveClass: '',
+    documentActiveClass: '',
+    target: null
+}
+
+export default ClassToggler;

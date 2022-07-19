@@ -1,4 +1,4 @@
-import { component } from '@reduct/component';
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
 const isSelected = (domNode, selectedState) => {
     const filters = JSON.parse(domNode.getAttribute('data-filters'));
@@ -20,22 +20,21 @@ function shuffleArray(array) {
     return array;
 }
 
-@component()
-export default class FundingBadges {
-    constructor() {
-        const list = this.find('.fundingBadges__list');
-        const elements = this.findAll('.fundingBadges__singleElement');
+class FundingBadges extends BaseComponent {
+
+    constructor(el) {
+        super(el);
+        const list = el.querySelector('.fundingBadges__list');
+        const elements = Array.from(el.querySelectorAll('.fundingBadges__singleElement'));
         const shuffledElements = shuffleArray(elements);
         shuffledElements.forEach((value, i) => {
             list.appendChild(value);
             value.setAttribute('data-index', i);
         });
 
-        this.findAll('.fundingBadges__sortingControl').forEach(value => {
+        el.querySelectorAll('.fundingBadges__sortingControl').forEach((value) => {
             value.addEventListener('click', () => {
-                delete this.queryCache['.fundingBadges__sortingControl--isActive'];
-
-                this.findAll('.fundingBadges__sortingControl--isActive').forEach(value => {
+                el.querySelectorAll('.fundingBadges__sortingControl--isActive').forEach(value => {
                     value.querySelector('.btn').classList.add('btn--bright');
                     value.querySelector('.btn').classList.remove('btn--solidBright');
                     value.classList.remove('fundingBadges__sortingControl--isActive');
@@ -43,25 +42,25 @@ export default class FundingBadges {
 
                 let selected = value.getAttribute('data-filter');
 
-                if (selected === this.state.selected) {
+                if (selected === this.selected) {
                     selected = '';
                 } else {
                     value.querySelector('.btn').classList.remove('btn--bright');
                     value.querySelector('.btn').classList.add('btn--solidBright');
                     value.classList.add('fundingBadges__sortingControl--isActive');
+
+                    this.el.dispatchEvent(new Event('filterChanged'));
                 }
 
-                this.setState({
-                    selected
-                });
+                this.selected = selected;
             });
         });
 
-        this.on('change', () => {
-            const { selected } = this.state;
+        this.el.addEventListener('filterChanged', () => {
+            const { selected } = this;
             const orderingsForEachCustomer = {};
 
-            let newOrdering = this.findAll('.fundingBadges__singleElement');
+            let newOrdering = Array.from(el.querySelectorAll('.fundingBadges__singleElement'));
 
             newOrdering.forEach(element => {
                 orderingsForEachCustomer[element.getAttribute('data-customer-name')] = element.getBoundingClientRect();
@@ -111,10 +110,10 @@ export default class FundingBadges {
             });
         });
     }
-
-    getInitialState() {
-        return {
-            selected: ''
-        };
-    }
 }
+
+FundingBadges.prototype.props = {
+    selected: '',
+}
+
+export default FundingBadges;

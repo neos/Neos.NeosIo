@@ -1,5 +1,4 @@
-import { component } from '@reduct/component';
-import propTypes from '@reduct/nitpick';
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
 function mapSentenceToParts(sentence) {
     const components = [];
@@ -57,13 +56,10 @@ function mapSentenceToParts(sentence) {
 // We only animate on big-enough screens
 const shouldStartAnimations = document.body.clientWidth >= 768; // iPad portrait mode
 
-@component({
-    sentenceSelector: propTypes.string.isRequired,
-    wordClassName: propTypes.string.isRequired,
-    animatingWordClassName: propTypes.string.isRequired
-})
-export default class SentenceSwitcher {
-    constructor() {
+class SentenceSwitcher extends BaseComponent {
+
+    constructor(el) {
+        super(el);
         //
         // Initialize this component only on the 'real' frontend,
         // not while editing the sentences.
@@ -75,35 +71,20 @@ export default class SentenceSwitcher {
         }
     }
 
-    getDefaultProps() {
-        return {
-            sentenceSelector: '.neos-nodetypes-headline > div > *'
-        };
-    }
-
-    getInitialState() {
-        return {
-            sentences: [],
-            currentIndex: -1
-        };
-    }
-
-    parseSentences() {
-        const nodes = this.findAll(this.props.sentenceSelector);
-        const sentences = nodes.map(node => mapSentenceToParts(node.innerHTML));
+    parseSentences = () => {
+        const nodes = this.el.querySelectorAll(this.sentenceSelector);
+        const sentences = Array.from(nodes).map((node) => mapSentenceToParts(node.innerHTML));
 
         // Remove the parsed sentences from the DOM.
         const children = Array.prototype.slice.call(this.el.children);
         children.forEach(node => this.el.removeChild(node));
 
-        this.setState({
-            sentences
-        });
+        this.sentences = sentences;
     }
 
-    createPartWrappers() {
-        const { wordClassName } = this.props;
-        const max = this.state.sentences
+    createPartWrappers = () => {
+        const { wordClassName } = this;
+        const max = this.sentences
             .map(i => i.length)
             .sort()
             .reverse()
@@ -119,12 +100,12 @@ export default class SentenceSwitcher {
         }
     }
 
-    startAnimationLoop() {
+    startAnimationLoop = () => {
         this.animateToIndex(0);
 
         if (shouldStartAnimations) {
             setInterval(() => {
-                const { currentIndex, sentences } = this.state;
+                const { currentIndex, sentences } = this;
                 const nextIndex = currentIndex + 2 > sentences.length ? 0 : currentIndex + 1;
 
                 this.animateToIndex(nextIndex);
@@ -132,9 +113,8 @@ export default class SentenceSwitcher {
         }
     }
 
-    animateToIndex(targetIndex) {
-        const { animatingWordClassName } = this.props;
-        const { sentences, currentIndex } = this.state;
+    animateToIndex = (targetIndex) => {
+        const { sentences, currentIndex, animatingWordClassName } = this;
         const targetSentence = sentences[targetIndex] || [];
         const currentSentence = sentences[currentIndex] || [];
 
@@ -189,8 +169,16 @@ export default class SentenceSwitcher {
             }
         }
 
-        this.setState({
-            currentIndex: targetIndex
-        });
+        this.currentIndex = targetIndex;
     }
 }
+
+SentenceSwitcher.prototype.props = {
+    sentenceSelector: '.neos-nodetypes-headline > div > *',
+    wordClassName: '',
+    animatingWordClassName: '',
+    sentences: [],
+    currentIndex: -1,
+};
+
+export default SentenceSwitcher;

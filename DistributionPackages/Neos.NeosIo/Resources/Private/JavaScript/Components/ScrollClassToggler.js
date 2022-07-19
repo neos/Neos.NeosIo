@@ -1,19 +1,14 @@
-import { component } from '@reduct/component';
-import propTypes from '@reduct/nitpick';
 import debounce from 'lodash.debounce';
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
-@component({
-    scrollClasses: propTypes.object.isRequired
-})
-export default class ScrollClassToggler {
-    constructor() {
+class ScrollClassToggler extends BaseComponent {
+
+    constructor(el) {
+        super(el);
         const handler = debounce(() => {
             const currentScrollPos = window.scrollY;
-            const lastScrollPos = this.state.currentScrollPos;
-
-            this.setState({
-                currentScrollPos
-            });
+            const lastScrollPos = this.currentScrollPos;
+            this.currentScrollPos = currentScrollPos;
 
             this.evaluateState(currentScrollPos, lastScrollPos);
         });
@@ -21,24 +16,10 @@ export default class ScrollClassToggler {
         window.addEventListener('scroll', handler);
     }
 
-    getDefaultProps() {
-        return {
-            removeClassOnScrollDecrease: false
-        };
-    }
-
-    getInitialState() {
-        return {
-            currentScrollPos: window.scrollY
-        };
-    }
-
-    evaluateState(currentScrollPos = 0, lastScrollPos = 0) {
-        const { scrollClasses } = this.props;
-
-        Object.keys(scrollClasses).forEach(key => {
+    evaluateState = (currentScrollPos = 0, lastScrollPos = 0) => {
+        Object.keys(this.scrollClasses).forEach(key => {
             const targetScrollPoint = Math.abs(key);
-            const data = scrollClasses[key];
+            const data = this.scrollClasses[key];
             const { className, removeOnScrollDecrease } = data;
             const method =
                 // General check if the class should be added or removed.
@@ -52,3 +33,11 @@ export default class ScrollClassToggler {
         });
     }
 }
+
+ScrollClassToggler.prototype.props = {
+    scrollClasses: '',
+    currentScrollPos: window.scrollY,
+    removeClassOnScrollDecrease: false,
+}
+
+export default ScrollClassToggler;

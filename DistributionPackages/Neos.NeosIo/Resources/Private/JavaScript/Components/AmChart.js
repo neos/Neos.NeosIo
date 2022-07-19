@@ -1,11 +1,9 @@
-import { component } from '@reduct/component';
-import propTypes from '@reduct/nitpick';
 import lighten from 'lightness';
-import { loadJs } from '../Utilities';
 import amCharts from "amcharts3/amcharts/amcharts";
 import amChartsSerial from "amcharts3/amcharts/serial";
 import amChartsLight from "amcharts3/amcharts/themes/light";
 import amChartGantt from "amcharts3/amcharts/gantt";
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
 const themeColor = '#26224C';
 
@@ -50,25 +48,17 @@ const config = {
     }
 };
 
-@component({
-    dataSelector: propTypes.string.isRequired
-})
-export default class AmChart {
-    constructor() {
+class AmChart extends BaseComponent {
+
+    constructor(el) {
+        super(el);
         // Hence AmCharts relies on element id's, we generate a random one.
-        this.el.setAttribute('id', `amChart__${Math.random() * 1000}`);
+        el.setAttribute('id', `amChart__${Math.random() * 1000}`);
 
-        this.initializeGlobals()
-            .then(() => this.render());
+        this.initializeGlobals().then(() => this.render());
     }
 
-    getDefaultProps() {
-        return {
-            dataSelector: '[data-json]'
-        };
-    }
-
-    initializeGlobals() {
+    initializeGlobals = async () => {
         // AmCharts isn't published on npm, thus we load it via their CDN and setup the global - Yeah...
         try {
             window.AmCharts.useUTC = true;
@@ -77,7 +67,7 @@ export default class AmChart {
         return Promise.resolve();
     }
 
-    render() {
+    render = () => {
         const dataProvider = this.parseData();
         const today = new Date();
 
@@ -106,8 +96,8 @@ export default class AmChart {
         );
     }
 
-    parseData() {
-        const data = JSON.parse(this.find(this.props.dataSelector).innerHTML);
+    parseData = () => {
+        const data = JSON.parse(this.el.querySelector(this.dataSelector).innerHTML);
 
         // To reduce the places where colors are defined, especially in the data itself,
         // we automatically set colors for the chart depending on the index of the segment.
@@ -124,3 +114,9 @@ export default class AmChart {
         });
     }
 }
+
+AmChart.prototype.props = {
+    dataSelector: '[data-json]',
+}
+
+export default AmChart;
