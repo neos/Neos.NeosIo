@@ -1,0 +1,8 @@
+prototype(Neos.NeosIo.ServiceOfferings:Content.AwardReference) < prototype(Neos.Neos:ContentComponent) {
+    award = ${q(node).property('award')}
+    title = ${q(node).property('title')}
+
+    renderer = afx`
+        <li title={props.title}><i class="fa fa-award"></i> {props.award.label} ({props.title})</li>
+    `
+}
