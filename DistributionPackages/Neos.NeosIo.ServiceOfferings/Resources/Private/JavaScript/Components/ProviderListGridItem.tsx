@@ -25,7 +25,14 @@ export default function ProviderListEntry({provider}: {provider: Provider}) {
                 ) : 'N/A'}
             </div>
             <div className="service-providers__grid-cell service-providers__list-entry__size">
-                <i class="fas fa-user-friends"/> {provider.size ? provider.size : 'N/A'}
+                <span>
+                    <i class="fas fa-user-friends"/> {provider.size ? provider.size : 'N/A'}
+                </span>
+                {provider.awards?.length > 0 && (
+                    <span className="service-providers__list-entry__awards">
+                        {provider.awards.map((award) => <i title={award} class="fa fa-award" />)}
+                    </span>
+                )}
             </div>
         </div>
     )
