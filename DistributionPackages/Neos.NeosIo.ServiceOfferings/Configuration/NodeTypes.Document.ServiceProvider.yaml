@@ -1,4 +1,5 @@
 'Neos.NeosIo.ServiceOfferings:Document.ServiceProvider':
+  final: true
   superTypes:
     'Neos.Neos:Document': true
     'Neos.NeosIo.ServiceOfferings:Mixin.Address': true
@@ -20,6 +21,13 @@
       '*': false
       'Neos.Neos:Document': false
       'Neos.MarketPlace:RepositoryStorage': false
+  childNodes:
+    awards:
+      type: Neos.Neos:ContentCollection
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo.ServiceOfferings:Content.AwardReference': true
   properties:
     logo:
       type: Neos\Media\Domain\Model\ImageInterface
@@ -111,3 +119,9 @@
               '100+':
                 label: 'Big agency 100+'
                 icon: city
+    awards:
+      type: string
+      options:
+          showInCreationDialog: true
+      ui:
+        label: 'Awards'
