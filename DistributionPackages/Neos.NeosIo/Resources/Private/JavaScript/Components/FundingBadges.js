@@ -48,11 +48,10 @@ class FundingBadges extends BaseComponent {
                     value.querySelector('.btn').classList.remove('btn--bright');
                     value.querySelector('.btn').classList.add('btn--solidBright');
                     value.classList.add('fundingBadges__sortingControl--isActive');
-
-                    this.el.dispatchEvent(new Event('filterChanged'));
                 }
 
                 this.selected = selected;
+                this.el.dispatchEvent(new Event('filterChanged'));
             });
         });
 
