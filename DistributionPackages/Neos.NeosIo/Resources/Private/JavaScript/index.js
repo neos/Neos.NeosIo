@@ -20,7 +20,7 @@ for (let componentKey in marketPlaceComponents) {
     components[componentKey] = marketPlaceComponents[componentKey];
 }
 for (let componentKey in neosConComponents) {
-    components[componentKey] = siteComponents[componentKey];
+    components[componentKey] = neosConComponents[componentKey];
 }
 
 const run = () => {
