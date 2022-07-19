@@ -45,7 +45,7 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
                 launchDate = ${Date.format(q(case).property('launchDate'), 'U')}
                 launchDateFormatted = ${q(case).property('launchDate') ? Date.format(q(case).property('launchDate'), 'd.m.Y') : ''}
                 datePublished = ${Date.format(q(case).property('datePublished'), 'U')}
-                projectVolume = ${q(case).property('projectVolume') || 1}
+                projectVolume = ${q(case).property('projectVolume') ? String.toInteger(q(case).property('projectVolume')) : 1}
                 featured = ${q(case).property('featured') || Neos.Node.isOfType(case, 'Neos.NeosIo:Reference.CaseStudy') || 0}
             }
         }
