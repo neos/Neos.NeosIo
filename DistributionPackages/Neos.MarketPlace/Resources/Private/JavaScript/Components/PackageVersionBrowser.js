@@ -1,20 +1,16 @@
 import 'whatwg-fetch';
-import { component } from '@reduct/component';
-import propTypes from '@reduct/nitpick';
 import hashChange from 'hash-change';
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
 const serviceUrlPattern = '/ttree/outofbandrendering?preset=marketplace:version&node={{ path }}&version={{ version }}';
 
-@component({
-    version: propTypes.string.isRequired,
-    path: propTypes.string.isRequired
-})
-export default class PackageVersionBrowserComponent {
-    constructor() {
-        this.version = this.props.version;
+class PackageVersionBrowserComponent extends BaseComponent {
+
+    constructor(el) {
+        super(el);
         this.wrapper = document.createElement('div');
 
-        hashChange.on('change', hash => {
+        hashChange.on('change', (hash) => {
             let [label, version] = hash.split(':');
             if (label === undefined || (label !== 'version' || version === undefined) || this.version === version) {
                 return;
@@ -24,17 +20,15 @@ export default class PackageVersionBrowserComponent {
     }
 
     load(version) {
-        let { path } = this.props;
+        let { path } = this;
 
         this.el.classList.toggle('version--hide');
 
         let url = serviceUrlPattern.replace('{{ path }}', path).replace('{{ version }}', version);
 
         fetch(url)
-            .then(response => {
-                return response.text();
-            })
-            .then(body => {
+            .then((response) => response.text())
+            .then((body) => {
                 this.wrapper.innerHTML = body;
                 let article = this.wrapper.querySelector('article');
 
@@ -48,3 +42,11 @@ export default class PackageVersionBrowserComponent {
             });
     }
 }
+
+PackageVersionBrowserComponent.prototype.props = {
+    version: '',
+    path: '',
+    wrapper: null,
+};
+
+export default PackageVersionBrowserComponent;

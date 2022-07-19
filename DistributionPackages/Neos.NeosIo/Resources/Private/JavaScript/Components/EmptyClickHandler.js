@@ -1,10 +1,8 @@
-import { component } from '@reduct/component';
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
-@component({})
-export default class EmptyClickHandler {
-    constructor() {
-        this.el.addEventListener('click', e => {
-            e.stopPropagation();
-        });
+export default class EmptyClickHandler extends BaseComponent {
+    constructor(el) {
+        super(el);
+        el.addEventListener('click', e => e.stopPropagation());
     }
 }

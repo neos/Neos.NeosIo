@@ -30,15 +30,34 @@
 			}
 		}
 	}
-}
-.siteFooter__heading {
-	margin-bottom: ($half-spacing / 2)+px;
-}
-.siteFooter__nav {
-	line-height: $basic-spacing+px;
-	color: lighten(brand('secondary'), 60%);
 
-	a:hover {
-		color: #FFF;
-	}
+  &__heading {
+    margin-bottom: ($half-spacing / 2)+px;
+  }
+
+  &__nav {
+    line-height: $basic-spacing+px;
+    color: lighten(brand('secondary'), 60%);
+
+    a:hover {
+      color: #FFF;
+    }
+  }
+
+  &__nav-wrapper {
+    display: flex;
+    gap: 2rem 8rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    justify-content: center;
+
+    > * {
+      flex: 1 1 auto;
+
+      @media (min-width: 600px) {
+        flex: 0 1 auto;
+      }
+    }
+  }
 }

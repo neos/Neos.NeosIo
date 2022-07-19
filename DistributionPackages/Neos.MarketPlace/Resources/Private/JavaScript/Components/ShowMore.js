@@ -1,76 +1,56 @@
-import { component } from '@reduct/component';
-import propTypes from '@reduct/nitpick';
-import addClass from 'dom-add-class';
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
-@component({
-    maximumHeight: propTypes.number.isRequired,
-    selector: propTypes.string.isRequired,
-    targetClass: propTypes.string.isRequired,
-    buttonClass: propTypes.string.isRequired,
-    wrapperClass: propTypes.string.isRequired,
-    iconClass: propTypes.string.isRequired
-})
-export default class ShowMoreComponent {
-    getDefaultProps() {
-        return {
-            maximumHeight: 210,
-            wrapperClass: 'show-more',
-            targetClass: 'show-more__target',
-            buttonClass: 'show-more__button',
-            iconClass: 'fas fa-chevron-down'
-        };
-    }
+class ShowMoreComponent extends BaseComponent {
 
-    constructor() {
-        const { maximumHeight, selector } = this.props;
-        this.target = this.el.querySelector(selector);
-        this.state.isOpen = true;
+    constructor(el) {
+        super(el);
+        this.target = el.querySelector(this.selector);
+        this.isOpen = true;
 
         if (!this.target) {
             return;
         }
 
-        const { offsetHeight } = this.target;
+        const {offsetHeight} = this.target;
 
         this.init();
-        if (offsetHeight > maximumHeight) {
+        if (offsetHeight > this.maximumHeight) {
             this.enable();
         } else {
             this.open();
         }
     }
 
-    init() {
-        const { wrapperClass, targetClass } = this.props;
-        addClass(this.el, wrapperClass);
-        addClass(this.target, targetClass);
+    init = () => {
+        const {wrapperClass, targetClass} = this;
+        this.el.classList.add(wrapperClass);
+        this.target.classList.add(targetClass);
     }
 
-    enable() {
+    enable = () => {
         this.close();
         this.appendButton();
     }
 
-    appendButton() {
-        let that = this;
+    appendButton = () => {
         let button = document.createElement('button');
-        const { buttonClass, iconClass } = this.props;
-        addClass(button, buttonClass);
+        const {buttonClass, iconClass} = this;
+        button.classList.add(buttonClass);
 
         let icon = document.createElement('i');
-        addClass(icon, iconClass);
+        icon.classList.add(iconClass);
 
         button.appendChild(icon);
         button.addEventListener('click', e => {
             e.preventDefault();
-            that.toggle();
+            this.toggle();
         });
 
         this.el.appendChild(button);
     }
 
     toggle() {
-        if (this.state.isOpen === false) {
+        if (this.isOpen === false) {
             this.open();
         } else {
             this.close();
@@ -78,12 +58,24 @@ export default class ShowMoreComponent {
     }
 
     close() {
-        this.target.style.height = this.props.maximumHeight + 'px';
-        this.state.isOpen = false;
+        this.target.style.height = this.maximumHeight + 'px';
+        this.isOpen = false;
     }
 
     open() {
         this.target.style.height = null;
-        this.state.isOpen = true;
+        this.isOpen = true;
     }
 }
+
+ShowMoreComponent.prototype.props = {
+    isOpen: false,
+    selector: '',
+    maximumHeight: 210,
+    targetClass: 'show-more__target',
+    buttonClass: 'show-more__button',
+    wrapperClass: 'show-more',
+    iconClass: 'fas fa-chevron-down',
+}
+
+export default ShowMoreComponent;

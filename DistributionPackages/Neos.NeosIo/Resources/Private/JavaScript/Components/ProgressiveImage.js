@@ -1,17 +1,12 @@
-import { component } from '@reduct/component';
-import propTypes from '@reduct/nitpick';
 import inViewport from 'in-viewport';
 import getClosest from 'get-closest';
 import debounce from 'lodash.debounce';
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
-@component({
-    src: propTypes.string.isRequired,
-    srcSet: propTypes.string,
-    isInline: propTypes.bool.isRequired
-})
-export default class ProgressiveImage {
-    constructor() {
-        const { el } = this;
+class ProgressiveImage extends BaseComponent {
+
+    constructor(el) {
+        super(el);
         const isAlreadyVisible = inViewport(el);
 
         //
@@ -19,7 +14,7 @@ export default class ProgressiveImage {
         // srcset to an obj containing the target width and source, and Afterwards
         // attach an resize handler for the window object.
         //
-        if (this.props.isInline) {
+        if (this.isInline) {
             this.transformInlineSourceMap();
 
             window.addEventListener('resize', debounce(() => this.loadAndReplaceImage()));
@@ -41,21 +36,8 @@ export default class ProgressiveImage {
         }
     }
 
-    getDefaultProps() {
-        return {
-            isInline: false
-        };
-    }
-
-    getInitialState() {
-        return {
-            inlineSourceMap: {}
-        };
-    }
-
-    loadAndReplaceImage() {
-        const { el, props } = this;
-        const { src, srcSet, isInline } = props;
+    loadAndReplaceImage = () => {
+        const { el, src, srcSet, isInline } = this;
         const isSrcSetPresent = srcSet && srcSet.length;
 
         //
@@ -90,8 +72,8 @@ export default class ProgressiveImage {
         }
     }
 
-    transformInlineSourceMap() {
-        const { srcSet = '' } = this.props;
+    transformInlineSourceMap = () => {
+        const { srcSet = '' } = this;
         const sources = srcSet.split(',').map(source => source.replace(/(\r\n|\n|\r|\t)/gm, ''));
         const inlineSourceMap = {};
 
@@ -105,17 +87,22 @@ export default class ProgressiveImage {
             });
         }
 
-        this.setState({
-            inlineSourceMap
-        });
+        this.inlineSourceMap = inlineSourceMap;
     }
 
-    getMatchingViewportSource() {
-        const { inlineSourceMap } = this.state;
+    getMatchingViewportSource = () => {
+        const { inlineSourceMap } = this;
         const sourceMapKeys = Object.keys(inlineSourceMap);
         const closestSourceIndex = getClosest.number(window.innerWidth, sourceMapKeys);
-        const targetSource = inlineSourceMap[sourceMapKeys[closestSourceIndex]];
-
-        return targetSource;
+        return inlineSourceMap[sourceMapKeys[closestSourceIndex]];
     }
 }
+
+ProgressiveImage.prototype.props = {
+    src: '',
+    srcSet: '',
+    isInline: false,
+    inlineSourceMap: {},
+}
+
+export default ProgressiveImage;

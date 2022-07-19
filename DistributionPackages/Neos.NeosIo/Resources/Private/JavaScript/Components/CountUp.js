@@ -1,27 +1,23 @@
-import { component } from '@reduct/component';
-import propTypes from '@reduct/nitpick';
 import inViewport from 'in-viewport';
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
-@component({
-    to: propTypes.number.isRequired
-})
-export default class CountUpComponent {
-    constructor() {
-        const { el } = this;
+class CountUpComponent extends BaseComponent {
+
+    constructor(el) {
+        super(el);
         const isAlreadyVisible = inViewport(el);
-        const onVisible = () => setTimeout(() => this.animate(), 400);
+        const onVisible = () => setTimeout(this.animate, 400);
 
         if (isAlreadyVisible) {
             onVisible();
         } else {
-            inViewport(this.el, onVisible);
+            inViewport(el, onVisible);
         }
     }
 
-    animate() {
-        let { to } = this.props;
+    animate = () => {
+        let { el, to } = this;
         to = parseInt(to, 10);
-        const { el } = this;
         let delay = 2;
         let count = to - 62 > 0 ? to - 62 : 0;
 
@@ -45,3 +41,9 @@ export default class CountUpComponent {
         ease();
     }
 }
+
+CountUpComponent.prototype.props = {
+    to: 0,
+}
+
+export default CountUpComponent;

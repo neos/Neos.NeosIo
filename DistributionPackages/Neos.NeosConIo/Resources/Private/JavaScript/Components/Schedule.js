@@ -1,12 +1,10 @@
-import { component } from '@reduct/component';
-import propTypes from '@reduct/nitpick';
+import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
-@component({
-    talkSelector: propTypes.string.isRequired
-})
-export default class Schedule {
-    constructor() {
-        this.talks = this.findAll(this.props.talkSelector);
+class Schedule extends BaseComponent {
+
+    constructor(el) {
+        super(el);
+        this.talks = this.el.querySelectorAll(this.talkSelector);
         this.registerTalkClickEvent();
     }
 
@@ -29,15 +27,15 @@ export default class Schedule {
     }
 
     closeAllTalks() {
-        const descriptions = this.findAll('.talk__description');
+        const descriptions = this.el.querySelectorAll('.talk__description');
         descriptions.forEach(description => {
             description.classList.remove('visible');
         });
     }
-
-    getDefaultProps() {
-        return {
-            talkSelector: '.schedule .talk'
-        };
-    }
 }
+
+Schedule.prototype.props = {
+    talkSelector: '.schedule .talk',
+}
+
+export default Schedule;
