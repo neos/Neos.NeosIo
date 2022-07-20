@@ -54,7 +54,6 @@ class AmChart extends BaseComponent {
         super(el);
         // Hence AmCharts relies on element id's, we generate a random one.
         el.setAttribute('id', `amChart__${Math.random() * 1000}`);
-
         this.initializeGlobals().then(() => this.render());
     }
 
