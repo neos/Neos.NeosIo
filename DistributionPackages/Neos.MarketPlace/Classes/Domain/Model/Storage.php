@@ -60,7 +60,6 @@ class Storage
     }
 
     /**
-     * @return NodeInterface
      * @throws Exception
      */
     public function node(): NodeInterface
@@ -76,8 +75,6 @@ class Storage
     }
 
     /**
-     * @param string $vendor
-     * @return NodeInterface
      * @throws Exception
      * @throws NodeTypeNotFoundException
      */
@@ -98,7 +95,6 @@ class Storage
     /**
      * Creates a content context for given workspace and language identifiers
      *
-     * @param string $workspaceName
      * @return ContentContext|Context
      */
     protected function createContext(string $workspaceName): ContentContext

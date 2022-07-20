@@ -34,6 +34,7 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Log\Utility\LogEnvironment;
 use Neos\Flow\Property\Exception\InvalidPropertyMappingConfigurationException;
 use Neos\Flow\Security\Exception;
+use Neos\Flow\Utility\Now;
 use Neos\Fusion\Core\Cache\ContentCache;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
@@ -94,6 +95,8 @@ class PackageConverter
 
     private Storage $storage;
 
+    private ?Client $client = null;
+
     public function __construct(bool $forceUpdate)
     {
         $this->storage = new Storage();
@@ -121,8 +124,6 @@ class PackageConverter
     /**
      * Converts $source to a node
      *
-     * @param Package $package
-     * @return NodeInterface
      * @throws Exception
      * @throws InvalidPropertyMappingConfigurationException
      * @throws NodeTypeNotFoundException
@@ -168,9 +169,6 @@ class PackageConverter
     }
 
     /**
-     * @param Package $package
-     * @param NodeInterface $packageNode
-     * @return bool
      * @throws NodeException
      */
     protected function packageRequireUpdate(Package $package, NodeInterface $packageNode): bool
@@ -187,19 +185,16 @@ class PackageConverter
         krsort($lastActivities);
         $lastActivity = reset($lastActivities) ?: new \DateTime();
         $lastRecordedActivity = $packageNode->getProperty('lastActivity');
+        $lastSync = $packageNode->getProperty('lastSync');
 
         return (
             !($lastRecordedActivity instanceof \DateTime)
             || $lastActivity > $lastRecordedActivity
-            || (int)$package->getFavers() !== $packageNode->getProperty('favers')
-            || $package->getDownloads()->getTotal() !== $packageNode->getProperty('downloadTotal')
+            || !($lastSync instanceof \DateTime)
+            || $lastSync < (new Now())->sub(new \DateInterval('P1D'))
         );
     }
 
-    /**
-     * @param Package $package
-     * @param NodeInterface $node
-     */
     protected function handleDownloads(Package $package, NodeInterface $node): void
     {
         $downloads = $package->getDownloads();
@@ -214,8 +209,6 @@ class PackageConverter
     }
 
     /**
-     * @param Package $package
-     * @param NodeInterface $node
      * @throws Exception
      * @throws NodeException
      * @throws NodeTypeNotFoundException
@@ -234,11 +227,13 @@ class PackageConverter
             $repository = str_replace('.git', '', $repository);
             preg_match('#(.*)://github.com/(.*)#', $repository, $matches);
             [$organization, $repository] = explode('/', $matches[2]);
-            $client = new Client();
-            $client->addCache($this->gitHubApiCachePool);
-            $client->authenticate($this->githubSettings['token'], null, Client::AUTH_ACCESS_TOKEN);
+            if (!$this->client) {
+                $this->client = new Client();
+                $this->client->addCache($this->gitHubApiCachePool);
+                $this->client->authenticate($this->githubSettings['token'], null, Client::AUTH_ACCESS_TOKEN);
+            }
             try {
-                $meta = $client->repositories()->show($organization, $repository);
+                $meta = $this->client->repositories()->show($organization, $repository);
                 if (!is_array($meta)) {
                     $this->logger->warning(sprintf('no repository info returned for %s', $repository), LogEnvironment::fromMethodName(__METHOD__));
                     return;
@@ -269,9 +264,6 @@ class PackageConverter
     }
 
     /**
-     * @param string $organization
-     * @param string $repository
-     * @param NodeInterface $node
      * @throws Exception
      * @throws NodeTypeNotFoundException
      * @throws \Neos\Flow\Property\Exception
@@ -285,18 +277,20 @@ class PackageConverter
             return;
         }
 
-        try {
-            $client = new Client();
-            $client->addCache($this->gitHubApiCachePool);
-            $client->authenticate($this->githubSettings['token'], null, Client::AUTH_ACCESS_TOKEN);
-        } catch (\Exception $exception) {
-            $this->logger->error($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
-            return;
+        if (!$this->client) {
+            try {
+                $this->client = new Client();
+                $this->client->addCache($this->gitHubApiCachePool);
+                $this->client->authenticate($this->githubSettings['token'], null, Client::AUTH_ACCESS_TOKEN);
+            } catch (\Exception $exception) {
+                $this->logger->error($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
+                return;
+            }
         }
         try {
-            $contents = new Contents($client);
+            $contents = new Contents($this->client);
             $metadata = $contents->readme($organization, $repository);
-            $rendered = $client->api('markdown')->render(file_get_contents($metadata['download_url']));
+            $rendered = $this->client->api('markdown')->render(file_get_contents($metadata['download_url']));
         } catch (ApiLimitExceedException $exception) {
             // Skip the processing if we hit the API rate limit
             $this->logger->warning($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
@@ -316,12 +310,6 @@ class PackageConverter
         $readmeNode->setProperty('readmeSource', $content);
     }
 
-    /**
-     * @param string $organization
-     * @param string $repository
-     * @param string $content
-     * @return string
-     */
     protected function postprocessGithubReadme(string $organization, string $repository, string $content): string
     {
         $content = trim($content);
@@ -337,9 +325,6 @@ class PackageConverter
         return trim(preg_replace(array_keys($r), array_values($r), $content));
     }
 
-    /**
-     * @param NodeInterface $node
-     */
     protected function resetGithubMetrics(NodeInterface $node): void
     {
         $this->updateNodeProperties($node, [
@@ -352,8 +337,6 @@ class PackageConverter
     }
 
     /**
-     * @param Package $package
-     * @param NodeInterface $node
      * @throws NodeException
      */
     protected function handleAbandonedPackageOrVersion(Package $package, NodeInterface $node): void
@@ -367,9 +350,6 @@ class PackageConverter
     }
 
     /**
-     * @param Package $package
-     * @param NodeInterface $parentNode
-     * @return NodeInterface
      * @throws NodeTypeNotFoundException
      */
     protected function create(Package $package, NodeInterface $parentNode): NodeInterface
@@ -390,11 +370,6 @@ class PackageConverter
         return $node;
     }
 
-    /**
-     * @param Package $package
-     * @param NodeInterface $node
-     * @return NodeInterface
-     */
     protected function update(Package $package, NodeInterface $node): NodeInterface
     {
         $this->updateNodeProperties($node, [
@@ -402,14 +377,13 @@ class PackageConverter
             'time' => \DateTime::createFromFormat(self::DATE_FORMAT, $package->getTime()),
             'type' => $package->getType(),
             'repository' => $package->getRepository(),
-            'favers' => $package->getFavers()
+            'favers' => $package->getFavers(),
+            'lastSync' => new \DateTime(),
         ]);
         return $node;
     }
 
     /**
-     * @param Package $package
-     * @param NodeInterface $node
      * @throws NodeTypeNotFoundException
      * @throws \Neos\Eel\Exception
      * @throws NodeException
@@ -448,8 +422,6 @@ class PackageConverter
     }
 
     /**
-     * @param Package $package
-     * @param NodeInterface $node
      * @throws NodeTypeNotFoundException
      * @throws \JsonException
      * @throws \Neos\Eel\Exception
@@ -539,7 +511,6 @@ class PackageConverter
     }
 
     /**
-     * @param NodeInterface $packageNode
      * @throws NodeException
      * @throws \Neos\Eel\Exception
      */
@@ -566,7 +537,6 @@ class PackageConverter
     }
 
     /**
-     * @param NodeInterface $vendorNode
      * @throws NodeException
      */
     protected function getVendorLastActivity(NodeInterface $vendorNode): void
@@ -587,10 +557,6 @@ class PackageConverter
         $vendorNode->setProperty('lastActivity', $lastActivePackage->getProperty('lastActivity'));
     }
 
-    /**
-     * @param NodeInterface $node
-     * @param array $data
-     */
     protected function setNodeProperties(NodeInterface $node, array $data): void
     {
         foreach ($data as $propertyName => $propertyValue) {
@@ -598,10 +564,6 @@ class PackageConverter
         }
     }
 
-    /**
-     * @param NodeInterface $node
-     * @param array $data
-     */
     protected function updateNodeProperties(NodeInterface $node, array $data): void
     {
         foreach ($data as $propertyName => $propertyValue) {
@@ -609,11 +571,6 @@ class PackageConverter
         }
     }
 
-    /**
-     * @param NodeInterface $node
-     * @param string $propertyName
-     * @param mixed $propertyValue
-     */
     protected function updateNodeProperty(NodeInterface $node, string $propertyName, $propertyValue): void
     {
         if (isset($node->getProperties()[$propertyName])) {
@@ -628,10 +585,6 @@ class PackageConverter
         $node->setProperty($propertyName, $propertyValue);
     }
 
-    /**
-     * @param array|null $value
-     * @return string
-     */
     protected function arrayToStringCaster(?array $value): string
     {
         $value = $value ?: [];
@@ -639,8 +592,6 @@ class PackageConverter
     }
 
     /**
-     * @param array|null $value
-     * @return string|null
      * @throws \JsonException
      */
     protected function arrayToJsonCaster(?array $value): ?string
@@ -652,8 +603,6 @@ class PackageConverter
      * Signals that a node was abandoned.
      *
      * @Flow\Signal
-     * @param NodeInterface $node
-     * @return void
      */
     protected function emitPackageAbandoned(NodeInterface $node): void
     {
