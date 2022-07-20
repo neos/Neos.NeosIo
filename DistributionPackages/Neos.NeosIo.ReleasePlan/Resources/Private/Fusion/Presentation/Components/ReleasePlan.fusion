@@ -1,0 +1,24 @@
+prototype(Neos.NeosIo.ReleasePlan:Presentation.Content.ReleasePlan) < prototype(Neos.Neos:ContentComponent) {
+    releasePlanData = null
+    amChartsScript = null
+
+    renderer = afx`
+        <div data-component="AmChart" class="amChart" @if.data={props.releasePlanData}>
+            <div class="u-alignCenter">
+                <div class="spinner">
+                    <i class="spinner__dot"></i>
+                    <i class="spinner__dot"></i>
+                    <i class="spinner__dot"></i>
+                </div>
+            </div>
+
+            <script type="application/json" data-json>
+                {Json.stringify(props.releasePlanData)}
+            </script>
+            {props.amChartsScript}
+        </div>
+        <div @if.noData={!props.releasePlanData}>
+            <p>{I18n.translate('Neos.NeosIo.ReleasePlan:Main:releaseplan.not_available')}</p>
+        </div>
+    `
+}

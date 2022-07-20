@@ -1,0 +1,17 @@
+up:
+  comments: 'Migrates ReleasePlan NodeTypes from Neos.NeosIo to the own packages namespace'
+  migration:
+    -
+      filters:
+        -
+          type: 'NodeType'
+          settings:
+            nodeType: 'Neos.NeosIo:ReleasePlan'
+      transformations:
+        -
+          type: 'ChangeNodeType'
+          settings:
+            newType: 'Neos.NeosIo.ReleasePlan:Content.ReleasePlan'
+
+down:
+  comments: 'No down migration possible.'
