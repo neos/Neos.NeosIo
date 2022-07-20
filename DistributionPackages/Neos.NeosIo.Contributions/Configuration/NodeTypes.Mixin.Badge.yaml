@@ -1,0 +1,49 @@
+'Neos.NeosIo.Contributions:Mixin.Badge':
+  abstract: true
+  superTypes:
+    'Neos.Neos:Document': true
+  ui:
+    label: 'Badge'
+    icon: icon-badge
+    group: contributions
+    inspector:
+      groups:
+        badgePreferences:
+          icon: 'icon-tools'
+          label: 'Badge preferences'
+  properties:
+    title:
+      type: string
+      ui:
+        label: 'Title'
+        showInCreationDialog: true
+        inspector:
+          group: badgePreferences
+    category:
+      type: string
+      ui:
+        label: 'Category'
+        showInCreationDialog: true
+        inspector:
+          group: badgePreferences
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              '':
+                label: 'None'
+              ling-time-supporter:
+                label: 'Long Time Supporter'
+              team-member-employer:
+                label: 'Active Team Member Employers'
+              neos-supporter:
+                label: 'Neos Supporter'
+    badgeType:
+      type: reference
+      ui:
+        label: 'Badge type'
+        showInCreationDialog: true
+        inspector:
+          group: badgePreferences
+          editorOptions:
+            nodeTypes:
+              - Neos.NeosIo.Contributions:Content.BadgeType

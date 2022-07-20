@@ -1,0 +1,33 @@
+'Neos.NeosIo.Contributions:Document.BadgeType':
+  superTypes:
+    'Neos.Neos:Document': true
+  ui:
+    label: 'Badge type'
+    icon: 'icon-certificate'
+    group: contributions
+    inspector:
+      groups:
+        properties:
+          label: 'Properties'
+          icon: 'icon-tools'
+  properties:
+    title:
+      type: string
+      ui:
+        showInCreationDialog: true
+        inspector:
+          group: properties
+    price:
+      type: string
+      ui:
+        label: 'Price'
+        showInCreationDialog: true
+        inspector:
+          group: properties
+    showInOverview:
+      type: boolean
+      ui:
+        label: 'Show in overview'
+        showInCreationDialog: true
+        inspector:
+          group: properties
