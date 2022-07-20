@@ -1,23 +1,16 @@
-prototype(Neos.MarketPlace:VersionMenu) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Version/VersionMenu.html'
-
+prototype(Neos.MarketPlace:VersionMenu) < prototype(Neos.Fusion:Component) {
     collection = Neos.MarketPlace:VersionsQuery
-    @context.versions = ${this.collection}
 
-    wrapperAttributes = Neos.Fusion:Attributes {
-        data-component = 'ShowMore'
-        data-selector = 'ul'
-    }
-
-    attributes = Neos.Fusion:Attributes  {
-        class = 'version-nav'
-    }
-
-    title = 'Released Versions'
-
-    versions = Neos.Fusion:Loop {
-        items = ${versions}
-        itemRenderer = Neos.MarketPlace:VersionMenuItem
-        itemName = 'node'
-    }
+    renderer = afx`
+        <nav data-component="ShowMore" data-selector="ul">
+            <header>
+                <h4>Released Versions</h4>
+            </header>
+            <ul class="version-nav">
+                <Neos.Fusion:Loop items={props.collection} itemName="node">
+                    <Neos.MarketPlace:VersionMenuItem />
+                </Neos.Fusion:Loop>
+            </ul>
+        </nav>
+    `
 }

@@ -1,34 +1,38 @@
-prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/Package.SubMenu.html'
-
-    versions = Neos.MarketPlace:VersionsQuery
-    @context.releasedVersionQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:ReleasedVersion]')}
-    @context.prereleasedVersionQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:PrereleasedVersion]')}
-    @context.developmentVersionsQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:DevelopmentVersion]')}
-
-    maintainers = Neos.MarketPlace:PeopleMenu {
-        path = 'maintainers'
-    }
-
-    releasedVersionMenu = Neos.MarketPlace:VersionMenu {
-        title = 'Stable versions'
-        collection = ${releasedVersionQuery}
-        @if.hasVersions = ${releasedVersionQuery.count() > 0}
-    }
-
-    prereleasedVersionMenu = Neos.MarketPlace:VersionCompactMenu {
-        title = 'Prerelease versions'
-        collection = ${prereleasedVersionQuery}
-        @if.hasVersions = ${prereleasedVersionQuery.count() > 0}
-    }
-
-    developmentVersionMenu = Neos.MarketPlace:VersionCompactMenu {
-        title = 'Development versions'
-        collection = ${developmentVersionsQuery}
-        @if.hasVersions = ${developmentVersionsQuery.count() > 0}
-    }
-
-    sourceButton = Neos.MarketPlace:PackageSourceButton
-
+prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Component) {
     avatarUrl = ${q(node).property('githubAvatar')}
+    versions = Neos.MarketPlace:VersionsQuery
+    releasedVersionQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:ReleasedVersion]')}
+    prereleasedVersionQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:PrereleasedVersion]')}
+    developmentVersionsQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:DevelopmentVersion]')}
+
+    renderer = afx`
+        <div class="lOnly" @if.hasAvatar={props.avatarUrl}>
+            <img class="package__avatar img-responsive" src={props.avatarUrl} alt={props.vendorName} />
+        </div>
+        <Neos.MarketPlace:PackageSourceButton />
+        <section class="market-nav" data-component="ShowMore" data-selector="ul">
+            <header>
+                <h4>Maintainers</h4>
+            </header>
+            <Neos.MarketPlace:PeopleMenu path="maintainers" />
+        </section>
+
+        <Neos.MarketPlace:VersionMenu
+              title="Stable versions"
+              collection={props.releasedVersionQuery}
+              @if.hasVersions={props.releasedVersionQuery.count() > 0}
+        />
+
+        <Neos.MarketPlace:VersionCompactMenu
+            title="Prerelease versions"
+            collection={props.prereleasedVersionQuery}
+            @if.hasVersions={props.prereleasedVersionQuery.count() > 0}
+        />
+
+        <Neos.MarketPlace:VersionCompactMenu
+            title="Development versions"
+            collection={props.developmentVersionsQuery}
+            @if.hasVersions={props.developmentVersionsQuery.count() > 0}
+        />
+    `
 }

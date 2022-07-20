@@ -1,19 +1,26 @@
-prototype(Neos.MarketPlace:PackageReadme) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/PackageReadme.html'
+prototype(Neos.MarketPlace:PackageReadme) < prototype(Neos.Fusion:Component) {
+    readme = ${q(documentNode).children('readme').first()}
+    readmeSource = ${this.readme.property('source')}
 
-    attributes = Neos.Fusion:Attributes {
-        class = 'readme'
-        data-component = 'ShowMore'
-        data-selector = '.readme__wrapper'
-        data-maximumHeight = 700
-    }
+    renderer = afx`
+            <article
+                class="readme"
+                data-component="ShowMore"
+                data-selector=".readme__wrapper"
+                data-maximumHeight={700}
+            >
+            <div class="readme__wrapper">
+                <div class="readme-content">
+                  {props.readmeSource}
+                </div>
+                <footer>
+                    <div class="readme__notice">The content of the readme is provided by <i class="fab fa-github"></i>
+                        <a href="https://github.com/">Github</a>
+                    </div>
+                </footer>
+            </div>
+            </article>
+    `
 
-    readmeSource = ${q(documentNode).find('readme').first().property('source')}
-    hasReadme = ${this.readmeSource != '<p>Enter HTML here</p>' && String.isBlank(this.readmeSource) == false}
-
-    readme = Neos.Fusion:Loop {
-        items = ${q(documentNode).find('readme')}
-        itemName = 'node'
-        itemRenderer = Neos.Neos:ContentCase
-    }
+    @if.hasReadme = ${this.readmeSource != '<p>Enter HTML here</p>' && String.isBlank(this.readmeSource) == false}
 }

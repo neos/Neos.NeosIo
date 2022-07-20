@@ -1,21 +1,14 @@
-prototype(Neos.MarketPlace:VendorRenderer) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/VendorRenderer.html'
-
-    attributes = Neos.Fusion:Attributes {
-        class = 'market-block'
-    }
-
+prototype(Neos.MarketPlace:VendorRenderer) < prototype(Neos.Fusion:Component) {
     title = ${q(node).property('title')}
+    packages = ${q(node).children('[instanceof Neos.MarketPlace:Package]')}
 
-    main = Neos.Neos:ContentCollection {
-        nodePath = 'main'
-    }
-
-    packages = Neos.Fusion:Loop {
-        items = ${q(node).children('[instanceof Neos.MarketPlace:Package]')}
-        itemName = 'node'
-        itemRenderer = Neos.MarketPlace:PackageSearchResult
-    }
-
-    @process.contentElementWrapping >
+    renderer = afx`
+        <article class="market-block">
+            <h1>{props.title}</h1>
+            <Neos.Neos:ContentCollection nodePath="main" />
+            <Neos.Fusion:Loop items={props.packages} itemName="node">
+                <Neos.MarketPlace:PackageSearchResult />
+            </Neos.Fusion:Loop>
+        </article>
+    `
 }

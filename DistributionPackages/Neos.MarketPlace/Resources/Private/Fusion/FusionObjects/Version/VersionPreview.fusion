@@ -1,28 +1,16 @@
-prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Tag) {
+prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
     version = ${String.isBlank(request.arguments.version) ? null : String.trim(request.arguments.version)}
-    @context.version = ${this.version ? this.version : 'latest'}
 
-    findByVersionQuery = ${q(node).find('versions').find('[instanceof Neos.MarketPlace:Version][version = "' + this.version + '"]').first()}
-    findLastVersionQuery = Neos.MarketPlace:LastVersionQuery
-
-    items = ${this.version ? this.findByVersionQuery : this.findLastVersionQuery}
-
-    @context.items = ${this.items}
-
-    tagName = 'section'
-
-    attributes {
-        class = 'block block--versions'
-        data-component = 'PackageVersionBrowser'
-        data-version = ${version}
-        data-path = ${node.path}
+    selectedVersion = ${this.version ?
+        q(node).children('versions').find('[instanceof Neos.MarketPlace:Version][version = "' + this.version + '"]').get(0) :
+        q(node).children('versions').children('[stability = true]').sort('versionNormalized', 'DESC').get(0)
     }
 
-    content = Neos.Fusion:Loop {
-        items = ${items}
-        itemRenderer = Neos.MarketPlace:Version
-        itemName = 'node'
-    }
+    renderer = afx`
+        <section class="block block--versions" data-component="PackageVersionBrowser" data-version={props.version} data-path={node.path}>
+            <Neos.MarketPlace:Version @context.node={props.selectedVersion} />
+        </section>
+    `
 
     @cache {
         mode = 'cached'

@@ -3,7 +3,10 @@ prototype(Neos.MarketPlace:PackageRequirements) < prototype(Neos.Fusion:Loop) {
     items = ${Json.parse(q(node).property(this.property))}
     itemKey = 'package'
     itemName = 'version'
-    itemRenderer = Neos.MarketPlace:PackageRequirementsItem
+    itemRenderer = Neos.MarketPlace:PackageRequirementsItem {
+        package = ${package}
+        version = ${version}
+    }
 
     @process.wrap = ${value ? '<ul>' + value + '</ul>' : ''}
 }

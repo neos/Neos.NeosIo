@@ -4,18 +4,4 @@ prototype(Neos.MarketPlace:PackageHighlightItem) < prototype(Neos.MarketPlace:Pa
     attributes {
         class = 'market-block market-block--highlight'
     }
-
-    @cache {
-        mode = 'cached'
-
-        entryIdentifier {
-            node = ${node}
-            format = ${request.format}
-        }
-
-        entryTags {
-            1 = ${Neos.Caching.nodeTag(node)}
-            2 = ${Neos.Caching.descendantOfTag(node)}
-        }
-    }
 }

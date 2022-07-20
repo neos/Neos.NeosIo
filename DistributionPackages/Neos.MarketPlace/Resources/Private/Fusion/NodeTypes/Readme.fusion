@@ -1,5 +1,9 @@
-prototype(Neos.MarketPlace:Readme) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Readme.html'
-
+prototype(Neos.MarketPlace:Readme) < prototype(Neos.Neos:ContentComponent) {
     readmeSource = ${q(node).property('readmeSource')}
+
+    renderer = afx`
+        <div class="readme-content">
+          {props.readmeSource}
+        </div>
+    `
 }

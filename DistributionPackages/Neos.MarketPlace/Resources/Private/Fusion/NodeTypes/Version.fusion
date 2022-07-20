@@ -1,8 +1,6 @@
 prototype(Neos.MarketPlace:Version) < prototype(Neos.MarketPlace:AbstractVersion) {
-    attributes {
-        class = 'version'
-        id = ${q(node).property('version')}
-    }
+    class = 'version'
+    id = ${q(node).property('version')}
 
     dist = ${q(node).find('dist').first()}
 

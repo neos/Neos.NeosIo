@@ -1,5 +1,12 @@
-prototype(Neos.MarketPlace:Button) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Button.html'
-    url = ${null}
-    content = ${null}
+prototype(Neos.MarketPlace:Button) < prototype(Neos.Fusion:Component) {
+    url = null
+    content = null
+
+    renderer = afx`
+        <a class="btn btn--solidPrimary" style="width: 100%; margin-bottom: 10px;" href={props.url}>
+            <div class="btn__content">{props.content}</div>
+        </a>
+    `
+
+    @if.hasContent=${this.content}
 }

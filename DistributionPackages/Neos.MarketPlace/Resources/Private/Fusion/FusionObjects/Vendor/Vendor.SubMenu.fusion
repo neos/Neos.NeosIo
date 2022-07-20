@@ -1,8 +1,0 @@
-prototype(Neos.MarketPlace:Vendor.SubMenu) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Vendor.SubMenu.html'
-
-    badges = Neos.MarketPlace:BadgeOverview
-    packages = Neos.MarketPlace:PackageMenu
-
-    avatarUrl = ${q(node).find('[instanceof Neos.MarketPlace:Package][githubAvatar]').first().property('githubAvatar')}
-}

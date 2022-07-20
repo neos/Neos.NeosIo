@@ -1,8 +1,6 @@
 // this is based on the abstract Neos.MarketPlace:Version nodetype
 
-prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Version.html'
-
+prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Neos:ContentComponent) {
     version = ${q(node).property('version')}
     versionNormalized = ${q(node).property('versionNormalized')}
     stability = ${q(node).property('stability')}
@@ -21,4 +19,79 @@ prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Neos:Content) {
     suggest = ${q(node).property('suggest')}
     conflict = ${q(node).property('conflict')}
     replace = ${q(node).property('replace')}
+
+    renderer = afx`
+        <article class={props.class} id={props.id}>
+            <header>
+                <h2>{props.version}</h2>
+            </header>
+            <Neos.Fusion:Fragment @if.abandoned={props.isAbandoned}>
+                <p>
+                    This version is abandoned and no longer maintained. The author suggests using the <strong>{props.abandoned}</strong> package instead.
+                </p>
+                <hr />
+            </Neos.Fusion:Fragment>
+            <p @if.set={props.description}>{description}</p>
+
+            <div class="g">
+                <div class="gi u-w1/1 u-wm1/2">
+                    <dl>
+                        <Neos.Fusion:Fragment @if.set={props.homepage}>
+                            <dt>Homepage</dt>
+                            <dd>{homepage}</dd>
+                        </Neos.Fusion:Fragment>
+                        <Neos.Fusion:Fragment @if.set={props.version}>
+                            <dt>Version</dt>
+                            <dd>{version}</dd>
+                        </Neos.Fusion:Fragment>
+                        <Neos.Fusion:Fragment @if.set={props.type}>
+                            <dt>Type</dt>
+                            <dd>{type}</dd>
+                        </Neos.Fusion:Fragment>
+                        <Neos.Fusion:Fragment @if.set={props.time}>
+                            <dt>Release Date</dt>
+                            <dd>{Date.format(time, 'medium')}</dd>
+                        </Neos.Fusion:Fragment>
+                        <dt>Source</dt>
+                        <dd><a href={props.sourceUrl}>{props.sourceType}</a></dd>
+                        <dt>Distribution</dt>
+                        <dd><a href={props.distUrl}>{props.distType}</a></dd>
+                    </dl>
+                </div>
+                <div class="gi u-w1/1 u-wm1/2">
+                    <dl>
+                        <dt>Requires</dt>
+                        <dd>{props.require || 'None'}</dd>
+                        <dt>Requires (dev)</dt>
+                        <dd>{props.requireDev || 'None'}</dd>
+                        <dt>Suggest</dt>
+                        <dd>{props.suggest || 'None'}</dd>
+                        <dt>Provides</dt>
+                        <dd>{props.provide || 'None'}</dd>
+                        <dt>Conflicts</dt>
+                        <dd>{props.conflict || 'None'}</dd>
+                        <dt>Replaces</dt>
+                        <dd>{props.replace || 'None'}</dd>
+                        <Neos.Fusion:Fragment @if.set={props.bin}>
+                            <dt>Bin</dt>
+                            <dd>{props.bin}</dd>
+                        </Neos.Fusion:Fragment>
+                    </dl>
+                </div>
+            </div>
+            <footer>
+                <div>
+                    <Neos.Fusion:Fragment @if.set={props.license}>
+                        <i class="fas fa-copyright" title="License"></i> {props.license}
+                    </Neos.Fusion:Fragment>
+                    <Neos.Fusion:Fragment @if.set={props.hasKeywords}>
+                        <i class="fas fa-tag" title="Tags"></i> {props.keywords}
+                    </Neos.Fusion:Fragment>
+                    <Neos.Fusion:Fragment @if.set={props.sourceReference}>
+                        <i class="fas fa-bookmark" title="License"></i> {props.sourceReference}
+                    </Neos.Fusion:Fragment>
+                </div>
+            </footer>
+        </article>
+    `
 }

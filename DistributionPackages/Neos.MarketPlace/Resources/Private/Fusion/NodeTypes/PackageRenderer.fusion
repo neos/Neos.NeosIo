@@ -1,37 +1,31 @@
-prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/PackageRenderer.html'
-
+prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
     vendor = Neos.MarketPlace:ClosestVendorQuery
-    @context.vendor = ${this.vendor}
-
     vendorName = ${q(this.vendor).property('title')}
-
-    attributes = Neos.Fusion:Attributes {
-        class = 'market-block'
-    }
-
-    lastActivity = Neos.MarketPlace:PackageLastActivity
-
-    versions = Neos.MarketPlace:VersionPreview
-
-    packageCount = Neos.MarketPlace:PackageCountButton
-
-    main = Neos.Neos:ContentCollection {
-        nodePath = 'main'
-    }
-
-    isAbandoned = ${q(node).property('abandoned') ? true : false}
     abandoned = ${q(node).property('abandoned')}
-
     packageName = ${q(node).property('title')}
     packageTime = ${q(node).property('time')}
     description = ${q(node).property('description')}
 
-    readme = Neos.MarketPlace:PackageReadme
-
-    metrics = Neos.MarketPlace:PackageMetrics {
-        attributes.class.@process.pullRight = ${value + ' pull-right'}
-    }
-
-    @process.contentElementWrapping >
+    renderer = afx`
+        <article class="market-block">
+            <header>
+                <h1>{props.packageName}</h1>
+            </header>
+            <p @if.abandoned={props.abandoned}>
+                This package is abandoned and no longer maintained. The author suggests using the <strong>{props.abandoned}</strong> package instead.
+            </p>
+            <hr @if.abandoned={props.abandoned} />
+            <div class="package__meta">
+                <Neos.MarketPlace:PackageLastActivity /> <Neos.MarketPlace:PackageMetrics attributes.class.@process.pullRight={value + ' pull-right'} />
+            </div>
+            <code class="market-code">
+                <i class="fas fa-download"></i> composer require {props.packageName}
+            </code>
+            <p @if.set={props.description}><strong>{props.description}</strong></p>
+            <Neos.Neos:ContentCollection nodePath="main" />
+            <Neos.MarketPlace:VersionPreview />
+            <Neos.MarketPlace:PackageReadme />
+            <Neos.MarketPlace:PackageCountButton vendor={props.vendor} />
+        </article>
+    `
 }
