@@ -31,6 +31,8 @@ class PackageImporter
 
     private array $processedPackages = [];
 
+    private $packageConverter;
+
     public function forceUpdates(bool $forceUpdates): void
     {
         $this->forceUpdates = $forceUpdates;
@@ -38,7 +40,10 @@ class PackageImporter
 
     public function process(Package $package): NodeInterface
     {
-        $node = (new PackageConverter($this->forceUpdates))->convert($package);
+        if (!$this->packageConverter) {
+            $this->packageConverter = new PackageConverter($this->forceUpdates);
+        }
+        $node = $this->packageConverter->convert($package);
         $this->processedPackages[$package->getName()] = true;
         return $node;
     }
