@@ -1,8 +1,20 @@
 prototype(Neos.NeosIo.ServiceOfferings:Content.AwardReference) < prototype(Neos.Neos:ContentComponent) {
     award = ${q(node).property('award')}
     title = ${q(node).property('title')}
+    projectUrl = ${q(node).property('projectUrl')}
 
-    renderer = afx`
-        <li title={props.title}><i class="fa fa-award"></i> {props.award.label} ({props.title})</li>
-    `
+    renderer = Neos.Fusion:Case {
+        hasLink {
+            condition = ${q(node).property('projectUrl')}
+            renderer = afx`
+                <li title={props.title}><i class="fa fa-award"></i> {props.award.label} (<a href={props.projectUrl} target="_blank" @if.isSet={props.projectUrl}>{props.title}</a>)</li>
+            `
+        }
+        default {
+            condition = true
+            renderer = afx`
+                <li title={props.title}><i class="fa fa-award"></i> {props.award.label} ({props.title})</li>
+            `
+        }
+    }
 }
