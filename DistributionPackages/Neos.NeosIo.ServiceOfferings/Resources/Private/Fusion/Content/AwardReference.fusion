@@ -7,7 +7,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Content.AwardReference) < prototype(Neos.
         hasLink {
             condition = ${q(node).property('projectUrl')}
             renderer = afx`
-                <li title={props.title}><i class="fa fa-award"></i> {props.award.label} (<a href={props.projectUrl} target="_blank" @if.isSet={props.projectUrl}>{props.title}</a>)</li>
+                <li title={props.title}><i class="fa fa-award"></i> {props.award.label} (<a href={props.projectUrl} target="_blank">{props.title}</a>)</li>
             `
         }
         default {
