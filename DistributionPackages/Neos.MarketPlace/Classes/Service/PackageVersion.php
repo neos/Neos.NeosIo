@@ -49,7 +49,7 @@ class PackageVersion
     {
         $versions = $this->extractVersions($node);
         usort($versions, static function (NodeInterface $a, NodeInterface $b) {
-            return $a->getProperty('versionNormalized') <=> $b->getProperty('versionNormalized');
+            return $b->getProperty('versionNormalized') <=> $a->getProperty('versionNormalized');
         });
         $stableVersions = array_filter($versions, static function (NodeInterface $version) {
             return $version->getProperty('stability') === true;
