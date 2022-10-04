@@ -67,6 +67,7 @@ prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Http.Message) {
     }
 
     @cache {
+        mode = 'cached'
         entryIdentifier {
             node = ${documentNode}
             format = 'atom'
