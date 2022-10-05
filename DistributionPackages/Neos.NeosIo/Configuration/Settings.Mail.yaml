@@ -3,7 +3,8 @@ SwiftMailer:
     type: 'Swift_SmtpTransport'
     options:
       host: '%env:SMTP_HOST%'
-      port: '%env:SMTP_PORT%'
+      # Should come from env var SMTP_PORT but that doesn't work yet as it needs to be an int
+      port: 587
       encryption: 'ssl'
       username: '%env:SMTP_USERNAME%'
       password: '%env:SMTP_PASSWORD%'
