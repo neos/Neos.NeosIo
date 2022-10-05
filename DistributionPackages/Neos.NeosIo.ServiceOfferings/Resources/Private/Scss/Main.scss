@@ -126,7 +126,6 @@
     }
 
     .service-providers__list-entry__awards {
-      margin-left: 1rem;
       display: inline-flex;
       gap: 0.5rem;
       cursor: pointer;
@@ -173,6 +172,10 @@
 
         p:last-child {
           margin-bottom: 0;
+        }
+
+        .service-providers__list-entry__awards {
+          margin-left: 0.5rem;
         }
       }
 
@@ -224,6 +227,9 @@
 
       .service-providers__list-entry__size {
         grid-area: size;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
       }
 
       .service-providers__list-entry__badge {
