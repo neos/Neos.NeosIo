@@ -1,0 +1,9 @@
+SwiftMailer:
+  transport:
+    type: 'Swift_SmtpTransport'
+    options:
+      host: '%env:SMTP_HOST%'
+      port: '%env:SMTP_PORT%'
+      encryption: 'ssl'
+      username: '%env:SMTP_USERNAME%'
+      password: '%env:SMTP_PASSWORD%'
