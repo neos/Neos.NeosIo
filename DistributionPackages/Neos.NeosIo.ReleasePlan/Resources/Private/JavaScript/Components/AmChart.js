@@ -6,6 +6,7 @@ import amChartGantt from "amcharts3/amcharts/gantt";
 import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
 const themeColor = '#26224C';
+const themeColorFuture = '#888888';
 
 const config = {
     type: 'gantt',
@@ -103,7 +104,12 @@ class AmChart extends BaseComponent {
         return data.map(obj => {
             return Object.assign({}, obj, {
                 segments: obj.segments.map((segment, index) => {
-                    const color = lighten(themeColor, index * 10);
+                    let color;
+                    if (Date.parse(segment.start) > Date.now()) {
+                        color = lighten(themeColorFuture, (index * 10));
+                    } else {
+                        color = lighten(themeColor, index * 10);
+                    }
 
                     return Object.assign({}, segment, {
                         color
