@@ -10,11 +10,24 @@
 	text-align: center;
 }
 .neos-alignment-right {
-	float: right;
-	margin-left: .9rem;
+	float: left;
+	margin-right: .9rem;
+
+	@media screen and (max-width: 649px) {
+		.neos-alignment-right {
+			float: right;
+			margin-right: 0;
+		}
+	}
 
 	figcaption {
-		margin-left: .9rem;
+		margin-left: 0;
+
+		@media screen and (max-width: 649px) {
+			figcaption {
+				margin-left: .9rem;
+			}
+		}
 	}
 }
 .neos-nodetypes-image {
