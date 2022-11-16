@@ -38,7 +38,7 @@ class ShowMoreComponent extends BaseComponent {
         button.classList.add(buttonClass);
 
         let icon = document.createElement('i');
-        icon.classList.add(iconClass.split(' '));
+        icon.classList.add(...iconClass.split(' '));
 
         button.appendChild(icon);
         button.addEventListener('click', e => {
