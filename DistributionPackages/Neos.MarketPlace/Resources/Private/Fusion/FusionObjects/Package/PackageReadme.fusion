@@ -8,7 +8,7 @@ prototype(Neos.MarketPlace:PackageReadme) < prototype(Neos.Fusion:Template) {
         data-maximumHeight = 700
     }
 
-    readmeSource = ${q(documentNode).find('readme').first().property('source')}
+    readmeSource = ${q(documentNode).find('readme').first().property('readmeSource')}
     hasReadme = ${this.readmeSource != '<p>Enter HTML here</p>' && String.isBlank(this.readmeSource) == false}
 
     readme = Neos.Fusion:Loop {
