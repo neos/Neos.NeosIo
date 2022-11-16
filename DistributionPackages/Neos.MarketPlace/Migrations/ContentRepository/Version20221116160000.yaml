@@ -1,0 +1,18 @@
+up:
+  comments: 'Rename source property Neos.MarketPlace:Readme node type'
+  migration:
+    -
+      filters:
+        -
+          type: 'NodeType'
+          settings:
+            nodeType: 'Neos.MarketPlace:Readme'
+      transformations:
+        -
+          type: 'RenameProperty'
+          settings:
+            from: 'source'
+            to: 'readmeSource'
+
+down:
+  comments: 'No down migration possible.'
