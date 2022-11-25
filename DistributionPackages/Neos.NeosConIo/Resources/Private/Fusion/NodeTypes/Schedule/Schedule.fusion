@@ -1,14 +1,9 @@
 prototype(Neos.NeosConIo:Schedule) < prototype(Neos.Neos:ContentComponent) {
-    @if.eventNodeIsSet = ${q(event).is('[instanceof Neos.NeosConIo:Event]')}
-    @if.dateIsSet = ${q(q(event).property('eventDate')).is('[instanceof DateTime]')}
+    scheduleDate = ${q(node).property('scheduleDate')}
+    title = ${q(node).property('title')}
 
-    @context {
-        event = ${q(node).property('event')}
-        days = Neos.Fusion:DataStructure {
-           day1 = ${q(node).property('event') && q(q(node).property('event')).property('eventDate')}
-           day2 = ${q(node).property('event') && q(q(node).property('event')).property('eventDate') && Date.add(q(q(node).property('event')).property('eventDate'), 'P1D')}
-        }
-    }
+    // Neos.NeosConIo:Schedule.Talks needs the event set.
+    @context.event = ${q(node).property('event')}
 
     @cache {
         mode = 'cached'
@@ -25,19 +20,15 @@ prototype(Neos.NeosConIo:Schedule) < prototype(Neos.Neos:ContentComponent) {
         }
     }
 
-    days = ${days}
-
     renderer = afx`
         <div class="schedule" data-component="Schedule">
-            <Neos.Fusion:Loop items={props.days} itemName="day" @children="itemRenderer">
-                <h3 class="conferenceDayTitle">Conference Day {iterator.cycle}</h3>
-                <div class="conferenceDaySubtitle">
-                    {Date.format(day, 'd M Y')}
-                </div>
-                <div class="talks">
-                    <Neos.NeosConIo:Schedule.Talks day={day} />
-                </div>
-            </Neos.Fusion:Loop>
+            <h3 class="conferenceDayTitle">{props.title}</h3>
+            <div class="conferenceDaySubtitle">
+                {Date.format(props.scheduleDate, 'd M Y')}
+            </div>
+            <div class="talks">
+                <Neos.NeosConIo:Schedule.Talks day={props.scheduleDate} />
+            </div>
         </div>
     `
 }
