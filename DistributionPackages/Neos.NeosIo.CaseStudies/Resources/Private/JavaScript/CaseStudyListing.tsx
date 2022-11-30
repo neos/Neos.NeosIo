@@ -80,9 +80,9 @@ export default function CaseStudyListing() {
                         </div>
                         <div
                             class="cases__header cases__grid-cell cases__header--sortable pull-right hide-md-down"
-                            onClick={() => sortBy('datePublished')}>
-                            {translationData['sortBy']['datePublished']}&nbsp;<i
-                            className={'fas ' + (sorting == 'datePublished' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
+                            onClick={() => sortBy('launchDate')}>
+                            {translationData['sortBy']['launchDate']}&nbsp;<i
+                            className={'fas ' + (sorting == 'launchDate' ? (sortingDirection == SortDirection.Asc ? 'fa-sort-down ' : ' fa-sort-up') : 'fa-sort')}/>
                         </div>
                     </div>
                     <div class="cases__grid-row form form--inline">
