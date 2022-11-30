@@ -12,6 +12,13 @@
           icon: 'calendar-alt'
           position: 20
   properties:
+    title:
+      type: string
+      placeholder: 'title'
+      ui:
+        label: 'Title'
+        inspector:
+          group: 'event'
     event:
       type: reference
       ui:
@@ -19,3 +26,12 @@
         reloadIfChanged: true
         inspector:
           group: 'event'
+    scheduleDate:
+      type: DateTime
+      placeholder: 'Select a date to display the schedule for'
+      ui:
+        label: 'Schedule date'
+        inspector:
+          group: 'event'
+          editorOptions:
+            format: 'd.m.Y'
