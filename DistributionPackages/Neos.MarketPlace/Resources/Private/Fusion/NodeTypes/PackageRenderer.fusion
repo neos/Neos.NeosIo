@@ -30,7 +30,7 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Neos:Content) {
     readme = Neos.MarketPlace:PackageReadme
 
     metrics = Neos.MarketPlace:PackageMetrics {
-        attributes.class.@process.pullRight = ${value + ' pull-right'}
+        attributes.class.@process.pullRight = ${Array.push(value, 'pull-right')}
     }
 
     @process.contentElementWrapping >

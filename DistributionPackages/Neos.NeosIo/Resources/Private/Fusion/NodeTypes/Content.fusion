@@ -9,7 +9,7 @@ prototype(Neos.Neos:Content) {
             displayAllMq.@if.set = ${q(node).property('displayAllMq')}
             @glue = ' '
         }
-        value = ${Type.isArray(value) ? Array.push(value, this.responsiveClasses) : value + ' ' + this.responsiveClasses}
+        value = ${Array.push(value, this.responsiveClasses)}
         @if.supportsMediaQueries = ${q(node).is('[instanceof Neos.NeosIo:MediaQueryMixin]')}
     }
 
