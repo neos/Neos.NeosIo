@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a575868a99796d8db56136771fa7c13",
+    "content-hash": "aecd8be04470e4f9497dd736204adb52",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2886,6 +2886,49 @@
             "time": "2022-04-06T20:21:02+00:00"
         },
         {
+            "name": "flowpack/media-ui",
+            "version": "0.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Flowpack/media-ui.git",
+                "reference": "1326beff8efa46a38ae7872b53915015d35d9006"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Flowpack/media-ui/zipball/1326beff8efa46a38ae7872b53915015d35d9006",
+                "reference": "1326beff8efa46a38ae7872b53915015d35d9006",
+                "shasum": ""
+            },
+            "require": {
+                "neos/media": "^5.2 || ~7.0 || ~8.0 || dev-master",
+                "neos/neos": "^5.2 || ~7.0 || ~8.0 || dev-master",
+                "neos/neos-ui": "^5.2 || ~7.0 || ~8.0 || dev-master",
+                "t3n/graphql": "^2.1 || ^3.0.2",
+                "t3n/graphql-upload": "^1.0 || ^2.0"
+            },
+            "suggest": {
+                "flowpack/entity-usage-databasestorage": "Required for the asset usage features",
+                "flowpack/neos-asset-usage": "Allows filtering unused assets and other related features",
+                "phpstan/phpstan": "For running code quality checks"
+            },
+            "type": "neos-package",
+            "autoload": {
+                "psr-4": {
+                    "Flowpack\\Media\\Ui\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "This module allows managing media assets including pictures, videos, audio and documents.",
+            "support": {
+                "issues": "https://github.com/Flowpack/media-ui/issues",
+                "source": "https://github.com/Flowpack/media-ui/tree/0.11.0"
+            },
+            "time": "2022-11-11T07:49:25+00:00"
+        },
+        {
             "name": "flowpack/neos-matomo",
             "version": "3.5.0",
             "source": {
@@ -5172,11 +5215,11 @@
         },
         {
             "name": "neos/flowneosio",
-            "version": "dev-main",
+            "version": "dev-task/neos-8-update",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.FlowNeosIo",
-                "reference": "b5e7247f73c02208a895b446c593cba5b83c60ad"
+                "reference": "165dd4208642455bea3a6a17be79e8dfd41cca02"
             },
             "require": {
                 "neos/neosio": "*"
@@ -5266,7 +5309,15 @@
                     "Neos.NodeTypes-20190917101945",
                     "Networkteam.Neos.MailObfuscator-20190919145400",
                     "Neos.NodeTypes-20200120114136",
-                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401"
+                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401",
+                    "Neos.Flow-20200813181400",
+                    "Neos.Flow-20201003165200",
+                    "Neos.Flow-20201109224100",
+                    "Neos.Flow-20201205172733",
+                    "Neos.Flow-20201207104500",
+                    "Neos.Neos-20220318111600",
+                    "Neos.Flow-20220318174300",
+                    "Neos.Fusion-20220326120900"
                 ]
             },
             "autoload": {
@@ -6576,11 +6627,11 @@
         },
         {
             "name": "neos/neosconio",
-            "version": "dev-main",
+            "version": "dev-task/neos-8-update",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosConIo",
-                "reference": "fa05093469270c8632f35ec2b10e3cf7d1cef1c5"
+                "reference": "2457fc2dcf2c0d3b44d300b8e23e94bdec4b5529"
             },
             "require": {
                 "neos/neosio": "*"
@@ -6670,7 +6721,15 @@
                     "Neos.NodeTypes-20190917101945",
                     "Networkteam.Neos.MailObfuscator-20190919145400",
                     "Neos.NodeTypes-20200120114136",
-                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401"
+                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401",
+                    "Neos.Flow-20200813181400",
+                    "Neos.Flow-20201003165200",
+                    "Neos.Flow-20201109224100",
+                    "Neos.Flow-20201205172733",
+                    "Neos.Flow-20201207104500",
+                    "Neos.Neos-20220318111600",
+                    "Neos.Flow-20220318174300",
+                    "Neos.Fusion-20220326120900"
                 ]
             },
             "autoload": {
@@ -6688,11 +6747,11 @@
         },
         {
             "name": "neos/neosio",
-            "version": "dev-main",
+            "version": "dev-task/neos-8-update",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosIo",
-                "reference": "232b62d053553fd1ae3a74dafb899571c6c0bf34"
+                "reference": "1dbd55423b7898aef7e700a41eb8f3a05813a5fb"
             },
             "require": {
                 "flownative/gravatar": "^2.0",
@@ -6701,6 +6760,7 @@
                 "flowpack/elasticsearch-contentrepositoryadaptor": "^8.4",
                 "flowpack/fullpagecache": "^3.0",
                 "flowpack/listable": "^3.4",
+                "flowpack/media-ui": "^0.11",
                 "flowpack/neos-matomo": "^3.3",
                 "flowpack/searchplugin": "^5.0",
                 "goe/neos-package": "^0.1.1",
@@ -6807,7 +6867,15 @@
                     "Neos.NodeTypes-20190917101945",
                     "Networkteam.Neos.MailObfuscator-20190919145400",
                     "Neos.NodeTypes-20200120114136",
-                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401"
+                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401",
+                    "Neos.Flow-20200813181400",
+                    "Neos.Flow-20201003165200",
+                    "Neos.Flow-20201109224100",
+                    "Neos.Flow-20201205172733",
+                    "Neos.Flow-20201207104500",
+                    "Neos.Neos-20220318111600",
+                    "Neos.Flow-20220318174300",
+                    "Neos.Fusion-20220326120900"
                 ]
             },
             "autoload": {
@@ -6825,11 +6893,11 @@
         },
         {
             "name": "neos/neosio-casestudies",
-            "version": "dev-main",
+            "version": "dev-task/neos-8-update",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosIo.CaseStudies",
-                "reference": "905b2ec2a0637c6b5bb690801ae6392c93c028a3"
+                "reference": "02d181906211a7ccfb20f7ccfb7c3951c0588aeb"
             },
             "require": {
                 "neos/neos": "*"
@@ -6917,7 +6985,15 @@
                     "Neos.NodeTypes-20190917101945",
                     "Networkteam.Neos.MailObfuscator-20190919145400",
                     "Neos.NodeTypes-20200120114136",
-                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401"
+                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401",
+                    "Neos.Flow-20200813181400",
+                    "Neos.Flow-20201003165200",
+                    "Neos.Flow-20201109224100",
+                    "Neos.Flow-20201205172733",
+                    "Neos.Flow-20201207104500",
+                    "Neos.Neos-20220318111600",
+                    "Neos.Flow-20220318174300",
+                    "Neos.Fusion-20220326120900"
                 ]
             },
             "autoload": {
@@ -6932,11 +7008,11 @@
         },
         {
             "name": "neos/neosio-featurelist",
-            "version": "dev-main",
+            "version": "dev-task/neos-8-update",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosIo.FeatureList",
-                "reference": "d421843146cd879cf06d72f484a51ef6cb0c55fa"
+                "reference": "f17ef854b252a8f5d4f3ee8e8c0bd5170e645af9"
             },
             "require": {
                 "neos/fusion-afx": "*",
@@ -7029,7 +7105,15 @@
                     "Neos.NodeTypes-20190917101945",
                     "Networkteam.Neos.MailObfuscator-20190919145400",
                     "Neos.NodeTypes-20200120114136",
-                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401"
+                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401",
+                    "Neos.Flow-20200813181400",
+                    "Neos.Flow-20201003165200",
+                    "Neos.Flow-20201109224100",
+                    "Neos.Flow-20201205172733",
+                    "Neos.Flow-20201207104500",
+                    "Neos.Neos-20220318111600",
+                    "Neos.Flow-20220318174300",
+                    "Neos.Fusion-20220326120900"
                 ]
             },
             "autoload": {
@@ -7044,11 +7128,11 @@
         },
         {
             "name": "neos/neosio-marketplace",
-            "version": "dev-main",
+            "version": "dev-task/neos-8-update",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.MarketPlace",
-                "reference": "91a16387fc79356a8a5f6c93e2526e1a111f9731"
+                "reference": "b4f81879546ae9ffea387cddb403e6c1560e7dcd"
             },
             "require": {
                 "cocur/slugify": "^4.0",
@@ -7143,7 +7227,15 @@
                     "Neos.NodeTypes-20190917101945",
                     "Networkteam.Neos.MailObfuscator-20190919145400",
                     "Neos.NodeTypes-20200120114136",
-                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401"
+                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401",
+                    "Neos.Flow-20200813181400",
+                    "Neos.Flow-20201003165200",
+                    "Neos.Flow-20201109224100",
+                    "Neos.Flow-20201205172733",
+                    "Neos.Flow-20201207104500",
+                    "Neos.Neos-20220318111600",
+                    "Neos.Flow-20220318174300",
+                    "Neos.Fusion-20220326120900"
                 ]
             },
             "autoload": {
@@ -7161,11 +7253,11 @@
         },
         {
             "name": "neos/neosio-release-plan",
-            "version": "dev-main",
+            "version": "dev-task/neos-8-update",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosIo.ReleasePlan",
-                "reference": "2157ed54a24677bc308c52322dafe33d3b0a41fa"
+                "reference": "d9872dfa9bcbb1b32d30d31740a02347e6fade5a"
             },
             "require": {
                 "neos/neos": "*"
@@ -7253,7 +7345,15 @@
                     "Neos.NodeTypes-20190917101945",
                     "Networkteam.Neos.MailObfuscator-20190919145400",
                     "Neos.NodeTypes-20200120114136",
-                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401"
+                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401",
+                    "Neos.Flow-20200813181400",
+                    "Neos.Flow-20201003165200",
+                    "Neos.Flow-20201109224100",
+                    "Neos.Flow-20201205172733",
+                    "Neos.Flow-20201207104500",
+                    "Neos.Neos-20220318111600",
+                    "Neos.Flow-20220318174300",
+                    "Neos.Fusion-20220326120900"
                 ]
             },
             "autoload": {
@@ -7268,11 +7368,11 @@
         },
         {
             "name": "neos/neosio-serviceofferings",
-            "version": "dev-main",
+            "version": "dev-task/neos-8-update",
             "dist": {
                 "type": "path",
                 "url": "./DistributionPackages/Neos.NeosIo.ServiceOfferings",
-                "reference": "cc97b560bf4becc5468bc129ba8d47a0f6971bcf"
+                "reference": "78c37a6e85bb99426a9a625ca61b0f3fd949c21e"
             },
             "require": {
                 "neos/neos": "*",
@@ -7364,7 +7464,15 @@
                     "Neos.NodeTypes-20190917101945",
                     "Networkteam.Neos.MailObfuscator-20190919145400",
                     "Neos.NodeTypes-20200120114136",
-                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401"
+                    "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401",
+                    "Neos.Flow-20200813181400",
+                    "Neos.Flow-20201003165200",
+                    "Neos.Flow-20201109224100",
+                    "Neos.Flow-20201205172733",
+                    "Neos.Flow-20201207104500",
+                    "Neos.Neos-20220318111600",
+                    "Neos.Flow-20220318174300",
+                    "Neos.Fusion-20220326120900"
                 ]
             },
             "autoload": {
@@ -13313,6 +13421,143 @@
             "time": "2022-11-25T16:04:03+00:00"
         },
         {
+            "name": "t3n/graphql",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/t3n/graphql.git",
+                "reference": "f8aafc967eec7820395145e33152ded1071cddec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/t3n/graphql/zipball/f8aafc967eec7820395145e33152ded1071cddec",
+                "reference": "f8aafc967eec7820395145e33152ded1071cddec",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "neos/flow": "~7.0 || ^8.0 || dev-master",
+                "php": ">=7.2",
+                "t3n/graphql-tools": "~1.0.2"
+            },
+            "require-dev": {
+                "t3n/coding-standard": "~1.1.0"
+            },
+            "type": "neos-package",
+            "extra": {
+                "neos": {
+                    "package-key": "t3n.GraphQL"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "t3n\\GraphQL\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Neos Flow adapter for graphql",
+            "support": {
+                "issues": "https://github.com/t3n/graphql/issues",
+                "source": "https://github.com/t3n/graphql/tree/3.1.0"
+            },
+            "time": "2022-05-05T10:16:21+00:00"
+        },
+        {
+            "name": "t3n/graphql-tools",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/t3n/graphql-tools.git",
+                "reference": "1943d4eb14799da76582529cda4de0659d2576fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/t3n/graphql-tools/zipball/1943d4eb14799da76582529cda4de0659d2576fc",
+                "reference": "1943d4eb14799da76582529cda4de0659d2576fc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.2",
+                "webonyx/graphql-php": "~0.13"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^5.0",
+                "phpstan/phpstan": "^0.10.5",
+                "phpstan/phpstan-phpunit": "^0.10.0",
+                "phpstan/phpstan-strict-rules": "^0.10.1",
+                "phpunit/phpunit": "^7.3",
+                "react/promise": "^2.7",
+                "squizlabs/php_codesniffer": "3.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GraphQLTools\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Torsten Blindert",
+                    "email": "info@by-torsten.com"
+                }
+            ],
+            "description": "A PHP port of apollo graphQL-tools",
+            "homepage": "https://github.com/t3n/graphql-tools",
+            "keywords": [
+                "graphql",
+                "graphql-tools"
+            ],
+            "support": {
+                "issues": "https://github.com/t3n/graphql-tools/issues",
+                "source": "https://github.com/t3n/graphql-tools/tree/master"
+            },
+            "time": "2019-03-18T08:50:46+00:00"
+        },
+        {
+            "name": "t3n/graphql-upload",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/t3n/graphql-upload.git",
+                "reference": "c29c9006f04f69237bdc5fc7055596697d3490f8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/t3n/graphql-upload/zipball/c29c9006f04f69237bdc5fc7055596697d3490f8",
+                "reference": "c29c9006f04f69237bdc5fc7055596697d3490f8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "neos/flow": "^7.0 || ^8.0 || dev-master",
+                "php": ">=7.3",
+                "t3n/graphql": "^3.0"
+            },
+            "type": "neos-package",
+            "extra": {
+                "neos": {
+                    "package-key": "t3n.GraphQL.Upload"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "t3n\\GraphQL\\Upload\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Extension for t3n/graphql that implements upload-handling",
+            "support": {
+                "issues": "https://github.com/t3n/graphql-upload/issues",
+                "source": "https://github.com/t3n/graphql-upload/tree/2.1.0"
+            },
+            "time": "2022-04-05T12:17:20+00:00"
+        },
+        {
             "name": "ttree/outofbandrendering",
             "version": "dev-task/newer-neos-versions",
             "source": {
@@ -13526,6 +13771,68 @@
                 "source": "https://github.com/webexcess/openstreetmap/tree/1.3.3"
             },
             "time": "2022-05-04T19:35:05+00:00"
+        },
+        {
+            "name": "webonyx/graphql-php",
+            "version": "v0.13.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webonyx/graphql-php.git",
+                "reference": "d9a94fddcad0a35d4bced212b8a44ad1bc59bdf3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/d9a94fddcad0a35d4bced212b8a44ad1bc59bdf3",
+                "reference": "d9a94fddcad0a35d4bced212b8a44ad1bc59bdf3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^7.1||^8.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^6.0",
+                "phpbench/phpbench": "^0.14.0",
+                "phpstan/phpstan": "^0.11.4",
+                "phpstan/phpstan-phpunit": "^0.11.0",
+                "phpstan/phpstan-strict-rules": "^0.11.0",
+                "phpunit/phpcov": "^5.0",
+                "phpunit/phpunit": "^7.2",
+                "psr/http-message": "^1.0",
+                "react/promise": "2.*"
+            },
+            "suggest": {
+                "psr/http-message": "To use standard GraphQL server",
+                "react/promise": "To leverage async resolving on React PHP platform"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GraphQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP port of GraphQL reference implementation",
+            "homepage": "https://github.com/webonyx/graphql-php",
+            "keywords": [
+                "api",
+                "graphql"
+            ],
+            "support": {
+                "issues": "https://github.com/webonyx/graphql-php/issues",
+                "source": "https://github.com/webonyx/graphql-php/tree/0.13.x"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/webonyx-graphql-php",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2020-07-02T05:49:25+00:00"
         },
         {
             "name": "yoast/yoast-seo-for-neos",
@@ -14204,7 +14511,9 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^8.1"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
 }
