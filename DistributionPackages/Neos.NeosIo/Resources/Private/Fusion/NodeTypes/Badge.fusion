@@ -2,7 +2,8 @@ prototype(Neos.NeosIo:Badge) < prototype(Neos.Neos:Content) {
     templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Badge.html'
 
     attributes.class = 'badge gi u-w1/2 u-wm4/12 u-wl2/12'
-    attributes.class.@process.highlight = ${value + (q(node).property('highlight') ? ' badge--highlighted' : '')}
+    attributes.class.@process.highlight = ${Array.push(value, 'badge--highlighted')}
+    attributes.class.@process.highlight.@if.set = ${q(node).property('highlight')}
 
     image = ${q(node).property('image')}
     highlight = ${q(node).property('highlight')}

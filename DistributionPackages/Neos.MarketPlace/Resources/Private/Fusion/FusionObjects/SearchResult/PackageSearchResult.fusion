@@ -11,6 +11,6 @@ prototype(Neos.MarketPlace:PackageSearchResult) < prototype(Neos.MarketPlace:Doc
     description = ${String.isBlank(q(this.lastVersion).property('description')) ? q(node).property('description') : q(this.lastVersion).property('description')}
 
     metrics = Neos.MarketPlace:PackageMetrics {
-        attributes.class.@process.pullRight = ${value + ' pull-right'}
+        attributes.class.@process.pullRight = ${Array.push(value, 'pull-right')}
     }
 }

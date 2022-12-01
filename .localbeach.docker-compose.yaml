@@ -2,13 +2,7 @@ version: '3.7'
 
 networks:
   local_beach:
-    external:
-      name: local_beach
-
-volumes:
-  application:
-    name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}-application
-    driver: local
+    external: true
 
 services:
   webserver:
@@ -21,9 +15,7 @@ services:
       - "8081"
       - "8082"
     volumes:
-      - application:/application
-      - ./Data/Persistent:/application/Data/Persistent:delegated
-      - ./Web:/application/Web:delegated
+      - ./:/application
     environment:
       - VIRTUAL_HOST=${BEACH_VIRTUAL_HOSTS:?Please specify Beach virtual hosts as BEACH_VIRTUAL_HOSTS}
       - VIRTUAL_PORT=8080
@@ -35,15 +27,6 @@ services:
       - FLOW_HTTP_TRUSTED_PROXIES=*
       - NGINX_CACHE_ENABLE=false
 
-  devkit:
-    image: flownative/localbeach-devkit:0
-    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_devkit
-    networks:
-      - local_beach
-    volumes:
-      - application:/application
-      - .:/application-on-host:delegated
-
   php:
     image: ${BEACH_PHP_IMAGE:-flownative/beach-php}:${BEACH_PHP_IMAGE_VERSION:-7.4}
     container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_php
@@ -53,17 +36,12 @@ services:
     depends_on:
       - webserver
       - redis
-      - devkit
     security_opt:
       - no-new-privileges
     volumes:
-      - application:/application
-      - ./Data/Persistent:/application/Data/Persistent:delegated
-      - ./Data/Logs:/application/Data/Logs:delegated
-      - ./Data/DoctrineMigrations:/application/Data/DoctrineMigrations
-      - ./Web:/application/Web:delegated
+      - ./:/application
     environment:
-      - BEACH_WAIT_FOR_SYNC=true
+      - BEACH_WAIT_FOR_SYNC=false
       - BEACH_INSTANCE_NAME=${BEACH_PROJECT_NAME}
       - BEACH_FLOW_BASE_CONTEXT=${BEACH_FLOW_BASE_CONTEXT:-Development}
       - BEACH_FLOW_SUB_CONTEXT=${BEACH_FLOW_SUB_CONTEXT:-Instance}

@@ -35,7 +35,7 @@ abstract class AbstractApiConnector
     /**
      * This should be overriden for the implementation.
      *
-     * @Flow\Inject(setting="<implementationName>")
+     * @Flow\InjectConfiguration(path="<implementationName>")
      *
      * @var array
      */
