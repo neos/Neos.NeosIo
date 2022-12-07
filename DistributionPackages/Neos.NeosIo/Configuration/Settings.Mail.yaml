@@ -4,7 +4,7 @@ SwiftMailer:
     options:
       host: '%env:SMTP_HOST%'
       # Should come from env var SMTP_PORT but that doesn't work yet as it needs to be an int
-      port: 2525
+      port: '%env(int):SMTP_PORT%'
       encryption: 'ssl'
       username: '%env:SMTP_USERNAME%'
       password: '%env:SMTP_PASSWORD%'
