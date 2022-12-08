@@ -149,23 +149,29 @@ class PackageConverter
         // We directly fetch the required fields via a native query to avoid loading the whole node data
         // FIXME: This will break with Neos 9.0 due to the new CR
         $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('title', 'title');
-        $rsm->addScalarResult('lastSync', 'lastSync');
-        $rsm->addScalarResult('lastActivity', 'lastActivity');
+        $rsm->addScalarResult('p', 'p');
 
-        $queryString = 'SELECT 
-            JSON_VALUE(properties, \'$.title\') as title, 
-            JSON_VALUE(properties, \'$.lastActivity.date\') as lastActivity, 
-            JSON_VALUE(properties, \'$.lastSync.date\') as lastSync 
-            FROM neos_contentrepository_domain_model_nodedata WHERE nodetype = \'Neos.MarketPlace:Package\'';
+        $queryString = '
+            SELECT properties p 
+            FROM neos_contentrepository_domain_model_nodedata 
+            WHERE nodetype = \'Neos.MarketPlace:Package\'
+        ';
 
         $query = $this->entityManager->createNativeQuery($queryString, $rsm);
         $packages = $query->getScalarResult();
 
         $timezone = new \DateTimeZone('UTC');
         $this->packagesState = array_reduce($packages, static function (array $carry, array $properties) use ($timezone) {
-            $lastActivity = $properties['lastActivity'] ? new \DateTime($properties['lastActivity'], $timezone) : null;
-            $lastSync = $properties['lastSync'] ? new \DateTime($properties['lastSync'], $timezone) : null;
+            $properties = json_decode($properties['p'], true);
+
+            $lastActivity = $properties['lastActivity'] ?? null;
+            if (is_array($lastActivity)) {
+                $lastActivity = new \DateTime($lastActivity['date'], $timezone);
+            }
+            $lastSync = $properties['lastSync'] ?? null;
+            if (is_array($lastSync)) {
+                $lastSync = new \DateTime($lastSync['date'], $timezone);
+            }
 
             $carry[$properties['title']] = [
                 'lastActivity' => $lastActivity,
