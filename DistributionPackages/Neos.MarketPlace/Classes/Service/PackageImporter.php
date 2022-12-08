@@ -38,14 +38,14 @@ class PackageImporter
         $this->forceUpdates = $forceUpdates;
     }
 
-    public function process(Package $package): NodeInterface
+    public function process(Package $package): bool
     {
         if (!$this->packageConverter) {
             $this->packageConverter = new PackageConverter($this->forceUpdates);
         }
-        $node = $this->packageConverter->convert($package);
+        $processed = $this->packageConverter->convert($package);
         $this->processedPackages[$package->getName()] = true;
-        return $node;
+        return $processed;
     }
 
     /**

@@ -64,8 +64,8 @@ class Storage
      */
     public function node(): NodeInterface
     {
-        $context = $this->createContext($this->workspaceName);
         if ($this->node === null) {
+            $context = $this->createContext($this->workspaceName);
             $this->node = $context->getNodeByIdentifier($this->repository['identifier']);
             if ($this->node === null) {
                 throw new Exception('Repository node not found', 1457507995);

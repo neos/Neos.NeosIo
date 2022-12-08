@@ -13,6 +13,8 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Indexer\NodeIndexer;
 use Github\Api\Repository\Contents;
 use Github\Client;
@@ -26,6 +28,7 @@ use Neos\Cache\Psr\Cache\CacheFactory;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\ContentRepository\Domain\NodeAggregate\NodeName;
 use Neos\ContentRepository\Domain\Projection\Content\TraversableNodeInterface;
+use Neos\ContentRepository\Domain\Repository\NodeDataRepository;
 use Neos\ContentRepository\Domain\Service\NodeTypeManager;
 use Neos\ContentRepository\Exception\NodeException;
 use Neos\ContentRepository\Exception\NodeTypeNotFoundException;
@@ -91,11 +94,27 @@ class PackageConverter
      */
     protected $logger;
 
+    /**
+     * @Flow\Inject
+     * @var NodeDataRepository
+     */
+    protected $nodeDataRepository;
+
     private bool $forceUpdate;
 
     private Storage $storage;
 
     private ?Client $client = null;
+
+    protected array $vendorCache = [];
+
+    private array $packagesState = [];
+
+    /**
+     * @Flow\Inject
+     * @var EntityManagerInterface
+     */
+    protected $entityManager;
 
     public function __construct(bool $forceUpdate)
     {
@@ -104,7 +123,6 @@ class PackageConverter
     }
 
     /**
-     * @return void
      * @throws InvalidBackendException
      */
     protected function initializeObject(): void
@@ -119,6 +137,43 @@ class PackageConverter
             'GitHubApiCache',
             SimpleFileBackend::class
         );
+
+        $this->fetchPackagesState();
+    }
+
+    /**
+     * Fetches the last activity and sync date for all packages to later speed up the package update check.
+     */
+    protected function fetchPackagesState(): void
+    {
+        // We directly fetch the required fields via a native query to avoid loading the whole node data
+        // FIXME: This will break with Neos 9.0 due to the new CR
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('title', 'title');
+        $rsm->addScalarResult('lastSync', 'lastSync');
+        $rsm->addScalarResult('lastActivity', 'lastActivity');
+
+        $queryString = 'SELECT 
+            JSON_VALUE(properties, \'$.title\') as title, 
+            JSON_VALUE(properties, \'$.lastActivity.date\') as lastActivity, 
+            JSON_VALUE(properties, \'$.lastSync.date\') as lastSync 
+            FROM neos_contentrepository_domain_model_nodedata WHERE nodetype = \'Neos.MarketPlace:Package\'';
+
+        $query = $this->entityManager->createNativeQuery($queryString, $rsm);
+        $packages = $query->getScalarResult();
+
+        $timezone = new \DateTimeZone('UTC');
+        $this->packagesState = array_reduce($packages, static function (array $carry, array $properties) use ($timezone) {
+            $lastActivity = $properties['lastActivity'] ? new \DateTime($properties['lastActivity'], $timezone) : null;
+            $lastSync = $properties['lastSync'] ? new \DateTime($properties['lastSync'], $timezone) : null;
+
+            $carry[$properties['title']] = [
+                'lastActivity' => $lastActivity,
+                'lastSync' => $lastSync,
+            ];
+            return $carry;
+        }, []);
+        unset($packages);
     }
 
     /**
@@ -134,21 +189,27 @@ class PackageConverter
      * @throws \Neos\MarketPlace\Exception
      * @throws NodeException
      */
-    public function convert(Package $package): NodeInterface
+    public function convert(Package $package): bool
     {
         $vendor = explode('/', $package->getName())[0];
         $packageNameSlug = Slug::create($package->getName());
-        $vendorNode = $this->storage->createVendor($vendor);
+        $vendorNode = $this->vendorCache[$vendor] ?? null;
+        if (!$vendorNode) {
+            $vendorNode = $this->storage->createVendor($vendor);
+            $this->vendorCache[$vendor] = $vendorNode;
+        }
         try {
             /** @var NodeInterface $packageNode */
-            $packageNode = $vendorNode->findNamedChildNode(NodeName::fromString($packageNameSlug));
-            if ($this->forceUpdate === true || $this->packageRequireUpdate($package, $packageNode)) {
+            if ($this->forceUpdate === true || $this->packageRequiresUpdate($package)) {
+                $packageNode = $vendorNode->findNamedChildNode(NodeName::fromString($packageNameSlug));
                 $node = $this->update($package, $packageNode);
             } else {
-                return $packageNode;
+                return false;
             }
         } /** @noinspection BadExceptionsProcessingInspection */ catch (NodeException $exception) {
             $node = $this->create($package, $vendorNode);
+        } catch (\Exception $e) {
+            return false;
         }
 
         $this->createOrUpdateMaintainers($package, $node);
@@ -163,16 +224,26 @@ class PackageConverter
         $this->handleAbandonedPackageOrVersion($package, $node);
 
         $this->nodeIndexer->indexNode($node);
-        $this->contentCache->flushByTag('Node_' . $node->getNodeAggregateIdentifier()->getCacheEntryIdentifier());
 
-        return $node;
+        return true;
     }
 
     /**
-     * @throws NodeException
+     * @throws \Exception
      */
-    protected function packageRequireUpdate(Package $package, NodeInterface $packageNode): bool
+    protected function packageRequiresUpdate(Package $package): bool
     {
+        // If the package is unknown immediately return true
+        if (!array_key_exists($package->getName(), $this->packagesState)) {
+            return true;
+        }
+        $lastRecordedActivity = $this->packagesState[$package->getName()]['lastActivity'] ?? null;
+        $lastSync = $this->packagesState[$package->getName()]['lastSync'] ?? null;
+
+        if (!$lastRecordedActivity || !$lastSync) {
+            return true;
+        }
+
         $lastActivities = [];
         foreach ($package->getVersions() as $version) {
             $time = $version->getTime();
@@ -184,8 +255,6 @@ class PackageConverter
         }
         krsort($lastActivities);
         $lastActivity = reset($lastActivities) ?: new \DateTime();
-        $lastRecordedActivity = $packageNode->getProperty('lastActivity');
-        $lastSync = $packageNode->getProperty('lastSync');
 
         return (
             !($lastRecordedActivity instanceof \DateTime)
@@ -433,9 +502,8 @@ class PackageConverter
             return Slug::create($version);
         }, array_keys($package->getVersions()));
         $versionStorage = $node->getNode('versions');
-        /** @var TraversableNodeInterface[] $versions */
-        /** @noinspection PhpUndefinedMethodInspection */
-        $versions = (new FlowQuery([$versionStorage]))->children('[instanceof Neos.MarketPlace:Version]');
+
+        $versions = $versionStorage->getChildNodes('Neos.MarketPlace:Version');
         foreach ($versions as $version) {
             if (in_array($version->getNodeName(), $upstreamVersions)) {
                 continue;
@@ -472,10 +540,10 @@ class PackageConverter
             switch ($stabilityLevel) {
                 case 'stable':
                     $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:ReleasedVersion');
-                break;
+                    break;
                 case 'dev':
                     $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:DevelopmentVersion');
-                break;
+                    break;
                 default:
                     $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:PrereleasedVersion');
             }
@@ -508,6 +576,7 @@ class PackageConverter
                 ]);
             }
         }
+        unset($versions);
     }
 
     /**
@@ -516,24 +585,23 @@ class PackageConverter
      */
     protected function getPackageLastActivity(NodeInterface $packageNode): void
     {
-        /** @var NodeInterface[] $versions */
-        $versions = $packageNode->findNamedChildNode(NodeName::fromString('versions'))->findChildNodes();
+        $versions = $packageNode->getNode('versions')->getChildNodes('Neos.MarketPlace:Version');
 
-        $sortedVersions = [];
+        $lastActiveVersionTime = null;
         foreach ($versions as $version) {
             $lastActivity = $version->getProperty('time');
             if (!$lastActivity instanceof \DateTime) {
                 continue;
             }
-            $sortedVersions[$version->getProperty('time')->getTimestamp()] = $version;
+            if (!$lastActiveVersionTime || $lastActivity > $lastActiveVersionTime) {
+                $lastActiveVersionTime = $lastActivity;
+            }
         }
-        krsort($sortedVersions);
-        /** @var NodeInterface $lastActiveVersion */
-        $lastActiveVersion = reset($sortedVersions);
 
-        $packageNode->setProperty('lastActivity', $lastActiveVersion->getProperty('time'));
+        $packageNode->setProperty('lastActivity', $lastActiveVersionTime);
         $lastVersion = $this->packageVersion->extractLastVersion($packageNode);
         $packageNode->setProperty('lastVersion', $lastVersion);
+        unset($versions);
     }
 
     /**
@@ -553,7 +621,6 @@ class PackageConverter
         }
         krsort($sortedPackages);
         $lastActivePackage = reset($sortedPackages);
-
         $vendorNode->setProperty('lastActivity', $lastActivePackage->getProperty('lastActivity'));
     }
 

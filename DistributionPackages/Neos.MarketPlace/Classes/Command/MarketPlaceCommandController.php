@@ -14,6 +14,7 @@ namespace Neos\MarketPlace\Command;
  */
 
 use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\ContentRepository\Domain\Repository\WorkspaceRepository;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\CommandController;
 use Neos\Flow\Log\ThrowableStorageInterface;
@@ -63,13 +64,18 @@ class MarketPlaceCommandController extends CommandController
     protected $persistenceManager;
 
     /**
+     * @Flow\Inject
+     * @var WorkspaceRepository
+     */
+    protected $workspaceRepository;
+
+    /**
      * Sync packages from Packagist
      *
      * @param string|null $package Sync only the given package
      * @param boolean $force Force sync even if the package is not update on packagist
-     * @return void
      */
-    public function syncCommand(string $package = '', bool $force = false): void
+    public function syncCommand(string $package = '', bool $force = false, int $limit = 0, bool $dontCountSkippedPackages = true): void
     {
         $beginTime = microtime(true);
 
@@ -91,7 +97,10 @@ class MarketPlaceCommandController extends CommandController
                 $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED, $packagistPackage->getName()), LogEnvironment::fromMethodName(__METHOD__));
                 $timer = microtime(true);
                 try {
-                    $this->processPackage($packagistPackage, $count);
+                    $result = $this->processPackage($packagistPackage, $count);
+                    if (!$result && $limit > 0 && $dontCountSkippedPackages) {
+                        $limit++;
+                    }
                     $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED, $packagistPackage->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
                 } catch (\Exception $exception) {
                     $this->logger->error(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FAILED, $packagistPackage->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
@@ -99,13 +108,20 @@ class MarketPlaceCommandController extends CommandController
                     $this->logger->error($logMessage, LogEnvironment::fromMethodName(__METHOD__));
                     $hasError = true;
                 }
+
+                if ($limit > 0 && $count === $limit) {
+                    $this->outputLine('Stopping as limit is reached');
+                    break;
+                }
             }
-            $this->cleanupPackages();
-            $this->cleanupVendors();
+            if ($limit === 0) {
+                $this->cleanupPackages();
+                $this->cleanupVendors();
+            }
             $this->logger->info(sprintf('action=%s duration=%f', LogAction::FULL_SYNC_FINISHED, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
 
             $this->outputLine();
-            $this->outputLine(sprintf('%d package(s) imported with success', $this->importer->getProcessedPackagesCount()));
+            $this->outputLine('%d package(s) synced with success', [$this->importer->getProcessedPackagesCount()]);
         } else {
             $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED, $package), LogEnvironment::fromMethodName(__METHOD__));
             $client = new Client();
@@ -122,9 +138,9 @@ class MarketPlaceCommandController extends CommandController
 
             $this->outputLine();
             if ($hasError) {
-                $this->outputLine(sprintf('Package "%s" import failed', $package));
+                $this->outputLine('Package "%s" import failed', [$package]);
             } else {
-                $this->outputLine(sprintf('Package "%s" imported with success', $package));
+                $this->outputLine('Package "%s" imported with success', [$package]);
             }
         }
 
@@ -134,20 +150,24 @@ class MarketPlaceCommandController extends CommandController
         }
 
         $this->outputLine();
-        $this->outputLine(sprintf('Duration: %f seconds', $elapsedTime()));
+        $this->outputLine('Peak memory usage: %d MB', [round(memory_get_peak_usage(true) / 1024 / 1024)]);
+        $this->outputLine('Duration: %f seconds', [$elapsedTime()]);
     }
 
-    private function processPackage(Package $package, int &$count): void
+    private function processPackage(Package $package, int &$count): bool
     {
         $count++;
-        $this->outputLine(sprintf('  %d/ %s (%s)', $count, $package->getName(), $package->getTime()));
+        $this->outputFormatted('%d/ <b>%s</b> (%d versions)', [$count, $package->getName(), count($package->getVersions())], 2);
 
-        $this->importer->process($package);
-        if ($count % 10 === 0) {
-            $this->persistenceManager->persistAll();
-            $this->contextFactory->reset();
-            $this->persistenceManager->clearState();
+        $result = $this->importer->process($package);
+        if (!$result) {
+            $this->outputFormatted('<i>Skipped package</i>', [], 4);
         }
+        if ($count % 10 === 0) {
+            $this->outputFormatted('<b>Flush persistence</b>', [], 2);
+            $this->persistenceManager->persistAll();
+        }
+        return $result;
     }
 
     /**
@@ -159,10 +179,10 @@ class MarketPlaceCommandController extends CommandController
         $this->outputLine('Cleanup packages ...');
         $this->outputLine('--------------------');
         $count = $this->importer->cleanupPackages(function (NodeInterface $package) {
-            $this->outputLine(sprintf('%s deleted', $package->getLabel()));
+            $this->outputLine('%s deleted', [$package->getLabel()]);
         });
         if ($count > 0) {
-            $this->outputLine(sprintf('  Deleted %d package(s)', $count));
+            $this->outputFormatted('Deleted %d package(s)', [$count], 2);
         }
     }
 
@@ -175,10 +195,10 @@ class MarketPlaceCommandController extends CommandController
         $this->outputLine('Cleanup vendors ...');
         $this->outputLine('-------------------');
         $count = $this->importer->cleanupVendors(function (NodeInterface $vendor) {
-            $this->outputLine(sprintf('%s deleted', $vendor->getLabel()));
+            $this->outputLine('%s deleted', [$vendor->getLabel()]);
         });
         if ($count > 0) {
-            $this->outputLine(sprintf('  Deleted %d vendor(s)', $count));
+            $this->outputFormatted('Deleted %d vendor(s)', [$count], 2);
         }
     }
 }
