@@ -7,7 +7,8 @@
         "bin-dir": "bin",
         "allow-plugins": {
             "neos/composer-plugin": true,
-            "ocramius/package-versions": true
+            "ocramius/package-versions": true,
+            "cweagans/composer-patches": true
         }
     },
     "require": {
@@ -26,11 +27,15 @@
         "rokka/imagine-vips": "^0.31",
         "shel/neos-terminal": "^0.7",
 
-        "ttree/outofbandrendering": "dev-task/newer-neos-versions as 4.0.0"
+        "ttree/outofbandrendering": "dev-task/newer-neos-versions as 4.0.0",
+        "cweagans/composer-patches": "^1.7"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "t3n/neos-debug": "^2.0"
+    },
+    "extra": {
+        "patches-file": "DistributionPackages/Neos.NeosIo/composer.patches.json"
     },
     "repositories": [
         {
