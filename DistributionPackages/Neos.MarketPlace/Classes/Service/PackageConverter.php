@@ -15,6 +15,7 @@ namespace Neos\MarketPlace\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception as CRException;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Indexer\NodeIndexer;
 use Github\Api\Repository\Contents;
 use Github\Client;
@@ -31,16 +32,20 @@ use Neos\ContentRepository\Domain\Projection\Content\TraversableNodeInterface;
 use Neos\ContentRepository\Domain\Repository\NodeDataRepository;
 use Neos\ContentRepository\Domain\Service\NodeTypeManager;
 use Neos\ContentRepository\Exception\NodeException;
+use Neos\ContentRepository\Exception\NodeExistsException;
 use Neos\ContentRepository\Exception\NodeTypeNotFoundException;
+use Neos\Eel\Exception as EelException;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Log\Utility\LogEnvironment;
+use Neos\Flow\Property\Exception as PropertyException;
 use Neos\Flow\Property\Exception\InvalidPropertyMappingConfigurationException;
 use Neos\Flow\Security\Exception;
 use Neos\Flow\Utility\Now;
 use Neos\Fusion\Core\Cache\ContentCache;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
+use Neos\MarketPlace\Exception as MarketPlaceException;
 use Neos\MarketPlace\Utility\VersionNumber;
 use Neos\Utility\Arrays;
 use Packagist\Api\Result\Package;
@@ -187,13 +192,9 @@ class PackageConverter
      *
      * @throws Exception
      * @throws InvalidPropertyMappingConfigurationException
-     * @throws NodeTypeNotFoundException
-     * @throws \Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception
+     * @throws NodeTypeNotFoundException|CRException|EelException|PropertyException|NodeException
      * @throws \JsonException
-     * @throws \Neos\Eel\Exception
-     * @throws \Neos\Flow\Property\Exception
-     * @throws \Neos\MarketPlace\Exception
-     * @throws NodeException
+     * @throws MarketPlaceException
      */
     public function convert(Package $package): bool
     {
@@ -285,9 +286,7 @@ class PackageConverter
 
     /**
      * @throws Exception
-     * @throws NodeException
-     * @throws NodeTypeNotFoundException
-     * @throws \Neos\Flow\Property\Exception
+     * @throws NodeException|NodeTypeNotFoundException|PropertyException
      */
     protected function handleGithubMetrics(Package $package, NodeInterface $node): void
     {
@@ -340,9 +339,7 @@ class PackageConverter
 
     /**
      * @throws Exception
-     * @throws NodeTypeNotFoundException
-     * @throws \Neos\Flow\Property\Exception
-     * @throws NodeException
+     * @throws NodeTypeNotFoundException|PropertyException|NodeException
      */
     protected function handleGithubReadme(string $organization, string $repository, NodeInterface $node): void
     {
@@ -425,7 +422,7 @@ class PackageConverter
     }
 
     /**
-     * @throws NodeTypeNotFoundException
+     * @throws NodeTypeNotFoundException|NodeExistsException
      */
     protected function create(Package $package, NodeInterface $parentNode): NodeInterface
     {
@@ -460,7 +457,7 @@ class PackageConverter
 
     /**
      * @throws NodeTypeNotFoundException
-     * @throws \Neos\Eel\Exception
+     * @throws EelException
      * @throws NodeException
      */
     protected function createOrUpdateMaintainers(Package $package, NodeInterface $node): void
@@ -473,10 +470,9 @@ class PackageConverter
         /** @noinspection PhpUndefinedMethodInspection */
         $maintainers = (new FlowQuery([$maintainerStorage]))->children('[instanceof Neos.MarketPlace:Maintainer]');
         foreach ($maintainers as $maintainer) {
-            if (in_array($maintainer->getNodeName(), $upstreamMaintainers)) {
-                continue;
+            if (!in_array($maintainer->getNodeName(), $upstreamMaintainers)) {
+                $maintainer->remove();
             }
-            $maintainer->remove();
         }
 
         foreach ($package->getMaintainers() as $maintainer) {
@@ -499,7 +495,7 @@ class PackageConverter
     /**
      * @throws NodeTypeNotFoundException
      * @throws \JsonException
-     * @throws \Neos\Eel\Exception
+     * @throws EelException
      * @throws NodeException
      */
     protected function createOrUpdateVersions(Package $package, NodeInterface $node): void
@@ -511,10 +507,9 @@ class PackageConverter
 
         $versions = $versionStorage->getChildNodes('Neos.MarketPlace:Version');
         foreach ($versions as $version) {
-            if (in_array($version->getNodeName(), $upstreamVersions)) {
-                continue;
+            if (!in_array($version->getNodeName(), $upstreamVersions)) {
+                $version->remove();
             }
-            $version->remove();
         }
 
         foreach ($package->getVersions() as $version) {
@@ -543,16 +538,11 @@ class PackageConverter
                 'conflict' => $this->arrayToJsonCaster($version->getConflict()),
                 'replace' => $this->arrayToJsonCaster($version->getReplace()),
             ];
-            switch ($stabilityLevel) {
-                case 'stable':
-                    $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:ReleasedVersion');
-                    break;
-                case 'dev':
-                    $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:DevelopmentVersion');
-                    break;
-                default:
-                    $nodeType = $this->nodeTypeManager->getNodeType('Neos.MarketPlace:PrereleasedVersion');
-            }
+            $nodeType = match ($stabilityLevel) {
+                'stable' => $this->nodeTypeManager->getNodeType('Neos.MarketPlace:ReleasedVersion'),
+                'dev' => $this->nodeTypeManager->getNodeType('Neos.MarketPlace:DevelopmentVersion'),
+                default => $this->nodeTypeManager->getNodeType('Neos.MarketPlace:PrereleasedVersion'),
+            };
             if ($node === null) {
                 $node = $versionStorage->createNode($name, $nodeType);
                 $this->setNodeProperties($node, $data);
@@ -587,7 +577,7 @@ class PackageConverter
 
     /**
      * @throws NodeException
-     * @throws \Neos\Eel\Exception
+     * @throws EelException
      */
     protected function getPackageLastActivity(NodeInterface $packageNode): void
     {
@@ -617,17 +607,15 @@ class PackageConverter
     {
         $packages = $vendorNode->getChildNodes('Neos.MarketPlace:Package');
 
-        $sortedPackages = [];
+        $lastActivePackageTime = null;
         foreach ($packages as $packageNode) {
             $lastActivity = $packageNode->getProperty('lastActivity');
-            if (!$lastActivity instanceof \DateTime) {
-                continue;
+            if ($lastActivity instanceof \DateTime && (!$lastActivePackageTime || $lastActivity > $lastActivePackageTime)) {
+                $lastActivePackageTime = $lastActivity;
             }
-            $sortedPackages[$lastActivity->getTimestamp()] = $packageNode;
         }
-        krsort($sortedPackages);
-        $lastActivePackage = reset($sortedPackages);
-        $vendorNode->setProperty('lastActivity', $lastActivePackage->getProperty('lastActivity'));
+        $vendorNode->setProperty('lastActivity', $lastActivePackageTime);
+        unset($packages);
     }
 
     protected function setNodeProperties(NodeInterface $node, array $data): void

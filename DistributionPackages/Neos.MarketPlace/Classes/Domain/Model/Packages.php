@@ -47,14 +47,8 @@ class Packages
      */
     protected $packageBlackList;
 
-    /**
-     * @var array
-     */
-    protected $processedPackages = [];
+    protected array $processedPackages = [];
 
-    /**
-     * @return \Generator
-     */
     public function packages(): \Generator
     {
         $vendors = array_keys(array_filter($this->vendors));
@@ -82,10 +76,6 @@ class Packages
         }
     }
 
-    /**
-     * @param string $packageKey
-     * @return boolean
-     */
     protected function isPackageBlacklisted(string $packageKey): bool
     {
         $blacklist = array_keys(array_filter($this->packageBlackList));
