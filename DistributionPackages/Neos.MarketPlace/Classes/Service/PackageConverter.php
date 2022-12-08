@@ -458,7 +458,7 @@ class PackageConverter
                 'versionNormalized' => $versionNormalized,
                 'stability' => $versionStability,
                 'stabilityLevel' => $stabilityLevel,
-                'license' => $this->arrayToStringCaster($version->getLicense()),
+                'license' => $this->arrayToStringCaster($version->getLicenses()),
                 'type' => $version->getType(),
                 'time' => \DateTime::createFromFormat(self::DATE_FORMAT, $version->getTime()),
                 'provide' => $this->arrayToJsonCaster($version->getProvide()),
