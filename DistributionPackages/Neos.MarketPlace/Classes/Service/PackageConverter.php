@@ -493,10 +493,7 @@ class PackageConverter
     }
 
     /**
-     * @throws NodeTypeNotFoundException
-     * @throws \JsonException
-     * @throws EelException
-     * @throws NodeException
+     * @throws NodeTypeNotFoundException|\JsonException|NodeException
      */
     protected function createOrUpdateVersions(Package $package, NodeInterface $node): void
     {
@@ -576,8 +573,7 @@ class PackageConverter
     }
 
     /**
-     * @throws NodeException
-     * @throws EelException
+     * @throws NodeException|EelException
      */
     protected function getPackageLastActivity(NodeInterface $packageNode): void
     {
