@@ -96,6 +96,12 @@ class MarketPlaceCommandController extends CommandController
             foreach ($packages->packages() as $packagistPackage) {
                 $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED, $packagistPackage->getName()), LogEnvironment::fromMethodName(__METHOD__));
                 $timer = microtime(true);
+
+                if ($packagistPackage->isAbandoned()) {
+                    $this->outputFormatted('<info>Skipping <b>%s</b> (abandoned)</info>', [$packagistPackage->getName()], 2);
+                    continue;
+                }
+
                 try {
                     $result = $this->processPackage($packagistPackage, $count);
                     if (!$result && $limit > 0 && $dontCountSkippedPackages) {
