@@ -1,8 +1,10 @@
-prototype(Neos.NeosIo:SemanticSection) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/SemanticSection.html'
-    contents = Neos.Neos:PrimaryContent {
-        nodePath = 'contents'
-    }
-
+prototype(Neos.NeosIo:SemanticSection) < prototype(Neos.Neos:ContentComponent) {
     isLast = ${iterator.isLast}
+
+    renderer = afx`
+        <section>
+            <Neos.Neos:ContentCollection nodePath="contents" />
+            <hr @if={!props.isLast} />
+        </section>
+    `
 }
