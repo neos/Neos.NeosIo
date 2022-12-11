@@ -1,14 +1,27 @@
-prototype(Neos.NeosIo:DefaultPage.FooterMenu) < prototype(Neos.Neos:Menu) {
+prototype(Neos.NeosIo:DefaultPage.FooterMenu) < prototype(Neos.Fusion:Component) {
     templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/FooterMenu.html'
     attributes.class = 'nav nav--stacked siteFooter__nav'
 
-    footerContainer = ${q(site).children('[instanceof Neos.NeosIo:FooterContainer]').first()}
-    @context.footerContainer = ${footerContainer.get(0)}
+    footerContainer = ${q(site).property('footerContentContainer')}
+    items = ${q(this.footerContainer).children('[instanceof Neos.Neos:Document]').get()}
 
-    itemCollection = ${q(this.footerContainer).children('[instanceof Neos.Neos:Document]').get()}
+    @if.hasFooterContainer = ${this.footerContainer}
+
+    renderer = afx`
+      <ul class="nav nav--stacked siteFooter__nav">
+          <Neos.Fusion:Loop items={props.items}>
+              <li>
+                  <Neos.Neos:NodeLink node={item} title={item.label} />
+              </li>
+          </Neos.Fusion:Loop>
+      </ul>
+    `
 
     @cache {
-        entryIdentifier.documentNode = ${site}
-        entryTags.childNodes = ${Neos.Caching.descendantOfTag(footerContainer)}
+        mode = 'cached'
+        tags {
+            footerContainer = ${Neos.Caching.nodeTag(q(site).property('footerContentContainer'))}
+            childNodes = ${Neos.Caching.descendantOfTag(q(site).property('footerContentContainer'))}
+        }
     }
 }
