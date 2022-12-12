@@ -10,7 +10,7 @@ prototype(Neos.NodeTypes.ColumnLayouts:MultiColumn) {
 }
 
 prototype(Neos.NodeTypes.ColumnLayouts:MultiColumnItem) {
-    @override {
+    @context {
         columnWidth = ${String.split(q(node).parent().property('layout'), '-')[multiColumnIteration.index]}
         desktopColumnWidth = ${String.split(q(node).parent().property('desktopLayout'), '-')[multiColumnIteration.index]}
     }

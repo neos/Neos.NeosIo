@@ -1,7 +1,7 @@
 prototype(Neos.MarketPlace:PeopleMenu) >
 prototype(Neos.MarketPlace:PeopleMenu) < prototype(Neos.Fusion:Tag) {
     path = 'maintainers'
-    @override.path = ${this.path}
+    @context.path = ${this.path}
 
     tagName = 'ul'
     attributes {
