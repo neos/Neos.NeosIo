@@ -1,5 +1,7 @@
 prototype(Neos.NeosIo:Content.ImageGrid) < prototype(Neos.Neos:ContentComponent) {
     renderer = Neos.Neos:ContentCollection {
         attributes.class = 'image-grid'
+        # Allow images are allowed so we skip the ContentCase for Neos.Neos:ContentCollection
+        content.itemRenderer = Neos.NodeTypes:Image
     }
 }
