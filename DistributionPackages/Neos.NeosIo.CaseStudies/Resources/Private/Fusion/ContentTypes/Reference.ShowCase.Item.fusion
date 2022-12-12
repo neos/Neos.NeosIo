@@ -5,37 +5,31 @@ prototype(Neos.NeosIo:Reference.ShowCaseItem) < prototype(Neos.Neos:ContentCompo
     launchDate = ${q(node).property('launchDate')}
     title = ${q(node).property('title')}
     alternativeText = ${q(node).property('title')}
-
     projectVolume = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes
-
     projectType = ${q(q(node).property('projectType')).property('title')}
-
-
-    @context {
-        title = ${this.title}
-        alternativeText = ${this.alternativeText}
-        image = ${this.image}
-    }
-
-    imageTag = Neos.NeosIo:Component.LazyLoadImage {
-        image = ${image}
-        title = ${title}
-        alternativeText = ${alternativeText}
-        className = 'u-mb1/2'
-        maximumHeight = '261'
-        maximumwidth = '561'
-        allowCropping = true
-    }
+    maximumHeight = 261
+    maximumWidth = 561
 
     renderer = afx`
-            <h1>{title}</h1>
-            {props.imageTag}
-            <ul>
-                <li @if.hasLaunchDate={props.launchDate}><i class="fas fa-rocket"></i>{Date.format(props.launchDate,'d.m.Y')}</li>
-                <li @if.hasProjectVolume={props.projectVolume}>
-                        <i class="fas fa-users"></i>{props.projectVolume}
-                </li>
-                <li @if.hasProjectType={props.projectType}><i class="fas fa-industry"></i> {props.projectType}</li>
-            </ul>
+      <h1>{title}</h1>
+      <Neos.Neos:ImageTag
+        asset={props.image}
+        title={props.title}
+        attributes.alt={props.alternativeText}
+        attributes.class="u-mb1/2"
+        attributes.style={'max-height: ' + props.maximumHeight + 'px;'}
+        attributes.style.@if.set={props.maximumHeight}
+        maximumHeight={props.maximumHeight}
+        maximumwidth={props.maximumWidth}
+        allowCropping={true}
+      />
+      <ul>
+        <li @if.hasLaunchDate={props.launchDate}><i class="fas fa-rocket"></i>{Date.format(props.launchDate, 'd.m.Y')}
+        </li>
+        <li @if.hasProjectVolume={props.projectVolume}>
+          <i class="fas fa-users"></i>{props.projectVolume}
+        </li>
+        <li @if.hasProjectType={props.projectType}><i class="fas fa-industry"></i> {props.projectType}</li>
+      </ul>
     `
 }

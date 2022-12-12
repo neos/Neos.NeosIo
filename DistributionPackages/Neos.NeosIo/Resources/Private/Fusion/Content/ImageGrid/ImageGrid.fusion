@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo:Content.ImageGrid) < prototype(Neos.Neos:ContentComponent) {
-    renderer = afx`
-        <Neos.Neos:ContentCollection attributes.class="image-grid" />
-    `
+    renderer = Neos.Neos:ContentCollection {
+        attributes.class = 'image-grid'
+    }
 }

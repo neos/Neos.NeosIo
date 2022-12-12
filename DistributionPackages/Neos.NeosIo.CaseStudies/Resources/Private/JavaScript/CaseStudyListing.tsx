@@ -6,13 +6,11 @@ import TranslationData from "./Context/TranslationData";
 import CaseStudyTableRow from "./Components/CaseStudyTableRow";
 import CaseStudyGridItem from "./Components/CaseStudyGridItem";
 import {SortDirection, sortObjects} from "./Helper/Sorter";
-import LazyLoad from "vanilla-lazyload";
 import getProjectVolume, {PROJECT_VOLUME_MAP} from "./Helper/ProjectVolume";
 
 export default function CaseStudyListing() {
     const casesData: CaseStudy[] = useContext(CasesData);
     const translationData: string[] = useContext(TranslationData);
-    const lazyLoad = new LazyLoad({});
 
     // Filter entries
     const industries: string[] = useMemo(() => casesData.reduce((carry: string[], caseStudy: CaseStudy) => {
@@ -63,8 +61,7 @@ export default function CaseStudyListing() {
             );
         }
         setCaseStudies(filteredCases);
-        lazyLoad.update();
-    }, [searchWord, industryFilter, projectVolumeFilter, sorting, sortingDirection, lazyLoad]);
+    }, [searchWord, industryFilter, projectVolumeFilter, sorting, sortingDirection]);
 
     return (
         <div>

@@ -1,34 +1,68 @@
-prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/ImageTeaser.html'
-    sectionName = 'main'
-
-    link = ${q(node).property('link')}
-    link.@process.convertUris = Neos.Neos:ConvertUris {
-        absolute = true
-    }
-
+prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
     title = ${q(node).property('title')}
     subTitle = ${q(node).property('subTitle')}
     alternativeText = ${this.title}
     image = ${q(node).property('image')}
-    text = ${q(node).property('text')}
+    text = Neos.Neos:Editable {
+        property = 'text'
+    }
     fallbackImageUrl = null
     className = null
     openInNewTab = ${q(node).property('openInNewTab')}
-
-    @context {
-        title = ${this.title}
-        alternativeText = ${this.alternativeText}
-        image = ${this.image}
+    link = ${q(node).property('link')}
+    link.@process.convertUris = Neos.Neos:ConvertUris {
+        absolute = true
     }
+    maximumHeight = 450
+    maximumwidth = 700
 
-    imageTag = Neos.NeosIo:Component.LazyLoadImage {
-        image = ${image}
-        title = ${title}
-        alternativeText = ${alternativeText}
-        className = 'imageTeaser__image'
-        maximumHeight = '450'
-        maximumwidth = '700'
-        allowCropping = true
-    }
+    renderer = afx`
+        <Neos.Fusion:Tag
+            tagName={props.link ? 'a' : 'div'}
+            attributes.href={props.link}
+            attributes.href.@if={props.link && !node.context.inBackend}
+            attributes.target={props.openInNewTab ? '_blank' : null}
+            attributes.target.@if={props.link && props.openInNewTab}
+            attributes.class={['imageTeaser', props.link && 'imageTeaser--isLink', className]}
+        >
+            <Neos.Neos:ImageTag
+                @if={props.image}
+                asset={props.image}
+                title={props.title}
+                maximumHeight={props.maximumHeight}
+                maximumwidth={props.maximumWidth}
+                allowCropping={true}
+                width={props.width}
+                height={props.height}
+                async={true}
+                attributes.class="imageTeaser__image"
+                attributes.alt={props.alternativeText}
+                attributes.style={'max-height: ' + props.maximumHeight + 'px;'}
+                attributes.style.@if.set={props.maximumHeight}
+            />
+            <img
+                @if={!props.image && props.fallbackImageUrl}
+                src={fallbackImageUrl}
+                alt={alternativeText}
+                title={props.title}
+            />
+            <img
+                @if={node.context.inBackend && !props.image && !props.fallbackImageUrl}
+                class="imageTeaser__image neos-handle"
+                src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
+                title="Dummy image"
+                alt="Dummy image"
+            />
+
+            <div class="imageTeaser__contents u-invertText">
+                <h5 class="imageTeaser__contents__subHeading">
+                    <Neos.Neos:Editable property="subTitle" block={false} />
+                </h5>
+                <h3 class="imageTeaser__contents__heading">
+                    <Neos.Neos:Editable property="title" block={false} />
+                </h3>
+                <div class="imageTeaser__contents__text">{props.text}</div>
+            </div>
+        </Neos.Fusion:Tag>
+    `
 }
