@@ -1,7 +1,4 @@
 prototype(Neos.NeosIo:DefaultPage.FooterMenu) < prototype(Neos.Fusion:Component) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/FooterMenu.html'
-    attributes.class = 'nav nav--stacked siteFooter__nav'
-
     footerContainer = ${q(site).property('footerContentContainer')}
     items = ${q(this.footerContainer).children('[instanceof Neos.Neos:Document]').get()}
 
