@@ -1,5 +1,20 @@
-prototype(Neos.MarketPlace:Button) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Button.html'
+prototype(Neos.MarketPlace:Button) < prototype(Neos.Fusion:Component) {
     url = ${null}
     content = ${null}
+    openInNewTab = false
+
+    renderer = afx`
+      <a
+          class="btn btn--solidPrimary"
+          style="width: 100%; margin-bottom: 10px;"
+          href={props.url}
+          target={props.openInNewTab ? '_blank' : ''}
+          target.@if={props.openInNewTab}
+          rel={props.openInNewTab ? 'noopener noreferrer' : ''}
+      >
+        <div class="btn__content">{props.content}</div>
+      </a>
+    `
+
+    @if.hasContent = ${this.content}
 }
