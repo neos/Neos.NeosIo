@@ -20,7 +20,7 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Template) {
         buttonLabel = 'Back to list'
         alignment = 'Right'
         link = Neos.Neos:NodeUri {
-            node = ${q(node).parents('[instanceof Neos.NodeTypes:Page]').get(0)}
+            node = ${q(documentNode).parent().get(0)}
             absolute = true
         }
         @process.contentElementWrapping >
