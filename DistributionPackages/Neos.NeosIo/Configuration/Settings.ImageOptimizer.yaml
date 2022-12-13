@@ -1,0 +1,9 @@
+Sitegeist:
+  Iconoclasm:
+    mediaTypes:
+      'image/jpeg':
+        enabled: true
+        command: 'jpegoptim --quiet --strip-all --force --stdout {input} > {output}'
+      'image/png':
+        enabled: true
+        command: 'pngquant --strip --force --output {output} -- {input}'
