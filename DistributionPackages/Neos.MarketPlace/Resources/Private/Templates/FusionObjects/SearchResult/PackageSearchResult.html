@@ -15,5 +15,7 @@
         {lastActivity -> f:format.raw()}
         &mdash;
         {metrics -> f:format.raw()}
+        <f:if condition="{keywords}">&mdash;</f:if>
+        {keywords -> f:format.raw()}
     </footer>
 </article>

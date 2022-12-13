@@ -4,9 +4,15 @@ prototype(Neos.MarketPlace:PackageSearchResult) < prototype(Neos.MarketPlace:Doc
     lastActivity = Neos.MarketPlace:PackageLastActivity
 
     lastVersion = ${q(node).property('lastVersion')}
+    @context.lastVersion = ${this.lastVersion}
 
     lastVersionLabel = ${q(this.lastVersion).property('version')}
     lastVersionTime = ${q(this.lastVersion).property('time')}
+
+    keywords = Neos.MarketPlace:Tags {
+        data = ${q(lastVersion).property('keywords')}
+        @if.hasKeywords = ${q(lastVersion).property('keywords')}
+    }
 
     description = ${String.isBlank(q(this.lastVersion).property('description')) ? q(node).property('description') : q(this.lastVersion).property('description')}
 
