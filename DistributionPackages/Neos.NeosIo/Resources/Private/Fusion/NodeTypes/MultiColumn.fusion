@@ -15,4 +15,12 @@ prototype(Neos.NodeTypes.ColumnLayouts:MultiColumnItem) {
         desktopColumnWidth = ${String.split(q(node).parent().property('desktopLayout'), '-')[multiColumnIteration.index]}
     }
     attributes.class = ${'gi u-w1/1 u-wm' + columnWidth + '/12 u-wl' + desktopColumnWidth + '/12'}
+
+    // Limit maximum image size in columns based on the selected layout
+    prototype(Neos.Neos:ImageTag) {
+        maximumWidth = ${2192 / 12 * (desktopColumnWidth || 6)}
+    }
+    prototype(Neos.NodeTypes:Image) {
+        maximumWidth = ${2192 / 12 * (desktopColumnWidth || 6)}
+    }
 }

@@ -30,7 +30,7 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     width = null
     // The maximum page width 1096 * 2
     maximumWidth = 2192
-    maximumWidth.@process.override = ${q(node).property('customHeight') ? null : value}
+    maximumWidth.@process.override = ${q(node).property('customWidth') || value}
 
     allowCropping = false
     allowUpScaling = false
