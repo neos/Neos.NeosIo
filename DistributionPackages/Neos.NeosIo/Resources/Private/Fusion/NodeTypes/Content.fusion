@@ -10,7 +10,7 @@ prototype(Neos.Neos:Content) {
             @glue = ' '
         }
         value = ${Array.push(value, this.responsiveClasses)}
-        @if.supportsMediaQueries = ${q(node).is('[instanceof Neos.NeosIo:MediaQueryMixin]')}
+        @if.supportsMediaQueries = ${q(node).property('displaySmallMq') || q(node).property('displayLargeMq') || q(node).property('displayAllMq')}
     }
 
     @process.addAnchor = Neos.Fusion:Value {
