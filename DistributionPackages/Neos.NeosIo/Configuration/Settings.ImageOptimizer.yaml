@@ -1,0 +1,21 @@
+MOC:
+  ImageOptimizer:
+    useGlobalBinary: true
+    formats:
+      'image/jpeg':
+        enabled: true
+        library: 'jpegoptim'
+        binaryPath: 'jpegoptim-bin/vendor/jpegoptim'
+        arguments: "${'--strip-all --max=' + quality + ' ' + (progressive ? '--all-progressive ' : '') + '-o ' + file}"
+        parameters:
+          progressive: true
+          quality: 80
+
+      'image/png':
+        enabled: true
+        library: 'pngquant'
+        binaryPath: 'pngquant-bin/vendor/pngquant'
+        arguments: "${' --skip-if-larger --strip --force -o ' + file + ' ' + file}"
+        parameters:
+          qualityMin: 65
+          qualityMax: 80
