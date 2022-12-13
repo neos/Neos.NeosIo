@@ -6,14 +6,14 @@
 		<f:then>
 			<div class="flag__image">
 				<img src="{media:uri.image(image: authorAvatar, maximumWidth: 128, maximumHeight: 128)}"
-					 itemprop="image" class="avatar" alt="{alternativeText}" title="{title}">
+					 itemprop="image" class="avatar" alt="{alternativeText}" title="{title}" loading="lazy" />
 			</div>
 		</f:then>
 		<f:else>
 			<f:if condition="{neos:rendering.inBackend()}">
 				<div class="flag__image">
 					<img src="{f:uri.resource(package: 'Neos.Neos', path: 'Images/dummy-image.svg')}"
-						 itemprop="image" class="avatar" style="width: 128px; height:128px;">
+						 itemprop="image" class="avatar" style="width: 128px; height:128px;" loading="lazy">
 				</div>
 			</f:if>
 		</f:else>
