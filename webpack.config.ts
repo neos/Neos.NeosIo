@@ -140,7 +140,15 @@ function config(
             extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.scss'],
             // absolute paths for JS and SCSS related files
             alias: alias
-        }
+        },
+        target: 'es11', // required for dynamic imports
+        externals: {
+            '/_maptiles/frontend/v1.1/map-main.js': '/_maptiles/frontend/v1.1/map-main.js',
+        },
+        externalsType: 'module',
+        experiments: {
+            outputModule: true, // required for externalsType: 'module'
+        },
     };
 }
 

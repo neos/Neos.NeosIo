@@ -22,7 +22,7 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
         }
 
         javascripts.site = afx`
-            <script @children="attributes.src" async="">
+            <script @children="attributes.src" async="" type="module">
                 <Neos.Fusion:ResourceUri path="resource://Neos.NeosIo/Public/Scripts/Main.js"/>
             </script>
         `
