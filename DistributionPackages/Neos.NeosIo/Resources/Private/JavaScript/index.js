@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import * as siteComponents from './Components';
 import * as marketPlaceComponents from 'DistributionPackages/Neos.MarketPlace/Resources/Private/JavaScript';
 import * as neosConComponents from 'DistributionPackages/Neos.NeosConIo/Resources/Private/JavaScript/Components';
