@@ -1,0 +1,20 @@
+###########################################
+# A slider for headlines to be used in
+# the page keyvisual.
+###########################################
+
+'Neos.NeosIo:HeadlineSlider':
+  superTypes:
+    'Neos.Neos:Content': true
+  childNodes:
+    headlines:
+      position: 'start'
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes: null
+        '*': false
+        'Neos.NodeTypes:Headline': true
+  ui:
+    label: 'Headline Slider'
+    icon: icon-font
+    inlineEditable: true

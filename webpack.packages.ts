@@ -21,6 +21,15 @@ const packages = [
         }
     },
     {
+        packageName: 'Neos.NeosIo.ReleasePlan',
+        filename: 'Main.tsx',
+        alias: {
+            react: 'preact/compat',
+            'react-dom/test-utils': 'preact/test-utils',
+            'react-dom': 'preact/compat'
+        }
+    },
+    {
         packageName: 'Neos.NeosIo.CaseStudies',
         filename: 'Main.tsx',
         alias: {

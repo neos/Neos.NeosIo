@@ -1,17 +1,11 @@
 prototype(Neos.NeosIo:ChoiceButtons) < prototype(Neos.Neos:ContentComponent) {
-    firstButton = Neos.NeosIo:Button {
-        @context.node = ${q(node).children('firstButton').get(0)}
-    }
-
-    secondButton = Neos.NeosIo:Button {
-        @context.node = ${q(node).children('secondButton').get(0)}
-    }
+    buttons = ${q(node).children()}
 
     renderer = afx`
         <div class="u-alignCenter u-mb1/2">
-            {props.firstButton}
+            <Neos.NeosIo:Button @context.node={props.buttons.get(0)} />
             <span class="btnChoiceLabel">{Translation.translate('choiceButton.or', '', [], 'Main', 'Neos.NeosIo')}</span>
-            {props.secondButton}
+            <Neos.NeosIo:Button @context.node={props.buttons.get(1)} />
         </div>
     `
 }

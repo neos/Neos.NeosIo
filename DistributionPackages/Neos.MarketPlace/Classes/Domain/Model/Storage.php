@@ -60,13 +60,12 @@ class Storage
     }
 
     /**
-     * @return NodeInterface
      * @throws Exception
      */
     public function node(): NodeInterface
     {
-        $context = $this->createContext($this->workspaceName);
         if ($this->node === null) {
+            $context = $this->createContext($this->workspaceName);
             $this->node = $context->getNodeByIdentifier($this->repository['identifier']);
             if ($this->node === null) {
                 throw new Exception('Repository node not found', 1457507995);
@@ -76,8 +75,6 @@ class Storage
     }
 
     /**
-     * @param string $vendor
-     * @return NodeInterface
      * @throws Exception
      * @throws NodeTypeNotFoundException
      */
@@ -98,7 +95,6 @@ class Storage
     /**
      * Creates a content context for given workspace and language identifiers
      *
-     * @param string $workspaceName
      * @return ContentContext|Context
      */
     protected function createContext(string $workspaceName): ContentContext

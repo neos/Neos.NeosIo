@@ -22,10 +22,6 @@ use Cocur\Slugify\Slugify;
  */
 class Slug
 {
-    /**
-     * @param string $string
-     * @return string
-     */
     public static function create(string $string): string
     {
         $slugify = new Slugify();

@@ -1,20 +1,22 @@
 {
     "name": "neos/neosio",
     "type": "neos-site",
+    "version": "1.0.0",
     "description": "neos.io site package",
     "license": "GPL-3.0+",
     "require": {
-        "neos/neos": "^5.3",
-        "neos/media": "^5.3",
-        "neos/nodetypes": "^5.3",
-        "neos/fusion-afx": "^1.2",
+        "neos/neos": "^8.3",
+        "neos/media": "^8.3",
+        "neos/nodetypes": "^8.3",
+        "neos/fusion-afx": "^8.3",
         "neos/seo": "^3.0",
-        "neos/neos-ui": "^5.3",
+        "neos/neos-ui": "^8.3",
         "neos/form": "^5.2",
         "neos/form-builder": "^2.2",
+        "neos/form-fusionrenderer": "^2.1",
         "neos/swiftmailer": "^7.1",
-        "neos/redirecthandler-neosadapter": "^4.1",
-        "neos/redirecthandler-databasestorage": "^4.1",
+        "neos/redirecthandler-neosadapter": "^4.3.1",
+        "neos/redirecthandler-databasestorage": "^5.0",
         "neos/redirecthandler-ui": "^2.3",
 
         "neos/neosio-marketplace": "*",
@@ -23,11 +25,13 @@
         "flowpack/searchplugin": "^5.0",
         "flowpack/listable": "^3.4",
         "flowpack/cachebuster": "^1.0",
-        "flowpack/elasticsearch-contentrepositoryadaptor": "^7.0",
+        "flowpack/elasticsearch-contentrepositoryadaptor": "^8.4",
         "flowpack/neos-matomo": "^3.3",
+        "flowpack/media-ui": "^0.11",
+        "flowpack/fullpagecache": "^3.0",
 
         "flownative/gravatar": "^2.0",
-        "flownative/resource-tools": "^1.0",
+        "flownative/resource-tools": "^2.1",
 
         "punktde/codeview": "^1.1",
 
@@ -36,10 +40,11 @@
         "yoast/yoast-seo-for-neos": "^1.2",
 
         "sitegeist/silhouettes": "^2.0",
-        "sitegeist/monocle": "^7.0",
+        "sitegeist/monocle": "^7.8",
 
         "goe/neos-package": "^0.1.1",
-        "flowpack/fullpagecache": "^1.0.2"
+
+        "sitegeist/iconoclasm": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -127,7 +132,15 @@
             "Neos.NodeTypes-20190917101945",
             "Networkteam.Neos.MailObfuscator-20190919145400",
             "Neos.NodeTypes-20200120114136",
-            "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401"
+            "Flowpack.ElasticSearch.ContentRepositoryAdaptor-20200513223401",
+            "Neos.Flow-20200813181400",
+            "Neos.Flow-20201003165200",
+            "Neos.Flow-20201109224100",
+            "Neos.Flow-20201205172733",
+            "Neos.Flow-20201207104500",
+            "Neos.Neos-20220318111600",
+            "Neos.Flow-20220318174300",
+            "Neos.Fusion-20220326120900"
         ]
     }
 }

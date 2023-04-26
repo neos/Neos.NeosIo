@@ -42,19 +42,21 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
                 }
                 projectType = ${q(q(case).property('projectType')).property('title')}
                 searchText = ${String.toLowerCase(Array.join([this.title, this.url, this.projectType], ' '))}
-                launchDate = ${Date.format(q(case).property('launchDate'), 'U')}
-                launchDateFormatted = ${q(case).property('launchDate') ? Date.format(q(case).property('launchDate'), 'd.m.Y') : ''}
-                datePublished = ${Date.format(q(case).property('datePublished'), 'U')}
+                launchDate = ${q(case).property('launchDate') || q(case).property('datePublished') || q(case).property('_creationDateTime')}
+                launchDate.@process.format = ${String.toInteger(Date.format(value, 'U'))}
+                launchDateFormatted = ${q(case).property('launchDate') || q(case).property('datePublished') || q(case).property('_creationDateTime')}
+                launchDateFormatted.@process.format = ${Date.format(value, 'd.m.Y')}
+                datePublished = ${q(case).property('datePublished') || q(case).property('_creationDateTime')}
+                datePublished.@process.format = ${String.toInteger(Date.format(value, 'U'))}
                 projectVolume = ${q(case).property('projectVolume') ? String.toInteger(q(case).property('projectVolume')) : 1}
                 featured = ${q(case).property('featured') || Neos.Node.isOfType(case, 'Neos.NeosIo:Reference.CaseStudy') || 0}
             }
         }
 
         renderer = afx`
-            <div class="cases__list" id="cases-listing"
-                 data-cases-data={Json.stringify(props.casesData)}
-                 data-translation-data={Json.stringify(props.translationData)}
-            >
+            <div class="cases__list" id="cases-listing">
+                <script type="application/json" name="cases-data">{Json.stringify(props.casesData)}</script>
+                <script type="application/json" name="translation-data">{Json.stringify(props.translationData)}</script>
             </div>
         `
     }

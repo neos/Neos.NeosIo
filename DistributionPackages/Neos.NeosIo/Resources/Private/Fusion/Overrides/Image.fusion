@@ -1,29 +1,46 @@
+prototype(Neos.NodeTypes:Image) >
 prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
+    title = ${q(node).property('title')}
     title.@process.filenameFallback = ${String.isBlank(value) ? q(node).property('image').label : value}
 
+    hasCaption = ${q(node).property("hasCaption")}
+
     alternativeText = ${q(node).property('alternativeText')}
-    alternativeText {
-        @process.titleFallback = ${String.isBlank(value) ? q(node).property('title') : value}
-        @process.filenameFallback = ${String.isBlank(value) ? q(node).property('image').label : value}
+    alternativeText.@process {
+        titleFallback = ${String.isBlank(value) ? q(node).property('title') : value}
+        filenameFallback = ${String.isBlank(value) ? q(node).property('image').label : value}
     }
 
-    imageClassName {
-        @process.addImageStyle = ${value + ' ' + q(node).property('imageStyle')}
-        @process.addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
+    alignment = ${q(node).property("alignment")}
+
+    image = ${q(node).property('image')}
+
+    imageClassName = ${this.alignment ? ('neos-alignment-' + this.alignment) : ''}
+    imageClassName.@process {
+        addImageStyle = ${value + ' ' + q(node).property('imageStyle')}
+        addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
     }
 
+    loading = 'lazy'
+
+    height = null
     maximumHeight = null
+    maximumHeight.@process.override = ${q(node).property('customHeight') || value}
+
+    width = null
     // The maximum page width 1096 * 2
     maximumWidth = 2192
+    maximumWidth.@process.override = ${q(node).property('customWidth') || value}
 
-    maximumHeight.@process.override = ${q(node).property('customHeight') || value}
-    maximumWidth.@process.override = ${q(node).property('customHeight') ? null : value}
+    allowCropping = false
+    allowUpScaling = false
 
-    link.@process.convertUris {
+    link = ${q(node).property("link")}
+    link.@process.convertUris = Neos.Neos:ConvertUris {
+        forceConversion = true
         absolute = true
     }
 
-    caption >
     caption = Neos.Neos:Editable {
         property = 'caption'
         block = false
@@ -36,17 +53,25 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     }
 
     renderer.@context.image = Neos.Fusion:Case {
-        lazyload {
+        default {
             condition = ${props.image}
-            renderer = Neos.NeosIo:Component.LazyLoadImage {
-                image = ${props.image}
+            renderer = Neos.Neos:ImageTag {
+                asset = ${props.image}
                 title = ${props.title}
-                alternativeText = ${props.alternativeText}
-                className = ${props.imageClassName}
                 maximumHeight = ${props.maximumHeight}
                 maximumWidth = ${props.maximumWidth}
                 allowUpScaling = ${props.allowUpScaling}
                 allowCropping = ${props.allowCropping}
+                width = ${props.width}
+                height = ${props.height}
+                async = true
+                attributes.alt = ${props.alternativeText}
+                attributes.class = ${props.imageClassName}
+                attributes.loading = ${props.loading}
+                attributes.style = Neos.Fusion:Join {
+                    maxHeight = ${'max-height: ' + props.maximumHeight + 'px;'}
+                    maxHeight.@if.set = ${props.maximumHeight}
+                }
             }
         }
         fallback {
@@ -56,10 +81,9 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
                     title="Dummy image"
                     alt="Dummy image"
                     class="neos-handle"
-                    @children="attributes.src"
-                >
-                    <Neos.Fusion:ResourceUri package="Neos.Neos" path="Images/dummy-image.svg" />
-                </img>
+                    loading={props.loading}
+                    src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
+                />
             `
         }
     }

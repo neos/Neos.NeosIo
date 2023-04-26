@@ -31,16 +31,21 @@ class PackageImporter
 
     private array $processedPackages = [];
 
+    private $packageConverter;
+
     public function forceUpdates(bool $forceUpdates): void
     {
         $this->forceUpdates = $forceUpdates;
     }
 
-    public function process(Package $package): NodeInterface
+    public function process(Package $package): bool
     {
-        $node = (new PackageConverter($this->forceUpdates))->convert($package);
+        if (!$this->packageConverter) {
+            $this->packageConverter = new PackageConverter($this->forceUpdates);
+        }
+        $processed = $this->packageConverter->convert($package);
         $this->processedPackages[$package->getName()] = true;
-        return $node;
+        return $processed;
     }
 
     /**

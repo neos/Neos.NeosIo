@@ -30,7 +30,9 @@
   .speaker__speakerList {
     display: block;
     margin: 0;
-    width: $imageTeaser--speaker__width;
+    flex-basis: #{$base-line-height * 12}px;
+    flex-grow: 0;
+    flex-shrink: 0;
 
     @include mq("small") {
       display: flex;

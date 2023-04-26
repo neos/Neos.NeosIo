@@ -1,4 +1,4 @@
-import AmChart from './AmChart';
+
 import ClassToggler from './ClassToggler';
 import EmptyClickHandler from './EmptyClickHandler';
 import CountUp from './CountUp';
@@ -9,7 +9,6 @@ import ScrollClassToggler from './ScrollClassToggler';
 import SentenceSwitcher from './SentenceSwitcher';
 
 export {
-    AmChart,
     ClassToggler,
     CountUp,
     ScrollTo,

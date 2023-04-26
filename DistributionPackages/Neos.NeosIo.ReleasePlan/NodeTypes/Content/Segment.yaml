@@ -1,0 +1,48 @@
+'Neos.NeosIo.ReleasePlan:Content.Segment':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'Version Segment'
+    icon: icon-calendar-day
+    inlineEditable: false
+    group: special
+    inspector:
+      groups:
+        releasePlan:
+          icon: 'icon-calendar'
+          label: 'Release Plan'
+  properties:
+    start:
+      type: DateTime
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Start date'
+        reloadIfChanged: true
+        inspector:
+          group: 'releasePlan'
+          editor: 'Neos.Neos/Inspector/Editors/DateTimeEditor'
+    end:
+      type: DateTime
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'End date'
+        reloadIfChanged: true
+        inspector:
+          group: 'releasePlan'
+          editor: 'Neos.Neos/Inspector/Editors/DateTimeEditor'
+    task:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Task name'
+        help:
+          message: 'This should be the description of the support period, e.g. "Security fixes only"'
+        reloadIfChanged: true
+        inspector:
+          group: 'releasePlan'
+          editor: 'Neos.Neos/Inspector/Editors/TextAreaEditor'
+          editorOptions:
+            rows: 2

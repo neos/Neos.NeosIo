@@ -74,6 +74,12 @@ export default function ProviderListing() {
                 sortingDirection,
                 sorting === 'size' ? sizeValueMap : null
             );
+        } else {
+            filteredProviders = filteredProviders.sort((a, b) => {
+                const aHasBadges = (a.badges?.length + a.awards?.length) > 0;
+                const bHasBadges = (b.badges?.length + b.awards?.length) > 0;
+                return aHasBadges && !bHasBadges ? -1 : !aHasBadges && bHasBadges ? 1 : 0;
+            });
         }
         setProviders(filteredProviders);
     }, [searchWord, countryFilter, sizeFilter, serviceTypeFilter, sorting, sortingDirection]);

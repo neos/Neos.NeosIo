@@ -15,7 +15,7 @@ const CaseStudyTableRow = ({caseStudy}: {caseStudy: CaseStudy}) => {
                 </p>
             </div>
             <div className="cases__grid-cell cases__overlay">
-                <p>
+                <p title={`Published on ${caseStudy.datePublished} ${new Date(caseStudy.datePublished).toLocaleDateString()}`}>
                     {caseStudy.launchDateFormatted ? <i class="fas fa-rocket"></i> : ''} {caseStudy.launchDateFormatted}
                 </p>
             </div>

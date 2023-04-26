@@ -1,0 +1,15 @@
+prototype(Neos.Neos:Page) {
+    head.stylesheets {
+        releasePlanStyleSheet = Neos.Fusion:Tag {
+            tagName = 'link'
+            attributes {
+                rel = 'stylesheet'
+                href = Neos.Fusion:ResourceUri {
+                    path = 'resource://Neos.NeosIo.ReleasePlan/Public/Styles/Main.css'
+                }
+                media = 'print'
+                onload = 'this.media=\'all\';'
+            }
+        }
+    }
+}

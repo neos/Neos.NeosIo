@@ -1,0 +1,18 @@
+###########################################
+# Displays a gant chart of the release plan
+# of Neos CMS.
+###########################################
+
+'Neos.NeosIo.ReleasePlan:Content.ReleasePlan':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.Neos:ContentCollection': true
+  ui:
+    label: 'Release Plan Chart'
+    icon: icon-calendar
+    inlineEditable: false
+    group: special
+  constraints:
+    nodeTypes:
+      'Neos.Neos:Content': false
+      'Neos.NeosIo.ReleasePlan:Content.Version': true

@@ -1,0 +1,55 @@
+###########################################
+# The root page should ideally only be used
+# on 1st level pages.
+###########################################
+
+'Neos.NeosIo:RootPage':
+  superTypes:
+    'Neos.NeosIo:LandingPage': true
+  ui:
+    label: 'Root Page'
+    icon: icon-home
+  constraints:
+    nodeTypes:
+      'Neos.NodeTypes:Page': true
+      'Neos.NeosIo:FooterContainer': true
+  properties:
+    titlePostfix:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Website Title Postfix'
+        inspector:
+          group: additional
+    imprintLinkNode:
+      type: reference
+      ui:
+        label: 'Imprint Link Page'
+        reloadIfChanged: true
+        inspector:
+          group: additional
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NodeTypes:Page'
+              - 'Neos.Neos:Shortcut'
+    showSmartAppBanner:
+      type: boolean
+      ui:
+        label: 'Show Smart App Banner'
+        inspector:
+          group: additional
+    iOSAppId:
+      type: string
+      ui:
+        label: 'iOS App Id'
+        inspector:
+          group: additional
+    footerContentContainer:
+      type: reference
+      ui:
+        label: 'Footer content container'
+        inspector:
+          group: additional
+          editorOptions:
+            nodeTypes:
+              - Neos.NeosIo:FooterContainer

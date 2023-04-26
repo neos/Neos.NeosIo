@@ -1,0 +1,119 @@
+'Neos.NeosIo:Post':
+  superTypes:
+    'Neos.NodeTypes:Page': true
+    'Neos.NeosIo:KeyVisualMixin': true
+  ui:
+    label: Post
+    icon: icon-newspaper-o
+    inspector:
+      groups:
+        options:
+          label: Options
+          position: 20
+        author:
+          label: Author
+          position: 30
+        image:
+          position: 40
+          collapsed: true
+  properties:
+    datePublished:
+      type: DateTime
+      defaultValue: now
+      ui:
+        label: 'Publication Date'
+        reloadPageIfChanged: true
+        inspector:
+          group: options
+          editorOptions:
+            format: Y-m-d
+      validation:
+        Neos.Neos/Validation/NotEmptyValidator: {  }
+        Neos.Neos/Validation/DateTimeValidator: {  }
+    title:
+      validation: null
+      ui:
+        inlineEditable: true
+        inspector:
+          group: null
+        inline:
+          editorOptions:
+            formatting:
+              sub: true
+              sup: true
+              p: false
+              h1: false
+              h2: false
+              h3: false
+              pre: false
+              removeFormat: false
+              a: true
+              strong: true
+              em: true
+              underline: true
+            placeholder: 'Enter title here'
+    summary:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            formatting:
+              sub: true
+              sup: true
+              p: true
+              h1: true
+              h2: true
+              h3: true
+              h4: false
+              h5: false
+              h6: false
+              removeFormat: true
+              table: true
+              a: true
+              ul: true
+              ol: true
+              left: true
+              center: true
+              right: true
+              justify: true
+              strong: true
+              em: true
+              underline: true
+            placeholder: 'Enter summary here'
+    featured:
+      type: boolean
+      ui:
+        label: Featured
+        inspector:
+          group: options
+    authors:
+      type: array
+      ui:
+        label: Author(s)
+        position: 10
+        reloadPageIfChanged: true
+        inspector:
+          group: author
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            placeholder: Choose
+            dataSourceIdentifier: neos-neosio-editors
+    authorAlternative:
+      type: string
+      ui:
+        label: 'Author (alt)'
+        position: 20
+        reloadPageIfChanged: true
+        inspector:
+          group: author
+    relatedDocuments:
+      type: references
+      ui:
+        label: 'Related documents'
+        reloadPageIfChanged: true
+        inspector:
+          group: options
+          editorOptions:
+            nodeTypes:
+              - 'Neos.Neos:Document'

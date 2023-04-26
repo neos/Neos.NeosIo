@@ -9,7 +9,7 @@ const CaseStudyGridItem = ({caseStudy}: {caseStudy: CaseStudy}) => {
         <a key={caseStudy.identifier} class={'imageTeaser imageTeaser--isLink' + (caseStudy.featured ? ' references__item--featured' : '')} href={caseStudy.url} target="_blank" rel="noopener">
             {caseStudy.image
                 ?
-                <img data-src={caseStudy.image} class="imageTeaser__image lazy" title={caseStudy.title} alt={caseStudy.title} />
+                <img src={caseStudy.image} class="imageTeaser__image" loading="lazy" title={caseStudy.title} alt={caseStudy.title} />
                 : ''
             }
                 <div class="imageTeaser__contents u-invertText">
