@@ -7,7 +7,7 @@ prototype(Neos.NeosIo:CrowdUserListItem) < prototype(Neos.Fusion:Template) {
     user = ${q(site).crowdUser(userName).get()}
     @context.user = ${this.user}
 
-    profileId = ${'member-profile-' + node.identifier + '-' + userName}
+    profileId = ${'member-profile-' + node.identifier + '-' + String.pregReplace(userName, '/[^a-z0-9]/', '_')}
     @context.profileId = ${this.profileId}
 
     attributes = Neos.Fusion:Attributes {
