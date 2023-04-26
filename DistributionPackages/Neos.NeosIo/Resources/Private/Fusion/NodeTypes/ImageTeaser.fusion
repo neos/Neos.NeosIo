@@ -1,6 +1,14 @@
 prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
-    title = ${q(node).property('title')}
-    subTitle = ${q(node).property('subTitle')}
+    title = Neos.Neos:Editable {
+        property = 'title'
+        block = false
+    }
+    subTitle = Neos.Neos:Editable {
+        property = 'subTitle'
+        block = false
+    }
+    rawTitle = ${q(node).property('title')}
+    rawSubTitle = ${q(node).property('subTitle')}
     alternativeText = ${this.title}
     image = ${q(node).property('image')}
     text = Neos.Neos:Editable {
@@ -16,6 +24,7 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
     maximumHeight = 450
     maximumwidth = 700
 
+    // TODO: Introduce presentation component and use that one for all other Neos.NeosIo:ImageTeaser component usages
     renderer = afx`
         <Neos.Fusion:Tag
             tagName={props.link ? 'a' : 'div'}
@@ -28,7 +37,7 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
             <Neos.Neos:ImageTag
                 @if={props.image}
                 asset={props.image}
-                title={props.title}
+                title={props.rawTitle}
                 maximumHeight={props.maximumHeight}
                 maximumwidth={props.maximumWidth}
                 allowCropping={true}
@@ -44,7 +53,7 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
                 @if={!props.image && props.fallbackImageUrl}
                 src={fallbackImageUrl}
                 alt={alternativeText}
-                title={props.title}
+                title={props.rawTitle}
             />
             <img
                 @if={node.context.inBackend && !props.image && !props.fallbackImageUrl}
@@ -56,10 +65,10 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
 
             <div class="imageTeaser__contents u-invertText">
                 <h5 class="imageTeaser__contents__subHeading">
-                    <Neos.Neos:Editable property="subTitle" block={false} />
+                    {props.subTitle}
                 </h5>
                 <h3 class="imageTeaser__contents__heading">
-                    <Neos.Neos:Editable property="title" block={false} />
+                    {props.title}
                 </h3>
                 <div class="imageTeaser__contents__text">{props.text}</div>
             </div>

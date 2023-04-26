@@ -17,8 +17,8 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
         @context.featuredTalkNode = ${q(node).property('featuredTalk')}
 
         featuredTalk = Neos.NeosIo:ImageTeaser {
-
             title = ${q(featuredTalkNode).property('title')}
+            rawTitle = ${this.title}
             image = ${q(featuredTalkNode).property('thumbnail')}
             fallbackImageUrl = ${(q(featuredTalkNode).property('video') && !q(featuredTalkNode).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(featuredTalkNode).property('video') + "/maxresdefault.jpg" : null}
             text = ${q(featuredTalkNode).property('text')}
@@ -48,7 +48,7 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
                     title = ${q(node).property('title')}
                     image = ${q(node).property('thumbnail')}
                     fallbackImageUrl = ${(q(node).property('video') && !q(node).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(node).property('video') + "/maxresdefault.jpg" : null}
-                    text = ${""}
+                    text = ''
                     className = 'imageTeaser--relatedTalk'
                     link = Neos.Neos:NodeUri {
                         node = ${node}
