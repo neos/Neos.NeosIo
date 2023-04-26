@@ -51,8 +51,8 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
             />
             <img
                 @if={!props.image && props.fallbackImageUrl}
-                src={fallbackImageUrl}
-                alt={alternativeText}
+                src={props.fallbackImageUrl}
+                alt={props.alternativeText}
                 title={props.rawTitle}
             />
             <img
