@@ -33,13 +33,11 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
         // Just show featured talk when defined in the backend
         featuredTalk.@if.featuredTalkIsSelected = ${featuredTalkNode}
 
-        moreTalksVisible = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').arrayPropertyContains("speakers", node)}
-
         moreTalks = Neos.Fusion:Loop {
             // node is speaker here
             items = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').arrayPropertyContains("speakers", node)}
 
-            @process.wrapWithUl = ${'<ul class="talkList">' + value + '</ul>'}
+            @process.wrapWithUl = ${value ? '<ul class="talkList">' + value + '</ul>' : ''}
             itemName = "node"
             itemRenderer = Neos.Fusion:Tag {
                 tagName = 'li'
