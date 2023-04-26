@@ -7,9 +7,13 @@ prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
             description.@process.useSummary = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : value, 197, '...')}
 
             image.asset {
-                post {
-                    condition = ${q(node).property('image')}
-                    renderer = ${q(node).property('image')}
+                keyVisualSmall {
+                    condition = ${q(node).property('keyVisualImageSmall')}
+                    renderer = ${q(node).property('keyVisualImageSmall')}
+                }
+                keyVisual {
+                    condition = ${q(node).property('keyVisualImage')}
+                    renderer = ${q(node).property('keyVisualImage')}
                 }
             }
         }
@@ -19,9 +23,13 @@ prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
             title = ${String.crop(String.stripTags(q(node).property('title')), 67, '...')}
             description.@process.useSummary = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : value, 197, '...')}
             image {
-                post {
-                    condition = ${q(node).property('image')}
-                    renderer = ${q(node).property('image')}
+                keyVisualSmall {
+                    condition = ${q(node).property('keyVisualImageSmall')}
+                    renderer = ${q(node).property('keyVisualImageSmall')}
+                }
+                keyVisual {
+                    condition = ${q(node).property('keyVisualImage')}
+                    renderer = ${q(node).property('keyVisualImage')}
                 }
             }
             renderer.publishedTime = Neos.Fusion:Tag {
@@ -47,7 +55,7 @@ prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
                 attributes.name = ${(q(node).property('authors') ? Data.users(q(node).property('authors')) + q(node).property('authorAlternative') : q(node).property('authorAlternative')) || 'Neos Foundation CIC'}
             }
             image = Neos.Seo:StructuredData.ImageObject {
-                image = ${q(node).property('image') || q(site).property('keyVisualImage')}
+                image = ${q(site).property('keyVisualImage')}
             }
             publisher = Neos.Seo:StructuredData.Object {
                 type = 'Organization'
@@ -65,7 +73,5 @@ prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
 
     body {
         content.main = Neos.NeosIo:PostRenderer
-        keyVisualImage = ${q(node).property('image')}
-        keyVisualImageSrcSet.keyVisualImage = ${q(node).property('image')}
     }
 }
