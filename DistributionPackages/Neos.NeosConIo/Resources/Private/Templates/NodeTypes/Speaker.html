@@ -22,10 +22,13 @@
 						</li>
 					</f:if>
 					<f:if condition="{twitter}">
-						<li class="speaker__infos__item"><i class="fab fa-twitter"></i> <a href="https://twitter.com/{twitter}" target="_blank" title="Go to twitter profile">{twitter}</a></li>
+						<li class="speaker__infos__item"><i class="fab fa-twitter"></i> <a href="https://twitter.com/{twitter}" target="_blank" rel="noreferrer noopener" title="Go to their twitter profile">{twitter}</a></li>
+					</f:if>
+					<f:if condition="{mastodon}">
+						<li class="speaker__infos__item"><i class="fab fa-mastodon"></i> <a href="{mastodon}" target="_blank" rel="noreferrer noopener" title="Go to their mastodon profile">{mastodon}</a></li>
 					</f:if>
 					<f:if condition="{github}">
-						<li class="speaker__infos__item"><i class="fab fa-github"></i> <a href="https://github.com/{github}" target="_blank" title="Go to github profile">{github}</a></li>
+						<li class="speaker__infos__item"><i class="fab fa-github"></i> <a href="https://github.com/{github}" target="_blank" rel="noreferrer noopener" title="Go to github profile">{github}</a></li>
 					</f:if>
 				</ul>
 			</div>
