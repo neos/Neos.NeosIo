@@ -8,3 +8,14 @@
   routeParts:
     'node':
       handler: 'Neos\Neos\Routing\FrontendNodeRoutePartHandler'
+
+- name:  'Json Package API'
+  uriPattern: '{node}.json'
+  defaults:
+    '@package': 'Neos.Neos'
+    '@controller': 'Frontend\Node'
+    '@action': 'show'
+    '@format': 'json'
+  routeParts:
+    'node':
+      handler: 'Neos\Neos\Routing\FrontendNodeRoutePartHandler'

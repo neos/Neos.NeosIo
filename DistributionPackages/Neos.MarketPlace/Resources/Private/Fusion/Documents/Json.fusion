@@ -1,0 +1,86 @@
+prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
+    httpResponseHead {
+        headers.Content-Type = 'application/json'
+    }
+
+    data = Neos.Fusion:Component {
+        searchTerm = ${request.arguments.search}
+
+        marketPlaceQuery = ${MarketPlaceSearch.query(documentNode)}
+        marketPlaceQuery.@process {
+            nodeType {
+                expression = ${value.nodeType('Neos.MarketPlace:Package')}
+                @position = 'start'
+            }
+            fulltext {
+                expression = ${value.fulltext('*' + String.replace(this.searchTerm, '"', ''))}
+                @if.hasQuery = ${!String.isBlank(this.searchTerm)}
+            }
+            abandoned {
+                expression = ${value.exclude('abandoned', '1')}
+            }
+            sort {
+                expression = ${value.sortDesc('lastActivity')}
+                @if.noQuery = ${!this.hasSearchQuery}
+            }
+            limit {
+                expression = ${value.limit(20)}
+            }
+            log {
+                expression = ${value.log('marketplace')}
+                @position = 'end'
+            }
+        }
+
+        renderer = Neos.Fusion:DataStructure {
+            items = Neos.Fusion:Map {
+                items = ${props.marketPlaceQuery.execute()}
+                itemName = 'package'
+                itemRenderer = Neos.Fusion:DataStructure {
+                    title = ${q(package).property('title')}
+                    description = ${q(package).property('description')}
+                    link = Neos.Neos:NodeUri {
+                        node = ${package}
+                        absolute = true
+                        format = 'html'
+                    }
+                    latestVersion = ${q(q(package).property('lastVersion')).property('version')}
+                    downloads = ${q(package).property('downloadTotal')}
+                    stars = ${q(package).property('githubStargazers') || 0}
+                }
+            }
+            @process.json = ${Json.stringify(value)}
+        }
+    }
+
+    @cache {
+        mode = 'dynamic'
+
+        entryIdentifier {
+            documentNode = ${documentNode}
+            format = 'json'
+        }
+
+        context {
+            documentNode = 'documentNode'
+            site = 'site'
+            node = 'node'
+        }
+
+        maximumLifetime = 3600
+
+        entryDiscriminator = ${!request.arguments.search}
+
+        entryTags {
+            documentNode = ${Neos.Caching.nodeTag(documentNode)}
+        }
+    }
+}
+
+root {
+    marketPlaceJson {
+        @position = 'before format'
+        condition = ${request.format == 'json' && q(documentNode).is('[instanceof Neos.MarketPlace:RepositoryStorage]')}
+        renderer = Neos.MarketPlace:JsonFeed
+    }
+}
