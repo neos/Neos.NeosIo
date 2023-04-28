@@ -33,7 +33,7 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
         }
 
         renderer = Neos.Fusion:DataStructure {
-            items = Neos.Fusion:Map {
+            results = Neos.Fusion:Map {
                 items = ${props.marketPlaceQuery.execute()}
                 itemName = 'package'
                 itemRenderer = Neos.Fusion:DataStructure {
