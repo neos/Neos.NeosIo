@@ -1,21 +1,60 @@
-prototype(Neos.NeosIo:CrowdUserProfile) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/CrowdUserProfile.html'
-    sectionName = 'details'
-
+prototype(Neos.NeosIo:CrowdUserProfile) < prototype(Neos.Fusion:Component) {
     user = ''
-    @context.user = ${this.user}
-
     userName = ''
-    @context.userName = ${this.userName}
-
     profileId = ''
-    @context.profileId = ${this.profileId}
 
-    attributes = Neos.Fusion:Attributes {
-        class = 'team-listing-profile'
-        data-component = 'ClassToggler'
-        data-activeClass = 'member-active'
-        data-targetSelector = ${'#' + profileId}
-        data-targetActiveClass = 'team-listing-profile--visible'
-    }
+    renderer = afx`
+            <div
+                class="team-listing-profile"
+                data-component="ClassToggler"
+                data-activeClass="member-active"
+                data-targetSelector={'#' + props.profileId}
+                data-targetActiveClass="team-listing-profile--visible"
+            >
+            <div data-component="EmptyClickHandler" class="team-listing-profile__inner">
+                <p @if={props.user.additionalProperties.neos_bio}>{user.additionalProperties.neos_bio}</p>
+
+                <Neos.Fusion:Fragment @if={props.user.additionalProperties.neos_contribution}>
+                    <strong class="team-listing-profile__header">
+                        {I18n.translate('profile.contribution', 'What ' + props.user['first-name'] + ' contributes to Neos', [props.user['first-name']], 'CrowdApi', 'Neos.NeosIo')}
+                    </strong>
+                    <hr />
+                    <p>
+                        {user.additionalProperties.neos_contribution}
+                    </p>
+                </Neos.Fusion:Fragment>
+
+                <strong class="team-listing-profile__header">
+                    {I18n.translate('profile.contact', 'Contact' + props.user['first-name'], [props.user['first-name']], 'CrowdApi', 'Neos.NeosIo')}
+                </strong>
+                <hr />
+                <ul>
+                    <li title="Slack">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="14" height="16">
+                                <path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/>
+                            </svg>
+                            @{props.user.name}
+                        </span>
+                    </li>
+                    <li @if={props.user.additionalProperties['neos_email']}>
+                        <a href={'mailto:' + props.user.additionalProperties['neos_email']} title="Email">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="14" height="14">
+                                <path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/>
+                            </svg>
+                            {props.user.additionalProperties['neos_email']}
+                        </a>
+                    </li>
+                    <li @if={props.user.additionalProperties['neos_mastodon']}>
+                        <a href={props.user.additionalProperties['neos_mastodon']} rel="noreferrer noopener" target="_blank" title="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="14" height="16">
+                                <path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/>
+                            </svg>
+                            {props.user.additionalProperties['neos_mastodon']}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    `
 }
