@@ -6918,7 +6918,9 @@
                 "neos/swiftmailer": "^7.1",
                 "networkteam/neos-mailobfuscator": "^3.0",
                 "punktde/codeview": "^1.1",
+                "shel/neos-commandbar": "^0.8",
                 "shel/neos-terminal": "^1.1",
+                "shel/neos-workspace-module": "^0.2",
                 "sitegeist/iconoclasm": "^2.0",
                 "sitegeist/monocle": "^7.8",
                 "sitegeist/silhouettes": "^2.0",
@@ -11706,6 +11708,73 @@
             "time": "2022-07-20T18:31:45+00:00"
         },
         {
+            "name": "shel/neos-commandbar",
+            "version": "0.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sebobo/Shel.Neos.CommandBar.git",
+                "reference": "c2503d494560a6f727644d2b68876d0b27d9ad9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sebobo/Shel.Neos.CommandBar/zipball/c2503d494560a6f727644d2b68876d0b27d9ad9c",
+                "reference": "c2503d494560a6f727644d2b68876d0b27d9ad9c",
+                "shasum": ""
+            },
+            "require": {
+                "neos/neos": "^7.3 || ^8.0",
+                "php": ">= 8.1"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "neos": {
+                    "package-key": "Shel.Neos.CommandBar"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Shel\\Neos\\CommandBar\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Helzle",
+                    "email": "sebastian@helzle.it",
+                    "homepage": "https://www.helzle.it"
+                }
+            ],
+            "description": "A commandbar (CMD+K) for Neos CMS",
+            "keywords": [
+                "Neos",
+                "cmdk",
+                "cms",
+                "commandbar"
+            ],
+            "support": {
+                "issues": "https://github.com/Sebobo/Shel.Neos.CommandBar/issues",
+                "source": "https://github.com/Sebobo/Shel.Neos.CommandBar/tree/0.8.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.amazon.de/hz/wishlist/ls/JEL60X51G2GA",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/sebobo",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/shelzle",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2023-04-28T12:27:30+00:00"
+        },
+        {
             "name": "shel/neos-terminal",
             "version": "1.1.0",
             "source": {
@@ -11766,6 +11835,51 @@
                 }
             ],
             "time": "2023-03-14T03:37:31+00:00"
+        },
+        {
+            "name": "shel/neos-workspace-module",
+            "version": "0.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sebobo/Shel.Neos.WorkspaceModule.git",
+                "reference": "0d67b6cdc737a934ddb58669725ba3f4350aa8dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sebobo/Shel.Neos.WorkspaceModule/zipball/0d67b6cdc737a934ddb58669725ba3f4350aa8dd",
+                "reference": "0d67b6cdc737a934ddb58669725ba3f4350aa8dd",
+                "shasum": ""
+            },
+            "require": {
+                "neos/neos": "^5.3 || ^7.0 || ^8.0 || dev-master",
+                "php": ">=7.4"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "neos": {
+                    "package-key": "Shel.Neos.WorkspaceModule"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Shel\\Neos\\WorkspaceModule\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "An alternative workspace module with additional features for Neos CMS",
+            "keywords": [
+                "flow",
+                "neoscms",
+                "workspaces"
+            ],
+            "support": {
+                "issues": "https://github.com/Sebobo/Shel.Neos.WorkspaceModule/issues",
+                "source": "https://github.com/Sebobo/Shel.Neos.WorkspaceModule/tree/0.2.7"
+            },
+            "time": "2023-03-24T08:32:37+00:00"
         },
         {
             "name": "sitegeist/iconoclasm",
