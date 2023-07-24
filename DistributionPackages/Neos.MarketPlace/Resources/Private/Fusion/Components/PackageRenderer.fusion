@@ -1,4 +1,4 @@
-prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Neos:Content) {
+prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Template) {
     templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/PackageRenderer.html'
 
     vendor = Neos.MarketPlace:ClosestVendorQuery
@@ -16,10 +16,6 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Neos:Content) {
 
     packageCount = Neos.MarketPlace:PackageCountButton
 
-    main = Neos.Neos:ContentCollection {
-        nodePath = 'main'
-    }
-
     isAbandoned = ${q(node).property('abandoned') ? true : false}
     abandoned = ${q(node).property('abandoned')}
 
@@ -34,6 +30,4 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Neos:Content) {
     metrics = Neos.MarketPlace:PackageMetrics {
         attributes.class.@process.pullRight = ${Array.push(value, 'pull-right')}
     }
-
-    @process.contentElementWrapping >
 }
