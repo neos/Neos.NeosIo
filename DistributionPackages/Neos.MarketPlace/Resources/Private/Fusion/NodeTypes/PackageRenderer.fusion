@@ -27,7 +27,9 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Neos:Content) {
     packageTime = ${q(node).property('time')}
     description = ${q(node).property('description')}
 
-    readme = Neos.MarketPlace:PackageReadme
+    readme = Neos.MarketPlace:Readme {
+        @context.node = ${q(node).children('readme').get(0)}
+    }
 
     metrics = Neos.MarketPlace:PackageMetrics {
         attributes.class.@process.pullRight = ${Array.push(value, 'pull-right')}
