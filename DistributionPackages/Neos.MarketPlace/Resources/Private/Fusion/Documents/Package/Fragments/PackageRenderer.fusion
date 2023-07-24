@@ -1,0 +1,42 @@
+prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
+    vendor = Neos.MarketPlace:ClosestVendorQuery
+
+    abandoned = ${q(node).property('abandoned')}
+    isAbandoned = ${this.abandoned ? true : false}
+
+    packageName = ${q(node).property('title')}
+    packageTime = ${q(node).property('time')}
+    description = ${q(node).property('description')}
+
+    readmeNode = ${q(node).children('readme').get(0)}
+
+    renderer = afx`
+        <article class="market-block">
+            <header>
+                <h1>{props.packageName}</h1>
+            </header>
+            <Neos.Fusion:Fragment @if={props.isAbandoned}>
+                <p>
+                    This package is abandoned and no longer maintained.
+                    The author suggests using the <strong>{props.abandoned}</strong> package instead.
+                </p>
+                <hr />
+            </Neos.Fusion:Fragment>
+            <div class="package__meta">
+                <Neos.MarketPlace:PackageLastActivity />
+                <Neos.MarketPlace:PackageMetrics
+                    attributes.class.@process.pullRight={Array.push(value, 'pull-right')}
+                />
+            </div>
+            <code class="market-code">
+                <i class="fas fa-download"></i> composer require {props.packageName}
+            </code>
+            <p @if={props.description}>
+                <strong>{props.description}</strong>
+            </p>
+            <Neos.MarketPlace:VersionPreview />
+            <Neos.MarketPlace:Readme @context.node={props.readmeNode} />
+            <Neos.MarketPlace:PackageCountButton vendor={props.vendor} />
+        </article>
+    `
+}

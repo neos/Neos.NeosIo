@@ -1,6 +1,5 @@
 prototype(Neos.MarketPlace:Readme) < prototype(Neos.Neos:ContentComponent) {
-    readme = ${q(documentNode).children('readme').first()}
-    readmeSource = ${this.readme.property('readmeSource')}
+    readmeSource = ${q(node).property('readmeSource')}
     hasReadme = ${this.readmeSource != '<p>Enter HTML here</p>' && String.isBlank(this.readmeSource) == false}
 
     renderer = afx`

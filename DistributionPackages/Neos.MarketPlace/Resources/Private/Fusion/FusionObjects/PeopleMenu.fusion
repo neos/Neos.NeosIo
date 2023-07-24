@@ -1,26 +1,12 @@
-prototype(Neos.MarketPlace:PeopleMenu) >
-prototype(Neos.MarketPlace:PeopleMenu) < prototype(Neos.Fusion:Tag) {
+prototype(Neos.MarketPlace:PeopleMenu) < prototype(Neos.Fusion:Component) {
     path = 'maintainers'
-    @context.path = ${this.path}
+    people = ${q(documentNode).children(this.path).find('[instanceof Neos.MarketPlace:People]')}
 
-    tagName = 'ul'
-    attributes {
-        class = 'nav nav--stacked'
-    }
-    content = Neos.Fusion:Loop {
-        items = ${q(documentNode).find(path).find('[instanceof Neos.MarketPlace:People]')}
-        itemRenderer = Neos.MarketPlace:PeopleMenuItem
-        itemName = 'node'
-    }
-}
-
-prototype(Neos.MarketPlace:PeopleMenuItem) < prototype(Neos.Fusion:Tag) {
-    tagName = 'li'
-    content = ${q(node).property('title')}
-
-    # The following line must not be removed as it adds required meta data to all content elements in backend
-    @process.contentElementWrapping {
-        expression = Neos.Neos:ContentElementWrapping
-        @position = 'end 999999999'
-    }
+    renderer = afx`
+      <ul class="nav nav--stacked">
+        <Neos.Fusion:Loop items={props.people}>
+            <li>{q(item).property('title')}</li>
+        </Neos.Fusion:Loop>
+      </ul>
+    `
 }
