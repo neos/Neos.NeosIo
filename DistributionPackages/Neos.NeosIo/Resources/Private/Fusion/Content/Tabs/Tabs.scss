@@ -1,0 +1,161 @@
+// @use "../../../../public/Frontend/scss/helpers";
+// TODO border, TODO css variables
+
+.tabs {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 48px;
+    width: 100%;
+    margin: 0 auto;
+    white-space: nowrap;
+
+    .tab {
+        display: inline-block;
+        text-align: center;
+        line-height: 48px;
+        height: 48px;
+        flex-shrink: 0;
+        padding: 0;
+        margin: 0;
+        text-transform: uppercase;
+        background: none;
+        appearance: none;
+        border: none;
+        cursor: pointer;
+
+        &:focus,
+        &:focus.active {
+            outline: none;
+        }
+
+        &:hover,
+        &.active {
+            background-color: transparent;
+        }
+
+        .tab-link__inner {
+            padding: 0 24px;
+            height: 100%;
+        }
+
+        font-size: 14px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        transition: color .28s ease, background-color .28s ease;
+
+        &.disabled a,
+        &.disabled a:hover {
+            cursor: default;
+        }
+    }
+}
+
+.tabs {
+    display: flex;
+    padding: 0;
+}
+
+.tabs .indicator {
+    display: none;
+}
+
+.tabs-content__wrapper {
+    position: relative;
+
+    &::after {
+        bottom: -1px;
+        content: "";
+        width: 16px;
+        border-top: 1px solid #e7e7e8;
+        position: absolute;
+        right: 12px;
+        transform-origin: right top;
+        transform: rotateZ(135deg);
+    }
+}
+
+.tabs-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    // @include helpers.neos-borders(0px, 12px);
+    border: 1px solid #e7e7e8;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    background: rgba(242, 242, 242, 0.5);
+    border-top: none;
+}
+
+.tab-item:not([hidden]){
+    display: inline-block;
+    width: 100%;
+}
+
+.tabs .tab {
+    &:focus,
+    &:active,
+    &[aria-selected="true"] {
+        &:before {
+            content: "";
+            width: 18px;
+            border-top: 1px solid #e7e7e8;
+            position: absolute;
+            left: -7px;
+            transform-origin: right top;
+            transform: rotateZ(-45deg);
+            z-index: 1;
+        }
+    }
+}
+
+.tabs .tab {
+    position: relative;
+    color: var(--c-brand);
+
+    .tab-link__inner {
+        pointer-events: none;
+        display: grid;
+
+        border: 1px solid transparent;
+        border-bottom-color: #e7e7e8;
+
+        font-weight: 540;
+        // @include helpers.neos-borders(12px, 0px);
+
+        &:empty::after {
+            content: "Tab title";
+            color: #ccc;
+        }
+    }
+
+    &[aria-selected="true"] {
+        .tab-link__inner {
+            background-color: rgba(242, 242, 242, 0.5);
+            border: 1px solid #e7e7e8;
+            border-bottom: none;
+        }
+
+        color: var(--c-accent);
+    }
+
+    &:focus, &:active, &:focus[aria-selected="true"] {
+        &::before {
+            border-top-color: var(--c-accent);
+        }
+
+        .tab-link__inner {
+            background-color: rgba(242, 242, 242, 0.5);
+            border-left-color: var(--c-accent);
+            border-right-color: var(--c-accent);
+            border-top-color: var(--c-accent);
+        }
+    }
+}
+
+.tabs .spacer {
+    display: flex;
+    flex-grow: 1;
+    border-bottom: 1px solid #e7e7e8;
+}

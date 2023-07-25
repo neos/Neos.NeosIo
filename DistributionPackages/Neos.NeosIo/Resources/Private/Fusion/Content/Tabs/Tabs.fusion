@@ -1,0 +1,26 @@
+prototype(Neos.NeosIo:Tabs) < prototype(Neos.Neos:ContentComponent) {
+    renderer = afx`
+        <div data-component="Tabs" class="tabs__wrapper">
+            <div class="tabs" role="tablist">
+                <Neos.Fusion:Loop items={q(node).children()} iteratorName="iterator" itemName="node">
+                    <button
+                        class={["tab", iterator.isFirst && 'active']}
+                        role="tab"
+                        aria-selected={iterator.isFirst ? "true" : "false"}
+                        tabindex={iterator.isFirst ? "0" : "-1"}
+                        id={'tab-' + node.identifier}
+                        aria-controls={'panel-' + node.identifier}
+                    >
+                        <div class="tab-link__inner">
+                            {q(node).property("title")}
+                        </div>
+                    </button>
+                </Neos.Fusion:Loop>
+                <div class="spacer"></div>
+            </div>
+            <div class="tabs-content__wrapper">
+                <Neos.Neos:ContentCollection nodePath="." attributes.class="tabs-content" />
+            </div>
+        </div>
+    `
+}
