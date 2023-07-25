@@ -15,5 +15,12 @@ up:
       transformations:
         - type: 'Neos\NeosIo\ContentRepository\Transformations\FlattenCollectionsTransformation'
         - type: 'Neos\NeosIo\ContentRepository\Transformations\RemoveEmptyCollectionsTransformation'
+    - filters:
+        - type: 'NodeType'
+          settings:
+            nodeType: 'Neos.NeosIo:Box'
+      transformations:
+        - type: 'Neos\NeosIo\ContentRepository\Transformations\FlattenCollectionsTransformation'
+        - type: 'Neos\NeosIo\ContentRepository\Transformations\RemoveEmptyCollectionsTransformation'
 down:
   comments: 'No down migration available'
