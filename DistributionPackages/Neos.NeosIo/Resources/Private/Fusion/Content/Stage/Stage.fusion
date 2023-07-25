@@ -7,10 +7,11 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:ContentComponent) {
     alternativeText = ${q(node).property('alternativeText')}
     title = ${q(node).property('title')}
     isContentExtraPadded = ${q(node).property('isContentExtraPadded') || this.backgroundImage  != null}
+    isContentFullWidth = ${q(node).property('isContentFullWidth')}
 
     renderer = afx`
         <section class={['stage', props.backgroundColor ? 'stage--' + props.backgroundColor : 'stage--bright']}>
-            <div class={['stage__contents', props.isContentTextInverted && 'u-invertText', props.isContentExtraPadded && 'stage__contents--extraPadding']}>
+            <div class={['stage__contents', props.isContentTextInverted && 'u-invertText', props.isContentExtraPadded && 'stage__contents--extraPadding', props.isContentFullWidth && 'stage__contents--fullWidth']}>
                 <Neos.Neos:ContentCollection nodePath="contents" />
             </div>
             <Neos.NeosIo:Stage.FixedBackgroundImage
