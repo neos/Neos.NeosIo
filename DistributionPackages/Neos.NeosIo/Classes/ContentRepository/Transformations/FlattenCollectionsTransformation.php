@@ -33,7 +33,7 @@ class FlattenCollectionsTransformation extends AbstractTransformation
 
         foreach ($contentCollections as $contentCollection) {
             if ($contentCollection->hasChildNodes() && $contentCollection->getNodeType()->getName() === 'Neos.Neos:ContentCollection') {
-                $this->moveChildNodesToSlide($contentCollection->getChildNodes(), $parentNode);
+                $this->moveChildNodesToParent($contentCollection->getChildNodes(), $parentNode);
             }
         }
     }
@@ -41,7 +41,7 @@ class FlattenCollectionsTransformation extends AbstractTransformation
     /**
      * @param NodeInterface[] $children
      */
-    protected function moveChildNodesToSlide(array $children, NodeInterface $parentNode): void
+    protected function moveChildNodesToParent(array $children, NodeInterface $parentNode): void
     {
         foreach ($children as $childNode) {
             if ($childNode instanceof NodeInterface) {
