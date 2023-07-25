@@ -23,3 +23,15 @@ _Note: We require [nvm](https://github.com/creationix/nvm#install-script) as wel
 | `yarn build` | Builds all assets |
 | `yarn pipeline` | Runs install and then build all assets |
 | `yarn start` | Watches the sources and rebuilds assets on change |
+
+### Troubleshooting Performance Issues with Neos.IO
+
+If you experience slow website behavior on your machine while using Neos.IO, follow these steps to check for potential solutions:
+
+1. Docker Version: Ensure your Docker installation is up to date. Neos.IO requires Docker version 4.21 or above for optimal performance.
+
+2. VirtioFS Status: Verify if VirtioFS is enabled in your Docker setup. VirtioFS provides improved I/O performance for operations on bind mounts, essential for Neos.IO to perform efficiently.
+   * VirtioFS is available in macOS 12.5 and above. Make sure your macOS version meets this requirement. 
+   * To enable VirtioFS and the Virtualization framework, check your Docker settings or configuration.
+
+By following these steps, you can potentially address any performance-related issues with Neos.IO and enjoy a smoother website experience.
