@@ -8,21 +8,25 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:ContentComponent) {
     title = ${q(node).property('title')}
     isContentExtraPadded = ${q(node).property('isContentExtraPadded') || this.backgroundImage  != null}
 
+    editableTitle = Neos.Neos:Editable {
+        property = 'title'
+        block = false
+    }
+
     renderer = afx`
         <section class={['stage', props.backgroundColor ? 'stage--' + props.backgroundColor : 'stage--bright']}>
             <div class={['stage__contents', props.isContentTextInverted && 'u-invertText', props.isContentExtraPadded && 'stage__contents--extraPadding']}>
-                <Neos.Neos:ContentCollection nodePath="contents" />
+                <h2 @if={node.context.inBackend || props.title}>{props.editableTitle}</h2>
+                <Neos.Neos:ContentCollection />
             </div>
             <Neos.NeosIo:Stage.FixedBackgroundImage
                 @if.fixed={props.backgroundImageFixed}
-                title={props.title}
                 backgroundImage={props.backgroundImage}
                 altText={props.alternativeText}
                 backgroundShadePercentage={props.backgroundShadePercentage}
             />
             <Neos.NeosIo:Stage.BackgroundImage
                 @if.notFixed={!props.backgroundImageFixed}
-                title={props.title}
                 backgroundImage={props.backgroundImage}
                 altText={props.alternativeText}
                 backgroundShadePercentage={props.backgroundShadePercentage}
