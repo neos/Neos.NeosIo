@@ -4,9 +4,9 @@ $font-path: "../Assets" !default;
   font-family: 'Work Sans';
   font-display: swap;
   src:
-    local("Work Sans"),
-    url('#{$font-path}/work-sans-v5-latin-regular.woff') format('woff'),
-    url('#{$font-path}/work-sans-v5-latin-regular.woff2') format('woff2');
-  font-style: normal;
-  font-weight: 400;
+    local('Work Sans Variable'),
+    url('#{$font-path}/work-sans-variable.woff2') format('woff2 supports variations'),
+    url('#{$font-path}/work-sans-variable.woff2') format('woff2-variations'),
+    url('#{$font-path}/work-sans-regular.woff2') format('woff2');
+  font-weight: 100 1000;
 }
