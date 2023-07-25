@@ -1,8 +1,6 @@
 // this is based on the abstract Neos.MarketPlace:Version nodetype
 
-prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/NodeTypes/Version.html'
-
+prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Fusion:Component) {
     version = ${q(node).property('version')}
     versionNormalized = ${q(node).property('versionNormalized')}
     stability = ${q(node).property('stability')}
@@ -21,4 +19,129 @@ prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Neos:Content) {
     suggest = ${q(node).property('suggest')}
     conflict = ${q(node).property('conflict')}
     replace = ${q(node).property('replace')}
+
+    source = ${q(node).children('source').first()}
+    sourceType = ${this.source.property('type')}
+    sourceUrl = ${this.source.property('url')}
+    sourceReference = ${this.source.property('reference')}
+
+    dist = ${q(node).find('dist').first()}
+    distReference = ${this.dist.property('reference')}
+    distShaSum = ${this.dist.property('shasum')}
+    distType = ${this.dist.property('type')}
+    distUrl = ${this.dist.property('url')}
+
+    hasKeywords = ${String.isBlank(q(node).property('keywords')) ? false : true}
+    keywords = Neos.MarketPlace:Tags {
+        data = ${q(node).property('keywords')}
+    }
+
+    require = Neos.MarketPlace:PackageRequirements {
+        property = 'require'
+    }
+    requireDev = Neos.MarketPlace:PackageRequirements {
+        property = 'requireDev'
+    }
+    suggest = Neos.MarketPlace:PackageRequirements {
+        property = 'suggest'
+    }
+    replace = Neos.MarketPlace:PackageRequirements {
+        property = 'replace'
+    }
+    conflict = Neos.MarketPlace:PackageRequirements {
+        property = 'conflict'
+    }
+    replace = Neos.MarketPlace:PackageRequirements {
+        property = 'replace'
+    }
+    provide = Neos.MarketPlace:PackageRequirements {
+        property = 'provide'
+    }
+
+    isAbandoned = ${q(documentNode).property('abandoned') ? true : false}
+    abandoned = ${q(documentNode).property('abandoned')}
+
+    renderer = afx`
+      <article class="version">
+        <header>
+          <h2>{props.version}</h2>
+        </header>
+        <Neos.Fusion:Fragment @if={props.abandoned}>
+          <p>This version is abandoned and no longer maintained. The author suggests using the
+            <strong>{props.abandoned}</strong> package instead.</p>
+          <hr />
+        </Neos.Fusion:Fragment>
+        <p @if={props.description}>{propsdescription}</p>
+
+        <div class="g">
+          <div class="gi u-w1/1 u-wm1/2">
+            <dl>
+              <Neos.Fusion:Fragment @if={props.homepage}>
+                <dt>Homepage</dt>
+                <dd>{props.homepage}</dd>
+              </Neos.Fusion:Fragment>
+              <Neos.Fusion:Fragment @if={props.version}>
+                <dt>Version</dt>
+                <dd>{props.version}</dd>
+              </Neos.Fusion:Fragment>
+              <Neos.Fusion:Fragment @if={props.type}>
+                <dt>Type</dt>
+                <dd>{props.type}</dd>
+              </Neos.Fusion:Fragment>
+              <Neos.Fusion:Fragment @if={props.time}>
+                <dt>Release Date</dt>
+                <dd>{Date.format(props.time, 'M d, Y H:i')}</dd>
+              </Neos.Fusion:Fragment>
+              <dt>Source</dt>
+              <dd><a href={props.sourceUrl} title="Source" rel="noreferrer noopener">{props.sourceType}</a></dd>
+              <dt>Distribution</dt>
+              <dd><a href={props.distUrl} title="Distribution" rel="noreferrer noopener">{props.distType}</a></dd>
+            </dl>
+          </div>
+          <div class="gi u-w1/1 u-wm1/2">
+            <dl>
+              <Neos.Fusion:Fragment @if={props.require}>
+                <dt>Requires</dt>
+                <dd>{props.require}</dd>
+              </Neos.Fusion:Fragment>
+              <Neos.Fusion:Fragment @if={props.requireDev}>
+                <dt>Requires (dev)</dt>
+                <dd>{props.requireDev}</dd>
+              </Neos.Fusion:Fragment>
+              <Neos.Fusion:Fragment @if={props.suggest}>
+                <dt>Suggest</dt>
+                <dd>{props.suggest}</dd>
+              </Neos.Fusion:Fragment>
+              <Neos.Fusion:Fragment @if={props.provide}>
+                <dt>Provides</dt>
+                <dd>{props.provide}</dd>
+              </Neos.Fusion:Fragment>
+              <Neos.Fusion:Fragment @if={props.conflict}>
+                <dt>Conflicts</dt>
+                <dd>{props.conflict}</dd>
+              </Neos.Fusion:Fragment>
+              <Neos.Fusion:Fragment @if={props.replace}>
+                <dt>Replaces</dt>
+                <dd>{props.replace}</dd>
+              </Neos.Fusion:Fragment>
+              <Neos.Fusion:Fragment @if={props.bin}>
+                <dt>Bin</dt>
+                <dd>{props.bin}</dd>
+              </Neos.Fusion:Fragment>
+            </dl>
+          </div>
+        </div>
+        <footer>
+          <Neos.Fusion:Fragment @if={props.license}>
+            <i class="fas fa-copyright" title="License"></i> {props.license}
+          </Neos.Fusion:Fragment>
+          <Neos.Fusion:Fragment @if={props.hasKeywords}>
+            <i class="fas fa-tag" title="Tags"></i> {props.keywords}
+          </Neos.Fusion:Fragment>
+          <Neos.Fusion:Fragment @if={props.sourceReference}>
+            <i class="fas fa-bookmark" title="License"></i> {props.sourceReference}
+          </Neos.Fusion:Fragment>
+        </footer>
+      </article>
+    `
 }

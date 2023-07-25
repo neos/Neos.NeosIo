@@ -1,9 +1,17 @@
-prototype(Neos.MarketPlace:VersionMenuItem) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Version/VersionMenuItem.html'
-
-    attributes {
-        class = 'version-nav__item'
-    }
+prototype(Neos.MarketPlace:VersionMenuItem) < prototype(Neos.Fusion:Component) {
     version = ${q(node).property('version')}
     time = ${q(node).property('time')}
+
+    renderer = afx`
+        <li class="version-nav__item">
+          <a href={'#version:' + props.version} class="version-nav__link">
+            <span class="version-nav__version">
+              {props.version}
+            </span>
+            <span class="version-nav__time" @if={props.time}>
+              {Date.format(props.time, 'd M Y')}
+            </span>
+          </a>
+        </li>
+    `
 }

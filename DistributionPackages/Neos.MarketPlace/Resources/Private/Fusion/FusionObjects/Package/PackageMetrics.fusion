@@ -1,11 +1,17 @@
-prototype(Neos.MarketPlace:PackageMetrics) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/PackageMetrics.html'
-
-    attributes = Neos.Fusion:Attributes {
-        class = 'metrics'
-    }
-
-    stargazers = ${q(node).property('githubStargazers')}
+prototype(Neos.MarketPlace:PackageMetrics) < prototype(Neos.Fusion:Component) {
+    favers = ${q(node).property('favers')}
     forks = ${q(node).property('githubForks')}
     downloads = ${q(node).property('downloadTotal')}
+
+    renderer = afx`
+      <span class="metrics__item" @if={props.favers}>
+          <i class="fas fa-star"></i> {props.favers}
+      </span>
+      <span class="metrics__item" @if={props.forks}>
+          <i class="fas fa-code-branch"></i> {props.forks}
+      </span>
+      <span class="metrics__item" @if={props.downloads}>
+          <i class="fas fa-download"></i> {props.downloads}
+      </span>
+    `
 }
