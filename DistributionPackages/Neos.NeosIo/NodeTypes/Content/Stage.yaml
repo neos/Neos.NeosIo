@@ -61,6 +61,20 @@
         label: 'Create more padding around the contents'
         inspector:
           group: content
+    padding:
+      type: string
+      ui:
+        label: 'Padding'
+        reloadIfChanged: true
+        inspector:
+          group: content
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            allowEmpty: true
+            placeholder: 'Default'
+            values:
+              none:
+                label: None
     backgroundColor:
       type: string
       defaultValue: bright
@@ -78,8 +92,34 @@
                 label: Dark
               primary:
                 label: Primary
+                group: Primary
+              primary-20:
+                label: Primary 20%
+                group: Primary
+              primary-40:
+                label: Primary 40%
+                group: Primary
+              primary-60:
+                label: Primary 60%
+                group: Primary
+              primary-80:
+                label: Primary 80%
+                group: Primary
               secondary:
                 label: Secondary
+                group: Secondary
+              secondary-20:
+                label: Secondary 20%
+                group: Secondary
+              secondary-40:
+                label: Secondary 40%
+                group: Secondary
+              secondary-60:
+                label: Secondary 60%
+                group: Secondary
+              secondary-80:
+                label: Secondary 80%
+                group: Secondary
               teritary:
                 label: Teritary
     backgroundImage:

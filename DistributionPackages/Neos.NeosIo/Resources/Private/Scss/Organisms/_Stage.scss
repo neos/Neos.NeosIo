@@ -1,28 +1,45 @@
 .stage {
+  @include u-linkReset();
+
   --stage-background-color: #000;
+  --stage-color: currentColor;
+
   display: block;
   position: relative;
-  background: #000;
-
-  @include u-linkReset();
+  background: var(--stage-background-color);
+  color: var(--stage-color);
 }
 
 .stage--bright {
   --stage-background-color: #fff;
-  background: #FFF;
 }
 
 .stage--dark {
   --stage-background-color: #000;
-  background: #000;
 }
 
 .stage--primary {
   --stage-background-color: #{brand('primary')};
-  background: #{brand('primary')};
+
+  &-20 {
+    --stage-background-color: #{brand('primary-20')};
+  }
+
+  &-40 {
+    --stage-background-color: #{brand('primary-40')};
+  }
+
+  &-60 {
+    --stage-background-color: #{brand('primary-60')};
+    --stage-color: #fff;
+  }
+
+  &-80 {
+    --stage-background-color: #{brand('primary-80')};
+    --stage-color: #fff;
+  }
 
   a {
-    color: #fff;
     text-decoration: underline;
 
     &:hover,
@@ -31,15 +48,31 @@
     }
   }
 }
-
 .stage--secondary {
   --stage-background-color: #{brand('secondary')};
-  background: #{brand('secondary')};
+
+  &-20 {
+    --stage-background-color: #{brand('secondary-20')};
+  }
+
+  &-40 {
+    --stage-background-color: #{brand('secondary-40')};
+    --stage-color: #fff;
+  }
+
+  &-60 {
+    --stage-background-color: #{brand('secondary-60')};
+    --stage-color: #fff;
+  }
+
+  &-80 {
+    --stage-background-color: #{brand('secondary-80')};
+    --stage-color: #fff;
+  }
 }
 
 .stage--teritary {
   --stage-background-color: #{brand('teritary')};
-  background: #{brand('teritary')};
 }
 
 .stage__bg {
@@ -112,15 +145,21 @@
   }
 }
 
-.stage__contents--extraPadding {
-  padding-top: 25vh;
-  padding-bottom: 25vh;
-}
+.stage__contents {
+  &--extraPadding {
+    padding-top: 25vh;
+    padding-bottom: 25vh;
+  }
 
-.stage__contents--small {
-  max-width: $layout-small-width;
-}
+  &--padding-none {
+    padding: 0;
+  }
 
-.stage__contents--big {
-  max-width: 9999px;
+  &--small {
+    max-width: #{$layout-small-width};
+  }
+
+  &--big {
+    max-width: 9999px;
+  }
 }

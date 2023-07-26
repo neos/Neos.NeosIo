@@ -7,6 +7,7 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:ContentComponent) {
     alternativeText = ${q(node).property('alternativeText')}
     title = ${q(node).property('title')}
     isContentExtraPadded = ${q(node).property('isContentExtraPadded') || this.backgroundImage  != null}
+    padding = ${q(node).property('padding')}
 
     editableTitle = Neos.Neos:Editable {
         property = 'title'
@@ -15,7 +16,7 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:ContentComponent) {
 
     renderer = afx`
         <section class={['stage', props.backgroundColor ? 'stage--' + props.backgroundColor : 'stage--bright']}>
-            <div class={['stage__contents', props.isContentTextInverted && 'u-invertText', props.isContentExtraPadded && 'stage__contents--extraPadding']}>
+            <div class={['stage__contents', props.isContentTextInverted && 'u-invertText', props.isContentExtraPadded && 'stage__contents--extraPadding', props.padding && 'stage__contents--padding-' + props.padding]}>
                 <h2 @if={node.context.inBackend || props.title}>{props.editableTitle}</h2>
                 <Neos.Neos:ContentCollection />
             </div>
