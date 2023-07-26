@@ -1,6 +1,4 @@
 .stage {
-  @include u-linkReset();
-
   --stage-background-color: #000;
   --stage-color: currentColor;
 
@@ -8,6 +6,7 @@
   position: relative;
   background: var(--stage-background-color);
   color: var(--stage-color);
+  @include u-linkReset();
 }
 
 .stage--bright {
@@ -130,11 +129,11 @@
   margin: 0 auto;
   padding: 7.5vh $double-spacing+px;
 
-  @include mq('small') {
-    *:not(i) {
-      text-align: left !important;
-    }
-  }
+	@include mq('small') {
+		*[style*=center],.u-alignCenter,.neos-alignment-center {
+			text-align: left!important;
+		}
+	}
 
   > :last-child {
     margin-bottom: 0;
