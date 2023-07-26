@@ -9,4 +9,25 @@
     flex: 0 1 200px;
     margin: 1rem;
   }
+
+  &.monochrome img {
+    filter: grayscale(100%);
+  }
+
+  &.distribute-evenly {
+    flex-wrap: nowrap;
+    justify-content: center;
+
+    @media(max-width: $layout-max-width) {
+      > *:nth-child(n+6) {
+        display: none;
+      }
+    }
+
+    img {
+      max-height: 30px;
+      max-width: 100px;
+    }
+
+  }
 }
