@@ -1,0 +1,39 @@
+prototype(Neos.NeosIo:Content.Map) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.NeosIo:Map {
+        lat = ${q(node).property('lat')}
+        lng = ${q(node).property('lng')}
+        zoom = ${q(node).property('zoom')}
+        popupText = ${q(node).property('popupText')}
+    }
+}
+
+prototype(Neos.NeosIo:Map) < prototype(Neos.Fusion:Component) {
+    lat = 0
+    lat.@process.toFloat = ${String.toFloat(value)}
+    lng = 0
+    lng.@process.toFloat = ${String.toFloat(value)}
+    zoom = 14
+    zoom.@process.toFloat = ${String.toFloat(value)}
+
+    popupText = ''
+
+    @propTypes {
+        @strict = true
+        lat = ${PropTypes.float.isRequired}
+        lng = ${PropTypes.float.isRequired}
+        zoom = ${PropTypes.float.isRequired}
+        popupText = ${PropTypes.string}
+    }
+
+    renderer = afx`
+            <link rel="stylesheet" href="/_maptiles/frontend/v1/map-main.css" />
+            <div
+                data-component="Map"
+                style="height: 500px"
+                data-lat={props.lat}
+                data-lng={props.lng}
+                data-zoom={props.zoom}
+                data-popupText={props.popupText}
+            ></div>
+        `
+}

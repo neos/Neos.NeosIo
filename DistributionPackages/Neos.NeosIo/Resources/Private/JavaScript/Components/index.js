@@ -7,6 +7,7 @@ import ScrollTo from './ScrollTo';
 import ProgressiveImage from './ProgressiveImage';
 import ScrollClassToggler from './ScrollClassToggler';
 import SentenceSwitcher from './SentenceSwitcher';
+import Map from './Map';
 
 export {
     ClassToggler,
@@ -16,5 +17,6 @@ export {
     SentenceSwitcher,
     ProgressiveImage,
     ScrollClassToggler,
-    EmptyClickHandler
+    EmptyClickHandler,
+    Map
 };

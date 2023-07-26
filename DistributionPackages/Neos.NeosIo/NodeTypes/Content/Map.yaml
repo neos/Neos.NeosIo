@@ -1,0 +1,51 @@
+'Neos.NeosIo:Content.Map':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'Map'
+    icon: icon-map
+    inspector:
+      groups:
+        general:
+          label: i18n
+        properties:
+          label: 'Properties'
+          tab: default
+
+  properties:
+
+    lat:
+      type: string
+      defaultValue: '51.0567032'
+      ui:
+        label: 'Latitude'
+        reloadIfChanged: true
+        inspector:
+          group: properties
+
+    lng:
+      type: string
+      defaultValue: '13.7769583'
+      ui:
+        label: 'Longitude'
+        reloadIfChanged: true
+        inspector:
+          group: properties
+
+    zoom:
+      type: string
+      defaultValue: '14'
+      ui:
+        label: 'Default zoom level'
+        reloadIfChanged: true
+        inspector:
+          group: properties
+
+    popupText:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Popup-Text'
+        reloadIfChanged: true
+        inspector:
+          group: properties
