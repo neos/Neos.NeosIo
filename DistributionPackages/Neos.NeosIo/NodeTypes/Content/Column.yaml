@@ -1,7 +1,6 @@
 'Neos.NeosIo:Content.Column':
   superTypes:
     Neos.Neos:ContentCollection: true
-    Neos.NeosIo:Mixin.ButtonStyles: true
   ui:
     label: Column
     icon: 'icon-columns'
@@ -23,15 +22,19 @@
           position: 10
     moreLinkLabel:
       type: string
-      defaultValue: 'Read more'
       ui:
         inlineEditable: true
         inline:
           editorOptions:
+            placeholder: 'Read more >'
             autoparagraph: false
+    moreLinkExternal:
+      type: boolean
+      ui:
+        label: 'Open in new tab/window'
         inspector:
           group: column
-          type: string
+          position: 'after moreLink'
   constraints:
     nodeTypes:
       '*': false
