@@ -61,14 +61,22 @@
         label: 'Create more padding around the contents'
         inspector:
           group: content
-    isContentFullWidth:
-      type: boolean
-      defaultValue: false
+    contentWidth:
+      type: string
       ui:
         reloadIfChanged: true
-        label: 'Set content to full width (without padding)'
+        label: 'Maximum content width'
         inspector:
           group: content
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            allowEmpty: true
+            placeholder: 'Default (1000px)'
+            values:
+              wide:
+                label: 'Wide (1800px)'
+              full:
+                label: 'Full-width (100%)'
     padding:
       type: string
       ui:
