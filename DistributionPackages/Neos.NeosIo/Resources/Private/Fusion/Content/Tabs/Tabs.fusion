@@ -11,12 +11,11 @@ prototype(Neos.NeosIo:Tabs) < prototype(Neos.Neos:ContentComponent) {
                         id={'tab-' + node.identifier}
                         aria-controls={'panel-' + node.identifier}
                     >
-                        <div class="tab-link__inner">
+                        <span class="tab-link__inner">
                             {q(node).property("title")}
-                        </div>
+                        </span>
                     </button>
                 </Neos.Fusion:Loop>
-                <div class="spacer"></div>
             </div>
             <div class="tabs-content__wrapper">
                 <Neos.Neos:ContentCollection nodePath="." attributes.class="tabs-content" />
