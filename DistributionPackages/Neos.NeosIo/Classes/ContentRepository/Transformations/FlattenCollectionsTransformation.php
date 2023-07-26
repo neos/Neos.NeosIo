@@ -23,7 +23,7 @@ class FlattenCollectionsTransformation extends AbstractTransformation
 
     public function execute(NodeData $node): void
     {
-        $contentContext = $this->createContentContext($node->getWorkspace()->getName());
+        $contentContext = $this->createContentContext($node->getWorkspace()->getName(), $node->getDimensionValues());
         $parentNode = $contentContext->getNodeByIdentifier($node->getIdentifier());
         if (!$parentNode) {
             return;
