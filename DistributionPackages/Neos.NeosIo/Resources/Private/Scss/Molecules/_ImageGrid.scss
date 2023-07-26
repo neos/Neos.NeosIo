@@ -17,12 +17,25 @@
   &.distribute-evenly {
     flex-wrap: nowrap;
     justify-content: center;
+    .neos-nodetypes-image {
+      text-align:center;
+    }
 
-    @media(max-width: $layout-max-width) {
+    @include mq('smallerThanLarge') {
       > *:nth-child(n+6) {
         display: none;
       }
     }
+
+    @include mq('small') {
+      > *:nth-child(n+4) {
+        display: none;
+      }
+      .neos-alignment-center {
+        text-align: center;
+      }
+    }
+
 
     img {
       max-height: 30px;
