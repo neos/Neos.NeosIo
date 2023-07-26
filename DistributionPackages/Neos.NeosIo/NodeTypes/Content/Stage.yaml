@@ -6,41 +6,45 @@
 'Neos.NeosIo:Stage':
   superTypes:
     'Neos.Neos:Content': true
-  childNodes:
-    contents:
-      type: 'Neos.Neos:ContentCollection'
-      constraints:
-        nodeTypes:
-          '*': false
-          'Neos.NodeTypes.ColumnLayouts:TwoColumn': true
-          'Neos.NodeTypes.ColumnLayouts:ThreeColumn': true
-          'Neos.NodeTypes.ColumnLayouts:FourColumn': true
-          'Neos.NodeTypes:Text': true
-          'Neos.NodeTypes:Image': true
-          'Neos.NodeTypes:TextWithImage': true
-          'Neos.NodeTypes:Headline': true
-          'Neos.NodeTypes.Html:Html': true
-          'Neos.NodeTypes.ContentReferences:ContentReferences': true
-          'Neos.NeosIo:Box': true
-          'Neos.NeosIo:Button': true
-          'Neos.NeosIo:ButtonDimensionAware': true
-          'Neos.NeosIo:ChoiceButtons': true
-          'Neos.NeosIo:Quote': true
-          'Neos.NeosIo:SemanticSection': true
-          'Neos.NeosIo:Youtube': true
-          'Neos.NeosIo:FundingBadges': true
-          'Neos.NeosIo:BadgeGrid': true
-          'Neos.NeosIo:Content.ImageGrid': true
-          'Neos.NeosIo:ImageTeaser': true
-          'Neos.NeosIo.FeatureList:FeatureList': true
-          'Neos.NeosIo.CaseStudies:Content.CaseList': true
-          'Neos.NeosIo:PostArchive': true
+    'Neos.Neos:ContentCollection': true
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.NodeTypes.ColumnLayouts:TwoColumn': true
+      'Neos.NodeTypes.ColumnLayouts:ThreeColumn': true
+      'Neos.NodeTypes.ColumnLayouts:FourColumn': true
+      'Neos.NodeTypes:Text': true
+      'Neos.NodeTypes:Image': true
+      'Neos.NodeTypes:TextWithImage': true
+      'Neos.NodeTypes:Headline': true
+      'Neos.NodeTypes.Html:Html': true
+      'Neos.NodeTypes.ContentReferences:ContentReferences': true
+      'Neos.NeosIo:Box': true
+      'Neos.NeosIo:Button': true
+      'Neos.NeosIo:ButtonDimensionAware': true
+      'Neos.NeosIo:ChoiceButtons': true
+      'Neos.NeosIo:Quote': true
+      'Neos.NeosIo:SemanticSection': true
+      'Neos.NeosIo:Youtube': true
+      'Neos.NeosIo:FundingBadges': true
+      'Neos.NeosIo:BadgeGrid': true
+      'Neos.NeosIo:Content.ImageGrid': true
+      'Neos.NeosIo:ImageTeaser': true
+      'Neos.NeosIo.FeatureList:FeatureList': true
+      'Neos.NeosIo.CaseStudies:Content.CaseList': true
+      'Neos.NeosIo:PostArchive': true
   ui:
     label: Stage
     icon: icon-tasks
     group: structure
-    inlineEditable: true
   properties:
+    title:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Stage title'
     isContentTextInverted:
       type: boolean
       defaultValue: false
@@ -153,18 +157,9 @@
         label: 'Background image fixed?'
         inspector:
           group: background
-
     alternativeText:
       type: string
       ui:
         label: 'Alternative text for background image'
         inspector:
           group: background
-          position: 100
-    title:
-      type: string
-      ui:
-        label: 'Title for background image'
-        inspector:
-          group: background
-          position: 150
