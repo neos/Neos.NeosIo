@@ -1,0 +1,13 @@
+prototype(Neos.MarketPlace:VendorRenderer) < prototype(Neos.Fusion:Component) {
+    title = ${q(node).property('title')}
+    packages = ${q(node).children('[instanceof Neos.MarketPlace:Package]')}
+
+    renderer = afx`
+        <article class="market-block">
+            <h1>{props.title}</h1>
+            <Neos.Fusion:Loop items={props.packages} itemName="node">
+                <Neos.MarketPlace:PackageSearchResult />
+            </Neos.Fusion:Loop>
+        </article>
+    `
+}

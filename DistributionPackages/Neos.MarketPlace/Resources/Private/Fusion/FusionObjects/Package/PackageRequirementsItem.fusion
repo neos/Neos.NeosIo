@@ -1,10 +1,14 @@
-prototype(Neos.MarketPlace:PackageRequirementsItem) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/PackageRequirementsItem.html'
-
+prototype(Neos.MarketPlace:PackageRequirementsItem) < prototype(Neos.Fusion:Component) {
     package = ${package}
     version = ${version}
 
     uri = Neos.MarketPlace:PackageUri {
         packageKey = ${package}
     }
+
+    renderer = afx`
+      <li>
+        <a href={props.uri} title={props.package}>{props.package}</a>: {props.version}
+      </li>
+    `
 }

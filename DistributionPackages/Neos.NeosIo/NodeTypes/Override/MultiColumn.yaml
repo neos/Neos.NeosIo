@@ -43,24 +43,14 @@
                 label: '33% / 66%'
   childNodes:
     column0:
+      type: 'Neos.NeosIo:Content.Column'
       constraints: &twoColumnConstraints
         nodeTypes:
-          '*': FALSE
-          'Neos.NodeTypes:Text': TRUE
-          'Neos.NodeTypes:Image': TRUE
-          'Neos.NodeTypes:TextWithImage': TRUE
-          'Neos.NodeTypes:Headline': TRUE
-          'Neos.NodeTypes.ContentReferences:ContentReferences': TRUE
-          'Neos.NeosIo:Box': TRUE
-          'Neos.NeosIo:CountUp': true
-          'Neos.NeosIo:Button': TRUE
-          'Neos.NeosIo:Teaser': TRUE
-          'Neos.NeosIo:ImageTeaser': TRUE
-          'Neos.NeosIo:Icon': TRUE
-          'Neos.NeosIo:Youtube': TRUE
-          'Neos.NeosIo:VideoEmbed': TRUE
-          'PunktDe.CodeView:Code': true
+          'Neos.NeosIo:Teaser': true
+          'Neos.NeosIo:ImageTeaser': true
+          'Neos.NeosIo:Youtube': true
     column1:
+      type: 'Neos.NeosIo:Content.Column'
       constraints: *twoColumnConstraints
 
 
@@ -100,25 +90,17 @@
                 label: '33% / 33% / 33%'
   childNodes:
     column0:
+      type: 'Neos.NeosIo:Content.Column'
       constraints: &threeColumnConstraints
         nodeTypes:
-          '*': FALSE
-          'Neos.NodeTypes:Text': TRUE
-          'Neos.NodeTypes:Image': TRUE
-          'Neos.NodeTypes:TextWithImage': TRUE
-          'Neos.NodeTypes:Headline': TRUE
-          'Neos.NodeTypes.ContentReferences:ContentReferences': TRUE
-          'Neos.NeosIo:Box': TRUE
-          'Neos.NeosIo:CountUp': true
-          'Neos.NeosIo:Button': TRUE
-          'Neos.NeosIo:Teaser': TRUE
-          'Neos.NeosIo:ImageTeaser': TRUE
-          'Neos.NeosIo:Icon': TRUE
-          'Neos.NeosIo:Youtube': TRUE
-          'Neos.NeosIo:VideoEmbed': TRUE
+          'Neos.NeosIo:Teaser': true
+          'Neos.NeosIo:ImageTeaser': true
+          'Neos.NeosIo:Youtube': true
     column1:
+      type: 'Neos.NeosIo:Content.Column'
       constraints: *threeColumnConstraints
     column2:
+      type: 'Neos.NeosIo:Content.Column'
       constraints: *threeColumnConstraints
 
 
@@ -153,21 +135,10 @@
                 label: '25% / 25% / 25% / 25%'
   childNodes:
     column0:
-      constraints: &fourColumnConstraints
-        nodeTypes:
-          '*': FALSE
-          'Neos.NodeTypes:Text': TRUE
-          'Neos.NodeTypes:Image': TRUE
-          'Neos.NodeTypes:TextWithImage': TRUE
-          'Neos.NodeTypes:Headline': TRUE
-          'Neos.NodeTypes.ContentReferences:ContentReferences': TRUE
-          'Neos.NeosIo:Box': TRUE
-          'Neos.NeosIo:CountUp': true
-          'Neos.NeosIo:Button': TRUE
-          'Neos.NeosIo:Icon': TRUE
+      type: 'Neos.NeosIo:Content.Column'
     column1:
-      constraints: *fourColumnConstraints
+      type: 'Neos.NeosIo:Content.Column'
     column2:
-      constraints: *fourColumnConstraints
+      type: 'Neos.NeosIo:Content.Column'
     column3:
-      constraints: *fourColumnConstraints
+      type: 'Neos.NeosIo:Content.Column'

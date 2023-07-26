@@ -1,0 +1,17 @@
+prototype(Neos.NodeTypes.ColumnLayouts:MultiColumn) >
+prototype(Neos.NodeTypes.ColumnLayouts:MultiColumn) < prototype(Neos.Neos:ContentComponent) {
+    columnWidth = ${q(node).property('layout')}
+    desktopColumnWidth = ${q(node).property('desktopLayout')}
+    columns = ${q(node).children('[instanceof Neos.Neos:ContentCollection]')}
+
+    renderer = afx`
+        <div class={['grid-layout', 'layout--' + props.columnWidth, 'wide-layout--' + props.desktopColumnWidth]}>
+          <Neos.Fusion:Loop items={props.columns}>
+              <Neos.NeosIo:Content.Column
+                  @context.node={item}
+                  columnWidth={String.toInteger(String.split(props.desktopColumnWidth, '-')[iterator.index])}
+              />
+          </Neos.Fusion:Loop>
+        </div>
+    `
+}

@@ -9,4 +9,38 @@
     flex: 0 1 200px;
     margin: 1rem;
   }
+
+  &.monochrome img {
+    filter: grayscale(100%);
+  }
+
+  &.distribute-evenly {
+    flex-wrap: nowrap;
+    justify-content: center;
+    .neos-nodetypes-image {
+      text-align:center;
+    }
+
+    @include mq('smallerThanLarge') {
+      > *:nth-child(n+6) {
+        display: none;
+      }
+    }
+
+    @include mq('small') {
+      > *:nth-child(n+4) {
+        display: none;
+      }
+      .neos-alignment-center {
+        text-align: center;
+      }
+    }
+
+
+    img {
+      max-height: 30px;
+      max-width: 100px;
+    }
+
+  }
 }

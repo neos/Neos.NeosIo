@@ -9,3 +9,20 @@ Neos.NeosIo:Content.ImageGrid:
     nodeTypes:
       '*': false
       Neos.NodeTypes:Image: true
+  properties:
+    isDistributeEvenly:
+      type: boolean
+      defaultValue: false
+      ui:
+        reloadIfChanged: true
+        label: 'Distribute evenly. Shows only first 5 elements < 1280px'
+        inspector:
+          group: content
+    isMonochrome:
+      type: boolean
+      defaultValue: false
+      ui:
+        reloadIfChanged: true
+        label: 'Monochrome'
+        inspector:
+          group: content

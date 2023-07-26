@@ -7,33 +7,30 @@
 'Neos.NeosIo:SemanticSection':
   superTypes:
     'Neos.Neos:Content': true
-  childNodes:
-    contents:
-      type: 'Neos.Neos:ContentCollection'
-      constraints:
-        nodeTypes:
-          '*': false
-          'Neos.NodeTypes.ColumnLayouts:TwoColumn': true
-          'Neos.NodeTypes.ColumnLayouts:ThreeColumn': true
-          'Neos.NodeTypes.ColumnLayouts:FourColumn': true
-          'Neos.NodeTypes:Text': true
-          'Neos.NodeTypes:Image': true
-          'Neos.NodeTypes:TextWithImage': true
-          'Neos.NodeTypes.Html:Html': true
-          'Neos.NodeTypes:Headline': true
-          'Neos.NodeTypes.ContentReferences:ContentReferences': true
-          'Neos.NeosIo:Button': true
-          'Neos.NeosIo:ButtonDimensionAware': true
-          'Neos.NeosIo:ChoiceButtons': true
-          'Neos.NeosIo:Quote': true
-          'Neos.NeosIo:Youtube': true
-          'Neos.NeosIo:PostFeatured': true
-          'Neos.NeosIo:BadgeGrid': true
-          'Neos.NeosIo:Box': true
-          'Neos.NeosIo:VideoEmbed': true
-          'PunktDe.CodeView:Code': true
-          'Neos.NeosIo:Event.List': true
-          'GoE.Neos:Content.Video': true
+    'Neos.Neos:ContentCollection': true
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.NodeTypes.ColumnLayouts:TwoColumn': true
+      'Neos.NodeTypes.ColumnLayouts:ThreeColumn': true
+      'Neos.NodeTypes.ColumnLayouts:FourColumn': true
+      'Neos.NodeTypes:Text': true
+      'Neos.NodeTypes:Image': true
+      'Neos.NodeTypes:TextWithImage': true
+      'Neos.NodeTypes.Html:Html': true
+      'Neos.NodeTypes:Headline': true
+      'Neos.NodeTypes.ContentReferences:ContentReferences': true
+      'Neos.NeosIo:Button': true
+      'Neos.NeosIo:ButtonDimensionAware': true
+      'Neos.NeosIo:ChoiceButtons': true
+      'Neos.NeosIo:Quote': true
+      'Neos.NeosIo:Youtube': true
+      'Neos.NeosIo:BadgeGrid': true
+      'Neos.NeosIo:Box': true
+      'Neos.NeosIo:VideoEmbed': true
+      'PunktDe.CodeView:Code': true
+      'Neos.NeosIo:Event.List': true
+      'GoE.Neos:Content.Video': true
   ui:
     label: 'Semantic Section'
     icon: icon-tasks

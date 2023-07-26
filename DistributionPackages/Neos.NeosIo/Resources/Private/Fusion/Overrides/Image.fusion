@@ -11,13 +11,12 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
         filenameFallback = ${String.isBlank(value) ? q(node).property('image').label : value}
     }
 
-    alignment = ${q(node).property("alignment")}
-
     image = ${q(node).property('image')}
+    imageClassName = Neos.Fusion:DataStructure {
+        alignment = ${'neos-alignment-' + q(node).property('alignment')}
+        alignment.@if.isSet = ${q(node).property('alignment')}
 
-    imageClassName = ${this.alignment ? ('neos-alignment-' + this.alignment) : ''}
-    imageClassName.@process {
-        addImageStyle = ${value + ' ' + q(node).property('imageStyle')}
+        addImageStyle = ${'image--style image--style-' + q(node).property('imageStyle')}
         addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
     }
 
@@ -66,7 +65,6 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
                 height = ${props.height}
                 async = true
                 attributes.alt = ${props.alternativeText}
-                attributes.class = ${props.imageClassName}
                 attributes.loading = ${props.loading}
                 attributes.style = Neos.Fusion:Join {
                     maxHeight = ${'max-height: ' + props.maximumHeight + 'px;'}

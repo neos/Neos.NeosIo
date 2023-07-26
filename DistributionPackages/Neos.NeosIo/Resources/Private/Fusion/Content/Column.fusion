@@ -1,0 +1,40 @@
+prototype(Neos.NeosIo:Content.Column) < prototype(Neos.Neos:ContentComponent) {
+    moreLink = ${q(node).property('moreLink')}
+    moreLink.@process.convertUris = Neos.Neos:ConvertUris {
+        absolute = true
+    }
+    editableMoreLinkLabel = Neos.Neos:Editable {
+        property = 'moreLinkLabel'
+    }
+    moreLinkLabel = ${q(node).property('moreLinkLabel')}
+    moreLinkExternal = ${q(node).property('moreLinkExternal')}
+
+    columnWidth = 6
+    columnWidth.@process.validate = ${Type.isInteger(value) ? value : 6}
+    @context.columnWidth = ${this.columnWidth}
+
+    // Limit maximum image size in columns based on the selected layout
+    prototype(Neos.Neos:ImageTag) {
+        maximumWidth = ${2192 / 12 * (columnWidth || 6)}
+    }
+    prototype(Neos.NodeTypes:Image) {
+        maximumWidth = ${2192 / 12 * (columnWidth || 6)}
+    }
+
+    renderer = afx`
+        <div class="grid-layout--item">
+            <Neos.Neos:ContentCollection />
+            <a
+                class="grid-layout--item--more-link"
+                @if={props.moreLink}
+                href={props.moreLink}
+                href.@if={!node.context.inBackend}
+                title={props.moreLinkLabel}
+                rel="noreferrer noopener"
+                target={props.moreLinkExternal ? '_blank' : null}
+            >
+                {props.editableMoreLinkLabel || 'Read more >'}
+            </a>
+        </div>
+    `
+}

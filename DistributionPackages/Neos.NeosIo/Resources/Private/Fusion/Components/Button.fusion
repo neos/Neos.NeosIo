@@ -1,0 +1,13 @@
+prototype(Neos.NeosIo:Component.Button) < prototype(Neos.Fusion:Component) {
+    color = ''
+    uri = null
+
+    additionalClassName = ''
+    className = 'btn'
+
+    renderer = afx`
+        <a class={[props.className, props.color, props.additionalClassName]} href={props.uri}>
+            <div class="btn__content">{props.content}</div>
+        </a>
+    `
+}

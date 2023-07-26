@@ -1,5 +1,11 @@
-prototype(Neos.MarketPlace:PackageLastActivity) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/PackageLastActivity.html'
-
+prototype(Neos.MarketPlace:PackageLastActivity) < prototype(Neos.Fusion:Component) {
     lastActivity = ${q(node).property('lastActivity')}
+
+    renderer = afx`
+        <span>
+            <i class="fas fa-clock"></i> {I18n.translate('package.lastActivity', 'Last activity', [], 'Main', 'Neos.MarketPlace')} {Date.format(props.lastActivity, 'd M Y')}
+        </span>
+    `
+
+    @if.visible = ${this.lastActivity}
 }
