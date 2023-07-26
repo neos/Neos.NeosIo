@@ -1,10 +1,12 @@
 .stage {
-	--stage-background-color: #000;
-	display: block;
-	position: relative;
-	background: #000;
+  --stage-background-color: #000;
+  --stage-color: currentColor;
 
-	@include u-linkReset();
+  display: block;
+  position: relative;
+  background: var(--stage-background-color);
+  color: var(--stage-color);
+  @include u-linkReset();
 }
 
 .stage--bright {
@@ -14,6 +16,7 @@
 .stage--dark {
   --stage-background-color: #000;
 }
+
 .stage--primary {
   --stage-background-color: #{brand('primary')};
 
