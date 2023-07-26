@@ -1,26 +1,17 @@
-prototype(Neos.NodeTypes.ColumnLayouts:MultiColumn) {
-    attributes = Neos.Fusion:Attributes {
-        class = Neos.Fusion:DataStructure {
-            row = 'g'
+prototype(Neos.NodeTypes.ColumnLayouts:MultiColumn) >
+prototype(Neos.NodeTypes.ColumnLayouts:MultiColumn) < prototype(Neos.Neos:ContentComponent) {
+    columnWidth = ${q(node).property('layout')}
+    desktopColumnWidth = ${q(node).property('desktopLayout')}
+    columns = ${q(node).children('[instanceof Neos.Neos:ContentCollection]')}
 
-            @process.nodeType >
-        }
-    }
-    columns.iterationName = 'multiColumnIteration'
-}
-
-prototype(Neos.NodeTypes.ColumnLayouts:MultiColumnItem) {
-    @context {
-        columnWidth = ${String.split(q(node).parent().property('layout'), '-')[multiColumnIteration.index]}
-        desktopColumnWidth = ${String.split(q(node).parent().property('desktopLayout'), '-')[multiColumnIteration.index]}
-    }
-    attributes.class = ${'gi u-w1/1 u-wm' + columnWidth + '/12 u-wl' + desktopColumnWidth + '/12'}
-
-    // Limit maximum image size in columns based on the selected layout
-    prototype(Neos.Neos:ImageTag) {
-        maximumWidth = ${2192 / 12 * (desktopColumnWidth || 6)}
-    }
-    prototype(Neos.NodeTypes:Image) {
-        maximumWidth = ${2192 / 12 * (desktopColumnWidth || 6)}
-    }
+    renderer = afx`
+        <div class={['grid-layout', 'layout--' + props.columnWidth, 'wide-layout--' + props.desktopColumnWidth]}>
+          <Neos.Fusion:Loop items={props.columns}>
+              <Neos.NeosIo:Content.Column
+                  @context.node={item}
+                  columnWidth={String.toInteger(String.split(props.desktopColumnWidth, '-')[iterator.index])}
+              />
+          </Neos.Fusion:Loop>
+        </div>
+    `
 }

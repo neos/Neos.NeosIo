@@ -1,0 +1,49 @@
+'Neos.NeosIo:Content.Column':
+  superTypes:
+    Neos.Neos:ContentCollection: true
+  ui:
+    label: Column
+    icon: 'icon-columns'
+    inspector:
+      groups:
+        column:
+          label: Column
+        appearance:
+          label: Appearance
+  properties:
+    moreLink:
+      type: string
+      ui:
+        label: 'More link'
+        reloadIfChanged: true
+        inspector:
+          group: column
+          editor: Neos.Neos/Inspector/Editors/LinkEditor
+          position: 10
+    moreLinkLabel:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Read more >'
+            autoparagraph: false
+    moreLinkExternal:
+      type: boolean
+      ui:
+        label: 'Open in new tab/window'
+        inspector:
+          group: column
+          position: 'after moreLink'
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.NodeTypes:Text': true
+      'Neos.NodeTypes:Image': true
+      'Neos.NodeTypes:TextWithImage': true
+      'Neos.NodeTypes:Headline': true
+      'Neos.NodeTypes:ContentReferences': true
+      'Neos.NeosIo:Box': true
+      'Neos.NeosIo:CountUp': true
+      'Neos.NeosIo:Button': true
+      'Neos.NeosIo:Icon': true

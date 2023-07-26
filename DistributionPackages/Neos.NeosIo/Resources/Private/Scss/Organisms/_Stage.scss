@@ -142,9 +142,7 @@
   > h2 {
     text-align: center;
   }
-}
 
-.stage__contents {
   &--extraPadding {
     padding-top: 25vh;
     padding-bottom: 25vh;
@@ -161,8 +159,19 @@
   &--big {
     max-width: 9999px;
   }
-}
-.stage__contents.stage__contents--fullWidth {
-  max-width: 100%;
-  padding: 7.5vh 0;
+
+  &.stage__contents--fullWidth {
+    max-width: 100%;
+    padding: 7.5vh 0;
+  }
+
+  > h2 {
+    margin-bottom: 2rem;
+  }
+
+  > .neos-contentcollection {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
 }
