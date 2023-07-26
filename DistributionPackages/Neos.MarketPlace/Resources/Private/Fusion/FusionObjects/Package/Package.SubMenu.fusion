@@ -1,34 +1,37 @@
-prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/Package/Package.SubMenu.html'
-
+prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Component) {
     versions = Neos.MarketPlace:VersionsQuery
     @context.releasedVersionQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:ReleasedVersion]')}
     @context.prereleasedVersionQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:PrereleasedVersion]')}
     @context.developmentVersionsQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:DevelopmentVersion]')}
 
-    maintainers = Neos.MarketPlace:PeopleMenu {
-        path = 'maintainers'
-    }
-
     releasedVersionMenu = Neos.MarketPlace:VersionMenu {
-        title = 'Stable versions'
-        collection = ${releasedVersionQuery}
+        title = ${I18n.translate('versions.stableVersions', 'Stable versions', [], 'Main', 'Neos.MarketPlace')}
+        versions = ${releasedVersionQuery}
         @if.hasVersions = ${releasedVersionQuery.count() > 0}
     }
 
     prereleasedVersionMenu = Neos.MarketPlace:VersionCompactMenu {
-        title = 'Prerelease versions'
-        collection = ${prereleasedVersionQuery}
+        title = ${I18n.translate('versions.prereleaseVersions', 'Prerelease versions', [], 'Main', 'Neos.MarketPlace')}
+        versions = ${prereleasedVersionQuery}
         @if.hasVersions = ${prereleasedVersionQuery.count() > 0}
     }
 
     developmentVersionMenu = Neos.MarketPlace:VersionCompactMenu {
-        title = 'Development versions'
-        collection = ${developmentVersionsQuery}
+        title = ${I18n.translate('versions.developmentVersions', 'Development versions', [], 'Main', 'Neos.MarketPlace')}
+        versions = ${developmentVersionsQuery}
         @if.hasVersions = ${developmentVersionsQuery.count() > 0}
     }
 
-    sourceButton = Neos.MarketPlace:PackageSourceButton
-
-    avatarUrl = ${q(node).property('githubAvatar')}
+    renderer = afx`
+      <Neos.MarketPlace:PackageSourceButton />
+      <section class="market-nav" data-component="ShowMore" data-selector="ul">
+        <header>
+          <h4>{I18n.translate('maintainers', 'Maintainers', [], 'Main', 'Neos.MarketPlace')}</h4>
+        </header>
+        <Neos.MarketPlace:PeopleMenu path="maintainers" />
+      </section>
+      {props.releasedVersionMenu}
+      {props.prereleasedVersionMenu}
+      {props.developmentVersionMenu}
+    `
 }

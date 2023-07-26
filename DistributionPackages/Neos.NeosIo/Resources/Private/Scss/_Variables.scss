@@ -15,8 +15,16 @@ $image-base-path: "../Images/" !default;
 // f.e. `.u-brandColor-primary { color: #0097d7; }`
 $brand-colors: (
   primary: #00adee,
+  primary-20: scale-color(#00adee, $lightness: +80%),
+  primary-40: scale-color(#00adee, $lightness: +60%),
+  primary-60: scale-color(#00adee, $lightness: +40%),
+  primary-80: scale-color(#00adee, $lightness: +20%),
   secondary: #26224c,
-  teritary: #34363c
+  secondary-20: scale-color(#26224c, $lightness: +80%),
+  secondary-40: scale-color(#26224c, $lightness: +60%),
+  secondary-60: scale-color(#26224c, $lightness: +40%),
+  secondary-80: scale-color(#26224c, $lightness: +20%),
+  teritary: #34363c,
 ) !default;
 
 // The main brand font-family
@@ -42,7 +50,7 @@ $serif-font-family: Georgia, "Times New Roman", Times, serif !default;
 $mono-font-family: Menlo, Monaco, Consolas, "Courier New", monospace !default;
 
 // The font-weights below are used to emphasize written words instead of numbers in your Sass.
-$bold: 400 !default;
+$bold: 500 !default;
 $regular: 300 !default;
 $light: 200 !default;
 $thin: 100 !default;

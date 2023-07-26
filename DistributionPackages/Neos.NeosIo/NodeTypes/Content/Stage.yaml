@@ -6,41 +6,45 @@
 'Neos.NeosIo:Stage':
   superTypes:
     'Neos.Neos:Content': true
-  childNodes:
-    contents:
-      type: 'Neos.Neos:ContentCollection'
-      constraints:
-        nodeTypes:
-          '*': false
-          'Neos.NodeTypes.ColumnLayouts:TwoColumn': true
-          'Neos.NodeTypes.ColumnLayouts:ThreeColumn': true
-          'Neos.NodeTypes.ColumnLayouts:FourColumn': true
-          'Neos.NodeTypes:Text': true
-          'Neos.NodeTypes:Image': true
-          'Neos.NodeTypes:TextWithImage': true
-          'Neos.NodeTypes:Headline': true
-          'Neos.NodeTypes.Html:Html': true
-          'Neos.NodeTypes.ContentReferences:ContentReferences': true
-          'Neos.NeosIo:Box': true
-          'Neos.NeosIo:Button': true
-          'Neos.NeosIo:ButtonDimensionAware': true
-          'Neos.NeosIo:ChoiceButtons': true
-          'Neos.NeosIo:Quote': true
-          'Neos.NeosIo:SemanticSection': true
-          'Neos.NeosIo:Youtube': true
-          'Neos.NeosIo:FundingBadges': true
-          'Neos.NeosIo:BadgeGrid': true
-          'Neos.NeosIo:Content.ImageGrid': true
-          'Neos.NeosIo:ImageTeaser': true
-          'Neos.NeosIo.FeatureList:FeatureList': true
-          'Neos.NeosIo.CaseStudies:Content.CaseList': true
-          'Neos.NeosIo:PostArchive': true
+    'Neos.Neos:ContentCollection': true
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.NodeTypes.ColumnLayouts:TwoColumn': true
+      'Neos.NodeTypes.ColumnLayouts:ThreeColumn': true
+      'Neos.NodeTypes.ColumnLayouts:FourColumn': true
+      'Neos.NodeTypes:Text': true
+      'Neos.NodeTypes:Image': true
+      'Neos.NodeTypes:TextWithImage': true
+      'Neos.NodeTypes:Headline': true
+      'Neos.NodeTypes.Html:Html': true
+      'Neos.NodeTypes.ContentReferences:ContentReferences': true
+      'Neos.NeosIo:Box': true
+      'Neos.NeosIo:Button': true
+      'Neos.NeosIo:ButtonDimensionAware': true
+      'Neos.NeosIo:ChoiceButtons': true
+      'Neos.NeosIo:Quote': true
+      'Neos.NeosIo:SemanticSection': true
+      'Neos.NeosIo:Youtube': true
+      'Neos.NeosIo:FundingBadges': true
+      'Neos.NeosIo:BadgeGrid': true
+      'Neos.NeosIo:Content.ImageGrid': true
+      'Neos.NeosIo:ImageTeaser': true
+      'Neos.NeosIo.FeatureList:FeatureList': true
+      'Neos.NeosIo.CaseStudies:Content.CaseList': true
+      'Neos.NeosIo:PostArchive': true
   ui:
     label: Stage
     icon: icon-tasks
     group: structure
-    inlineEditable: true
   properties:
+    title:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Stage title'
     isContentTextInverted:
       type: boolean
       defaultValue: false
@@ -65,6 +69,20 @@
         label: 'Set content to full width (without padding)'
         inspector:
           group: content
+    padding:
+      type: string
+      ui:
+        label: 'Padding'
+        reloadIfChanged: true
+        inspector:
+          group: content
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            allowEmpty: true
+            placeholder: 'Default'
+            values:
+              none:
+                label: None
     backgroundColor:
       type: string
       defaultValue: bright
@@ -82,8 +100,34 @@
                 label: Dark
               primary:
                 label: Primary
+                group: Primary
+              primary-20:
+                label: Primary 20%
+                group: Primary
+              primary-40:
+                label: Primary 40%
+                group: Primary
+              primary-60:
+                label: Primary 60%
+                group: Primary
+              primary-80:
+                label: Primary 80%
+                group: Primary
               secondary:
                 label: Secondary
+                group: Secondary
+              secondary-20:
+                label: Secondary 20%
+                group: Secondary
+              secondary-40:
+                label: Secondary 40%
+                group: Secondary
+              secondary-60:
+                label: Secondary 60%
+                group: Secondary
+              secondary-80:
+                label: Secondary 80%
+                group: Secondary
               teritary:
                 label: Teritary
     backgroundImage:
@@ -121,18 +165,9 @@
         label: 'Background image fixed?'
         inspector:
           group: background
-
     alternativeText:
       type: string
       ui:
         label: 'Alternative text for background image'
         inspector:
           group: background
-          position: 100
-    title:
-      type: string
-      ui:
-        label: 'Title for background image'
-        inspector:
-          group: background
-          position: 150

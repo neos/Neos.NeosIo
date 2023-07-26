@@ -1,9 +1,14 @@
-prototype(Neos.MarketPlace:PackageRequirements) < prototype(Neos.Fusion:Loop) {
+prototype(Neos.MarketPlace:PackageRequirements) < prototype(Neos.Fusion:Component) {
     property = ''
     items = ${Json.parse(q(node).property(this.property))}
-    itemKey = 'package'
-    itemName = 'version'
-    itemRenderer = Neos.MarketPlace:PackageRequirementsItem
 
-    @process.wrap = ${value ? '<ul>' + value + '</ul>' : ''}
+    renderer = afx`
+      <ul>
+          <Neos.Fusion:Loop items={props.items} itemKey="package" itemName="version">
+              <Neos.MarketPlace:PackageRequirementsItem package={package} version={version} />
+          </Neos.Fusion:Loop>
+      </ul>
+    `
+
+    @if.hasItems = ${this.items}
 }

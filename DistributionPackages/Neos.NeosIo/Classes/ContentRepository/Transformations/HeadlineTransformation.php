@@ -1,5 +1,5 @@
 <?php
-namespace Neos\NeosIo\TYPO3CR\Transformations;
+namespace Neos\NeosIo\ContentRepository\Transformations;
 
 use Neos\ContentRepository\Domain\Model\NodeData;
 use Neos\ContentRepository\Migration\Transformations\AbstractTransformation;

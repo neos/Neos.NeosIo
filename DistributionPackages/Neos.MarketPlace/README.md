@@ -56,6 +56,21 @@ Or run it for a sinlge package:
 
     flow marketplace:sync --package ttree/jobbutler
 
+## Development
+
+If you want to test the sync functionality make sure to have ElasticSearch running on your machine or use the localbeach
+setup.
+
+Also you need to create a GitHub token and add it to your local settings to make the sync also include forks and 
+other properties:
+
+```yaml
+Neos:
+  MarketPlace:
+    github:
+      token: <my-token>
+```
+
 ## License
 
 The MIT License (MIT). Please see [LICENSE](LICENSE.txt) for more information.
