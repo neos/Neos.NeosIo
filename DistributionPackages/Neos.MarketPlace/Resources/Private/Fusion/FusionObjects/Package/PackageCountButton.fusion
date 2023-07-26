@@ -1,5 +1,5 @@
 prototype(Neos.MarketPlace:PackageCountButton) < prototype(Neos.MarketPlace:Button) {
-    vendor = ${vendor}
+    vendor = null
     @context.vendor = ${this.vendor}
 
     packageCount = ${q(this.vendor).find('[instanceof Neos.MarketPlace:Package]').count()}
@@ -18,7 +18,7 @@ prototype(Neos.MarketPlace:PackageCountButton) < prototype(Neos.MarketPlace:Butt
         }
 
         entryTags {
-            1 = ${Neos.Caching.descendantOfTag(vendor)}
+            vendorNode = ${Neos.Caching.nodeTag(vendor)}
         }
     }
 }

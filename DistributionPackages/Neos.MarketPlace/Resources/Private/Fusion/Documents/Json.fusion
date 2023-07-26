@@ -46,7 +46,7 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
                     }
                     latestVersion = ${q(q(package).property('lastVersion')).property('version')}
                     downloads = ${q(package).property('downloadTotal')}
-                    stars = ${q(package).property('githubStargazers') || 0}
+                    stars = ${q(package).property('favers') || 0}
                 }
             }
             @process.json = ${Json.stringify(value)}

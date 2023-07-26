@@ -1,5 +1,5 @@
 <?php
-namespace Neos\NeosIo\TYPO3CR\Transformations;
+namespace Neos\NeosIo\ContentRepository\Transformations;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\ContentRepository\Domain\Factory\NodeFactory;

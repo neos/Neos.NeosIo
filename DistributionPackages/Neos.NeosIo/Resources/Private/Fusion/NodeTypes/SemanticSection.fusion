@@ -3,7 +3,7 @@ prototype(Neos.NeosIo:SemanticSection) < prototype(Neos.Neos:ContentComponent) {
 
     renderer = afx`
         <section>
-            <Neos.Neos:ContentCollection nodePath="contents" />
+            <Neos.Neos:ContentCollection />
             <hr @if={!props.isLast} />
         </section>
     `

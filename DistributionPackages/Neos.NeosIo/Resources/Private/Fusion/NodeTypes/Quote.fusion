@@ -1,11 +1,43 @@
-prototype(Neos.NeosIo:Quote) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Quote.html'
-
-    quote = ${q(node).property('quote')}
+prototype(Neos.NeosIo:Quote) < prototype(Neos.Neos:ContentComponent) {
     title = ${q(node).property('author')}
-    author = ${q(node).property('author')}
     authorAvatar = ${q(node).property('authorAvatar')}
     alternativeText = ${q(node).property('alternativeText')}
     alternativeText = ${String.isBlank(value) ? q(node).property('image').label : value}
     alternativeText.@process.authorNameFallback = ${q(node).property('author')}
+
+    quote = Neos.Neos:Editable {
+        property = 'quote'
+        block = false
+    }
+
+    author = Neos.Neos:Editable {
+        property = 'author'
+        block = false
+    }
+
+    authorAvatarUri = Neos.Neos:ImageUri {
+        asset = ${q(node).property('authorAvatar')}
+        maximumWidth = 400
+        maximumHeight = 600
+    }
+
+    renderer = afx`
+      <blockquote class="flag u-mb0" itemscope itemtype="http://schema.org/Person">
+        <div class="flag__image" @if={props.authorAvatar}>
+          <img src={props.authorAvatarUri}
+               itemprop="image" alt={props.alternativeText} title={props.title} loading="lazy" />
+        </div>
+        <div class="flag__image" @if={!props.authorAvatar && node.context.inBackend}>
+          <img src={StaticResource.uri('Neos.Neos', 'Images/dummy-image.svg')} alt="Dummy image"
+               itemprop="image" class="avatar" style="width: 128px; height:128px;" loading="lazy" />
+        </div>
+        <div class="flag__body">
+          <p>„{props.quote}“</p>
+          <footer class="u-microCopy" itemprop="name">
+            <cite>{props.author}</cite>
+          </footer>
+        </div>
+      </blockquote>
+
+    `
 }

@@ -1,0 +1,92 @@
+.neos-nodetypes-textwithimage,
+.neos-nodetypes-image {
+  @include u-cf();
+
+  figure {
+    --background-color: none;
+    --color: currentColor;
+    background-color: var(--background-color);
+    color: var(--color);
+
+    & + * {
+      margin-top: 1em;
+    }
+
+    figcaption {
+      margin-top: 0.5rem;
+    }
+
+    &.image--style {
+      padding: 1.5rem 2rem;
+
+      &-thumbnail {
+        text-align: center;
+        padding: 0;
+
+        img {
+          max-height: 300px;
+          max-width: 50%;
+        }
+      }
+
+      &-primary {
+        &-20 {
+          --background-color: #{brand('primary-20')};
+        }
+
+        &-40 {
+          --background-color: #{brand('primary-40')};
+        }
+
+        &-60 {
+          --background-color: #{brand('primary-60')};
+          --color: #fff;
+        }
+
+        &-80 {
+          --background-color: #{brand('primary-80')};
+          --color: #fff;
+        }
+      }
+
+      &-secondary {
+        padding: 1rem;
+
+        &-20 {
+          --background-color: #{brand('secondary-20')};
+        }
+
+        &-40 {
+          --background-color: #{brand('secondary-40')};
+          --color: #fff;
+        }
+
+        &-60 {
+          --background-color: #{brand('secondary-60')};
+          --color: #fff;
+        }
+
+        &-80 {
+          --background-color: #{brand('secondary-80')};
+          --color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.neos-alignment-left {
+  float: left;
+}
+
+.neos-alignment-center {
+  text-align: center;
+}
+
+.neos-alignment-right {
+  float: right;
+}
+
+.neos-nodetypes-image {
+  margin-bottom: rs($basic-spacing, $unit: rem);
+}

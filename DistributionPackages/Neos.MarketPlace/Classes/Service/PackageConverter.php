@@ -18,6 +18,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception as CRException;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Indexer\NodeIndexer;
 use Github\Api\Repository\Contents;
+use Github\AuthMethod;
 use Github\Client;
 use Github\Exception\ApiLimitExceedException;
 use Github\Exception\ExceptionInterface as GithubException;
@@ -42,7 +43,6 @@ use Neos\Flow\Property\Exception as PropertyException;
 use Neos\Flow\Property\Exception\InvalidPropertyMappingConfigurationException;
 use Neos\Flow\Security\Exception;
 use Neos\Flow\Utility\Now;
-use Neos\Fusion\Core\Cache\ContentCache;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
 use Neos\MarketPlace\Exception as MarketPlaceException;
@@ -84,12 +84,6 @@ class PackageConverter
      * @Flow\Inject
      */
     protected $nodeIndexer;
-
-    /**
-     * @var ContentCache
-     * @Flow\Inject
-     */
-    protected $contentCache;
 
     private CacheItemPoolInterface $gitHubApiCachePool;
 
@@ -304,7 +298,7 @@ class PackageConverter
             if (!$this->client) {
                 $this->client = new Client();
                 $this->client->addCache($this->gitHubApiCachePool);
-                $this->client->authenticate($this->githubSettings['token'], null, Client::AUTH_ACCESS_TOKEN);
+                $this->client->authenticate($this->githubSettings['token'], null, AuthMethod::ACCESS_TOKEN);
             }
             try {
                 $meta = $this->client->repositories()->show($organization, $repository);
