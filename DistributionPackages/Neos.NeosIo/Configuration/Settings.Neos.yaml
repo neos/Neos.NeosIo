@@ -1,0 +1,22 @@
+Neos:
+  Neos:
+    userInterface:
+      navigateComponent:
+        nodeTree:
+          loadingDepth: 1
+        structureTree:
+          loadingDepth: 2
+      inspector:
+        editors:
+          # TODO: Define these nodetypes were needed and not globally or come up with a better solution
+          Neos.Neos/Inspector/Editors/LinkEditor:
+            editorOptions:
+              nodeTypes:
+                - 'Neos.NodeTypes:Page'
+                - 'Neos.MarketPlace:RepositoryStorage'
+                - 'Neos.NeosIo:Reference'
+    nodeTypes:
+      groups:
+        special:
+          position: 'after general'
+          label: Special
