@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6edc2d66703d49dcd949735b5158e1f4",
+    "content-hash": "64860cce7a8c42d9060b0a054470b625",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -6918,6 +6918,7 @@
                 "neos/media": "^8.3",
                 "neos/neos": "^8.3",
                 "neos/neos-ui": "^8.3",
+                "neos/neosio-blog": "*",
                 "neos/neosio-marketplace": "*",
                 "neos/neosio-serviceofferings": "*",
                 "neos/nodetypes": "^8.3",
@@ -7038,6 +7039,32 @@
                 "GPL-3.0+"
             ],
             "description": "neos.io site package",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "neos/neosio-blog",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "./DistributionPackages/Neos.NeosIo.Blog"
+            },
+            "require": {
+                "neos/neos": "*"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "neos": {
+                    "package-key": "Neos.NeosIo.Blog"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Neos\\NeosIo\\Blog\\": "Classes/"
+                }
+            },
+            "description": "Blog for neos.io",
             "transport-options": {
                 "relative": true
             }
@@ -11939,21 +11966,21 @@
         },
         {
             "name": "sitegeist/monocle",
-            "version": "v7.10.0",
+            "version": "v7.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sitegeist/Sitegeist.Monocle.git",
-                "reference": "f2dd7ea4fa1084039da239b95598b635a93cb4ab"
+                "reference": "5b33c359f88251d9563de1a068d78c32daf87bfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sitegeist/Sitegeist.Monocle/zipball/f2dd7ea4fa1084039da239b95598b635a93cb4ab",
-                "reference": "f2dd7ea4fa1084039da239b95598b635a93cb4ab",
+                "url": "https://api.github.com/repos/sitegeist/Sitegeist.Monocle/zipball/5b33c359f88251d9563de1a068d78c32daf87bfe",
+                "reference": "5b33c359f88251d9563de1a068d78c32daf87bfe",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/psr7": "^1.4 || ^2.0",
-                "neos/neos": "^8.3 || dev-master"
+                "neos/neos": "^8.3 || ^9.0 || dev-master"
             },
             "type": "neos-plugin",
             "extra": {
@@ -12062,9 +12089,9 @@
             "description": "An living-styleguide for Neos that is based on the actual fusion-code",
             "support": {
                 "issues": "https://github.com/sitegeist/Sitegeist.Monocle/issues",
-                "source": "https://github.com/sitegeist/Sitegeist.Monocle/tree/v7.10.0"
+                "source": "https://github.com/sitegeist/Sitegeist.Monocle/tree/v7.10.2"
             },
-            "time": "2023-03-23T18:58:17+00:00"
+            "time": "2023-07-24T11:51:09+00:00"
         },
         {
             "name": "sitegeist/silhouettes",
@@ -14203,12 +14230,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "4bdecf23905dae843494483debeae99c08e4f66f"
+                "reference": "69dafab8a5dffa4d6a4d6dab1ebadf48aca449c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/4bdecf23905dae843494483debeae99c08e4f66f",
-                "reference": "4bdecf23905dae843494483debeae99c08e4f66f",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/69dafab8a5dffa4d6a4d6dab1ebadf48aca449c7",
+                "reference": "69dafab8a5dffa4d6a4d6dab1ebadf48aca449c7",
                 "shasum": ""
             },
             "conflict": {
@@ -14287,7 +14314,7 @@
                 "contao-components/mediaelement": ">=2.14.2,<2.21.1",
                 "contao/contao": ">=4,<4.4.56|>=4.5,<4.9.40|>=4.10,<4.11.7|>=4.13,<4.13.21|>=5.1,<5.1.4",
                 "contao/core": ">=2,<3.5.39",
-                "contao/core-bundle": "<4.9.40|>=4.10,<4.11.7|>=4.13,<4.13.21|>=5.1,<5.1.4|= 4.10.0",
+                "contao/core-bundle": "<4.9.42|>=4.10,<4.13.28|>=5,<5.1.10|= 4.10.0",
                 "contao/listing-bundle": ">=4,<4.4.8",
                 "contao/managed-edition": "<=1.5",
                 "cosenary/instagram": "<=2.3",
@@ -14356,6 +14383,7 @@
                 "fixpunkt/fp-masterquiz": "<2.2.1|>=3,<3.5.2",
                 "fixpunkt/fp-newsletter": "<1.1.1|>=2,<2.1.2|>=2.2,<3.2.6",
                 "flarum/core": "<1.7",
+                "flarum/framework": "<=0.1-beta.7.1",
                 "flarum/mentions": "<1.6.3",
                 "flarum/sticky": ">=0.1-beta.14,<=0.1-beta.15",
                 "flarum/tags": "<=0.1-beta.13",
@@ -14379,6 +14407,7 @@
                 "genix/cms": "<=1.1.11",
                 "getgrav/grav": "<=1.7.42.1",
                 "getkirby/cms": "= 3.8.0|<3.5.8.2|>=3.6,<3.6.6.2|>=3.7,<3.7.5.1",
+                "getkirby/kirby": "<=2.5.12",
                 "getkirby/panel": "<2.5.14",
                 "getkirby/starterkit": "<=3.7.0.2",
                 "gilacms/gila": "<=1.11.4",
@@ -14482,7 +14511,7 @@
                 "melisplatform/melis-front": "<5.0.1",
                 "mezzio/mezzio-swoole": "<3.7|>=4,<4.3",
                 "mgallegos/laravel-jqgrid": "<=1.3",
-                "microweber/microweber": "= 1.1.18|<=1.3.4",
+                "microweber/microweber": "<=1.3.4|= 1.1.18",
                 "miniorange/miniorange-saml": "<1.4.3",
                 "mittwald/typo3_forum": "<1.2.1",
                 "mobiledetect/mobiledetectlib": "<2.8.32",
@@ -14721,10 +14750,10 @@
                 "twig/twig": "<1.44.7|>=2,<2.15.3|>=3,<3.4.3",
                 "typo3/cms": "<2.0.5|>=3,<3.0.3|>=6.2,<=6.2.38|>=7,<7.6.32|>=8,<8.7.38|>=9,<9.5.29|>=10,<10.4.35|>=11,<11.5.23|>=12,<12.2",
                 "typo3/cms-backend": ">=7,<=7.6.50|>=8,<=8.7.39|>=9,<=9.5.24|>=10,<=10.4.13|>=11,<=11.1",
-                "typo3/cms-core": "<8.7.51|>=9,<9.5.40|>=10,<10.4.36|>=11,<11.5.23|>=12,<12.2",
+                "typo3/cms-core": "<8.7.51|>=9,<9.5.42|>=10,<10.4.39|>=11,<11.5.30|>=12,<12.4.4",
                 "typo3/cms-form": ">=8,<=8.7.39|>=9,<=9.5.24|>=10,<=10.4.13|>=11,<=11.1",
                 "typo3/flow": ">=1,<1.0.4|>=1.1,<1.1.1|>=2,<2.0.1|>=2.3,<2.3.16|>=3,<3.0.12|>=3.1,<3.1.10|>=3.2,<3.2.13|>=3.3,<3.3.13|>=4,<4.0.6",
-                "typo3/html-sanitizer": ">=1,<1.5|>=2,<2.1.1",
+                "typo3/html-sanitizer": ">=1,<1.5.1|>=2,<2.1.2",
                 "typo3/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4|>=2.3,<2.3.99|>=3,<3.0.20|>=3.1,<3.1.18|>=3.2,<3.2.14|>=3.3,<3.3.23|>=4,<4.0.17|>=4.1,<4.1.16|>=4.2,<4.2.12|>=4.3,<4.3.3",
                 "typo3/phar-stream-wrapper": ">=1,<2.1.1|>=3,<3.1.1",
                 "typo3/swiftmailer": ">=4.1,<4.1.99|>=5.4,<5.4.5",
@@ -14840,7 +14869,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-21T23:04:36+00:00"
+            "time": "2023-07-25T19:04:12+00:00"
         },
         {
             "name": "shel/nodetypes-analyzer",
@@ -14981,6 +15010,7 @@
         "neos/neosio-marketplace": 20,
         "neos/neosio-casestudies": 20,
         "neos/neosio-release-plan": 20,
+        "neos/neosio-blog": 20,
         "flowpack/media-ui": 10,
         "ttree/outofbandrendering": 20,
         "roave/security-advisories": 20
