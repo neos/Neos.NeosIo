@@ -10,6 +10,10 @@
           label: Column
         appearance:
           label: Appearance
+  constraints:
+    nodeTypes:
+      '*': false
+      Neos.NeosIo:Constraints.Column: true
   properties:
     moreLink:
       type: string
@@ -35,15 +39,3 @@
         inspector:
           group: column
           position: 'after moreLink'
-  constraints:
-    nodeTypes:
-      '*': false
-      'Neos.NodeTypes:Text': true
-      'Neos.NodeTypes:Image': true
-      'Neos.NodeTypes:TextWithImage': true
-      'Neos.NodeTypes:Headline': true
-      'Neos.NodeTypes:ContentReferences': true
-      'Neos.NeosIo:Box': true
-      'Neos.NeosIo:CountUp': true
-      'Neos.NeosIo:Button': true
-      'Neos.NeosIo:Icon': true
