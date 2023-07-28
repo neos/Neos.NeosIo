@@ -4,7 +4,14 @@ up:
     - filters:
         - type: 'NodeType'
           settings:
-            nodeType: 'Neos.NeosIo:Stage'
+            nodeType: 'Neos.NeosIo:Box'
+      transformations:
+        - type: 'Neos\NeosIo\ContentRepository\Transformations\FlattenCollectionsTransformation'
+        - type: 'Neos\NeosIo\ContentRepository\Transformations\RemoveEmptyCollectionsTransformation'
+    - filters:
+        - type: 'NodeType'
+          settings:
+            nodeType: 'Neos.NeosIo:BadgeGrid'
       transformations:
         - type: 'Neos\NeosIo\ContentRepository\Transformations\FlattenCollectionsTransformation'
         - type: 'Neos\NeosIo\ContentRepository\Transformations\RemoveEmptyCollectionsTransformation'
@@ -18,7 +25,7 @@ up:
     - filters:
         - type: 'NodeType'
           settings:
-            nodeType: 'Neos.NeosIo:Box'
+            nodeType: 'Neos.NeosIo:Stage'
       transformations:
         - type: 'Neos\NeosIo\ContentRepository\Transformations\FlattenCollectionsTransformation'
         - type: 'Neos\NeosIo\ContentRepository\Transformations\RemoveEmptyCollectionsTransformation'
