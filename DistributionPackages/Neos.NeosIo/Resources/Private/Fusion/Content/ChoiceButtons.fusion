@@ -3,9 +3,9 @@ prototype(Neos.NeosIo:ChoiceButtons) < prototype(Neos.Neos:ContentComponent) {
 
     renderer = afx`
         <div class="u-alignCenter u-mb1/2">
-            <Neos.NeosIo:Button @context.node={props.buttons.get(0)} />
+            <Neos.NeosIo:Button @context.node={props.buttons.get(0)} @if={props.buttons.get(0)} />
             <span class="btnChoiceLabel">{Translation.translate('choiceButton.or', '', [], 'Main', 'Neos.NeosIo')}</span>
-            <Neos.NeosIo:Button @context.node={props.buttons.get(1)} />
+            <Neos.NeosIo:Button @context.node={props.buttons.get(1)} @if={props.buttons.get(1)} />
         </div>
     `
 }
