@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Post.html'
+    templatePath = 'resource://Neos.NeosIo.Blog/Private/Fusion/Components/Post.Renderer.html'
 
     node = ${node}
     datePublished = ${q(node).property('datePublished')}
@@ -29,7 +29,3 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Template) {
     latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').slice(0, 6).sort('datePublished', 'DESC').get()}
 }
 
-prototype(Neos.NeosIo:Post.Short) < prototype(Neos.NeosIo:PostRenderer) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/PostShort.html'
-    content >
-}
