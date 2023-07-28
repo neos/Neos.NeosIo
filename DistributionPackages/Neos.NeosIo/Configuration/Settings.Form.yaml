@@ -1,0 +1,16 @@
+Neos:
+  Form:
+    presets:
+      'fusion':
+        title: 'Fusion based Form Elements'
+        parentPreset: 'default'
+        formElementTypes:
+          'Neos.Form:Base':
+            renderingOptions:
+              templatePathPattern: ~
+              partialPathPattern: ~
+              layoutPathPattern: ~
+          'Neos.Form:Form':
+            rendererClassName: 'Neos\Form\FusionRenderer\FusionFormRenderer'
+            renderingOptions:
+              submitButtonClassAttribute: 'btn btn--solidPrimary'
