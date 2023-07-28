@@ -1,0 +1,10 @@
+comments: 'Flatten badge grid by removing intermittent collection'
+migration:
+  - filters:
+      - type: 'NodeType'
+        settings:
+          nodeType: 'Neos.NeosIo:BadgeGrid'
+    transformations:
+      - type: 'FlattenCollection'
+        settings:
+          collectionNodeName: 'badges'
