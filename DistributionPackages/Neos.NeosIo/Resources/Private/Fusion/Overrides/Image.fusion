@@ -12,7 +12,9 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     }
 
     image = ${q(node).property('image')}
-    imageClassName = Neos.Fusion:DataStructure {
+    className = Neos.Fusion:DataStructure {
+        main = 'neos-nodetypes-image'
+
         alignment = ${'neos-alignment-' + q(node).property('alignment')}
         alignment.@if.isSet = ${q(node).property('alignment')}
 
@@ -54,22 +56,38 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     renderer.@context.image = Neos.Fusion:Case {
         default {
             condition = ${props.image}
-            renderer = Neos.Neos:ImageTag {
-                asset = ${props.image}
-                title = ${props.title}
-                maximumHeight = ${props.maximumHeight}
-                maximumWidth = ${props.maximumWidth}
-                allowUpScaling = ${props.allowUpScaling}
-                allowCropping = ${props.allowCropping}
-                width = ${props.width}
-                height = ${props.height}
-                async = true
-                attributes.alt = ${props.alternativeText}
-                attributes.loading = ${props.loading}
-                attributes.style = Neos.Fusion:Join {
-                    maxHeight = ${'max-height: ' + props.maximumHeight + 'px;'}
-                    maxHeight.@if.set = ${props.maximumHeight}
+            renderer = Neos.Fusion:Component {
+                @apply.props = ${props}
+
+                thumbnail = ${Neos.Seo.Image.createThumbnail(
+                props.image,
+                null,
+                props.width,
+                props.maximumWidth,
+                props.height,
+                props.maximumHeight,
+                props.allowCropping,
+                props.allowUpScaling,
+                true
+                )}
+
+                renderer.@process.debug = Neos.Fusion:Debug.Console {
+                    value = ${props}
                 }
+
+                renderer = afx`
+                    <img
+                        title={props.title}
+                        alt={props.alternativeText}
+                        style={'max-height: ' + props.maximumHeight + 'px;'}
+                        style.@if={props.maximumHeight}
+                        width={props.thumbnail.width || props.width}
+                        height={props.thumbnail.height || props.height}
+                        loading={props.loading}
+                    >
+                      <Neos.Fusion:ResourceUri resource={props.thumbnail.resource} @path='attributes.src'/>
+                    </img>
+                `
             }
         }
         fallback {
@@ -87,8 +105,8 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     }
 
     renderer = afx`
-        <div class="neos-nodetypes-image">
-            <figure class={props.imageClassName}>
+        <div class={props.className}>
+            <figure>
                 <a
                     href={props.link}
                     href.@if.live={!node.context.inBackend}
