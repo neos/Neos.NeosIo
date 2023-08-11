@@ -9,11 +9,10 @@
   properties:
     fundingPlatformName:
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Funding platform name'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: contributions
           editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
@@ -22,11 +21,10 @@
             dataSourceIdentifier: neos-neosio-donors
     showCases:
       type: references
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Show cases'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: contributions
           editorOptions:
@@ -34,11 +32,10 @@
               - 'Neos.NeosIo:Reference.ShowCase'
     caseStudies:
       type: references
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Case Studies'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: contributions
           editorOptions:
@@ -46,20 +43,18 @@
               - 'Neos.NeosIo:Reference.CaseStudy'
     githubName:
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Github name'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: contributions
     vendors:
       type: references
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Vendors (for package listing)'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: contributions
           editorOptions:
@@ -67,11 +62,10 @@
               - 'Neos.MarketPlace:Vendor'
     packages:
       type: references
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Additional packages (in other vendors)'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: contributions
           editorOptions:
@@ -79,11 +73,10 @@
               - 'Neos.MarketPlace:Package'
     badges:
       type: references
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Badges'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: contributions
           editorOptions:

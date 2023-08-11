@@ -9,30 +9,31 @@
   properties:
     website:
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Website'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: 'contact'
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator': {}
     email:
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'E-Mail Address'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: 'contact'
           position: 'after website'
+      validation:
+        Neos.Neos/Validation/EmailAddressValidator: {}
     phone:
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Phone'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: 'contact'
           position: 'after email'

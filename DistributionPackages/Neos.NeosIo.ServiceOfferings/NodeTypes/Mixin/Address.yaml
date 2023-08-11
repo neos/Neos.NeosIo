@@ -9,72 +9,78 @@
   properties:
     'street':
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Street'
         inlineEditable: true
+        showInCreationDialog: true
         inspector:
           group: 'address'
         inline:
           editorOptions:
             placeholder: 'Street'
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator': {}
     'zipcode':
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Zip Code'
         inlineEditable: true
+        showInCreationDialog: true
         inspector:
           group: 'address'
           position: 'after street'
         inline:
           editorOptions:
             placeholder: 'Zipcode'
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator': {}
     'city':
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'City'
         inlineEditable: true
+        showInCreationDialog: true
         inspector:
           group: 'address'
-          position: 'after zip'
+          position: 'after zipcode'
         inline:
           editorOptions:
             placeholder: 'City'
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator': {}
     'country':
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Country'
         inlineEditable: true
+        showInCreationDialog: true
         inspector:
           group: 'address'
           position: 'after city'
         inline:
           editorOptions:
             placeholder: 'country'
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator': {}
     'latitude':
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Latitude'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: 'address'
           position: 'after country'
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator': {}
     'longitude':
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Longitude'
         reloadIfChanged: true
+        showInCreationDialog: true
         inspector:
           group: 'address'
           position: 'after latitude'
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator': {}
