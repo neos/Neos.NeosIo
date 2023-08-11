@@ -2,7 +2,7 @@ prototype(Neos.NeosIo:SemanticSection) < prototype(Neos.Neos:ContentComponent) {
     isLast = ${iterator.isLast}
 
     renderer = afx`
-        <section>
+        <section class="semantic-section">
             <Neos.Neos:ContentCollection />
             <hr @if={!props.isLast} />
         </section>
