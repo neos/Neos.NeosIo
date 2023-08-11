@@ -5,8 +5,9 @@ prototype(Neos.NodeTypes:TextWithImage) < prototype(Neos.NodeTypes:Image) {
         property = 'text'
     }
 
+    className.main = 'neos-nodetypes-textwithimage'
+
     renderer {
-        attributes.class = 'neos-nodetypes-textwithimage'
         content.@process.appendText = ${value + props.text}
     }
 }

@@ -12,13 +12,6 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     }
 
     image = ${q(node).property('image')}
-    imageClassName = Neos.Fusion:DataStructure {
-        alignment = ${'neos-alignment-' + q(node).property('alignment')}
-        alignment.@if.isSet = ${q(node).property('alignment')}
-
-        addImageStyle = ${'image--style image--style-' + q(node).property('imageStyle')}
-        addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
-    }
 
     loading = 'lazy'
     lightbox = true
@@ -52,51 +45,70 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
         }
     }
 
-    renderer.@context.image = Neos.Fusion:Case {
-        default {
-            condition = ${props.image}
-            renderer = Neos.Neos:ImageTag {
-                asset = ${props.image}
-                title = ${props.title}
-                maximumHeight = ${props.maximumHeight}
-                maximumWidth = ${props.maximumWidth}
-                allowUpScaling = ${props.allowUpScaling}
-                allowCropping = ${props.allowCropping}
-                width = ${props.width}
-                height = ${props.height}
-                async = true
-                attributes {
-                    alt = ${props.alternativeText}
-                    loading = ${props.loading}
-                    data-lightbox = Neos.Neos:ImageUri {
-                        asset = ${props.image}
-                        @if.enabled = ${props.lightbox}
-                        @if.notInBackend = ${!renderingMode.isEdit && !renderingMode.isPreview}
-                    }
-                    style = Neos.Fusion:Join {
-                        maxHeight = ${'max-height: ' + props.maximumHeight + 'px;'}
-                        maxHeight.@if.set = ${props.maximumHeight}
-                    }
-                }
-            }
+    @private {
+        className = Neos.Fusion:DataStructure {
+            main = 'neos-nodetypes-image'
+
+            alignment = ${'neos-alignment-' + q(node).property('alignment')}
+            alignment.@if.isSet = ${q(node).property('alignment')}
         }
-        fallback {
-            condition = ${!props.image && renderingMode.isEdit}
-            renderer = afx`
-                <img
-                    title="Dummy image"
-                    alt="Dummy image"
-                    class="neos-handle"
-                    loading={props.loading}
-                    src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
-                />
-            `
+
+        figureClassName = Neos.Fusion:DataStructure {
+            addImageStyle = ${'image--style image--style-' + q(node).property('imageStyle')}
+            addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
+        }
+
+        thumbnail = ${props.image ? Neos.Seo.Image.createThumbnail(
+            props.image,
+            null,
+            props.width,
+            props.maximumWidth,
+            props.height,
+            props.maximumHeight,
+            props.allowCropping,
+            props.allowUpScaling,
+            false
+        ) : null}
+
+        imageSrc = Neos.Fusion:ResourceUri {
+            resource = ${private.thumbnail.resource}
+            @if.set = ${private.thumbnail}
+        }
+
+        image = Neos.Fusion:Case {
+            image {
+                condition = ${private.imageSrc}
+                renderer = afx`
+                    <img
+                        title={props.title}
+                        alt={props.alternativeText}
+                        style={'max-height: ' + props.maximumHeight + 'px;'}
+                        style.@if={props.maximumHeight}
+                        width={private.thumbnail.width || props.width}
+                        height={private.thumbnail.height || props.height}
+                        loading={props.loading}
+                        src={private.imageSrc}
+                    />
+                `
+            }
+            fallback {
+                condition = true
+                renderer = afx`
+                    <img
+                        title="Dummy image"
+                        alt="Dummy image"
+                        class="neos-handle"
+                        loading={props.loading}
+                        src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
+                    />
+                `
+            }
         }
     }
 
     renderer = afx`
-        <div class="neos-nodetypes-image">
-            <figure class={props.imageClassName}>
+        <div class={private.className}>
+            <figure class={private.figureClassName}>
                 <a
                     href={props.link}
                     href.@if.live={!renderingMode.isEdit}
@@ -105,9 +117,9 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
                     title={props.title}
                     @if.set={props.link}
                 >
-                    {image}
+                    {private.image}
                 </a>
-                {!props.link ? image : ''}
+                {!props.link ? private.image : ''}
                 <figcaption @if.set={props.caption}>
                     {props.caption}
                 </figcaption>
