@@ -1,0 +1,26 @@
+up:
+  comments: 'Migrates the old NodeTypes of the Neos.NodeTypes package too new ones.'
+  migration:
+    -
+      filters:
+        - type: 'NodeType'
+          settings:
+            nodeType: 'Neos.NodeTypes:Text'
+      transformations:
+        -
+          type: 'ChangeNodeType'
+          settings:
+            newType: 'Neos.NeosIo:Text'
+    -
+      filters:
+        - type: 'NodeType'
+          settings:
+            nodeType: 'Neos.NodeTypes:Headline'
+      transformations:
+        -
+          type: 'ChangeNodeType'
+          settings:
+            newType: 'Neos.NeosIo:Headline'
+
+down:
+  comments: 'No down migration available'
