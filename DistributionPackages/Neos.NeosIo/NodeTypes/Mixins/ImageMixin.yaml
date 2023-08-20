@@ -1,0 +1,34 @@
+'Neos.NeosIo:Mixins.ImageMixin':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        image:
+          label: 'Image'
+          position: 5
+          icon: 'icon-image'
+  properties:
+    image:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Image'
+        reloadIfChanged: true
+        inspector:
+          group: 'image'
+          position: 50
+    alternativeText:
+      type: string
+      ui:
+        label: 'Alternative text'
+        reloadIfChanged: true
+        inspector:
+          group: 'image'
+          position: 100
+    title:
+      type: string
+      ui:
+        label: 'Title'
+        reloadIfChanged: true
+        inspector:
+          group: 'image'
+          position: 150

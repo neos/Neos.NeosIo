@@ -1,5 +1,4 @@
-prototype(Neos.NodeTypes:Image) >
-prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
+prototype(Neos.NeosIo:Image) < prototype(Neos.Neos:ContentComponent) {
     title = ${q(node).property('title')}
     title.@process.filenameFallback = ${String.isBlank(value) ? q(node).property('image').label : value}
 

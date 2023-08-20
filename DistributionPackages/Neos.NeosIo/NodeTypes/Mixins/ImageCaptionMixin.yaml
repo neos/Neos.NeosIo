@@ -1,0 +1,20 @@
+'Neos.NeosIo:Mixins.ImageCaptionMixin':
+  abstract: true
+  properties:
+    hasCaption:
+      type: boolean
+      ui:
+        label: 'Enable caption'
+        reloadIfChanged: true
+        inspector:
+          group: 'image'
+          position: 200
+    caption:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            autoparagraph: true
+            placeholder: 'Enter caption here'

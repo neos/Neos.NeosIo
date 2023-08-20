@@ -21,6 +21,16 @@ up:
           type: 'ChangeNodeType'
           settings:
             newType: 'Neos.NeosIo:Headline'
+    -
+      filters:
+        - type: 'NodeType'
+          settings:
+            nodeType: 'Neos.NodeTypes:Image'
+      transformations:
+        -
+          type: 'ChangeNodeType'
+          settings:
+            newType: 'Neos.NeosIo:Image'
 
 down:
   comments: 'No down migration available'

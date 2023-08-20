@@ -1,0 +1,24 @@
+'Neos.NeosIo:Mixins.ImageAlignmentMixin':
+  abstract: true
+  properties:
+    alignment:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Alignment'
+        reloadIfChanged: true
+        inspector:
+          group: 'image'
+          position: 400
+          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            placeholder: 'Default'
+            values:
+              '':
+                label: ''
+              center:
+                label: 'Center'
+              left:
+                label: 'Left'
+              right:
+                label: 'Right'
