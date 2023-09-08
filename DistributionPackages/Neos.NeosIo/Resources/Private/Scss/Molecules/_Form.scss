@@ -81,3 +81,20 @@
 		margin-#{$end}: .3em;
 	}
 }
+
+.form__item {
+  &--with-icon {
+    position: relative;
+
+    input {
+      width: 100%;
+    }
+
+    label {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
