@@ -68,6 +68,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
         }
 
         renderer = afx`
+            <h2 class="headline">{I18n.id('serviceListing.headline').value('serviceListing.headline').package('Neos.NeosIo.ServiceOfferings').source('Main')}</h2>
             <div class="service-providers__list" id="service-providers-listing"
                  data-provider-data={Json.stringify(props.serviceProvidersData)}
                  data-translation-data={Json.stringify(props.translationData)}
