@@ -1,6 +1,10 @@
 prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection) < prototype(Neos.NeosIo:DefaultPage) {
     body {
         content {
+            keyVisual = Neos.NeosIo:KeyVisual {
+                keyVisualSize = 'small'
+            }
+
             main = Neos.Fusion:Join {
                 top = Neos.Neos:PrimaryContent {
                     nodePath = 'main'
