@@ -137,29 +137,28 @@
 
     .service-providers__grid-tableview {
       .service-providers__grid-row {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
         border-top: 1pt solid #eee;
         padding: 1rem;
 
-        @media(max-width: 1023px) {
-          grid-template-columns: none;
-          grid-template-rows: 1fr;
-          grid-gap: 1rem;
-        }
-
         &.form {
           padding: 0;
-          grid-template-columns: repeat(5, auto);
+          display: flex;
           justify-content: space-between;
 
           .service-providers__grid-cell {
             padding-top: 0;
+            width: 100%;
+            &:nth-child(n+2) {
+              padding-left: 16px;
+            }
+          }
+
+          select {
+            width: 100%;
           }
         }
 
         .form__item {
-          display: inline-block;
           white-space: nowrap;
         }
       }
@@ -178,7 +177,6 @@
           margin-left: 0.5rem;
         }
       }
-
     }
 
     .service-providers__grid-gridview {
