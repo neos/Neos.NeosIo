@@ -135,13 +135,8 @@
       }
     }
 
-    .service-providers__grid-tableview {
+    .service-providers__grid-filter {
       .service-providers__grid-row {
-        border-top: 1pt solid #eee;
-        padding: 1rem;
-        margin-bottom: 0;
-
-
         &.form {
           padding: 0;
           display: flex;
@@ -172,6 +167,21 @@
           white-space: nowrap;
         }
       }
+    }
+
+    .service-providers__grid-tableview {
+      .service-providers__grid-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 1pt solid #eee;
+        padding: 1rem;
+
+        @media(max-width: 1023px) {
+          grid-template-columns: none;
+          grid-template-rows: 1fr;
+          grid-gap: 1rem;
+        }
+      }
       .service-providers__grid-cell {
         z-index: 2;
 
@@ -187,6 +197,8 @@
           margin-left: 0.5rem;
         }
       }
+
+
     }
 
     .service-providers__grid-gridview {

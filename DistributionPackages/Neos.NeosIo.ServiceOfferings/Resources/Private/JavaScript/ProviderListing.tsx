@@ -98,7 +98,7 @@ export default function ProviderListing() {
     return (
         <div>
             <div>
-                <header class="service-providers__grid-tableview">
+                <header class="service-providers__grid-filter">
                     <div class="service-providers__grid-row remove-border form">
                         <div class="service-providers__grid-cell row">
                             <div class="form__item">
