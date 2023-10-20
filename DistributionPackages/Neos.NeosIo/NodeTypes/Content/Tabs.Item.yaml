@@ -1,0 +1,18 @@
+'Neos.NeosIo:Tabs.Item':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.Neos:ContentCollection': true
+    'Neos.NeosIo:ContentInspectorGroupMixin': true
+  ui:
+    label: 'Tab'
+    icon: icon-square-o
+    position: 200
+  properties:
+    title:
+      type: string
+      ui:
+        reloadIfChanged: true
+        label: 'Tab Title'
+        showInCreationDialog: true
+        inspector:
+          group: 'default'

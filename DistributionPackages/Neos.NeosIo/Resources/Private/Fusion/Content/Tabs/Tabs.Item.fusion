@@ -1,0 +1,11 @@
+prototype(Neos.NeosIo:Tabs.Item) < prototype(Neos.Neos:ContentComponent) {
+    content = Neos.Neos:ContentCollection {
+        nodePath = '.'
+    }
+
+    renderer = afx`
+        <div id={'panel-' + node.identifier} class="tab-item" role="tabpanel" tabindex="0" aria-labelledby={'tab-' + node.identifier}>
+            {props.content}
+        </div>
+    `
+}
