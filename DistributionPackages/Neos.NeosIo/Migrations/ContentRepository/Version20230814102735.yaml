@@ -31,6 +31,16 @@ up:
           type: 'ChangeNodeType'
           settings:
             newType: 'Neos.NeosIo:Image'
+    -
+      filters:
+        - type: 'NodeType'
+          settings:
+            nodeType: 'Neos.NodeTypes.ContentReferences:ContentReferences'
+      transformations:
+        -
+          type: 'ChangeNodeType'
+          settings:
+            newType: 'Neos.NeosIo:ContentReferences'
 
 down:
   comments: 'No down migration available'
