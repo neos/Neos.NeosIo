@@ -1,0 +1,41 @@
+name: neos-io
+type: php
+docroot: Web
+php_version: "8.1"
+webserver_type: nginx-fpm
+xdebug_enabled: false
+additional_hostnames: []
+additional_fqdns: []
+database:
+    type: mariadb
+    version: "10.8"
+use_dns_when_possible: true
+composer_version: "2"
+timezone: Europe/Berlin
+nodejs_version: "18"
+webimage_extra_packages: ["php8.1-vips"]
+hooks:
+  post-composer:
+    - exec: ./flow flow:package:rescan >> /dev/null
+upload_dirs:
+  - '../Data/Persistent'
+  - '../Data/Temporary'
+  - '/_Resources'
+web_environment:
+  - FLOW_CONTEXT=Development/ddev
+  - FLOW_REWRITEURLS=1
+  - FLOW_PATH_TEMPORARY_BASE=/tmp/neos
+  - FLOW_ROOTPATH=/var/www/html
+  - COMPOSER_MEMORY_LIMIT=-1
+  - COMPOSER_ROOT_VERSION=dev-main
+  - NEOS_DB_HOST=db
+  - NEOS_DB_NAME=db
+  - NEOS_DB_USER=db
+  - NEOS_DB_PASSWORD=db
+  - NEOS_DB_PORT=3306
+  - NEOS_REDIS_ENDPOINT=redis
+  - ELASTICSEARCH_HOST=elasticsearch
+  - ELASTICSEARCH_PORT=9200
+  - ELASTICSEARCH_SCHEME=http
+  - ELASTICSEARCH_PASSWORD=
+  - ELASTICSEARCH_USERNAME=

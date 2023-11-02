@@ -1,0 +1,57 @@
+#
+# Settings used for development with ddev
+#
+
+Neos:
+  Flow:
+    persistence:
+      backendOptions:
+        host: '%env:NEOS_DB_HOST%'
+        dbname: '%env:NEOS_DB_NAME%'
+        user: '%env:NEOS_DB_USER%'
+        password: '%env:NEOS_DB_PASSWORD%'
+        port: '%env:NEOS_DB_PORT%'
+
+  NeosIo:
+    crowdApi:
+      username: '%env:CROWD_API_USERNAME%'
+      password: '%env:CROWD_API_PASSWORD%'
+
+  MarketPlace:
+    github:
+      token: '%env:GITHUB_API_TOKEN%'
+
+Flowpack:
+  ElasticSearch:
+    clients:
+      default:
+        - host: '%env:ELASTICSEARCH_HOST%'
+          port: '%env:ELASTICSEARCH_PORT%'
+          username: '%env:ELASTICSEARCH_USERNAME%'
+          password: '%env:ELASTICSEARCH_PASSWORD%'
+          scheme: '%env:ELASTICSEARCH_SCHEME%'
+
+    indexes:
+      default:
+        'wwwneosio-development':
+          settings:
+            analysis:
+              filter:
+                autocompleteFilter:
+                  max_shingle_size: 4
+                  min_shingle_size: 2
+                  type: 'shingle'
+              analyzer:
+                autocomplete:
+                  filter: [ 'lowercase', 'autocompleteFilter' ]
+                  char_filter: [ 'html_strip' ]
+                  type: 'custom'
+                  tokenizer: 'standard'
+
+    ContentRepositoryAdaptor:
+      driver:
+        version: '7.x'
+
+  FullPageCache:
+    # disable full page caching
+    enabled: false
