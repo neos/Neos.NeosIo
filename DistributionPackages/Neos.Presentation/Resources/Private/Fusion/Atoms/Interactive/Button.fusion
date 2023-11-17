@@ -1,0 +1,57 @@
+prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Button"
+        props {
+            text = 'Button Text'
+        }
+        useCases {
+            link.props {
+                text = 'Button as Link'
+                variant = 'link'
+            }
+            icon {
+                props.icon = afx`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path fill="none" stroke="currentColor" d="M2 6q2 0 3 1t3 1V3Q6 3 5 2T2 1v8"/></svg>`
+            }
+        }
+    }
+
+    @propTypes {
+        variant = ${PropTypes.oneOf(['button', 'link'])}
+        text = ${PropTypes.string.isRequired}
+        href = ${PropTypes.anyOf(PropTypes.string)}
+        icon = ${PropTypes.string}
+        srOnlyLabel = ${PropTypes.boolean}
+    }
+
+    text = null
+    variant = 'button'
+    icon = null
+    srOnlyLabel = false
+
+    attributes = Neos.Fusion:DataStructure
+    class = null
+
+    @private {
+        labelText = ${props.srOnlyLabel ? '<span class="sr-only">' + props.text + '</span>' : props.text}
+    }
+
+    renderer = Neos.Fusion:Tag {
+        tagName = 'button'
+        attributes {
+            @apply.attributes = ${props.attributes}
+            class = ${AtomicFusion.classNames(
+                'n-button n-interactive',
+                {
+                    'n-interactive--button': props.variant == 'button',
+                    'n-interactive--link': props.variant == 'link'
+                },
+                props.class
+            )}
+        }
+        content = afx`
+            <span>{private.labelText}</span>
+            {props.icon}
+        `
+    }
+}
