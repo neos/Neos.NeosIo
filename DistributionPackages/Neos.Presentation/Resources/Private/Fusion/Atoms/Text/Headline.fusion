@@ -1,0 +1,23 @@
+prototype(Neos.Presentation:Headline) < prototype(Neos.Presentation:Paragraph) {
+
+    @styleguide {
+        title = "Headline"
+        props {
+            text = 'Headline Text'
+            tagName = 'h2'
+            display = 'tagname'
+        }
+    }
+
+    @propTypes {
+        text = ${PropTypes.string}
+        tagName = ${PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'])}
+        display = ${PropTypes.anyOf(PropTypes.string, PropTypes.integer, PropTypes.oneOf(['tagname', '', null]))}
+    }
+
+    text = ''
+    tagName = 'h2'
+    display = 'tagname'
+
+    renderer.attributes.class.@process.component = ${['n-headline', value]}
+}

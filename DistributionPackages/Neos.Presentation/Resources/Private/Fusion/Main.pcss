@@ -2,4 +2,11 @@
 @import url("tailwindcss/components");
 /* Add here the imports from subfolders */
 @import url("Atoms/**/*.pcss");
+@import url("Styles/*.pcss");
 @import url("tailwindcss/utilities");
+
+@layer base {
+  html {
+    @apply font-sans;
+  }
+}
