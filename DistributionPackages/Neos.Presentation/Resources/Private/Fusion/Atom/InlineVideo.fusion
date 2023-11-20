@@ -2,13 +2,7 @@ prototype(Neos.Presentation:Atom.InlineVideo) < prototype(Neos.Neos:ContentCompo
 
     @styleguide {
         title = 'Inline Video'
-        props {
-            autoplay = true
-            loop = true
-            controls = false
-            sources = Neos.Presentation:Atom.InlineVideo.ExampleSources
-            class = ""
-        }
+        props = Neos.Presentation:Atom.InlineVideo.ExampleProps
     }
 
     @propTypes {
@@ -97,4 +91,12 @@ prototype(Neos.Presentation:Atom.InlineVideo.ExampleSources) < prototype(Neos.Fu
         }
         type = "webm"
     }
+}
+
+prototype(Neos.Presentation:Atom.InlineVideo.ExampleProps) < prototype(Neos.Fusion:DataStructure) {
+    autoplay = true
+    loop = true
+    controls = false
+    sources = Neos.Presentation:Atom.InlineVideo.ExampleSources
+    class = ""
 }
