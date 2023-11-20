@@ -6,11 +6,15 @@ The official neos.io website package.
 
 Clone the repository, and setup Neos as always:
 
-- Set up local beach as described here: https://www.flownative.com/en/documentation/guides/localbeach/local-beach-setup-docker-based-neos-development-howto.html
+- Set up Local Beach as described here: https://www.flownative.com/en/documentation/guides/localbeach/local-beach-setup-docker-based-neos-development-howto.html
 - Run `composer install`
 - Run `beach start`
 - Run `beach exec` to enter the container
 - Inside the container run `./flow doctrine:migrate` and site imports etc. as needed
+- add the following domains:
+  - `./flow domain:add --site-node-name neosio --hostname neosio.localbeach.net --scheme https`
+  - `./flow domain:add --site-node-name flowneosio --hostname flowneosio.localbeach.net --scheme https`
+  - `./flow domain:add --site-node-name neosconio --hostname neosconio.localbeach.net --scheme https`
 
 _Note: We require [nvm](https://github.com/creationix/nvm#install-script) as well as the `yarn` binary to be installed on your system._
 
