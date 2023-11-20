@@ -6,21 +6,7 @@ prototype(Neos.Presentation:Atom.InlineVideo) < prototype(Neos.Neos:ContentCompo
             autoplay = true
             loop = true
             controls = false
-            sources = Neos.Fusion:DataStructure {
-                1 = Neos.Fusion:DataStructure {
-                    src = Neos.Fusion:ResourceUri {
-                        path = "resource://Neos.Presentation/Public/Assets/Videos/example.mp4"
-                    }
-                    type = "mp4"
-                }
-
-                2 = Neos.Fusion:DataStructure {
-                    src = Neos.Fusion:ResourceUri {
-                        path = "resource://Neos.Presentation/Public/Assets/Videos/example.webm"
-                    }
-                    type = "webm"
-                }
-            }
+            sources = Neos.Presentation:Atom.InlineVideo.ExampleSources
             class = ""
         }
     }
@@ -47,7 +33,7 @@ prototype(Neos.Presentation:Atom.InlineVideo) < prototype(Neos.Neos:ContentCompo
         sources = Neos.Fusion:Case {
             hasAssets {
                 condition = ${props.assets && Array.length(props.assets)}
-                renderer = Neos.Presentation:InlineVideo.AssetsToSources {
+                renderer = Neos.Presentation:Atom.InlineVideo.AssetsToSources {
                     assets = ${props.assets}
                 }
             }
@@ -81,7 +67,7 @@ prototype(Neos.Presentation:Atom.InlineVideo) < prototype(Neos.Neos:ContentCompo
     }
 }
 
-prototype(Neos.Presentation:InlineVideo.AssetsToSources) < prototype(Neos.Neos:ContentComponent) {
+prototype(Neos.Presentation:Atom.InlineVideo.AssetsToSources) < prototype(Neos.Neos:ContentComponent) {
 
     assets = ${[]}
 
@@ -95,4 +81,20 @@ prototype(Neos.Presentation:InlineVideo.AssetsToSources) < prototype(Neos.Neos:C
         }
     }
 
+}
+
+prototype(Neos.Presentation:Atom.InlineVideo.ExampleSources) < prototype(Neos.Fusion:DataStructure) {
+    1 = Neos.Fusion:DataStructure {
+        src = Neos.Fusion:ResourceUri {
+            path = "resource://Neos.Presentation/Public/Assets/Videos/example.mp4"
+        }
+        type = "mp4"
+    }
+
+    2 = Neos.Fusion:DataStructure {
+        src = Neos.Fusion:ResourceUri {
+            path = "resource://Neos.Presentation/Public/Assets/Videos/example.webm"
+        }
+        type = "webm"
+    }
 }
