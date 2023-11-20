@@ -57,13 +57,14 @@ services:
       - BEACH_PHP_TIMEZONE=${BEACH_PHP_TIMEZONE:-UTC}
       - BEACH_APPLICATION_USER_SERVICE_ENABLE=${BEACH_APPLICATION_USER_SERVICE_ENABLE:-false}
       - BEACH_APPLICATION_STARTUP_SCRIPTS_ENABLE=${BEACH_APPLICATION_STARTUP_SCRIPTS_ENABLE:-false}
+      - BEACH_APPLICATION_CUSTOM_STARTUP_SCRIPTS_ENABLE=${BEACH_APPLICATION_CUSTOM_STARTUP_SCRIPTS_ENABLE:-false}
       - ELASTICSEARCH_HOSTNAME=${ELASTICSEARCH_HOSTNAME:-neosio_elasticsearch.local_beach}
       - ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT:-9200}
       - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
       - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
-      - CROWD_API_USERNAME=${CROWD_API_USERNAME}
-      - CROWD_API_PASSWORD=${CROWD_API_PASSWORD}
-      - GITHUB_API_TOKEN=${GITHUB_API_TOKEN}
+      - CROWD_API_USERNAME=${CROWD_API_USERNAME:-}
+      - CROWD_API_PASSWORD=${CROWD_API_PASSWORD:-}
+      - GITHUB_API_TOKEN=${GITHUB_API_TOKEN:-}
 
   redis:
     image: ${BEACH_REDIS_IMAGE:-flownative/redis}:${BEACH_REDIS_IMAGE_VERSION:-latest}
@@ -78,21 +79,3 @@ services:
       interval: 1s
       timeout: 5s
       retries: 120
-
-  elasticsearch:
-    image: ${BEACH_ELASTICSEARCH_IMAGE:-flownative/elasticsearch}:${BEACH_ELASTICSEARCH_IMAGE_VERSION:-5.6}
-    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_elasticsearch
-    networks:
-      - local_beach
-    ports:
-      - 9200:9200
-    volumes:
-      - ./.LocalBeach/elasticsearch/data:/usr/share/elasticsearch/data
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    environment:
-      - cluster.name=neosio
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
