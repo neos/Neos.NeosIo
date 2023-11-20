@@ -1,0 +1,61 @@
+prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = 'Inline Video'
+        props = Neos.Presentation:InlineVideo.ExampleProps
+    }
+
+    @propTypes {
+        autoplay = ${PropTypes.boolean}
+        loop = ${PropTypes.boolean}
+        controls = ${PropTypes.boolean}
+        sources = ${PropTypes.arrayOf(PropTypes.dataStructure({"src": PropTypes.string, "type": PropTypes.oneOf(['webm', 'mp4', 'ogg'])}))}
+        class = ${PropTypes.anyOf(PropTypes.arrayOf(PropTypes.anyOf(PropTypes.string, PropTypes.boolean)), PropTypes.string)}
+        assets = ${PropTypes.arrayOf(PropTypes.instanceOf('\\Neos\\Media\\Domain\\Model\\AssetInterface'))}
+    }
+
+    autoplay = true
+    loop = ${true}
+    controls = ${false}
+    sources = ${[]}
+    videoFileTypes = ${['webm', 'mp4', 'ogg']}
+    class = null
+    assets = ${[]}
+
+    @private {
+        sources = Neos.Fusion:Case {
+            hasAssets {
+                condition = ${props.assets && Array.length(props.assets)}
+                renderer = Neos.Presentation:Atom.InlineVideo.AssetsToSources {
+                    assets = ${props.assets}
+                }
+            }
+
+            hasNoAssets {
+                condition = ${true}
+                renderer = ${props.sources}
+            }
+        }
+    }
+
+    renderer = afx`
+      <video
+        class={AtomicFusion.classNames(props.class)}
+        autoplay="autoplay"
+        muted="muted"
+        autoplay.@if.hasAutoplay={props.autoplay}
+        muted.@if.hasAutoplay={props.autoplay}
+        loop="loop"
+        loop.@if.hasLoop={props.loop}
+        controls="controls"
+        controls.@if.hasControls={props.controls}
+        playsinline="playsinline">
+        <Neos.Fusion:Loop items={props.videoFileTypes} itemName="type">
+          <Neos.Fusion:Loop items={private.sources} itemName="source">
+            <source @if.isRequiredFiletype={source.type == type} type={"video/" + type} src={source.src} />
+          </Neos.Fusion:Loop>
+        </Neos.Fusion:Loop>
+      </video>
+    `
+
+}
