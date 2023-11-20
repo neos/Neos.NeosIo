@@ -11,7 +11,7 @@ prototype(Neos.Presentation:Atom.SquareIcon) < prototype(Neos.Fusion:Component) 
 
     @propTypes {
         text = ${PropTypes.string.isRequired}
-        iconName = ${PropTypes.string.isRequired}
+        iconName = ${PropTypes.oneOf(['pixel-art/clock', 'pixel-art/circle', 'pixel-art/heart']).isRequired}
         backgroundColorClass = ${PropTypes.oneOf(['bg-accent-lightblue', 'bg-accent-yellow', 'bg-accent-purple']).isRequired}
     }
 
