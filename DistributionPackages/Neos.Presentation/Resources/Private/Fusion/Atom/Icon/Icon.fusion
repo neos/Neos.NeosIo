@@ -1,0 +1,45 @@
+prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
+
+    @propTypes {
+        inline = ${PropTypes.boolean}
+        name = ${PropTypes.string}
+        fallbackName = ${PropTypes.string}
+        class = ${PropTypes.string}
+    }
+
+    name = null
+    name.@process.clean = ${String.trim(String.toLowerCase(value))}
+
+    fallbackName = null
+    fallbackName.@process.clean = ${String.trim(String.toLowerCase(value))}
+
+    inline = null
+
+    class = null
+
+    renderer = Neos.Fusion:Augmenter {
+        data-icon-name = ${props.name}
+        data-icon-name.@if.hasName = ${props.name}
+
+        class = ${props.class}
+
+        content = Neos.Fusion:Case {
+            inlineExists {
+                condition = ${!!props.inline}
+                renderer = ${props.inline}
+            }
+            nameExists {
+                condition = ${File.exists('resource://Neos.Presentation/Public/Assets/Icons/' + props.name + '.svg')}
+                renderer = ${StaticResource.content('Neos.Presentation', 'Public/Assets/Icons/' + props.name + '.svg')}
+            }
+            fallbackNameExists {
+                condition = ${File.exists('resource://Neos.Presentation/Public/Assets/Icons/' + props.fallbackName + '.svg')}
+                renderer = ${StaticResource.content('Neos.Presentation', 'Public/Assets/Icons/' + props.fallbackName + '.svg')}
+            }
+            error {
+                condition = true
+                renderer = ${StaticResource.content('Neos.Presentation', 'Public/Assets/Icons/iconnotfound.svg')}
+            }
+        }
+    }
+}

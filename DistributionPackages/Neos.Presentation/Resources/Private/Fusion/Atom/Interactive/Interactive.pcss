@@ -1,0 +1,23 @@
+.n-interactive {
+  @apply inline-flex justify-center items-center gap-2;
+}
+
+.n-interactive--button {
+  @apply px-6 py-3;
+  @apply text-white bg-green hover:bg-green-dark;
+
+  &[disabled] {
+    @apply text-white bg-gray hover:bg-gray;
+  }
+}
+
+.n-interactive--link {
+  @apply pt-3 pb-1 border-b;
+  @apply text-black hover:text-lightblue;
+  @apply border-darkblue hover:border-lightblue;
+
+  &[disabled] {
+    @apply text-gray hover:text-gray;
+    @apply border-gray hover:border-gray;
+  }
+}

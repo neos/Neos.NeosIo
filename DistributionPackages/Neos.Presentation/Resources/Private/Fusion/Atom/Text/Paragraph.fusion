@@ -1,0 +1,40 @@
+prototype(Neos.Presentation:Paragraph) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Paragraph"
+        props {
+            text = 'Lorem ipsum dolor <em>sit amet</em>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est <strong>Lorem ipsum</strong> dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        }
+    }
+
+    @propTypes {
+        text = ${PropTypes.string}
+        tagName = ${PropTypes.oneOf(['p'])}
+        display = ${PropTypes.anyOf(PropTypes.string, PropTypes.oneOf(['tagname', '', null]))}
+    }
+
+    text = ''
+    tagName = 'p'
+
+    // By default we use the defined tagname
+    display = 'tagname'
+    display.@process.fallback = ${!Type.isString(value) && !Type.isInteger(value) ? 'tagname' : value}
+
+    class = ''
+
+    renderer = Neos.Fusion:Tag {
+        tagName = ${props.tagName}
+        attributes = Neos.Fusion:DataStructure {
+            @apply.attributes = ${props.attributes}
+            class = ${AtomicFusion.classNames(
+                'display-' + props.display,
+                props.class
+            )}
+            style = ${props.style}
+        }
+
+        content = ${props.content || props.text}
+    }
+
+    renderer.attributes.class.@process.component = ${'n-paragraph ' + value}
+}
