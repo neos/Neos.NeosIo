@@ -1,0 +1,50 @@
+prototype(Neos.Presentation:GradientContainer) < prototype(Neos.Fusion:Component) {
+
+    @propTypes {
+        direction = ${PropTypes.oneOf(['right', 'bottom'])}
+        variant = ${PropTypes.oneOf(['blue', 'blueDouble'])}
+        content = ${PropTypes.any}
+    }
+
+
+    @private {
+        colorClass = Neos.Fusion:Case {
+            blueDouble {
+                condition = ${props.variant == 'blueDouble'}
+                renderer = 'gradient-blueDouble'
+            }
+            default {
+                condition = ${true}
+                renderer = 'gradient-blue'
+            }
+        }
+
+        directionClass = Neos.Fusion:Case {
+            bottom {
+                condition = ${props.direction == 'bottom'}
+                renderer = 'bg-gradient-to-b'
+            }
+            default {
+                condition = ${true}
+                renderer = 'bg-gradient-to-r'
+            }
+        }
+    }
+
+    @styleguide {
+        title = 'Gradient Container'
+        props {
+            direction = 'bottom'
+            variant = 'blue'
+            content = Neos.Fusion:Tag {
+                attributes.class = 'h-64'
+            }
+        }
+    }
+
+    renderer = afx`
+        <div class={private.directionClass + ' ' + private.colorClass}>
+            {props.content}
+        </div>
+    `
+}

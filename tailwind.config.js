@@ -10,6 +10,7 @@ module.exports = {
     theme: {
         gradients: {
             blue: '#26224C 0%, #0114C2 100%',
+            blueDouble: '#26224C 0%, #0114C2 50%, #26224C 100%',
         },
         colors: {
             transparent: 'transparent',
