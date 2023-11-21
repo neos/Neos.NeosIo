@@ -37,7 +37,15 @@ prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
             attributes.class={AtomicFusion.classNames(
                 'n-background',
                 {
-                    'n-background--gradient': props.variant == 'gradient'
+                    'n-background--gradient': props.variant == 'gradient',
+                    'n-background--brand': props.variant == 'brand',
+                    'n-background--accent-purple': props.variant == 'accent-purple',
+                    'n-background--accent-blue': props.variant == 'accent-blue',
+                    'n-background--accent-lightblue': props.variant == 'accent-lightblue',
+                    'n-background--accent-green': props.variant == 'accent-green',
+                    'n-background--accent-yellow': props.variant == 'accent-yellow',
+                    'n-background--accent-orange': props.variant == 'accent-orange',
+                    'n-background--accent-red': props.variant == 'accent-red'
                 },
                 props.class
             )}
