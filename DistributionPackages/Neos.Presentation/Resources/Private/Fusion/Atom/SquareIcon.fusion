@@ -1,30 +1,35 @@
-prototype(Neos.Presentation:Atom.SquareIcon) < prototype(Neos.Fusion:Component) {
+prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
 
     @styleguide {
-        title = 'Suqare Icon'
+        title = 'Square Icon'
         props {
             text = 'Forever Open Source'
-            iconName = 'pixel-art/heart'
-            backgroundColorClass = 'bg-accent-purple'
+            iconName = 'heart'
+            color = 'purple'
         }
     }
 
     @propTypes {
-        text = ${PropTypes.string.isRequired}
-        iconName = ${PropTypes.oneOf(['pixel-art/clock', 'pixel-art/circle', 'pixel-art/heart']).isRequired}
-        backgroundColorClass = ${PropTypes.oneOf(['bg-accent-lightblue', 'bg-accent-yellow', 'bg-accent-purple']).isRequired}
+        text = PropTypes:String
+        iconName = PropTypes:String
+        color = PropTypes:String
+    }
+
+    @private.backgroundColorClass = Neos.Fusion:Match {
+        @subject = ${props.color}
+        @default = 'bg-accent-lightblue'
+        yellow = 'bg-accent-yellow'
+        purple = 'bg-accent-purple'
     }
 
     text = null
     iconName = null
-    backgroundColorClass = null
+    color = null
 
     renderer = afx`
-        <div class={'w-44 lg:w-56 lg:p-4 p-3 flex flex-col square-icon aspect-square ' + props.backgroundColorClass}>
-            <div class="icon flex flex-col aspect-square w-8 lg:w-12">
-                <Neos.Presentation:Icon name={props.iconName} class="mb-auto h-auto max-w-full" />
-            </div>
-            <div class="text mt-auto break-words hyphens-auto text-lg lg:text-2xl font-medium text-white">{props.text}</div>
+        <div @if={props.iconName} class={['w-44 lg:w-56 lg:p-4 p-3 flex flex-col square-icon aspect-square text-white', private.backgroundColorClass]}>
+            <Neos.Presentation:Icon name={props.iconName} class="w-8 lg:w-12 h-auto" />
+            <div @if={props.text} class="text mt-auto break-words hyphens-auto text-lg lg:text-2xl font-medium">{props.text}</div>
         </div>
     `
 }
