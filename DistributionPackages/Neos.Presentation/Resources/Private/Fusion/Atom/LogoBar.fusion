@@ -27,7 +27,7 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
     grayscale = false
 
     renderer = afx`
-      <div class="h-10 lg:h-16 w-full inline-flex flex-nowrap overflow-x-hidden bg-[#00ff00]"
+      <div class="h-10 md:h-16 w-full inline-flex flex-nowrap overflow-x-hidden"
            @if={props.assets && Array.length(props.assets)}
            x-data="{}"
            x-init="
@@ -43,7 +43,7 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
         <ul x-ref="logos"
             class="flex item-list gap-11 items-center justify-center md:justify-start mr-11 [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll">
           <Neos.Fusion:Loop items={props.assets} itemName="asset">
-            <img @if={asset.src} class="" alt={asset.alternativeText} src={asset.src} />
+            <img @if={asset.src} class="max-h-[75%]" alt={asset.alternativeText} src={asset.src} />
           </Neos.Fusion:Loop>
         </ul>
       </div>
