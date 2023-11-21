@@ -15,8 +15,7 @@ prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
     }
 
     @propTypes {
-        variant = ${PropTypes.oneOf(['gradient'])}
-
+        variant = ${PropTypes.oneOf(['gradient', 'brand', 'accent-purple', 'accent-blue', 'accent-lightblue', 'accent-green', 'accent-yellow', 'accent-orange', 'accent-red'])}
         tagName = ${PropTypes.string}
         style = ${PropTypes.any}
         class = ${PropTypes.any}
