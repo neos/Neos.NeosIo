@@ -48,7 +48,7 @@ prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
         playsinline="playsinline">
         <Neos.Fusion:Loop items={props.videoFileTypes} itemName="type">
           <Neos.Fusion:Loop items={private.sources} itemName="source">
-            <source @if.isRequiredFiletype={source.type == type} type={"video/" + type} src={source.src} />
+            <source @if={source.type == type} type={"video/" + type} src={source.src} />
           </Neos.Fusion:Loop>
         </Neos.Fusion:Loop>
       </video>
