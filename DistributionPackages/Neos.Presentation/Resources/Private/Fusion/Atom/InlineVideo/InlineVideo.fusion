@@ -54,7 +54,7 @@ prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
             }
 
             hasNoAssets {
-                condition = ${true}
+                condition = ${props.sources && Array.length(props.sources)}
                 renderer = ${props.sources}
             }
         }
