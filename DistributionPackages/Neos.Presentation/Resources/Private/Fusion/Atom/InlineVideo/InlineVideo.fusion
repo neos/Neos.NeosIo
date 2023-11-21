@@ -2,16 +2,38 @@ prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
 
     @styleguide {
         title = 'Inline Video'
-        props = Neos.Presentation:InlineVideo.ExampleProps
+        props = Neos.Presentation:InlineVideo.Fixture
     }
 
     @propTypes {
-        autoplay = ${PropTypes.boolean}
-        loop = ${PropTypes.boolean}
-        controls = ${PropTypes.boolean}
-        sources = ${PropTypes.arrayOf(PropTypes.dataStructure({"src": PropTypes.string, "type": PropTypes.oneOf(['webm', 'mp4', 'ogg'])}))}
-        class = ${PropTypes.anyOf(PropTypes.arrayOf(PropTypes.anyOf(PropTypes.string, PropTypes.boolean)), PropTypes.string)}
-        assets = ${PropTypes.arrayOf(PropTypes.instanceOf('\\Neos\\Media\\Domain\\Model\\AssetInterface'))}
+        autoplay = PropTypes:Bool
+        loop = PropTypes:Bool
+        controls = PropTypes:Bool
+        sources = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                src = PropTypes:String
+                type = PropTypes:Enum {
+                    1 = 'webm'
+                    2 = 'mp4'
+                    3 = 'ogg'
+                }
+            }
+        }
+        class = PropTypes:Union {
+            string = PropTypes:String
+            array = PropTypes:Array {
+                type = PropTypes:Union {
+                    boolean = PropTypes:Bool
+                    string = PropTypes:String
+                }
+            }
+        }
+        assets = PropTypes:Array {
+            type = PropTypes:InstanceOf {
+                type = '\Neos\Media\Domain\Model\AssetInterface'
+            }
+        }
+
     }
 
     autoplay = true
