@@ -80,6 +80,9 @@ module.exports = {
             '5xl': '2160px',
         },
         extend: {
+            aspectRatio: {
+                "portrait": "5 / 7",
+            },
             fontFamily: {
                 sans: ['"Bricolage Grotesque"', ...defaultTheme.fontFamily.sans],
             },
