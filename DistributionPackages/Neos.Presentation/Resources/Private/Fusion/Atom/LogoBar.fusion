@@ -3,38 +3,22 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
     @styleguide {
         title = 'Logo-Bar'
         props {
-            assets = Neos.Fusion:DataStructure {
-                0 = Neos.Fusion:DataStructure {
-                    src = Neos.Fusion:ResourceUri {
-                        path = 'resource://Neos.Presentation/Public/Assets/Styleguide/logos/solarwatt.svg'
-                    }
-                    alternativeText = 'Logo solarwatt'
-                }
-                1 = Neos.Fusion:DataStructure {
-                    src = Neos.Fusion:ResourceUri {
-                        path = 'resource://Neos.Presentation/Public/Assets/Styleguide/logos/heineken.svg'
-                    }
-                    alternativeText = 'Logo heineken'
-                }
-                2 = Neos.Fusion:DataStructure {
-                    src = Neos.Fusion:ResourceUri {
-                        path = 'resource://Neos.Presentation/Public/Assets/Styleguide/logos/swisscom.svg'
-                    }
-                    alternativeText = 'Logo swisscom'
-                }
-                3 = Neos.Fusion:DataStructure {
-                    src = Neos.Fusion:ResourceUri {
-                        path = 'resource://Neos.Presentation/Public/Assets/Styleguide/logos/t3n.png'
-                    }
-                    alternativeText = 'Logo t3n'
+            assets = Neos.Fusion:Map {
+                items = ${['solarwatt.svg', 'heineken.svg', 'swisscom.svg', 't3n.png']}
+                itemRenderer = Neos.Fusion:DataStructure {
+                    src = ${StaticResource.uri('Neos.Presentation', 'Public/Assets/Styleguide/logos/' + item)}
+                    alternativeText = ${'Logo ' + props.item}
                 }
             }
         }
     }
 
     @propTypes {
-        assets = PropTypes:FromPrototype {
-            prototypeName = "Neos.Fusion:DataStructure"
+        assets = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                src = PropTypes:String
+                alternativeText = PropTypes:String
+            }
         }
         grayscale = PropTypes:Bool
     }
@@ -43,8 +27,8 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
     grayscale = false
 
     renderer = afx`
-        <div @if={props.assets}
-             class={['h-10 lg:h-16 w-full logo-bar overflow-x-scroll hide-scrollbar inline-flex items-center gap-11 snap-x snap-mandatory', props.grayscale ? 'grayscale' : '']}>
+        <div @if={props.assets && Array.length(props.assets)}
+             class={['h-10 lg:h-16 w-full logo-bar overflow-x-scroll hide-scrollbar inline-flex items-center gap-11 snap-x snap-mandatory', props.grayscale ? 'grayscale' : null]}>
             <Neos.Fusion:Loop items={props.assets} itemName="asset">
                 <img @if={asset.src} class="snap-center h-3/4" alt={asset.alternativeText} src={asset.src} />
             </Neos.Fusion:Loop>
