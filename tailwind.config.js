@@ -1,6 +1,6 @@
 const content = require('./Build/Carbon.Pipeline/purge');
 const plugin = require('tailwindcss/plugin');
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 const pxToRem = (px) => `${px / 16}rem`;
 
@@ -10,6 +10,8 @@ module.exports = {
     theme: {
         gradients: {
             blue: '#26224C 0%, #0114C2 100%',
+            'blue-inside': '#26224C 0%, #0114C2 50%, #26224C 100%',
+            'blue-outside': '#26224C 0%, #0114C2 50%, #26224C 100%',
         },
         colors: {
             transparent: 'transparent',
@@ -74,18 +76,18 @@ module.exports = {
         },
         extend: {
             fontFamily: {
-                'sans': ['"Bricolage Grotesque"', ...defaultTheme.fontFamily.sans],
+                sans: ['"Bricolage Grotesque"', ...defaultTheme.fontFamily.sans],
             },
             lineHeight: {
-                "auto": "normal"
+                auto: 'normal',
             },
             spacing: {
-                "spacing-x": "var(--c-spacing--x)",
-                "spacing-y": "var(--c-spacing--y)",
-                "spacing-y-small": "var(--c-spacing--y-small)",
+                'spacing-x': 'var(--c-spacing--x)',
+                'spacing-y': 'var(--c-spacing--y)',
+                'spacing-y-small': 'var(--c-spacing--y-small)',
             },
             supports: {
-                dvh: "height: 100dvh",
+                dvh: 'height: 100dvh',
             },
         },
     },
