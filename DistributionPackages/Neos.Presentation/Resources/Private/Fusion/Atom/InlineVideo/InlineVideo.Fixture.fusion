@@ -2,6 +2,9 @@ prototype(Neos.Presentation:InlineVideo.Fixture) < prototype(Neos.Fusion:DataStr
     autoplay = true
     loop = true
     controls = false
+    poster = Sitegeist.Kaleidoscope:UriImageSource {
+        uri = 'https://source.unsplash.com/random/800x600'
+    }
     sources = Neos.Fusion:Map {
         items = ${['mp4', 'webm']}
         itemRenderer = Neos.Fusion:DataStructure {
