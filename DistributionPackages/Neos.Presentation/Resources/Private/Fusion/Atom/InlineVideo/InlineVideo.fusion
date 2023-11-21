@@ -9,6 +9,9 @@ prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
         autoplay = PropTypes:Bool
         loop = PropTypes:Bool
         controls = PropTypes:Bool
+        poster = PropTypes:InstanceOf {
+            type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
+        }
         sources = PropTypes:Array {
             type = PropTypes:DataStructure {
                 src = PropTypes:String
@@ -30,7 +33,7 @@ prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
         }
         assets = PropTypes:Array {
             type = PropTypes:InstanceOf {
-                type = '\Neos\Media\Domain\Model\AssetInterface'
+                type = '\\Neos\\Media\\Domain\\Model\\AssetInterface'
             }
         }
 
@@ -58,6 +61,7 @@ prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
                 renderer = ${props.sources}
             }
         }
+        posterUrl = ${props.poster ? props.poster.src() : null}
     }
 
     renderer = afx`
@@ -68,6 +72,7 @@ prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
         muted={props.autoplay ? true : null}
         loop={props.loop ? true : null}
         controls={props.controls ? true : null}
+        poster={private.posterUrl ? private.posterUrl : null}
         playsinline="playsinline">
         <Neos.Fusion:Loop items={props.videoFileTypes} itemName="type">
           <Neos.Fusion:Loop items={private.sources} itemName="source">
