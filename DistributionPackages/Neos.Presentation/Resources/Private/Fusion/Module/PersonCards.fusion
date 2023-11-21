@@ -1,0 +1,66 @@
+prototype(Neos.Presentation:Module.PersonCards) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Person Cards"
+        props {
+            headline.text = 'Ready for <strong>Neos CMS?</strong>'
+            cards = Neos.Fusion:DataStructure {
+                0 {
+                    name = "Karsten Dambekalns"
+                    email = "karsten@neos.io"
+                    variant = "blue"
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=5&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                    }
+                }
+                1 {
+                    name = "Anke Häslich"
+                    email = "anke@neos.io"
+                    variant = "purple"
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&crop=faces&fp-y=0.8&fp-z=2&w=1024&h=1024&q=80'
+                    }
+                }
+                2 {
+                    name = "Christian Müller"
+                    email = "christian@neos.io"
+                    variant = "green"
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&crop=faces&fp-y=0.8&fp-z=2&w=1024&h=1024&q=80'
+                    }
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        headline = PropTypes:FromPrototype {
+            prototypeName = "Neos.Presentation:Headline"
+        }
+        cards = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                name = PropTypes:String
+                email = PropTypes:String
+                image.imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+            }
+        }
+    }
+
+    headline = null
+    cards = null
+
+    renderer = afx`
+        <Neos.Presentation:Spacing size x y>
+            <Neos.Presentation:Spacing y="small">
+                <Neos.Presentation:Headline {...props.headline} display="headline-lg" class="text-center"/>
+            </Neos.Presentation:Spacing>
+            <Neos.Presentation:Spacing y="small">
+                <ul role="list" class="grid lg:grid-cols-3 items-stretch gap-x-6 gap-y-16 mx-0 text-white">
+                    <Neos.Fusion:Loop items={props.cards} itemName="card">
+                        <Neos.Presentation:Module.PersonCards.Card {...card}/>
+                    </Neos.Fusion:Loop>
+                </ul>
+            </Neos.Presentation:Spacing>
+        </Neos.Presentation:Spacing>
+    `
+}
