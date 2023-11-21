@@ -62,6 +62,7 @@ prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
       <video
+        @if={private.sources}
         class={AtomicFusion.classNames(props.class)}
         autoplay={props.autoplay ? true : null}
         muted={props.autoplay ? true : null}
