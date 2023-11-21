@@ -1,0 +1,104 @@
+prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Navigation"
+        container = Neos.Presentation:Background {
+            variant = 'gradient'
+            content = ${value}
+        }
+        props {
+            links = Neos.Fusion:DataStructure {
+                0 {
+                    label = "Product"
+                    link = "#"
+                    flyoutType = "groups"
+                    flyoutItems {
+                        group0 {
+                            label = "First group"
+                            link = "#"
+                            items {
+                                0 {
+                                    label = 'sdfs'
+                                    link = '#'
+                                }
+                            }
+                        }
+                        group1 {
+                            label = "Second group"
+                        }
+                    }
+                }
+                1 {
+                    label = "Cases"
+                    link = "#"
+                    flyoutType = "teaser"
+                    flyoutTitle = "Teaser"
+                    flyoutBody = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu aliquam"
+                }
+                2 {
+                    label = "Community"
+                    link = "#"
+                }
+                3 {
+                    label = "Download"
+                    link = "#"
+                }
+                4 {
+                    label = "Blog"
+                    link = "#"
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        links = PropTypes:Array {
+            type = PropTypes:Union {
+                groups = PropTypes:DataStructure {
+                    label = ${PropTypes.string.required}
+                    link = ${PropTypes.string}
+                    flyoutType = 'group'
+                    flyoutTeaser = PropTypes:String
+                    flyoutItems = PropTypes:Array {
+                        type = PropTypes:DataStructure {
+                            label = ${PropTypes.string}
+                            link = ${PropTypes.string}
+                            items = PropTypes:Array {
+                                type = PropTypes:DataStructure {
+                                    label = ${PropTypes.string}
+                                    link = ${PropTypes.string}
+                                    icon = ${PropTypes.string}
+                                    description = ${PropTypes.string}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Spacing tagName="nav" size x y="small">
+            <ul class="flex justify-between items-center gap-x-6">
+                <Neos.Presentation:Icon name="neos-white-logo" class="h-10" />
+                <div class="hidden lg:flex items-center gap-5 2xl:gap-10">
+                    <Neos.Fusion:Loop items={props.links} itemName="link">
+                        <li class="group">
+                            <a href={link.link}
+                               class="inline-flex items-center gap-1 hover:bg-white/10 px-4 py-1 rounded-md display-lead">{link.label}
+                                <Neos.Presentation:Icon
+                                        @if={link.flyoutItems && link.flyoutItems != []}
+                                        name="chevron-down"
+                                        class="h-6"
+                                />
+                            </a>
+                            <Neos.Presentation:Navigation.Flyout {...link} />
+                        </li>
+                    </Neos.Fusion:Loop>
+                </div>
+                <Neos.Presentation:Button text="Try Neos" />
+            </ul>
+        </Neos.Presentation:Spacing>
+    `
+}

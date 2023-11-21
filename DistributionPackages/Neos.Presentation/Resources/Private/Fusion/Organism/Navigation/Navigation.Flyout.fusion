@@ -1,0 +1,17 @@
+prototype(Neos.Presentation:Navigation.Flyout) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <div @if={props.flyoutItems && props.flyoutItems != []} class="absolute hidden group-hover:block">
+            <Neos.Fusion:Loop items={props.flyoutItems} itemName="flyoutItem">
+                <Neos.Presentation:Headline text={flyoutItem.title} />
+                <ul>
+                    <Neos.Fusion:Loop items={flyoutItem.items} itemName="item">
+                        <li>
+                            <a href={item.link}>{item.label}</a>
+                        </li>
+                    </Neos.Fusion:Loop>
+                </ul>
+            </Neos.Fusion:Loop>
+        </div>
+    `
+}

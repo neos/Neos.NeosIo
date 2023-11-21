@@ -1,0 +1,59 @@
+prototype(Neos.Presentation:Module.Teaser) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Teaser"
+        props {
+            headline.text = 'Ready for <strong>Neos CMS?</strong>'
+            primaryLink.text = 'Try Neos now'
+            primaryLink.icon = Neos.Presentation:Icon {
+                name = 'pixel-chevron-right'
+                class = 'h-6'
+            }
+            secondaryLink.text = 'View features'
+            image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                uri = 'https://source.unsplash.com/random/800x600'
+            }
+        }
+    }
+
+    @propTyes {
+        image.imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        headline = PropTypes:FromPrototype {
+            prototypeName = "Neos.Presentation:Headline"
+        }
+        description = PropTypes:FromPrototype {
+            prototypeName = "Neos.Presentation:Paragraph"
+        }
+        primaryLink = PropTypes:FromPrototype {
+            prototypeName = "Neos.Presentation:Link"
+        }
+        secondaryLink = PropTypes:FromPrototype {
+            prototypeName = "Neos.Presentation:Link"
+        }
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Spacing size y>
+            <div class="grid md:grid-cols-2 items-center">
+                <Neos.Presentation:Spacing x y="small">
+                    <Neos.Presentation:Spacing y="small">
+                        <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
+                        <Neos.Presentation:Paragraph {...props.description} display="lead" />
+                    </Neos.Presentation:Spacing>
+                    <Neos.Presentation:Spacing y="small">
+                        <div class="flex flex-wrap gap-10 items-center">
+                            <Neos.Presentation:Link
+                                @if={props.primaryLink.text}
+                                {...props.primaryLink}
+                                variant="button" />
+                            <Neos.Presentation:Link
+                                @if={props.secondaryLink.text}
+                                {...props.secondaryLink} />
+                        </div>
+                    </Neos.Presentation:Spacing>
+                </Neos.Presentation:Spacing>
+                <Sitegeist.Kaleidoscope:Image {...props.image} />
+            </div>
+        </Neos.Presentation:Spacing>
+    `
+}
