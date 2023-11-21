@@ -17,7 +17,9 @@ prototype(Neos.Presentation:Module.Teaser) < prototype(Neos.Fusion:Component) {
     }
 
     @propTypes {
-        image.imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        image = PropTypes:DataStructure {
+            imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        }
         headline = PropTypes:FromPrototype {
             prototypeName = "Neos.Presentation:Headline"
         }
