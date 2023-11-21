@@ -39,7 +39,7 @@ prototype(Neos.Presentation:Link) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = Neos.Fusion:Tag {
-        tagName = 'link'
+        tagName = 'a'
         attributes {
             @apply.attributes = ${props.attributes}
             class = ${AtomicFusion.classNames(
