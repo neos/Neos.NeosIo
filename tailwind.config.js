@@ -81,6 +81,14 @@ module.exports = {
             lineHeight: {
                 auto: 'normal',
             },
+            spacing: {
+                'spacing-x': 'var(--c-spacing--x)',
+                'spacing-y': 'var(--c-spacing--y)',
+                'spacing-y-small': 'var(--c-spacing--y-small)',
+            },
+            supports: {
+                dvh: 'height: 100dvh',
+            },
         },
     },
     plugins: [

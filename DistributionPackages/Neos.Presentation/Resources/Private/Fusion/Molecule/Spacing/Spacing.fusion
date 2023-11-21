@@ -1,0 +1,60 @@
+prototype(Neos.Presentation:Spacing) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Spacing"
+        description = "Spacing between elements (also available as css variables)"
+        props {
+            size = 'default'
+            x = 'default'
+            y = 'default'
+            class = ''
+            tagName = 'div'
+            content = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda atque cumque, dignissimos ea eos error in iure laboriosam libero mollitia nam nemo omnis, perferendis quisquam recusandae reiciendis repudiandae unde ut!'
+        }
+    }
+
+    @propTypes {
+        // this defines the max width of the content
+        size = ${PropTypes.anyOf(PropTypes.oneOf(['default']), PropTypes.boolean)}
+
+        // this defines the horizontal padding (if false, content can touch the edges)
+        x = ${PropTypes.anyOf(PropTypes.oneOf(['default']), PropTypes.boolean)}
+
+        // this defines the vertical margin (siblings margin collapse)
+        y = ${PropTypes.anyOf(PropTypes.oneOf(['default', 'small']), PropTypes.boolean)}
+
+        class = ${PropTypes.any}
+        attributes = ${PropTypes.any}
+        tagName = ${PropTypes.string}
+    }
+
+    size = 'default'
+    x = null
+    y = null
+
+    class = null
+    attributes = Neos.Fusion:DataStructure
+    tagName = 'div'
+
+    content = null
+
+    renderer = afx`
+        <Neos.Fusion:Augmenter
+            class={AtomicFusion.classNames(
+            'c-spacing',
+            {
+                'c-spacing--size': props.size || props.size == 'default',
+                'c-spacing--x': props.x || props.x == 'default',
+                'c-spacing--y': props.y || props.y == 'default',
+                'c-spacing--y-small': props.y == 'small'
+            },
+            props.class
+        )}>
+            <Neos.Fusion:Tag
+                tagName={props.tagName}
+                attributes={props.attributes}>
+                {props.content}
+            </Neos.Fusion:Tag>
+        </Neos.Fusion:Augmenter>
+    `
+}
