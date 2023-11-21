@@ -1,0 +1,50 @@
+prototype(Neos.Presentation:List.With.Preview.Item) < prototype(Neos.Fusion:Component) {
+
+    @propTypes {
+        image = ${PropTypes.dataStructure({
+            imageSource: PropTypes.anyOf(
+                PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')
+            ),
+            altText: PropTypes.string
+        })}
+        link = ${PropTypes.string}
+        label = ${PropTypes.string}
+        category = ${PropTypes.dataStructure({
+            label: PropTypes.string,
+            color: PropTypes.string
+        })}
+    }
+
+    image = null
+    link = null
+    label = null
+    category = null
+
+    number = ${'#' + (value < 10 ? '0' : '') + iterator.cycle}
+    borderTop = ${(iterator.cycle==1) ? ' border-t' : ''}
+
+    renderer = afx`
+        <a href={props.link} title={props.label}
+            class={"group hover:bg-accent-yellow relative flex flex-col py-10 color-black md:flex-row w-full hover:md:bg-yellow border-solid border-b border-gray-light" + props.borderTop}>
+            <div class="flex flex-row order-2 w-full mb-3 items-start md:order-1 md:w-8/12 md:mb-0 md:items-center">
+                <div class="flex order-2 w-2/12  text-2xl font-medium md:order-1 md:w-1/12 group-hover:md:pl-8">{props.number}</div>
+                <div class="flex flex-grow order-3 w-10/12 text-2xl md:order-2 md:w-11/12 md:grow group-hover:md:pl-8">{props.label}</div>
+            </div>
+            <div class="flex flex-row order-1 w-full mb-3 items-center md:order-2 md:w-3/12 md:mb-0">
+                <div class="w-6 h-6 mr-6" style={"background-color: " + props.category.color}></div>
+                <div class="text-2xl">{props.category.label}</div>
+            </div>
+            <div class="hidden md:w-1/12 md:items-center md:order-3 md:flex md:justify-center">
+                <Neos.Presentation:Icon name='chevron-right' class="block group-hover:hidden" />
+                <Neos.Presentation:Icon name='arrow-right' class="hidden group-hover:block" />
+            </div>
+            <Sitegeist.Kaleidoscope:Image
+                @if.set={props.image.imageSource}
+                imageSource={props.image.imageSource}
+                title={props.title}
+                attributes.class={['hidden group-hover:md:block absolute top-0 right-1/4 z-[10]', props.class]}
+            />
+        </a>
+    `
+
+}
