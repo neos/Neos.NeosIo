@@ -1,0 +1,136 @@
+prototype(Neos.Presentation:List.With.Preview) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Feature List of link with preview"
+        description = "List of link items with preview image"
+        props {
+            link = '#'
+            label = 'All case studies'
+            items = Neos.Fusion:DataStructure {
+                10 = Neos.Fusion:DataStructure {
+                    image = Neos.Fusion:DataStructure {
+                        imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                            width = 500
+                            height = 300
+                            text = '5:3'
+                        }
+                        altText = 'Lorem ipsum'
+                    }
+                    link = '#'
+                    label = 'Name of the client and his project'
+                    category = Neos.Fusion:DataStructure {
+                        label = 'E-commerce'
+                        color = 'green'
+                    }
+                }
+                20 = Neos.Fusion:DataStructure {
+                    image = Neos.Fusion:DataStructure {
+                        imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                            width = 500
+                            height = 300
+                            text = '5:3'
+                        }
+                        altText = 'Lorem ipsum'
+                    }
+                    link = '#'
+                    label = 'Name of the client and his project'
+                    category = Neos.Fusion:DataStructure {
+                        label = 'E-commerce'
+                        color = 'green'
+                    }
+                }
+                30 = Neos.Fusion:DataStructure {
+                    image = Neos.Fusion:DataStructure {
+                        imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                            width = 500
+                            height = 300
+                            text = '5:3'
+                        }
+                        altText = 'Lorem ipsum'
+                    }
+                    link = '#'
+                    label = 'Name of the client and his project'
+                    category = Neos.Fusion:DataStructure {
+                        label = 'Dev'
+                        color = '#b6b6b6'
+                    }
+                }
+                40 = Neos.Fusion:DataStructure {
+                    image = Neos.Fusion:DataStructure {
+                        imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                            width = 500
+                            height = 300
+                            text = '5:3'
+                        }
+                        altText = 'Lorem ipsum'
+                    }
+                    link = '#'
+                    label = 'Name of the client and his project'
+                    category = Neos.Fusion:DataStructure {
+                        label = 'Content Platforms'
+                        color = 'blue'
+                    }
+                }
+                50 = Neos.Fusion:DataStructure {
+                    image = Neos.Fusion:DataStructure {
+                        imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                            width = 500
+                            height = 300
+                            text = '5:3'
+                        }
+                        altText = 'Lorem ipsum'
+                    }
+                    link = '#'
+                    label = 'Name of the client and his project'
+                    category = Neos.Fusion:DataStructure {
+                        label = 'Content Platforms'
+                        color = 'blue'
+                    }
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        link = ${PropTypes.string}
+        label= ${PropTypes.string}
+        items = ${PropTypes.arrayOf(
+            PropTypes.dataStructure({
+                image: PropTypes.dataStructure({
+                    imageSource: PropTypes.anyOf(
+                        PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')
+                    ),
+                    altText: PropTypes.string
+                }),
+                link: PropTypes.string,
+                label: PropTypes.string,
+                category: PropTypes.dataStructure({
+                    label: PropTypes.string,
+                    color: PropTypes.string
+                })
+            })
+        )}
+    }
+
+    link = null
+    label = null
+    items = null
+
+    renderer = afx`
+        <div class="flex w-full flex-col">
+            <ul class="mb-12" @if.setItems={props.items}>
+                <Neos.Fusion:Loop items={props.items}>
+                    <li>
+                        <Neos.Presentation:List.With.Preview.Item {...item} />
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
+            <div @if.setLink={props.link} class="flex w-full justify-center mb-12">
+                <a href={props.link} title={props.label} class="text-base pb-3 border-solid border-b-2 border-black md:text-xl">
+                    {props.label}
+                </a>
+            </div>
+        </div>
+    `
+
+}
