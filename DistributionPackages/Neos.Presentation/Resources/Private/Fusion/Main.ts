@@ -11,7 +11,6 @@ Alpine.plugin([
     anchor,
     clipboard,
     collapse,
-    fetch,
     focus,
     intersect,
     typewriter,
