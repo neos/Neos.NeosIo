@@ -8,7 +8,7 @@ const pxToRem = (px) => `${px / 16}rem`;
 module.exports = {
     content,
     theme: {
-        gradient: {
+        gradients: {
             blue: '#26224C 0%, #0114C2 100%',
         },
         colors: {
@@ -86,7 +86,7 @@ module.exports = {
             const gradients = theme('gradients', {});
             const utilities = Object.entries(gradients).map(([name, gradient]) => ({
                 [`.${e(`gradient-${name}`)}`]: {
-                    '--gradient-color-stops': gradient,
+                    '--tw-gradient-stops': gradient,
                 },
             }));
 
