@@ -1,4 +1,4 @@
-prototype(Neos.Presentation:List.With.Preview) < prototype(Neos.Fusion:Component) {
+prototype(Neos.Presentation:List) < prototype(Neos.Fusion:Component) {
 
     @styleguide {
         title = "Feature List of link with preview"
@@ -92,24 +92,22 @@ prototype(Neos.Presentation:List.With.Preview) < prototype(Neos.Fusion:Component
     }
 
     @propTypes {
-        link = ${PropTypes.string}
-        label= ${PropTypes.string}
-        items = ${PropTypes.arrayOf(
-            PropTypes.dataStructure({
-                image: PropTypes.dataStructure({
-                    imageSource: PropTypes.anyOf(
-                        PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')
-                    ),
-                    altText: PropTypes.string
-                }),
-                link: PropTypes.string,
-                label: PropTypes.string,
-                category: PropTypes.dataStructure({
-                    label: PropTypes.string,
-                    color: PropTypes.string
-                })
-            })
-        )}
+        link = PropTypes:String
+        label = PropTypes:String
+        items = PropTypes:DataStructure {
+            image = PropTypes:DataStructure {
+                imageSource = PropTypes:InstanceOf {
+                    type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
+                }
+                alternativeText = PropTypes:String
+            }
+            link = PropTypes:String
+            label = PropTypes:String
+            category = PropTypes:DataStructure {
+                label = PropTypes:String
+                color = PropTypes:String
+            }
+        }
     }
 
     link = null
@@ -117,16 +115,14 @@ prototype(Neos.Presentation:List.With.Preview) < prototype(Neos.Fusion:Component
     items = null
 
     renderer = afx`
-        <div class="flex w-full flex-col">
-            <ul class="mb-12" @if.setItems={props.items}>
+        <div class="flex w-full flex-col mt-12 mb-12">
+            <ol class="list-preview mb-12 border-t border-t-solid border-t-gray-light divide-gray-light divide-solid divide-y" @if={props.items}>
                 <Neos.Fusion:Loop items={props.items}>
-                    <li>
-                        <Neos.Presentation:List.With.Preview.Item {...item} />
-                    </li>
+                    <Neos.Presentation:List.Fragment.Item {...item} />
                 </Neos.Fusion:Loop>
-            </ul>
-            <div @if.setLink={props.link} class="flex w-full justify-center mb-12">
-                <a href={props.link} title={props.label} class="text-base pb-3 border-solid border-b-2 border-black md:text-xl">
+            </ol>
+            <div @if={props.link} class="flex w-full justify-center mb-12">
+                <a href={props.link} class="text-base pb-3 border-solid border-b-2 border-black md:text-xl">
                     {props.label}
                 </a>
             </div>

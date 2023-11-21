@@ -1,0 +1,39 @@
+prototype(Neos.Presentation:List.Fragment.Item) < prototype(Neos.Fusion:Component) {
+
+    @propTypes {
+        image = PropTypes:DataStructure {
+            imageSource = PropTypes:InstanceOf {
+                type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
+            }
+            alternativeText = PropTypes:String
+        }
+        link = PropTypes:String
+        label = PropTypes:String
+        category = PropTypes:DataStructure {
+            label = PropTypes:String
+            color = PropTypes:String
+        }
+    }
+
+    image = null
+    link = null
+    label = null
+    category = null
+
+    renderer = afx`
+        <li class="group relative flex flex-col gap-4 relative color-black text-black md:flex-row md:bg-accent-yellow md:bg-opacity-0 md:hover:bg-opacity-100 transition py-2 nd:py-0">
+            <a href={props.link} class="flex flex-row order-3 md:order-2 w-10/12 md:w-6/12 text-2xl z-1 group-hover:md:translate-x-8 transition-transform after:absolute after:inset-0 md:py-10 md:pr-8">
+                {props.label}
+            </a>
+            <span class="flex order-1 items-baseline w-full mb-3 gap-6 md:order-2 md:w-3/12 md:mb-0 md:py-10">
+                <span class="aspect-square h-6 translate-y-1" style={"background-color: " + props.category.color}></span>
+                <span class="text-2xl">{props.category.label}</span>
+            </span>
+            <span class="hidden md:w-1/12 md:items-center md:order-3 md:flex md:justify-center md:py-10">
+                <Neos.Presentation:Icon name='chevron-right' class="block group-hover:hidden" />
+                <Neos.Presentation:Icon name='arrow-right' class="hidden group-hover:block" />
+            </span>
+        </li>
+    `
+
+}
