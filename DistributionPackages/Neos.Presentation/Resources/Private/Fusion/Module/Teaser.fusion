@@ -72,7 +72,7 @@ prototype(Neos.Presentation:Module.Teaser) < prototype(Neos.Fusion:Component) {
     secondaryLink = null
 
     renderer = afx`
-        <Neos.Presentation:Spacing size y>
+        <Neos.Presentation:Spacing size>
             <div class="relative grid md:grid-cols-2 items-center">
                 <div class={AtomicFusion.classNames({"bg-gradient-to-r from-white to-white/0": props.variant == 'imageBackground'})}>
                     <Neos.Presentation:Spacing x y="small">
