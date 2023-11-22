@@ -28,6 +28,7 @@ module.exports = {
             gray: {
                 DEFAULT: '#989898',
                 light: '#F1F1F1',
+                dark: '#242424'
             },
             green: {
                 DEFAULT: '#2AA72A',
@@ -97,6 +98,9 @@ module.exports = {
             supports: {
                 dvh: 'height: 100dvh',
             },
+            backgroundImage: {
+                "pattern-pixels": "url('../Assets/Pattern/pattern-pixels.png')",
+            }
         },
     },
     plugins: [
