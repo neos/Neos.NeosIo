@@ -27,7 +27,7 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
     grayscale = false
 
     renderer = afx`
-      <div class="h-10 md:h-16 w-full inline-flex flex-nowrap overflow-x-hidden"
+      <div class={['h-10 md:h-16 w-full inline-flex flex-nowrap overflow-x-hidden', props.grayscale ? 'grayscale' : null]}
            @if={props.assets && Array.length(props.assets)}
            x-data="{}"
            x-init="
