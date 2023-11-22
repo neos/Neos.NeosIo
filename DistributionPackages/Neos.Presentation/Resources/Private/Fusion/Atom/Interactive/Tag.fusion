@@ -1,0 +1,48 @@
+prototype(Neos.Presentation:Tag) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Tag"
+        props {
+            text = 'Tag Text'
+            href = '#link'
+        }
+        useCases {
+            numbered.props {
+                text = 'Tag Text'
+                number = 42
+                href = '#link'
+            }
+        }
+    }
+
+    @propTypes {
+        text = ${PropTypes.string.isRequired}
+        href = ${PropTypes.anyOf(PropTypes.string)}
+        number = ${PropTypes.integer}
+        disabled = ${PropTypes.boolean}
+    }
+
+    text = null
+    href = null
+    number = null
+
+    attributes = Neos.Fusion:DataStructure
+    class = null
+
+    renderer = Neos.Fusion:Tag {
+        tagName = 'a'
+        attributes {
+            @apply.attributes = ${props.attributes}
+            class = ${AtomicFusion.classNames(
+                'n-tag n-interactive',
+                'n-interactive--tag',
+                props.class
+            )}
+            href = ${props.href}
+        }
+        content = afx`
+            <span>{props.text}</span>
+            <span @if={props.number}>{props.number}</span>
+        `
+    }
+}

@@ -1,0 +1,72 @@
+prototype(Neos.Presentation:TagGroup) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Tag Group"
+        props {
+            variant = 'default'
+            content = Neos.Fusion:Join {
+                tag1 = Sitegeist.Monocle:Preview.Prototype {
+                    prototypeName = 'Neos.Presentation:Tag'
+                    useCase = 'numbered'
+                    props.text = 'Numquam amet tempora'
+                }
+                tag2 = Sitegeist.Monocle:Preview.Prototype {
+                    prototypeName = 'Neos.Presentation:Tag'
+                    useCase = 'numbered'
+                    props.text = 'Labore eius neque non'
+                }
+                tag3 = Sitegeist.Monocle:Preview.Prototype {
+                    prototypeName = 'Neos.Presentation:Tag'
+                    useCase = 'numbered'
+                    props.text = 'Non velit dolore'
+                }
+            }
+        }
+        useCases {
+            list.props {
+                variant = 'list'
+                content = Neos.Fusion:Join {
+                    tag1 = Sitegeist.Monocle:Preview.Prototype {
+                        prototypeName = 'Neos.Presentation:Tag'
+                        useCase = 'numbered'
+                        props.text = 'Numquam amet tempora'
+                    }
+                    tag2 = Sitegeist.Monocle:Preview.Prototype {
+                        prototypeName = 'Neos.Presentation:Tag'
+                        useCase = 'numbered'
+                        props.text = 'Labore eius neque non'
+                    }
+                    tag3 = Sitegeist.Monocle:Preview.Prototype {
+                        prototypeName = 'Neos.Presentation:Tag'
+                        useCase = 'numbered'
+                        props.text = 'Non velit dolore'
+                    }
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        variant = ${PropTypes.string.isRequired}
+    }
+
+    variant = 'default'
+    content = null
+
+    attributes = Neos.Fusion:DataStructure
+    class = null
+
+    renderer = Neos.Fusion:Tag {
+        attributes {
+            @apply.attributes = ${props.attributes}
+            class = ${AtomicFusion.classNames(
+                'c-tag-group',
+                {
+                    'c-tag-group--list': props.variant == 'list'
+                },
+                props.class
+            )}
+        }
+        content = ${props.content}
+    }
+}
