@@ -115,7 +115,7 @@ prototype(Neos.Presentation:List) < prototype(Neos.Fusion:Component) {
     items = null
 
     renderer = afx`
-        <div class="flex w-full flex-col mt-12 mb-12">
+        <div class="flex w-full flex-col">
             <ol class="list-preview mb-12 border-t border-t-solid border-t-gray-light divide-gray-light divide-solid divide-y" @if={props.items}>
                 <Neos.Fusion:Loop items={props.items}>
                     <Neos.Presentation:List.Fragment.Item {...item} />
