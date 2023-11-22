@@ -34,8 +34,8 @@ prototype(Neos.Presentation:Tag) < prototype(Neos.Fusion:Component) {
         attributes {
             @apply.attributes = ${props.attributes}
             class = ${AtomicFusion.classNames(
-                'n-tag n-interactive',
-                'n-interactive--tag',
+                'n-tag',
+                'display-body-md',
                 props.class
             )}
             href = ${props.href}

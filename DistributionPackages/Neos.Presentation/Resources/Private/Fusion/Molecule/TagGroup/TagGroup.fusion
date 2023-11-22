@@ -60,9 +60,9 @@ prototype(Neos.Presentation:TagGroup) < prototype(Neos.Fusion:Component) {
         attributes {
             @apply.attributes = ${props.attributes}
             class = ${AtomicFusion.classNames(
-                'c-tag-group',
+                'n-tag-group',
                 {
-                    'c-tag-group--list': props.variant == 'list'
+                    'n-tag-group--list': props.variant == 'list'
                 },
                 props.class
             )}
