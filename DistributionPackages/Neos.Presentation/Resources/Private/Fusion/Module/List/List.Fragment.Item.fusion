@@ -26,19 +26,19 @@ prototype(Neos.Presentation:List.Fragment.Item) < prototype(Neos.Fusion:Componen
                 <span class="group-hover:md:translate-x-8 transition-transform">{props.label}</span>
             </a>
             <span class="flex order-1 items-baseline w-full mb-3 gap-6 md:order-2 md:w-3/12 md:mb-0 md:py-10 pointer-events-none">
-                <span class="aspect-square h-6 translate-y-1" style={"background-color: " + props.category.color}></span>
+                <span class="aspect-square h-6 translate-y-1" style={"background-color:" + props.category.color}></span>
                 <span class="text-2xl">{props.category.label}</span>
             </span>
             <span class="hidden md:w-1/12 md:items-center md:order-3 md:flex md:justify-center md:py-10 pointer-events-none">
-                <Neos.Presentation:Icon name='chevron-right' class="block group-hover:hidden" />
-                <Neos.Presentation:Icon name='arrow-right' class="hidden group-hover:block" />
+                <Neos.Presentation:Icon name="chevron-right" class="block group-hover:hidden" />
+                <Neos.Presentation:Icon name="arrow-right" class="hidden group-hover:block" />
             </span>
             <Sitegeist.Kaleidoscope:Image
-                @if.set={props.image.imageSource}
+                @if={props.image.imageSource}
                 imageSource={props.image.imageSource}
                 alt={props.alternativeText}
                 lazy={false}
-                attributes.class={['hidden group-hover:md:block absolute top-0 right-1/4 z-[10] pointer-events-none', props.class]}
+                attributes.class="hidden group-hover:md:block absolute top-0 right-1/4 z-10 pointer-events-none"
             />
         </li>
     `
