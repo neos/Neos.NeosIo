@@ -41,7 +41,7 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
                 }
             })">
         <ul x-ref="logos"
-            class="flex item-list gap-11 items-center justify-center md:justify-start mr-11 [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll">
+            class="flex item-list gap-11 items-center justify-center md:justify-start pr-11 [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll">
           <Neos.Fusion:Loop items={props.assets} itemName="asset">
             <img @if={asset.src} class="max-h-[75%]" alt={asset.alternativeText} src={asset.src} />
           </Neos.Fusion:Loop>
