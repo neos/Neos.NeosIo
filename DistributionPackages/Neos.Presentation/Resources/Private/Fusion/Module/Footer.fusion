@@ -69,20 +69,21 @@ prototype(Neos.Presentation:Module.Footer) < prototype(Neos.Fusion:Component) {
     }
 
     @propTypes {
-        linkGroups = PropTypes:Array {
-            type = Neos.Fusion:DataStructure {
-                title = PropTypes:String
-                links = PropTypes:Array {
-                    type = Neos.Fusion:DataStructure {
-                        title = PropTypes:String
-                        link = PropTypes:String
-                    }
-                }
-            }
-        }
+        // does not work with monocle yet
+        //linkGroups = PropTypes:Array {
+        //    type = PropTypes:DataStructure {
+        //        title = PropTypes:String
+        //        links = PropTypes:Array {
+        //            type = Neos.Fusion:DataStructure {
+        //                title = PropTypes:String
+        //                link = PropTypes:String
+        //            }
+        //        }
+        //    }
+        //}
 
         socials = PropTypes:Array {
-            type = Neos.Fusion:DataStructure {
+            type = PropTypes:DataStructure {
                 link = PropTypes:String
                 icon = PropTypes:String
                 label = PropTypes:String
@@ -90,7 +91,7 @@ prototype(Neos.Presentation:Module.Footer) < prototype(Neos.Fusion:Component) {
         }
 
         endlinks = PropTypes:Array {
-            type = Neos.Fusion:DataStructure {
+            type = PropTypes:DataStructure {
                 link = PropTypes:String
                 label = PropTypes:String
             }
