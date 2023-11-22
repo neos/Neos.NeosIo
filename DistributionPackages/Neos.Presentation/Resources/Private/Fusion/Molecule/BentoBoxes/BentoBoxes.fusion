@@ -1,0 +1,257 @@
+prototype(Neos.Presentation:BentoBoxes) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = 'Bento Boxes'
+        props {
+
+            heading = Neos.Fusion:DataStructure {
+                text = 'Tools that transform your digital journey'
+                tagName = 'h2'
+            }
+
+            text = 'Take control of HTML, CSS, and JavaScript in a visual canvas. Webflow generates clean, semantic code that’s ready.'
+
+            boxes = Neos.Fusion:DataStructure {
+
+                1 = Neos.Fusion:DataStructure {
+                    heading = Neos.Fusion:DataStructure {
+                        text = 'Enterprise Features like Role Management and Media Center'
+                        tagName = 'h2'
+                    }
+
+                    link = 'https://google.ch'
+
+                    linkLabel = 'Mehr erfahren'
+
+                    background = 'gradient'
+
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/1200x600'
+                    }
+
+                    video = Neos.Presentation:InlineVideo.Fixture
+
+                    assetAlign = 'center'
+
+                }
+
+                2 = Neos.Fusion:DataStructure {
+                    heading = Neos.Fusion:DataStructure {
+                        text = 'Lorem ipsum dolor <em>sit amet</em>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna'
+                        tagName = 'h2'
+                    }
+
+                    link = 'https://google.ch'
+
+                    linkLabel = 'Mehr erfahren'
+
+                    background = 'gradient'
+
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/1200x600'
+                    }
+
+                    video = Neos.Presentation:InlineVideo.Fixture
+
+                    assetAlign = 'right'
+
+                }
+
+                3 = Neos.Fusion:DataStructure {
+                    heading = Neos.Fusion:DataStructure {
+                        text = 'Lorem ipsum dolor <em>sit amet</em>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna'
+                        tagName = 'h2'
+                    }
+
+                    link = 'https://google.ch'
+
+                    linkLabel = 'Mehr erfahren'
+
+                    background = 'gradient'
+
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/1200x600'
+                    }
+
+                    video = Neos.Presentation:InlineVideo.Fixture
+
+                    assetAlign = 'center'
+
+                }
+
+                4 = Neos.Fusion:DataStructure {
+                    heading = Neos.Fusion:DataStructure {
+                        text = 'Lorem ipsum dolor <em>sit amet</em>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna'
+                        tagName = 'h2'
+                    }
+
+//                    link = 'https://google.ch'
+
+//                    linkLabel = 'Mehr erfahren'
+
+                    background = 'gradient'
+
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/1200x600'
+                    }
+
+                    video = Neos.Presentation:InlineVideo.Fixture
+
+                    assetAlign = 'right'
+
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        heading = PropTypes:DataStructure {
+            text = PropTypes:String
+            tagName = PropTypes:Enum {
+                1 = 'h1'
+                2 = 'h2'
+                3 = 'h3'
+                4 = 'h4'
+                5 = 'h5'
+                6 = 'h6'
+                p = 'p'
+            }
+        }
+        text = PropTypes:String
+        boxes = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                heading = PropTypes:DataStructure {
+                    text = PropTypes:String
+                    tagName = PropTypes:Enum {
+                        1 = 'h1'
+                        2 = 'h2'
+                        3 = 'h3'
+                        4 = 'h4'
+                        5 = 'h5'
+                        6 = 'h6'
+                        p = 'p'
+                    }
+                }
+
+                link = PropTypes:String
+
+                linkLabel = PropTypes:String
+
+                background = PropTypes:Enum {
+                    1 = 'gradient'
+                    2 = 'brand'
+                    3 = 'accent-purple'
+                    4 = 'accent-blue'
+                    5 = 'accent-lightblue'
+                    6 = 'accent-green'
+                    7 = 'accent-yellow'
+                    8 = 'accent-orange'
+                    9 = 'accent-red'
+                }
+
+                image = PropTypes:DataStructure {
+                    imageSource = PropTypes:InstanceOf {
+                        type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
+                    }
+                }
+
+                video = PropTypes:FromPrototype {
+                    prototypeName = 'Neos.Presentation:InlineVideo'
+                }
+
+                assetAlign = PropTypes:Enum {
+                    1 = 'center'
+                    2 = 'right'
+                }
+
+            }
+        }
+    }
+
+    heading = Neos.Fusion:DataStructure {
+        text = ''
+        tagName = 'h2'
+    }
+
+    text = ''
+
+    boxes = ${[]}
+
+    @private {
+        boxes = ${Carbon.Array.chunk(props.boxes, 2)}
+    }
+
+    renderer = afx`
+
+    <Neos.Presentation:Spacing size x y class="bento-boxes">
+    <div class="flex flex-col mdl:flex-row 2xl:flex-col gap-0 mdl:gap-10 2xl:gap-0">
+      <Neos.Presentation:Headline @if={props.heading.text} {...props.heading} display="headline-lg" class={AtomicFusion.classNames(
+        'bento-boxes__heading p-0 2xl:pr-[40%] text-5xl sm:text-5xl md:text-5xl mdl:text-7xl 2xl:text-9xl',
+        {
+          'pb-10 mdl:pb-0': props.text
+        }
+      )} />
+      <Neos.Presentation:Paragraph @if={props.text} text={props.text} display="lead" class="bento-boxes__heading sm:text-base mdl:text-md p-0 mdl:pt-8 2xl:pt-0 2xl:pl-[60%]" />
+    </div>
+
+    <div class={AtomicFusion.classNames(
+        'flex flex-col gap-6 mdl:gap-10',
+        {
+          'pt-14 mdl:pt-20 2xl:pt-10': props.text || props.heading.text
+        }
+      )}>
+      <Neos.Fusion:Loop items={private.boxes} itemName="chunk">
+        <div class="bento-boxes__row flex flex-row flex-wrap mdl:flex-nowrap gap-6 mdl:gap-10 items-stretch">
+          <Neos.Fusion:Loop items={chunk} itemName="box">
+            <div class="bento-boxes__box-wrapper max-w-full">
+              <Neos.Presentation:Background class="bento-boxes__box h-full flex flex-col relative" variant={box.background}>
+                <Neos.Fusion:Tag tagName={box.link ? 'a' : 'div'} attributes.class={AtomicFusion.classNames(
+                  'pl-6 2xl:pl-10 pr-6 2xl:pr-20 pt-8 2xl:pt-14 grow-0 before:absolute before:inset-0 before:z-10',
+                  {
+                    'pb-8 2xl:pb-14': box.assetAlign == 'center' || !box.link,
+                    'pb-8 2xl:pb-0': box.assetAlign == 'right' && box.link
+                  }
+                )} attributes.href={box.link ? box.link : null}>
+                  <Neos.Presentation:Headline {...box.heading} display="title-lg text-2xl sm:text-2xl mdl:text-3xl 2xl:text-4xl"/>
+                  <Neos.Presentation:Paragraph @if={box.link} display="cta-xl" class="mt-8 2xl:mt-14 text-md mdl:text-lg">
+                    {box.linkLabel} <Neos.Presentation:Icon name="pixel-chevron-right" class="inline-block h-6" />
+                  </Neos.Presentation:Paragraph>
+                </Neos.Fusion:Tag>
+                <div class={AtomicFusion.classNames(
+                  'grow flex items-end',
+                  {
+                    'justify-center px-6 2xl:px-10': box.assetAlign == 'center',
+                    'justify-end': box.assetAlign == 'right'
+                  }
+                )}>
+                  <div class={AtomicFusion.classNames(
+                  'overflow-hidden',
+                  {
+                    'pl-12 2xl:pl-20': box.assetAlign == 'right' && !box.link,
+                    'pl-12 2xl:pl-[20rem]': box.assetAlign == 'right' && box.link
+                  }
+                )}>
+                    <Neos.Presentation:InlineVideo {...box.video} poster={box.image && box.image.imageSource ? box.image.iamgeSource : null} class={AtomicFusion.classNames(
+                      {
+                        'max-w-none': box.assetAlign == 'right'
+                      }
+                    )} @if.hasVideo={box.video && (box.video.sources || box.video.assets)} />
+                    <Sitegeist.Kaleidoscope:Image {...box.image} class={AtomicFusion.classNames(
+                      {
+                        'max-w-none': box.assetAlign == 'right'
+                      }
+                    )} @if.hasImage={box.image && (box.image.imageSource) && !(box.video && (box.video.assets || box.video.sources))} />
+
+                  </div>
+                </div>
+              </Neos.Presentation:Background>
+            </div>
+          </Neos.Fusion:Loop>
+        </div>
+      </Neos.Fusion:Loop>
+    </div>
+    </Neos.Presentation:Spacing>
+    `
+
+
+}
