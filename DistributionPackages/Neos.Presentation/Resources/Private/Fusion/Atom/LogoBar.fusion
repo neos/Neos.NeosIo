@@ -1,0 +1,37 @@
+prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = 'Logo-Bar'
+        props {
+            assets = Neos.Fusion:Map {
+                items = ${['solarwatt.svg', 'heineken.svg', 'swisscom.svg', 't3n.png']}
+                itemRenderer = Neos.Fusion:DataStructure {
+                    src = ${StaticResource.uri('Neos.Presentation', 'Public/Assets/Styleguide/logos/' + item)}
+                    alternativeText = ${'Logo ' + props.item}
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        assets = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                src = PropTypes:String
+                alternativeText = PropTypes:String
+            }
+        }
+        grayscale = PropTypes:Bool
+    }
+
+    assets = null
+    grayscale = false
+
+    renderer = afx`
+        <div @if={props.assets && Array.length(props.assets)}
+             class={['h-10 lg:h-16 w-full logo-bar overflow-x-scroll hide-scrollbar inline-flex items-center gap-11 snap-x snap-mandatory', props.grayscale ? 'grayscale' : null]}>
+            <Neos.Fusion:Loop items={props.assets} itemName="asset">
+                <img @if={asset.src} class="snap-center h-3/4" alt={asset.alternativeText} src={asset.src} />
+            </Neos.Fusion:Loop>
+        </div>
+    `
+}
