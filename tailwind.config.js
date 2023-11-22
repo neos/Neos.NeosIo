@@ -1,10 +1,13 @@
 const content = require('./Build/Carbon.Pipeline/purge');
 const plugin = require('tailwindcss/plugin');
 const defaultTheme = require('tailwindcss/defaultTheme');
+const Color = require('color');
 
 const pxToRem = (px) => `${px / 16}rem`;
 
-/** @type {import('tailwindcss').Config} */
+const getRgbChannels = (color) => Color(color).rgb().array().splice(0, 3).join(' ');
+
+/** @type {import("tailwindcss").Config} */
 module.exports = {
     content,
     theme: {
@@ -16,6 +19,8 @@ module.exports = {
         colors: {
             transparent: 'transparent',
             current: 'currentColor',
+            fg: 'rgb(var(--n-fg) / <alpha-value>)',
+            bg: 'rgb(var(--n-bg) / <alpha-value>)',
             black: '#000',
             white: '#fff',
             darkblue: '#26224C',
@@ -75,6 +80,9 @@ module.exports = {
             '5xl': '2160px',
         },
         extend: {
+            aspectRatio: {
+                "portrait": "5 / 7",
+            },
             fontFamily: {
                 sans: ['"Bricolage Grotesque"', ...defaultTheme.fontFamily.sans],
             },
@@ -111,6 +119,31 @@ module.exports = {
 
             addUtilities(utilities);
         }),
+
+        // Create color css variables
+        plugin(({ addBase, theme }) => {
+            function extractColorVars(colorObj, colorGroup = '') {
+                const result = [];
+                for (const [colorKey, value] of Object.entries(colorObj)) {
+                    const cssVariable =
+                        colorKey === 'DEFAULT' ? `--color${colorGroup}` : `--color${colorGroup}-${colorKey}`;
+
+                    if (typeof value === 'string') {
+                        if (!(value.includes('var(') || value === 'currentColor')) {
+                            result.push([cssVariable, getRgbChannels(value)]);
+                        }
+                    } else {
+                        result.push(...extractColorVars(value, `-${colorKey}`));
+                    }
+                }
+                return result;
+            }
+
+            addBase({
+                ':root': Object.fromEntries(extractColorVars(theme('colors'))),
+            });
+        }),
+
         // Add scrollbar variants and utilities
         plugin(({ addVariant, addUtilities }) => {
             addVariant('scrollbar', '&::-webkit-scrollbar');
