@@ -114,9 +114,10 @@ prototype(Neos.Presentation:List) < prototype(Neos.Fusion:Component) {
     label = null
     items = null
 
+    @if.hasItems = ${Type.isArray(this.items) && Array.length(this.items)}
     renderer = afx`
         <div class="flex w-full flex-col">
-            <ol class="list-preview mb-12 border-t border-t-solid border-t-gray-light divide-gray-light divide-solid divide-y" @if={props.items}>
+            <ol class="list-preview mb-12 border-t border-t-solid border-t-gray-light divide-gray-light divide-solid divide-y">
                 <Neos.Fusion:Loop items={props.items}>
                     <Neos.Presentation:List.Fragment.Item {...item} />
                 </Neos.Fusion:Loop>
