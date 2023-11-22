@@ -1,0 +1,48 @@
+prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Image Collage"
+        props {
+            headline.text = 'Projects created with Neos CMS'
+            description.text = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
+            squareIcons = Neos.Fusion:Array
+            images = Neos.Fusion:Map {
+                items = ${['allplan', 'berchtesgadener', 'heineken', 'hitachi', 'hoerbiger', 'hogast', 'kvh', 'siga', 't3n']}
+                itemName = 'item'
+                itemRenderer = Neos.Fusion:DataStructure {
+                    src = ${StaticResource.uri('Neos.Presentation', 'Public/Assets/Styleguide/cases/' + item + '.png')}
+                    alternativeText = ${'Case ' + props.item}
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        headline = PropTypes:DataStructure
+        description = PropTypes:DataStructure
+        squareIcons = PropTypes:Array
+        images = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                src = PropTypes:String
+                alternativeText = PropTypes:String
+            }
+        }
+    }
+
+    renderer = afx`
+      <Neos.Presentation:Background variant="gradient">
+        <Neos.Presentation:Spacing size y>
+          <div class="grid md:grid-cols-2 items-center">
+            <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
+            <Neos.Presentation:Paragraph {...props.description} display="lead" />
+          </div>
+
+          <div class="image-collage relative h-[1400px]" x-data="ImageCollage">
+            <Neos.Fusion:Loop items={props.images}>
+              <img class="hidden absolute w-[128px] h-[160px]" src={item.src} alt={item.alternativeText} />
+            </Neos.Fusion:Loop>
+          </div>
+        </Neos.Presentation:Spacing>
+      </Neos.Presentation:Background>
+    `
+}
