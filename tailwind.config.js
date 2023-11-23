@@ -98,6 +98,8 @@ module.exports = {
                 'spacing-y': 'var(--n-spacing--y)',
                 'spacing-y-small': 'var(--n-spacing--y-small)',
             },
+            minHeight: defaultTheme.spacing,
+            minWidth: defaultTheme.spacing,
             supports: {
                 dvh: 'height: 100dvh',
             },
