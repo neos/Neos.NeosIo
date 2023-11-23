@@ -53,13 +53,15 @@ prototype(Neos.Presentation:List) < prototype(Neos.Fusion:Component) {
 
     @if.hasItems = ${Type.isArray(this.items) && Array.length(this.items)}
     renderer = afx`
-        <ol class="n-counter list-preview mb-12 border-t border-t-solid border-t-gray-light divide-gray-light divide-solid divide-y text-2xl">
-            <Neos.Fusion:Loop items={props.items}>
-                <Neos.Presentation:List.Fragment.Item {...item} />
-            </Neos.Fusion:Loop>
-        </ol>
-        <div @if={props.link} class="flex w-full justify-center mb-12">
-            <Neos.Presentation:Link variant="link" href={props.link} text={props.label} />
-        </div>
+        <Neos.Presentation:Spacing size y x>
+            <ol class="n-counter list-preview mb-12 border-t border-t-solid border-t-gray-light divide-gray-light divide-solid divide-y text-2xl">
+                <Neos.Fusion:Loop items={props.items}>
+                    <Neos.Presentation:List.Fragment.Item {...item} />
+                </Neos.Fusion:Loop>
+            </ol>
+            <div @if={props.link} class="flex w-full justify-center mb-12">
+                <Neos.Presentation:Link variant="link" href={props.link} text={props.label} />
+            </div>
+        </Neos.Presentation:Spacing>
     `
 }
