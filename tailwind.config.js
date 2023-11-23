@@ -81,7 +81,7 @@ module.exports = {
         },
         extend: {
             aspectRatio: {
-                "portrait": "5 / 7",
+                portrait: '5 / 7',
             },
             fontFamily: {
                 sans: ['"Bricolage Grotesque"', ...defaultTheme.fontFamily.sans],
@@ -94,6 +94,8 @@ module.exports = {
                 'spacing-y': 'var(--c-spacing--y)',
                 'spacing-y-small': 'var(--c-spacing--y-small)',
             },
+            minHeight: defaultTheme.spacing,
+            minWidth: defaultTheme.spacing,
             supports: {
                 dvh: 'height: 100dvh',
             },
