@@ -1,17 +1,25 @@
 prototype(Neos.Presentation:Navigation.Flyout) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        title = ${PropTypes.string}
+        column0 = ${PropTypes.string}
+        column1 = ${PropTypes.string}
+        column2 = ${PropTypes.string}
+    }
 
     renderer = afx`
-        <div @if={props.flyoutItems && props.flyoutItems != []} class="absolute hidden group-hover:block">
-            <Neos.Fusion:Loop items={props.flyoutItems} itemName="flyoutItem">
-                <Neos.Presentation:Headline text={flyoutItem.title} />
-                <ul>
-                    <Neos.Fusion:Loop items={flyoutItem.items} itemName="item">
-                        <li>
-                            <a href={item.link}>{item.label}</a>
-                        </li>
-                    </Neos.Fusion:Loop>
-                </ul>
-            </Neos.Fusion:Loop>
-        </div>
+        <Neos.Presentation:Spacing size x y="small">
+            <Neos.Presentation:Background variant='gradient' class="px-6 py-8">
+                <Neos.Presentation:Paragraph
+                    display="lead"
+                    text={props.title}
+                    class="mb-1"
+                />
+                <div class="grid grid-cols-3 gap-3">
+                    {props.column0}
+                    {props.column1}
+                    {props.column2}
+                </div>
+            </Neos.Presentation:Background>
+        </Neos.Presentation:Spacing>
     `
 }

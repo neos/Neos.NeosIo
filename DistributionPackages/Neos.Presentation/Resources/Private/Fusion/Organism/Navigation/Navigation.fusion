@@ -11,29 +11,44 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
                 0 {
                     label = "Product"
                     link = "#"
-                    flyoutType = "groups"
-                    flyoutItems {
-                        group0 {
-                            label = "First group"
-                            link = "#"
-                            items {
-                                0 {
-                                    label = 'sdfs'
-                                    link = '#'
-                                }
-                            }
-                        }
-                        group1 {
-                            label = "Second group"
-                        }
+                    flyoutItems = Neos.Presentation:Navigation.Flyout {
+                        title = "Product"
+                        column0 = afx`
+                            <ul>
+                                <li>Item a</li>
+                                <li>Item a</li>
+                                <li>Item a</li>
+                            </ul>
+                        `
                     }
                 }
                 1 {
                     label = "Cases"
                     link = "#"
-                    flyoutType = "teaser"
-                    flyoutTitle = "Teaser"
-                    flyoutBody = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu aliquam"
+                    flyoutItems = Neos.Presentation:Navigation.Flyout {
+                        title = "Cases"
+                        column0 = afx`
+                            <ul>
+                                <li>Item a</li>
+                                <li>Item a</li>
+                                <li>Item a</li>
+                            </ul>
+                        `
+                        column1 = afx`
+                            <ul>
+                                <li>Item b</li>
+                                <li>Item b</li>
+                                <li>Item b</li>
+                            </ul>
+                        `
+                        column2 = afx`
+                            <ul>
+                                <li>Item c</li>
+                                <li>Item c</li>
+                                <li>Item c</li>
+                            </ul>
+                        `
+                    }
                 }
                 2 {
                     label = "Community"
@@ -57,22 +72,7 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
                 groups = PropTypes:DataStructure {
                     label = ${PropTypes.string.required}
                     link = ${PropTypes.string}
-                    flyoutType = 'group'
-                    flyoutTeaser = PropTypes:String
-                    flyoutItems = PropTypes:Array {
-                        type = PropTypes:DataStructure {
-                            label = ${PropTypes.string}
-                            link = ${PropTypes.string}
-                            items = PropTypes:Array {
-                                type = PropTypes:DataStructure {
-                                    label = ${PropTypes.string}
-                                    link = ${PropTypes.string}
-                                    icon = ${PropTypes.string}
-                                    description = ${PropTypes.string}
-                                }
-                            }
-                        }
-                    }
+                    flyoutItems = ${PropTypes.string}
                 }
             }
         }
@@ -82,18 +82,29 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
         <Neos.Presentation:Spacing tagName="nav" size x y="small">
             <ul class="flex justify-between items-center gap-x-6">
                 <Neos.Presentation:Icon name="neos-white-logo" class="h-10" />
-                <div class="hidden lg:flex items-center gap-5 2xl:gap-10">
+                <div x-data="{linkInFlyout:null}" class="hidden lg:flex items-center gap-5 2xl:gap-10" "x-on:click.away"='linkInFlyout = null'>
                     <Neos.Fusion:Loop items={props.links} itemName="link">
                         <li class="group">
-                            <a href={link.link}
-                               class="inline-flex items-center gap-1 hover:bg-white/10 px-4 py-1 rounded-md display-lead">{link.label}
+                            <a
+                               "x-on:click.preventDefault"={'linkInFlyout === ' + iterator.index + ' ? linkInFlyout = null : linkInFlyout = ' + iterator.index}
+                               href={link.link}
+                               class="inline-flex items-center gap-1 hover:bg-white/10 px-4 py-1 rounded-md display-lead"
+                            >
+                                {link.label}
                                 <Neos.Presentation:Icon
                                         @if={link.flyoutItems && link.flyoutItems != []}
                                         name="chevron-down"
                                         class="h-6"
                                 />
                             </a>
-                            <Neos.Presentation:Navigation.Flyout {...link} />
+                            <div
+                                x-show={'linkInFlyout === ' + iterator.index}
+                                x-cloak
+                                class="absolute left-0 w-full"
+                                @if={link.flyoutItems}
+                            >
+                                {link.flyoutItems}
+                            </div>
                         </li>
                     </Neos.Fusion:Loop>
                 </div>
