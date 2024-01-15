@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6edc2d66703d49dcd949735b5158e1f4",
+    "content-hash": "72ac57139a470bced0033f6327088ecc",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -7288,7 +7288,7 @@
                 "knplabs/github-api": "^3.9",
                 "knplabs/packagist-api": "^2.0",
                 "neos/flow": "*",
-                "ttree/outofbandrendering": "^4.0.0"
+                "ttree/outofbandrendering": "^3.1.0"
             },
             "type": "neos-package",
             "extra": {
@@ -13854,23 +13854,26 @@
         },
         {
             "name": "ttree/outofbandrendering",
-            "version": "dev-task/newer-neos-versions",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/kdambekalns/OutOfBandRendering.git",
-                "reference": "3de4d2c2b4e73fb05d55b11e21727dbe5a4a768d"
+                "url": "https://github.com/ttreeagency/OutOfBandRendering.git",
+                "reference": "5fca77630f825cb96a25c0b172516069879a3b29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kdambekalns/OutOfBandRendering/zipball/3de4d2c2b4e73fb05d55b11e21727dbe5a4a768d",
-                "reference": "3de4d2c2b4e73fb05d55b11e21727dbe5a4a768d",
+                "url": "https://api.github.com/repos/ttreeagency/OutOfBandRendering/zipball/5fca77630f825cb96a25c0b172516069879a3b29",
+                "reference": "5fca77630f825cb96a25c0b172516069879a3b29",
                 "shasum": ""
             },
             "require": {
-                "neos/neos": "^7.0 || ^8.0"
+                "neos/neos": "^7.3 || ^8.0"
             },
             "type": "neos-package",
             "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                },
                 "applied-flow-migrations": [
                     "TYPO3.FLOW3-201201261636",
                     "TYPO3.Fluid-201205031303",
@@ -13950,25 +13953,21 @@
                     "Ttree\\OutOfBandRendering\\": "Classes"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "A package to render Fusion Out of Band in complex application fun & easy",
             "keywords": [
+                "FUSION",
                 "flow-framework",
-                "fusion",
                 "neoscms"
             ],
             "support": {
-                "source": "https://github.com/kdambekalns/OutOfBandRendering/tree/task/newer-neos-versions"
+                "issues": "https://github.com/ttreeagency/OutOfBandRendering/issues",
+                "source": "https://github.com/ttreeagency/OutOfBandRendering/tree/3.1.0"
             },
-            "funding": [
-                {
-                    "type": "github",
-                    "url": "https://github.com/kdambekalns"
-                }
-            ],
-            "time": "2022-11-29T17:39:14+00:00"
+            "time": "2024-01-15T05:53:16+00:00"
         },
         {
             "name": "typo3fluid/fluid",
@@ -14963,12 +14962,6 @@
             "version": "0.13.0.0-beta7",
             "alias": "0.13.0",
             "alias_normalized": "0.13.0.0"
-        },
-        {
-            "package": "ttree/outofbandrendering",
-            "version": "dev-task/newer-neos-versions",
-            "alias": "4.0.0",
-            "alias_normalized": "4.0.0.0"
         }
     ],
     "minimum-stability": "stable",
@@ -14982,7 +14975,6 @@
         "neos/neosio-casestudies": 20,
         "neos/neosio-release-plan": 20,
         "flowpack/media-ui": 10,
-        "ttree/outofbandrendering": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
@@ -14991,5 +14983,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
