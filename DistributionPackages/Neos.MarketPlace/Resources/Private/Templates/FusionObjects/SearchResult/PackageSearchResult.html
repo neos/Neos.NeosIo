@@ -4,12 +4,12 @@
 <article{attributes -> f:format.raw()}>
     <header>
         <h4 class="result-list__title"><neos:link.node node="{node}">
-            <i class="fas fa-puzzle-piece"></i> {title}</neos:link.node>
+            <i class="fas fa-puzzle-piece"></i> {title -> f:format.stripTags()}</neos:link.node>
             <small>{lastVersionLabel}</small>
         </h4>
     </header>
     <f:if condition="{description}">
-        <div class="result-list__description">{description}</div>
+        <div class="result-list__description">{description -> f:format.stripTags()}</div>
     </f:if>
     <footer class="result-list__meta">
         {lastActivity -> f:format.raw()}

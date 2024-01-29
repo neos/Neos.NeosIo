@@ -4,9 +4,9 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
     abandoned = ${q(node).property('abandoned')}
     isAbandoned = ${this.abandoned ? true : false}
 
-    packageName = ${q(node).property('title')}
+    packageName = ${String.stripTags(q(node).property('title'))}
     packageTime = ${q(node).property('time')}
-    description = ${q(node).property('description')}
+    description = ${String.stripTags(q(node).property('description') || '')}
 
     readmeNode = ${q(node).children('readme').get(0)}
 
