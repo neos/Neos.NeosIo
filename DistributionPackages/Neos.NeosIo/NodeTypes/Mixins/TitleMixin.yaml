@@ -1,0 +1,17 @@
+'Neos.NeosIo:Mixins.TitleMixin':
+  abstract: true
+  properties:
+    title:
+      type: string
+      defaultValue: '<h1>Enter headline here</h1>'
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            formatting:
+              p: false
+              h1: true
+              h2: true
+              h3: true
+              removeFormat: true
+              a: true

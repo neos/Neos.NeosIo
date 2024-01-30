@@ -1,0 +1,29 @@
+prototype(Neos.NeosIo:ContentReferences) < prototype(Neos.Neos:ContentComponent) {
+
+    @context.referencedNodes = ${q(node).property('references')}
+
+    references = Neos.Fusion:Loop {
+        items = ${referencedNodes}
+        itemRenderer = Neos.Neos:ContentCase
+        itemName = 'node'
+    }
+
+    renderer = afx`
+        <Neos.Fusion:Fragment @if.noReferencesAndInBackend={!props.references && node.context.inBackend}>
+            <p>Momentan sind keine Referenzen im Inspektor ausgewählt.</p>
+        </Neos.Fusion:Fragment>
+        {props.references}
+    `
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
+            2 = ${Neos.Caching.nodeTag(referencedNodes)}
+            3 = ${Neos.Caching.descendantOfTag(referencedNodes)}
+        }
+    }
+}

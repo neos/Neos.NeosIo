@@ -1,0 +1,22 @@
+'Neos.NeosIo:ContentReferences':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.Neos:ContentCollection': true
+  ui:
+    label: 'Inhaltsreferenz'
+    icon: 'icon-copy'
+    inspector:
+      groups:
+        references:
+          label: 'Verweise'
+          icon: 'icon-copy'
+  properties:
+    references:
+      type: 'references'
+      ui:
+        label: Auswählen
+        reloadIfChanged: true
+        inspector:
+          group: 'references'
+          editorOptions:
+            nodeTypes: ['Neos.Neos:Content']
