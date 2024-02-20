@@ -28,6 +28,7 @@ module.exports = {
             gray: {
                 DEFAULT: '#989898',
                 light: '#F1F1F1',
+                dark: '#242424',
             },
             green: {
                 DEFAULT: '#2AA72A',
@@ -81,21 +82,29 @@ module.exports = {
         },
         extend: {
             aspectRatio: {
-                "portrait": "5 / 7",
+                portrait: '5 / 7',
             },
             fontFamily: {
                 sans: ['"Bricolage Grotesque"', ...defaultTheme.fontFamily.sans],
+            },
+            fontWeight: {
+                inherit: 'inherit',
             },
             lineHeight: {
                 auto: 'normal',
             },
             spacing: {
-                'spacing-x': 'var(--c-spacing--x)',
-                'spacing-y': 'var(--c-spacing--y)',
-                'spacing-y-small': 'var(--c-spacing--y-small)',
+                'spacing-x': 'var(--n-spacing--x)',
+                'spacing-y': 'var(--n-spacing--y)',
+                'spacing-y-small': 'var(--n-spacing--y-small)',
             },
+            minHeight: defaultTheme.spacing,
+            minWidth: defaultTheme.spacing,
             supports: {
                 dvh: 'height: 100dvh',
+            },
+            backgroundImage: {
+                'pattern-pixels': "url('../Assets/Pattern/pattern-pixels.png')",
             },
             animation: {
                 'infinite-scroll': 'infinite-scroll 15s linear infinite',
