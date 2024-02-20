@@ -1,4 +1,6 @@
-export default () => ({
+import Alpine from 'alpinejs';
+
+Alpine.data('ImageCollage', () => ({
     imgPoss: [],
     imgRendered: [],
     maxX: 0,
@@ -58,8 +60,8 @@ export default () => ({
             };
 
             if (image.complete) tryToPlace();
-            else image.addEventListener('onload', tryToPlace)
+            else image.addEventListener('onload', tryToPlace);
             image.classList.remove('hidden');
         }
     },
-});
+}));
