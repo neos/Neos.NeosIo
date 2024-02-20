@@ -1,67 +1,81 @@
 import Alpine from 'alpinejs';
 
-Alpine.data('ImageCollage', () => ({
-    imgPoss: [],
-    imgRendered: [],
+// function that returns a random number
+function getRandomNumber(max, substract = 0) {
+    return Math.round(Math.random() * max - substract);
+}
+
+// get the size of an element
+function getSize(element) {
+    return { x: element.clientWidth, y: element.clientHeight };
+}
+
+Alpine.data('collage', () => ({
+    positions: [],
+    rendered: [],
+    elements: [],
     maxX: 0,
     maxY: 0,
     padding: 30,
-    placeImg(imageTag) {
-        const { random: r } = Math;
-
-        let imageSize = { x: imageTag.clientWidth, y: imageTag.clientHeight };
-        const x = r() * this.maxX - imageSize.x;
-        const y = r() * this.maxY - imageSize.y;
-
-        if (!this.isOverlap(x, y, imageSize)) {
-            imageTag.style.setProperty('left', x + 'px');
-            imageTag.style.setProperty('top', y + 'px');
-
-            this.imgPoss.push({ x, y });
-            this.imgRendered.push(imageTag);
+    maxAttempts: 50,
+    placeElement(element, size, attempts = 0) {
+        if (attempts >= this.maxAttempts) {
+            // console.error('Max attempts reached');
+            return;
         }
+
+        const x = getRandomNumber(this.maxX, size.x / 2);
+        const y = getRandomNumber(this.maxY);
+
+        if (this.isOverlap(x, y, size)) {
+            attempts++;
+            this.placeElement(element, size, attempts);
+            return;
+        }
+
+        element.style.setProperty('left', x + 'px');
+        element.style.setProperty('top', y + 'px');
+        this.positions.push({ x, y });
+        this.rendered.push(element);
+        element.classList.remove('opacity-0');
     },
-    isOverlap(x, y, imageSize) {
+    isOverlap(x, y, size) {
         // return true if overlapping
-        for (const imgPos of this.imgPoss) {
+        for (const position of this.positions) {
             if (
-                x > imgPos.x - imageSize.x &&
-                x < imgPos.x + imageSize.x &&
-                y > imgPos.y - imageSize.y &&
-                y < imgPos.y + imageSize.y
-            )
+                x > position.x - size.x &&
+                x < position.x + size.x &&
+                y > position.y - size.y &&
+                y < position.y + size.y
+            ) {
                 return true;
+            }
         }
-        console.log({ x, y });
-        console.log(this.imgPoss);
+        // console.log({ x, y });
+        // console.log(this.positions);
         return false;
     },
-    initializeMaxValues($el) {
-        this.maxX = $el.clientWidth - 128;
-        this.maxY = $el.clientHeight - 160;
+    processElements() {
+        this.maxX = this.$el.clientWidth;
+        this.maxY = this.$el.clientHeight;
+        this.positions = [];
+        this.rendered = [];
+        this.elements.forEach((element) => {
+            element.classList.add('opacity-0');
+            element.style.setProperty('left', '0');
+            element.style.setProperty('top', '0');
+
+            if (element.tagName !== 'IMG' || element.complete) {
+                this.placeElement(element, getSize(element));
+            } else {
+                element.addEventListener('load', () => {
+                    this.placeElement(element, getSize(element));
+                });
+            }
+        });
     },
     init() {
-        console.log('ImageCollage');
-        this.initializeMaxValues(this.$el);
-        let imageTags = this.$el.querySelectorAll('img');
-
-        for (let i = 0; i < imageTags.length; ++i) {
-            let image = imageTags[i];
-
-            image.style.setProperty('left', '0px');
-            image.style.setProperty('top', '0px');
-
-            const tryToPlace = () => {
-                let i = 0;
-                while (i < 50 && !this.imgRendered.includes(image)) {
-                    setInterval(this.placeImg(image), 10);
-                    i++;
-                }
-            };
-
-            if (image.complete) tryToPlace();
-            else image.addEventListener('onload', tryToPlace);
-            image.classList.remove('hidden');
-        }
+        this.elements = [...this.$el.children];
+        this.processElements();
     },
 }));

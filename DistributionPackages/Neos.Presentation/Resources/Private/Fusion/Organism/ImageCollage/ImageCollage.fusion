@@ -30,18 +30,18 @@ prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Compone
     }
 
     renderer = afx`
-      <Neos.Presentation:Background variant="gradient">
+      <Neos.Presentation:Background variant="gradient" class="overflow-clip">
         <Neos.Presentation:Spacing size y>
           <div class="grid md:grid-cols-2 items-center">
             <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
             <Neos.Presentation:Paragraph {...props.description} display="lead" />
           </div>
 
-          <div class="image-collage relative h-[1400px]" x-data="ImageCollage">
+          <figure class="relative h-[1400px]" x-data="collage">
             <Neos.Fusion:Loop items={props.images}>
-              <img class="hidden absolute w-[128px] h-auto" src={item.src} alt={item.alternativeText} />
+              <img class="opacity-0 transition-opacity absolute w-[128px] h-auto" src={item.src} alt={item.alternativeText} />
             </Neos.Fusion:Loop>
-          </div>
+          </figure>
         </Neos.Presentation:Spacing>
       </Neos.Presentation:Background>
     `
