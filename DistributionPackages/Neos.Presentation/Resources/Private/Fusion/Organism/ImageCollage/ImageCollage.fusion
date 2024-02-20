@@ -39,7 +39,7 @@ prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Compone
 
           <div class="image-collage relative h-[1400px]" x-data="ImageCollage">
             <Neos.Fusion:Loop items={props.images}>
-              <img class="hidden absolute w-[128px] h-[160px]" src={item.src} alt={item.alternativeText} />
+              <img class="hidden absolute w-[128px] h-auto" src={item.src} alt={item.alternativeText} />
             </Neos.Fusion:Loop>
           </div>
         </Neos.Presentation:Spacing>

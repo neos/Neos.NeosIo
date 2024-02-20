@@ -6,15 +6,14 @@ export default () => ({
     padding: 30,
     placeImg(imageTag) {
         const { random: r } = Math;
-        const x = r() * this.maxX;
-        const y = r() * this.maxY;
 
         let imageSize = { x: imageTag.clientWidth, y: imageTag.clientHeight };
+        const x = r() * this.maxX - imageSize.x;
+        const y = r() * this.maxY - imageSize.y;
 
         if (!this.isOverlap(x, y, imageSize)) {
             imageTag.style.setProperty('left', x + 'px');
             imageTag.style.setProperty('top', y + 'px');
-            imageTag.classList.remove('hidden');
 
             this.imgPoss.push({ x, y });
             this.imgRendered.push(imageTag);
@@ -46,9 +45,21 @@ export default () => ({
 
         for (let i = 0; i < imageTags.length; ++i) {
             let image = imageTags[i];
-            while (!this.imgRendered.includes(image)) {
-                setInterval(this.placeImg(image), 10);
-            }
+
+            image.style.setProperty('left', '0px');
+            image.style.setProperty('top', '0px');
+
+            const tryToPlace = () => {
+                let i = 0;
+                while (i < 50 && !this.imgRendered.includes(image)) {
+                    setInterval(this.placeImg(image), 10);
+                    i++;
+                }
+            };
+
+            if (image.complete) tryToPlace();
+            else image.addEventListener('onload', tryToPlace)
+            image.classList.remove('hidden');
         }
     },
 });
