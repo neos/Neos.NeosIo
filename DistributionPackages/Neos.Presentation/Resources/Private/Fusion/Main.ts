@@ -5,7 +5,7 @@ import intersect from "@alpinejs/intersect";
 import collapse from "@alpinejs/collapse";
 import clipboard from "@ryangjchandler/alpine-clipboard";
 import typewriter from "@marcreichel/alpine-typewriter";
-import ImageCollage from "./Module/ImageCollage/ImageCollage";
+import ImageCollage from "./Organism/ImageCollage/ImageCollage";
 
 // @ts-ignore
 Alpine.plugin([
