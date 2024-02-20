@@ -1,8 +1,8 @@
 import Alpine from 'alpinejs';
 
 // function that returns a random number
-function getRandomNumber(max, substract = 0) {
-    return Math.round(Math.random() * max - substract);
+function getRandomNumber(min, max, substract = 0) {
+    return Math.round(min + (Math.random() * (max - min)) - substract);
 }
 
 // get the size of an element
@@ -17,6 +17,7 @@ Alpine.data('collage', () => ({
     maxX: 0,
     maxY: 0,
     padding: 30,
+    objectMargin: 10,
     maxAttempts: 50,
     placeElement(element, size, attempts = 0) {
         if (attempts >= this.maxAttempts) {
@@ -24,10 +25,10 @@ Alpine.data('collage', () => ({
             return;
         }
 
-        const x = getRandomNumber(this.maxX, size.x / 2);
-        const y = getRandomNumber(this.maxY);
+        const x = getRandomNumber(this.padding, this.maxX - this.padding, size.x / 2);
+        const y = getRandomNumber(this.padding, this.maxY - this.padding - size.y);
 
-        if (this.isOverlap(x, y, size)) {
+        if (this.isOverlap(x, y, size, element.tagName)) {
             attempts++;
             this.placeElement(element, size, attempts);
             return;
@@ -35,18 +36,18 @@ Alpine.data('collage', () => ({
 
         element.style.setProperty('left', x + 'px');
         element.style.setProperty('top', y + 'px');
-        this.positions.push({ x, y });
+        this.positions.push({ x, y, size, type: element.tagName });
         this.rendered.push(element);
         element.classList.remove('opacity-0');
     },
-    isOverlap(x, y, size) {
-        // return true if overlapping
-        for (const position of this.positions) {
+    isOverlap(x, y, size, type) {
+        // return true if overlapping another element of the same type
+        for (const position of this.positions.filter( p => p.type === type )) {
             if (
-                x > position.x - size.x &&
-                x < position.x + size.x &&
-                y > position.y - size.y &&
-                y < position.y + size.y
+                (x + size.x + this.objectMargin) > position.x &&
+                (x - this.objectMargin) < (position.x + position.size.x) &&
+                (y + size.y + this.objectMargin) > position.y &&
+                (y - this.objectMargin) < (position.y + position.size.y)
             ) {
                 return true;
             }
