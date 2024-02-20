@@ -37,9 +37,9 @@ prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Compone
             <Neos.Presentation:Paragraph {...props.description} display="lead" />
           </div>
 
-          <figure class="relative h-[1400px]" x-data="collage">
+          <figure class="relative h-[1400px]" x-data="collage" "x-on:resize.window.debounce"="processElements">
             <Neos.Fusion:Loop items={props.images}>
-              <img class="opacity-0 transition-opacity absolute w-[128px] h-auto" src={item.src} alt={item.alternativeText} />
+              <img class="opacity-0 transition-all absolute w-[128px] h-auto" src={item.src} alt={item.alternativeText} />
             </Neos.Fusion:Loop>
           </figure>
         </Neos.Presentation:Spacing>

@@ -61,10 +61,6 @@ Alpine.data('collage', () => ({
         this.positions = [];
         this.rendered = [];
         this.elements.forEach((element) => {
-            element.classList.add('opacity-0');
-            element.style.setProperty('left', '0');
-            element.style.setProperty('top', '0');
-
             if (element.tagName !== 'IMG' || element.complete) {
                 this.placeElement(element, getSize(element));
             } else {
