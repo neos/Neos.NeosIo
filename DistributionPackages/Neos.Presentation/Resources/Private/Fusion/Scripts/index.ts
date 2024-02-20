@@ -1,5 +1,6 @@
 import Alpine from 'alpinejs';
 import anchor from './anchor';
+import './magics';
 import focus from '@alpinejs/focus';
 import intersect from '@alpinejs/intersect';
 import collapse from '@alpinejs/collapse';
