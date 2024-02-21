@@ -42,6 +42,14 @@
         --bento-boxes-column-width: 50%;
         width: var(--bento-boxes-column-width);
       }
+
+      .n-paragraph svg {
+        @apply inline-block;
+      }
+
+      &:hover .n-paragraph svg > path:first-child {
+        @apply scale-x-100;
+      }
     }
 
     @screen md {
