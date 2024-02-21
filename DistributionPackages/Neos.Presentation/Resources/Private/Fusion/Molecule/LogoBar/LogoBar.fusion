@@ -39,7 +39,7 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
         >
             <ul
                 x-random-children
-                class={['flex item-list items-center [&_li]:mx-16', private.duplications ? 'animate-infinite-scroll' : null]}
+                class={['flex item-list items-center [&_li]:mx-28', private.duplications ? 'animate-infinite-scroll' : null]}
             >
                 <Neos.Fusion:Loop items={props.assets}>
                     <li @if={item.src}><img class="max-h-10 md:max-h-16 max-w-none" alt={item.alternativeText} src={item.src}/></li>
