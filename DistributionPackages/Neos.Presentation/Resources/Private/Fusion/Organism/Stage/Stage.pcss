@@ -1,0 +1,40 @@
+.n-stage {
+    @apply relative;
+    @apply flex flex-col items-center;
+    @apply pb-[26rem];
+    @apply text-white;
+    background:
+        resolve('../Assets/Pattern/pattern-pixels.svg'), linear-gradient(to right, #26224C 0%, #0114C2 50%, #26224C 100%);
+    background-size: 75%, 100%;
+    background-position: -80px, 0;
+}
+
+.n-stage-icons {
+    @apply absolute w-full h-full top-0 left-0 hidden xl:block;
+}
+
+.n-stage-icons > * {
+    @apply absolute;
+}
+
+.n-stage-icons > *:nth-child(1) {
+    @apply top-[30%] left-[10%];
+}
+.n-stage-icons > *:nth-child(2) {
+    @apply top-[20%] right-[10%];
+}
+.n-stage-icons > *:nth-child(3) {
+    @apply top-[50%] right-[0%];
+}
+
+.n-stage-image {
+    @apply relative;
+    @apply -mt-[24rem] mx-auto max-w-7xl m-6 rounded-3xl overflow-hidden;
+    @apply object-cover;
+    @apply outline outline-gray-dark/90 outline-8;
+    @apply border border-gray;
+}
+
+.n-stage-image > img {
+    @apply object-cover aspect-[21/9];
+}

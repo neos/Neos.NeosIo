@@ -1,0 +1,41 @@
+prototype(Neos.Presentation:Module.TextAndImage) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Text and Image"
+        props {
+            headline.text = 'Meet the <strong>Community</strong>'
+            description.text = 'The Neos Team consists of many independent individuals who are actively contributing to Neos. Each has their own focus and specialty. Together with the Neos community they push the project forward. This includes the organisation of Neos events, contributing code, writing documentation, managing the websites & services used by the community and much more.'
+            image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                uri = 'https://source.unsplash.com/random/800x600'
+            }
+        }
+    }
+
+    @propTypes {
+        image = PropTypes:DataStructure {
+            imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        }
+        headline = PropTypes:FromPrototype {
+            prototypeName = "Neos.Presentation:Headline"
+        }
+        description = PropTypes:FromPrototype {
+            prototypeName = "Neos.Presentation:Paragraph"
+        }
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Spacing size y>
+            <div class="grid md:grid-cols-2 items-center">
+                <Sitegeist.Kaleidoscope:Image {...props.image} />
+                <Neos.Presentation:Spacing x y="small">
+                    <Neos.Presentation:Spacing y="small">
+                        <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
+                    </Neos.Presentation:Spacing>
+                    <Neos.Presentation:Spacing y="small">
+                        <Neos.Presentation:Paragraph {...props.description} displafy="lead" />
+                    </Neos.Presentation:Spacing>
+                </Neos.Presentation:Spacing>
+            </div>
+        </Neos.Presentation:Spacing>
+    `
+}

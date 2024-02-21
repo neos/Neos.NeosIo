@@ -10,6 +10,7 @@ prototype(Neos.Presentation:Paragraph) < prototype(Neos.Fusion:Component) {
     @propTypes {
         text = ${PropTypes.string}
         tagName = ${PropTypes.oneOf(['p'])}
+        // see for all options the `display-*` classnames in resource://Neos.Presentation/Private/Fusion/Styles/Typography.pcss
         display = ${PropTypes.anyOf(PropTypes.string, PropTypes.oneOf(['tagname', '', null]))}
     }
 

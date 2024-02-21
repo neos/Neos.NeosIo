@@ -41,12 +41,12 @@ prototype(Neos.Presentation:Spacing) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <Neos.Fusion:Augmenter
             class={AtomicFusion.classNames(
-            'c-spacing',
+            'n-spacing',
             {
-                'c-spacing--size': props.size || props.size == 'default',
-                'c-spacing--x': props.x || props.x == 'default',
-                'c-spacing--y': props.y || props.y == 'default',
-                'c-spacing--y-small': props.y == 'small'
+                'n-spacing--size': props.size || props.size == 'default',
+                'n-spacing--x': props.x || props.x == 'default',
+                'n-spacing--y': props.y || props.y == 'default',
+                'n-spacing--y-small': props.y == 'small'
             },
             props.class
         )}>
