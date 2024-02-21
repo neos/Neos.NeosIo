@@ -25,7 +25,6 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
 
     assets = null
     grayscale = false
-    gap = 'gap-28'
 
     @private {
         numberOfAssets = ${Type.isArray(props.assets) ? Array.length(props.assets) : 0}
@@ -35,12 +34,12 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <div
             @if={private.numberOfAssets}
-            class={['flex justify-center overflow-x-clip', props.grayscale ? 'grayscale' : null, props.gap]}
+            class={['flex justify-center overflow-x-clip', props.grayscale ? 'grayscale' : null]}
             x-data={AlpineJS.xData('LogoBar', private.duplications)}
         >
             <ul
                 x-random-children
-                class={['flex item-list items-center', props.gap, private.duplications ? 'animate-infinite-scroll' : null]}
+                class={['flex item-list items-center [&_li]:mx-16', private.duplications ? 'animate-infinite-scroll' : null]}
             >
                 <Neos.Fusion:Loop items={props.assets}>
                     <li @if={item.src}><img class="max-h-10 md:max-h-16 max-w-none" alt={item.alternativeText} src={item.src}/></li>
