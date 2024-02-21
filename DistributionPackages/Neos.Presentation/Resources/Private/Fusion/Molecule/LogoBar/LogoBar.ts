@@ -1,13 +1,16 @@
 import Alpine from 'alpinejs';
 
-Alpine.data('LogoBar', () => ({
+Alpine.data('LogoBar', (duplications) => ({
     init() {
-        const logos = this.$refs.logos;
+        if (!duplications) {
+            return;
+        }
         this.$nextTick(() => {
-            for (let i = 1; i <= 3; i++) {
-                logos.insertAdjacentHTML('afterend', logos.outerHTML);
-                logos.nextSibling.removeAttribute('x-random-children');
-                logos.nextSibling.setAttribute('aria-hidden', 'true');
+            const element = this.$el.firstElementChild.cloneNode(true);
+            element.removeAttribute('x-random-children');
+            element.setAttribute('aria-hidden', 'true');
+            for (let i = 1; i <= duplications; i++) {
+                this.$el.appendChild(element.cloneNode(true));
             }
         });
     },
