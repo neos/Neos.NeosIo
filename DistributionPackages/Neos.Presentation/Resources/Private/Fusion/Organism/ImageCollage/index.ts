@@ -1,4 +1,7 @@
 import Alpine from 'alpinejs';
+import 'atropos/css'
+
+import Atropos from 'atropos';
 
 // function that returns a random number
 function getRandomNumber(min, max, substract = 0) {
@@ -7,11 +10,12 @@ function getRandomNumber(min, max, substract = 0) {
 
 // get the size of an element
 function getSize(element) {
-    console.log({ x: element.clientWidth, y: element.clientHeight });
     return { x: element.clientWidth, y: element.clientHeight };
 }
 
 Alpine.data('collage', () => ({
+    atropos: null,
+    figure: null,
     positions: [],
     rendered: [],
     elements: [],
@@ -54,13 +58,12 @@ Alpine.data('collage', () => ({
             return true;
 
         }
-        // console.log({ x, y });
-        // console.log(this.positions);
+
         return false;
     },
     processElements() {
-        this.maxX = this.$el.clientWidth;
-        this.maxY = this.$el.clientHeight;
+        this.maxX = this.figure.clientWidth;
+        this.maxY = this.figure.clientHeight;
         this.positions = [];
         this.rendered = [];
         this.elements.forEach((element) => {
@@ -75,7 +78,17 @@ Alpine.data('collage', () => ({
         });
     },
     init() {
-        this.elements = [...this.$el.children];
+        this.figure = this.$el.querySelector('figure');
+        this.elements = [...this.figure?.children ?? []];
+
+        // Add randomized z offset for atropos (-5 to 5) if none is defined already
+        this.elements.forEach(e => e.dataset.atroposOffset = e.dataset.atroposOffset ?? Math.random() * 5 - 10)
+
+        // Init atropos
+        this.atropos = Atropos({
+            el: this.$el,
+        });
+
         this.processElements();
     },
 }));
