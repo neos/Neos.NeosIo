@@ -48,25 +48,29 @@ prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Compone
     }
 
     renderer = afx`
-      <Neos.Presentation:Background variant="gradient" class="overflow-clip">
-        <Neos.Presentation:Spacing size y>
-          <div class="grid md:grid-cols-2 items-center">
-            <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
-            <Neos.Presentation:Paragraph {...props.description} display="lead" />
-          </div>
+        <Neos.Presentation:Background variant="gradient" class="overflow-clip h-screen flex flex-col">
+            <div class="flex-initial">
+                <Neos.Presentation:Spacing size y>
+                    <div class="grid md:grid-cols-2 items-center">
+                        <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
+                        <Neos.Presentation:Paragraph {...props.description} display="lead" />
+                    </div>
+                </Neos.Presentation:Spacing>
+            </div>
+            <div class="grow">
+                <figure class="relative h-full n-spacing--size" x-data="collage" "x-on:resize.window.debounce"="processElements">
+                    <Neos.Fusion:Loop items={props.images}>
+                        <img class="opacity-0 transition-all absolute w-[128px] h-auto" src={item.src}
+                             alt={item.alternativeText} />
+                    </Neos.Fusion:Loop>
+                    <Neos.Fusion:Loop items={props.squareIcons}>
+                        <Neos.Fusion:Augmenter class="absolute z-1 opacity-0 transition-all">
+                            <Neos.Presentation:SquareIcon {...item} />
+                        </Neos.Fusion:Augmenter>
+                    </Neos.Fusion:Loop>
+                </figure>
+            </div>
 
-          <figure class="relative h-[1400px]" x-data="collage" "x-on:resize.window.debounce"="processElements">
-            <Neos.Fusion:Loop items={props.images}>
-              <img class="opacity-0 transition-all absolute w-[128px] h-auto" src={item.src} alt={item.alternativeText} />
-            </Neos.Fusion:Loop>
-            <Neos.Fusion:Loop items={props.squareIcons}>
-              <Neos.Fusion:Augmenter class="absolute z-1 opacity-0 transition-all">
-                <Neos.Presentation:SquareIcon {...item}/>
-              </Neos.Fusion:Augmenter>
-            </Neos.Fusion:Loop>
-          </figure>
-
-        </Neos.Presentation:Spacing>
-      </Neos.Presentation:Background>
+        </Neos.Presentation:Background>
     `
 }
