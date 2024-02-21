@@ -19,11 +19,24 @@ prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Compone
                 }
             }
             images = Neos.Fusion:Map {
-                items = ${['allplan', 'berchtesgadener', 'heineken', 'hitachi', 'hoerbiger', 'hogast', 'kvh', 'siga', 't3n']}
+                items = ${[
+                    [ "Case 1", 800, 600, '#000000' ],
+                    [ "Case 2", 1920, 1080, '#222222' ],
+                    [ "Case 3", 600, 1024, '#444444' ],
+                    [ "Case 4", 1080, 1920, '#666666' ],
+                    [ "Case 5", 600, 600, '#888888' ],
+                    [ "Case 6", 1440, 1024, '#AAAAAA' ],
+                    [ "Case 7", 500, 400, '#CCCCCC' ]
+                ]}
                 itemName = 'item'
                 itemRenderer = Neos.Fusion:DataStructure {
-                    src = ${StaticResource.uri('Neos.Presentation', 'Public/Assets/Styleguide/cases/' + item + '.png')}
-                    alternativeText = ${'Case ' + props.item}
+                    imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                        title = ${item[0]}
+                        baseWidth = ${item[1]}
+                        baseHeight = ${item[2]}
+                        backgroundColor = ${item[3]}
+                    }
+                    alternativeText = ${'Case ' + props.item[0]}
                 }
             }
         }
@@ -34,7 +47,9 @@ prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Compone
         description = PropTypes:DataStructure
         squareIcons = PropTypes:Array {
             type = PropTypes:DataStructure {
-                src = PropTypes:String
+                imageSource = PropTypes:InstanceOf {
+                    type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
+                }
                 alternativeText = PropTypes:String
             }
         }
@@ -60,8 +75,13 @@ prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Compone
             <div class="grow">
                 <figure class="relative h-full n-spacing--size" x-data="collage" "x-on:resize.window.debounce"="processElements">
                     <Neos.Fusion:Loop items={props.images}>
-                        <img class="opacity-0 transition-all absolute w-[128px] h-auto" src={item.src}
-                             alt={item.alternativeText} />
+                        <Sitegeist.Kaleidoscope:Image
+                            class="opacity-0 transition-all absolute h-auto w-auto max-w-[33%] max-h-[33%]"
+                            imageSource={item.imageSource}
+                            alt={item.alternativeText}
+                            srcset="1x,2x"
+                            lazy={true}
+                        />
                     </Neos.Fusion:Loop>
                     <Neos.Fusion:Loop items={props.squareIcons}>
                         <Neos.Fusion:Augmenter class="absolute z-1 opacity-0 transition-all">

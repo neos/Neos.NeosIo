@@ -7,6 +7,7 @@ function getRandomNumber(min, max, substract = 0) {
 
 // get the size of an element
 function getSize(element) {
+    console.log({ x: element.clientWidth, y: element.clientHeight });
     return { x: element.clientWidth, y: element.clientHeight };
 }
 
@@ -42,15 +43,12 @@ Alpine.data('collage', () => ({
     },
     isOverlap(x, y, size, type) {
         // return true if overlapping another element of the same type
-        for (const position of this.positions.filter( p => p.type === type )) {
-            if (
-                (x + size.x + this.objectMargin) > position.x &&
-                (x - this.objectMargin) < (position.x + position.size.x) &&
-                (y + size.y + this.objectMargin) > position.y &&
-                (y - this.objectMargin) < (position.y + position.size.y)
-            ) {
-                return true;
-            }
+        for (const p of this.positions.filter( p => p.type === type )) {
+
+            if ((x - this.objectMargin) > (p.x + p.size.x) || p.x > (x + this.objectMargin + size.x)) continue;
+            if ((y - this.objectMargin) > (p.y + p.size.y) || p.y > (y + this.objectMargin + size.y)) continue;
+            return true;
+
         }
         // console.log({ x, y });
         // console.log(this.positions);
@@ -62,6 +60,7 @@ Alpine.data('collage', () => ({
         this.positions = [];
         this.rendered = [];
         this.elements.forEach((element) => {
+            element.classList.add('opacity-0');
             if (element.tagName !== 'IMG' || element.complete) {
                 this.placeElement(element, getSize(element));
             } else {
