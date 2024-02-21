@@ -5,6 +5,11 @@ import intersect from "@alpinejs/intersect";
 import collapse from "@alpinejs/collapse";
 import clipboard from "@ryangjchandler/alpine-clipboard";
 import typewriter from "@marcreichel/alpine-typewriter";
+import '../Molecule/LogoBar/LogoBar';
+
+Alpine.directive('random-children', el => {
+    el.replaceChildren(...[...el.children].sort(() => Math.random() - 0.5));
+})
 
 // @ts-ignore
 Alpine.plugin([
