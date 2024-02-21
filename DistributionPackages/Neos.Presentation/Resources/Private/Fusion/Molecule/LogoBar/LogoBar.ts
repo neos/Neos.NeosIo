@@ -6,6 +6,7 @@ Alpine.data('LogoBar', () => ({
         this.$nextTick(() => {
             for (let i = 1; i <= 3; i++) {
                 logos.insertAdjacentHTML('afterend', logos.outerHTML);
+                logos.nextSibling.removeAttribute('x-random-children');
                 logos.nextSibling.setAttribute('aria-hidden', 'true');
             }
         });
