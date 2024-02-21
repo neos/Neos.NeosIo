@@ -4,15 +4,16 @@ prototype(Neos.Presentation:Module.PersonCards.Card) < prototype(Neos.Fusion:Com
     email = null
     image = null
     variant = null
+    pixelVariant = null
 
     renderer = afx`
-        <li class="flex flex-col">
+        <li class="c-person-card flex flex-col">
             <figure class="relative">
-                <Sitegeist.Kaleidoscope:Image {...props.image} attributes.class="aspect-portrait w-full object-cover"/>
+                <Sitegeist.Kaleidoscope:Image {...props.image} attributes.class="aspect-portrait w-full object-cover"></Sitegeist.Kaleidoscope:Image>
                 <!-- FIXME: Use actual pixel overlay instead of simple background -->
-                <Neos.Presentation:Background variant={"accent-" + props.variant} class="absolute bottom-0 w-full h-[160px] opacity-50"/>
+                <Neos.Presentation:Icon name={"pixel-grid-" + props.pixelVariant} class={props.variant + " c-pixel-grid absolute bottom-0 left-0 right-0 w-full"}/>
             </figure>
-            <Neos.Presentation:Background variant={"accent-" + props.variant} class="p-8 flex-1 flex flex-col">
+            <Neos.Presentation:Background variant={props.variant} class="p-8 flex-1 flex flex-col">
                 <Neos.Presentation:Headline text={props.name} tagName="h3" display="title-lg flex-1"/>
                 <a href={"mailto:" + props.email}>
                     <span class="sr-only">Email</span>
