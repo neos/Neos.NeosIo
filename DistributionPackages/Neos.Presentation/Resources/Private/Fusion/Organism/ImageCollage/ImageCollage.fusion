@@ -74,6 +74,11 @@ prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Compone
             </div>
             <div class="grow">
                 <figure class="relative h-full n-spacing--size" x-data="collage" "x-on:resize.window.debounce"="processElements">
+                    <Neos.Fusion:Loop items={props.squareIcons}>
+                        <Neos.Fusion:Augmenter class="absolute z-[1] opacity-0 transition-all">
+                            <Neos.Presentation:SquareIcon {...item} />
+                        </Neos.Fusion:Augmenter>
+                    </Neos.Fusion:Loop>
                     <Neos.Fusion:Loop items={props.images}>
                         <Sitegeist.Kaleidoscope:Image
                             class="opacity-0 transition-all absolute h-auto w-auto max-w-[33%] max-h-[33%]"
@@ -82,11 +87,6 @@ prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Compone
                             srcset="1x,2x"
                             lazy={true}
                         />
-                    </Neos.Fusion:Loop>
-                    <Neos.Fusion:Loop items={props.squareIcons}>
-                        <Neos.Fusion:Augmenter class="absolute z-1 opacity-0 transition-all">
-                            <Neos.Presentation:SquareIcon {...item} />
-                        </Neos.Fusion:Augmenter>
                     </Neos.Fusion:Loop>
                 </figure>
             </div>

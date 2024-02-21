@@ -38,12 +38,16 @@ Alpine.data('collage', () => ({
         element.style.setProperty('left', x + 'px');
         element.style.setProperty('top', y + 'px');
         this.positions.push({ x, y, size, type: element.tagName });
+
+        // Push another element-box to prevent objects from different types to overlap entirely
+        this.positions.push({ x: x + size.x * 0.25, y: y + size.y * 0.25, size: {x: size.x / 2, y: size.y / 2}, type: '*' });
+
         this.rendered.push(element);
         element.classList.remove('opacity-0');
     },
     isOverlap(x, y, size, type) {
         // return true if overlapping another element of the same type
-        for (const p of this.positions.filter( p => p.type === type )) {
+        for (const p of this.positions.filter( p => p.type === "*" || p.type === type )) {
 
             if ((x - this.objectMargin) > (p.x + p.size.x) || p.x > (x + this.objectMargin + size.x)) continue;
             if ((y - this.objectMargin) > (p.y + p.size.y) || p.y > (y + this.objectMargin + size.y)) continue;
