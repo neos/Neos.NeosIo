@@ -1,4 +1,4 @@
-import Alpine from "alpinejs";
+import Alpine from 'alpinejs';
 import anchor from './anchor';
 import focus from "@alpinejs/focus";
 import intersect from "@alpinejs/intersect";
@@ -12,14 +12,7 @@ Alpine.directive('random-children', el => {
 })
 
 // @ts-ignore
-Alpine.plugin([
-    anchor,
-    clipboard,
-    collapse,
-    focus,
-    intersect,
-    typewriter,
-]);
+Alpine.plugin([anchor, clipboard, collapse, focus, intersect, typewriter]);
 
 window.Alpine = Alpine;
 
