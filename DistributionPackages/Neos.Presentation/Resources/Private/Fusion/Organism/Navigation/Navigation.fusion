@@ -10,21 +10,87 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
             links = Neos.Fusion:DataStructure {
                 0 {
                     label = "Product"
-                    link = "#"
                     flyoutType = "groups"
                     flyoutItems {
                         group0 {
-                            label = "First group"
+                            title = "Editors choice"
                             link = "#"
                             items {
                                 0 {
-                                    label = 'sdfs'
+                                    label = 'True WYSIWYG'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'cursor'
+                                    link = '#'
+                                }
+                                1 {
+                                    label = 'Mehrsprachigkeit'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'globe'
+                                    link = '#'
+                                }
+                                2 {
+                                    label = 'SEO'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'search'
+                                    link = '#'
+                                }
+                                3 {
+                                    label = 'Veröffentlichung & Arbeitsbereiche'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'clock'
+                                    link = '#'
+                                }
+                                4 {
+                                    label = 'Personalisierung & Zielgruppen'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'smiley'
                                     link = '#'
                                 }
                             }
                         }
                         group1 {
-                            label = "Second group"
+                            title = "Developers choice"
+
+                            items {
+                                0 {
+                                    label = 'Modellierung von Inhalten'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'database'
+                                    link = '#'
+                                }
+                                1 {
+                                    label = 'Updates & Erweiterungen'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'umbrella'
+                                    link = '#'
+                                }
+                                2 {
+                                    label = 'Neos in der Cloud'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'cloud'
+                                    link = '#'
+                                }
+                                3 {
+                                    label = 'Release roadmap & process'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'truck'
+                                    link = '#'
+                                }
+                                4 {
+                                    label = 'Extensionpakete & Plugins'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'package'
+                                    link = '#'
+                                }
+                            }
+                        }
+                        group2 {
+                            body = afx`
+                                <Sitegeist.Kaleidoscope:Image class="w-full mb-4">
+                                    <Sitegeist.Kaleidoscope:ResourceImageSource @path="imageSource" path="resource://Neos.Presentation/Public/Assets/Styleguide/Images/navteaser.png" />
+                                </Sitegeist.Kaleidoscope:Image>
+                                <Neos.Presentation:Button text="Try the Neos Demo" icon={{name: 'pixel-chevron-right'}} class="w-full" />
+                            `
                         }
                     }
                 }
@@ -37,7 +103,90 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
                 }
                 2 {
                     label = "Community"
-                    link = "#"
+                    link = "https://neos.io"
+                    flyoutVariant = 'white'
+                    flyoutItems {
+                        group0 {
+                            title = "Editors choice"
+                            link = "#"
+                            items {
+                                0 {
+                                    label = 'True WYSIWYG'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'cursor'
+                                    link = '#'
+                                }
+                                1 {
+                                    label = 'Mehrsprachigkeit'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'globe'
+                                    link = '#'
+                                }
+                                2 {
+                                    label = 'SEO'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'search'
+                                    link = '#'
+                                }
+                                3 {
+                                    label = 'Veröffentlichung & Arbeitsbereiche'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'clock'
+                                    link = '#'
+                                }
+                                4 {
+                                    label = 'Personalisierung & Zielgruppen'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'smiley'
+                                    link = '#'
+                                }
+                            }
+                        }
+                        group1 {
+                            title = "Developers choice"
+
+                            items {
+                                0 {
+                                    label = 'Modellierung von Inhalten'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'database'
+                                    link = '#'
+                                }
+                                1 {
+                                    label = 'Updates & Erweiterungen'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'umbrella'
+                                    link = '#'
+                                }
+                                2 {
+                                    label = 'Neos in der Cloud'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'cloud'
+                                    link = '#'
+                                }
+                                3 {
+                                    label = 'Release roadmap & process'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'truck'
+                                    link = '#'
+                                }
+                                4 {
+                                    label = 'Extensionpakete & Plugins'
+                                    description = 'Hier steht ein kurzer Beschreibungs-Text '
+                                    icon = 'package'
+                                    link = '#'
+                                }
+                            }
+                        }
+                        group2 {
+                            body = afx`
+                                <Sitegeist.Kaleidoscope:Image class="w-full mb-4">
+                                    <Sitegeist.Kaleidoscope:ResourceImageSource @path="imageSource" path="resource://Neos.Presentation/Public/Assets/Styleguide/Images/navteaser.png" />
+                                </Sitegeist.Kaleidoscope:Image>
+                                <Neos.Presentation:Button text="Try the Neos Demo" icon={{name: 'pixel-chevron-right'}} class="w-full" />
+                            `
+                        }
+                    }
                 }
                 3 {
                     label = "Download"
@@ -79,20 +228,31 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = afx`
-        <Neos.Presentation:Spacing tagName="nav" size x y="small">
-            <ul class="flex justify-between items-center gap-x-6">
-                <Neos.Presentation:Icon name="neos-white-logo" class="h-10" />
-                <div class="hidden lg:flex items-center gap-5 2xl:gap-10">
+        <Neos.Presentation:Spacing tagName="nav" size x y="small" class="z-navigation">
+            <ul class="flex justify-between gap-x-6 relative">
+                <Neos.Presentation:Icon name="neos-white-logo" class="h-10 self-center" />
+                <div class="hidden lg:flex gap-5 2xl:gap-10">
                     <Neos.Fusion:Loop items={props.links} itemName="link">
-                        <li class="group">
-                            <a href={link.link}
-                               class="inline-flex items-center gap-1 hover:bg-white/10 px-4 py-1 rounded-md display-lead">{link.label}
-                                <Neos.Presentation:Icon
+                        <li class="group/navitem h-14" x-data="NavigationItem">
+                            <div class="h-full flex items-center group-hover/navitem:z-10">
+                                <div class="rounded-md group-hover/navitem:bg-white/10 flex items-center" x-bind:class="{ '!bg-white/10': open }">
+                                    <Neos.Fusion:Tag tagName={link.link ? 'a' : 'span'} attributes.href={link.link} attributes.class="inline-block py-1 px-4 display-lead">{link.label}</Neos.Fusion:Tag>
+                                    <button
                                         @if={link.flyoutItems && link.flyoutItems != []}
-                                        name="chevron-down"
-                                        class="h-6"
-                                />
-                            </a>
+                                        class="-ml-2 mr-2 group-hover/navitem:rotate-180 transition duration-500"
+                                        x-bind:class="{'rotate-180': open}"
+                                        x-on:click="open = !open"
+                                        x-bind:aria-expanded="open"
+                                        aria-haspopup="true"
+                                        "x-on:click.outside"="open = false">
+                                        <Neos.Presentation:Icon
+                                                name="chevron-down"
+                                                class="h-6"
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="itemblocker pointer-events-none group-hover/navitem:pointer-events-default group-hover/navitem:block"></div>
                             <Neos.Presentation:Navigation.Flyout {...link} />
                         </li>
                     </Neos.Fusion:Loop>

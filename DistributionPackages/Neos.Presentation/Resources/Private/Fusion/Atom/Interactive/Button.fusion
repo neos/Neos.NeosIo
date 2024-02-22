@@ -20,7 +20,7 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
         variant = ${PropTypes.oneOf(['button', 'link'])}
         text = ${PropTypes.string.isRequired}
         href = ${PropTypes.anyOf(PropTypes.string)}
-        icon = ${PropTypes.string}
+        icon = ${PropTypes.anyOf(PropTypes.string, PropTypes.any)}
         srOnlyLabel = ${PropTypes.boolean}
     }
 
@@ -34,6 +34,22 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
 
     @private {
         labelText = ${props.srOnlyLabel ? '<span class="sr-only">' + props.text + '</span>' : props.text}
+        icon = Neos.Fusion:Case {
+            string {
+                condition = ${Type.isString(props.icon)}
+                renderer = ${props.icon}
+            }
+            icon {
+                condition = ${props.icon}
+                renderer = Neos.Presentation:Icon {
+                    @apply.props = ${props.icon}
+                    class = "w-5"
+                }
+            }
+            @default {
+                renderer = null
+            }
+        }
     }
 
     renderer = Neos.Fusion:Tag {
@@ -51,7 +67,7 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
         }
         content = afx`
             <span>{private.labelText}</span>
-            {props.icon}
+            {private.icon}
         `
     }
 }
