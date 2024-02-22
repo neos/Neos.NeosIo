@@ -22,7 +22,7 @@ Alpine.data('collage', () => ({
     padding: 30,
     objectMargin: 10,
     maxAttempts: 50,
-    placeElement(element, size, attempts = 0) {
+    placeElement(element, size, type, attempts = 0) {
         if (attempts >= this.maxAttempts) {
             // console.error('Max attempts reached');
             return;
@@ -31,15 +31,15 @@ Alpine.data('collage', () => ({
         const x = getRandomNumber(this.padding, this.maxX - this.padding, size.x / 2);
         const y = getRandomNumber(this.padding, this.maxY - this.padding - size.y);
 
-        if (this.isOverlap(x, y, size, element.tagName)) {
+        if (this.isOverlap(x, y, size, type)) {
             attempts++;
-            this.placeElement(element, size, attempts);
+            this.placeElement(element, size, type, attempts);
             return;
         }
 
         element.style.setProperty('left', x + 'px');
         element.style.setProperty('top', y + 'px');
-        this.positions.push({ x, y, size, type: element.tagName });
+        this.positions.push({ x, y, size, type });
 
         // Push another element-box to prevent objects from different types to overlap entirely
         this.positions.push({
@@ -69,26 +69,39 @@ Alpine.data('collage', () => ({
         this.rendered = [];
         this.elements.forEach((element) => {
             element.classList.add('opacity-0');
-            if (element.tagName !== 'IMG' || element.complete) {
-                this.placeElement(element, getSize(element));
+
+            // Get the inner image if it exists and set max height and width
+            let image = element.querySelector('img.image-collage-item');
+            image?.style.setProperty('max-width', (this.maxX/3) + 'px');
+            image?.style.setProperty('max-height', (this.maxY/3) + 'px');
+
+            if (!image || image.complete) {
+                // Element is not an image, or is already loaded; we can place
+                // it right away
+                this.placeElement(element, getSize(element), image ? 'img' : 'div');
             } else {
-                element.addEventListener('load', () => {
-                    this.placeElement(element, getSize(element));
+                // We need to wait for this image to load until we can place it
+                image.addEventListener('load', () => {
+                    this.placeElement(element, getSize(element), 'img');
                 });
             }
         });
     },
     init() {
         this.figure = this.$el.querySelector('figure');
-        this.elements = [...(this.figure?.children ?? [])];
-
-        // Add randomized z offset for atropos (-5 to 5) if none is defined already
-        this.elements.forEach((e) => (e.dataset.atroposOffset = e.dataset.atroposOffset ?? Math.random() * 5 - 10));
+        this.elements = [...(this.figure?.querySelectorAll('.atropos-image-collage-item') ?? [])];
 
         // Init atropos
-        this.atropos = Atropos({
-            el: this.$el,
-        });
+        this.$el.querySelectorAll('.atropos-image-collage-item').forEach(item => {
+            Atropos({
+                el: item,
+                eventsEl: this.figure,
+                commonOrigin: false,
+
+                // SquareItems should elevate higher than image items
+                activeOffset: item.querySelector("img.image-collage-item") ? (Math.random() * 20) : (50 + Math.random() * 10)
+            });
+        })
 
         this.processElements();
     },

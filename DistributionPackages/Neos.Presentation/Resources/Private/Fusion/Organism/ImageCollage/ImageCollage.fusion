@@ -63,42 +63,52 @@ prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Compone
     }
 
     renderer = afx`
-        <Neos.Presentation:Background variant="gradient" class="overflow-clip h-screen flex flex-col">
-            <div class="flex-initial">
-                <Neos.Presentation:Spacing size y>
-                    <div class="grid md:grid-cols-2 items-center">
-                        <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
-                        <Neos.Presentation:Paragraph {...props.description} display="lead" />
-                    </div>
-                </Neos.Presentation:Spacing>
+      <Neos.Presentation:Background variant="gradient" class="overflow-clip h-screen flex flex-col">
+        <div class="flex-initial">
+          <Neos.Presentation:Spacing size y>
+            <div class="grid md:grid-cols-2 items-center">
+              <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
+              <Neos.Presentation:Paragraph {...props.description} display="lead" />
             </div>
-            <div class="atropos atropos-image-collage grow" x-data="collage" "x-on:resize.window.debounce"="processElements">
-                <div class="atropos-scale h-full">
-                    <div class="atropos-rotate h-full">
-                        <div class="atropos-inner h-full">
-                            <figure class="relative h-full n-spacing--size">
-                                <Neos.Fusion:Loop items={props.squareIcons}>
-                                    <Neos.Fusion:Augmenter class="absolute z-10 opacity-0 transition-all" data-atropos-offset="15">
-                                        <Neos.Presentation:SquareIcon {...item} />
-                                    </Neos.Fusion:Augmenter>
-                                </Neos.Fusion:Loop>
-                                <Neos.Fusion:Loop items={props.images}>
-                                    <Sitegeist.Kaleidoscope:Image
-                                        class="opacity-0 transition-all absolute h-auto w-auto max-w-[33%] max-h-[33%]"
-                                        imageSource={item.imageSource}
-                                        alt={item.alternativeText}
-                                        srcset="160w, 320w, 480w,1x ,2x"
-                                        sizes="(min-width: 1440px) 480px, 33vw"
-                                        lazy={true}
-                                    />
-                                </Neos.Fusion:Loop>
-                            </figure>
-                        </div>
+          </Neos.Presentation:Spacing>
+        </div>
+        <div class="grow" x-data="collage"
+             "x-on:resize.window.debounce"="processElements">
+          <figure class="relative h-full n-spacing--size">
+            <Neos.Fusion:Loop items={props.squareIcons}>
+              <div class="atropos atropos-image-collage-item absolute z-10 opacity-0 transition-all overflow-visible">
+                <div class="atropos-scale">
+                  <div class="atropos-rotate">
+                    <div class="atropos-inner">
+                      <Neos.Fusion:Augmenter class="image-collage-item">
+                        <Neos.Presentation:SquareIcon {...item} />
+                      </Neos.Fusion:Augmenter>
                     </div>
+                  </div>
                 </div>
+              </div>
+            </Neos.Fusion:Loop>
+            <Neos.Fusion:Loop items={props.images}>
+              <div class="atropos atropos-image-collage-item opacity-0 transition-all absolute">
+                <div class="atropos-scale">
+                  <div class="atropos-rotate">
+                    <div class="atropos-inner">
+                      <Sitegeist.Kaleidoscope:Image
+                        class="image-collage-item h-auto w-auto"
+                        imageSource={item.imageSource}
+                        alt={item.alternativeText}
+                        srcset="160w, 320w, 480w,1x ,2x"
+                        sizes="(min-width: 1440px) 480px, 33vw"
+                        lazy={true}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Neos.Fusion:Loop>
+          </figure>
+        </div>
 
-            </div>
-
-        </Neos.Presentation:Background>
+      </Neos.Presentation:Background>
     `
 }
