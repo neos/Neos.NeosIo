@@ -1,0 +1,155 @@
+prototype(Neos.Presentation:BentoBoxes) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = 'Bento Boxes'
+        props {
+            heading = Neos.Fusion:DataStructure {
+                text = 'Tools that transform your digital journey'
+                tagName = 'h2'
+            }
+            text = 'Take control of HTML, CSS, and JavaScript in a visual canvas. Webflow generates clean, semantic code that’s ready.'
+            boxes = Neos.Fusion:DataStructure {
+                1 = Neos.Fusion:DataStructure {
+                    heading = Neos.Fusion:DataStructure {
+                        text = 'Enterprise Features like Role Management and Media Center'
+                        tagName = 'h2'
+                    }
+                    background = 'brand'
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/300x400?1'
+                    }
+                    assetAlign = 'center'
+                }
+                2 = Neos.Fusion:DataStructure {
+                    heading = Neos.Fusion:DataStructure {
+                        text = 'What you see, is what you get. Our True Inline Editor.'
+                        tagName = 'h2'
+                    }
+                    background = 'accent-blue'
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/800x400?2'
+                    }
+                    assetAlign = 'right'
+                }
+                3 = Neos.Fusion:DataStructure {
+                    heading = Neos.Fusion:DataStructure {
+                        text = 'Multi-language and Multi-site Functionality'
+                        tagName = 'h2'
+                    }
+                    link = '#'
+                    linkLabel = 'Mehr erfahren'
+                    background = 'accent-lightblue'
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/360x240?3'
+                    }
+                    assetAlign = 'center'
+                }
+                4 = Neos.Fusion:DataStructure {
+                    heading = Neos.Fusion:DataStructure {
+                        text = 'SEO Optimization Tools for the best performance'
+                        tagName = 'h2'
+                    }
+                    background = 'brand'
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/600x300?4'
+                    }
+                    assetAlign = 'right'
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        heading = PropTypes:DataStructure {
+            text = PropTypes:String
+            tagName = PropTypes:Enum {
+                1 = 'h1'
+                2 = 'h2'
+                3 = 'h3'
+                4 = 'h4'
+                5 = 'h5'
+                6 = 'h6'
+                p = 'p'
+            }
+        }
+        text = PropTypes:String
+        boxes = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                heading = PropTypes:FromPrototype {
+                    prototypeName = 'Neos.Presentation:Headline'
+                }
+                link = PropTypes:String
+                linkLabel = PropTypes:String
+                background = PropTypes:Enum {
+                    1 = 'gradient'
+                    2 = 'brand'
+                    3 = 'accent-purple'
+                    4 = 'accent-blue'
+                    5 = 'accent-lightblue'
+                    6 = 'accent-green'
+                    7 = 'accent-yellow'
+                    8 = 'accent-orange'
+                    9 = 'accent-red'
+                }
+                image = PropTypes:DataStructure {
+                    imageSource = PropTypes:InstanceOf {
+                        type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
+                    }
+                }
+                video = PropTypes:FromPrototype {
+                    prototypeName = 'Neos.Presentation:InlineVideo'
+                }
+                assetAlign = PropTypes:Enum {
+                    1 = 'center'
+                    2 = 'right'
+                }
+            }
+        }
+    }
+
+    heading = Neos.Fusion:DataStructure {
+        text = ''
+        tagName = 'h2'
+    }
+    text = ''
+    boxes = ${[]}
+
+    @private {
+        boxes = ${Carbon.Array.chunk(props.boxes, 2)}
+
+        headlineClass = ${AtomicFusion.classNames(
+            'bento-boxes__heading p-0 2xl:pr-[40%] text-darkblue text-5xl sm:text-5xl mdl:text-7xl 2xl:text-9xl',
+            { 'pb-10 mdl:pb-0': props.text }
+        )}
+
+        wrapperClass = ${AtomicFusion.classNames(
+            'flex flex-col gap-6 mdl:gap-10',
+            { 'pt-14 mdl:pt-20 2xl:pt-10': props.text || props.heading.text }
+        )}
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Spacing size x y class="bento-boxes">
+            <div class="flex flex-col md:flex-row 2xl:flex-col gap-0 mdl:gap-10 2xl:gap-0">
+                <Neos.Presentation:Headline
+                    @if={props.heading.text} {...props.heading}
+                    display="headline-lg" class={private.headlineClass}
+                />
+                <Neos.Presentation:Paragraph
+                    @if={props.text} text={props.text} display="lead"
+                    class="bento-boxes__heading text-black/75 sm:text-base mdl:text-md p-0 mdl:pt-8 2xl:pt-0 2xl:pl-[60%]"
+                />
+            </div>
+
+            <div class={private.wrapperClass}>
+                <Neos.Fusion:Loop items={private.boxes} itemName="chunk">
+                    <div class="bento-boxes__row flex flex-row flex-wrap md:flex-nowrap gap-6 mdl:gap-10 items-stretch">
+                        <Neos.Fusion:Loop items={chunk} itemName="box">
+                            <Neos.Presentation:BentoBoxes.Box {...box} />
+                        </Neos.Fusion:Loop>
+                    </div>
+                </Neos.Fusion:Loop>
+            </div>
+        </Neos.Presentation:Spacing>
+    `
+}
