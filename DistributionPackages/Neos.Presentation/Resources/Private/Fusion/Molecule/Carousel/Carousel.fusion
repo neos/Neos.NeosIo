@@ -1,0 +1,58 @@
+prototype(Neos.Presentation:Carousel) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = 'Carousel'
+        props {
+            headline = 'A nice looking carousel!'
+            cards = Neos.Fusion:DataStructure {
+                0 {
+                    headline = "Card One Headline"
+                    text = "Card One Text"
+                    link = "Card One Link"
+                }
+                1 {
+                    headline = "Card Two Headline"
+                    text = "Card Two Text"
+                    link = "Card Two Link"
+                }
+                2 {
+                    headline = "Card Three Headline"
+                    text = "Card Three Text"
+                    link = "Card Three Link"
+                }
+                3 {
+                    headline = "Card Four Headline"
+                    text = "Card Four Text"
+                    link = "Card Four Link"
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        headline = PropTypes:String
+        cards = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                headline = PropTypes:String
+                text = PropTypes:String
+                link = PropTypes:String
+            }
+        }
+    }
+
+    headline = null
+    cards = null
+
+    renderer = afx`
+        <div class="grid grid-cols-4 gap-4">
+            <div class="flex flex-col col-span-1 p-8 border border-solid border-black rounded-lg">
+                <Neos.Presentation:Headline text={props.headline} display="headline-lg"/>
+            </div>
+            <ul class="flex flex-no-wrap overflow-clip col-span-3 gap-4">
+                <Neos.Fusion:Loop items={props.cards} itemName="card">
+                    <Neos.Presentation:Molecule.Carousel.Card {...card}/>
+                </Neos.Fusion:Loop>
+            </ul>
+        </div>
+    `
+}

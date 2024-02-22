@@ -1,0 +1,14 @@
+prototype(Neos.Presentation:Molecule.Carousel.Card) < prototype(Neos.Fusion:Component) {
+
+    headline = null
+    text = null
+    link = null
+
+    renderer = afx`
+        <li class="flex flex-col justify-between w-1/3 p-8 border border-solid border-black">
+            <Neos.Presentation:Headline text={props.headline} tagName="h3" display="title-lg"/>
+            <Neos.Presentation:Paragraph text={props.text}/>
+            <Neos.Presentation:Link text={props.link}/>
+        </li>
+    `
+}
