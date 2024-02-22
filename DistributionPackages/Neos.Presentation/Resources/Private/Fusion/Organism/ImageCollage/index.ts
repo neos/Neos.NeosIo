@@ -72,8 +72,8 @@ Alpine.data('collage', () => ({
 
             // Get the inner image if it exists and set max height and width
             let image = element.querySelector('img.image-collage-item');
-            image?.style.setProperty('max-width', (this.maxX/3) + 'px');
-            image?.style.setProperty('max-height', (this.maxY/3) + 'px');
+            image?.style.setProperty('max-width', this.maxX / 3 + 'px');
+            image?.style.setProperty('max-height', this.maxY / 3 + 'px');
 
             if (!image || image.complete) {
                 // Element is not an image, or is already loaded; we can place
@@ -92,16 +92,18 @@ Alpine.data('collage', () => ({
         this.elements = [...(this.figure?.querySelectorAll('.atropos-image-collage-item') ?? [])];
 
         // Init atropos
-        this.$el.querySelectorAll('.atropos-image-collage-item').forEach(item => {
+        this.$el.querySelectorAll('.atropos-image-collage-item').forEach((item) => {
             Atropos({
                 el: item,
                 eventsEl: this.figure,
                 commonOrigin: false,
 
                 // SquareItems should elevate higher than image items
-                activeOffset: item.querySelector("img.image-collage-item") ? (Math.random() * 20) : (50 + Math.random() * 10)
+                activeOffset: item.querySelector('img.image-collage-item')
+                    ? Math.random() * 20
+                    : 50 + Math.random() * 10,
             });
-        })
+        });
 
         this.processElements();
     },
