@@ -1,17 +1,51 @@
 prototype(Neos.Presentation:Navigation.Flyout) < prototype(Neos.Fusion:Component) {
 
+    @propTypes {
+        variant = ${PropTypes.oneOf(['default', 'white'])}
+    }
+
+    flyoutVariant = 'default'
+
     renderer = afx`
-        <div @if={props.flyoutItems && props.flyoutItems != []} class="absolute hidden group-hover:block">
-            <Neos.Fusion:Loop items={props.flyoutItems} itemName="flyoutItem">
-                <Neos.Presentation:Headline text={flyoutItem.title} />
-                <ul>
-                    <Neos.Fusion:Loop items={flyoutItem.items} itemName="item">
-                        <li>
-                            <a href={item.link}>{item.label}</a>
-                        </li>
-                    </Neos.Fusion:Loop>
-                </ul>
-            </Neos.Fusion:Loop>
+        <div @if={props.flyoutItems && props.flyoutItems != []} class="absolute hidden group-hover/navitem:block top-full left-0 right-0 pt-spacing-y-small" x-bind:class="{'!block': open}">
+            <div class={AtomicFusion.classNames("flow-root fade-in slide-up", {
+                'bg-darkblue/5 backdrop-blur-3xl': props.flyoutVariant == 'default',
+                'bg-white text-darkblue': props.flyoutVariant == 'white'
+            })}>
+                <Neos.Presentation:Spacing y x>
+                    <div class="grid grid-cols-3 gap-6 fade-in slide-up">
+                        <Neos.Fusion:Loop items={props.flyoutItems} itemName="flyoutItem">
+                            <div @if={!flyoutItem.body}>
+                                <Neos.Presentation:Headline text={flyoutItem.title} display="title-md" class={AtomicFusion.classNames("text-accent-lightblue mb-8", {
+                                    'text-lightblue': props.flyoutVariant == 'white',
+                                    'text-accent-lightblue': props.flyoutVariant == 'white'
+                                })} />
+                                <ul class="grid gap-1">
+                                    <Neos.Fusion:Loop items={flyoutItem.items} itemName="item">
+                                        <li class="group/li">
+                                            <a href={item.link} class={AtomicFusion.classNames("flex px-5 py-3 transition -translate-x-4 group-hover/li:translate-x-0",{
+                                                'group-hover/li:bg-darkblue/15': props.flyoutVariant == 'default',
+                                                'group-hover/li:bg-darkblue/5': props.flyoutVariant == 'white'
+                                            })}>
+                                                <div class="flex transition -translate-x-1 group-hover/li:translate-x-0 gap-4 ">
+                                                    <Neos.Presentation:Icon name={item.icon} class="w-5" />
+                                                    <span class="grid gap-1">
+                                                        <strong class="display-label-lg">{item.label}</strong>
+                                                        <span class="display-body-md">{item.description}</span>
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </Neos.Fusion:Loop>
+                                </ul>
+                            </div>
+                            <div @if={flyoutItem.body} class="self-end">
+                                {flyoutItem.body}
+                            </div>
+                        </Neos.Fusion:Loop>
+                    </div>
+                </Neos.Presentation:Spacing>
+            </div>
         </div>
     `
 }
