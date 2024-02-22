@@ -106,6 +106,15 @@ module.exports = {
             backgroundImage: {
                 'pattern-pixels': "url('../Assets/Pattern/pattern-pixels.png')",
             },
+            animation: {
+                'infinite-scroll': 'infinite-scroll 15s linear infinite',
+            },
+            keyframes: {
+                'infinite-scroll': {
+                    from: { transform: 'translateX(0)' },
+                    to: { transform: 'translateX(-100%)' },
+                },
+            },
         },
     },
     plugins: [
