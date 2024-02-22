@@ -1,0 +1,99 @@
+prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
+
+    @propTypes {
+        background = PropTypes:Enum {
+            1 = 'gradient'
+            2 = 'brand'
+            3 = 'accent-purple'
+            4 = 'accent-blue'
+            5 = 'accent-lightblue'
+            6 = 'accent-green'
+            7 = 'accent-yellow'
+            8 = 'accent-orange'
+            9 = 'accent-red'
+        }
+        link = PropTypes:String
+        assetAlign = PropTypes:String
+        heading = PropTypes:FromPrototype {
+            prototypeName = 'Neos.Presentation:Headline'
+        }
+        linkLabel = PropTypes:String
+        video = PropTypes:FromPrototype {
+            prototypeName = 'Neos.Presentation:InlineVideo'
+        }
+        image = PropTypes:DataStructure {
+            imageSource = PropTypes:InstanceOf {
+                type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
+            }
+        }
+    }
+
+    background = null
+    link = ''
+    assetAlign = ''
+    heading = Neos.Fusion:DataStructure {
+        text = ''
+        tagName = 'h2'
+    }
+    linkLabel = ''
+    video = Neos.Fusion:DataStructure {
+        sources = null
+        assets = null
+    }
+    image = Neos.Fusion:DataStructure {
+        imageSource = null
+    }
+
+    @private {
+        linkClass = ${AtomicFusion.classNames(
+            'pl-6 sm:pl-8 lg:pl-14 pr-6 2xl:pr-20 pt-8 2xl:pt-14 grow-0 before:absolute before:inset-0 before:z-10',
+            {
+                'pb-8 2xl:pb-14': props.assetAlign == 'center' || !props.link,
+                'pb-8 2xl:pb-0': props.assetAlign == 'right' && props.link
+            }
+        )}
+
+        assetWrapperClass = ${AtomicFusion.classNames(
+            'grow flex items-end',
+            {
+                'justify-center px-8 lg:px-14': props.assetAlign == 'center',
+                'justify-end pl-8 sm:pl-14': props.assetAlign == 'right'
+            }
+        )}
+    }
+
+    renderer = afx`
+        <div class="bento-boxes__box-wrapper max-w-full">
+            <Neos.Presentation:Background
+                class="bento-boxes__box h-full flex flex-col relative" variant={props.background}>
+                <Neos.Fusion:Tag
+                    tagName={props.link ? 'a' : 'div'} attributes.class={private.linkClass}
+                    attributes.href={props.link ? props.link : null}>
+                    <Neos.Presentation:Headline
+                        {...props.heading} display="title-lg text-2xl mdl:text-3xl 2xl:text-4xl"
+                    />
+
+                    <Neos.Presentation:Paragraph
+                        @if={props.link} display="cta-xl" class="mt-8 2xl:mt-14 text-md mdl:text-lg">
+                        {props.linkLabel} <Neos.Presentation:Atom.AnimatedArrow />
+                    </Neos.Presentation:Paragraph>
+                </Neos.Fusion:Tag>
+
+                <div class={private.assetWrapperClass}>
+                    <div class="overflow-hidden">
+                        <Neos.Presentation:InlineVideo
+                            @if.hasVideo={props.video && (props.video.sources || props.video.assets)} {...props.video}
+                            poster={props.image && props.image.imageSource ? props.image.imageSource : null}
+                            class={AtomicFusion.classNames({ 'max-w-none': props.assetAlign == 'right' })}
+                        />
+
+                        <Sitegeist.Kaleidoscope:Image
+                            @if.hasImage={props.image && (props.image.imageSource) && !(props.video && (props.video.assets || props.video.sources))}
+                            {...props.image} class={AtomicFusion.classNames({ 'max-w-none': props.assetAlign == 'right' })}
+                        />
+                    </div>
+                </div>
+            </Neos.Presentation:Background>
+        </div>
+    `
+}

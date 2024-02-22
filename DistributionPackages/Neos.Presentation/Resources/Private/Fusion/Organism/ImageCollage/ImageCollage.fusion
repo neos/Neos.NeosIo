@@ -1,0 +1,112 @@
+prototype(Neos.Presentation:Module.ImageCollage) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Image Collage"
+        props {
+            headline.text = 'Projects created with Neos CMS'
+            description.text = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
+            squareIcons = Neos.Fusion:Map {
+                items = ${[
+                    ['Lorem ipsum', 'heart', 'purple'],
+                    ['dolor sit', 'circle', 'yellow'],
+                    ['amet, consetetur', 'clock', 'lightblue']
+                ]}
+                itemName = 'item'
+                itemRenderer = Neos.Fusion:DataStructure {
+                    text = ${item[0]}
+                    iconName = ${item[1]}
+                    color = ${item[2]}
+                }
+            }
+            images = Neos.Fusion:Map {
+                items = ${[
+                    [ "Case 1", 800, 600, '#000000' ],
+                    [ "Case 2", 1920, 1080, '#222222' ],
+                    [ "Case 3", 600, 1024, '#444444' ],
+                    [ "Case 4", 1080, 1920, '#666666' ],
+                    [ "Case 5", 600, 600, '#888888' ],
+                    [ "Case 6", 1440, 1024, '#AAAAAA' ],
+                    [ "Case 7", 500, 400, '#CCCCCC' ]
+                ]}
+                itemName = 'item'
+                itemRenderer = Neos.Fusion:DataStructure {
+                    imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                        title = ${item[0]}
+                        baseWidth = ${item[1]}
+                        baseHeight = ${item[2]}
+                        backgroundColor = ${item[3]}
+                    }
+                    alternativeText = ${'Case ' + props.item[0]}
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        headline = PropTypes:DataStructure
+        description = PropTypes:DataStructure
+        squareIcons = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                imageSource = PropTypes:InstanceOf {
+                    type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
+                }
+                alternativeText = PropTypes:String
+            }
+        }
+        images = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                text = PropTypes:String
+                iconName = PropTypes:String
+                color = PropTypes:String
+            }
+        }
+    }
+
+    renderer = afx`
+      <Neos.Presentation:Background variant="gradient" class="overflow-clip h-screen flex flex-col">
+        <div class="flex-initial">
+          <Neos.Presentation:Spacing size y>
+            <div class="grid md:grid-cols-2 items-center">
+              <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
+              <Neos.Presentation:Paragraph {...props.description} display="lead" />
+            </div>
+          </Neos.Presentation:Spacing>
+        </div>
+        <div class="grow" x-data="collage"
+             "x-on:resize.window.debounce"="processElements">
+          <figure class="relative h-full n-spacing--size">
+            <Neos.Fusion:Loop items={props.squareIcons}>
+              <div class="atropos atropos-image-collage-item absolute z-10 opacity-0 transition-all overflow-visible">
+                <div class="atropos-scale">
+                  <div class="atropos-rotate">
+                    <div class="atropos-inner">
+                        <Neos.Presentation:SquareIcon class="image-collage-item" {...item} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Neos.Fusion:Loop>
+            <Neos.Fusion:Loop items={props.images}>
+              <div class="atropos atropos-image-collage-item opacity-0 transition-all absolute">
+                <div class="atropos-scale">
+                  <div class="atropos-rotate">
+                    <div class="atropos-inner">
+                      <Sitegeist.Kaleidoscope:Image
+                        class="image-collage-item h-auto w-auto"
+                        imageSource={item.imageSource}
+                        alt={item.alternativeText}
+                        srcset="160w, 320w, 480w,1x ,2x"
+                        sizes="(min-width: 1440px) 480px, 33vw"
+                        lazy={true}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Neos.Fusion:Loop>
+          </figure>
+        </div>
+
+      </Neos.Presentation:Background>
+    `
+}
