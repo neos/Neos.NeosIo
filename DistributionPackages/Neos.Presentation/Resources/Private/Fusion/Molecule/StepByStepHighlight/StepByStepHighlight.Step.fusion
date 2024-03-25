@@ -1,0 +1,46 @@
+prototype(Neos.Presentation:StepByStepHighlight.Step) < prototype(Neos.Fusion:Component) {
+
+    @propTypes {
+        inBackend = PropTypes:Bool
+        index = PropTypes:Int
+        heading = PropTypes:String
+        text = PropTypes:String
+        image = PropTypes:FromPrototype {
+            prototypeName = Sitegeist.Kaleidoscope:Image
+        }
+    }
+
+    inBackend = false
+    index = 0
+    heading = ''
+    text = ''
+    image = null
+
+    renderer = afx`
+        <div
+            class="step-by-step-highlight-step__box-wrapper max-w-full px-4 py-1 broder-l border-l-2 flex flex-col"
+            :class={'currentStep === ' + props.index + '? "border-l-lightblue" : "border-l-transparent"'}>
+            <Neos.Fusion:Augmenter
+                x-on:click={'currentStep = ' + props.index}
+                :class={'currentStep === ' + props.index + '? "text-lightblue" : "text-darkblue"'}>
+                <Neos.Presentation:Headline
+                    @if={props.inBackend || props.heading}
+                    text={props.heading} tagName="h3" display="title-md"
+                    class="text-balance cursor-pointer duration-300 mb-2"
+                />
+            </Neos.Fusion:Augmenter>
+
+            <div class="step-by-step-highlight-step__content"
+                 x-show={'currentStep === ' + props.index} x-collapse>
+                <Neos.Presentation:Paragraph class="text-pretty">
+                    {props.text}
+                </Neos.Presentation:Paragraph>
+
+                <Sitegeist.Kaleidoscope:Image
+                    @if.hasImage={step.image && step.image.imageSource} {...step.image}
+                    attributes.class="mx-auto md:hidden my-8"
+                />
+            </div>
+        </div>
+    `
+}

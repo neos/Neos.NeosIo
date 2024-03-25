@@ -1,0 +1,75 @@
+prototype(Neos.Presentation:StepByStepHighlight) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = 'Step-by-Step Highlight'
+        props {
+            heading = 'Tools that transform your digital journey'
+            steps = Neos.Fusion:DataStructure {
+                1 = Neos.Fusion:DataStructure {
+                    heading = 'Enterprise Features like Role Management and Media Center'
+                    text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.'
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://picsum.photos/512/512?1'
+                    }
+                }
+                2 = Neos.Fusion:DataStructure {
+                    heading = 'What you see, is what you get. Our True Inline Editor.'
+                    text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://picsum.photos/512/360?2'
+                    }
+                }
+                3 = Neos.Fusion:DataStructure {
+                    heading = 'Multi-language and Multi-site Functionality'
+                    text = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.'
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://picsum.photos/360/512?3'
+                    }
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        inBackend = PropTypes:Bool
+        heading = PropTypes:String
+        steps = PropTypes:Array {
+            type = PropTypes:FromPrototype {
+                prototype = Neos.Presentation:StepByStepHighlight.Step
+            }
+        }
+    }
+
+    inBackend = false
+    heading = ''
+    steps = ${[]}
+
+    renderer = afx`
+        <Neos.Presentation:Spacing
+            size x y class="step-by-step-highlight grid md:grid-cols-2 gap-8"
+            attributes.x-data="{ currentStep: 0 }">
+            <div class="step-by-step-highlight__images hidden md:grid">
+                <Neos.Fusion:Loop items={props.steps} itemName="step">
+                    <Sitegeist.Kaleidoscope:Image
+                        @if.hasImage={step.image && step.image.imageSource} {...step.image}
+                        attributes.x-show={'currentStep === ' + iterator.index} attributes.x-transition
+                        attributes.class="col-start-1 row-start-1"
+                    />
+                </Neos.Fusion:Loop>
+            </div>
+
+            <div class="step-by-step-highlight__content">
+                <Neos.Presentation:Headline
+                    @if={props.inBackend || props.heading} text={props.heading}
+                    display="headline-lg" class="text-darkblue text-balance mb-8"
+                />
+
+                <div class="step-by-step-highlight__steps border-l border-l-2 border-l-gray-light">
+                    <Neos.Fusion:Loop items={props.steps} itemName="step">
+                        <Neos.Presentation:StepByStepHighlight.Step {...step} index={iterator.index} />
+                    </Neos.Fusion:Loop>
+                </div>
+            </div>
+        </Neos.Presentation:Spacing>
+    `
+}
