@@ -31,13 +31,13 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
             <a href={props.link} class="w-full h-full cursor-pointer">
                 <Neos.Presentation:Background
                     variant={private.background}
-                    class="w-full h-[fit-content] xs:h-full grid grid-cols-1 xs:grid-rows-1">
+                    class="w-full h-[fit-content] xs:h-full grid grid-cols-1 xs:grid-rows-1 overflow-hidden">
                     <Sitegeist.Kaleidoscope:Image
                         @if.hasImage={props.image && props.image.imageSource}
-                        {...props.image} class="xs:col-start-1 xs:row-start-1 inset-0 w-full h-full object-cover"
+                        {...props.image} class="xs:col-start-1 xs:row-start-1 inset-0 w-full h-full object-cover group-hover:scale-105 will-change-transform duration-700"
                     />
 
-                    <div class="xs:col-start-1 xs:row-start-1 flex flex-col justify-between bg-black bg-opacity-25">
+                    <div class="xs:col-start-1 xs:row-start-1 flex flex-col justify-between bg-black bg-opacity-25 z-10">
                         <div class="grid p-8 pb-4">
                             <h2 class={AtomicFusion.classNames('text-white text-2xl font-bold text-balance', {
                                 'sm:text-4xl': props.isFeature
