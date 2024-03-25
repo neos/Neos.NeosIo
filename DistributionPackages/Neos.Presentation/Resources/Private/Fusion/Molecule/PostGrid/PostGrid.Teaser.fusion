@@ -24,7 +24,7 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
     }
 
     renderer = afx`
-        <li class={AtomicFusion.classNames('n-post-grid__teaser', {
+        <li class={AtomicFusion.classNames('n-post-grid__teaser group', {
             'aspect-[4/3] md:aspect-video xl:aspect-[4/3] md:col-span-2 md:row-span-2': props.isFeature,
             'aspect-[7/5]': !props.isFeature
         })}>
