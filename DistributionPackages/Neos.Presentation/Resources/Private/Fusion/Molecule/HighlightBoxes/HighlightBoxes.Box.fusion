@@ -30,11 +30,12 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
             tagName={!props.inBackend && props.link ? 'a' : 'div'}
             attributes.href={props.link ? props.link : null}
             attributes.class={['highlight-boxes-box relative flex flex-col bg-gray-light',
-                props.link && 'group'
+                props.link && 'group',
+                (props.image && props.image.imageSource) && ''
             ]}>
             <div @if={props.displayType == 'icon'}
-                 class="highlight-boxes-box__icon w-8 h-8 aspect-square rounded-full mx-4 mt-4 bg-lightblue/70 text-white">
-                <i class={props.icon}></i>
+                 class="highlight-boxes-box__icon w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-lightblue/70 text-white grid place-content-center">
+                <Neos.Presentation:Icon name={props.icon} class="w-6 h-6" />
             </div>
 
             <div @if.isIcon={props.displayType == 'image-header' || props.displayType == 'circle-image'}
@@ -69,7 +70,7 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
                 />
 
                 <div @if={props.link} class="mt-4 flex gap-2 text-darkblue self-end">
-                    <div class="flex-1">{props.linkText}</div>
+                    <div class="flex-1 text-balance">{props.linkText}</div>
                     <Neos.Presentation:Atom.AnimatedArrow />
                 </div>
             </div>
