@@ -8,6 +8,7 @@ prototype(Neos.Presentation:Module.TextAndImage) < prototype(Neos.Fusion:Compone
             image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
                 uri = 'https://source.unsplash.com/random/800x600'
             }
+            button.text = 'More information'
         }
     }
 
@@ -21,18 +22,26 @@ prototype(Neos.Presentation:Module.TextAndImage) < prototype(Neos.Fusion:Compone
         description = PropTypes:FromPrototype {
             prototypeName = "Neos.Presentation:Paragraph"
         }
+        imageRight = PropTypes:Bool
+        hasButton = PropTypes:Bool
     }
+
+    imageRight = false
+    hasButton = false
 
     renderer = afx`
         <Neos.Presentation:Spacing size y>
             <div class="grid md:grid-cols-2 items-center">
-                <Sitegeist.Kaleidoscope:Image {...props.image} />
+                <Sitegeist.Kaleidoscope:Image {...props.image} class={[props.imageRight ? 'order-last' : null]} />
                 <Neos.Presentation:Spacing x y="small">
                     <Neos.Presentation:Spacing y="small">
                         <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
                     </Neos.Presentation:Spacing>
                     <Neos.Presentation:Spacing y="small">
-                        <Neos.Presentation:Paragraph {...props.description} displafy="lead" />
+                        <Neos.Presentation:Paragraph {...props.description} display="lead" />
+                    </Neos.Presentation:Spacing>
+                    <Neos.Presentation:Spacing y="small" @if={props.hasButton}>
+                        <Neos.Presentation:Button @if={props.hasButton} {...props.button}/>
                     </Neos.Presentation:Spacing>
                 </Neos.Presentation:Spacing>
             </div>
