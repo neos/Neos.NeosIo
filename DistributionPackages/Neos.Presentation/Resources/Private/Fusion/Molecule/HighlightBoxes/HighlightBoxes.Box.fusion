@@ -16,9 +16,7 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
 
     inBackend = false
     displayType = 'icon'
-    image = Neos.Fusion:DataStructure {
-        imageSource = null
-    }
+    image = null
     tag = ''
     heading = ''
     description = ''
@@ -30,8 +28,7 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
             tagName={!props.inBackend && props.link ? 'a' : 'div'}
             attributes.href={props.link ? props.link : null}
             attributes.class={['highlight-boxes-box relative flex flex-col bg-gray-light',
-                props.link && 'group',
-                (props.image && props.image.imageSource) && ''
+                props.link && 'group'
             ]}>
             <div @if={props.displayType == 'icon'}
                  class="highlight-boxes-box__icon w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-lightblue/70 text-white grid place-content-center">

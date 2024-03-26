@@ -57,6 +57,7 @@ prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
         cols = ${PropTypes.oneOf(['2', '3', '4'])}
         displayType = ${PropTypes.oneOf(['icon', 'circle-image', 'image-header'])}
         heading = PropTypes:String
+        hasBackgroundImage = PropTypes:Bool
         image = PropTypes:DataStructure {
             imageSource = PropTypes:InstanceOf {
                 type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
@@ -72,16 +73,19 @@ prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
     inBackend = false
     cols = '2'
     displayType = 'icon'
+    hasBackgroundImage = false
     image = null
     heading = ''
     boxes = ${[]}
 
     @private {
+        bg = ${'background-image: url(' + props.image.imageSource + ');'}
         cols = ${String.toInteger(props.cols)}
     }
 
     renderer = afx`
-        <Neos.Presentation:Spacing size x y class="highlight-boxes">
+        <Neos.Presentation:Spacing size x y class="highlight-boxes py-8" attributes.style={private.bg}
+                                   attributes.style.@if.hasBackgroundImage={props.hasBackgroundImage}>
             <Neos.Presentation:Headline
                 @if={props.inBackend || props.heading} text={props.heading}
                 display="headline-lg" class="text-darkblue text-balance mb-16"
