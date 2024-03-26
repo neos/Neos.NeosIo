@@ -1,0 +1,100 @@
+prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = 'Highlight Boxes'
+        props {
+            cols = '3'
+            heading = 'Tools that transform your digital journey'
+            image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                uri = 'https://source.unsplash.com/random/1920x1080?1'
+            }
+            boxes = Neos.Fusion:DataStructure {
+                1 = Neos.Fusion:DataStructure {
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/320x180?2'
+                    }
+                    icon = 'fas fa-users'
+                    tag = 'Enterprise'
+                    heading = 'Enterprise Features like Role Management and Media Center'
+                    description = 'Manage your team and media assets with ease. Our role management system allows you to define roles and permissions for your team members.'
+                    link = '#'
+                    linkText = 'Learn more about roles and permissions'
+                }
+                2 = Neos.Fusion:DataStructure {
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/320x180?3'
+                    }
+                    icon = 'fas fa-pencil-alt'
+                    tag = 'Editor'
+                    heading = 'What you see, is what you get. Our True Inline Editor.'
+                    description = 'Our True Inline Editor allows you to edit your content directly on the page. No more guessing how your content will look like.'
+                }
+                3 = Neos.Fusion:DataStructure {
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/320x180?4'
+                    }
+                    icon = 'fas fa-cogs'
+                    heading = 'Customize your content with our powerful NodeTypes.'
+                    link = '#'
+                    linkText = 'Learn more about content elements'
+                }
+                4 = Neos.Fusion:DataStructure {
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://source.unsplash.com/random/320x180?5'
+                    }
+                    icon = 'fas fa-chart-line'
+                    heading = 'Track your success with our Analytics Dashboard.'
+                    description = 'Our Analytics Dashboard gives you insights into your content performance. Track your success and optimize your content.'
+                    link = '#'
+                    linkText = 'Learn more about analytics'
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        inBackend = PropTypes:Bool
+        cols = ${PropTypes.oneOf(['2', '3', '4'])}
+        displayType = ${PropTypes.oneOf(['icon', 'circle-image', 'image-header'])}
+        heading = PropTypes:String
+        image = PropTypes:DataStructure {
+            imageSource = PropTypes:InstanceOf {
+                type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
+            }
+        }
+        boxes = PropTypes:Array {
+            type = PropTypes:FromPrototype {
+                prototypeName = 'Neos.Presentation:HighlightBoxes.Box'
+            }
+        }
+    }
+
+    inBackend = false
+    cols = '2'
+    displayType = 'icon'
+    image = null
+    heading = ''
+    boxes = ${[]}
+
+    @private {
+        cols = ${String.toInteger(props.cols)}
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Spacing size x y class="highlight-boxes">
+            <Neos.Presentation:Headline
+                @if={props.inBackend || props.heading} text={props.heading}
+                display="headline-lg" class="text-darkblue text-balance mb-16"
+            />
+
+            <div class={["highlight-boxes__boxes grid sm:grid-cols-2 gap-8",
+                private.cols == 3 && 'md:grid-cols-3',
+                private.cols == 4 && 'lg:grid-cols-4'
+            ]}>
+                <Neos.Fusion:Loop items={props.boxes} itemName="box">
+                    <Neos.Presentation:HighlightBoxes.Box {...box} displayType={props.displayType} />
+                </Neos.Fusion:Loop>
+            </div>
+        </Neos.Presentation:Spacing>
+    `
+}

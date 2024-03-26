@@ -1,0 +1,78 @@
+prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Component) {
+
+    @propTypes {
+        inBackend = PropTypes:Bool
+        image = PropTypes:DataStructure {
+            imageSource = PropTypes:InstanceOf {
+                type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
+            }
+        }
+        tag = PropTypes:String
+        heading = PropTypes:String
+        description = PropTypes:String
+        link = PropTypes:String
+        linkLabel = PropTypes:String
+    }
+
+    inBackend = false
+    displayType = 'icon'
+    image = Neos.Fusion:DataStructure {
+        imageSource = null
+    }
+    tag = ''
+    heading = ''
+    description = ''
+    link = ''
+    linkLabel = ''
+
+    renderer = afx`
+        <Neos.Fusion:Tag
+            tagName={!props.inBackend && props.link ? 'a' : 'div'}
+            attributes.href={props.link ? props.link : null}
+            attributes.class={['highlight-boxes-box relative flex flex-col bg-gray-light',
+                props.link && 'group'
+            ]}>
+            <div @if={props.displayType == 'icon'}
+                 class="highlight-boxes-box__icon w-8 h-8 aspect-square rounded-full mx-4 mt-4 bg-lightblue/70 text-white">
+                <i class={props.icon}></i>
+            </div>
+
+            <div @if.isIcon={props.displayType == 'image-header' || props.displayType == 'circle-image'}
+                 class={['highlight-boxes-box__image overflow-hidden',
+                    props.displayType == 'image-header' && 'aspect-video',
+                    props.displayType == 'circle-image' && 'w-32 h-32 aspect-square rounded-full overflow-hidden self-center mx-4 mt-8 mb-2'
+                 ]}>
+                <Sitegeist.Kaleidoscope:Image
+                    @if.hasImage={props.image && props.image.imageSource} {...props.image}
+                    class="w-full h-full object-cover group-hover:scale-110 will-change-transform duration-700"
+                />
+            </div>
+
+            <div class="highlight-boxes-box__content flex-1 grid gap-2 p-4">
+                <div @if.hasTag={(props.displayType != 'icon') && (props.inBackend || props.tag)}
+                     class={['text-xs bg-lightblue/70 text-white px-2 py-1 rounded-full',
+                        props.displayType == 'image-header' && 'absolute top-4 left-4',
+                        props.displayType == 'circle-image' && 'self-start justify-self-start'
+                     ]}>
+                    {props.tag}
+                </div>
+
+                <Neos.Presentation:Headline
+                    @if={props.inBackend || props.heading}
+                    tagName="h3" display="title-md" text={props.heading}
+                    class="text-darkblue group-hover:text-lightblue text-balance duration-300"
+                />
+
+                <Neos.Presentation:Paragraph
+                    @if.hasDescription={(props.displayType != 'image-header') && (props.inBackend || props.description)}
+                    text={props.description} class="text-pretty"
+                />
+
+                <div @if={props.link} class="mt-4 flex gap-2 text-darkblue self-end">
+                    <div class="flex-1">{props.linkText}</div>
+                    <Neos.Presentation:Atom.AnimatedArrow />
+                </div>
+            </div>
+        </Neos.Fusion:Tag>
+    `
+}
