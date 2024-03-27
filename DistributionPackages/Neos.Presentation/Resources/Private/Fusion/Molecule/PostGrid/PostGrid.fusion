@@ -68,13 +68,8 @@ prototype(Neos.Presentation:PostGrid) < prototype(Neos.Fusion:Component) {
         }
     }
 
-    headline = Neos.Fusion:DataStructure {
-        text = ''
-    }
-    posts = ${[]}
-
     renderer = afx`
-        <Neos.Presentation:Spacing size x y attributes.class="n-post-grid">
+        <Neos.Presentation:Spacing size x y>
             <Neos.Presentation:Spacing y>
                 <Neos.Presentation:Headline {...props.headline} display="headline-lg" class="text-lightblue" />
             </Neos.Presentation:Spacing>
