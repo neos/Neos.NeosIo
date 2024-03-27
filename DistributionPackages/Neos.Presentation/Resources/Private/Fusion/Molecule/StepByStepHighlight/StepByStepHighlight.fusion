@@ -41,14 +41,12 @@ prototype(Neos.Presentation:StepByStepHighlight) < prototype(Neos.Fusion:Compone
     }
 
     inBackend = false
-    heading = ''
-    steps = ${[]}
 
     renderer = afx`
         <Neos.Presentation:Spacing
-            size x y class="step-by-step-highlight grid md:grid-cols-2 gap-8"
+            size x y class="grid md:grid-cols-2 gap-8"
             attributes.x-data="{ currentStep: 0 }">
-            <div class="step-by-step-highlight__images hidden md:grid">
+            <div class="hidden md:grid">
                 <Neos.Fusion:Loop items={props.steps} itemName="step">
                     <Sitegeist.Kaleidoscope:Image
                         @if.hasImage={step.image && step.image.imageSource} {...step.image}
@@ -58,13 +56,13 @@ prototype(Neos.Presentation:StepByStepHighlight) < prototype(Neos.Fusion:Compone
                 </Neos.Fusion:Loop>
             </div>
 
-            <div class="step-by-step-highlight__content">
+            <div>
                 <Neos.Presentation:Headline
                     @if={props.inBackend || props.heading} text={props.heading}
                     display="headline-lg" class="text-darkblue text-balance mb-8"
                 />
 
-                <div class="step-by-step-highlight__steps border-l border-l-2 border-l-gray-light">
+                <div class="border-l border-l-2 border-l-gray-light">
                     <Neos.Fusion:Loop items={props.steps} itemName="step">
                         <Neos.Presentation:StepByStepHighlight.Step {...step} index={iterator.index} />
                     </Neos.Fusion:Loop>

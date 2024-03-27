@@ -12,13 +12,10 @@ prototype(Neos.Presentation:StepByStepHighlight.Step) < prototype(Neos.Fusion:Co
 
     inBackend = false
     index = 0
-    heading = ''
-    text = ''
-    image = null
 
     renderer = afx`
         <div
-            class="step-by-step-highlight-step__box-wrapper max-w-full px-4 py-1 broder-l border-l-2 flex flex-col"
+            class="max-w-full px-4 py-1 broder-l border-l-2 flex flex-col"
             :class={'currentStep === ' + props.index + '? "border-l-lightblue" : "border-l-transparent"'}>
             <Neos.Fusion:Augmenter
                 x-on:click={'currentStep = ' + props.index}
@@ -30,8 +27,7 @@ prototype(Neos.Presentation:StepByStepHighlight.Step) < prototype(Neos.Fusion:Co
                 />
             </Neos.Fusion:Augmenter>
 
-            <div class="step-by-step-highlight-step__content"
-                 x-show={'currentStep === ' + props.index} x-collapse>
+            <div x-show={'currentStep === ' + props.index} x-collapse>
                 <Neos.Presentation:Paragraph class="text-pretty mb-2">
                     {props.text}
                 </Neos.Presentation:Paragraph>
