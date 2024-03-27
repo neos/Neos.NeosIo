@@ -40,19 +40,26 @@ prototype(Neos.Presentation:Carousel) < prototype(Neos.Fusion:Component) {
         }
     }
 
-    headline = null
-    cards = null
+    @private {
+        cards = Neos.Fusion:Map {
+            items = ${props.cards}
+            itemRenderer = afx`
+                <Neos.Presentation:Molecule.Carousel.Card {...item} />
+            `
+        }
+    }
+
+    options = Neos.Fusion:DataStructure {
+        perPage = 3
+        perMove = 1
+    }
 
     renderer = afx`
         <div class="grid grid-cols-4 gap-4">
             <div class="flex flex-col col-span-1 p-8 rounded-xl shadow-lg h-full">
                 <Neos.Presentation:Headline text={props.headline} display="headline-lg"/>
             </div>
-            <ul class="flex flex-no-wrap col-span-3 gap-4">
-                <Neos.Fusion:Loop items={props.cards} itemName="card">
-                    <Neos.Presentation:Molecule.Carousel.Card {...card}/>
-                </Neos.Fusion:Loop>
-            </ul>
+            <Neos.Presentation:Slider {...props} items={private.cards} class={"col-span-3"} />
         </div>
     `
 }
