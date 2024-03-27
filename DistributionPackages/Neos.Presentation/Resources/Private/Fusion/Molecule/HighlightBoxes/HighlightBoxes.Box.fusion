@@ -2,6 +2,7 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
 
     @propTypes {
         inBackend = PropTypes:Bool
+        displayType = ${PropTypes.oneOf(['icon', 'imageCircle', 'imageHeader'])}
         image = PropTypes:DataStructure {
             imageSource = PropTypes:InstanceOf {
                 type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
@@ -12,46 +13,46 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
         description = PropTypes:String
         link = PropTypes:String
         linkLabel = PropTypes:String
+        linkTargetBlank = PropTypes:Bool
     }
 
     inBackend = false
     displayType = 'icon'
-    image = null
-    tag = ''
-    heading = ''
-    description = ''
-    link = ''
-    linkLabel = ''
+    linkTargetBlank = false
+
+    @private {
+        imageClass = Neos.Fusion:Match {
+            @subject = ${props.displayType}
+            @default = ''
+            'imageHeader' = 'aspect-video'
+            'imageCircle' = 'w-32 h-32 aspect-square rounded-full overflow-hidden self-center mx-4 mt-8 mb-2'
+        }
+        tagClass = Neos.Fusion:Match {
+            @subject = ${props.displayType}
+            @default = ''
+            'imageHeader' = 'absolute top-4 left-4'
+            'imageCircle' = 'self-start justify-self-start'
+        }
+    }
 
     renderer = afx`
-        <Neos.Fusion:Tag
-            tagName={!props.inBackend && props.link ? 'a' : 'div'}
-            attributes.href={props.link ? props.link : null}
-            attributes.class={['highlight-boxes-box relative flex flex-col bg-gray-light',
-                props.link && 'group'
-            ]}>
-            <div @if={props.displayType == 'icon'}
-                 class="highlight-boxes-box__icon w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-lightblue/70 text-white grid place-content-center">
+        <div class={AtomicFusion.classNames('relative flex flex-col bg-gray-light', { 'group': props.link })}>
+            <figure @if={props.displayType == 'icon'}
+                    class="w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-lightblue/70 text-white grid place-content-center">
                 <Neos.Presentation:Icon name={props.icon} class="w-6 h-6" />
-            </div>
+            </figure>
 
-            <div @if.isIcon={props.displayType == 'image-header' || props.displayType == 'circle-image'}
-                 class={['highlight-boxes-box__image overflow-hidden',
-                    props.displayType == 'image-header' && 'aspect-video',
-                    props.displayType == 'circle-image' && 'w-32 h-32 aspect-square rounded-full overflow-hidden self-center mx-4 mt-8 mb-2'
-                 ]}>
+            <figure @if.isIcon={props.displayType == 'imageHeader' || props.displayType == 'imageCircle'}
+                    class={AtomicFusion.classNames('overflow-hidden', private.imageClass)}>
                 <Sitegeist.Kaleidoscope:Image
                     @if.hasImage={props.image && props.image.imageSource} {...props.image}
                     class="w-full h-full object-cover group-hover:scale-110 will-change-transform duration-700"
                 />
-            </div>
+            </figure>
 
-            <div class="highlight-boxes-box__content flex-1 grid gap-2 p-4">
+            <div class="flex-1 grid gap-2 p-4">
                 <div @if.hasTag={(props.displayType != 'icon') && (props.inBackend || props.tag)}
-                     class={['text-xs bg-lightblue/70 text-white px-2 py-1 rounded-full',
-                        props.displayType == 'image-header' && 'absolute top-4 left-4',
-                        props.displayType == 'circle-image' && 'self-start justify-self-start'
-                     ]}>
+                     class={AtomicFusion.classNames('text-xs bg-lightblue/70 text-white px-2 py-1 rounded-full', private.tagClass)}>
                     {props.tag}
                 </div>
 
@@ -62,15 +63,19 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
                 />
 
                 <Neos.Presentation:Paragraph
-                    @if.hasDescription={(props.displayType != 'image-header') && (props.inBackend || props.description)}
+                    @if.hasDescription={(props.displayType != 'imageHeader') && (props.inBackend || props.description)}
                     text={props.description} class="text-pretty"
                 />
 
-                <div @if={props.link} class="mt-4 flex gap-2 text-darkblue self-end">
-                    <div class="flex-1 text-balance">{props.linkText}</div>
+                <a @if={!inBackend && props.link || props.link && props.linkLabel}
+                   href={props.link}
+                   target={props.linkTargetBlank ? '_blank' : '_self'}
+                   class="mt-4 flex gap-2 text-darkblue self-end">
+                    <span class="absolute inset-0 pointer-events-auto"></span>
+                    <div class="flex-1 text-balance">{props.linkLabel}</div>
                     <Neos.Presentation:Atom.AnimatedArrow />
-                </div>
+                </a>
             </div>
-        </Neos.Fusion:Tag>
+        </div>
     `
 }
