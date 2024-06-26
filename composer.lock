@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6edc2d66703d49dcd949735b5158e1f4",
+    "content-hash": "64860cce7a8c42d9060b0a054470b625",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -7235,6 +7235,7 @@
                 "neos/media": "^8.3",
                 "neos/neos": "^8.3",
                 "neos/neos-ui": "^8.3",
+                "neos/neosio-blog": "*",
                 "neos/neosio-marketplace": "*",
                 "neos/neosio-serviceofferings": "*",
                 "neos/nodetypes": "^8.3",
@@ -7355,6 +7356,32 @@
                 "GPL-3.0+"
             ],
             "description": "neos.io site package",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "neos/neosio-blog",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "./DistributionPackages/Neos.NeosIo.Blog"
+            },
+            "require": {
+                "neos/neos": "*"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "neos": {
+                    "package-key": "Neos.NeosIo.Blog"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Neos\\NeosIo\\Blog\\": "Classes/"
+                }
+            },
+            "description": "Blog for neos.io",
             "transport-options": {
                 "relative": true
             }
@@ -14464,12 +14491,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "59b0da5b0c3aea934f731036370e1dcb7c56da19"
+                "reference": "27714b56f04815b654c3805502ab77207505ac19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/59b0da5b0c3aea934f731036370e1dcb7c56da19",
-                "reference": "59b0da5b0c3aea934f731036370e1dcb7c56da19",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/27714b56f04815b654c3805502ab77207505ac19",
+                "reference": "27714b56f04815b654c3805502ab77207505ac19",
                 "shasum": ""
             },
             "conflict": {
@@ -14860,7 +14887,7 @@
                 "october/cms": "<1.0.469|==1.0.469|==1.0.471|==1.1.1",
                 "october/october": "<=3.4.4",
                 "october/rain": "<1.0.472|>=1.1,<1.1.2",
-                "october/system": "<1.0.476|>=1.1,<1.1.12|>=2,<2.2.34|>=3,<3.5.2",
+                "october/system": "<1.0.476|>=1.1,<1.1.12|>=2,<2.2.34|>=3,<3.5.15",
                 "omeka/omeka-s": "<4.0.3",
                 "onelogin/php-saml": "<2.10.4",
                 "oneup/uploader-bundle": ">=1,<1.9.3|>=2,<2.1.5",
@@ -15261,7 +15288,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-06-25T18:06:06+00:00"
+            "time": "2024-06-26T15:05:17+00:00"
         },
         {
             "name": "shel/nodetypes-analyzer",
@@ -15405,6 +15432,7 @@
         "neos/neosio-marketplace": 20,
         "neos/neosio-casestudies": 20,
         "neos/neosio-release-plan": 20,
+        "neos/neosio-blog": 20,
         "flowpack/media-ui": 10,
         "ttree/outofbandrendering": 20,
         "roave/security-advisories": 20
