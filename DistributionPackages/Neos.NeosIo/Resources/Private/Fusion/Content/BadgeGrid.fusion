@@ -1,9 +1,7 @@
-prototype(Neos.NeosIo:BadgeGrid) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/BadgeGrid.html'
-
-    attributes.class = 'g'
-
-    badges = Neos.Neos:ContentCollection {
-        nodePath = 'badges'
-    }
+prototype(Neos.NeosIo:BadgeGrid) < prototype(Neos.Neos:ContentComponent) {
+    renderer = afx`
+        <div class="badge-grid g">
+            <Neos.Neos:ContentCollection />
+        </div>
+    `
 }
