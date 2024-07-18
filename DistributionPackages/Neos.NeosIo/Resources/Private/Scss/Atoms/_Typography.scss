@@ -3,7 +3,11 @@
  */
 
 p {
-	margin: 0 0 rs($basic-spacing);
+  margin: 0;
+
+  & + * {
+    margin-top: rs($basic-spacing);
+  }
 }
 
 b,
