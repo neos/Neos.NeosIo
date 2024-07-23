@@ -1,0 +1,60 @@
+prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) {
+
+    @propTypes {
+        title = PropTypes:String
+        teaser = PropTypes:String
+        date = PropTypes:String
+        url = PropTypes:String
+        isFeature = PropTypes:Bool
+        image = PropTypes:FromPrototype {
+            prototypeName = Sitegeist.Kaleidoscope:Image
+        }
+    }
+
+    isFeature = false
+
+    @private {
+        accentColors = ${['purple', 'blue', 'lightblue', 'green', 'yellow', 'orange', 'red']}
+        background = ${props.isFeature ? 'accent-' + Array.random(private.accentColors) : 'gradient'}
+    }
+
+    renderer = afx`
+        <li class={AtomicFusion.classNames('group w-full h-full relative', {
+            'aspect-[4/3] md:aspect-video xl:aspect-[4/3] md:col-span-2 md:row-span-2': props.isFeature,
+            'aspect-[7/5]': !props.isFeature
+        })}>
+            <Neos.Presentation:Background
+                variant={private.background}
+                class="w-full h-[fit-content] xs:h-full grid grid-cols-1 xs:grid-rows-1 overflow-hidden">
+                <Sitegeist.Kaleidoscope:Image
+                    @if.hasImage={props.image && props.image.imageSource}
+                    {...props.image}
+                    class="xs:col-start-1 xs:row-start-1 inset-0 w-full h-full object-cover group-hover:scale-105 duration-700"
+                />
+
+                <div class="xs:col-start-1 xs:row-start-1 flex flex-col justify-between bg-black bg-opacity-25 z-10">
+                    <div class="grid p-8 pb-4">
+                        <h2 class={AtomicFusion.classNames('text-white text-2xl font-bold text-balance', {
+                            'sm:text-4xl': props.isFeature
+                        })}>{props.title}</h2>
+
+                        <p class="text-white text-sm mb-8">{props.date}</p>
+
+                        <p class={AtomicFusion.classNames('max-w-md text-white text-sm text-pretty xs:line-clamp-3 sm:line-clamp-2', {
+                            'sm:text-md md:line-clamp-6': props.isFeature
+                        })}>{props.teaser}</p>
+                    </div>
+
+                    <a href={props.url}
+                       class={AtomicFusion.classNames('flex items-center gap-2 p-8 pt-4', {
+                            'justify-end': props.isFeature
+                    })}>
+                        <span class="absolute inset-0 pointer-events-auto"></span>
+                        <span class="text-white text-sm">Read more</span>
+                        <Neos.Presentation:Atom.AnimatedArrow class="w-4 fill-white" />
+                    </a>
+                </div>
+            </Neos.Presentation:Background>
+        </li>
+    `
+}
