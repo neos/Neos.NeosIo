@@ -13,46 +13,45 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
         description = PropTypes:String
         link = PropTypes:String
         linkLabel = PropTypes:String
-        linkTargetBlank = PropTypes:Bool
     }
 
     inBackend = false
     displayType = 'icon'
-    linkTargetBlank = false
+    imageWidth = 576
 
     @private {
-        imageClass = Neos.Fusion:Match {
-            @subject = ${props.displayType}
-            @default = ''
-            'imageHeader' = 'aspect-video'
-            'imageCircle' = 'w-32 h-32 aspect-square rounded-full overflow-hidden self-center mx-4 mt-8 mb-2'
-        }
-        tagClass = Neos.Fusion:Match {
-            @subject = ${props.displayType}
-            @default = ''
-            'imageHeader' = 'absolute top-4 left-4'
-            'imageCircle' = 'self-start justify-self-start'
-        }
+        isIcon = ${props.displayType == 'icon'}
+        isImageHeader = ${props.displayType == 'imageHeader'}
+        imageRatio = ${private.isImageHeader ? 16 / 9 : 1}
     }
 
     renderer = afx`
-        <div class={AtomicFusion.classNames('relative flex flex-col bg-gray-light', { 'group': props.link })}>
-            <figure @if={props.displayType == 'icon'}
-                    class="w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-lightblue/70 text-white grid place-content-center">
+        <div class={Tailwind.merge('relative flex flex-col bg-gray-light', { 'group': !!props.link })}>
+            <figure
+                @if={private.isIcon}
+                class="w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-lightblue/70 text-white grid place-content-center"
+            >
                 <Neos.Presentation:Icon name={props.icon} class="w-6 h-6" />
             </figure>
 
-            <figure @if.isIcon={props.displayType == 'imageHeader' || props.displayType == 'imageCircle'}
-                    class={AtomicFusion.classNames('overflow-hidden', private.imageClass)}>
+            <figure
+                @if={!private.isIcon}
+                class={Tailwind.merge('overflow-hidden', private.isImageHeader ? 'aspect-video' : 'size-32 aspect-square rounded-full overflow-hidden self-center mx-4 mt-8 mb-2')}
+            >
                 <Sitegeist.Kaleidoscope:Image
-                    @if.hasImage={props.image && props.image.imageSource} {...props.image}
-                    class="w-full h-full object-cover group-hover:scale-110 will-change-transform duration-700"
+                    @if={props.image && props.image.imageSource} {...props.image}
+                    class="size-full object-cover will-change-transform duration-700 group-hover:scale-110"
+                    srcset="1x,2x"
+                    width={props.imageWidth}
+                    height={Math.round(props.imageWidth / private.imageRatio)}
                 />
             </figure>
 
             <div class="flex-1 grid gap-2 p-4">
-                <div @if.hasTag={(props.displayType != 'icon') && (props.inBackend || props.tag)}
-                     class={AtomicFusion.classNames('text-xs bg-lightblue/70 text-white px-2 py-1 rounded-full', private.tagClass)}>
+                <div
+                    @if={!private.isIcon && (props.inBackend || props.tag)}
+                    class={Tailwind.merge('text-xs bg-lightblue/70 text-white px-2 py-1 rounded-full', private.isImageHeader ? 'absolute top-4 left-4' : 'self-start justify-self-start')}
+                >
                     {props.tag}
                 </div>
 
@@ -63,16 +62,15 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
                 />
 
                 <Neos.Presentation:Paragraph
-                    @if.hasDescription={(props.displayType != 'imageHeader') && (props.inBackend || props.description)}
+                    @if={!private.isImageHeader && (props.inBackend || props.description)}
                     text={props.description} class="text-pretty"
                 />
 
-                <a @if={!inBackend && props.link || props.link && props.linkLabel}
+                <a @if={props.link && props.linkLabel}
                    href={props.link}
-                   target={props.linkTargetBlank ? '_blank' : '_self'}
                    class="mt-4 flex gap-2 text-darkblue self-end">
                     <span class="absolute inset-0 pointer-events-auto"></span>
-                    <div class="flex-1 text-balance">{props.linkLabel}</div>
+                    <span class="flex-1 text-balance">{props.linkLabel}</span>
                     <Neos.Presentation:Atom.AnimatedArrow />
                 </a>
             </div>
