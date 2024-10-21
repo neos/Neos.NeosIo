@@ -16,10 +16,11 @@ prototype(Neos.Presentation:StepByStepHighlight.Step) < prototype(Neos.Fusion:Co
     renderer = afx`
         <div
             class="max-w-full px-4 py-1 broder-l border-l-2 flex flex-col"
-            :class={'currentStep === ' + props.index + '? "border-l-lightblue" : "border-l-transparent"'}>
+            :class={"currentStep == " + props.index + "?'border-l-lightblue':'border-l-gray-light'"}
+        >
             <Neos.Fusion:Augmenter
                 x-on:click={'currentStep = ' + props.index}
-                :class={'currentStep === ' + props.index + '? "text-lightblue" : "text-darkblue"'}>
+                :class={"currentStep == " + props.index + "?'text-lightblue':'text-darkblue'"}>
                 <Neos.Presentation:Headline
                     @if={props.inBackend || props.heading}
                     text={props.heading} tagName="h3" display="title-md"
@@ -27,15 +28,14 @@ prototype(Neos.Presentation:StepByStepHighlight.Step) < prototype(Neos.Fusion:Co
                 />
             </Neos.Fusion:Augmenter>
 
-            <div x-show={'currentStep === ' + props.index} x-collapse>
+            <div x-show={'currentStep == ' + props.index} x-collapse :aria-hidden={'currentStep != ' + props.index}>
                 <Neos.Presentation:Paragraph class="text-pretty mb-2">
                     {props.text}
                 </Neos.Presentation:Paragraph>
 
-                <Sitegeist.Kaleidoscope:Image
-                    @if.hasImage={step.image && step.image.imageSource} {...step.image}
-                    attributes.class="mx-auto md:hidden my-8"
-                />
+                <figure @if={step.image && step.image.imageSource} class="my-8 md:hidden">
+                    <Sitegeist.Kaleidoscope:Image {...step.image} attributes.class="mx-auto" />
+                </figure>
             </div>
         </div>
     `

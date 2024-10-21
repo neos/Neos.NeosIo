@@ -44,17 +44,19 @@ prototype(Neos.Presentation:StepByStepHighlight) < prototype(Neos.Fusion:Compone
 
     renderer = afx`
         <Neos.Presentation:Spacing
-            size x y class="grid md:grid-cols-2 gap-8"
-            attributes.x-data="{ currentStep: 0 }">
-            <div class="hidden md:grid">
+            size x y class="step-by-step-highlight grid md:grid-cols-2 gap-8"
+            attributes.x-data="{currentStep:0}"
+        >
+            <figure class="hidden md:grid">
                 <Neos.Fusion:Loop items={props.steps} itemName="step">
                     <Sitegeist.Kaleidoscope:Image
-                        @if.hasImage={step.image && step.image.imageSource} {...step.image}
-                        attributes.x-show={'currentStep === ' + iterator.index} attributes.x-transition
-                        attributes.class="col-start-1 row-start-1"
+                        @if={step.image && step.image.imageSource} {...step.image}
+                        attributes.x-show={'currentStep == ' + iterator.index}
+                        attributes."x-transition.duration.750ms"
+                        attributes.class="col-start-1 row-start-1 w-full"
                     />
                 </Neos.Fusion:Loop>
-            </div>
+            </figure>
 
             <div>
                 <Neos.Presentation:Headline
@@ -62,11 +64,9 @@ prototype(Neos.Presentation:StepByStepHighlight) < prototype(Neos.Fusion:Compone
                     display="headline-lg" class="text-darkblue text-balance mb-8"
                 />
 
-                <div class="border-l border-l-2 border-l-gray-light">
-                    <Neos.Fusion:Loop items={props.steps} itemName="step">
-                        <Neos.Presentation:StepByStepHighlight.Step {...step} index={iterator.index} />
-                    </Neos.Fusion:Loop>
-                </div>
+                <Neos.Fusion:Loop items={props.steps} itemName="step">
+                    <Neos.Presentation:StepByStepHighlight.Step {...step} index={iterator.index} />
+                </Neos.Fusion:Loop>
             </div>
         </Neos.Presentation:Spacing>
     `
