@@ -10,17 +10,17 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
             icons = Neos.Fusion:DataStructure {
                 0 {
                     text = 'Forever Open Source'
-                    iconName = 'heart'
+                    iconName = 'pixel-heart'
                     color = 'lightblue'
                 }
                 1 {
                     text = 'Planned Extensibility'
-                    iconName = 'circle'
+                    iconName = 'pixel-circle'
                     color = 'purple'
                 }
                 2 {
                     text = 'One click publishing'
-                    iconName = 'clock'
+                    iconName = 'pixel-clock'
                     color = 'yellow'
                 }
             }
@@ -47,7 +47,7 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
         <section class="n-stage">
             {props.navSlot}
 
-            <div class="n-stage-icons" @if={props.icons}>
+            <div class="n-stage-icons pointer-events-none" @if={props.icons}>
                 <Neos.Fusion:Loop items={props.icons}>
                     <Neos.Presentation:SquareIcon {...item} />
                 </Neos.Fusion:Loop>

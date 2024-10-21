@@ -86,6 +86,7 @@ module.exports = {
             },
             fontFamily: {
                 sans: ['"Bricolage Grotesque"', ...defaultTheme.fontFamily.sans],
+                'sans-semibold': ['"Bricolage Grotesque Semibold"', ...defaultTheme.fontFamily.sans],
             },
             fontWeight: {
                 inherit: 'inherit',
@@ -105,6 +106,9 @@ module.exports = {
             },
             backgroundImage: {
                 'pattern-pixels': "url('../Assets/Pattern/pattern-pixels.png')",
+            },
+            zIndex: {
+                navigation: 100,
             },
             animation: {
                 'infinite-scroll': 'infinite-scroll 15s linear infinite',
