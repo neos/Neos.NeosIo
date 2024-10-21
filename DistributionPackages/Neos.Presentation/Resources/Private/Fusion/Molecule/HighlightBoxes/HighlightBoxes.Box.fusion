@@ -1,0 +1,81 @@
+prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Component) {
+
+    @propTypes {
+        inBackend = PropTypes:Bool
+        displayType = ${PropTypes.oneOf(['icon', 'imageCircle', 'imageHeader'])}
+        image = PropTypes:DataStructure {
+            imageSource = PropTypes:InstanceOf {
+                type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
+            }
+        }
+        tag = PropTypes:String
+        heading = PropTypes:String
+        description = PropTypes:String
+        link = PropTypes:String
+        linkLabel = PropTypes:String
+        linkTargetBlank = PropTypes:Bool
+    }
+
+    inBackend = false
+    displayType = 'icon'
+    linkTargetBlank = false
+
+    @private {
+        imageClass = Neos.Fusion:Match {
+            @subject = ${props.displayType}
+            @default = ''
+            'imageHeader' = 'aspect-video'
+            'imageCircle' = 'w-32 h-32 aspect-square rounded-full overflow-hidden self-center mx-4 mt-8 mb-2'
+        }
+        tagClass = Neos.Fusion:Match {
+            @subject = ${props.displayType}
+            @default = ''
+            'imageHeader' = 'absolute top-4 left-4'
+            'imageCircle' = 'self-start justify-self-start'
+        }
+    }
+
+    renderer = afx`
+        <div class={AtomicFusion.classNames('relative flex flex-col bg-gray-light', { 'group': props.link })}>
+            <figure @if={props.displayType == 'icon'}
+                    class="w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-lightblue/70 text-white grid place-content-center">
+                <Neos.Presentation:Icon name={props.icon} class="w-6 h-6" />
+            </figure>
+
+            <figure @if.isIcon={props.displayType == 'imageHeader' || props.displayType == 'imageCircle'}
+                    class={AtomicFusion.classNames('overflow-hidden', private.imageClass)}>
+                <Sitegeist.Kaleidoscope:Image
+                    @if.hasImage={props.image && props.image.imageSource} {...props.image}
+                    class="w-full h-full object-cover group-hover:scale-110 will-change-transform duration-700"
+                />
+            </figure>
+
+            <div class="flex-1 grid gap-2 p-4">
+                <div @if.hasTag={(props.displayType != 'icon') && (props.inBackend || props.tag)}
+                     class={AtomicFusion.classNames('text-xs bg-lightblue/70 text-white px-2 py-1 rounded-full', private.tagClass)}>
+                    {props.tag}
+                </div>
+
+                <Neos.Presentation:Headline
+                    @if={props.inBackend || props.heading}
+                    tagName="h3" display="title-md" text={props.heading}
+                    class="text-darkblue group-hover:text-lightblue text-balance duration-300"
+                />
+
+                <Neos.Presentation:Paragraph
+                    @if.hasDescription={(props.displayType != 'imageHeader') && (props.inBackend || props.description)}
+                    text={props.description} class="text-pretty"
+                />
+
+                <a @if={!inBackend && props.link || props.link && props.linkLabel}
+                   href={props.link}
+                   target={props.linkTargetBlank ? '_blank' : '_self'}
+                   class="mt-4 flex gap-2 text-darkblue self-end">
+                    <span class="absolute inset-0 pointer-events-auto"></span>
+                    <div class="flex-1 text-balance">{props.linkLabel}</div>
+                    <Neos.Presentation:Atom.AnimatedArrow />
+                </a>
+            </div>
+        </div>
+    `
+}
