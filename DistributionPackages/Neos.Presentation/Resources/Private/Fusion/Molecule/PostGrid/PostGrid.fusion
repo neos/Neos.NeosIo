@@ -1,0 +1,86 @@
+prototype(Neos.Presentation:PostGrid) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Post Grid"
+        description = "A grid of posts with a headline. The posts are displayed as cards with an image, a title, a date, a teaser and a link to the full post and can be featured with a highlighted background color."
+        props {
+            headline.text = 'Blog'
+            posts = Neos.Fusion:DataStructure {
+                0 {
+                    title = 'First post example title'
+                    teaser = 'This is a teaser for the first post example. It should be a short text that gives a quick overview of the post. It should be a short text that gives a quick overview of the post. This is more text to show the ellipsis on the teaser. It goes on and on and then there is even more text until it finally ends right here and right now.'
+                    date = '01.06.2023'
+                    url = '#'
+                    isFeature = true
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://picsum.photos/1128/640?1'
+                    }
+                }
+                1 {
+                    title = 'Second post example title'
+                    teaser = 'This is a teaser for the second post example. It should be a short text that gives a quick overview of the post.'
+                    date = '01.05.2023'
+                    url = '#'
+                }
+                2 {
+                    title = 'Third post example title'
+                    teaser = 'This is a teaser for the third post example. It should be a short text that gives a quick overview of the post.'
+                    date = '01.04.2023'
+                    url = '#'
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://picsum.photos/720/512?3'
+                    }
+                }
+                3 {
+                    title = 'Fourth post example title'
+                    teaser = 'This is a teaser for the fourth post example. It should be a short text that gives a quick overview of the post.'
+                    date = '01.03.2023'
+                    url = '#'
+                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                        uri = 'https://picsum.photos/720/512?4'
+                    }
+                }
+                4 {
+                    title = 'Fifth post example title'
+                    teaser = 'This is a teaser for the fifth post example. It should be a short text that gives a quick overview of the post.'
+                    date = '01.02.2023'
+                    url = '#'
+                    isFeature = true
+                }
+                5 {
+                    title = 'Sixth post example title'
+                    teaser = 'This is a teaser for the sixth post example. It should be a short text that gives a quick overview of the post.'
+                    date = '01.01.2023'
+                    url = '#'
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        headline = PropTypes:FromPrototype {
+            prototypeName = 'Neos.Presentation:Headline'
+        }
+        posts = PropTypes:Array {
+            type = PropTypes:FromPrototype {
+                prototypeName = 'Neos.Presentation:PostGrid.Teaser'
+            }
+        }
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Spacing size x y>
+            <Neos.Presentation:Spacing y>
+                <Neos.Presentation:Headline {...props.headline} display="headline-lg" class="text-lightblue" />
+            </Neos.Presentation:Spacing>
+
+            <Neos.Presentation:Spacing y="small">
+                <ul class="grid md:grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-8 mx-0">
+                    <Neos.Fusion:Loop items={props.posts} itemName="post">
+                        <Neos.Presentation:PostGrid.Teaser {...post} />
+                    </Neos.Fusion:Loop>
+                </ul>
+            </Neos.Presentation:Spacing>
+        </Neos.Presentation:Spacing>
+    `
+}
