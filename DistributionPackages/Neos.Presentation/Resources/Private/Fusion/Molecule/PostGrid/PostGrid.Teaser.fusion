@@ -3,8 +3,11 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
     @propTypes {
         title = PropTypes:String
         teaser = PropTypes:String
-        date = PropTypes:String
+        date = PropTypes:InstanceOf {
+            type = '\DateTimeInterface'
+        }
         url = PropTypes:String
+        linkText = PropTypes:String
         isFeature = PropTypes:Bool
         image = PropTypes:FromPrototype {
             prototypeName = Sitegeist.Kaleidoscope:Image
@@ -19,7 +22,7 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
     }
 
     renderer = afx`
-        <li class={AtomicFusion.classNames('group w-full h-full relative', {
+        <li class={Carbon.String.classNames('group w-full h-full relative', {
             'aspect-[4/3] md:aspect-video xl:aspect-[4/3] md:col-span-2 md:row-span-2': props.isFeature,
             'aspect-[7/5]': !props.isFeature
         })}>
@@ -29,30 +32,35 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
                 <Sitegeist.Kaleidoscope:Image
                     @if.hasImage={props.image && props.image.imageSource}
                     {...props.image}
+                    aria-hidden="true"
                     class="xs:col-start-1 xs:row-start-1 inset-0 w-full h-full object-cover group-hover:scale-105 duration-700"
                 />
 
                 <div class="xs:col-start-1 xs:row-start-1 flex flex-col justify-between bg-black bg-opacity-25 z-10">
                     <div class="grid p-8 pb-4">
-                        <h2 class={AtomicFusion.classNames('text-white text-2xl font-bold text-balance', {
+                        <h2 class={Carbon.String.classNames('text-white text-2xl font-bold text-balance', {
                             'sm:text-4xl': props.isFeature
                         })}>{props.title}</h2>
 
-                        <p class="text-white text-sm mb-8">{props.date}</p>
+                        <time @if={Type.instance(props.date, '\DateTimeInterface')} datetime={Date.format(props.date, 'Y-m-d')} class="text-white text-sm mb-8">{Date.format(props.date, 'd.m.Y')}</time>
 
-                        <p class={AtomicFusion.classNames('max-w-md text-white text-sm text-pretty xs:line-clamp-3 sm:line-clamp-2', {
+                        <p class={Carbon.String.classNames('max-w-md text-white text-sm text-pretty xs:line-clamp-3 sm:line-clamp-2', {
                             'sm:text-md md:line-clamp-6': props.isFeature
                         })}>{props.teaser}</p>
                     </div>
 
-                    <a href={props.url}
-                       class={AtomicFusion.classNames('flex items-center gap-2 p-8 pt-4', {
-                            'justify-end': props.isFeature
-                    })}>
-                        <span class="absolute inset-0 pointer-events-auto"></span>
-                        <span class="text-white text-sm">Read more</span>
-                        <Neos.Presentation:Atom.AnimatedArrow class="w-4 fill-white" />
-                    </a>
+                    <div class="p-8 pt-4" @if={props.url}>
+                        <a
+                            href={props.url}
+                            class={Tailwind.merge('inline-flex items-center gap-2 text-white', props.isFeature ? 'justify-end' : null)}>
+                                <span class="absolute inset-0 pointer-events-auto"></span>
+                                <span class="text-sm">{props.linkText ?
+                                    props.linkText : I18n.translate('postgrid.teaser.linklabel', '', [], 'Main', 'Neos.Presentation')
+                                }</span>
+                                <Neos.Presentation:Atom.AnimatedArrow class="w-4" />
+                        </a>
+                    </div>
+
                 </div>
             </Neos.Presentation:Background>
         </li>
