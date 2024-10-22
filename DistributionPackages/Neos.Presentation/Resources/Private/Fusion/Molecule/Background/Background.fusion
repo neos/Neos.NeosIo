@@ -33,7 +33,7 @@ prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
         <Neos.Fusion:Tag
             tagName={props.tagName}
             attributes.style={props.style}
-            attributes.class={AtomicFusion.classNames(
+            attributes.class={Carbon.String.classNames(
                 'n-background',
                 {
                     'n-background--gradient': props.variant == 'gradient',

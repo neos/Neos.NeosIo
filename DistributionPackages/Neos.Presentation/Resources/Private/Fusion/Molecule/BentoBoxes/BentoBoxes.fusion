@@ -117,12 +117,12 @@ prototype(Neos.Presentation:BentoBoxes) < prototype(Neos.Fusion:Component) {
     @private {
         boxes = ${Carbon.Array.chunk(props.boxes, 2)}
 
-        headlineClass = ${AtomicFusion.classNames(
+        headlineClass = ${Carbon.String.classNames(
             'bento-boxes__heading p-0 2xl:pr-[40%] text-darkblue text-5xl sm:text-5xl mdl:text-7xl 2xl:text-9xl',
             { 'pb-10 mdl:pb-0': props.text }
         )}
 
-        wrapperClass = ${AtomicFusion.classNames(
+        wrapperClass = ${Carbon.String.classNames(
             'flex flex-col gap-6 mdl:gap-10',
             { 'pt-14 mdl:pt-20 2xl:pt-10': props.text || props.heading.text }
         )}

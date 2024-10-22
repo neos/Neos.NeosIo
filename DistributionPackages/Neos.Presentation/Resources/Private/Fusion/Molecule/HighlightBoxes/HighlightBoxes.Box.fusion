@@ -26,7 +26,7 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
     }
 
     renderer = afx`
-        <div class={Tailwind.merge('relative flex flex-col bg-gray-light', { 'group': !!props.link })}>
+        <div class={Carbon.String.classNames('relative flex flex-col bg-gray-light', { 'group': !!props.link })}>
             <figure
                 @if={private.isIcon}
                 class="w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-lightblue/70 text-white grid place-content-center"
@@ -36,7 +36,7 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
 
             <figure
                 @if={!private.isIcon}
-                class={Tailwind.merge('overflow-hidden', private.isImageHeader ? 'aspect-video' : 'size-32 aspect-square rounded-full overflow-hidden self-center mx-4 mt-8 mb-2')}
+                class={Carbon.String.classNames('overflow-hidden', private.isImageHeader ? 'aspect-video' : 'size-32 aspect-square rounded-full overflow-hidden self-center mx-4 mt-8 mb-2')}
             >
                 <Sitegeist.Kaleidoscope:Image
                     @if={props.image && props.image.imageSource} {...props.image}
@@ -50,7 +50,7 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
             <div class="flex-1 grid gap-2 p-4">
                 <div
                     @if={!private.isIcon && (props.inBackend || props.tag)}
-                    class={Tailwind.merge('text-xs bg-lightblue/70 text-white px-2 py-1 rounded-full', private.isImageHeader ? 'absolute top-4 left-4' : 'self-start justify-self-start')}
+                    class={Carbon.String.classNames('text-xs bg-lightblue/70 text-white px-2 py-1 rounded-full', private.isImageHeader ? 'absolute top-4 left-4' : 'self-start justify-self-start')}
                 >
                     {props.tag}
                 </div>

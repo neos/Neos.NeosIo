@@ -27,7 +27,7 @@ prototype(Neos.Presentation:Paragraph) < prototype(Neos.Fusion:Component) {
         tagName = ${props.tagName}
         attributes = Neos.Fusion:DataStructure {
             @apply.attributes = ${props.attributes}
-            class = ${AtomicFusion.classNames(
+            class = ${Carbon.String.classNames(
                 'display-' + props.display,
                 props.class
             )}

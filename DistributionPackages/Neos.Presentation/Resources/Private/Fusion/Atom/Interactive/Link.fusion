@@ -42,7 +42,7 @@ prototype(Neos.Presentation:Link) < prototype(Neos.Fusion:Component) {
         tagName = 'a'
         attributes {
             @apply.attributes = ${props.attributes}
-            class = ${AtomicFusion.classNames(
+            class = ${Carbon.String.classNames(
                 'n-link n-interactive',
                 {
                     'n-interactive--button': props.variant == 'button',

@@ -45,7 +45,7 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
     }
 
     @private {
-        linkClass = ${AtomicFusion.classNames(
+        linkClass = ${Carbon.String.classNames(
             'pl-6 sm:pl-8 lg:pl-14 pr-6 2xl:pr-20 pt-8 2xl:pt-14 grow-0 before:absolute before:inset-0 before:z-10',
             {
                 'pb-8 2xl:pb-14': props.assetAlign == 'center' || !props.link,
@@ -53,7 +53,7 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
             }
         )}
 
-        assetWrapperClass = ${AtomicFusion.classNames(
+        assetWrapperClass = ${Carbon.String.classNames(
             'grow flex items-end',
             {
                 'justify-center px-8 lg:px-14': props.assetAlign == 'center',
@@ -84,12 +84,12 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
                         <Neos.Presentation:InlineVideo
                             @if.hasVideo={props.video && (props.video.sources || props.video.assets)} {...props.video}
                             poster={props.image && props.image.imageSource ? props.image.imageSource : null}
-                            class={AtomicFusion.classNames({ 'max-w-none': props.assetAlign == 'right' })}
+                            class={Carbon.String.classNames({ 'max-w-none': props.assetAlign == 'right' })}
                         />
 
                         <Sitegeist.Kaleidoscope:Image
                             @if.hasImage={props.image && (props.image.imageSource) && !(props.video && (props.video.assets || props.video.sources))}
-                            {...props.image} class={AtomicFusion.classNames({ 'max-w-none': props.assetAlign == 'right' })}
+                            {...props.image} class={Carbon.String.classNames({ 'max-w-none': props.assetAlign == 'right' })}
                         />
                     </div>
                 </div>

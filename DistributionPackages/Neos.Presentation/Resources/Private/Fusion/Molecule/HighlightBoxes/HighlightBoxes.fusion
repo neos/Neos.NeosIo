@@ -104,7 +104,7 @@ prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
                     @if={props.inBackend || props.heading} text={props.heading}
                     display="headline-lg" class="text-darkblue text-balance mb-16"
                 />
-                <div class={Tailwind.merge('grid gap-8 sm:grid-cols-2', private.colClass)}>
+                <div class={Carbon.String.classNames('grid gap-8 sm:grid-cols-2', private.colClass)}>
                     <Neos.Fusion:Loop items={props.boxes} itemName="box">
                         <Neos.Presentation:HighlightBoxes.Box {...box} displayType={props.displayType} imageWidth={private.imageWidth} />
                     </Neos.Fusion:Loop>

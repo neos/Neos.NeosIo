@@ -40,7 +40,7 @@ prototype(Neos.Presentation:Spacing) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <Neos.Fusion:Augmenter
-            class={AtomicFusion.classNames(
+            class={Carbon.String.classNames(
             'n-spacing',
             {
                 'n-spacing--size': props.size || props.size == 'default',
