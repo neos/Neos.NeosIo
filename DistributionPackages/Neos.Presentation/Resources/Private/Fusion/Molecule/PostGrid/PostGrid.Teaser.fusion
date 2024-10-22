@@ -3,7 +3,9 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
     @propTypes {
         title = PropTypes:String
         teaser = PropTypes:String
-        date = ${PropTypes.any}
+        date = PropTypes:InstanceOf {
+            type = '\DateTimeInterface'
+        }
         url = PropTypes:String
         isFeature = PropTypes:Bool
         image = PropTypes:FromPrototype {
@@ -39,22 +41,20 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
                             'sm:text-4xl': props.isFeature
                         })}>{props.title}</h2>
 
-                        <time datetime={props.date && Date.format(props.date, 'Y-m-d')} class="text-white text-sm mb-8">{props.date && Date.format(props.date, 'd.m.Y')}</time>
+                        <time @if={Type.instance(props.date, '\DateTimeInterface')} datetime={Date.format(props.date, 'Y-m-d')} class="text-white text-sm mb-8">{Date.format(props.date, 'd.m.Y')}</time>
 
                         <p class={AtomicFusion.classNames('max-w-md text-white text-sm text-pretty xs:line-clamp-3 sm:line-clamp-2', {
                             'sm:text-md md:line-clamp-6': props.isFeature
                         })}>{props.teaser}</p>
                     </div>
 
-                    <div class='p-8 pt-4'>
-                        <a @if.hasLink={props.url}
+                    <div class="p-8 pt-4" @if={props.url}>
+                        <a
                             href={props.url}
-                            class={AtomicFusion.classNames('inline-flex items-center gap-2', {
-                                    'justify-end': props.isFeature
-                            })}>
+                            class={Tailwind.merge('inline-flex items-center gap-2 text-white', props.isFeature ? 'justify-end' : null)}>
                                 <span class="absolute inset-0 pointer-events-auto"></span>
-                                <span class="text-white text-sm">Read more</span>
-                                <Neos.Presentation:Atom.AnimatedArrow class="w-4 fill-white" />
+                                <span class="text-sm">Read more</span>
+                                <Neos.Presentation:Atom.AnimatedArrow class="w-4" />
                         </a>
                     </div>
 

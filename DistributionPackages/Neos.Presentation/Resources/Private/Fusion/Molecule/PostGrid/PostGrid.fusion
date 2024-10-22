@@ -9,7 +9,7 @@ prototype(Neos.Presentation:PostGrid) < prototype(Neos.Fusion:Component) {
                 0 {
                     title = 'First post example title'
                     teaser = 'This is a teaser for the first post example. It should be a short text that gives a quick overview of the post. It should be a short text that gives a quick overview of the post. This is more text to show the ellipsis on the teaser. It goes on and on and then there is even more text until it finally ends right here and right now.'
-                    date = 'now'
+                    date = ${Date.create('now')}
                     url = '#'
                     isFeature = true
                     image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
@@ -73,7 +73,7 @@ prototype(Neos.Presentation:PostGrid) < prototype(Neos.Fusion:Component) {
             </Neos.Presentation:Spacing>
 
             <Neos.Presentation:Spacing y="small">
-                <ul class="grid md:grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-4 mx-0">
+                <ul class="grid md:grid-cols-2 xl:grid-cols-3 gap-4 mx-0">
                     <Neos.Fusion:Loop items={props.posts} itemName="post">
                         <Neos.Presentation:PostGrid.Teaser {...post} />
                     </Neos.Fusion:Loop>
