@@ -5,6 +5,7 @@ prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
         name = ${PropTypes.string}
         fallbackName = ${PropTypes.string}
         class = ${PropTypes.string}
+        attributes = PropTypes:DataStructure
     }
 
     name = null
@@ -14,14 +15,15 @@ prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
     fallbackName.@process.clean = ${String.trim(String.toLowerCase(value))}
 
     inline = null
-
     class = null
+    attributes = Neos.Fusion:DataStructure
 
     renderer = Neos.Fusion:Augmenter {
         data-icon-name = ${props.name}
         data-icon-name.@if.hasName = ${props.name}
 
         class = ${props.class}
+        attributes = ${props.attributes}
 
         content = Neos.Fusion:Case {
             inlineExists {
