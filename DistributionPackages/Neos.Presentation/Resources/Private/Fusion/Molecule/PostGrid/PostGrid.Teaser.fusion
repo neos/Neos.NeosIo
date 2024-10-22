@@ -3,7 +3,7 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
     @propTypes {
         title = PropTypes:String
         teaser = PropTypes:String
-        date = PropTypes:String
+        date = ${PropTypes.any}
         url = PropTypes:String
         isFeature = PropTypes:Bool
         image = PropTypes:FromPrototype {
@@ -29,6 +29,7 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
                 <Sitegeist.Kaleidoscope:Image
                     @if.hasImage={props.image && props.image.imageSource}
                     {...props.image}
+                    aria-hidden="true"
                     class="xs:col-start-1 xs:row-start-1 inset-0 w-full h-full object-cover group-hover:scale-105 duration-700"
                 />
 
@@ -38,21 +39,25 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
                             'sm:text-4xl': props.isFeature
                         })}>{props.title}</h2>
 
-                        <p class="text-white text-sm mb-8">{props.date}</p>
+                        <time datetime={props.date && Date.format(props.date, 'Y-m-d')} class="text-white text-sm mb-8">{props.date && Date.format(props.date, 'd.m.Y')}</time>
 
                         <p class={AtomicFusion.classNames('max-w-md text-white text-sm text-pretty xs:line-clamp-3 sm:line-clamp-2', {
                             'sm:text-md md:line-clamp-6': props.isFeature
                         })}>{props.teaser}</p>
                     </div>
 
-                    <a href={props.url}
-                       class={AtomicFusion.classNames('flex items-center gap-2 p-8 pt-4', {
-                            'justify-end': props.isFeature
-                    })}>
-                        <span class="absolute inset-0 pointer-events-auto"></span>
-                        <span class="text-white text-sm">Read more</span>
-                        <Neos.Presentation:Atom.AnimatedArrow class="w-4 fill-white" />
-                    </a>
+                    <div class='p-8 pt-4'>
+                        <a @if.hasLink={props.url}
+                            href={props.url}
+                            class={AtomicFusion.classNames('inline-flex items-center gap-2', {
+                                    'justify-end': props.isFeature
+                            })}>
+                                <span class="absolute inset-0 pointer-events-auto"></span>
+                                <span class="text-white text-sm">Read more</span>
+                                <Neos.Presentation:Atom.AnimatedArrow class="w-4 fill-white" />
+                        </a>
+                    </div>
+
                 </div>
             </Neos.Presentation:Background>
         </li>
