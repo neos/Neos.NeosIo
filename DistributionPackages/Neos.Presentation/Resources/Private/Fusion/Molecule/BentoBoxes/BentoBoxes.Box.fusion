@@ -80,7 +80,7 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
                 </Neos.Fusion:Tag>
 
                 <div class={private.assetWrapperClass}>
-                    <div class="overflow-hidden">
+                    <figure class="overflow-hidden">
                         <Neos.Presentation:InlineVideo
                             @if.hasVideo={props.video && (props.video.sources || props.video.assets)} {...props.video}
                             poster={props.image && props.image.imageSource ? props.image.imageSource : null}
@@ -91,7 +91,7 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
                             @if.hasImage={props.image && (props.image.imageSource) && !(props.video && (props.video.assets || props.video.sources))}
                             {...props.image} class={Carbon.String.classNames({ 'max-w-none': props.assetAlign == 'right' })}
                         />
-                    </div>
+                    </figure>
                 </div>
             </Neos.Presentation:Background>
         </div>

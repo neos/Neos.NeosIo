@@ -1,18 +1,16 @@
 prototype(Neos.Presentation:Module.Teaser) < prototype(Neos.Fusion:Component) {
 
     @styleguide {
-        title = "Teaser"
+        title = 'Teaser'
         props {
             headline.text = 'Ready for <strong>Neos CMS?</strong>'
             primaryLink.text = 'Try Neos now'
             primaryLink.icon = Neos.Presentation:Icon {
-                name = 'pixel-chevron-right'
+                name = 'animated-arrow'
                 class = 'h-6'
             }
             secondaryLink.text = 'View features'
-            image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
-                uri = 'https://source.unsplash.com/random/800x600'
-            }
+            image.imageSource = Sitegeist.Kaleidoscope:DummyImageSource
         }
     }
 

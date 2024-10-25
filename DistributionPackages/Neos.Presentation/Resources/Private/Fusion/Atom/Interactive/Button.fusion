@@ -1,7 +1,7 @@
 prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
 
     @styleguide {
-        title = "Button"
+        title = 'Button'
         props {
             text = 'Button Text'
         }
@@ -10,8 +10,9 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
                 text = 'Button as Link'
                 variant = 'link'
             }
-            icon {
-                props.icon = afx`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path fill="none" stroke="currentColor" d="M2 6q2 0 3 1t3 1V3Q6 3 5 2T2 1v8"/></svg>`
+            icon.props {
+                text = 'Button with Icon'
+                icon = 'animatedArrow'
             }
         }
     }
@@ -50,9 +51,6 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
                     class = "w-5"
                 }
             }
-            @default {
-                renderer = null
-            }
         }
     }
 
@@ -64,9 +62,10 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
                 'n-button n-interactive',
                 {
                     'n-interactive--button': props.variant == 'button',
-                    'n-interactive--link': props.variant == 'link'
+                    'n-interactive--link': props.variant == 'link',
+                    'group': props.icon == 'animatedArrow'
                 },
-                Carbon.String.classNames(props.icon == 'animatedArrow' && 'group', props.class)
+                props.class
             )}
         }
         content = afx`
