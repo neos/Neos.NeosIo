@@ -52,7 +52,7 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
                     <div class="p-8 pt-4" @if={props.url}>
                         <a
                             href={props.url}
-                            class={Tailwind.merge('inline-flex items-center gap-2 text-white', props.isFeature ? 'justify-end' : null)}>
+                            class={Carbon.String.classNames('inline-flex items-center gap-2 text-white', props.isFeature ? 'justify-end' : null)}>
                                 <span class="absolute inset-0 pointer-events-auto"></span>
                                 <span class="text-sm">{props.linkText ?
                                     props.linkText : I18n.translate('postgrid.teaser.linklabel', '', [], 'Main', 'Neos.Presentation')
