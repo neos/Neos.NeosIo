@@ -1,6 +1,6 @@
 xml = Neos.Fusion:Http.Message {
     feed = Neos.Fusion:Template {
-        templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/PostRss.xml'
+        templatePath = 'resource://Neos.NeosIo.Blog/Private/Templates/PostRss.xml'
         posts = ${q(site).find('[instanceof Neos.NeosIo:Post]').sort('datePublished').slice(0, 20).get()}
         site = ${site}
         @cache {
