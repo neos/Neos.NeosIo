@@ -5,7 +5,7 @@ prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Fusion:Component) {
     versionNormalized = ${q(node).property('versionNormalized')}
     stability = ${q(node).property('stability')}
     stabilityLevel = ${q(node).property('stabilityLevel')}
-    description = ${q(node).property('description')}
+    description = ${String.stripTags(q(node).property('description'))}
     keywords = ${q(node).property('keywords')}
     homepage = ${q(node).property('homepage')}
     license = ${q(node).property('license')}

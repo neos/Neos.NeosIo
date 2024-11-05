@@ -1,4 +1,20 @@
-prototype(Neos.NeosIo:Youtube) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Youtube.html'
+prototype(Neos.NeosIo:Youtube) < prototype(Neos.Neos:ContentComponent) {
     video = ${q(node).property('video')}
+
+    renderer = afx`
+      <div class="youtube">
+        <figure class="flexibleEmbed" @if={props.video}>
+          <iframe
+            class="flexibleEmbed__content"
+            src={'https://www.youtube-nocookie.com/embed/' + props.video + '?wmode=transparent&rel=0'}
+            allowfullscreen=""
+            frameborder="0"
+          ></iframe>
+          <div class="flexibleEmbed__ratio flexibleEmbed__ratio--16/9"></div>
+        </figure>
+        <div class="box" @if={!props.video && node.context.inBackend}>
+          <p>Please specify a video ID</p>
+        </div>
+      </div>
+    `
 }

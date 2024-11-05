@@ -5,9 +5,9 @@ prototype(Neos.NeosIo:CrowdGroup) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <div class="team-listing__group">
-            <header>
+            <header @if={props.group.neos_title}>
                 <Neos.Fusion:Tag tagName={props.headerLevel}>
-                    {props.group.neos_title || props.teamName}
+                    {props.group.neos_title}
                 </Neos.Fusion:Tag>
             </header>
             <p @if.set={props.group.neos_summary}>{props.group.neos_summary}</p>

@@ -58,6 +58,17 @@ export default function ProviderListing() {
         }
     };
 
+    const sortByFirstNumberInString = (a: string, b: string) => {
+        const regex = /\d+/; // Regular expression to extract the first number in the string
+        const numberA = parseInt(a.match(regex)[0]);
+        const numberB = parseInt(b.match(regex)[0]);
+
+        // Sort descending by the first number in the string
+        return numberB - numberA;
+    }
+
+    sizes.sort(sortByFirstNumberInString);
+
     const switchToGrid = (state: boolean) => { setGrid(state)};
 
     useEffect(() => {
@@ -87,9 +98,9 @@ export default function ProviderListing() {
     return (
         <div>
             <div>
-                <header class="service-providers__grid-tableview">
-                    <div class="service-providers__grid-row remove-border form form--inline">
-                        <div class="service-providers__grid-cell">
+                <header class="service-providers__grid-filter">
+                    <div class="service-providers__grid-row remove-border form">
+                        <div class="service-providers__grid-cell row">
                             <div class="form__item">
                                 <i class={'grid-switcher fas fa-th-large' + (grid ? ' selected' : '')}
                                    onclick={e => switchToGrid(true)}
@@ -105,12 +116,9 @@ export default function ProviderListing() {
                                    onclick={() => sortBy('title')}
                                    title={translationData['name']}></i>
                             </div>
-                            <div className="form__item" title={`${providers.length} ${translationData['providers']}`}>
-                                {providers.length} <i class="fas fa-user-ninja"></i>
-                            </div>
                         </div>
                         <div class="service-providers__grid-cell">
-                            <div class="form__item">
+                            <div class="form__item form__item--with-icon">
                                 <input type="text"
                                        id="service-provider-search"
                                        placeholder={translationData['search']}
@@ -145,6 +153,9 @@ export default function ProviderListing() {
                                 {serviceTypes.map(serviceType => <option key={serviceType} value={serviceType}>{serviceType}</option>)}
                             </select>
                         </div>
+                    </div>
+                    <div className="form__item">
+                        <strong>{providers.length}</strong> {translationData['providers']}
                     </div>
                 </header>
                 <section className={grid ? 'service-providers__grid-gridview' : 'service-providers__grid-tableview'}>
