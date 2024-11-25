@@ -87,3 +87,13 @@
 		}
 	}
 }
+
+@mixin clippedForm() {
+  $btn-clip-width: 14px;
+  $btn-clip-height: 10px;
+  $clip-path: polygon($btn-clip-width 0px, 0 $btn-clip-height, 0 100%, calc(100% - #{$btn-clip-width}) 100%, 100% calc(100% - #{$btn-clip-height}), 100% 0);
+
+  // Autoprefixer doesn't add the required webkit prefix for some reason
+  -webkit-clip-path: #{$clip-path};
+  clip-path: #{$clip-path};
+}

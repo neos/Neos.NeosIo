@@ -1,0 +1,138 @@
+.tabs {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 48px;
+    width: 100%;
+    margin: 0 auto;
+    white-space: nowrap;
+
+    .tab {
+        display: inline-block;
+        text-align: center;
+        line-height: 48px;
+        height: 48px;
+        flex-shrink: 0;
+        padding: 0;
+        margin: 0;
+        background: none;
+        appearance: none;
+        border: none;
+        cursor: pointer;
+
+        &:focus,
+        &:focus.active {
+            outline: none;
+        }
+
+        &:hover,
+        &.active {
+            background-color: transparent;
+        }
+
+        .tab-link__inner {
+            padding: 0 24px;
+            height: 100%;
+        }
+
+        font-size: 14px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        transition: color .28s ease, background-color .28s ease;
+
+        &.disabled a,
+        &.disabled a:hover {
+            cursor: default;
+        }
+    }
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.tabs .indicator {
+    display: none;
+}
+
+.tabs-content__wrapper {
+    position: relative;
+    padding-top: 48px;
+
+    &::after {
+        bottom: -1px;
+        content: "";
+        width: 16px;
+        border-top: 1px solid #e7e7e8;
+        position: absolute;
+        right: 12px;
+        transform-origin: right top;
+        transform: rotateZ(135deg);
+    }
+}
+
+.tabs-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.tab-item:not([hidden]){
+    display: inline-block;
+    width: 100%;
+}
+
+.tabs {
+  .tab {
+    @include clippedForm;
+
+    position: relative;
+    color: $headingsColor;
+
+    .tab-link__inner {
+      pointer-events: none;
+      display: grid;
+      font-weight: bold;
+      font-family: $brand-font-family;
+
+      &:empty::after {
+        content: "Tab title";
+        color: #ccc;
+      }
+    }
+
+    &[aria-selected="true"] {
+      .tab-link__inner {
+        background-color: brand('primary');
+      }
+
+      color: #fff;
+    }
+
+    &:focus, &:active, &:focus[aria-selected="true"] {
+      .tab-link__inner {
+        background-color: brand('primary');
+      }
+    }
+
+    &:focus,
+    &:active,
+    &[aria-selected="true"] {
+      &:before {
+        content: "";
+        width: 18px;
+        border-top: 1px solid #e7e7e8;
+        position: absolute;
+        left: -7px;
+        transform-origin: right top;
+        transform: rotateZ(-45deg);
+        z-index: 1;
+      }
+    }
+  }
+}
