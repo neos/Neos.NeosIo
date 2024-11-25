@@ -3,6 +3,7 @@ prototype(Neos.Presentation:Module.Teaser) < prototype(Neos.Fusion:Component) {
     @styleguide {
         title = 'Teaser'
         props {
+            variant = 'default'
             headline.text = 'Ready for <strong>Neos CMS?</strong>'
             primaryLink.text = 'Try Neos now'
             primaryLink.icon = Neos.Presentation:Icon {
@@ -11,6 +12,34 @@ prototype(Neos.Presentation:Module.Teaser) < prototype(Neos.Fusion:Component) {
             }
             secondaryLink.text = 'View features'
             image.imageSource = Sitegeist.Kaleidoscope:DummyImageSource
+        }
+        useCases {
+            imageBackgroundWithFreeContent.props {
+                variant = 'imageBackground'
+                headline.text = 'Find your <strong>nearest Neos Partner</strong>'
+                content = afx`
+                    <Neos.Presentation:Paragraph text="Choose by your interest:"/>
+                    <Neos.Presentation:TagGroup variant="list">
+                        <Neos.Presentation:Tag text="# full service agency" href="#" number={34} />
+                        <Neos.Presentation:Tag text="# freelancer" href="#" number={12} />
+                        <Neos.Presentation:Tag text="# plugin development" href="#" number={6} />
+                        <Neos.Presentation:Tag text="# core development" href="#" number={3} />
+                        <Neos.Presentation:Tag text="# hosting" href="#" number={2} />
+                    </Neos.Presentation:TagGroup>
+                `
+                image.imageSource = Sitegeist.Kaleidoscope:ResourceImageSource {
+                    package = 'Neos.Presentation'
+                    path = 'Assets/Styleguide/teaser/EuropaNeosMap.svg'
+                }
+                secondaryLink {
+                    text = 'All Service Providers'
+                    icon = Neos.Presentation:Icon {
+                        name = 'pixel-chevron-right'
+                        class = 'h-6'
+                    }
+                    href = '#'
+                }
+            }
         }
     }
 
@@ -32,27 +61,40 @@ prototype(Neos.Presentation:Module.Teaser) < prototype(Neos.Fusion:Component) {
         }
     }
 
+    variant = 'default'
+    image = null
+    headline = null
+    description = null
+    content = null
+    primaryLink = null
+    secondaryLink = null
+
     renderer = afx`
         <Neos.Presentation:Spacing size>
-            <div class="grid md:grid-cols-2 items-center">
-                <Neos.Presentation:Spacing x y="small">
-                    <Neos.Presentation:Spacing y="small">
-                        <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
-                        <Neos.Presentation:Paragraph {...props.description} display="lead" />
+            <div class="relative grid md:grid-cols-2 items-center">
+                <div class={AtomicFusion.classNames({"bg-gradient-to-r from-white to-white/0": props.variant == 'imageBackground'})}>
+                    <Neos.Presentation:Spacing x y="small">
+                        <Neos.Presentation:Spacing y="small">
+                            <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
+                            <Neos.Presentation:Spacing y="small">
+                                <Neos.Presentation:Paragraph @if={props.description.text} {...props.description} display="lead" />
+                                {props.content}
+                            </Neos.Presentation:Spacing>
+                        </Neos.Presentation:Spacing>
+                        <Neos.Presentation:Spacing y="small">
+                            <div class="flex flex-wrap gap-10 items-center">
+                                <Neos.Presentation:Link
+                                    @if={props.primaryLink.text}
+                                    {...props.primaryLink}
+                                    variant="button" />
+                                <Neos.Presentation:Link
+                                    @if={props.secondaryLink.text}
+                                    {...props.secondaryLink} />
+                            </div>
+                        </Neos.Presentation:Spacing>
                     </Neos.Presentation:Spacing>
-                    <Neos.Presentation:Spacing y="small">
-                        <div class="flex flex-wrap gap-10 items-center">
-                            <Neos.Presentation:Link
-                                @if={props.primaryLink.text}
-                                {...props.primaryLink}
-                                variant="button" />
-                            <Neos.Presentation:Link
-                                @if={props.secondaryLink.text}
-                                {...props.secondaryLink} />
-                        </div>
-                    </Neos.Presentation:Spacing>
-                </Neos.Presentation:Spacing>
-                <Sitegeist.Kaleidoscope:Image {...props.image} />
+                </div>
+                <Sitegeist.Kaleidoscope:Image {...props.image} class={AtomicFusion.classNames({"absolute top-0 left-0 w-full h-full object-cover -z-10": props.variant == 'imageBackground'})} />
             </div>
         </Neos.Presentation:Spacing>
     `
