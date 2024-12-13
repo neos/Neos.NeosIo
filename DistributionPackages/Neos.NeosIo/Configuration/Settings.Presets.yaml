@@ -1,0 +1,100 @@
+
+Neos:
+  Neos:
+    nodeTypes:
+      presets:
+        properties:
+          NeosIo:
+            text:
+              plain:
+                type: string
+                defaultValue: ''
+                ui:
+                  inlineEditable: true
+                  inline:
+                    editorOptions:
+                      placeholder: '(( text plain ))'
+                      autoparagraph: false
+                      formatting: {'removeFormat': true}
+
+              block:
+                type: string
+                defaultValue: ''
+                ui:
+                  inlineEditable: true
+                  inline:
+                    editorOptions:
+                      placeholder: '(( text block ))'
+                      autoparagraph: true
+                      linking:
+                        anchor: true
+                        title: true
+                        relNofollow: false
+                        targetBlank: false
+                      formatting:
+                        strong: true
+                        em: true
+                        u: false
+                        underline: false
+                        strikethrough: false
+                        sub: false
+                        sup: false
+                        del: false
+                        p: true
+                        h1: false
+                        h2: false
+                        h3: false
+                        h4: false
+                        h5: false
+                        h6: false
+                        pre: false
+                        removeFormat: true
+                        left: false
+                        right: false
+                        center: false
+                        justify: false
+                        table: false
+                        ol: false
+                        ul: false
+                        a: true
+
+              free:
+                type: string
+                defaultValue: ''
+                ui:
+                  inlineEditable: true
+                  inline:
+                    editorOptions:
+                      placeholder: '(( text ))'
+                      autoparagraph: true
+                      linking:
+                        anchor: true
+                        title: true
+                        relNofollow: false
+                        targetBlank: false
+                      formatting:
+                        strong: true
+                        em: true
+                        u: true
+                        underline: true
+                        strikethrough: true
+                        sub: false
+                        sup: false
+                        del: false
+                        p: true
+                        h1: true
+                        h2: true
+                        h3: true
+                        h4: true
+                        h5: true
+                        h6: true
+                        pre: true
+                        removeFormat: true
+                        left: false
+                        right: false
+                        center: false
+                        justify: false
+                        table: true
+                        ol: true
+                        ul: true
+                        a: true
