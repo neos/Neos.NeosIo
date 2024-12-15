@@ -1,13 +1,11 @@
 'Neos.NeosIo:BadgeGrid':
   superTypes:
     'Neos.Neos:Content': true
-  childNodes:
-    badges:
-      type: 'Neos.Neos:ContentCollection'
-      constraints:
-        nodeTypes:
-          '*': false
-          'Neos.NeosIo:Badge': true
+    'Neos.Neos:ContentCollection': true
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.NeosIo:Badge': true
   ui:
     label: 'Badge grid'
     icon: 'th-large'
