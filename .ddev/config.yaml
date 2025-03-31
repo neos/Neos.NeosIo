@@ -13,7 +13,7 @@ use_dns_when_possible: true
 composer_version: "2"
 timezone: Europe/Berlin
 nodejs_version: "20"
-webimage_extra_packages: ["php8.1-vips"]
+webimage_extra_packages: ["php${DDEV_PHP_VERSION}-vips"]
 hooks:
   post-composer:
     - exec: ./flow flow:package:rescan >> /dev/null
@@ -35,8 +35,3 @@ web_environment:
   - NEOS_DB_PASSWORD=db
   - NEOS_DB_PORT=3306
   - NEOS_REDIS_ENDPOINT=redis
-  - ELASTICSEARCH_HOST=elasticsearch
-  - ELASTICSEARCH_PORT=9200
-  - ELASTICSEARCH_SCHEME=http
-  - ELASTICSEARCH_PASSWORD=
-  - ELASTICSEARCH_USERNAME=
