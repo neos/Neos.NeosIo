@@ -16,5 +16,5 @@ export {
     SentenceSwitcher,
     ProgressiveImage,
     ScrollClassToggler,
-    EmptyClickHandler
+    EmptyClickHandler,
 };
