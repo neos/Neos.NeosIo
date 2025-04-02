@@ -28,7 +28,7 @@ services:
       - NGINX_CACHE_ENABLE=false
 
   php:
-    image: ${BEACH_PHP_IMAGE:-flownative/beach-php}:${BEACH_PHP_IMAGE_VERSION:-7.4}
+    image: ${BEACH_PHP_IMAGE:-flownative/beach-php}:${BEACH_PHP_IMAGE_VERSION:-8.3}
     container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_php
 
     networks:

@@ -1,4 +1,4 @@
-const content = require('./Build/Carbon.Pipeline/purge');
+const content = require('./Build/Carbon.Pipeline/content');
 const plugin = require('tailwindcss/plugin');
 const defaultTheme = require('tailwindcss/defaultTheme');
 const Color = require('color');
@@ -17,12 +17,45 @@ module.exports = {
             'blue-outside': '#26224C 0%, #0114C2 50%, #26224C 100%',
         },
         colors: {
+            primary: {
+                dark: '#26224C',
+                DEFAULT: '#0114C2',
+                light: '#00CFFD',
+            },
+            accent: {
+                green: {
+                    DEFAULT: '#35BA34',
+                    dark: '#1D751D',
+                },
+                purple: {
+                    DEFAULT: '#8A3FFC',
+                    dark: '#602CB0',
+                },
+                yellow: {
+                    DEFAULT: '#F1C21B',
+                    dark: '#B08C0E',
+                }
+            },
+            neutral: {
+                90: '#161616',
+                80: '#363636',
+                70: '#545454',
+                60: '#676767',
+                50: '#8F8F8F',
+                40: '#AFAFAF',
+                30: '#D4D4D4',
+                20: '#E5E5E5',
+                10: '#F0F0F0',
+                05: '#F8F8F8',
+            },
             transparent: 'transparent',
             current: 'currentColor',
-            fg: 'rgb(var(--n-fg) / <alpha-value>)',
-            bg: 'rgb(var(--n-bg) / <alpha-value>)',
             black: '#000',
             white: '#fff',
+            fg: 'rgb(var(--n-fg) / <alpha-value>)',
+            bg: 'rgb(var(--n-bg) / <alpha-value>)',
+
+
             darkblue: '#26224C',
             lightblue: '#009FE3',
             gray: {
