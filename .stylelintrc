@@ -13,6 +13,9 @@
       { "camelCaseSvgKeywords": true, "ignoreFunctions": ["theme"] }
     ],
     "function-no-unknown": [true, { "ignoreFunctions": ["theme", "resolve"] }],
+    "declaration-property-value-no-unknown": [true, { "ignoreProperties": {
+      "/.+/": "/theme([^)]+)/"
+    }}],
     "at-rule-no-unknown": [
       true,
       { "ignoreAtRules": ["tailwind", "apply", "layer", "screen"] }
