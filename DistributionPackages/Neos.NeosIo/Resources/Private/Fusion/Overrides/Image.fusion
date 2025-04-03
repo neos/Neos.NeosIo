@@ -21,6 +21,7 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     }
 
     loading = 'lazy'
+    lightbox = true
 
     height = null
     maximumHeight = null
@@ -64,14 +65,17 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
                 width = ${props.width}
                 height = ${props.height}
                 async = true
-                attributes.alt = ${props.alternativeText}
-                attributes.loading = ${props.loading}
-                attributes.data-lightbox = Neos.Neos:ImageUri {
-                    asset = ${props.image}
-                }
-                attributes.style = Neos.Fusion:Join {
-                    maxHeight = ${'max-height: ' + props.maximumHeight + 'px;'}
-                    maxHeight.@if.set = ${props.maximumHeight}
+                attributes {
+                    alt = ${props.alternativeText}
+                    loading = ${props.loading}
+                    data-lightbox = Neos.Neos:ImageUri {
+                        asset = ${props.image}
+                        @if.enabled = ${props.lightbox && !node.context.inBackend}
+                    }
+                    style = Neos.Fusion:Join {
+                        maxHeight = ${'max-height: ' + props.maximumHeight + 'px;'}
+                        maxHeight.@if.set = ${props.maximumHeight}
+                    }
                 }
             }
         }
