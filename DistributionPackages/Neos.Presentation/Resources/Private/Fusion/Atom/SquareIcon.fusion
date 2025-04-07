@@ -1,5 +1,4 @@
 prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
-
     @styleguide {
         title = 'Square Icon'
         props {
@@ -13,22 +12,23 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
         text = PropTypes:String
         iconName = PropTypes:String
         color = PropTypes:String
-        class = PropTypes:String
+        class = PropTypes:Union {
+            string = PropTypes:String
+            array = PropTypes:Array {
+                type = PropTypes:String
+            }
+        }
     }
 
     @private.backgroundColorClass = Neos.Fusion:Match {
         @subject = ${props.color}
-        @default = 'bg-accent-lightblue'
-        yellow = 'bg-accent-yellow'
-        purple = 'bg-accent-purple'
+        @default = 'bg-blue-light'
+        yellow = 'bg-yellow'
+        purple = 'bg-purple'
     }
 
-    text = null
-    iconName = null
-    color = null
-
     renderer = afx`
-        <div @if={props.iconName} class={['w-44 lg:w-56 lg:p-4 p-3 flex flex-col square-icon aspect-square text-white', private.backgroundColorClass, props.class]}>
+        <div @if={props.iconName} class={Tailwind.merge('w-44 lg:w-56 lg:p-4 p-3 flex flex-col square-icon aspect-square text-white', private.backgroundColorClass, props.class)}>
             <Neos.Presentation:Icon name={props.iconName} class="w-8 lg:w-12 h-auto" />
             <div @if={props.text} class="text mt-auto break-words hyphens-auto text-lg lg:text-2xl font-medium">{props.text}</div>
         </div>

@@ -1,5 +1,10 @@
 prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
-
+    @styleguide {
+        props {
+            name = 'clock'
+            fallbackName = 'cloud'
+        }
+    }
     @propTypes {
         inline = ${PropTypes.boolean}
         name = ${PropTypes.string}

@@ -1,7 +1,6 @@
 prototype(Neos.Presentation:Paragraph) < prototype(Neos.Fusion:Component) {
-
     @styleguide {
-        title = "Paragraph"
+        title = 'Paragraph'
         props {
             text = 'Lorem ipsum dolor <em>sit amet</em>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est <strong>Lorem ipsum</strong> dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
         }
@@ -10,8 +9,26 @@ prototype(Neos.Presentation:Paragraph) < prototype(Neos.Fusion:Component) {
     @propTypes {
         text = ${PropTypes.string}
         tagName = ${PropTypes.oneOf(['p'])}
-        // see for all options the `display-*` classnames in resource://Neos.Presentation/Private/Fusion/Styles/Typography.pcss
-        display = ${PropTypes.anyOf(PropTypes.string, PropTypes.oneOf(['tagname', '', null]))}
+        display = ${PropTypes.oneOf([
+            'tagname',
+            'headline-xl',
+            'headline-lg',
+            'headline-md',
+            'headline-sm',
+            'title-lg',
+            'title-md',
+            'title-sm',
+            'lead',
+            'body-lg',
+            'body-md',
+            'body-sm',
+            'label-lg',
+            'label-md',
+            'label-sm',
+            'cta-xl',
+            'cta-lg',
+            'cta-sm'
+        ])}
     }
 
     text = ''
@@ -19,16 +36,19 @@ prototype(Neos.Presentation:Paragraph) < prototype(Neos.Fusion:Component) {
 
     // By default we use the defined tagname
     display = 'tagname'
-    display.@process.fallback = ${!Type.isString(value) && !Type.isInteger(value) ? 'tagname' : value}
 
     class = ''
+
+    additionalClass = 'n-paragraph'
+    @private.display = ${!Type.isString(props.display) && !Type.isInteger(props.display) ? 'tagname' : props.display}
 
     renderer = Neos.Fusion:Tag {
         tagName = ${props.tagName}
         attributes = Neos.Fusion:DataStructure {
             @apply.attributes = ${props.attributes}
             class = ${Carbon.String.classNames(
-                'display-' + props.display,
+                'display-' + private.display,
+                props.additionalClass,
                 props.class
             )}
             style = ${props.style}
@@ -36,6 +56,4 @@ prototype(Neos.Presentation:Paragraph) < prototype(Neos.Fusion:Component) {
 
         content = ${props.content || props.text}
     }
-
-    renderer.attributes.class.@process.component = ${'n-paragraph ' + value}
 }
