@@ -16,12 +16,13 @@ prototype(Neos.Presentation:List) < prototype(Neos.Fusion:Component) {
                 itemRenderer = Neos.Fusion:DataStructure {
                     image {
                         imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
-                            text = 'Preview of website'
+                            text = ${'Preview ' + item.label}
+                            backgroundColor = ${item.color}
                         }
                         alternativeText = ${item.label}
                     }
-                    link = '#'
-                    label = 'Name of the client and his project'
+                    link = ${'#' + iterator.cycle}
+                    label = ${'Name of the client and his ' + item.label + ' project'}
                     category = ${item}
                 }
             }
@@ -51,15 +52,28 @@ prototype(Neos.Presentation:List) < prototype(Neos.Fusion:Component) {
     label = null
     items = null
 
+    descriptionLabel = ${I18n.translate('Neos.Presentation:Main:description')}
+    categoryLabel = ${I18n.translate('Neos.Presentation:Main:category')}
+
     @if.hasItems = ${Type.isArray(this.items) && Array.length(this.items)}
     renderer = afx`
         <Neos.Presentation:Spacing size y x>
-            <ol class="n-counter list-preview mb-12 border-t border-t-solid border-t-gray-light divide-gray-light divide-solid divide-y text-2xl">
-                <Neos.Fusion:Loop items={props.items}>
-                    <Neos.Presentation:List.Fragment.Item {...item} />
-                </Neos.Fusion:Loop>
-            </ol>
-            <div @if={props.link} class="flex w-full justify-center mb-12">
+            <table class="w-full mb-12">
+                <thead class="sr-only">
+                    <tr>
+                        <th aria-hidden="true"></th>
+                        <th>{props.descriptionLabel}</th>
+                        <th class="hidden lg:table-cell">{props.categoryLabel}</th>
+                        <th class="hidden md:table-cell" aria-hidden="true"></th>
+                    </tr>
+                </thead>
+                <tbody class="n-counter">
+                    <Neos.Fusion:Loop items={props.items}>
+                        <Neos.Presentation:List.Fragment.Item {...item} />
+                    </Neos.Fusion:Loop>
+                </tbody>
+            </table>
+            <div @if={props.link && props.label} class="flex w-full justify-center mb-12">
                 <Neos.Presentation:Link variant="link" href={props.link} text={props.label} />
             </div>
         </Neos.Presentation:Spacing>
