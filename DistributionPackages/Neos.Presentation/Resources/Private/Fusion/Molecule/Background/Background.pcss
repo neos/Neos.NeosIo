@@ -1,55 +1,46 @@
 .n-background {
-  @apply flow-root;
+  color: var(--n-fg);
+  background-color: var(--n-bg);
 }
 
-.n-background--gradient {
-  @apply bg-gradient-to-r gradient-blue text-white;
-}
-
-.n-background--brand {
-  @apply bg-darkblue text-white;
+.n-background--gradient,
+.n-background--brand,
+.n-background--blue-dark {
   --n-fg: var(--color-white);
-  --n-bg: var(--color-darkblue);
+  --n-bg: var(--color-blue-dark);
 }
 
-.n-background--accent-purple {
-  @apply bg-accent-purple text-white;
+.n-background--blue {
   --n-fg: var(--color-white);
-  --n-bg: var(--color-accent-purple);
+  --n-bg: var(--color-blue);
 }
 
-.n-background--accent-blue {
-  @apply bg-accent-blue text-white;
+.n-background--blue-light {
+  --n-fg: var(--color-dark-blue);
+  --n-bg: var(--color-blue-light);
+}
+
+.n-background--purple {
   --n-fg: var(--color-white);
-  --n-bg: var(--color-accent-blue);
+  --n-bg: var(--color-purple);
 }
 
-.n-background--accent-lightblue {
-  @apply bg-accent-lightblue text-darkblue;
-  --n-fg: var(--color-darkblue);
-  --n-bg: var(--color-accent-lightblue);
-}
-
-.n-background--accent-green {
-  @apply bg-accent-green text-darkblue;
+.n-background--green {
   --n-fg: var(--color-black);
-  --n-bg: var(--color-accent-green);
+  --n-bg: var(--color-green);
 }
 
-.n-background--accent-yellow {
-  @apply bg-accent-yellow text-black;
+.n-background--yellow {
   --n-fg: var(--color-black);
-  --n-bg: var(--color-accent-yellow);
+  --n-bg: var(--color-yellow);
 }
 
-.n-background--accent-orange {
-  @apply bg-accent-orange text-black;
+.n-background--orange {
   --n-fg: var(--color-black);
-  --n-bg: var(--color-accent-orange);
+  --n-bg: var(--color-orange);
 }
 
-.n-background--accent-red {
-  @apply bg-accent-red text-white;
-  --n-fg: var(--color-white);
-  --n-bg: var(--color-accent-red);
+.n-background--red {
+  --n-fg: var(--color-black);
+  --n-bg: var(--color-red);
 }
