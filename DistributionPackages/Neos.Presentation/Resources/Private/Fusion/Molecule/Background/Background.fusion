@@ -1,21 +1,14 @@
 prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
-
     @styleguide {
-        title = "Background"
+        title = 'Background'
         props {
-            variant = null
+            variant = 'gradient'
             content = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda atque cumque, dignissimos ea eos error in iure laboriosam libero mollitia nam nemo omnis, perferendis quisquam recusandae reiciendis repudiandae unde ut!'
-        }
-        propSets {
-            gradient {
-                variant = 'gradient'
-                content = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda atque cumque, dignissimos ea eos error in iure laboriosam libero mollitia nam nemo omnis, perferendis quisquam recusandae reiciendis repudiandae unde ut!'
-            }
         }
     }
 
     @propTypes {
-        variant = ${PropTypes.oneOf(['gradient', 'brand', 'accent-purple', 'accent-blue', 'accent-lightblue', 'accent-green', 'accent-yellow', 'accent-orange', 'accent-red'])}
+        variant = ${PropTypes.oneOf(['gradient', 'brand', 'blue-dark', 'blue', 'blue-light', 'purple', 'green', 'yellow', 'orange', 'red'])}
         tagName = ${PropTypes.string}
         style = ${PropTypes.any}
         class = ${PropTypes.any}
@@ -34,18 +27,10 @@ prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
             tagName={props.tagName}
             attributes.style={props.style}
             attributes.class={Carbon.String.classNames(
+                'flow-root',
                 'n-background',
-                {
-                    'n-background--gradient': props.variant == 'gradient',
-                    'n-background--brand': props.variant == 'brand',
-                    'n-background--accent-purple': props.variant == 'accent-purple',
-                    'n-background--accent-blue': props.variant == 'accent-blue',
-                    'n-background--accent-lightblue': props.variant == 'accent-lightblue',
-                    'n-background--accent-green': props.variant == 'accent-green',
-                    'n-background--accent-yellow': props.variant == 'accent-yellow',
-                    'n-background--accent-orange': props.variant == 'accent-orange',
-                    'n-background--accent-red': props.variant == 'accent-red'
-                },
+                props.variant && 'n-background--' + props.variant,
+                props.variant == 'gradient' && 'bg-gradient-to-r from-blue-dark to-blue',
                 props.class
             )}
         >
