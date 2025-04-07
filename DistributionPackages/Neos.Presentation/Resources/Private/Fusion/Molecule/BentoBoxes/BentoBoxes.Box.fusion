@@ -1,22 +1,10 @@
 prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
-
     @propTypes {
-        background = PropTypes:Enum {
-            1 = 'gradient'
-            2 = 'brand'
-            3 = 'accent-purple'
-            4 = 'accent-blue'
-            5 = 'accent-lightblue'
-            6 = 'accent-green'
-            7 = 'accent-yellow'
-            8 = 'accent-orange'
-            9 = 'accent-red'
-        }
+        background = ${PropTypes.oneOf(['gradient', 'brand', 'blue-dark', 'blue', 'blue-light', 'purple', 'green', 'yellow', 'orange', 'red'])}
+        assetAlign = ${PropTypes.oneOf(['left', 'center', 'right', '', null])}
         link = PropTypes:String
-        assetAlign = PropTypes:String
-        heading = PropTypes:FromPrototype {
-            prototypeName = 'Neos.Presentation:Headline'
-        }
+        headlineTagName = ${PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'])}
+        headline = PropTypes:String
         linkLabel = PropTypes:String
         video = PropTypes:FromPrototype {
             prototypeName = 'Neos.Presentation:InlineVideo'
@@ -29,13 +17,9 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
     }
 
     background = null
-    link = ''
-    assetAlign = ''
-    heading = Neos.Fusion:DataStructure {
-        text = ''
-        tagName = 'h2'
-    }
-    linkLabel = ''
+    link = null
+    assetAlign = 'center'
+    linkLabel = null
     video = Neos.Fusion:DataStructure {
         sources = null
         assets = null
@@ -43,57 +27,56 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
     image = Neos.Fusion:DataStructure {
         imageSource = null
     }
+    alignEnd = false
+    headlineTagName = 'h2'
 
     @private {
-        linkClass = ${Carbon.String.classNames(
-            'pl-6 sm:pl-8 lg:pl-14 pr-6 2xl:pr-20 pt-8 2xl:pt-14 grow-0 before:absolute before:inset-0 before:z-10',
-            {
-                'pb-8 2xl:pb-14': props.assetAlign == 'center' || !props.link,
-                'pb-8 2xl:pb-0': props.assetAlign == 'right' && props.link
-            }
+        figureClass = ${Carbon.String.classNames(
+            'grow flex items-end mt-10',
+            props.assetAlign == 'right' && 'justify-end ml-8 lg:ml-10',
+            props.assetAlign == 'left' && 'justify-start mr-8 lg:mr-10',
+            props.assetAlign != 'left' && props.assetAlign != 'right' && 'justify-center mx-8 lg:mx-10'
         )}
-
-        assetWrapperClass = ${Carbon.String.classNames(
-            'grow flex items-end',
-            {
-                'justify-center px-8 lg:px-14': props.assetAlign == 'center',
-                'justify-end pl-8 sm:pl-14': props.assetAlign == 'right'
-            }
-        )}
+        hasVideo = ${props.video && (props.video.sources || props.video.assets)}
+        hasImage = ${props.image && props.image.imageSource && !private.hasVideo}
     }
 
     renderer = afx`
-        <div class="bento-boxes__box-wrapper max-w-full">
-            <Neos.Presentation:Background
-                class="bento-boxes__box h-full flex flex-col relative" variant={props.background}>
-                <Neos.Fusion:Tag
-                    tagName={props.link ? 'a' : 'div'} attributes.class={private.linkClass}
-                    attributes.href={props.link ? props.link : null}>
-                    <Neos.Presentation:Headline
-                        {...props.heading} display="title-lg text-2xl mdl:text-3xl 2xl:text-4xl"
-                    />
+        <Neos.Presentation:Background
+            variant={props.background}
+            class={["h-full w-full flex flex-col relative group", props.alignEnd ? "self-end" : null]}
+        >
+            <div class="p-8 lg:px-10">
+                <Neos.Presentation:Headline
+                    tagName={props.headlineTagName}
+                    display="title-lg"
+                >
+                    {props.link ? "" : props.headline}
+                    <a @if={props.link} href={props.link} class="block after:absolute after:inset-0 after:z-10">
+                        {props.headline}
+                    </a>
+                </Neos.Presentation:Headline>
+                <Neos.Presentation:Paragraph
+                    @if={props.link && props.linkLabel}
+                    display="cta-xl"
+                    class="flex mt-8 gap-2 items-center"
+                >
+                    {props.linkLabel}
+                    <Neos.Presentation:AnimatedArrow moveRight={true} />
+                </Neos.Presentation:Paragraph>
+            </div>
+            <figure @if={private.hasImage || private.hasVideo} class={private.figureClass}>
+                <Neos.Presentation:InlineVideo
+                    @if={private.hasVideo}
+                    {...props.video}
+                    poster={props.image && props.image.imageSource ? props.image.imageSource : null}
+                />
 
-                    <Neos.Presentation:Paragraph
-                        @if={props.link} display="cta-xl" class="mt-8 2xl:mt-14 text-md mdl:text-lg">
-                        {props.linkLabel} <Neos.Presentation:Atom.AnimatedArrow />
-                    </Neos.Presentation:Paragraph>
-                </Neos.Fusion:Tag>
-
-                <div class={private.assetWrapperClass}>
-                    <figure class="overflow-hidden">
-                        <Neos.Presentation:InlineVideo
-                            @if.hasVideo={props.video && (props.video.sources || props.video.assets)} {...props.video}
-                            poster={props.image && props.image.imageSource ? props.image.imageSource : null}
-                            class={Carbon.String.classNames({ 'max-w-none': props.assetAlign == 'right' })}
-                        />
-
-                        <Sitegeist.Kaleidoscope:Image
-                            @if.hasImage={props.image && (props.image.imageSource) && !(props.video && (props.video.assets || props.video.sources))}
-                            {...props.image} class={Carbon.String.classNames({ 'max-w-none': props.assetAlign == 'right' })}
-                        />
-                    </figure>
-                </div>
-            </Neos.Presentation:Background>
-        </div>
+                <Sitegeist.Kaleidoscope:Image
+                    @if={private.hasImage}
+                    {...props.image}
+                />
+            </figure>
+        </Neos.Presentation:Background>
     `
 }
