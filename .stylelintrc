@@ -1,24 +1,9 @@
 {
-  "extends": "stylelint-config-standard",
+  "extends": "stylelint-config-tailwindcss",
   "ignoreFiles": [
     "**/Public/**",
     "**/Private/Templates/**",
     "node_modules/**",
     "**/*.noLinter.*"
-  ],
-  "rules": {
-    "selector-class-pattern": "[a-z-_0-9]+",
-    "value-keyword-case": [
-      "lower",
-      { "camelCaseSvgKeywords": true, "ignoreFunctions": ["theme"] }
-    ],
-    "function-no-unknown": [true, { "ignoreFunctions": ["theme", "resolve"] }],
-    "declaration-property-value-no-unknown": [true, { "ignoreProperties": {
-      "/.+/": "/theme([^)]+)/"
-    }}],
-    "at-rule-no-unknown": [
-      true,
-      { "ignoreAtRules": ["tailwind", "apply", "layer", "screen"] }
-    ]
-  }
+  ]
 }

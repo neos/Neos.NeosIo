@@ -1,8 +1,8 @@
-prototype(Neos.Presentation:Atom.AnimatedArrow) < prototype(Neos.Fusion:Component) {
+prototype(Neos.Presentation:AnimatedArrow) < prototype(Neos.Fusion:Component) {
     @styleguide {
         title = 'Animated Arrow'
         props {
-            style = 'width: 90px;margin: 100px auto'
+            style = 'width: 90px; margin: 100px auto'
             class = 'group'
         }
     }
@@ -24,7 +24,7 @@ prototype(Neos.Presentation:Atom.AnimatedArrow) < prototype(Neos.Fusion:Componen
     }
 
     class = 'w-4'
-    lineClass = 'transition-transform ease-[steps(5)] scale-x-0 group-hover:scale-x-100 duration-500 origin-right'
+    lineClass = 'transition-transform ease-[steps(5)] scale-x-0 group-hocus-within:scale-x-100 duration-500 origin-right motion-reduce:hidden'
 
     renderer = afx`
         <svg

@@ -1,23 +1,52 @@
-.n-interactive {
-  @apply inline-flex justify-center items-center gap-2;
-}
+@layer components {
+  .n-interactive {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: --spacing(2);
+    cursor: pointer;
 
-.n-interactive--button {
-  @apply px-6 py-4;
-  @apply text-white bg-green hover:bg-green-dark;
-
-  &[disabled] {
-    @apply text-white bg-gray hover:bg-gray;
+    &[disabled] {
+      cursor: not-allowed;
+    }
   }
-}
 
-.n-interactive--link {
-  @apply pt-3 pb-1 border-b;
-  @apply text-black hover:text-lightblue;
-  @apply border-darkblue hover:border-lightblue;
+  .n-interactive--button {
+    --background-color: var(--color-green);
+    --color: var(--color-white);
 
-  &[disabled] {
-    @apply text-gray hover:text-gray;
-    @apply border-gray hover:border-gray;
+    padding: --spacing(4) --spacing(6);
+    color: var(--color);
+    background-color: var(--background-color);
+
+    &:where(:hover, :focus):not([disabled], .n-interactive--disabled) {
+      --background-color: var(--color-green-dark);
+    }
+
+    &[disabled],
+    &.n-interactive--disabled {
+      --background-color: var(--color-neutral-50);
+    }
+  }
+
+  .n-interactive--link {
+    --border-color: var(--color-blue-dark);
+    --color: var(--color-black);
+
+    padding-top: --spacing(3);
+    padding-bottom: --spacing(1);
+    border-bottom-width: 1px;
+    border-color: var(--border-color);
+    color: var(--color);
+
+    &:where(:hover, :focus):not([disabled], .n-interactive--disabled) {
+      --color: var(--color-blue-light);
+      --border-color: var(--color);
+    }
+
+    &[disabled],
+    &.n-interactive--disabled {
+      --color: var(--color-neutral-50);
+    }
   }
 }
