@@ -1,50 +1,41 @@
-.n-spacing--size {
-  @apply w-full max-w-screen-2xl mx-auto;
-}
+@layer base {
+  :root {
+    --n-spacing--x: --spacing(3);
+    --n-spacing--y-small: --spacing(3);
+    --n-spacing--y: --spacing(6);
 
-:root {
-  --n-spacing--x: theme('spacing.3');
+    @media (width >= theme(--breakpoint-xxs)) {
+      --n-spacing--x: --spacing(6);
+      --n-spacing--y-small: --spacing(6);
+      --n-spacing--y: --spacing(12);
+    }
 
-  @screen xxs {
-    --n-spacing--x: theme('spacing.6');
-  }
+    @media (width >= theme(--breakpoint-md)) {
+      --n-spacing--x: --spacing(9);
+      --n-spacing--y-small: --spacing(10);
+      --n-spacing--y: --spacing(20);
+    }
 
-  @screen md {
-    --n-spacing--x: theme('spacing.9');
-  }
+    @media (width >= theme(--breakpoint-lg)) {
+      --n-spacing--x: --spacing(16);
+    }
 
-  @screen lg {
-    --n-spacing--x: theme('spacing.16');
-  }
-
-  @screen 2xl {
-    --n-spacing--x: theme('spacing.20');
-  }
-}
-
-.n-spacing--x {
-  @apply px-spacing-x;
-}
-
-:root {
-  --n-spacing--y-small: theme('spacing.3');
-  --n-spacing--y: theme('spacing.6');
-
-  @screen xxs {
-    --n-spacing--y-small: theme('spacing.6');
-    --n-spacing--y: theme('spacing.12');
-  }
-
-  @screen md {
-    --n-spacing--y-small: theme('spacing.10');
-    --n-spacing--y: theme('spacing.20');
+    @media (width >= theme(--breakpoint-2xl)) {
+      --n-spacing--x: --spacing(20);
+    }
   }
 }
 
-.n-spacing--y {
-  @apply my-spacing-y;
-}
+@layer components {
+  .n-spacing--x {
+    padding-inline: var(--n-spacing--x);
+  }
 
-.n-spacing--y-small {
-  @apply my-spacing-y-small;
+  .n-spacing--y {
+    margin-block: var(--n-spacing--y);
+  }
+
+  .n-spacing--y-small {
+    margin-block: var(--n-spacing--y-small);
+  }
 }
