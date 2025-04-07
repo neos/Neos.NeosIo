@@ -43,7 +43,7 @@ prototype(Neos.Presentation:Spacing) < prototype(Neos.Fusion:Component) {
             class={Carbon.String.classNames(
             'n-spacing',
             {
-                'n-spacing--size': props.size || props.size == 'default',
+                'w-full max-w-screen-2xl mx-auto': props.size || props.size == 'default',
                 'n-spacing--x': props.x || props.x == 'default',
                 'n-spacing--y': props.y || props.y == 'default',
                 'n-spacing--y-small': props.y == 'small'
