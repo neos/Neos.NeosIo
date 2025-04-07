@@ -20,37 +20,54 @@ prototype(Neos.Presentation:List.Fragment.Item) < prototype(Neos.Fusion:Componen
     }
 
     renderer = afx`
-        <li
-            x-data={private.hasImage ? "{open:false}" : null}
-            x-on:mouseenter={private.hasImage ? "open=true" : null}
-            x-on:mouseleave={private.hasImage ? "open=false" : null}
-            class="n-counter__increment relative group flex flex-col gap-7 transition py-2 duration-500 bg-accent-yellow bg-opacity-0 min-h-32 justify-center hover:bg-opacity-100 md:flex-row md:justify-between md:items-center"
+        <tr
+            x-data={AlpineJS.object({link:props.link, image:false})}
+            x-on:click="window.location.href=link"
+            x-on:keydown.enter="window.location.href=link"
+            x-on:mouseenter={private.hasImage ? "image=true" : null}
+            x-on:mouseleave={private.hasImage ? "image=false" : null}
+            class="n-counter__increment group transition duration-500 hocus-within:bg-yellow cursor-pointer border-y border-y-solid border-y-neutral-40 *:py-9 *:align-baseline"
         >
-            <a href={props.link} class="flex gap-4 after:absolute after:inset-0 after:z-20 md:gap-14">
-                <span class="n-counter__decimal-leading-zero transition-transform group-hover:translate-x-8 delay-100 md:delay-0"></span>
-                <span class="transition-transform group-hover:translate-x-8 delay-100 md:delay-0">{props.label}</span>
-            </a>
-            <span class="flex order-first items-baseline gap-6 md:order-none transition-transform group-hover:translate-x-8 md:basis-72 md:delay-75">
-                <span class="aspect-square h-6 translate-y-1" style={"background-color:" + props.category.color}></span>
-                <span>{props.category.label}</span>
-            </span>
-            <Neos.Presentation:Atom.AnimatedArrow class="hidden md:block group-hover:translate-x-8 delay-150 mr-16 w-5" />
-            <figure
-                @if={private.hasImage}
-                class="absolute pointer-events-none z-40 shadow max-w-[calc(100%-100px)] w-96"
-                x-cloak
-                x-transition
-                x-show="open"
-                "x-anchor.right.offset.50"="mouse"
-            >
-                <Sitegeist.Kaleidoscope:Image
-                    imageSource={props.image.imageSource}
-                    alt={props.image.alternativeText}
-                    width={384}
-                    srcset="1x,2x"
-                    lazy={true}
-                />
-            </figure>
-        </li>
+            <td aria-hidden="true" class="pr-6 text-xl lg:text-2xl lg:pr-8">
+                <span class="n-counter__decimal-leading-zero block transition-transform motion-safe:group-hocus-within:translate-x-6"></span>
+            </td>
+            <td class="w-full pr-6 lg:pr-8">
+                <a href={props.link} class="block transition-transform delay-100 text-xl lg:text-2xl motion-safe:group-hocus-within:translate-x-6">
+                    {props.label}
+                </a>
+                <Neos.Presentation:List.Fragment.Item.Category {...props.category} class="lg:hidden mt-2 delay-100" />
+                <figure
+                    @if={private.hasImage}
+                    class="absolute pointer-events-none z-40 shadow-sm max-w-[calc(100%-100px)] w-96"
+                    x-cloak
+                    "x-transition.duration.300ms"
+                    x-show="image"
+                    "x-anchor.right.offset.50"="mouse"
+                >
+                    <Sitegeist.Kaleidoscope:Image
+                        imageSource={props.image.imageSource}
+                        alt={props.image.alternativeText}
+                        width={384}
+                        srcset="1x,2x"
+                        lazy={true}
+                    />
+                </figure>
+            </td>
+            <td class="hidden whitespace-nowrap pr-6 lg:pr-8 lg:table-cell">
+                <Neos.Presentation:List.Fragment.Item.Category {...props.category} class="delay-200" />
+            </td>
+            <td class="hidden md:table-cell" aria-hidden="true">
+                <Neos.Presentation:AnimatedArrow class="mx-8 w-4 lg:w-5" />
+            </td>
+        </tr>
+    `
+}
+
+prototype(Neos.Presentation:List.Fragment.Item.Category) < prototype(Neos.Fusion:Component) {
+    renderer = afx`
+        <span class={["flex items-center gap-3 transition-transform lg:text-2xl lg:gap-6 motion-safe:group-hocus-within:translate-x-6", props.class]}>
+            <span class="aspect-square rounded-xs size-3 lg:size-5" style={"background-color:" + props.color}></span>
+            <span>{props.label}</span>
+        </span>
     `
 }
