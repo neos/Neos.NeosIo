@@ -1,56 +1,48 @@
 prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
     @styleguide {
-        title = 'Button'
-        props {
-            text = 'Button Text'
-        }
-        useCases {
-            link.props {
-                text = 'Button as Link'
-                variant = 'link'
-            }
-            icon.props {
-                text = 'Button with Icon'
-                icon = 'animatedArrow'
-            }
+        props.content = 'Button Text'
+        useCases.icon.props {
+            content = 'Button with Icon'
+            icon = 'animatedArrow'
         }
     }
 
     @propTypes {
         variant = ${PropTypes.oneOf(['button', 'link'])}
-        text = ${PropTypes.string.isRequired}
-        href = ${PropTypes.anyOf(PropTypes.string)}
+        type = ${PropTypes.oneOf(['button', 'submit', 'reset'])}
+        content = ${PropTypes.string}
+        ariaLabel = ${PropTypes.string}
         icon = ${PropTypes.string}
-        srOnlyLabel = ${PropTypes.boolean}
         disabled = ${PropTypes.boolean}
+        class = ${PropTypes.any}
     }
 
-    text = null
     variant = 'button'
-    icon = null
-    srOnlyLabel = false
-
+    type = 'button'
     attributes = Neos.Fusion:DataStructure
-    class = null
 
-    renderer = Neos.Fusion:Tag {
-        tagName = 'button'
-        attributes {
-            @apply.attributes = ${props.attributes}
-            disabled = ${props.disabled}
-            class = ${Carbon.String.classNames(
-                'n-button n-interactive',
-                'n-interactive--' + props.variant,
-                {
-                    'n-interactive--disabled cursor-not-allowed': !!props.disabled,
-                    'group': !!(props.icon == 'animatedArrow' || props.icon == 'animatedArrowMoveRight')
-                },
-                props.class
-            )}
-        }
-        content = afx`
-            <span @if={props.text} class={props.srOnlyLabel ? "sr-only" : null}>{props.text}</span>
+    @private.class = ${Carbon.String.classNames(
+        'n-button n-interactive',
+        'n-interactive--' + props.variant,
+        {
+            'n-interactive--disabled cursor-not-allowed': !!props.disabled,
+            'group': !!(props.icon == 'animatedArrow' || props.icon == 'animatedArrowMoveRight')
+        },
+        props.class
+    )}
+
+    @if.hasLabelOrContent = ${this.content || this.ariaLabel}
+
+    renderer = afx`
+        <button
+            {...props.attributes}
+            disabled={props.disabled}
+            aria-label={props.ariaLabel}
+            type={props.type}
+            class={private.class}
+        >
+            {props.content}{props.icon ? ' ' : ''}
             <Neos.Presentation:Icon icon={props.icon} @if={props.icon} />
-        `
-    }
+        </button>
+    `
 }
