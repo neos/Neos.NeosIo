@@ -1,13 +1,8 @@
 prototype(Neos.Presentation:Paragraph) < prototype(Neos.Fusion:Component) {
-    @styleguide {
-        title = 'Paragraph'
-        props {
-            text = 'Lorem ipsum dolor <em>sit amet</em>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est <strong>Lorem ipsum</strong> dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
-        }
-    }
+    @styleguide.props.content = 'Lorem ipsum dolor <em>sit amet</em>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est <strong>Lorem ipsum</strong> dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
 
     @propTypes {
-        text = ${PropTypes.string}
+        content = PropTypes:String
         tagName = ${PropTypes.oneOf(['p'])}
         display = ${PropTypes.oneOf([
             'tagname',
@@ -31,16 +26,16 @@ prototype(Neos.Presentation:Paragraph) < prototype(Neos.Fusion:Component) {
         ])}
     }
 
-    text = ''
     tagName = 'p'
 
     // By default we use the defined tagname
     display = 'tagname'
 
-    class = ''
-
-    additionalClass = 'n-paragraph'
-    @private.display = ${!Type.isString(props.display) && !Type.isInteger(props.display) ? 'tagname' : props.display}
+    @private {
+        display = ${!Type.isString(props.display) && !Type.isInteger(props.display) ? 'tagname' : props.display}
+        additionalClass = 'n-paragraph'
+    }
+    @if.hasContent = ${this.content}
 
     renderer = Neos.Fusion:Tag {
         tagName = ${props.tagName}
@@ -48,12 +43,12 @@ prototype(Neos.Presentation:Paragraph) < prototype(Neos.Fusion:Component) {
             @apply.attributes = ${props.attributes}
             class = ${Carbon.String.classNames(
                 'display-' + private.display,
-                props.additionalClass,
+                private.additionalClass,
                 props.class
             )}
             style = ${props.style}
         }
 
-        content = ${props.content || props.text}
+        content = ${props.content}
     }
 }

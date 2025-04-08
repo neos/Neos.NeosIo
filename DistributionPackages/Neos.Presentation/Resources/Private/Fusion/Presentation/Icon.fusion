@@ -1,11 +1,10 @@
 prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
-    @styleguide {
-        props {
-            icon = 'clock'
-            class = 'group h-[1em]'
-            style = 'font-size: 90px; margin: 1em auto; color: red'
-        }
+    @styleguide.props {
+        icon = 'clock'
+        class = 'group h-[1em]'
+        style = 'font-size: 90px; margin: 1em auto; color: red'
     }
+
     @propTypes {
         icon = ${PropTypes.oneOf([
             'animatedArrow', 'animatedArrowMoveRight',
@@ -13,9 +12,9 @@ prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
             'chevron-down', 'clock', 'cloud', 'cursor','database', 'email', 'facebook', 'github', 'globe', 'instagram', 'linkedin', 'mastodon', 'package',
             'pixel-circle', 'pixel-clock', 'pixel-heart', 'search', 'slack', 'smiley', 'truck', 'umbrella', 'youtube', 'notfound'
         ])}
-        ariaLabel = ${PropTypes.string}
+        ariaLabel = PropTypes:String
         class = ${PropTypes.any}
-        style = ${PropTypes.string}
+        style = PropTypes:String
     }
 
     icon = null
