@@ -1,8 +1,6 @@
 prototype(Neos.Presentation:Spacing) < prototype(Neos.Fusion:Component) {
-
     @styleguide {
-        title = "Spacing"
-        description = "Spacing between elements (also available as css variables)"
+        description = 'Spacing between elements (also available as CSS variables)'
         props {
             size = 'default'
             x = 'default'
@@ -25,7 +23,7 @@ prototype(Neos.Presentation:Spacing) < prototype(Neos.Fusion:Component) {
 
         class = ${PropTypes.any}
         attributes = ${PropTypes.any}
-        tagName = ${PropTypes.string}
+        tagName = PropTypes:String
     }
 
     size = 'default'
