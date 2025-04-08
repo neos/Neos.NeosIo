@@ -3,9 +3,7 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
     @propTypes {
         title = PropTypes:String
         teaser = PropTypes:String
-        date = PropTypes:InstanceOf {
-            type = '\DateTimeInterface'
-        }
+        date = ${PropTypes.instanceOf('\\DateTimeInterface')}
         url = PropTypes:String
         linkText = PropTypes:String
         isFeature = PropTypes:Bool

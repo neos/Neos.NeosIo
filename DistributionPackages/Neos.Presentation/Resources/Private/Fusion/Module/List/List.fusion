@@ -34,9 +34,7 @@ prototype(Neos.Presentation:List) < prototype(Neos.Fusion:Component) {
         label = PropTypes:String
         items = PropTypes:DataStructure {
             image = PropTypes:DataStructure {
-                imageSource = PropTypes:InstanceOf {
-                    type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
-                }
+                imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
                 alternativeText = PropTypes:String
             }
             link = PropTypes:String

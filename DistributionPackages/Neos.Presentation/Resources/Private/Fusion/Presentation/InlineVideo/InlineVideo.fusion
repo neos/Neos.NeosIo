@@ -5,9 +5,7 @@ prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
         autoplay = PropTypes:Bool
         loop = PropTypes:Bool
         controls = PropTypes:Bool
-        poster = PropTypes:InstanceOf {
-            type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
-        }
+        poster = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
         sources = PropTypes:Array {
             type = PropTypes:DataStructure {
                 src = PropTypes:String
@@ -16,11 +14,8 @@ prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
         }
         class = ${PropTypes.any}
         assets = PropTypes:Array {
-            type = PropTypes:InstanceOf {
-                type = '\\Neos\\Media\\Domain\\Model\\AssetInterface'
-            }
+            type = ${PropTypes.instanceOf('\\Neos\\Media\\Domain\\Model\\AssetInterface')}
         }
-
     }
 
     autoplay = true
