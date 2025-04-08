@@ -23,7 +23,7 @@ prototype(Neos.Presentation:Link) < prototype(Neos.Fusion:Component) {
         variant = ${PropTypes.oneOf(['button', 'link'])}
         text = ${PropTypes.string.isRequired}
         href = ${PropTypes.anyOf(PropTypes.string)}
-        icon = ${PropTypes.anyOf(PropTypes.string, PropTypes.any)}
+        icon = ${PropTypes.string}
         srOnlyLabel = ${PropTypes.boolean}
         disabled = ${PropTypes.boolean}
     }
@@ -36,26 +36,6 @@ prototype(Neos.Presentation:Link) < prototype(Neos.Fusion:Component) {
     attributes = Neos.Fusion:DataStructure
     class = null
 
-    @private {
-        icon = Neos.Fusion:Case {
-            animatedArrow {
-                condition = ${props.icon == 'animatedArrow'}
-                renderer = Neos.Presentation:AnimatedArrow
-            }
-            string {
-                condition = ${Type.isString(props.icon)}
-                renderer = ${props.icon}
-            }
-            icon {
-                condition = ${props.icon}
-                renderer = Neos.Presentation:Icon {
-                    @apply.props = ${props.icon}
-                    class = 'w-5'
-                }
-            }
-        }
-    }
-
     renderer = Neos.Fusion:Tag {
         tagName = 'a'
         attributes {
@@ -65,7 +45,7 @@ prototype(Neos.Presentation:Link) < prototype(Neos.Fusion:Component) {
                 'n-interactive--' + props.variant,
                 {
                     'n-interactive--disabled cursor-not-allowed': !!props.disabled,
-                    'group': props.icon == 'animatedArrow'
+                    'group': !!(props.icon == 'animatedArrow' || props.icon == 'animatedArrowMoveRight')
                 },
                 props.class
             )}
@@ -73,7 +53,7 @@ prototype(Neos.Presentation:Link) < prototype(Neos.Fusion:Component) {
         }
         content = afx`
             <span @if={props.text} class={props.srOnlyLabel ? "sr-only" : null}>{props.text}</span>
-            {private.icon}
+            <Neos.Presentation:Icon icon={props.icon} @if={props.icon} />
         `
     }
 }
