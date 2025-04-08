@@ -1,6 +1,6 @@
 prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
     @propTypes {
-        background = ${PropTypes.oneOf(['gradient', 'brand', 'blue-dark', 'blue', 'blue-light', 'purple', 'green', 'yellow', 'orange', 'red'])}
+        background = ${PropTypes.oneOf(['gradient', 'blue-dark', 'blue', 'blue-light', 'purple', 'green', 'yellow', 'orange', 'red', 'black'])}
         assetAlign = ${PropTypes.oneOf(['left', 'center', 'right', '', null])}
         link = PropTypes:String
         headlineTagName = ${PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'])}
@@ -9,23 +9,15 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
         video = PropTypes:FromPrototype {
             prototypeName = 'Neos.Presentation:InlineVideo'
         }
-        image = PropTypes:DataStructure {
-            imageSource = PropTypes:InstanceOf {
-                type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
-            }
+        imageSource = PropTypes:InstanceOf {
+            type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
         }
     }
 
-    background = null
-    link = null
     assetAlign = 'center'
-    linkLabel = null
     video = Neos.Fusion:DataStructure {
         sources = null
         assets = null
-    }
-    image = Neos.Fusion:DataStructure {
-        imageSource = null
     }
     alignEnd = false
     headlineTagName = 'h2'
@@ -38,12 +30,12 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
             props.assetAlign != 'left' && props.assetAlign != 'right' && 'justify-center mx-8 lg:mx-10'
         )}
         hasVideo = ${props.video && (props.video.sources || props.video.assets)}
-        hasImage = ${props.image && props.image.imageSource && !private.hasVideo}
+        hasImage = ${props.imageSource && !private.hasVideo}
     }
 
     renderer = afx`
         <Neos.Presentation:Background
-            variant={props.background}
+            background={props.background}
             class={["h-full w-full flex flex-col relative group", props.alignEnd ? "self-end" : null]}
         >
             <div class="p-8 lg:px-10">
@@ -69,12 +61,12 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
                 <Neos.Presentation:InlineVideo
                     @if={private.hasVideo}
                     {...props.video}
-                    poster={props.image && props.image.imageSource ? props.image.imageSource : null}
+                    poster={props.imageSource}
                 />
 
                 <Sitegeist.Kaleidoscope:Image
                     @if={private.hasImage}
-                    {...props.image}
+                    imageSource={props.imageSource}
                 />
             </figure>
         </Neos.Presentation:Background>
