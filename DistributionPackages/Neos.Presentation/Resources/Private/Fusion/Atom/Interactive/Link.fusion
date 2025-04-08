@@ -1,59 +1,53 @@
 prototype(Neos.Presentation:Link) < prototype(Neos.Fusion:Component) {
     @styleguide {
-        title = 'Link'
         props {
-            text = 'Link Text'
+            content = 'Link Text'
             href = '#link'
         }
-        useCases {
-            button.props {
-                text = 'Link as Button'
-                href = '#link'
-                variant = 'button'
-            }
-            icon.props {
-                text = 'Link with Icon'
-                href = '#link'
-                icon = 'animatedArrow'
-            }
+        useCases.icon.props {
+            content = 'Link with Icon'
+            href = '#link'
+            icon = 'animatedArrow'
         }
     }
 
     @propTypes {
         variant = ${PropTypes.oneOf(['button', 'link'])}
-        text = ${PropTypes.string.isRequired}
-        href = ${PropTypes.anyOf(PropTypes.string)}
+        href = ${PropTypes.string}
+        content = ${PropTypes.string}
+        ariaLabel = ${PropTypes.string}
         icon = ${PropTypes.string}
-        srOnlyLabel = ${PropTypes.boolean}
         disabled = ${PropTypes.boolean}
+        class = ${PropTypes.any}
     }
 
-    text = null
     variant = 'link'
-    icon = null
-    srOnlyLabel = false
-
     attributes = Neos.Fusion:DataStructure
-    class = null
 
-    renderer = Neos.Fusion:Tag {
-        tagName = 'a'
-        attributes {
-            @apply.attributes = ${props.attributes}
-            class = ${Carbon.String.classNames(
-                'n-link n-interactive',
-                'n-interactive--' + props.variant,
-                {
-                    'n-interactive--disabled cursor-not-allowed': !!props.disabled,
-                    'group': !!(props.icon == 'animatedArrow' || props.icon == 'animatedArrowMoveRight')
-                },
-                props.class
-            )}
-            href = ${props.disabled ? null : props.href}
-        }
-        content = afx`
-            <span @if={props.text} class={props.srOnlyLabel ? "sr-only" : null}>{props.text}</span>
-            <Neos.Presentation:Icon icon={props.icon} @if={props.icon} />
-        `
+    @private.class = ${Carbon.String.classNames(
+        'n-link n-interactive',
+        'n-interactive--' + props.variant,
+        {
+            'n-interactive--disabled cursor-not-allowed': !!props.disabled,
+            'group': !!(props.icon == 'animatedArrow' || props.icon == 'animatedArrowMoveRight')
+        },
+        props.class
+    )}
+
+    @if {
+        hasHref = ${this.href}
+        hasLabelOrContent = ${this.content || this.ariaLabel}
     }
+
+    renderer = afx`
+        <a
+            {...props.attributes}
+            href={props.disabled ? null : props.href}
+            aria-label={props.ariaLabel}
+            class={private.class}
+        >
+            {props.content}
+            <Neos.Presentation:Icon icon={props.icon} @if={props.icon} />
+        </a>
+    `
 }
