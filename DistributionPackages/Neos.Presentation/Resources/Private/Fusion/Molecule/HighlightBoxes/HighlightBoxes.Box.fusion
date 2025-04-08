@@ -1,21 +1,16 @@
 prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Component) {
-
     @propTypes {
-        inBackend = PropTypes:Bool
         displayType = ${PropTypes.oneOf(['icon', 'imageCircle', 'imageHeader'])}
-        image = PropTypes:DataStructure {
-            imageSource = PropTypes:InstanceOf {
-                type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
-            }
+        imageSource = PropTypes:InstanceOf {
+            type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
         }
         tag = PropTypes:String
-        heading = PropTypes:String
+        headline = PropTypes:String
         description = PropTypes:String
         link = PropTypes:String
         linkLabel = PropTypes:String
     }
 
-    inBackend = false
     displayType = 'icon'
     imageWidth = 576
 
@@ -26,12 +21,12 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
     }
 
     renderer = afx`
-        <div class={Carbon.String.classNames('relative flex flex-col bg-gray-light', { 'group': !!props.link })}>
+        <div class={Carbon.String.classNames('relative flex flex-col bg-neutral-05', { 'group': !!props.link })}>
             <figure
                 @if={private.isIcon}
-                class="w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-lightblue/70 text-white grid place-content-center"
+                class="w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-blue-light/70 text-white grid place-content-center"
             >
-                <Neos.Presentation:Icon name={props.icon} class="w-6 h-6" />
+                <Neos.Presentation:Icon icon={props.icon} class="size-6" />
             </figure>
 
             <figure
@@ -39,7 +34,8 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
                 class={Carbon.String.classNames('overflow-hidden', private.isImageHeader ? 'aspect-video' : 'size-32 aspect-square rounded-full overflow-hidden self-center mx-4 mt-8 mb-2')}
             >
                 <Sitegeist.Kaleidoscope:Image
-                    @if={props.image && props.image.imageSource} {...props.image}
+                    @if={props.imageSource}
+                    imageSource={props.imageSource}
                     class="size-full object-cover will-change-transform duration-700 group-hover:scale-110"
                     srcset="1x,2x"
                     width={props.imageWidth}
@@ -49,29 +45,33 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
 
             <div class="flex-1 grid gap-2 p-4">
                 <div
-                    @if={!private.isIcon && (props.inBackend || props.tag)}
-                    class={Carbon.String.classNames('text-xs bg-lightblue/70 text-white px-2 py-1 rounded-full', private.isImageHeader ? 'absolute top-4 left-4' : 'self-start justify-self-start')}
+                    @if={!private.isIcon && props.tag}
+                    class={Carbon.String.classNames('text-xs bg-blue-light/70 text-white px-2 py-1 rounded-full', private.isImageHeader ? 'absolute top-4 left-4' : 'self-start justify-self-start')}
                 >
                     {props.tag}
                 </div>
 
                 <Neos.Presentation:Headline
-                    @if={props.inBackend || props.heading}
-                    tagName="h3" display="title-md" text={props.heading}
-                    class="text-darkblue group-hover:text-lightblue text-balance duration-300"
+                    @if={props.headline}
+                    tagName="h3"
+                    display="title-md"
+                    class="text-blue-dark group-hover:text-blue-light duration-300"
+                    content={props.headline}
                 />
 
                 <Neos.Presentation:Paragraph
-                    @if={!private.isImageHeader && (props.inBackend || props.description)}
-                    text={props.description} class="text-pretty"
+                    @if={!private.isImageHeader && props.description}
+                    class="text-pretty"
+                    content={props.description}
                 />
 
-                <a @if={props.link && props.linkLabel}
-                   href={props.link}
-                   class="mt-4 flex gap-2 text-darkblue self-end">
-                    <span class="absolute inset-0 pointer-events-auto"></span>
+                <a
+                    @if={props.link && props.linkLabel}
+                    href={props.link}
+                    class="mt-4 flex gap-2 text-blue-dark items-end self-end after:absolute after:inset-0 after:z-10 after:pointer-events-auto"
+                >
                     <span class="flex-1 text-balance">{props.linkLabel}</span>
-                    <Neos.Presentation:Atom.AnimatedArrow />
+                    <Neos.Presentation:Icon icon="animatedArrow" class="-translate-y-1 h-[1em]" />
                 </a>
             </div>
         </div>

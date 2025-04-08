@@ -1,61 +1,12 @@
 prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
-
-    @styleguide {
-        title = 'Highlight Boxes'
-        props {
-            cols = 3
-            heading = 'Tools that transform your digital journey'
-            image.imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
-                baseWidth = 1920
-                baseHeight = 1080
-            }
-            boxes = Neos.Fusion:DataStructure {
-                1 = Neos.Fusion:DataStructure {
-                    image.imageSource = Sitegeist.Kaleidoscope:DummyImageSource
-                    icon = 'heart'
-                    tag = 'Enterprise'
-                    heading = 'Enterprise Features like Role Management and Media Center'
-                    description = 'Manage your team and media assets with ease. Our role management system allows you to define roles and permissions for your team members.'
-                    link = '#'
-                    linkLabel = 'Learn more about roles and permissions'
-                    linkTargetBlank = true
-                }
-                2 = Neos.Fusion:DataStructure {
-                    image.imageSource = Sitegeist.Kaleidoscope:DummyImageSource
-                    icon = 'email'
-                    tag = 'Editor'
-                    heading = 'What you see, is what you get. Our True Inline Editor.'
-                    description = 'Our True Inline Editor allows you to edit your content directly on the page. No more guessing how your content will look like.'
-                }
-                3 = Neos.Fusion:DataStructure {
-                    image.imageSource = Sitegeist.Kaleidoscope:DummyImageSource
-                    icon = 'circle'
-                    heading = 'Customize your content with our powerful NodeTypes.'
-                    link = '#'
-                    linkLabel = 'Learn more about content elements'
-                }
-                4 = Neos.Fusion:DataStructure {
-                    image.imageSource = Sitegeist.Kaleidoscope:DummyImageSource
-                    icon = 'clock'
-                    heading = 'Track your success with our Analytics Dashboard.'
-                    description = 'Our Analytics Dashboard gives you insights into your content performance. Track your success and optimize your content.'
-                    link = '#'
-                    linkLabel = 'Learn more about analytics'
-                }
-            }
-        }
-    }
+    @styleguide.props = Neos.Presentation:HighlightBoxes.Fixture
 
     @propTypes {
-        inBackend = PropTypes:Bool
         cols = ${PropTypes.oneOf([2, 3, 4])}
         displayType = ${PropTypes.oneOf(['icon', 'imageCircle', 'imageHeader'])}
-        heading = PropTypes:String
-        hasBackgroundImage = PropTypes:Bool
-        image = PropTypes:DataStructure {
-            imageSource = PropTypes:InstanceOf {
-                type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
-            }
+        headline = PropTypes:String
+        imageSource = PropTypes:InstanceOf {
+            type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
         }
         boxes = PropTypes:Array {
             type = PropTypes:FromPrototype {
@@ -64,13 +15,11 @@ prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
         }
     }
 
-    inBackend = false
     cols = 2
     displayType = 'icon'
-    hasBackgroundImage = false
 
     @private {
-        backgroundImage = ${props.hasBackgroundImage && props.image && props.image.imageSource ? 'background-image:url(' + props.image.imageSource + ');' : null}
+        backgroundImage = ${props.imageSource ? 'background-image:url(' + props.imageSource + ');' : null}
         colClass = Neos.Fusion:Match {
             @subject = ${props.cols}
             @default = ''
@@ -80,7 +29,7 @@ prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
         imageWidth = Neos.Fusion:Case {
             noImage {
                 condition = ${props.displayType == 'icon'}
-                renderer = null
+                renderer = 0
             }
             isImageCircle {
                 condition = ${props.displayType == 'imageCircle'}
@@ -101,8 +50,9 @@ prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
         }
         content = afx`
                 <Neos.Presentation:Headline
-                    @if={props.inBackend || props.heading} text={props.heading}
-                    display="headline-lg" class="text-darkblue text-balance mb-16"
+                    @if={props.headline}
+                    content={props.headline}
+                    display="headline-lg" class="text-blue-dark text-balance mb-16"
                 />
                 <div class={Carbon.String.classNames('grid gap-8 sm:grid-cols-2', private.colClass)}>
                     <Neos.Fusion:Loop items={props.boxes} itemName="box">
@@ -114,7 +64,7 @@ prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <Neos.Presentation:Spacing
-            @if={private.backgroundImage}
+            @if={private.backgroundImage && private.content}
             size={false}
             y class="highlight-boxes bg-cover py-8"
             attributes.style={private.backgroundImage}
@@ -122,7 +72,7 @@ prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
             <Neos.Presentation:Spacing size x content={private.content} />
         </Neos.Presentation:Spacing>
         <Neos.Presentation:Spacing
-            @if={!private.backgroundImage}
+            @if={!private.backgroundImage && private.content}
             size x y class="highlight-boxes"
             content={private.content}
         />
