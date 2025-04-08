@@ -3,14 +3,19 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
         title = 'Square Icon'
         props {
             text = 'Forever Open Source'
-            iconName = 'heart'
+            icon = 'heart'
             color = 'purple'
         }
     }
 
     @propTypes {
         text = PropTypes:String
-        iconName = PropTypes:String
+        icon = ${PropTypes.oneOf([
+            'animatedArrow', 'animatedArrowMoveRight',
+            'neosAvatarPrimary', 'neosAvatarLight', 'neosAvatarDark', 'neosAvatarMonochrome', 'neosLogoPrimary', 'neosLogoLight', 'neosLogoDark', 'neosLogoMonochrome',
+            'chevron-down', 'clock', 'cloud', 'cursor','database', 'email', 'facebook', 'github', 'globe', 'instagram', 'linkedin', 'mastodon', 'package',
+            'pixel-circle', 'pixel-clock', 'pixel-heart', 'search', 'slack', 'smiley', 'truck', 'umbrella', 'youtube', 'notfound'
+        ])}
         color = PropTypes:String
         class = PropTypes:Union {
             string = PropTypes:String
@@ -28,8 +33,8 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = afx`
-        <div @if={props.iconName} class={Tailwind.merge('w-44 lg:w-56 lg:p-4 p-3 flex flex-col square-icon aspect-square text-white', private.backgroundColorClass, props.class)}>
-            <Neos.Presentation:Icon name={props.iconName} class="w-8 lg:w-12 h-auto" />
+        <div @if={props.icon} class={Tailwind.merge('w-44 lg:w-56 lg:p-4 p-3 flex flex-col square-icon aspect-square text-white', private.backgroundColorClass, props.class)}>
+            <Neos.Presentation:Icon icon={props.icon} class="w-8 lg:w-12 h-auto" />
             <div @if={props.text} class="text mt-auto break-words hyphens-auto text-lg lg:text-2xl font-medium">{props.text}</div>
         </div>
     `
