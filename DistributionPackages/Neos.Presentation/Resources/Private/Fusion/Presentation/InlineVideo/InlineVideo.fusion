@@ -1,9 +1,5 @@
 prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
-
-    @styleguide {
-        title = 'Inline Video'
-        props = Neos.Presentation:InlineVideo.Fixture
-    }
+    @styleguide.props = Neos.Presentation:InlineVideo.Fixture
 
     @propTypes {
         autoplay = PropTypes:Bool
@@ -15,22 +11,10 @@ prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
         sources = PropTypes:Array {
             type = PropTypes:DataStructure {
                 src = PropTypes:String
-                type = PropTypes:Enum {
-                    1 = 'webm'
-                    2 = 'mp4'
-                    3 = 'ogg'
-                }
+                type = ${PropTypes.oneOf(['webm', 'mp4', 'ogg'])}
             }
         }
-        class = PropTypes:Union {
-            string = PropTypes:String
-            array = PropTypes:Array {
-                type = PropTypes:Union {
-                    boolean = PropTypes:Bool
-                    string = PropTypes:String
-                }
-            }
-        }
+        class = ${PropTypes.any}
         assets = PropTypes:Array {
             type = PropTypes:InstanceOf {
                 type = '\\Neos\\Media\\Domain\\Model\\AssetInterface'

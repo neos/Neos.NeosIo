@@ -1,0 +1,33 @@
+prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
+    @styleguide.props {
+        background = 'gradient'
+        content = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda atque cumque, dignissimos ea eos error in iure laboriosam libero mollitia nam nemo omnis, perferendis quisquam recusandae reiciendis repudiandae unde ut!'
+    }
+
+    @propTypes {
+        background = ${PropTypes.oneOf(['gradient', 'blue-dark', 'blue', 'blue-light', 'purple', 'purple-dark', 'green', 'green-dark', 'yellow', 'yellow-dark', 'orange', 'red', 'black'])}
+        tagName = PropTypes:String
+        style = PropTypes:String
+        href = PropTypes:String
+        class = ${PropTypes.any}
+    }
+
+    tagName = 'div'
+    class = 'flow-root'
+
+    renderer = afx`
+        <Neos.Fusion:Tag
+            tagName={props.href ? 'a' : props.tagName}
+            attributes.style={props.style}
+            attributes.href={props.href}
+            attributes.class={Carbon.String.classNames(
+                'n-background',
+                props.background && 'n-background--' + props.background,
+                props.background == 'gradient' && 'bg-gradient-to-r from-blue-dark to-blue',
+                props.class
+            )}
+        >
+            {props.content}
+        </Neos.Fusion:Tag>
+    `
+}

@@ -10,10 +10,10 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
     @propTypes {
         variant = ${PropTypes.oneOf(['button', 'link'])}
         type = ${PropTypes.oneOf(['button', 'submit', 'reset'])}
-        content = ${PropTypes.string}
-        ariaLabel = ${PropTypes.string}
-        icon = ${PropTypes.string}
-        disabled = ${PropTypes.boolean}
+        content = PropTypes:String
+        ariaLabel = PropTypes:String
+        icon = PropTypes:String
+        disabled = PropTypes:Bool
         class = ${PropTypes.any}
     }
 
