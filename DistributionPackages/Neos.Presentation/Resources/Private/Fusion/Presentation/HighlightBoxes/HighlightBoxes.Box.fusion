@@ -1,9 +1,7 @@
 prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Component) {
     @propTypes {
         displayType = ${PropTypes.oneOf(['icon', 'imageCircle', 'imageHeader'])}
-        imageSource = PropTypes:InstanceOf {
-            type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
-        }
+        imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
         tag = PropTypes:String
         headline = PropTypes:String
         description = PropTypes:String

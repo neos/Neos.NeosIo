@@ -5,9 +5,7 @@ prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
         cols = ${PropTypes.oneOf([2, 3, 4])}
         displayType = ${PropTypes.oneOf(['icon', 'imageCircle', 'imageHeader'])}
         headline = PropTypes:String
-        imageSource = PropTypes:InstanceOf {
-            type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
-        }
+        imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
         boxes = PropTypes:Array {
             type = PropTypes:FromPrototype {
                 prototypeName = 'Neos.Presentation:HighlightBoxes.Box'

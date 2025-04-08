@@ -9,9 +9,7 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
         video = PropTypes:FromPrototype {
             prototypeName = 'Neos.Presentation:InlineVideo'
         }
-        imageSource = PropTypes:InstanceOf {
-            type = '\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface'
-        }
+        imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
     }
 
     assetAlign = 'center'
