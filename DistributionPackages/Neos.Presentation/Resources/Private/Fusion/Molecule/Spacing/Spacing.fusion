@@ -36,23 +36,23 @@ prototype(Neos.Presentation:Spacing) < prototype(Neos.Fusion:Component) {
 
     content = null
 
-    renderer = afx`
-        <Neos.Fusion:Augmenter
-            class={Carbon.String.classNames(
-            'n-spacing',
-            {
-                'w-full max-w-screen-2xl mx-auto': props.size || props.size == 'default',
-                'n-spacing--x': props.x || props.x == 'default',
-                'n-spacing--y': props.y || props.y == 'default',
-                'n-spacing--y-small': props.y == 'small'
-            },
-            props.class
-        )}>
-            <Neos.Fusion:Tag
-                tagName={props.tagName}
-                attributes={props.attributes}>
-                {props.content}
-            </Neos.Fusion:Tag>
-        </Neos.Fusion:Augmenter>
-    `
+    renderer = Neos.Fusion:Tag {
+        tagName = ${props.tagName}
+        content = ${props.content}
+        attributes = afx`
+            <Neos.Fusion:DataStructure
+                {...props.attributes}
+                class={Carbon.String.classNames(
+                    'n-spacing',
+                    {
+                        'w-full max-w-screen-2xl mx-auto': props.size || props.size == 'default',
+                        'n-spacing--x': props.x || props.x == 'default',
+                        'n-spacing--y': props.y || props.y == 'default',
+                        'n-spacing--y-small': props.y == 'small'
+                    },
+                    props.class
+                )}
+            />
+        `
+    }
 }
