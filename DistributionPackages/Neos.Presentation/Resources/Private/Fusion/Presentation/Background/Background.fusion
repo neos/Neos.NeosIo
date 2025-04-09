@@ -9,12 +9,20 @@ prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
         tagName = PropTypes:String
         style = PropTypes:String
         href = PropTypes:String
+        pixelCycle = PropTypes:Int
+        pixelPosition = ${PropTypes.oneOf(['', 'top', 'bottom'])}
         class = ${PropTypes.any}
     }
 
     tagName = 'div'
     class = 'flow-root'
+    pixelPosition = ''
+    pixelCycle = 1
 
+    @private {
+        maxPixelTypes = 3
+        pixelType = ${(props.pixelCycle - 1) % private.maxPixelTypes + 1}
+    }
     renderer = afx`
         <Neos.Fusion:Tag
             tagName={props.href ? 'a' : props.tagName}
@@ -24,6 +32,7 @@ prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
                 'n-background',
                 props.background && 'n-background--' + props.background,
                 props.background == 'gradient' && 'bg-gradient-to-r from-blue-dark to-blue',
+                props.pixelPosition && 'n-background--pixel n-background--pixel-' + props.pixelPosition + ' n-background--pixel-' + props.pixelPosition + private.pixelType,
                 props.class
             )}
         >
