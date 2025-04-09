@@ -1,41 +1,41 @@
 prototype(Neos.Presentation:PostGrid) < prototype(Neos.Fusion:Component) {
 
     @styleguide {
-        title = "Post Grid"
-        description = "A grid of posts with a headline. The posts are displayed as cards with an image, a title, a date, a teaser and a link to the full post and can be featured with a highlighted background color."
+        title = 'Post Grid'
+        description = 'A grid of posts with a headline. The posts are displayed as cards with an image, a title, a date, a teaser and a link to the full post and can be featured with a highlighted background color.'
         props {
-            headline.text = 'Blog'
+            headline = 'Blog'
             posts = Neos.Fusion:DataStructure {
                 0 {
                     title = 'First post example title'
                     teaser = 'This is a teaser for the first post example. It should be a short text that gives a quick overview of the post. It should be a short text that gives a quick overview of the post. This is more text to show the ellipsis on the teaser. It goes on and on and then there is even more text until it finally ends right here and right now.'
                     date = ${Date.create('now')}
-                    url = '#'
+                    href = '#'
                     linkText = 'Link Text'
                     isFeature = true
-                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    imageSource = Sitegeist.Kaleidoscope:UriImageSource {
                         uri = 'https://picsum.photos/1128/640?1'
                     }
                 }
                 1 {
                     title = 'Second post example title'
                     teaser = 'This is a teaser for the second post example. It should be a short text that gives a quick overview of the post.'
-                    date = ${Date.create('2023-12-04')}
-                    url = '#'
+                    date = ${Date.create('2026-12-04')}
+                    href = '#'
                 }
                 2 {
                     title = 'Third post example title'
                     teaser = 'This is a teaser for the third post example. It should be a short text that gives a quick overview of the post.'
-                    url = '#'
-                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    href = '#'
+                    imageSource = Sitegeist.Kaleidoscope:UriImageSource {
                         uri = 'https://picsum.photos/720/512?3'
                     }
                 }
                 3 {
                     title = 'Fourth post example title'
                     teaser = 'This is a teaser for the fourth post example. It should be a short text that gives a quick overview of the post.'
-                    date = ${Date.create('01.03.2023')}
-                    image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    date = ${Date.create('01.03.2025')}
+                    imageSource = Sitegeist.Kaleidoscope:UriImageSource {
                         uri = 'https://picsum.photos/720/512?4'
                     }
                 }
@@ -43,23 +43,21 @@ prototype(Neos.Presentation:PostGrid) < prototype(Neos.Fusion:Component) {
                     title = 'Fifth post example title'
                     teaser = 'This is a teaser for the fifth post example. It should be a short text that gives a quick overview of the post.'
                     date = ${Date.create('05.03.2022')}
-                    url = '#'
+                    href = '#'
                     isFeature = true
                 }
                 5 {
                     title = 'Sixth post example title'
                     teaser = 'This is a teaser for the sixth post example. It should be a short text that gives a quick overview of the post.'
                     date = ${Date.create('01.09.2010')}
-                    url = '#'
+                    href = '#'
                 }
             }
         }
     }
 
     @propTypes {
-        headline = PropTypes:FromPrototype {
-            prototypeName = 'Neos.Presentation:Headline'
-        }
+        headline = PropTypes:String
         posts = PropTypes:Array {
             type = PropTypes:FromPrototype {
                 prototypeName = 'Neos.Presentation:PostGrid.Teaser'
@@ -69,14 +67,14 @@ prototype(Neos.Presentation:PostGrid) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <Neos.Presentation:Spacing size x y>
-            <Neos.Presentation:Spacing y>
-                <Neos.Presentation:Headline {...props.headline} display="headline-lg" class="text-lightblue" />
+            <Neos.Presentation:Spacing y @if={props.headline}>
+                <Neos.Presentation:Headline content={props.headline} display="headline-lg" class="text-blue-light" />
             </Neos.Presentation:Spacing>
 
             <Neos.Presentation:Spacing y="small">
-                <ul class="grid md:grid-cols-2 xl:grid-cols-3 gap-4 mx-0">
-                    <Neos.Fusion:Loop items={props.posts} itemName="post">
-                        <Neos.Presentation:PostGrid.Teaser {...post} />
+                <ul class="gap-4 mx-0 grid md:grid-cols-2 xl:grid-cols-3">
+                    <Neos.Fusion:Loop items={props.posts}>
+                        <Neos.Presentation:PostGrid.Teaser {...item} />
                     </Neos.Fusion:Loop>
                 </ul>
             </Neos.Presentation:Spacing>
