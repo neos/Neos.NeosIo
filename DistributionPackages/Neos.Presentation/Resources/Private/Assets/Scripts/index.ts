@@ -30,9 +30,9 @@ Alpine.data('exclusiveDisclosure', function (id) {
     };
 });
 
-// @ts-ignore
 Alpine.plugin([anchor, clipboard, collapse, focus, intersect, typewriter, disclosure]);
 
+// @ts-ignore: Set Alpine as a global variable
 window.Alpine = Alpine;
 
 export { Alpine };
