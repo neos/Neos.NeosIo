@@ -59,14 +59,20 @@ prototype(Neos.Presentation:Module.PersonCards) < prototype(Neos.Fusion:Componen
                             <figure>
                                 <Sitegeist.Kaleidoscope:Image imageSource={item.imageSource} attributes.class="aspect-4/5 w-full object-cover"/>
                             </figure>
-                            <Neos.Presentation:Background background={item.background} pixelPosition="top" pixelCycle={iterator.cycle} class="px-8 pb-8 flex-1 flex flex-col">
+                            <Neos.Presentation:Background.Pixel
+                                background={item.background}
+                                pixelPosition="top"
+                                pixelCycle={iterator.cycle}
+                                delayBreakpoint="sm"
+                                class="px-8 pb-8 flex-1 flex flex-col"
+                            >
                                 <Neos.Presentation:Headline content={item.name} tagName="h3" display="title-lg" class="flex-1 pt-8" />
                                 <a href={"mailto:" + item.email}>
                                     <span class="sr-only">{I18n.translate('Neos.Presentation:Main:email')}</span>
                                     <Neos.Presentation:Icon icon="email" class="w-5 inline-block mr-2"/>
                                     {item.email}
                                 </a>
-                            </Neos.Presentation:Background>
+                            </Neos.Presentation:Background.Pixel>
                         </li>
                     </Neos.Fusion:Loop>
                 </ul>

@@ -1,0 +1,539 @@
+/* https://unused-css.com/tools/clip-path-generator */
+
+/* Make sure classes are generated */
+@source inline("n-background--pixel-{top,bottom}");
+@source inline("n-background--pixel-{top,bottom}{1..3}");
+@source inline("{sm,md,lg,xl}:n-background--pixel-delay");
+
+@utility n-background--pixel-delay {
+  animation-delay: var(--delay);
+}
+
+@layer components {
+  .n-background--pixel {
+    --units: 7;
+    --frac: calc(100cqw / var(--units));
+  }
+
+  .n-background--pixel-top {
+    margin-top: calc(var(--frac) * -4 - 2px);
+    padding-top: calc(var(--frac) * 4);
+
+    --bottom-none: polygon(evenodd, 0 calc(var(--frac) * 4), 100% calc(var(--frac) * 4), 100% 100%, 0 100%);
+    --bottom-left: polygon(evenodd, 0 calc(var(--frac) * 3), var(--frac) calc(var(--frac) * 3), var(--frac) calc(var(--frac) * 4), 100% calc(var(--frac) * 4), 100% 100%, 0 100%);
+    --bottom-left-right: polygon(evenodd, 0 calc(var(--frac) * 3), var(--frac) calc(var(--frac) * 3), var(--frac) calc(var(--frac) * 4), calc(var(--frac) * 6) calc(var(--frac) * 4), calc(var(--frac) * 6) calc(var(--frac) * 3), 100% calc(var(--frac) * 3), 100% 100%, 0 100%);
+  }
+
+  .n-background--pixel-top1 {
+    --delay: 0.5s;
+
+    animation: 0.7s step-start 0.5s 1 normal both pixel-top1;
+  }
+
+  .n-background--pixel-top2 {
+    --delay: 0.75s;
+
+    animation: 0.7s step-start 0.5s 1 normal both pixel-top2;
+  }
+
+  .n-background--pixel-top3 {
+    --delay: 1s;
+
+    animation: 0.7s step-start 0.5s 1 normal both pixel-top3;
+  }
+
+  @keyframes pixel-top1 {
+    0% {
+      clip-path: var(--bottom-none);
+    }
+    8% {
+      clip-path: var(--bottom-left);
+    }
+    15% {
+      clip-path: var(--bottom-left-right);
+    }
+    23% {
+      clip-path: polygon(evenodd, 0 calc(var(--frac) * 3), calc(var(--frac) * 2) calc(var(--frac) * 3), calc(var(--frac) * 2) calc(var(--frac) * 4), calc(var(--frac) * 6) calc(var(--frac) * 4), calc(var(--frac) * 6) calc(var(--frac) * 3), 100% calc(var(--frac) * 3), 100% 100%, 0 100%);
+    }
+    31% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 6) calc(var(--frac) * 4),
+        calc(var(--frac) * 6) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    38% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    46% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        calc(var(--frac) * 6) calc(var(--frac) * 3),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        100% calc(var(--frac) * 2),
+        100% 100%,
+        0 100%
+      );
+    }
+    54% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 4) calc(var(--frac) * 4),
+        calc(var(--frac) * 4) calc(var(--frac) * 3),
+        calc(var(--frac) * 6) calc(var(--frac) * 3),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        100% calc(var(--frac) * 2),
+        100% 100%,
+        0 100%
+      );
+    }
+    62% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 4) calc(var(--frac) * 4),
+        calc(var(--frac) * 4) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) calc(var(--frac) * 2),
+        100% calc(var(--frac) * 2),
+        100% 100%,
+        0 100%
+      );
+    }
+    69% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 4) calc(var(--frac) * 4),
+        calc(var(--frac) * 4) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) calc(var(--frac) * 1),
+        calc(var(--frac) * 6) calc(var(--frac) * 1),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        100% calc(var(--frac) * 2),
+        100% 100%,
+        0 100%
+      );
+    }
+    77% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 4) calc(var(--frac) * 4),
+        calc(var(--frac) * 4) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) calc(var(--frac) * 1),
+        calc(var(--frac) * 6) calc(var(--frac) * 1),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        100% calc(var(--frac) * 2),
+        100% 100%,
+        0 100%
+      );
+    }
+    85% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 3) calc(var(--frac) * 4),
+        calc(var(--frac) * 3) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) calc(var(--frac) * 1),
+        calc(var(--frac) * 6) calc(var(--frac) * 1),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        100% calc(var(--frac) * 2),
+        100% 100%,
+        0 100%
+      );
+    }
+    92% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        calc(var(--frac) * 3) calc(var(--frac) * 2),
+        calc(var(--frac) * 3) calc(var(--frac) * 4),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) var(--frac),
+        calc(var(--frac) * 6) var(--frac),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        100% calc(var(--frac) * 2),
+        100% 100%,
+        0 100%
+      );
+    }
+    100% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 2),
+        calc(var(--frac) * 2) var(--frac),
+        calc(var(--frac) * 3) var(--frac),
+        calc(var(--frac) * 3) calc(var(--frac) * 4),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        calc(var(--frac) * 5) var(--frac),
+        calc(var(--frac) * 6) var(--frac),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        100% calc(var(--frac) * 2),
+        100% 100%,
+        0 100%
+      );
+    }
+  }
+
+  @keyframes pixel-top2 {
+    0% {
+      clip-path: var(--bottom-none);
+    }
+    13% {
+      clip-path: var(--bottom-left);
+    }
+    25% {
+      clip-path: var(--bottom-left-right);
+    }
+    38% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 2),
+        calc(var(--frac) * 1) calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 4),
+        calc(var(--frac) * 6) calc(var(--frac) * 4),
+        calc(var(--frac) * 6) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    50% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 2),
+        calc(var(--frac) * 1) calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    63% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 2),
+        calc(var(--frac) * 1) calc(var(--frac) * 2),
+        var(--frac) calc(var(--frac) * 4),
+        calc(var(--frac) * 3) calc(var(--frac) * 4),
+        calc(var(--frac) * 3) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    75% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 1),
+        calc(var(--frac) * 1) calc(var(--frac) * 1),
+        var(--frac) calc(var(--frac) * 4),
+        calc(var(--frac) * 3) calc(var(--frac) * 4),
+        calc(var(--frac) * 3) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    88% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 1),
+        calc(var(--frac) * 1) calc(var(--frac) * 1),
+        var(--frac) calc(var(--frac) * 4),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    100% {
+      clip-path: polygon(
+        evenodd,
+        0 0,
+        var(--frac) 0,
+        var(--frac) var(--frac),
+        0 var(--frac),
+        0 calc(var(--frac) * 3),
+        var(--frac) calc(var(--frac) * 3),
+        var(--frac) var(--frac),
+        calc(var(--frac) * 2) var(--frac),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 1) calc(var(--frac) * 3),
+        calc(var(--frac) * 1) calc(var(--frac) * 4),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+  }
+
+  @keyframes pixel-top3 {
+    0% {
+      clip-path: var(--bottom-none);
+    }
+    10% {
+      clip-path: polygon(evenodd, 0 calc(var(--frac) * 4), calc(var(--frac) * 6) calc(var(--frac) * 4), calc(var(--frac) * 6) calc(var(--frac) * 3), 100% calc(var(--frac) * 3), 100% 100%, 0 100%);
+    }
+    20% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 6) calc(var(--frac) * 4),
+        calc(var(--frac) * 6) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    30% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 2) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    40% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 3) calc(var(--frac) * 3),
+        calc(var(--frac) * 3) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    50% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 3) calc(var(--frac) * 3),
+        calc(var(--frac) * 3) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    60% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 3) calc(var(--frac) * 3),
+        calc(var(--frac) * 3) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    70% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 3) calc(var(--frac) * 3),
+        calc(var(--frac) * 3) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) var(--frac),
+        100% var(--frac),
+        100% calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    80% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) var(--frac),
+        100% var(--frac),
+        100% calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    90% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        0 calc(var(--frac) * 3),
+        0 calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) var(--frac),
+        100% var(--frac),
+        100% calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+    100% {
+      clip-path: polygon(
+        evenodd,
+        0 calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 2),
+        calc(var(--frac) * 2) calc(var(--frac) * 3),
+        0 calc(var(--frac) * 3),
+        0 calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 4),
+        var(--frac) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 3),
+        calc(var(--frac) * 4) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 4),
+        calc(var(--frac) * 5) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) var(--frac),
+        100% var(--frac),
+        100% calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 2),
+        calc(var(--frac) * 6) calc(var(--frac) * 3),
+        100% calc(var(--frac) * 3),
+        100% 100%,
+        0 100%
+      );
+    }
+  }
+}
