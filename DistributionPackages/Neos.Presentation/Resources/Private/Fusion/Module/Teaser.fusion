@@ -25,10 +25,10 @@ prototype(Neos.Presentation:Module.Teaser) < prototype(Neos.Fusion:Component) {
             prototypeName = "Neos.Presentation:Paragraph"
         }
         primaryLink = PropTypes:FromPrototype {
-            prototypeName = "Neos.Presentation:Link"
+            prototypeName = "Neos.Presentation:Button"
         }
         secondaryLink = PropTypes:FromPrototype {
-            prototypeName = "Neos.Presentation:Link"
+            prototypeName = "Neos.Presentation:Button"
         }
     }
 
@@ -42,11 +42,11 @@ prototype(Neos.Presentation:Module.Teaser) < prototype(Neos.Fusion:Component) {
                     </Neos.Presentation:Spacing>
                     <Neos.Presentation:Spacing y="small">
                         <div class="flex flex-wrap gap-10 items-center">
-                            <Neos.Presentation:Link
+                            <Neos.Presentation:Button
                                 @if={props.primaryLink.text}
                                 {...props.primaryLink}
                                 variant="button" />
-                            <Neos.Presentation:Link
+                            <Neos.Presentation:Button
                                 @if={props.secondaryLink.text}
                                 {...props.secondaryLink} />
                         </div>

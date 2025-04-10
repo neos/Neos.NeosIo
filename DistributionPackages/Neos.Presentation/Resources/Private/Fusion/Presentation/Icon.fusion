@@ -1,7 +1,7 @@
 prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
     @styleguide.props {
         icon = 'clock'
-        class = 'group h-[1em]'
+        class = 'group/icon h-[1em]'
         style = 'font-size: 90px; margin: 1em auto; color: red'
     }
 
@@ -38,7 +38,7 @@ prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
             neosLogoPrimary = 'fill-blue-light'
         }
         class = ${Tailwind.merge(
-            props.icon == 'animatedArrowMoveRight' && 'transition-transform duration-500 ease-[steps(5)] group-hocus-within:translate-x-1/2',
+            props.icon == 'animatedArrowMoveRight' && 'transition-transform duration-500 ease-[steps(5)] group-hocus-within/icon:translate-x-1/2',
             props.class
         )}
         neosAvatar = afx`
@@ -61,7 +61,7 @@ prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
                 viewBox="0 0 5 5"
                 fill="currentColor"
             >
-                <path class="transition-transform ease-[steps(5)] scale-x-0 group-hocus-within:scale-x-100 duration-500 origin-right motion-reduce:hidden" d="M0 2h4v1H0z"/>
+                <path class="transition-transform ease-[steps(5)] scale-x-0 group-hocus-within/icon:scale-x-100 duration-500 origin-right motion-reduce:hidden" d="M0 2h4v1H0z"/>
                 <path d="M2 0h1v1H2zM3 1h1v1H3zM4 2h1v1H4zM3 3h1v1H3zM2 4h1v1H2z"/>
             </svg>
         `

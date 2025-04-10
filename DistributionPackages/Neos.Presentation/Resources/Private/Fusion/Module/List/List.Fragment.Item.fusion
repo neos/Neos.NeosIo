@@ -24,7 +24,7 @@ prototype(Neos.Presentation:List.Fragment.Item) < prototype(Neos.Fusion:Componen
             x-on:keydown.enter="window.location.href=link"
             x-on:mouseenter={private.hasImage ? "image=true" : null}
             x-on:mouseleave={private.hasImage ? "image=false" : null}
-            class="n-counter__increment group transition duration-500 hocus-within:bg-yellow cursor-pointer border-y border-y-solid border-y-neutral-40 *:py-9 *:align-baseline"
+            class="n-counter__increment group group/icon transition duration-500 hocus-within:bg-yellow cursor-pointer border-y border-y-solid border-y-neutral-40 *:py-9 *:align-baseline"
         >
             <td aria-hidden="true" class="pr-6 text-xl lg:text-2xl lg:pr-8">
                 <span class="n-counter__decimal-leading-zero block transition-transform motion-safe:group-hocus-within:translate-x-6"></span>
