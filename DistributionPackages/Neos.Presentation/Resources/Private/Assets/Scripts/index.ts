@@ -12,7 +12,7 @@ import '../../Fusion/Presentation/LogoBar';
 import '../../Fusion/Organism/ImageCollage';
 import '../../Fusion/Organism/Navigation/Navigation.js';
 
-Alpine.data('exclusiveDisclosure', function (id) {
+Alpine.data('exclusiveDisclosure', function (id: string | number) {
     return {
         id,
         get expanded() {
