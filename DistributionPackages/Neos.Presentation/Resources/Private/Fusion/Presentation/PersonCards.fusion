@@ -53,7 +53,11 @@ prototype(Neos.Presentation:Module.PersonCards) < prototype(Neos.Fusion:Componen
                 {props.headline}
             </Neos.Presentation:Spacing>
             <Neos.Presentation:Spacing y="small">
-                <ul role="list" class="grid sm:grid-cols-2 md:grid-cols-3 items-stretch gap-6 text-white">
+                <Neos.Presentation:DynamicGrid
+                    tagName="ul"
+                    attributes.role="list"
+                    class="items-stretch text-white dynamic-grid-gap-6 dynamic-grid-max-cols-3 dynamic-grid-min-size-76"
+                >
                     <Neos.Fusion:Loop items={props.cards}>
                         <li class="flex flex-col @container">
                             <figure>
@@ -75,7 +79,7 @@ prototype(Neos.Presentation:Module.PersonCards) < prototype(Neos.Fusion:Componen
                             </Neos.Presentation:Background.Pixel>
                         </li>
                     </Neos.Fusion:Loop>
-                </ul>
+                </Neos.Presentation:DynamicGrid>
             </Neos.Presentation:Spacing>
         </Neos.Presentation:Spacing>
     `
