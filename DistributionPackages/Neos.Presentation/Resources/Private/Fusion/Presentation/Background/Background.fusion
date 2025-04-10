@@ -9,34 +9,37 @@ prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
         tagName = PropTypes:String
         style = PropTypes:String
         href = PropTypes:String
-        pixelCycle = PropTypes:Int
-        pixelPosition = ${PropTypes.oneOf(['', 'top', 'bottom'])}
         class = ${PropTypes.any}
     }
 
     tagName = 'div'
     class = 'flow-root'
-    pixelPosition = ''
-    pixelCycle = 1
 
+    attributes = Neos.Fusion:DataStructure
+
+    // Extension point for pixel backgrounds
     @private {
-        maxPixelTypes = 3
-        pixelType = ${(props.pixelCycle - 1) % private.maxPixelTypes + 1}
+        class = ''
+        attributes = Neos.Fusion:DataStructure
     }
-    renderer = afx`
-        <Neos.Fusion:Tag
-            tagName={props.href ? 'a' : props.tagName}
-            attributes.style={props.style}
-            attributes.href={props.href}
-            attributes.class={Carbon.String.classNames(
-                'n-background',
-                props.background && 'n-background--' + props.background,
-                props.background == 'gradient' && 'bg-gradient-to-r from-blue-dark to-blue',
-                props.pixelPosition && 'n-background--pixel n-background--pixel-' + props.pixelPosition + ' n-background--pixel-' + props.pixelPosition + private.pixelType,
-                props.class
-            )}
-        >
-            {props.content}
-        </Neos.Fusion:Tag>
-    `
+
+    renderer = Neos.Fusion:Tag {
+        tagName = ${props.href ? 'a' : props.tagName}
+        content = ${props.content}
+        attributes = afx`
+            <Neos.Fusion:DataStructure
+                {...props.attributes}
+                {...private.attributes}
+                style={props.style}
+                href={props.href}
+                class={Carbon.String.classNames(
+                    'n-background',
+                    props.background && 'n-background--' + props.background,
+                    props.background == 'gradient' && 'bg-gradient-to-r from-blue-dark to-blue',
+                    private.class,
+                    props.class
+                )}
+            />
+        `
+    }
 }
