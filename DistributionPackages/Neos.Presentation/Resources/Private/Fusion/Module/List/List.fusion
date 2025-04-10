@@ -72,7 +72,7 @@ prototype(Neos.Presentation:List) < prototype(Neos.Fusion:Component) {
                 </tbody>
             </table>
             <div @if={props.link && props.label} class="flex w-full justify-center mb-12">
-                <Neos.Presentation:Link variant="link" href={props.link} text={props.label} />
+                <Neos.Presentation:Button variant="link" href={props.link} content={props.label} />
             </div>
         </Neos.Presentation:Spacing>
     `

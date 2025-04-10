@@ -17,7 +17,7 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
     }
 
     renderer = afx`
-        <li class={Carbon.String.classNames('group w-full h-full relative', props.isFeature ? 'aspect-[4/3] md:aspect-video xl:aspect-[4/3] md:col-span-2 md:row-span-2' : 'aspect-[7/5]')}>
+        <li class={Carbon.String.classNames('group group/icon w-full h-full relative', props.isFeature ? 'aspect-[4/3] md:aspect-video xl:aspect-[4/3] md:col-span-2 md:row-span-2' : 'aspect-[7/5]')}>
             <Neos.Presentation:Background
                 background={private.background}
                 class="w-full h-fit xs:h-full grid grid-cols-1 xs:grid-rows-1 overflow-clip">

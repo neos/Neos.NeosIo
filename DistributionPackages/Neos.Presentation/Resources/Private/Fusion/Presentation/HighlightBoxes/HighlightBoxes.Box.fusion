@@ -19,7 +19,7 @@ prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Componen
     }
 
     renderer = afx`
-        <div class={Carbon.String.classNames('relative flex flex-col bg-neutral-05', { 'group': !!props.link })}>
+        <div class={Carbon.String.classNames('relative flex flex-col bg-neutral-05', { 'group/icon': !!props.link })}>
             <figure
                 @if={private.isIcon}
                 class="w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-blue-light/70 text-white grid place-content-center"

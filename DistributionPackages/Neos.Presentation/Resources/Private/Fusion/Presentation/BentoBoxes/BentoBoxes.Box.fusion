@@ -34,7 +34,7 @@ prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <Neos.Presentation:Background
             background={props.background}
-            class={["h-full w-full flex flex-col relative group", props.alignEnd ? "self-end" : null]}
+            class={["h-full w-full flex flex-col relative group/icon", props.alignEnd ? "self-end" : null]}
         >
             <div class="p-8 lg:px-10">
                 <Neos.Presentation:Headline
