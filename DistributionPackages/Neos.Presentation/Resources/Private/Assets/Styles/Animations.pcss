@@ -11,6 +11,14 @@
   }
 }
 
+@utility animation-pause {
+  animation-play-state: paused;
+}
+
+@utility animation-play {
+  animation-play-state: running;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   :root {
     --anim-opacity: none;
