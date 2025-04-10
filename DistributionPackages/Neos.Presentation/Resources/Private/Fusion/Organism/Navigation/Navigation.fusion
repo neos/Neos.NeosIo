@@ -3,7 +3,7 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
     @styleguide {
         title = "Navigation"
         container = Neos.Presentation:Background {
-            variant = 'gradient'
+            background = 'gradient'
             content = ${value}
         }
         props {
@@ -89,7 +89,7 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
                                 <Sitegeist.Kaleidoscope:Image class="w-full mb-4">
                                     <Sitegeist.Kaleidoscope:ResourceImageSource @path="imageSource" path="resource://Neos.Presentation/Public/Assets/Styleguide/Images/navteaser.png" />
                                 </Sitegeist.Kaleidoscope:Image>
-                                <Neos.Presentation:Button text="Try the Neos Demo" icon="animatedArrow" class="w-full" />
+                                <Neos.Presentation:Button content="Try the Neos Demo" icon="animatedArrow" class="w-full" />
                             `
                         }
                     }
@@ -183,7 +183,7 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
                                 <Sitegeist.Kaleidoscope:Image class="w-full mb-4">
                                     <Sitegeist.Kaleidoscope:ResourceImageSource @path="imageSource" path="resource://Neos.Presentation/Public/Assets/Styleguide/Images/navteaser.png" />
                                 </Sitegeist.Kaleidoscope:Image>
-                                <Neos.Presentation:Button text="Try the Neos Demo" icon="animatedArrow" class="w-full" />
+                                <Neos.Presentation:Button content="Try the Neos Demo" icon="animatedArrow" class="w-full" />
                             `
                         }
                     }
@@ -205,19 +205,19 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
             type = PropTypes:Union {
                 groups = PropTypes:DataStructure {
                     label = ${PropTypes.string.required}
-                    link = ${PropTypes.string}
+                    link = PropTypes:String
                     flyoutType = 'group'
                     flyoutTeaser = PropTypes:String
                     flyoutItems = PropTypes:Array {
                         type = PropTypes:DataStructure {
-                            label = ${PropTypes.string}
-                            link = ${PropTypes.string}
+                            label = PropTypes:String
+                            link = PropTypes:String
                             items = PropTypes:Array {
                                 type = PropTypes:DataStructure {
-                                    label = ${PropTypes.string}
-                                    link = ${PropTypes.string}
-                                    icon = ${PropTypes.string}
-                                    description = ${PropTypes.string}
+                                    label = PropTypes:String
+                                    link = PropTypes:String
+                                    icon = PropTypes:String
+                                    description = PropTypes:String
                                 }
                             }
                         }
@@ -257,7 +257,7 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
                         </li>
                     </Neos.Fusion:Loop>
                 </div>
-                <Neos.Presentation:Button text="Try Neos" />
+                <Neos.Presentation:Button content="Try Neos" />
             </ul>
         </Neos.Presentation:Spacing>
     `

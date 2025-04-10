@@ -99,21 +99,21 @@ prototype(Neos.Presentation:Module.Footer) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = afx`
-      <Neos.Presentation:Background variant="gradient">
+      <Neos.Presentation:Background background="gradient">
         <Neos.Presentation:Spacing y>
           <Neos.Presentation:Spacing x y="small" size>
             <div class="flex flex-wrap gap-12 mb-10">
               <div class="flex-grow grid gap-y-14">
                 <Neos.Presentation:Icon name="neos-white-logo" class="h-12" />
                 <Neos.Presentation:Paragraph
-                  text="Neos is free and open source software licensed under GPL v3 or later. Created with passion by over 100 contributors around the world."
+                  content="Neos is free and open source software licensed under GPL v3 or later. Created with passion by over 100 contributors around the world."
                   class="max-w-screen-xxs"
                 />
               </div>
               <div class="flex grow-3 flex-wrap gap-8">
                 <Neos.Fusion:Loop items={props.linkGroups} itemName="group">
                   <div class="grow">
-                    <Neos.Presentation:Headline display="title-md" text={group.title} />
+                    <Neos.Presentation:Headline display="title-md" content={group.title} />
                     <div class="grid gap-y-1 mt-6">
                         <Neos.Fusion:Loop items={group.links} itemName="link">
                             <a href={link.link} class="py-1 hover:underline underline-offset-8 display-body-lg">{link.title}</a>

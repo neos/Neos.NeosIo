@@ -7,8 +7,7 @@ Alpine.data('NavigationItem', () => ({
     },
     root: {
         ['x-on:focusout'](event) {
-            if (event.currentTarget.contains(event.relatedTarget)) {
-            } else {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
                 this.open = false;
             }
         },
