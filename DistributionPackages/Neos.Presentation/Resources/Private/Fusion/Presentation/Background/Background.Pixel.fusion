@@ -24,7 +24,7 @@ prototype(Neos.Presentation:Background.Pixel) < prototype(Neos.Presentation:Back
     @private {
         maxPixelTypes = 3
         pixelType = ${(props.pixelCycle - 1) % private.maxPixelTypes + 1}
-        class = ${['n-background--pixel', 'n-background--pixel-' + props.pixelPosition, 'n-background--pixel-' + props.pixelPosition + private.pixelType, props.delayBreakpoint ? props.delayBreakpoint + ':n-background--pixel-delay' : null]}
+        class = ${['motion-reduce:animation-state-finish n-background--pixel', 'n-background--pixel-' + props.pixelPosition, 'n-background--pixel-' + props.pixelPosition + private.pixelType, props.delayBreakpoint ? props.delayBreakpoint + ':n-background--pixel-delay' : null]}
         attributes = Neos.Fusion:DataStructure {
             x-data = '{play:false}'
             'x-intersect.full:enter' = 'play=true'

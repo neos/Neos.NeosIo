@@ -19,6 +19,11 @@
   animation-play-state: running;
 }
 
+@utility animation-state-finish {
+  animation-play-state: paused;
+  animation-direction: reverse;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   :root {
     --anim-opacity: none;
