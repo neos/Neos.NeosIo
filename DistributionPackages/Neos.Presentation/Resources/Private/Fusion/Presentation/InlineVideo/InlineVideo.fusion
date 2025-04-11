@@ -1,0 +1,64 @@
+prototype(Neos.Presentation:InlineVideo) < prototype(Neos.Fusion:Component) {
+    @styleguide.props = Neos.Presentation:InlineVideo.Fixture
+
+    @propTypes {
+        autoplay = PropTypes:Bool
+        loop = PropTypes:Bool
+        controls = PropTypes:Bool
+        poster = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        sources = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                src = PropTypes:String
+                type = ${PropTypes.oneOf(['webm', 'mp4', 'ogg'])}
+            }
+        }
+        class = ${PropTypes.any}
+        assets = PropTypes:Array {
+            type = ${PropTypes.instanceOf('\\Neos\\Media\\Domain\\Model\\AssetInterface')}
+        }
+    }
+
+    autoplay = true
+    loop = true
+    controls = false
+    sources = ${[]}
+    videoFileTypes = ${['webm', 'mp4', 'ogg']}
+    class = null
+    assets = ${[]}
+
+    @private {
+        sources = Neos.Fusion:Case {
+            hasAssets {
+                condition = ${props.assets && Array.length(props.assets)}
+                renderer = Neos.Presentation:Atom.InlineVideo.AssetsToSources {
+                    assets = ${props.assets}
+                }
+            }
+
+            hasSources {
+                condition = ${props.sources && Array.length(props.sources)}
+                renderer = ${props.sources}
+            }
+        }
+        posterUrl = ${props.poster ? props.poster.src() : null}
+    }
+
+    renderer = afx`
+      <video
+        @if={private.sources}
+        class={Carbon.String.classNames(props.class)}
+        autoplay={props.autoplay ? true : null}
+        muted={props.autoplay ? true : null}
+        loop={props.loop ? true : null}
+        controls={props.controls ? true : null}
+        poster={private.posterUrl ? private.posterUrl : null}
+        playsinline="playsinline">
+        <Neos.Fusion:Loop items={props.videoFileTypes} itemName="type">
+          <Neos.Fusion:Loop items={private.sources} itemName="source">
+            <source @if={source.type == type} type={"video/" + type} src={source.src} />
+          </Neos.Fusion:Loop>
+        </Neos.Fusion:Loop>
+      </video>
+    `
+
+}

@@ -1,0 +1,41 @@
+@layer base {
+  :root {
+    --n-spacing--x: --spacing(3);
+    --n-spacing--y-small: --spacing(3);
+    --n-spacing--y: --spacing(6);
+
+    @media (width >= theme(--breakpoint-xxs)) {
+      --n-spacing--x: --spacing(6);
+      --n-spacing--y-small: --spacing(6);
+      --n-spacing--y: --spacing(12);
+    }
+
+    @media (width >= theme(--breakpoint-md)) {
+      --n-spacing--x: --spacing(9);
+      --n-spacing--y-small: --spacing(10);
+      --n-spacing--y: --spacing(20);
+    }
+
+    @media (width >= theme(--breakpoint-lg)) {
+      --n-spacing--x: --spacing(16);
+    }
+
+    @media (width >= theme(--breakpoint-2xl)) {
+      --n-spacing--x: --spacing(20);
+    }
+  }
+}
+
+@layer components {
+  .n-spacing--x {
+    padding-inline: var(--n-spacing--x);
+  }
+
+  .n-spacing--y {
+    margin-block: var(--n-spacing--y);
+  }
+
+  .n-spacing--y-small {
+    margin-block: var(--n-spacing--y-small);
+  }
+}

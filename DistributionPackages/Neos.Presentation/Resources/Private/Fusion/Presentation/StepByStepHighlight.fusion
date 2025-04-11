@@ -1,0 +1,95 @@
+prototype(Neos.Presentation:StepByStepHighlight) < prototype(Neos.Fusion:Component) {
+    @styleguide.props {
+        headline = 'Tools that transform your digital journey'
+        steps = Neos.Fusion:DataStructure {
+            1 = Neos.Fusion:DataStructure {
+                headline = 'Enterprise Features like Role Management and Media Center'
+                text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.'
+                imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    uri = 'https://picsum.photos/512/512?1'
+                }
+            }
+            2 = Neos.Fusion:DataStructure {
+                headline = 'What you see, is what you get. Our True Inline Editor.'
+                text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+                imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    uri = 'https://picsum.photos/512/360?2'
+                }
+            }
+            3 = Neos.Fusion:DataStructure {
+                headline = 'Multi-language and Multi-site Functionality'
+                text = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.'
+                imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    uri = 'https://picsum.photos/360/512?3'
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        headline = PropTypes:String
+        steps = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                id = PropTypes:Int
+                headline = PropTypes:String
+                text = PropTypes:String
+                imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+            }
+        }
+    }
+
+    @private.steps = ${Type.isArray(props.steps) ? Array.filter(props.steps, item => !!item.headline) : []}
+
+    renderer = afx`
+        <Neos.Presentation:Spacing
+            @if={Array.length(private.steps)}
+            size x y class="grid md:grid-cols-2 gap-8"
+            attributes.x-data="{active:1}"
+        >
+            <figure class="hidden md:grid">
+                <Neos.Fusion:Loop items={private.steps} itemName="step">
+                    <Sitegeist.Kaleidoscope:Image
+                        @if={step.imageSource}
+                        imageSource={step.imageSource}
+                        attributes.x-show={'active==' + iterator.cycle}
+                        attributes."x-transition.duration.750ms"
+                        attributes.class="col-start-1 row-start-1 w-full"
+                    />
+                </Neos.Fusion:Loop>
+            </figure>
+
+            <div>
+                <Neos.Presentation:Headline
+                    @if={props.headline}
+                    content={props.headline}
+                    display="headline-lg"
+                    class="text-blue-dark mb-8"
+                />
+                <Neos.Fusion:Loop items={private.steps} itemName="step">
+                    <div
+                        x-disclosure
+                        x-data={AlpineJS.function('exclusiveDisclosure', iterator.cycle)}
+                        class="max-w-full px-4 py-1 broder-l border-l-2 flex flex-col"
+                        :class="$disclosure.isOpen?'border-l-blue-light':'border-l-neutral-05'"
+                    >
+                        <button
+                            type="button"
+                            x-disclosure:button
+                            :class="$disclosure.isOpen?'text-blue-light':'text-blue-dark'"
+                            class="duration-300 mb-2 display-title-md text-left cursor-pointer"
+                        >
+                            {step.headline}
+                        </button>
+
+                        <div x-disclosure:panel x-collapse>
+                            <Neos.Presentation:Paragraph class="mb-2" content={step.text} />
+                            <figure @if={step.imageSource} class="my-8 md:hidden">
+                                <Sitegeist.Kaleidoscope:Image imageSource={step.imageSource} attributes.class="mx-auto" />
+                            </figure>
+                        </div>
+                    </div>
+                </Neos.Fusion:Loop>
+            </div>
+        </Neos.Presentation:Spacing>
+    `
+}

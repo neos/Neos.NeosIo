@@ -1,0 +1,39 @@
+prototype(Neos.Presentation:Background.Pixel) < prototype(Neos.Presentation:Background) {
+    @styleguide.props {
+        background = 'gradient'
+        content = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda atque cumque, dignissimos ea eos error in iure laboriosam libero mollitia nam nemo omnis, perferendis quisquam recusandae reiciendis repudiandae unde ut!'
+    }
+
+    @propTypes {
+        background = ${PropTypes.oneOf(['gradient', 'blue-dark', 'blue', 'blue-light', 'purple', 'purple-dark', 'green', 'green-dark', 'yellow', 'yellow-dark', 'orange', 'red', 'black'])}
+        tagName = PropTypes:String
+        style = PropTypes:String
+        href = PropTypes:String
+        pixelCycle = PropTypes:Int
+        pixelPosition = ${PropTypes.oneOf(['top', 'bottom'])}
+        delayBreakpoint = ${PropTypes.oneOf(['sm', 'md', 'lg', 'xl'])}
+        replayAnimation = PropTypes:Bool
+        class = ${PropTypes.any}
+    }
+
+    pixelPosition = 'top'
+    pixelCycle = 1
+    replayAnimation = true
+    delayBreakpoint = null
+
+    @private {
+        maxPixelTypes = 3
+        pixelType = ${(props.pixelCycle - 1) % private.maxPixelTypes + 1}
+        class = ${['motion-reduce:animation-state-finish n-background--pixel', 'n-background--pixel-' + props.pixelPosition, 'n-background--pixel-' + props.pixelPosition + private.pixelType, props.delayBreakpoint ? props.delayBreakpoint + ':n-background--pixel-delay' : null]}
+        attributes = Neos.Fusion:DataStructure {
+            x-data = '{play:false}'
+            'x-intersect.full:enter' = 'play=true'
+            'x-intersect.full:leave' = 'play=false'
+            'x-intersect.full:leave'.@if.replay = ${props.replayAnimation}
+            :class = "play?'animation-play':'animation-pause'"
+            // This is a workaround to restart the animation when play changes
+            x-effect = "if(!play){$el.style.animation='none';$el.offsetHeight;$el.style.animation=null}"
+            x-effect.@if.replay = ${props.replayAnimation}
+        }
+    }
+}

@@ -1,0 +1,42 @@
+prototype(Neos.Presentation:HighlightBoxes.Fixture) < prototype(Neos.Fusion:DataStructure) {
+    cols = 3
+    headline = 'Tools that transform your digital journey'
+    imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+        baseWidth = 1920
+        baseHeight = 1080
+    }
+    boxes = Neos.Fusion:DataStructure {
+        1 = Neos.Fusion:DataStructure {
+            imageSource = Sitegeist.Kaleidoscope:DummyImageSource
+            icon = 'heart'
+            tag = 'Enterprise'
+            headline = 'Enterprise Features like Role Management and Media Center'
+            description = 'Manage your team and media assets with ease. Our role management system allows you to define roles and permissions for your team members.'
+            link = '#'
+            linkLabel = 'Learn more about roles and permissions'
+            linkTargetBlank = true
+        }
+        2 = Neos.Fusion:DataStructure {
+            imageSource = Sitegeist.Kaleidoscope:DummyImageSource
+            icon = 'mail'
+            tag = 'Editor'
+            headline = 'What you see, is what you get. Our True Inline Editor.'
+            description = 'Our True Inline Editor allows you to edit your content directly on the page. No more guessing how your content will look like.'
+        }
+        3 = Neos.Fusion:DataStructure {
+            imageSource = Sitegeist.Kaleidoscope:DummyImageSource
+            icon = 'square'
+            headline = 'Customize your content with our powerful NodeTypes.'
+            link = '#'
+            linkLabel = 'Learn more about content elements'
+        }
+        4 = Neos.Fusion:DataStructure {
+            imageSource = Sitegeist.Kaleidoscope:DummyImageSource
+            icon = 'clock'
+            headline = 'Track your success with our Analytics Dashboard.'
+            description = 'Our Analytics Dashboard gives you insights into your content performance. Track your success and optimize your content.'
+            link = '#'
+            linkLabel = 'Learn more about analytics'
+        }
+    }
+}
