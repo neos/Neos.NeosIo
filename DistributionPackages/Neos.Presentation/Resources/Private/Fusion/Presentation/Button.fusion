@@ -43,7 +43,7 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
         button = ${[
             'px-8 py-4 text-black bg-green display-cta-lg hocus:text-white hocus:bg-green-dark',
             private.isButton ? 'disabled:bg-neutral-40! disabled:text-black!' : 'aria-disabled:bg-neutral-40! aria-disabled:text-black!',
-            props.fullWidth ? 'flex w-full justify-center' : 'inline-flex'
+            props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
         ]}
         transparent = ${[
             'inline-flex text-black display-cta-xl hocus:opacity-66 disabled:text-neutral-40! aria-disabled:text-neutral-40!',
