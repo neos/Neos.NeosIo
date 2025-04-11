@@ -1,5 +1,9 @@
 prototype(Neos.Presentation:DynamicGrid) < prototype(Neos.Fusion:Component) {
     @propTypes {
+        tagName = PropTypes:String
+        content = PropTypes:String
+        class = ${PropTypes.any}
+        attributes = ${PropTypes.any}
         maxCols = PropTypes:Int
         gap = PropTypes:Union {
             int = PropTypes:Int
