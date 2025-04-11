@@ -1,11 +1,11 @@
 @layer components {
   .dynamic-grid {
     /* calculations, do not touch */
-    ----size-calc: calc((100% - var(--gap) * var(--max-cols)) / var(--max-cols));
+    ----size-calc: calc((100% - var(--gap, 0) * var(--max-cols)) / var(--max-cols));
     ----min-size-calc: min(100%, max(var(--min-size), var(----size-calc)));
 
     display: grid;
-    gap: var(--gap);
+    gap: var(--gap, 0);
     grid-template-columns: repeat(auto-fit, minmax(var(----min-size-calc), 1fr));
   }
 }
