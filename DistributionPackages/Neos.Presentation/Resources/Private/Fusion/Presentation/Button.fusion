@@ -73,7 +73,7 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
         content = afx`
             {props.fullWidth && private.hasIcon ? "" : props.content}
             <span @if={props.fullWidth && private.hasIcon && props.content} class="grow">{props.content}</span>
-            <Neos.Presentation:Icon icon={props.icon} @if={private.hasIcon} />
+            <Neos.Presentation:Icon icon={props.icon} @if={private.hasIcon} class="h-[1em] shrink-0" />
         `
     }
 }
