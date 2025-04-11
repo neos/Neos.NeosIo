@@ -8,7 +8,7 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
     @propTypes {
         content = PropTypes:String
         icon = ${PropTypes.oneOf([
-            'animatedArrow', 'animatedArrowStatic',
+            'animatedArrow', 'animatedArrowLeft',
             'neosAvatarPrimary', 'neosAvatarLight', 'neosAvatarDark', 'neosAvatarMonochrome', 'neosLogoPrimary', 'neosLogoLight', 'neosLogoDark', 'neosLogoMonochrome',
             'arrow-right', 'briefcase', 'calculator', 'calendar', 'chevron-down', 'chevron-left', 'chevron-right', 'chevron-up', 'clock', 'cloud', 'desktop',
             'development', 'document', 'eye', 'facebook', 'file', 'github', 'globe', 'headphones', 'heart', 'house', 'instagram', 'linkedin', 'mail-open',
@@ -27,7 +27,7 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
             class={['w-44 lg:w-56 lg:p-4 p-3 flex flex-col square-icon aspect-square text-white', props.class]}
             background={props.background}
         >
-            <Neos.Presentation:Icon icon={props.icon} class="w-8 lg:w-12 h-auto" />
+            <Neos.Presentation:Icon icon={props.icon} sizeClass="h-8 lg:h-12 mr-auto" />
             <span @if={props.content} class="block mt-auto break-words hyphens-auto text-lg lg:text-2xl font-medium">{props.content}</span>
         </Neos.Presentation:Background>
     `
