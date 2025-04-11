@@ -1,7 +1,7 @@
 prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
     @styleguide.props {
         content = 'Forever Open Source'
-        icon = 'pixel-heart'
+        icon = 'heart'
         background = 'purple'
     }
 
@@ -10,8 +10,9 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
         icon = ${PropTypes.oneOf([
             'animatedArrow', 'animatedArrowMoveRight',
             'neosAvatarPrimary', 'neosAvatarLight', 'neosAvatarDark', 'neosAvatarMonochrome', 'neosLogoPrimary', 'neosLogoLight', 'neosLogoDark', 'neosLogoMonochrome',
-            'chevron-down', 'clock', 'cloud', 'cursor','database', 'email', 'facebook', 'github', 'globe', 'instagram', 'linkedin', 'mastodon', 'package',
-            'pixel-circle', 'pixel-clock', 'pixel-heart', 'search', 'slack', 'smiley', 'truck', 'umbrella', 'youtube', 'notfound'
+            'arrow-right', 'briefcase', 'calculator', 'calendar', 'chevron-down', 'chevron-left', 'chevron-right', 'chevron-up', 'clock', 'cloud', 'desktop',
+            'development', 'document', 'eye', 'facebook', 'file', 'github', 'globe', 'headphones', 'heart', 'house', 'instagram', 'linkedin', 'mail-open',
+            'mail', 'mastodon', 'place', 'plus', 'quote', 'search', 'slack', 'smile', 'square', 'time', 'user', 'youtube', 'notfound'
         ])}
         background = ${PropTypes.oneOf(['gradient', 'blue-dark', 'blue', 'blue-light', 'purple', 'purple-dark', 'green', 'green-dark', 'yellow', 'yellow-dark', 'orange', 'red', 'black'])}
         class = ${PropTypes.any}

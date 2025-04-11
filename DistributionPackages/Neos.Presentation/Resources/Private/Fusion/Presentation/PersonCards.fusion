@@ -71,9 +71,12 @@ prototype(Neos.Presentation:Module.PersonCards) < prototype(Neos.Fusion:Componen
                                 class="px-8 pb-8 flex-1 flex flex-col"
                             >
                                 <Neos.Presentation:Headline content={item.name} tagName="h3" display="title-lg" class="flex-1 pt-8" />
-                                <a href={"mailto:" + item.email}>
+                                <a href={"mailto:" + item.email} class="group inline-flex items-center gap-2 mr-auto">
                                     <span class="sr-only">{I18n.translate('Neos.Presentation:Main:email')}</span>
-                                    <Neos.Presentation:Icon icon="email" class="w-5 inline-block mr-2"/>
+                                    <Neos.Presentation:LayeredGrid inline={true} class="-translate-y-0.5" attributes.aria-hidden="true">
+                                        <Neos.Presentation:Icon icon="mail" class="w-5 visible self-end group-hocus:invisible"/>
+                                        <Neos.Presentation:Icon icon="mail-open" class="w-5 invisible self-end group-hocus:visible"/>
+                                    </Neos.Presentation:LayeredGrid>
                                     {item.email}
                                 </a>
                             </Neos.Presentation:Background.Pixel>
