@@ -1,15 +1,20 @@
 prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
     @styleguide {
-        props.content = 'Button Text'
+        props {
+            content = 'Button Text'
+            attributes.style = "margin: 50px"
+        }
         useCases {
             icon.props {
                 content = 'Button with Icon'
                 icon = 'animatedArrow'
+                attributes.style = "margin: 50px"
             }
             href.props {
                 content = 'Link with Icon'
                 icon = 'animatedArrow'
                 href = '#link'
+                attributes.style = "margin: 50px"
             }
         }
     }
@@ -24,6 +29,7 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
         icon = PropTypes:String
         disabled = PropTypes:Bool
         fullWidth = PropTypes:Bool
+        iconLeft = PropTypes:Bool
         class = ${PropTypes.any}
     }
 
@@ -31,6 +37,7 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
     type = 'button'
     fullWidth = false
     attributes = Neos.Fusion:DataStructure
+    iconLeft = ${this.icon == 'animatedArrowLeft'}
 
     @private {
         isButton = ${!props.href}
@@ -71,9 +78,10 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
             />
         `
         content = afx`
+            <Neos.Presentation:Icon @if={private.hasIcon && props.iconLeft} icon={props.icon} class="shrink-0" />
             {props.fullWidth && private.hasIcon ? "" : props.content}
             <span @if={props.fullWidth && private.hasIcon && props.content} class="grow">{props.content}</span>
-            <Neos.Presentation:Icon icon={props.icon} @if={private.hasIcon} class="h-[1em] shrink-0" />
+            <Neos.Presentation:Icon @if={private.hasIcon && !props.iconLeft} icon={props.icon} class="shrink-0" />
         `
     }
 }
