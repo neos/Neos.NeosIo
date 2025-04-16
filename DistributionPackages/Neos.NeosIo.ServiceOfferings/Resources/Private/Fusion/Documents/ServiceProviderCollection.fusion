@@ -1,12 +1,12 @@
 prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection) < prototype(Neos.NeosIo:DefaultPage) {
-    body {
+    body.template {
         content {
             keyVisual = Neos.NeosIo:KeyVisual {
                 keyVisualSize = 'small'
             }
 
             main = Neos.Fusion:Join {
-                top = Neos.Neos:PrimaryContent {
+                top = Neos.Neos:ContentCollection {
                     nodePath = 'main'
                 }
 
@@ -40,6 +40,6 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection) < pro
     }
 
     @cache {
-        entryTags.children = ${Neos.Caching.descendantOfTag(footerContainer)}
+        entryTags.children = ${Neos.Caching.descendantOfTag(q(site).property('footerContentContainer'))}
     }
 }
