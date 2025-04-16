@@ -9,7 +9,7 @@ prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Loop) {
     @cache {
         mode = 'cached'
         entryIdentifier {
-            node = ${node}
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
         }
         tags {
             1 = ${Neos.Caching.nodeTag(node)}

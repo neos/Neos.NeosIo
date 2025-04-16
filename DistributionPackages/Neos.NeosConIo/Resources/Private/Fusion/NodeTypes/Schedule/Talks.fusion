@@ -14,7 +14,7 @@ prototype(Neos.NeosConIo:Schedule.Talks) < prototype(Neos.Fusion:Component) {
             </div>
         </Neos.Fusion:Loop>
         <Neos.Fusion:Loop items={props.talksAndBreaks} itemName="talk" @children="itemRenderer">
-            <div data-date={Date.format(q(talk).property('talkDate'), 'y-m-d')} data-room-id={talk.properties.room.identifier} class={"talk " + (talk.properties.room.identifier ? 'talk--room' + q(talk.properties.room).prevAll().count() + ' talk--totalRooms' + Array.length(props.rooms) : 'talk--fullWidthBecauseNoRoom talk--totalRooms' + Array.length(props.rooms))}>
+            <div data-date={Date.format(q(talk).property('talkDate'), 'y-m-d')} data-room-id={talk.properties.room.aggregateId} class={"talk " + (talk.properties.room.aggregateId ? 'talk--room' + q(talk.properties.room).prevAll().count() + ' talk--totalRooms' + Array.length(props.rooms) : 'talk--fullWidthBecauseNoRoom talk--totalRooms' + Array.length(props.rooms))}>
                 <header class="talk__header">
                     <div class="talk__time">
                         <i class="fas fa-clock"></i>

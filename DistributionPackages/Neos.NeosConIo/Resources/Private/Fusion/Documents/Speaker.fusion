@@ -1,6 +1,6 @@
 prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
-    body.content.keyVisual = ""
-    body.content.main = Neos.Fusion:Template {
+    body.template.content.keyVisual = ""
+    body.template.content.main = Neos.Fusion:Template {
         templatePath = 'resource://Neos.NeosConIo/Private/Templates/NodeTypes/Speaker.html'
 
         title = ${q(node).property('title')}
