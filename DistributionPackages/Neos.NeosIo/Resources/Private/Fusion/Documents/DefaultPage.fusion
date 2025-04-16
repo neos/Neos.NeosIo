@@ -1,4 +1,15 @@
 prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
+    httpResponseHead {
+        # https://scotthelme.co.uk/content-security-policy-an-introduction/
+        # https://owasp.org/www-project-secure-headers/#div-headers
+        headers.X-Frame-Options = 'sameorigin'
+        headers.X-Content-Type-Options = 'nosniff'
+        headers.Referrer-Policy = 'same-origin'
+        headers.Permissions-Policy = 'camera=(), display-capture=(), geolocation=(), microphone=()'
+        # disabled, see https://owasp.org/www-project-secure-headers/index.html#x-xss-protection
+        headers.X-XSS-Protection = '0'
+    }
+
     head {
         metaTags = Neos.NeosIo:MetaTags
         stylesheets = Neos.NeosIo:PageStyles
