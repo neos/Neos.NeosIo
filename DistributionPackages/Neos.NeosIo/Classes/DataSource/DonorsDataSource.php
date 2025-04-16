@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Neos\NeosIo\DataSource;
 
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Flow\Annotations as Flow;
 use Neos\Neos\Service\DataSource\AbstractDataSource;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\NeosIo\Service\FundingApiConnector;
 
 class DonorsDataSource extends AbstractDataSource
@@ -23,11 +23,11 @@ class DonorsDataSource extends AbstractDataSource
     protected $fundingApi;
 
     /**
-     * @param NodeInterface $node The node that is currently edited (optional)
+     * @param Node $node The node that is currently edited (optional)
      * @param array $arguments Additional arguments (key / value)
      * @return array
      */
-    public function getData(NodeInterface $node = null, array $arguments = []): array
+    public function getData(Node $node = null, array $arguments = []): array
     {
         $options = [];
 

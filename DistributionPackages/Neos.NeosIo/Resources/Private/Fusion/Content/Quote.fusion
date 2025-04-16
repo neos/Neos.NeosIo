@@ -27,7 +27,7 @@ prototype(Neos.NeosIo:Quote) < prototype(Neos.Neos:ContentComponent) {
           <img src={props.authorAvatarUri}
                itemprop="image" alt={props.alternativeText} title={props.title} loading="lazy" />
         </div>
-        <div class="flag__image" @if={!props.authorAvatar && node.context.inBackend}>
+        <div class="flag__image" @if={!props.authorAvatar && renderingMode.isEdit}>
           <img src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')} alt="Dummy image"
                itemprop="image" class="avatar" style="width: 128px; height:128px;" loading="lazy" />
         </div>

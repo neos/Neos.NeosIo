@@ -61,7 +61,7 @@ prototype(Neos.NeosIo:Component.SiteFooter.Renderer) < prototype(Neos.Fusion:Com
         mode = 'cached'
         entryIdentifier {
             name = 'footer'
-            site = ${site}
+            site = ${Neos.Caching.entryIdentifierForNode(site)}
         }
         tags {
             site = ${Neos.Caching.nodeTag(site)}

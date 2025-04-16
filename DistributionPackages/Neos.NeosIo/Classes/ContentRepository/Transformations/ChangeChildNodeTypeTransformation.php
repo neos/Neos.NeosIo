@@ -9,15 +9,9 @@ use Neos\ContentRepository\Domain\Model\NodeData;
 use Neos\ContentRepository\Domain\Service\NodeTypeManager;
 use Neos\Neos\Controller\CreateContentContextTrait;
 
-class ChangeChildNodeTypeTransformation extends AbstractTransformation
+// TODO 9.0 migration: You need to convert your AbstractTransformation to an implementation of Neos\ContentRepository\NodeMigration\Transformation\TransformationFactoryInterface
+class ChangeChildNodeTypeTransformation
 {
-    use CreateContentContextTrait;
-
-    /**
-     * @Flow\Inject
-     * @var NodeTypeManager
-     */
-    protected $nodeTypeManager;
 
     protected string $newType;
 

@@ -8,12 +8,9 @@ use Neos\ContentRepository\Domain\Model\NodeData;
 use Neos\ContentRepository\Migration\Transformations\AbstractTransformation;
 use Neos\Neos\Controller\CreateContentContextTrait;
 
-/**
- * Move content of elements with a single content collection to the parent to cleanup the content tree
- */
-class FlattenCollectionsTransformation extends AbstractTransformation
+// TODO 9.0 migration: You need to convert your AbstractTransformation to an implementation of Neos\ContentRepository\NodeMigration\Transformation\TransformationFactoryInterface
+class FlattenCollectionsTransformation
 {
-    use CreateContentContextTrait;
 
     public function isTransformable(NodeData $node): bool
     {
@@ -39,12 +36,14 @@ class FlattenCollectionsTransformation extends AbstractTransformation
     }
 
     /**
-     * @param NodeInterface[] $children
+     * @param \Neos\ContentRepository\Core\Projection\ContentGraph\Node[] $children
      */
-    protected function moveChildNodesToParent(array $children, NodeInterface $parentNode): void
+    protected function moveChildNodesToParent(array $children, \Neos\ContentRepository\Core\Projection\ContentGraph\Node $parentNode): void
     {
         foreach ($children as $childNode) {
-            if ($childNode instanceof NodeInterface) {
+            if ($childNode instanceof \Neos\ContentRepository\Core\Projection\ContentGraph\Node) {
+                // TODO 9.0 migration: !! Node::moveInto() is not supported by the new CR. Use the "MoveNodeAggregate" command to move a node.
+
                 $childNode->moveInto($parentNode);
             }
         }

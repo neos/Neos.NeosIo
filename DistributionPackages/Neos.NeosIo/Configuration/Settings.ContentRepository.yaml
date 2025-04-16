@@ -1,17 +1,31 @@
 Neos:
-  ContentRepository:
-    contentDimensions:
-      'language':
-        default: 'en'
-        defaultPreset: 'en'
-        label: 'Language'
-        icon: 'language'
-        presets:
-          'en':
-            label: 'English'
-            values: [ 'en' ]
-            uriSegment: ''
-          'de':
-            label: 'German'
-            values: [ 'de', 'en' ]
-            uriSegment: 'de'
+  ContentRepositoryRegistry:
+    contentRepositories:
+      default:
+        contentDimensions:
+          language:
+            label: Language
+            icon: language
+            values:
+              en:
+                label: English
+                specializations:
+                  de:
+                    label: German
+  Neos:
+    sites:
+      '*':
+        contentDimensions:
+          # defaultDimensionSpacePoint is used for the homepage (URL /)
+          defaultDimensionSpacePoint:
+            language: en
+          resolver:
+            factoryClassName: Neos\Neos\FrontendRouting\DimensionResolution\Resolver\UriPathResolverFactory
+            options:
+              segments:
+                -
+                  dimensionIdentifier: language
+                  # dimensionValue => uriPathSegment (empty uriPathSegment allowed)
+                  dimensionValueMapping:
+                    en: ''
+                    de: de

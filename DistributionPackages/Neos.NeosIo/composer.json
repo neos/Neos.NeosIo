@@ -5,50 +5,52 @@
     "description": "neos.io site package",
     "license": "GPL-3.0+",
     "require": {
-        "neos/neos": "^8.3",
-        "neos/media": "^8.3",
-        "neos/nodetypes": "^8.3",
-        "neos/fusion-afx": "^8.3",
-        "neos/seo": "^3.0",
-        "neos/neos-ui": "^8.3",
-        "neos/form": "^5.2",
-        "neos/form-builder": "^2.2",
-        "neos/form-fusionrenderer": "^2.3",
-        "neos/swiftmailer": "^7.1",
-        "neos/redirecthandler-neosadapter": "^4.3.1",
-        "neos/redirecthandler-databasestorage": "^5.0",
-        "neos/redirecthandler-ui": "^2.3",
+        "neos/neos": "^9.0",
+        "neos/flow": "^9.0",
+        "neos/contentgraph-doctrinedbaladapter": "^9.0",
+        "neos/media": "^9.0",
+        "neos/nodetypes": "^9.0",
+        "neos/fusion-afx": "^9.0",
+        "neos/seo": "^4.1",
+        "neos/neos-ui": "^9.0",
+        "neos/form": "^6.0",
+        "neos/form-builder": "dev-dlubitz-patch-1 as 3.0",
+        "neos/form-fusionrenderer": "dev-dlubitz-patch-1 as 2.3",
+        "neos/symfonymailer": "^0.1",
+        "neos/redirecthandler-neosadapter": "^5.0",
+        "neos/redirecthandler-databasestorage": "^6.0",
+        "neos/redirecthandler-ui": "^3.0",
 
         "neos/neosio-marketplace": "*",
         "neos/neosio-serviceofferings": "*",
         "neos/neosio-blog": "*",
 
-        "flowpack/searchplugin": "^5.0",
-        "flowpack/listable": "^3.4",
+        "flowpack/searchplugin": "^6.0",
+        "flowpack/listable": "^4.0",
         "flowpack/cachebuster": "^1.0",
-        "flowpack/elasticsearch-contentrepositoryadaptor": "^8.4",
-        "flowpack/neos-matomo": "^3.3",
-        "flowpack/media-ui": "^0.13",
+        "flowpack/elasticsearch-contentrepositoryadaptor": "^9.0",
+        "flowpack/neos-matomo": "^4.0",
         "flowpack/fullpagecache": "^3.0",
 
         "flownative/gravatar": "^2.0",
-        "flownative/resource-tools": "^2.1",
+        "flownative/resource-tools": "^2.2",
 
-        "punktde/codeview": "^1.1",
+        "punktde/codeview": "^1.2",
 
-        "networkteam/neos-mailobfuscator": "^3.0",
+        "networkteam/neos-mailobfuscator": "^4.0",
 
-        "yoast/yoast-seo-for-neos": "^1.2",
+        "yoast/yoast-seo-for-neos": "^2.0",
 
         "sitegeist/monocle": "^7.8",
 
         "goe/neos-package": "^0.1.1",
 
-        "sitegeist/iconoclasm": "^2.0",
-
+        "sitegeist/iconoclasm": "^2.0"
+    },
+    "needsUpdate": {
+        "flowpack/media-ui": "^0.13",
         "shel/neos-terminal": "^1.2",
-        "shel/neos-commandbar": "^1.1",
-        "shel/neos-workspace-module": "^1.1"
+        "shel/neos-commandbar": "^1.1"
     },
     "autoload": {
         "psr-4": {

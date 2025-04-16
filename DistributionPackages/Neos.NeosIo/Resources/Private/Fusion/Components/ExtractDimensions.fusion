@@ -1,3 +1,4 @@
+// TODO 9.0 migration: The dimension extration doesn't work his way in Neos 9 and needs to get re-implemented
 prototype(Neos.NeosIo:ExtractDimensions) < prototype(Neos.Fusion:Value) {
     @context{
         languageDimension = ${Array.first(String.split(String.trim(request.httpRequest.uri.path, '/'), '/', 2))}

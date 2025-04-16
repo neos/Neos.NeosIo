@@ -6,14 +6,9 @@ use Neos\ContentRepository\Domain\Factory\NodeFactory;
 use Neos\ContentRepository\Domain\Model\NodeData;
 use Neos\ContentRepository\Migration\Transformations\AbstractTransformation;
 
-class SectionTransformation extends AbstractTransformation
+// TODO 9.0 migration: You need to convert your AbstractTransformation to an implementation of Neos\ContentRepository\NodeMigration\Transformation\TransformationFactoryInterface
+class SectionTransformation
 {
-    /**
-     * @Flow\Inject
-     * @var NodeFactory
-     */
-    protected $nodeFactory;
-
     /**
      * @param NodeData $node
      * @return boolean
