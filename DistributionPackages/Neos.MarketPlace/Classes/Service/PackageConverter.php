@@ -27,14 +27,15 @@ use Neos\Cache\Backend\SimpleFileBackend;
 use Neos\Cache\EnvironmentConfiguration;
 use Neos\Cache\Exception\InvalidBackendException;
 use Neos\Cache\Psr\Cache\CacheFactory;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\ContentRepository\Domain\NodeAggregate\NodeName;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
+use Neos\ContentRepository\Core\SharedModel\Node\NodeName;
 use Neos\ContentRepository\Domain\Projection\Content\TraversableNodeInterface;
 use Neos\ContentRepository\Domain\Repository\NodeDataRepository;
 use Neos\ContentRepository\Domain\Service\NodeTypeManager;
 use Neos\ContentRepository\Exception\NodeException;
 use Neos\ContentRepository\Exception\NodeExistsException;
 use Neos\ContentRepository\Exception\NodeTypeNotFoundException;
+use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Eel\Exception as EelException;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
@@ -61,11 +62,6 @@ class PackageConverter
 {
     private const DATE_FORMAT = 'Y-m-d\TH:i:sO';
 
-    /**
-     * @var NodeTypeManager
-     * @Flow\Inject
-     */
-    protected $nodeTypeManager;
 
     /**
      * @var PackageVersion
@@ -93,12 +89,6 @@ class PackageConverter
      */
     protected $logger;
 
-    /**
-     * @Flow\Inject
-     * @var NodeDataRepository
-     */
-    protected $nodeDataRepository;
-
     private bool $forceUpdate;
 
     private Storage $storage;
@@ -114,6 +104,9 @@ class PackageConverter
      * @var EntityManagerInterface
      */
     protected $entityManager;
+
+    #[Flow\Inject]
+    protected ContentRepositoryRegistry $contentRepositoryRegistry;
 
     public function __construct(bool $forceUpdate)
     {
@@ -186,7 +179,7 @@ class PackageConverter
      *
      * @throws Exception
      * @throws InvalidPropertyMappingConfigurationException
-     * @throws NodeTypeNotFoundException|CRException|EelException|PropertyException|NodeException
+     * @throws CRException|EelException|PropertyException
      * @throws \JsonException
      * @throws MarketPlaceException
      */
@@ -200,8 +193,9 @@ class PackageConverter
             $this->vendorCache[$vendor] = $vendorNode;
         }
         try {
-            /** @var NodeInterface $packageNode */
+            /** @var Node $packageNode */
             if ($this->forceUpdate === true || $this->packageRequiresUpdate($package)) {
+                // TODO 9.0 migration: This needs to get refactored and use Subgraph.
                 $packageNode = $vendorNode->findNamedChildNode(NodeName::fromString($packageNameSlug));
                 $node = $this->update($package, $packageNode);
             } else {
@@ -258,14 +252,14 @@ class PackageConverter
         $lastActivity = reset($lastActivities) ?: new \DateTime();
 
         return (
-            !($lastRecordedActivity instanceof \DateTime)
+            !($lastRecordedActivity instanceof \DateTimeInterface)
             || $lastActivity > $lastRecordedActivity
-            || !($lastSync instanceof \DateTime)
+            || !($lastSync instanceof \DateTimeInterface)
             || $lastSync < (new Now())->sub(new \DateInterval('P1D'))
         );
     }
 
-    protected function handleDownloads(Package $package, NodeInterface $node): void
+    protected function handleDownloads(Package $package, Node $node): void
     {
         $downloads = $package->getDownloads();
         if (!$downloads instanceof Package\Downloads) {
@@ -280,9 +274,9 @@ class PackageConverter
 
     /**
      * @throws Exception
-     * @throws NodeException|NodeTypeNotFoundException|PropertyException
+     * @throws PropertyException
      */
-    protected function handleGithubMetrics(Package $package, NodeInterface $node): void
+    protected function handleGithubMetrics(Package $package, Node $node): void
     {
         if ($package->isAbandoned()) {
             $this->resetGithubMetrics($node);
@@ -333,11 +327,12 @@ class PackageConverter
 
     /**
      * @throws Exception
-     * @throws NodeTypeNotFoundException|PropertyException|NodeException
+     * @throws PropertyException
      */
-    protected function handleGithubReadme(string $organization, string $repository, NodeInterface $node): void
+    protected function handleGithubReadme(string $organization, string $repository, Node $node): void
     {
         try {
+            // TODO 9.0 migration: This needs to get refactored and use Subgraph.
             $readmeNode = $node->findNamedChildNode(NodeName::fromString('readme'));
         } /** @noinspection BadExceptionsProcessingInspection */ catch (NodeException $exception) {
             return;
@@ -373,6 +368,7 @@ class PackageConverter
         }
 
         $content = $this->postprocessGithubReadme($organization, $repository, $rendered);
+        // TODO 9.0 migration: !! Node::setProperty() is not supported by the new CR. Use the "SetNodeProperties" command to change property values.
         $readmeNode->setProperty('readmeSource', $content);
     }
 
@@ -391,7 +387,7 @@ class PackageConverter
         return trim(preg_replace(array_keys($r), array_values($r), $content));
     }
 
-    protected function resetGithubMetrics(NodeInterface $node): void
+    protected function resetGithubMetrics(Node $node): void
     {
         $this->updateNodeProperties($node, [
             'githubStargazers' => 0,
@@ -405,12 +401,14 @@ class PackageConverter
     /**
      * @throws NodeException
      */
-    protected function handleAbandonedPackageOrVersion(Package $package, NodeInterface $node): void
+    protected function handleAbandonedPackageOrVersion(Package $package, Node $node): void
     {
         if ($package->isAbandoned() && trim((string)$node->getProperty('abandoned')) === '') {
+            // TODO 9.0 migration: !! Node::setProperty() is not supported by the new CR. Use the "SetNodeProperties" command to change property values.
             $node->setProperty('abandoned', (string)$package->isAbandoned());
             $this->emitPackageAbandoned($node);
         } else {
+            // TODO 9.0 migration: !! Node::setProperty() is not supported by the new CR. Use the "SetNodeProperties" command to change property values.
             $node->setProperty('abandoned', (string)$package->isAbandoned());
         }
     }
@@ -418,7 +416,7 @@ class PackageConverter
     /**
      * @throws NodeTypeNotFoundException|NodeExistsException
      */
-    protected function create(Package $package, NodeInterface $parentNode): NodeInterface
+    protected function create(Package $package, Node $parentNode): Node
     {
         $name = Slug::create($package->getName());
         $data = [
@@ -431,12 +429,13 @@ class PackageConverter
             'favers' => $package->getFavers()
         ];
 
+        // TODO 9.0 migration: Needs to use a command to create a new Node
         $node = $parentNode->createNode($name, $this->nodeTypeManager->getNodeType('Neos.MarketPlace:Package'));
         $this->setNodeProperties($node, $data);
         return $node;
     }
 
-    protected function update(Package $package, NodeInterface $node): NodeInterface
+    protected function update(Package $package, Node $node): Node
     {
         $this->updateNodeProperties($node, [
             'description' => $package->getDescription(),
@@ -450,27 +449,28 @@ class PackageConverter
     }
 
     /**
-     * @throws NodeTypeNotFoundException
      * @throws EelException
-     * @throws NodeException
      */
-    protected function createOrUpdateMaintainers(Package $package, NodeInterface $node): void
+    protected function createOrUpdateMaintainers(Package $package, Node $node): void
     {
         $upstreamMaintainers = array_map(static function (Package\Maintainer $maintainer) {
             return Slug::create($maintainer->getName());
         }, $package->getMaintainers());
+        // TODO 9.0 migration: This needs to get refactored and use Subgraph.
         $maintainerStorage = $node->getNode('maintainers');
         /** @var TraversableNodeInterface[] $maintainers */
         /** @noinspection PhpUndefinedMethodInspection */
         $maintainers = (new FlowQuery([$maintainerStorage]))->children('[instanceof Neos.MarketPlace:Maintainer]');
         foreach ($maintainers as $maintainer) {
-            if (!in_array($maintainer->getNodeName(), $upstreamMaintainers)) {
+            if (!in_array($maintainer->nodeName, $upstreamMaintainers)) {
+                // TODO 9.0 migration: !! Node::remove() is not supported by the new CR. Use the "RemoveNodeAggregate" command to remove a node.
                 $maintainer->remove();
             }
         }
 
         foreach ($package->getMaintainers() as $maintainer) {
             $name = Slug::create($maintainer->getName());
+            // TODO 9.0 migration: This needs to get refactored and use Subgraph.
             $node = $maintainerStorage->getNode($name);
             $data = [
                 'title' => $maintainer->getName(),
@@ -478,6 +478,7 @@ class PackageConverter
                 'homepage' => $maintainer->getHomepage()
             ];
             if ($node === null) {
+                // TODO 9.0 migration: Needs to use a command to create a new Node
                 $node = $maintainerStorage->createNode($name, $this->nodeTypeManager->getNodeType('Neos.MarketPlace:Maintainer'));
                 $this->setNodeProperties($node, $data);
             } else {
@@ -489,14 +490,17 @@ class PackageConverter
     /**
      * @throws NodeTypeNotFoundException|\JsonException|NodeException
      */
-    protected function createOrUpdateVersions(Package $package, NodeInterface $node): void
+    protected function createOrUpdateVersions(Package $package, Node $node): void
     {
         $upstreamVersions = array_map(static function ($version) {
             return Slug::create($version);
         }, array_keys($package->getVersions()));
         $versionStorage = $node->getNode('versions');
+        $subgraph = $this->contentRepositoryRegistry->subgraphForNode($versionStorage);
+        // TODO 9.0 migration: Try to remove the iterator_to_array($nodes) call.
 
-        $versions = $versionStorage->getChildNodes('Neos.MarketPlace:Version');
+
+        $versions = iterator_to_array($subgraph->findChildNodes($versionStorage->aggregateId, \Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFilter::create(nodeTypeConstraints: 'Neos.MarketPlace:Version')));
         foreach ($versions as $version) {
             if (!in_array($version->getNodeName(), $upstreamVersions)) {
                 $version->remove();
@@ -538,7 +542,8 @@ class PackageConverter
                 $node = $versionStorage->createNode($name, $nodeType);
                 $this->setNodeProperties($node, $data);
             } else {
-                if ($node->getNodeType()->getName() !== $nodeType->getName()) {
+                if ($node->nodeTypeName->value !== $nodeType->getName()) {
+                    // TODO 9.0 migration: !! Node::setNodeType() is not supported by the new CR. Use the "ChangeNodeAggregateType" command to change nodetype.
                     $node->setNodeType($nodeType);
                 }
                 $this->updateNodeProperties($node, $data);
@@ -567,25 +572,28 @@ class PackageConverter
     }
 
     /**
-     * @throws NodeException|EelException
+     * @throws EelException
      */
-    protected function getPackageLastActivity(NodeInterface $packageNode): void
+    protected function getPackageLastActivity(Node $packageNode): void
     {
-        $versions = $packageNode->getNode('versions')->getChildNodes('Neos.MarketPlace:Version');
+        $subgraph = $this->contentRepositoryRegistry->subgraphForNode($packageNode->getNode('versions'));
+        // TODO 9.0 migration: Try to remove the iterator_to_array($nodes) call.
+        $versions = iterator_to_array($subgraph->findChildNodes($packageNode->getNode('versions')->aggregateId, \Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFilter::create(nodeTypeConstraints: 'Neos.MarketPlace:Version')));
 
         $lastActiveVersionTime = null;
         foreach ($versions as $version) {
             $lastActivity = $version->getProperty('time');
-            if (!$lastActivity instanceof \DateTime) {
+            if (!$lastActivity instanceof \DateTimeInterface) {
                 continue;
             }
             if (!$lastActiveVersionTime || $lastActivity > $lastActiveVersionTime) {
                 $lastActiveVersionTime = $lastActivity;
             }
         }
-
+        // TODO 9.0 migration: !! Node::setProperty() is not supported by the new CR. Use the "SetNodeProperties" command to change property values.
         $packageNode->setProperty('lastActivity', $lastActiveVersionTime);
         $lastVersion = $this->packageVersion->extractLastVersion($packageNode);
+        // TODO 9.0 migration: !! Node::setProperty() is not supported by the new CR. Use the "SetNodeProperties" command to change property values.
         $packageNode->setProperty('lastVersion', $lastVersion);
         unset($versions);
     }
@@ -593,46 +601,51 @@ class PackageConverter
     /**
      * @throws NodeException
      */
-    protected function getVendorLastActivity(NodeInterface $vendorNode): void
+    protected function getVendorLastActivity(Node $vendorNode): void
     {
-        $packages = $vendorNode->getChildNodes('Neos.MarketPlace:Package');
+        $subgraph = $this->contentRepositoryRegistry->subgraphForNode($vendorNode);
+        // TODO 9.0 migration: Try to remove the iterator_to_array($nodes) call.
+        $packages = iterator_to_array($subgraph->findChildNodes($vendorNode->aggregateId, \Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFilter::create(nodeTypeConstraints: 'Neos.MarketPlace:Package')));
 
         $lastActivePackageTime = null;
         foreach ($packages as $packageNode) {
             $lastActivity = $packageNode->getProperty('lastActivity');
-            if ($lastActivity instanceof \DateTime && (!$lastActivePackageTime || $lastActivity > $lastActivePackageTime)) {
+            if ($lastActivity instanceof \DateTimeInterface && (!$lastActivePackageTime || $lastActivity > $lastActivePackageTime)) {
                 $lastActivePackageTime = $lastActivity;
             }
         }
+        // TODO 9.0 migration: !! Node::setProperty() is not supported by the new CR. Use the "SetNodeProperties" command to change property values.
         $vendorNode->setProperty('lastActivity', $lastActivePackageTime);
         unset($packages);
     }
 
-    protected function setNodeProperties(NodeInterface $node, array $data): void
+    protected function setNodeProperties(Node $node, array $data): void
     {
         foreach ($data as $propertyName => $propertyValue) {
+            // TODO 9.0 migration: !! Node::setProperty() is not supported by the new CR. Use the "SetNodeProperties" command to change property values.
             $node->setProperty($propertyName, $propertyValue);
         }
     }
 
-    protected function updateNodeProperties(NodeInterface $node, array $data): void
+    protected function updateNodeProperties(Node $node, array $data): void
     {
         foreach ($data as $propertyName => $propertyValue) {
             $this->updateNodeProperty($node, $propertyName, $propertyValue);
         }
     }
 
-    protected function updateNodeProperty(NodeInterface $node, string $propertyName, $propertyValue): void
+    protected function updateNodeProperty(Node $node, string $propertyName, $propertyValue): void
     {
-        if (isset($node->getProperties()[$propertyName])) {
-            if ($propertyValue instanceof \DateTime) {
-                if ($node->getProperties()[$propertyName]->getTimestamp() === $propertyValue->getTimestamp()) {
+        if (isset($node->properties[$propertyName])) {
+            if ($propertyValue instanceof \DateTimeInterface) {
+                if ($node->properties[$propertyName]->getTimestamp() === $propertyValue->getTimestamp()) {
                     return;
                 }
-            } elseif ($node->getProperties()[$propertyName] === $propertyValue) {
+            } elseif ($node->properties[$propertyName] === $propertyValue) {
                 return;
             }
         }
+        // TODO 9.0 migration: !! Node::setProperty() is not supported by the new CR. Use the "SetNodeProperties" command to change property values.
         $node->setProperty($propertyName, $propertyValue);
     }
 
@@ -655,7 +668,7 @@ class PackageConverter
      *
      * @Flow\Signal
      */
-    protected function emitPackageAbandoned(NodeInterface $node): void
+    protected function emitPackageAbandoned(Node $node): void
     {
     }
 }

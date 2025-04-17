@@ -13,7 +13,7 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
-use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
 use Neos\MarketPlace\Domain\Model\Storage;
@@ -52,7 +52,6 @@ class PackageImporter
      * Remove local package not preset in the processed packages list
      *
      * @throws \Neos\Eel\Exception
-     * @throws \Neos\ContentRepository\Exception\NodeException
      * @throws \Neos\MarketPlace\Exception
      */
     public function cleanupPackages(?callable $callback = null): int
@@ -63,10 +62,11 @@ class PackageImporter
         $query = $query->find('[instanceof Neos.MarketPlace:Package]');
         $upstreamPackages = $this->getProcessedPackages();
         foreach ($query as $package) {
-            /** @var NodeInterface $package */
+            /** @var Node $package */
             if (in_array($package->getProperty('title'), $upstreamPackages, true)) {
                 continue;
             }
+            // TODO 9.0 migration: !! Node::remove() is not supported by the new CR. Use the "RemoveNodeAggregate" command to remove a node.
             $package->remove();
             if ($callback !== null) {
                 $callback($package);
@@ -90,12 +90,13 @@ class PackageImporter
         $query = new FlowQuery([$storageNode]);
         $query = $query->find('[instanceof Neos.MarketPlace:Vendor]');
         foreach ($query as $vendor) {
-            /** @var NodeInterface $vendor */
+            /** @var Node $vendor */
             $hasPackageQuery = new FlowQuery([$vendor]);
             $packageCount = $hasPackageQuery->find('[instanceof Neos.MarketPlace:Package]')->count();
             if ($packageCount > 0) {
                 continue;
             }
+            // TODO 9.0 migration: !! Node::remove() is not supported by the new CR. Use the "RemoveNodeAggregate" command to remove a node.
             $vendor->remove();
             if ($callback !== null) {
                 $callback($vendor);
@@ -120,10 +121,10 @@ class PackageImporter
      * Signals that a package node was deleted.
      *
      * @Flow\Signal
-     * @param NodeInterface $node
+     * @param Node $node
      * @return void
      */
-    protected function emitPackageDeleted(NodeInterface $node): void
+    protected function emitPackageDeleted(Node $node): void
     {
     }
 
@@ -131,10 +132,10 @@ class PackageImporter
      * Signals that a package node was deleted.
      *
      * @Flow\Signal
-     * @param NodeInterface $node
+     * @param Node $node
      * @return void
      */
-    protected function emitVendorDeleted(NodeInterface $node): void
+    protected function emitVendorDeleted(Node $node): void
     {
     }
 }

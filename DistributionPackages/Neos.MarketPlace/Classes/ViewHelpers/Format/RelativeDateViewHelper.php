@@ -49,7 +49,7 @@ class RelativeDateViewHelper extends AbstractViewHelper
         if ($date === null) {
             $date = $this->renderChildren();
         }
-        if (!$date instanceof \DateTime) {
+        if (!$date instanceof \DateTimeInterface) {
             throw new \InvalidArgumentException('No valid date given,', 1459411176);
         }
         $now = new Now();
