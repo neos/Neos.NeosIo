@@ -13,14 +13,9 @@ namespace Neos\MarketPlace\Domain\Model;
  * source code.
  */
 
-use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\ContentRepository\Domain\Service\Context;
-use Neos\ContentRepository\Domain\Service\NodeTypeManager;
-use Neos\ContentRepository\Exception\NodeTypeNotFoundException;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Flow\Annotations as Flow;
 use Neos\MarketPlace\Exception;
-use Neos\Neos\Domain\Service\ContentContext;
-use Neos\Neos\Domain\Service\ContentContextFactory;
 
 /**
  * Storage
@@ -29,17 +24,11 @@ use Neos\Neos\Domain\Service\ContentContextFactory;
  */
 class Storage
 {
-    /**
-     * @var ContentContextFactory
-     * @Flow\Inject
-     */
-    protected $contextFactory;
-
-    /**
-     * @var NodeTypeManager
-     * @Flow\Inject
-     */
-    protected $nodeTypeManager;
+//    /**
+//     * @var \Neos\ContentRepository\Core\NodeType\NodeTypeManager
+//     * @Flow\Inject
+//     */
+//    protected $nodeTypeManager;
 
     /**
      * @var array
@@ -50,7 +39,7 @@ class Storage
     protected string $workspaceName;
 
     /**
-     * @var NodeInterface
+     * @var Node
      */
     protected $node;
 
@@ -62,9 +51,10 @@ class Storage
     /**
      * @throws Exception
      */
-    public function node(): NodeInterface
+    public function node(): Node
     {
         if ($this->node === null) {
+            // TODO 9.0 migration: We need to use the ContentRepository Registry here to fetch the node by Identifier
             $context = $this->createContext($this->workspaceName);
             $this->node = $context->getNodeByIdentifier($this->repository['identifier']);
             if ($this->node === null) {
@@ -78,12 +68,13 @@ class Storage
      * @throws Exception
      * @throws NodeTypeNotFoundException
      */
-    public function createVendor(string $vendor): NodeInterface
+    public function createVendor(string $vendor): Node
     {
         $vendor = Slug::create($vendor);
         $node = $this->node()->getNode($vendor);
 
         if ($node === null) {
+            // TODO 9.0 migration: Creation of nodes needs to be rewitten to Commands.
             $node = $this->node()->createNode($vendor, $this->nodeTypeManager->getNodeType('Neos.MarketPlace:Vendor'));
             $node->setProperty('uriPathSegment', $vendor);
             $node->setProperty('title', $vendor);
@@ -95,16 +86,17 @@ class Storage
     /**
      * Creates a content context for given workspace and language identifiers
      *
-     * @return ContentContext|Context
+     * @return \Neos\Rector\ContentRepository90\Legacy\LegacyContextStub|\Neos\Rector\ContentRepository90\Legacy\LegacyContextStub
      */
-    protected function createContext(string $workspaceName): ContentContext
+    protected function createContext(string $workspaceName): \Neos\Rector\ContentRepository90\Legacy\LegacyContextStub
     {
+        // TODO 9.0 migration: Context does not exist anymore.
         $contextProperties = [
             'workspaceName' => $workspaceName,
             'invisibleContentShown' => true,
             'inaccessibleContentShown' => true
         ];
 
-        return $this->contextFactory->create($contextProperties);
+        return new \Neos\Rector\ContentRepository90\Legacy\LegacyContextStub($contextProperties);
     }
 }

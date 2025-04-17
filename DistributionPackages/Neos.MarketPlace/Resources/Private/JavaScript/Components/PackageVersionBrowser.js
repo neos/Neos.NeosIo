@@ -21,6 +21,7 @@ class PackageVersionBrowserComponent extends BaseComponent {
 
     load(version) {
         let { path } = this;
+        if (path instanceof Object) path = JSON.stringify(path);
 
         this.el.classList.toggle('version--hide');
 

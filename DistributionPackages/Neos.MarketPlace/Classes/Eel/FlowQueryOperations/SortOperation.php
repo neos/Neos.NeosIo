@@ -13,11 +13,10 @@ namespace Neos\MarketPlace\Eel\FlowQueryOperations;
  * source code.
  */
 
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Eel\FlowQuery\FlowQueryException;
 use Neos\Eel\FlowQuery\Operations\AbstractOperation;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Eel\FlowQuery\FlowQuery;
-use Neos\ContentRepository\Domain\Model\Node;
 
 /**
  * EEL sort() operation to sort Nodes
@@ -47,7 +46,7 @@ class SortOperation extends AbstractOperation {
      * @return boolean
      */
     public function canEvaluate($context) {
-        return (isset($context[0]) && ($context[0] instanceof NodeInterface)) || (is_array($context) && count($context) === 0);
+        return (isset($context[0]) && ($context[0] instanceof Node)) || (is_array($context) && count($context) === 0);
     }
 
     /**
@@ -57,8 +56,6 @@ class SortOperation extends AbstractOperation {
      * @param array $arguments the arguments for this operation
      * @return mixed
      * @throws FlowQueryException
-     * @throws \Neos\ContentRepository\Exception\NodeException
-     * @throws \Neos\ContentRepository\Exception\NodeTypeNotFoundException
      * @throws \Neos\Flow\Property\Exception
      * @throws \Neos\Flow\Security\Exception
      */
@@ -80,11 +77,11 @@ class SortOperation extends AbstractOperation {
         /** @var Node $node */
         foreach ($nodes as $node) {
             $propertyValue = $node->getProperty($sortByPropertyPath);
-            if ($propertyValue instanceof \DateTime) {
+            if ($propertyValue instanceof \DateTimeInterface) {
                 $propertyValue = $propertyValue->getTimestamp();
             }
-            $sortSequence[$node->getIdentifier()] = $propertyValue;
-            $nodesByIdentifier[$node->getIdentifier()] = $node;
+            $sortSequence[$node->aggregateId->value] = $propertyValue;
+            $nodesByIdentifier[$node->aggregateId->value] = $node;
         }
         if ($sortOrder === 'DESC') {
             arsort($sortSequence);

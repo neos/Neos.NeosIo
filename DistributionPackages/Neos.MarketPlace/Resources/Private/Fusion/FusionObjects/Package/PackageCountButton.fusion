@@ -14,7 +14,7 @@ prototype(Neos.MarketPlace:PackageCountButton) < prototype(Neos.MarketPlace:Butt
         mode = 'cached'
 
         entryIdentifier {
-            vendor = ${vendor}
+            vendor = ${Neos.Caching.entryIdentifierForNode(vendor)}
         }
 
         entryTags {

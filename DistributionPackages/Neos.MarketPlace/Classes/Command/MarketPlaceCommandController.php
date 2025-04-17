@@ -13,8 +13,7 @@ namespace Neos\MarketPlace\Command;
  * source code.
  */
 
-use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\ContentRepository\Domain\Repository\WorkspaceRepository;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\CommandController;
 use Neos\Flow\Log\ThrowableStorageInterface;
@@ -23,7 +22,7 @@ use Neos\Flow\Persistence\Doctrine\PersistenceManager;
 use Neos\MarketPlace\Domain\Model\LogAction;
 use Neos\MarketPlace\Domain\Model\Packages;
 use Neos\MarketPlace\Service\PackageImporter;
-use Neos\Neos\Domain\Service\ContentContextFactory;
+use Neos\Neos\Domain\NodeLabel\NodeLabelGeneratorInterface;
 use Packagist\Api\Client;
 use Packagist\Api\Result\Package;
 use Psr\Log\LoggerInterface;
@@ -39,11 +38,6 @@ class MarketPlaceCommandController extends CommandController
      */
     protected $importer;
 
-    /**
-     * @var ContentContextFactory
-     * @Flow\Inject
-     */
-    protected $contextFactory;
 
     /**
      * @var LoggerInterface
@@ -63,11 +57,8 @@ class MarketPlaceCommandController extends CommandController
      */
     protected $persistenceManager;
 
-    /**
-     * @Flow\Inject
-     * @var WorkspaceRepository
-     */
-    protected $workspaceRepository;
+    #[Flow\Inject]
+    protected NodeLabelGeneratorInterface $nodeLabelGenerator;
 
     /**
      * Sync packages from Packagist
@@ -184,8 +175,8 @@ class MarketPlaceCommandController extends CommandController
         $this->outputLine();
         $this->outputLine('Cleanup packages ...');
         $this->outputLine('--------------------');
-        $count = $this->importer->cleanupPackages(function (NodeInterface $package) {
-            $this->outputLine('%s deleted', [$package->getLabel()]);
+        $count = $this->importer->cleanupPackages(function (Node $package) {
+            $this->outputLine('%s deleted', [$this->nodeLabelGenerator->getLabel($package)]);
         });
         if ($count > 0) {
             $this->outputFormatted('Deleted %d package(s)', [$count], 2);
@@ -200,8 +191,8 @@ class MarketPlaceCommandController extends CommandController
         $this->outputLine();
         $this->outputLine('Cleanup vendors ...');
         $this->outputLine('-------------------');
-        $count = $this->importer->cleanupVendors(function (NodeInterface $vendor) {
-            $this->outputLine('%s deleted', [$vendor->getLabel()]);
+        $count = $this->importer->cleanupVendors(function (Node $vendor) {
+            $this->outputLine('%s deleted', [$this->nodeLabelGenerator->getLabel($vendor)]);
         });
         if ($count > 0) {
             $this->outputFormatted('Deleted %d vendor(s)', [$count], 2);

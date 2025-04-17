@@ -14,10 +14,10 @@ namespace Neos\MarketPlace\Eel;
  */
 
 use Composer\Semver\Semver;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\MarketPlace\Service\PackageVersion;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\ContentRepository\Search\Eel;
 
 /**
@@ -56,14 +56,14 @@ class IndexingHelper extends Eel\IndexingHelper
     }
 
     /**
-     * @param NodeInterface $node
+     * @param Node $node
      * @return array
      * @throws \Neos\Eel\Exception
      */
-    public function extractVersions(NodeInterface $node): array
+    public function extractVersions(Node $node): array
     {
         $data = [];
-        /** @var NodeInterface[] $versions */
+        /** @var Node[] $versions */
         $versions = $this->packageVersion->extractVersions($node);
 
         foreach ($versions as $versionNode) {
@@ -74,11 +74,10 @@ class IndexingHelper extends Eel\IndexingHelper
     }
 
     /**
-     * @param NodeInterface|null $versionNode
+     * @param Node|null $versionNode
      * @return array
-     * @throws \Neos\ContentRepository\Exception\NodeException
      */
-    public function prepareVersion(NodeInterface $versionNode = null): array
+    public function prepareVersion(?Node $versionNode = null): array
     {
         if ($versionNode === null) {
             return [];
@@ -100,10 +99,10 @@ class IndexingHelper extends Eel\IndexingHelper
     }
 
     /**
-     * @param array<NodeInterface> $versionNodes
+     * @param array<Node> $versionNodes
      * @return array<string>
      */
-    public function extractCompatibility(array $versionNodes = [], string $packageName = null): array
+    public function extractCompatibility(array $versionNodes = [], ?string $packageName = null): array
     {
         if (!$versionNodes || !array_key_exists($packageName, $this->compatibilityCheck)) {
             return [];
@@ -144,12 +143,11 @@ class IndexingHelper extends Eel\IndexingHelper
     }
 
     /**
-     * @param NodeInterface $node
+     * @param Node $node
      * @return array
      * @throws \Neos\Eel\Exception
-     * @throws \Neos\ContentRepository\Exception\NodeException
      */
-    public function extractMaintainers(NodeInterface $node): array
+    public function extractMaintainers(Node $node): array
     {
         $data = [];
         $query = new FlowQuery([$node]);
@@ -158,7 +156,7 @@ class IndexingHelper extends Eel\IndexingHelper
             ->find('[instanceof Neos.MarketPlace:Maintainer]');
 
         foreach ($query as $maintainerNode) {
-            /** @var NodeInterface $maintainerNode */
+            /** @var Node $maintainerNode */
             $data[] = [
                 'name' => $maintainerNode->getProperty('title'),
                 'email' => $maintainerNode->getProperty('email'),
