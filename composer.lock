@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eff4300f94957cb167acc1b291ce22fd",
+    "content-hash": "45654dea2f29c38d3a27fb0cba54e9bf",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -5448,6 +5448,56 @@
                 }
             ],
             "time": "2025-04-02T10:05:05+00:00"
+        },
+        {
+            "name": "neos/contentrepository-legacynodemigration",
+            "version": "9.0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neos/contentrepository-legacynodemigration.git",
+                "reference": "458a40560304b3981e5c46911db9430e2326af3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neos/contentrepository-legacynodemigration/zipball/458a40560304b3981e5c46911db9430e2326af3c",
+                "reference": "458a40560304b3981e5c46911db9430e2326af3c",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^3",
+                "neos/contentrepository-core": "self.version",
+                "neos/contentrepository-export": "self.version",
+                "neos/neos": "self.version",
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "league/flysystem-memory": "^3",
+                "neos/behat": "*"
+            },
+            "default-branch": true,
+            "type": "neos-package",
+            "autoload": {
+                "psr-4": {
+                    "Neos\\ContentRepository\\LegacyNodeMigration\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Migration from the Non-Event-Sourced to the Event-Sourced world",
+            "support": {
+                "docs": "https://docs.neos.io/",
+                "forum": "https://discuss.neos.io/",
+                "source": "https://github.com/neos/contentrepository-legacynodemigration.git"
+            },
+            "funding": [
+                {
+                    "url": "https://shop.neos.io/neosfunding/",
+                    "type": "custom"
+                }
+            ],
+            "time": "2025-04-04T16:45:07+00:00"
         },
         {
             "name": "neos/contentrepository-nodeaccess",
@@ -15217,56 +15267,6 @@
                 "source": "https://github.com/Flowpack/neos-debug/tree/1.0.3"
             },
             "time": "2025-04-03T13:03:14+00:00"
-        },
-        {
-            "name": "neos/contentrepository-legacynodemigration",
-            "version": "9.0.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/neos/contentrepository-legacynodemigration.git",
-                "reference": "458a40560304b3981e5c46911db9430e2326af3c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/neos/contentrepository-legacynodemigration/zipball/458a40560304b3981e5c46911db9430e2326af3c",
-                "reference": "458a40560304b3981e5c46911db9430e2326af3c",
-                "shasum": ""
-            },
-            "require": {
-                "league/flysystem": "^3",
-                "neos/contentrepository-core": "self.version",
-                "neos/contentrepository-export": "self.version",
-                "neos/neos": "self.version",
-                "php": ">=8.2"
-            },
-            "require-dev": {
-                "league/flysystem-memory": "^3",
-                "neos/behat": "*"
-            },
-            "default-branch": true,
-            "type": "neos-package",
-            "autoload": {
-                "psr-4": {
-                    "Neos\\ContentRepository\\LegacyNodeMigration\\": "Classes"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0-or-later"
-            ],
-            "description": "Migration from the Non-Event-Sourced to the Event-Sourced world",
-            "support": {
-                "docs": "https://docs.neos.io/",
-                "forum": "https://discuss.neos.io/",
-                "source": "https://github.com/neos/contentrepository-legacynodemigration.git"
-            },
-            "funding": [
-                {
-                    "url": "https://shop.neos.io/neosfunding/",
-                    "type": "custom"
-                }
-            ],
-            "time": "2025-04-04T16:45:07+00:00"
         },
         {
             "name": "roave/security-advisories",
