@@ -6,10 +6,8 @@ namespace Neos\NeosIo\ContentRepository\Transformations;
 use Neos\ContentRepository\Domain\Model\NodeData;
 use Neos\ContentRepository\Migration\Transformations\AbstractTransformation;
 
-/**
- * Rename a given property and replace its value based on the previous value.
- */
-class RenameAndUpdatePropertyTransformation extends AbstractTransformation
+// TODO 9.0 migration: You need to convert your AbstractTransformation to an implementation of Neos\ContentRepository\NodeMigration\Transformation\TransformationFactoryInterface
+class RenameAndUpdatePropertyTransformation
 {
     protected string $oldPropertyName;
     protected string $newPropertyName;

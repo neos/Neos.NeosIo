@@ -8,12 +8,9 @@ use Neos\ContentRepository\Domain\Model\NodeData;
 use Neos\ContentRepository\Migration\Transformations\AbstractTransformation;
 use Neos\Neos\Controller\CreateContentContextTrait;
 
-/**
- * Remove empty content collections that are leftover after the FlattenCollectionsTransformation
- */
-class RemoveEmptyCollectionsTransformation extends AbstractTransformation
+// TODO 9.0 migration: You need to convert your AbstractTransformation to an implementation of Neos\ContentRepository\NodeMigration\Transformation\TransformationFactoryInterface
+class RemoveEmptyCollectionsTransformation
 {
-    use CreateContentContextTrait;
 
     public function isTransformable(NodeData $node): bool
     {

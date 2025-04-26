@@ -13,9 +13,9 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
 
 /**
  * Package Version Utility
@@ -26,11 +26,11 @@ use Neos\ContentRepository\Domain\Model\NodeInterface;
 class PackageVersion
 {
     /**
-     * @param NodeInterface $node
+     * @param Node $node
      * @return array
      * @throws \Neos\Eel\Exception
      */
-    public function extractVersions(NodeInterface $node): array
+    public function extractVersions(Node $node): array
     {
         $query = new FlowQuery([$node]);
         return $query
@@ -40,18 +40,17 @@ class PackageVersion
     }
 
     /**
-     * @param NodeInterface $node
-     * @return NodeInterface
-     * @throws \Neos\ContentRepository\Exception\NodeException
+     * @param Node $node
+     * @return Node
      * @throws \Neos\Eel\Exception
      */
-    public function extractLastVersion(NodeInterface $node): ?NodeInterface
+    public function extractLastVersion(Node $node): ?Node
     {
         $versions = $this->extractVersions($node);
-        usort($versions, static function (NodeInterface $a, NodeInterface $b) {
+        usort($versions, static function (Node $a, Node $b) {
             return $b->getProperty('versionNormalized') <=> $a->getProperty('versionNormalized');
         });
-        $stableVersions = array_filter($versions, static function (NodeInterface $version) {
+        $stableVersions = array_filter($versions, static function (Node $version) {
             return $version->getProperty('stability') === true;
         });
         if (count($stableVersions) > 0) {

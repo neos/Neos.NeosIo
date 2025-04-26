@@ -13,12 +13,20 @@ namespace Neos\MarketPlace\FusionObjects;
  * source code.
  */
 
+use GuzzleHttp\Psr7\ServerRequest;
+use Neos\ContentRepository\Core\NodeType\NodeTypeNames;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindDescendantNodesFilter;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\PropertyValueEquals;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
+use Neos\ContentRepository\Core\SharedModel\Node\NodeAddress;
+use Neos\ContentRepository\Core\SharedModel\Node\PropertyName;
+use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
+use Neos\Flow\Mvc\ActionRequest;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\Flow\Annotations as Flow;
-use Neos\Neos\Domain\Service\NodeSearchServiceInterface;
 use Neos\Neos\Exception as NeosException;
-use Neos\Neos\Service\LinkingService;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\Neos\FrontendRouting\NodeUriBuilderFactory;
 use Neos\Fusion\FusionObjects\AbstractFusionObject;
 
 /**
@@ -28,17 +36,11 @@ use Neos\Fusion\FusionObjects\AbstractFusionObject;
  */
 class PackageUriImplementation extends AbstractFusionObject
 {
-    /**
-     * @Flow\Inject
-     * @var LinkingService
-     */
-    protected $linkingService;
+    #[Flow\Inject]
+    protected NodeUriBuilderFactory $nodeUriBuilderFactory;
 
-    /**
-     * @Flow\Inject
-     * @var NodeSearchServiceInterface
-     */
-    protected $nodeSearchService;
+    #[Flow\Inject]
+    protected ContentRepositoryRegistry $contentRepositoryRegistry;
 
     /**
      * @return string
@@ -49,9 +51,9 @@ class PackageUriImplementation extends AbstractFusionObject
     }
 
     /**
-     * @return NodeInterface
+     * @return Node
      */
-    public function getNode(): NodeInterface
+    public function getNode(): Node
     {
         return $this->fusionValue('node');
     }
@@ -73,13 +75,24 @@ class PackageUriImplementation extends AbstractFusionObject
             return sprintf('http://php.net/manual-lookup.php?pattern=%s&scope=quickref', urlencode($packageKeyParts[1]));
         }
         $title = Slug::create($packageKey);
-        $packageNodes = $this->nodeSearchService->findByProperties(['uriPathSegment' => $title], ['Neos.MarketPlace:Package'], $this->getNode()->getContext());
-        $packageNode = reset($packageNodes);
+
+        $node = $this->getNode();
+        $subgraph = $this->contentRepositoryRegistry->subgraphForNode($node);
+        $packageNodes = $subgraph->findDescendantNodes($node->aggregateId, FindDescendantNodesFilter::create(nodeTypes: NodeTypeCriteria::create(NodeTypeNames::fromStringArray(['Neos.MarketPlace:Package']), NodeTypeNames::createEmpty()), propertyValue: PropertyValueEquals::create(PropertyName::fromString('uriPathSegment'), $title, false)));
+        $packageNode = $packageNodes->first();
         if ($packageNode) {
-            return $this->linkingService->createNodeUri(
-                $this->runtime->getControllerContext(),
-                $packageNode,
-                $this->getNode()
+            $possibleRequest = $this->runtime->fusionGlobals->get('request');
+            if ($possibleRequest instanceof ActionRequest) {
+                $nodeUriBuilder = $this->nodeUriBuilderFactory->forActionRequest($possibleRequest);
+            } else {
+                // unfortunately, the uri-builder always needs a request at hand and cannot build uris without it
+                // this will improve with a reformed uri building:
+                // https://github.com/neos/flow-development-collection/issues/3354
+                $nodeUriBuilder = $this->nodeUriBuilderFactory->forActionRequest(ActionRequest::fromHttpRequest(ServerRequest::fromGlobals()));
+            }
+
+            return (string)$nodeUriBuilder->uriFor(
+                NodeAddress::fromNode($packageNode)
             );
         }
         return 'https://packagist.org/packages/' . $this->getPackageKey();

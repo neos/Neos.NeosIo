@@ -50,7 +50,7 @@ prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Http.Message) {
                     <logo>
                         <Neos.Fusion:ResourceUri path="resource://Neos.NeosIo/Public/Images/NeosLogoSocial.png" absolute={true} />
                     </logo>
-                    <id>urn:uuid:{documentNode.identifier}</id>
+                    <id>urn:uuid:{documentNode.aggregateId}</id>
                     <updated @if.hasEntries={props.query}>{Date.format(q(q(props.query[0]).property('lastVersion')).property('time'), 'Y-m-d\TH:i:sP')}</updated>
                     <link rel="alternate" type="text/html" @children="attributes.href">
                     <Neos.Neos:NodeUri node={documentNode} format="html" absolute={true} />
@@ -69,7 +69,7 @@ prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Http.Message) {
     @cache {
         mode = 'cached'
         entryIdentifier {
-            node = ${documentNode}
+            node = ${Neos.Caching.entryIdentifierForNode(documentNode)}
             format = 'atom'
         }
         entryTags {

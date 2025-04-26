@@ -53,7 +53,7 @@ prototype(Neos.NeosIo:DefaultPage.Menu.Renderer) < prototype(Neos.Fusion:Compone
     @cache {
         mode = 'cached'
         entryIdentifier {
-            site = ${site}
+            site = ${Neos.Caching.entryIdentifierForNode(site)}
         }
         entryTags {
             pages = ${Neos.Caching.nodeTypeTag('Neos.Neos:Document', site)}

@@ -11,7 +11,7 @@ prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
         class="block block--versions"
         data-component="PackageVersionBrowser"
         data-version={version}
-        data-path={node.path}
+        data-path={Neos.Node.serializedNodeAddress(node)}
       >
         <Neos.MarketPlace:Version @context.node={props.versionNode} />
       </section>
@@ -22,7 +22,7 @@ prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
         entryDiscriminator = ${request.arguments.version ? false : 'latest'}
 
         entryIdentifier {
-            node = ${node}
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
             format = ${request.format}
         }
 

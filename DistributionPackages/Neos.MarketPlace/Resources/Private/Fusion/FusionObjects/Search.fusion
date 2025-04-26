@@ -130,7 +130,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
         mode = 'dynamic'
 
         entryIdentifier {
-            documentNode = ${documentNode}
+            documentNode = ${Neos.Caching.entryIdentifierForNode(documentNode)}
         }
 
         maximumLifetime = 3600

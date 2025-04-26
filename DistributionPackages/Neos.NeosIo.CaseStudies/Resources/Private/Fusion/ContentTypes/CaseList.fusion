@@ -25,9 +25,9 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
             items = ${props.cases}
             itemName = 'case'
             itemRenderer = Neos.Fusion:DataStructure {
-                identifier = ${case.identifier}
+                identifier = ${case.aggregateId}
                 title = ${q(case).property('title')}
-                url = ${q(case).property('url') ? q(case).property('url') : 'node://' + case.identifier}
+                url = ${q(case).property('url') ? q(case).property('url') : 'node://' + case.aggregateId}
                 url.@process.convertUris = Neos.Neos:ConvertUris {
                     absolute = true
                 }
@@ -63,7 +63,7 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
     @cache {
         mode = 'cached'
         entryIdentifier {
-            node = ${node}
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
         }
         entryTags {
             node = ${Neos.Caching.nodeTag(node)}

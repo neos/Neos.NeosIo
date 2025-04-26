@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neos.NeosIo:DefaultPage) {
-    body {
+    body.template {
         content {
             keyVisual {
                 keyVisualImage = ${q(documentNode).property('bannerImage')}
@@ -59,7 +59,8 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     itemName = 'vendor'
                     carryName = 'packageList'
                     itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
-                    @process.unique = ${value ? Array.unique(value) : value}
+                    // TODO 9.0 migration: Array.uniqe() is throwing an exception "Object of class Neos\ContentRepository\Core\Projection\ContentGraph\Node could not be converted to string"
+                    // @process.unique = ${value ? Array.unique(value) : value}
                     @process.sort = ${value ? q(value).sort('downloadTotal').get() : value}
                 }
 
@@ -68,7 +69,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     getBadges = ${value['customers'][q(node).property('fundingPlatformName')]['badges'] || []}
                 }
 
-                awards = ${Array.map(q(node).children('awards').children().get(), a => q(a).property('award').label + ' (' + q(a).property('title') + ')')}
+                awards = ${Array.map(q(node).children('awards').children().get(), a => Neos.Node.label(q(a).property('award')) + ' (' + q(a).property('title') + ')')}
 
                 renderer = afx`
                     <div class="service-provider">

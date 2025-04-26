@@ -8,20 +8,9 @@ use Neos\ContentRepository\Domain\Service\ContextFactoryInterface;
 use Neos\ContentRepository\Domain\Utility\NodePaths;
 use Neos\ContentRepository\Migration\Transformations\AbstractTransformation;
 
-class ContainerTransformation extends AbstractTransformation
+// TODO 9.0 migration: You need to convert your AbstractTransformation to an implementation of Neos\ContentRepository\NodeMigration\Transformation\TransformationFactoryInterface
+class ContainerTransformation
 {
-    /**
-     * @Flow\Inject
-     * @var NodeFactory
-     */
-    protected $nodeFactory;
-
-    /**
-     * @Flow\Inject
-     * @var ContextFactoryInterface
-     */
-    protected $contextFactory;
-
     /**
      * @param NodeData $node
      * @return boolean
@@ -39,7 +28,7 @@ class ContainerTransformation extends AbstractTransformation
      */
     public function execute(NodeData $node)
     {
-        $node = $this->nodeFactory->createFromNodeData($node, $this->contextFactory->create(array(
+        $node = $this->nodeFactory->createFromNodeData($node, new \Neos\Rector\ContentRepository90\Legacy\LegacyContextStub(array(
             'workspaceName' => $node->getWorkspace()->getName(),
             'invisibleContentShown' => true,
             'inaccessibleContentShown' => true
