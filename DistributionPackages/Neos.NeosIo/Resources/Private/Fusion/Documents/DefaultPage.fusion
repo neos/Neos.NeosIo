@@ -1,4 +1,31 @@
 prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
+    httpResponseHead {
+        # https://scotthelme.co.uk/content-security-policy-an-introduction/
+        headers.Content-Security-Policy = Neos.Fusion:Join {
+            @glue = '; '
+            object-src = "object-src 'self'"
+            img-src = "img-src 'self' data: https://analytics.neos.io/ https://uptimerobot.com https://i.ytimg.com https://www.youtube-nocookie.com/"
+            font-src = "font-src 'self' https://fonts.gstatic.com"
+            script-src = "script-src 'self' 'unsafe-inline' https://analytics.neos.io/ https://www.youtube-nocookie.com/ https://www.google.com/ https://app.goessential.com"
+            style-src = "style-src 'self' 'unsafe-inline' data: https://www.youtube.com/ https://www.youtube-nocookie.com/"
+            connect-src = "connect-src 'self' https://analytics.neos.io/"
+            media-src = "media-src 'self'"
+            base-uri = "base-uri 'self'"
+            form-action = "form-action 'self'"
+            frame-ancestors = "frame-ancestors 'self'"
+            frame-src = "frame-src 'self' https://www.youtube-nocookie.com/ https://www.youtube.com/"
+            report-uri = "report-uri /__csp-report"
+        }
+
+        # https://owasp.org/www-project-secure-headers/#div-headers
+        headers.X-Frame-Options = 'sameorigin'
+        headers.X-Content-Type-Options = 'nosniff'
+        headers.Referrer-Policy = 'same-origin'
+        headers.Permissions-Policy = 'camera=(), display-capture=(), geolocation=(), microphone=()'
+        # disabled, see https://owasp.org/www-project-secure-headers/index.html#x-xss-protection
+        headers.X-XSS-Protection = '0'
+    }
+
     head {
         metaTags = Neos.NeosIo:MetaTags
         stylesheets = Neos.NeosIo:PageStyles
