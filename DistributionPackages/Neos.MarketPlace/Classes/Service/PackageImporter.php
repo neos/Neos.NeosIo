@@ -13,7 +13,10 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
+use Neos\ContentRepository\Core\Feature\NodeRemoval\Command\RemoveNodeAggregate;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
+use Neos\ContentRepository\Core\SharedModel\Node\NodeVariantSelectionStrategy;
+use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
 use Neos\MarketPlace\Domain\Model\Storage;
@@ -32,6 +35,9 @@ class PackageImporter
     private array $processedPackages = [];
 
     private $packageConverter;
+
+    #[Flow\Inject()]
+    protected ContentRepositoryRegistry $contentRepositoryRegistry;
 
     public function forceUpdates(bool $forceUpdates): void
     {
@@ -66,8 +72,16 @@ class PackageImporter
             if (in_array($package->getProperty('title'), $upstreamPackages, true)) {
                 continue;
             }
-            // TODO 9.0 migration: !! Node::remove() is not supported by the new CR. Use the "RemoveNodeAggregate" command to remove a node.
-            $package->remove();
+
+            $this->contentRepositoryRegistry->get($package->contentRepositoryId)
+                ->handle(
+                    RemoveNodeAggregate::create(
+                        $package->workspaceName,
+                        $package->aggregateId,
+                        $package->dimensionSpacePoint, NodeVariantSelectionStrategy::STRATEGY_ALL_VARIANTS
+                    )
+                );
+
             if ($callback !== null) {
                 $callback($package);
             }
@@ -96,8 +110,16 @@ class PackageImporter
             if ($packageCount > 0) {
                 continue;
             }
-            // TODO 9.0 migration: !! Node::remove() is not supported by the new CR. Use the "RemoveNodeAggregate" command to remove a node.
-            $vendor->remove();
+
+            $this->contentRepositoryRegistry->get($vendor->contentRepositoryId)
+                ->handle(
+                    RemoveNodeAggregate::create(
+                        $vendor->workspaceName,
+                        $vendor->aggregateId,
+                        $vendor->dimensionSpacePoint, NodeVariantSelectionStrategy::STRATEGY_ALL_VARIANTS
+                    )
+                );
+
             if ($callback !== null) {
                 $callback($vendor);
             }
