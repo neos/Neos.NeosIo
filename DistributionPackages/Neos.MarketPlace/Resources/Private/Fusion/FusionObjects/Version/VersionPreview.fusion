@@ -13,7 +13,10 @@ prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
         data-version={version}
         data-path={node.path}
       >
-        <Neos.MarketPlace:Version @context.node={props.versionNode} />
+          <Neos.MarketPlace:Version @context.node={props.versionNode} @if.hasNode={props.versionNode} />
+          <span @if={!props.versionNode} class="error">
+            {I18n.translate('versions.versionNotFound', 'No released version found', [], 'Main', 'Neos.MarketPlace')}
+          </span>
       </section>
     `
 
