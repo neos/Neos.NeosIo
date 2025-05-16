@@ -1,33 +1,6 @@
-// TODO 9.0 migration: The dimension extration doesn't work his way in Neos 9 and needs to get re-implemented
-prototype(Neos.NeosIo:ExtractDimensions) < prototype(Neos.Fusion:Value) {
-    @context{
-        languageDimension = ${Array.first(String.split(String.trim(request.httpRequest.uri.path, '/'), '/', 2))}
-        defaultPresets = Neos.Fusion:DataStructure {
-            language = ${Configuration.setting('Neos.ContentRepository.contentDimensions.language.defaultPreset')}
-        }
-    }
-    value = Neos.Fusion:Case {
-        dimensionsFound {
-            condition = ${String.isBlank(languageDimension) == false && Configuration.setting('Neos.ContentRepository.contentDimensions.language.presets.' + languageDimension + '.values')}
-            renderer = Neos.Fusion:DataStructure {
-                dimensions = Neos.Fusion:DataStructure {
-                    language = ${Configuration.setting('Neos.ContentRepository.contentDimensions.language.presets.' + languageDimension + '.values')}
-                }
-                targetDimensions = Neos.Fusion:DataStructure {
-                    language = ${languageDimension}
-                }
-            }
-        }
-        noDimensionsFound {
-            condition = true
-            renderer = Neos.Fusion:DataStructure {
-                dimensions = Neos.Fusion:DataStructure {
-                    language = ${Configuration.setting('Neos.ContentRepository.contentDimensions.language.presets.' + defaultPresets.language + '.values')}
-                }
-                targetDimensions = Neos.Fusion:DataStructure {
-                    language = ${defaultPresets.language}
-                }
-            }
-        }
-    }
+prototype(Neos.NeosIo:ExtractDimensions) {
+    @class = 'Neos\\NeosIo\\Fusion\\ExtractDimensionsImplementation'
+
+    site = ${site}
+    uriPath = ${request.httpRequest.uri.path}
 }

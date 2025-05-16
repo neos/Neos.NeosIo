@@ -1,10 +1,8 @@
 error {
     @context.notfoundDocument = ${q(site).children('[uriPathSegment = "404"]').get(0)}
     4xx {
-        // TODO 9.0 migration: The dimension extration doesn't work his way in Neos 9 and needs to get re-implemented
-        // dimensions = Neos.NeosIo:ExtractDimensions
-        // @context.notfoundDocument = ${q(site).context({'dimensions': this.dimensions.dimensions}).children('[instanceof Neos.Neos:Document][uriPathSegment="404"]').get(0)}
-        @context.notfoundDocument = ${q(site).children('[instanceof Neos.Neos:Document][uriPathSegment="404"]').get(0)}
+        dimensions = Neos.NeosIo:ExtractDimensions
+        @context.notfoundDocument = ${q(site).context({'dimensions': this.dimensions}).children('[instanceof Neos.Neos:Document][uriPathSegment="404"]').get(0)}
         @position = 'start'
         condition = ${statusCode >= 400 && statusCode < 500 && notfoundDocument}
         renderer = Neos.Fusion:Renderer {
