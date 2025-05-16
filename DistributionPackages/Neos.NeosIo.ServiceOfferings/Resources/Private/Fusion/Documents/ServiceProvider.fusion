@@ -59,8 +59,8 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     itemName = 'vendor'
                     carryName = 'packageList'
                     itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
-                    // TODO 9.0 migration: Array.uniqe() is throwing an exception "Object of class Neos\ContentRepository\Core\Projection\ContentGraph\Node could not be converted to string"
-                    // @process.unique = ${value ? Array.unique(value) : value}
+                    // TODO 9.0 migration: Need to be enabled after https://github.com/neos/flow-development-collection/pull/3479 is merged and released
+                    // @process.unique = ${value ? Array.unique(value, "SORT_REGULAR") : value}
                     @process.sort = ${value ? q(value).sort('downloadTotal').get() : value}
                 }
 
