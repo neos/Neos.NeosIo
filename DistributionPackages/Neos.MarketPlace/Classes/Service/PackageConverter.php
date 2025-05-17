@@ -28,9 +28,13 @@ use Neos\Cache\Exception\InvalidBackendException;
 use Neos\Cache\Psr\Cache\CacheFactory;
 use Neos\ContentRepository\Core\DimensionSpace\OriginDimensionSpacePoint;
 use Neos\ContentRepository\Core\Feature\NodeModification\Dto\PropertyValuesToWrite;
+use Neos\ContentRepository\Core\Feature\NodeReferencing\Dto\NodeReferencesForName;
+use Neos\ContentRepository\Core\Feature\NodeReferencing\Dto\NodeReferencesToWrite;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
+use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateIds;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeName;
+use Neos\ContentRepository\Core\SharedModel\Node\ReferenceName;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Log\Utility\LogEnvironment;
 use Neos\Flow\Utility\Now;
@@ -77,8 +81,8 @@ class PackageConverter
     protected CacheItemPoolInterface $gitHubApiCachePool;
 
     public function __construct(
-        protected Storage                   $storage,
-        protected NodeIndexer               $nodeIndexer,
+        protected Storage     $storage,
+        protected NodeIndexer $nodeIndexer,
     )
     {
     }
@@ -562,8 +566,17 @@ class PackageConverter
             $originDimensionSpacePoint,
             PropertyValuesToWrite::fromArray([
                 'lastActivity' => $lastActiveVersionTime,
-                'lastVersion' => $lastVersion,
             ])
+        );
+        $this->storage->updateNodeReferences(
+            $packageNodeAggregateId,
+            $originDimensionSpacePoint,
+            NodeReferencesToWrite::create(
+                NodeReferencesForName::fromTargets(
+                    ReferenceName::fromString('lastVersion'),
+                    $lastVersion ? NodeAggregateIds::fromArray([$lastVersion->aggregateId]) : NodeAggregateIds::createEmpty(),
+                )
+            )
         );
         unset($versions);
     }

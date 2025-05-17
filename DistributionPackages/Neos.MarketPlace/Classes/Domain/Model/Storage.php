@@ -19,6 +19,8 @@ use Neos\ContentRepository\Core\DimensionSpace\OriginDimensionSpacePoint;
 use Neos\ContentRepository\Core\Feature\NodeCreation\Command\CreateNodeAggregateWithNode;
 use Neos\ContentRepository\Core\Feature\NodeModification\Command\SetNodeProperties;
 use Neos\ContentRepository\Core\Feature\NodeModification\Dto\PropertyValuesToWrite;
+use Neos\ContentRepository\Core\Feature\NodeReferencing\Command\SetNodeReferences;
+use Neos\ContentRepository\Core\Feature\NodeReferencing\Dto\NodeReferencesToWrite;
 use Neos\ContentRepository\Core\Feature\NodeRemoval\Command\RemoveNodeAggregate;
 use Neos\ContentRepository\Core\Feature\NodeTypeChange\Command\ChangeNodeAggregateType;
 use Neos\ContentRepository\Core\Feature\NodeTypeChange\Dto\NodeAggregateTypeChangeChildConstraintConflictResolutionStrategy;
@@ -238,7 +240,9 @@ class Storage
             return $this->subGraph->findChildNodes(
                 $vendorNodeAggregateId,
                 FindChildNodesFilter::create(
-                    NodeTypeName::fromString(MarketplaceNodeType::PACKAGE->value)
+                    NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                        NodeTypeNames::fromStringArray([MarketplaceNodeType::PACKAGE->value])
+                    ),
                 )
             );
         }
@@ -529,5 +533,27 @@ class Storage
             NodePath::fromString('readme'),
             $packageNodeAggregateId
         );
+    }
+
+    public function updateNodeReferences(
+        NodeAggregateId           $packageNodeAggregateId,
+        OriginDimensionSpacePoint $originDimensionSpacePoint,
+        NodeReferencesToWrite     $references
+    ): bool
+    {
+        try {
+            $this->contentRepository->handle(
+                SetNodeReferences::create(
+                    $this->workspaceName,
+                    $packageNodeAggregateId,
+                    $originDimensionSpacePoint,
+                    $references
+                )
+            );
+            return true;
+        } catch (AccessDenied) {
+            $this->logger->error('Access denied while updating node references: ' . $packageNodeAggregateId);
+        }
+        return false;
     }
 }
