@@ -24,9 +24,11 @@ use Neos\ContentRepository\Core\Feature\NodeTypeChange\Command\ChangeNodeAggrega
 use Neos\ContentRepository\Core\Feature\NodeTypeChange\Dto\NodeAggregateTypeChangeChildConstraintConflictResolutionStrategy;
 use Neos\ContentRepository\Core\Feature\Security\Exception\AccessDenied;
 use Neos\ContentRepository\Core\NodeType\NodeTypeName;
+use Neos\ContentRepository\Core\NodeType\NodeTypeNames;
 use Neos\ContentRepository\Core\Projection\ContentGraph\ContentSubgraphInterface;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindDescendantNodesFilter;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\PropertyValueEquals;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\Projection\ContentGraph\NodePath;
@@ -39,6 +41,7 @@ use Neos\ContentRepository\Core\SharedModel\Node\PropertyName;
 use Neos\ContentRepository\Core\SharedModel\Workspace\WorkspaceName;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
+use Neos\Neos\Domain\SubtreeTagging\NeosVisibilityConstraints;
 use Packagist\Api\Result\Package;
 use Packagist\Api\Result\Package\Maintainer;
 use Psr\Log\LoggerInterface;
@@ -88,9 +91,9 @@ class Storage
         $this->contentRepository = $this->contentRepositoryRegistry->get(
             ContentRepositoryId::fromString('default')
         );
-        $this->subGraph = $this->contentRepository->getContentSubgraph(
-            $this->workspaceName,
+        $this->subGraph = $this->contentRepository->getContentGraph($this->workspaceName)->getSubgraph(
             DimensionSpacePoint::fromArray(['language' => 'en']),
+            NeosVisibilityConstraints::excludeRemoved()
         );
         $this->storageRootNodeAggregateId = NodeAggregateId::fromString($this->repositoryIdentifier);
     }
@@ -110,7 +113,9 @@ class Storage
         $node = $this->subGraph->findChildNodes(
             $this->storageRootNodeAggregateId,
             FindChildNodesFilter::create(
-                NodeTypeName::fromString(MarketplaceNodeType::VENDOR->value),
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::VENDOR->value]
+                    )),
                 propertyValue: PropertyValueEquals::create(
                     PropertyName::fromString('title'),
                     $vendorName,
@@ -181,7 +186,9 @@ class Storage
         return $this->subGraph->findChildNodes(
             $vendorNodeAggregateId,
             FindChildNodesFilter::create(
-                NodeTypeName::fromString(MarketplaceNodeType::PACKAGE->value),
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::PACKAGE->value])
+                ),
                 propertyValue: PropertyValueEquals::create(
                     PropertyName::fromString('title'),
                     $packageNameSlug,
@@ -236,9 +243,11 @@ class Storage
             );
         }
         return $this->subGraph->findDescendantNodes(
-           $this->storageRootNodeAggregateId,
+            $this->storageRootNodeAggregateId,
             FindDescendantNodesFilter::create(
-                NodeTypeName::fromString(MarketplaceNodeType::PACKAGE->value)
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::PACKAGE->value])
+                ),
             )
         );
     }
@@ -287,6 +296,15 @@ class Storage
                 $maintainerNode->originDimensionSpacePoint,
                 $properties
             );
+            return true;
+        }
+
+        $maintainersNode = $this->subGraph->findNodeByPath(
+            NodeName::fromString('maintainers'),
+            $packageNode->aggregateId
+        );
+        if ($maintainersNode === null) {
+            return false;
         }
 
         try {
@@ -296,8 +314,8 @@ class Storage
                     $this->workspaceName,
                     $maintainerNodeAggregateId,
                     NodeTypeName::fromString(MarketplaceNodeType::MAINTAINER->value),
-                    $packageNode->originDimensionSpacePoint,
-                    $packageNode->aggregateId,
+                    $maintainersNode->originDimensionSpacePoint,
+                    $maintainersNode->aggregateId,
                     initialPropertyValues: $properties
                 )
             );
@@ -322,7 +340,9 @@ class Storage
         return $this->subGraph->findChildNodes(
             $maintainersNode->aggregateId,
             FindChildNodesFilter::create(
-                NodeTypeName::fromString(MarketplaceNodeType::MAINTAINER->value)
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::MAINTAINER->value])
+                )
             )
         );
     }
@@ -344,7 +364,9 @@ class Storage
         return $this->subGraph->findChildNodes(
             $versionsNodeAggregateId,
             FindChildNodesFilter::create(
-                NodeTypeName::fromString(MarketplaceNodeType::VERSION->value)
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::VERSION->value])
+                )
             )
         );
     }
@@ -357,7 +379,9 @@ class Storage
         return $this->subGraph->findChildNodes(
             $versionsNodeAggregateId,
             FindChildNodesFilter::create(
-                NodeTypeName::fromString(MarketplaceNodeType::VERSION->value),
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::VERSION->value])
+                ),
                 propertyValue: PropertyValueEquals::create(
                     PropertyName::fromString('title'),
                     Slug::create($version),
@@ -382,7 +406,9 @@ class Storage
         return $this->subGraph->findChildNodes(
             $maintainersNode->aggregateId,
             FindChildNodesFilter::create(
-                NodeTypeName::fromString(MarketplaceNodeType::MAINTAINER->value),
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::MAINTAINER->value])
+                ),
                 propertyValue: PropertyValueEquals::create(
                     PropertyName::fromString('title'),
                     Slug::create($maintainerName),
