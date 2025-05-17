@@ -182,8 +182,6 @@ class Storage
         NodeAggregateId $vendorNodeAggregateId
     ): ?Node
     {
-        $packageNameSlug = Slug::create($package->getName());
-
         // Find the vendor node by name
         return $this->subGraph->findChildNodes(
             $vendorNodeAggregateId,
@@ -193,8 +191,8 @@ class Storage
                 ),
                 propertyValue: PropertyValueEquals::create(
                     PropertyName::fromString('title'),
-                    $packageNameSlug,
-                    true
+                    $package->getName(),
+                    false
                 )
             )
         )->first();
