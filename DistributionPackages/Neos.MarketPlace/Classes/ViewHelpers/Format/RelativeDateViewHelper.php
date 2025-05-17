@@ -23,11 +23,9 @@ class RelativeDateViewHelper extends AbstractViewHelper
 {
     /**
      * Initialize arguments
-     *
-     * @return void
      * @api
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('date', \DateTimeInterface::class, 'the URI that will be put in the href attribute of the rendered link tag');
         $this->registerArgument('compact', 'string', 'Open the linked document in new Tab', false, false);

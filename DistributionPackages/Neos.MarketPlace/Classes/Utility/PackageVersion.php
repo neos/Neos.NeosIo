@@ -30,7 +30,11 @@ class PackageVersion
      */
     public static function extractLastVersion(Nodes $versionNodes): ?Node
     {
-        $versions = iterator_to_array($versionNodes->getIterator());
+        try {
+            $versions = iterator_to_array($versionNodes->getIterator());
+        } catch (\Exception) {
+            return null;
+        }
         usort($versions, static function (Node $a, Node $b) {
             return $b->getProperty('versionNormalized') <=> $a->getProperty('versionNormalized');
         });

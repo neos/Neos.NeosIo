@@ -23,9 +23,9 @@ use Neos\ContentRepository\Core\SharedModel\Node\NodeAddress;
 use Neos\ContentRepository\Core\SharedModel\Node\PropertyName;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Mvc\ActionRequest;
+use Neos\Flow\Mvc\Exception\NoMatchingRouteException;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\Flow\Annotations as Flow;
-use Neos\Neos\Exception as NeosException;
 use Neos\Neos\FrontendRouting\NodeUriBuilderFactory;
 use Neos\Fusion\FusionObjects\AbstractFusionObject;
 
@@ -42,17 +42,11 @@ class PackageUriImplementation extends AbstractFusionObject
     #[Flow\Inject]
     protected ContentRepositoryRegistry $contentRepositoryRegistry;
 
-    /**
-     * @return string
-     */
     public function getPackageKey(): string
     {
         return $this->fusionValue('packageKey');
     }
 
-    /**
-     * @return Node
-     */
     public function getNode(): Node
     {
         return $this->fusionValue('node');
@@ -60,19 +54,14 @@ class PackageUriImplementation extends AbstractFusionObject
 
     /**
      * @return string The rendered URI or NULL if no URI could be resolved for the given node
-     * @throws NeosException
-     * @throws \Neos\Flow\Http\Exception
-     * @throws \Neos\Flow\Mvc\Routing\Exception\MissingActionNameException
-     * @throws \Neos\Flow\Persistence\Exception\IllegalObjectTypeException
-     * @throws \Neos\Flow\Property\Exception
-     * @throws \Neos\Flow\Security\Exception
+     * @throws NoMatchingRouteException
      */
     public function evaluate(): string
     {
         $packageKey = $this->getPackageKey();
         $packageKeyParts = explode('-', $packageKey);
-        if (isset($packageKeyParts[0]) && $packageKeyParts[0] === 'ext' && isset($packageKeyParts[1])) {
-            return sprintf('http://php.net/manual-lookup.php?pattern=%s&scope=quickref', urlencode($packageKeyParts[1]));
+        if (isset($packageKeyParts[0], $packageKeyParts[1]) && $packageKeyParts[0] === 'ext') {
+            return sprintf('https://php.net/manual-lookup.php?pattern=%s&scope=quickref', urlencode($packageKeyParts[1]));
         }
         $title = Slug::create($packageKey);
 

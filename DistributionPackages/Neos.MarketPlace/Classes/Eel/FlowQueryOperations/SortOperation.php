@@ -21,7 +21,8 @@ use Neos\Eel\FlowQuery\FlowQuery;
 /**
  * EEL sort() operation to sort Nodes
  */
-class SortOperation extends AbstractOperation {
+class SortOperation extends AbstractOperation
+{
 
     /**
      * {@inheritdoc}
@@ -41,11 +42,9 @@ class SortOperation extends AbstractOperation {
      * {@inheritdoc}
      *
      * We can only handle CR Nodes.
-     *
-     * @param mixed $context
-     * @return boolean
      */
-    public function canEvaluate($context) {
+    public function canEvaluate($context): bool
+    {
         return (isset($context[0]) && ($context[0] instanceof Node)) || (is_array($context) && count($context) === 0);
     }
 
@@ -54,20 +53,18 @@ class SortOperation extends AbstractOperation {
      *
      * @param FlowQuery $flowQuery the FlowQuery object
      * @param array $arguments the arguments for this operation
-     * @return mixed
      * @throws FlowQueryException
-     * @throws \Neos\Flow\Property\Exception
-     * @throws \Neos\Flow\Security\Exception
      */
-    public function evaluate(FlowQuery $flowQuery, array $arguments) {
-        if (!isset($arguments[0]) || empty($arguments[0])) {
+    public function evaluate(FlowQuery $flowQuery, array $arguments): void
+    {
+        if (empty($arguments[0])) {
             throw new FlowQueryException('sort() needs property name by which nodes should be sorted', 1332492263);
         }
 
         $nodes = $flowQuery->getContext();
         $sortByPropertyPath = $arguments[0];
         $sortOrder = 'DESC';
-        if (isset($arguments[1]) && !empty($arguments[1]) && in_array($arguments[1], array('ASC', 'DESC'))) {
+        if (!empty($arguments[1]) && in_array($arguments[1], array('ASC', 'DESC'))) {
             $sortOrder = $arguments[1];
         }
 
