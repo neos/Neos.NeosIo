@@ -67,7 +67,19 @@ class PackageUriImplementation extends AbstractFusionObject
 
         $node = $this->getNode();
         $subgraph = $this->contentRepositoryRegistry->subgraphForNode($node);
-        $packageNodes = $subgraph->findDescendantNodes($node->aggregateId, FindDescendantNodesFilter::create(nodeTypes: NodeTypeCriteria::create(NodeTypeNames::fromStringArray(['Neos.MarketPlace:Package']), NodeTypeNames::createEmpty()), propertyValue: PropertyValueEquals::create(PropertyName::fromString('uriPathSegment'), $title, false)));
+        $packageNodes = $subgraph->findDescendantNodes(
+            $node->aggregateId,
+            FindDescendantNodesFilter::create(
+                nodeTypes: NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray(['Neos.MarketPlace:Package'])
+                ),
+                propertyValue: PropertyValueEquals::create(
+                    PropertyName::fromString('uriPathSegment'),
+                    $title,
+                    false
+                )
+            )
+        );
         $packageNode = $packageNodes->first();
         if ($packageNode) {
             $possibleRequest = $this->runtime->fusionGlobals->get('request');
