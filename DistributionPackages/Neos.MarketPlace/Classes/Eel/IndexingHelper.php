@@ -15,10 +15,10 @@ namespace Neos\MarketPlace\Eel;
 
 use Composer\Semver\Semver;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
-use Neos\MarketPlace\Service\PackageVersion;
+use Neos\ContentRepository\Search\Eel;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
-use Neos\ContentRepository\Search\Eel;
+use Neos\MarketPlace\Utility\PackageVersion;
 
 /**
  * IndexingHelper

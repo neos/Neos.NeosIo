@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neos\MarketPlace\Service;
+namespace Neos\MarketPlace\Utility;
 
 /*
  * This file is part of the Neos.MarketPlace package.
@@ -14,39 +14,23 @@ namespace Neos\MarketPlace\Service;
  */
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
-use Neos\Eel\FlowQuery\FlowQuery;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\Flow\Annotations as Flow;
 
 /**
  * Package Version Utility
- *
- * @Flow\Scope("singleton")
  * @api
  */
+#[Flow\Proxy(false)]
 class PackageVersion
 {
-    /**
-     * @param Node $node
-     * @return array
-     * @throws \Neos\Eel\Exception
-     */
-    public function extractVersions(Node $node): array
-    {
-        $query = new FlowQuery([$node]);
-        return $query
-            ->find('versions')
-            ->find('[instanceof Neos.MarketPlace:Version]')
-            ->get();
-    }
 
     /**
-     * @param Node $node
-     * @return Node
-     * @throws \Neos\Eel\Exception
+     * Extracts the last (stable) version from a list of versions
      */
-    public function extractLastVersion(Node $node): ?Node
+    public static function extractLastVersion(Nodes $versionNodes): ?Node
     {
-        $versions = $this->extractVersions($node);
+        $versions = iterator_to_array($versionNodes->getIterator());
         usort($versions, static function (Node $a, Node $b) {
             return $b->getProperty('versionNormalized') <=> $a->getProperty('versionNormalized');
         });
@@ -54,11 +38,8 @@ class PackageVersion
             return $version->getProperty('stability') === true;
         });
         if (count($stableVersions) > 0) {
-            $version = reset($stableVersions);
-        } else {
-            $version = reset($versions);
+            return $stableVersions[0] ?? null;
         }
-
-        return $version ?: null;
+        return $versions[0] ?? null;
     }
 }
