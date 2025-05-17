@@ -7,7 +7,7 @@
     '@format': 'atom'
   routeParts:
     'node':
-      handler: 'Neos\Neos\Routing\FrontendNodeRoutePartHandler'
+      handler: 'Neos\Neos\FrontendRouting\FrontendNodeRoutePartHandlerInterface'
 
 - name:  'Json Package API'
   uriPattern: '{node}.json'
@@ -18,4 +18,4 @@
     '@format': 'json'
   routeParts:
     'node':
-      handler: 'Neos\Neos\Routing\FrontendNodeRoutePartHandler'
+      handler: 'Neos\Neos\FrontendRouting\FrontendNodeRoutePartHandlerInterface'

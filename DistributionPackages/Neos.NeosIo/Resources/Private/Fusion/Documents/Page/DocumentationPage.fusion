@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo:DocumentationPage) < prototype(Neos.NeosIo:DefaultPage) {
-    body {
+    body.template {
         templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/DocumentationPage.html'
 
         parts {
@@ -18,7 +18,7 @@ prototype(Neos.NeosIo:DocumentationPage) < prototype(Neos.NeosIo:DefaultPage) {
                 nodePath = 'keyvisual'
             }
 
-            main = Neos.Neos:PrimaryContent {
+            main = Neos.Neos:ContentCollection {
                 nodePath = 'main'
             }
 

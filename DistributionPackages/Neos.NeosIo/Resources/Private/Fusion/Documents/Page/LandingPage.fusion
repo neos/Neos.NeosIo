@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo:LandingPage) < prototype(Neos.NeosIo:DefaultPage) {
-    body {
+    body.template {
         templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/LandingPage.html'
 
         content {
@@ -13,7 +13,7 @@ prototype(Neos.NeosIo:LandingPage) < prototype(Neos.NeosIo:DefaultPage) {
                 }
             }
 
-            main = Neos.Neos:PrimaryContent {
+            main = Neos.Neos:ContentCollection {
                 nodePath = 'main'
             }
         }

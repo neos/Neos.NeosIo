@@ -19,39 +19,23 @@ use Neos\Flow\Annotations as Flow;
 
 /**
  * Handle request to Packagist to get package informations
- *
- * @Flow\Scope("singleton")
  * @api
  */
+#[Flow\Scope('singleton')]
 class PackageRepository
 {
-    /**
-     * @param string $packageKey
-     * @return Package
-     */
     public function findByPackageKey(string $packageKey): Package
     {
-        $client = new Client();
-        return $client->get($packageKey);
+        return (new Client())->get($packageKey);
     }
 
-    /**
-     * @param string $type
-     * @return array
-     */
     public function findByPackageType(string $type): array
     {
-        $client = new Client();
-        return $client->all(['type' => $type]);
+        return (new Client())->all(['type' => $type]);
     }
 
-    /**
-     * @param string $vendor
-     * @return array
-     */
     public function findByVendor(string $vendor): array
     {
-        $client = new Client();
-        return $client->all(['vendor' => $vendor]);
+        return (new Client())->all(['vendor' => $vendor]);
     }
 }

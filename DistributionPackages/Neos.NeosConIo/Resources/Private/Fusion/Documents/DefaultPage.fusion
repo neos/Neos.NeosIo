@@ -10,7 +10,7 @@ prototype(Neos.NeosIo:PageStyles) {
 }
 
 prototype(Neos.NeosIo:DefaultPage.Menu) {
-    @cache.entryIdentifier.documentNode = ${documentNode}
+    @cache.entryIdentifier.documentNode = ${Neos.Caching.entryIdentifierForNode(documentNode)}
 }
 
 prototype(Neos.NeosIo:Component.SiteHeader) {

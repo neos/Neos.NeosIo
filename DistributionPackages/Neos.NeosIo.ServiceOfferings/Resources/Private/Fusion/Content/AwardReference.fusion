@@ -5,7 +5,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Content.AwardReference) < prototype(Neos.
 
 
     renderer = afx`
-        <li title={props.title}><i class="fa fa-award"></i> {props.award.label} (<a href={props.projectUrl} target="_blank" @if.hasProjectUrl={props.projectUrl}>{props.title}</a><span @if.hasNoProjectUrl={!props.projectUrl}>{props.title}</span>)</li>
+        <li title={props.title}><i class="fa fa-award"></i> {Neos.Node.label(props.award)} (<a href={props.projectUrl} target="_blank" @if.hasProjectUrl={props.projectUrl}>{props.title}</a><span @if.hasNoProjectUrl={!props.projectUrl}>{props.title}</span>)</li>
     `
 
 }
