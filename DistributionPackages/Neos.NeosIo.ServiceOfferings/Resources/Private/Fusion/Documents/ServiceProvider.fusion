@@ -59,9 +59,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     itemName = 'vendor'
                     carryName = 'packageList'
                     itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
-                    // TODO 9.0 migration: Need to be enabled after https://github.com/neos/flow-development-collection/pull/3479 is merged and released
-                    // @process.unique = ${value ? Array.unique(value, "SORT_REGULAR") : value}
-                    @process.sort = ${value ? q(value).sort('downloadTotal').get() : value}
+                    @process.uniqueAndSort = ${value ? q(value).unique().sort('downloadTotal').get() : value}
                 }
 
                 fundingBadges = ${q(site).fundingBadges().get()}
