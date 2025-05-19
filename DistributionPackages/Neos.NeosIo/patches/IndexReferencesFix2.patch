@@ -1,0 +1,66 @@
+From 122a548aac324ca765965abd090b106f76d03012 Mon Sep 17 00:00:00 2001
+From: Daniel Lienert <daniel@lienert.cc>
+Date: Fri, 9 May 2025 12:41:54 +0200
+Subject: [PATCH 1/2] BUGFIX: Also add nodeTypeMapping for references
+
+---
+ .../Version6/Mapping/NodeTypeMappingBuilder.php      | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/Classes/Driver/Version6/Mapping/NodeTypeMappingBuilder.php b/Classes/Driver/Version6/Mapping/NodeTypeMappingBuilder.php
+index 7d749c4c..7736116c 100644
+--- a/Classes/Driver/Version6/Mapping/NodeTypeMappingBuilder.php
++++ b/Classes/Driver/Version6/Mapping/NodeTypeMappingBuilder.php
+@@ -71,8 +71,16 @@ public function buildMappingInformation(ContentRepositoryId $contentRepositoryId
+                 $mapping->setFullMapping($fullMapping);
+             }
+
+-            foreach ($nodeType->getProperties() as $propertyName => $propertyConfiguration) {
+-                // This property is configured to not be index, so do not add a mapping for it
++            $propertiesAndReferences = array_merge(
++                $nodeType->getProperties(),
++                array_map(function ($reference) {
++                    $reference['type'] = 'references';
++                    return $reference;
++                }, $nodeType->getReferences())
++            );
++
++            foreach ($propertiesAndReferences as $propertyName => $propertyConfiguration) {
++                // This property is configured to not be indexed, so do not add a mapping for it
+                 if (isset($propertyConfiguration['search']) && array_key_exists('indexing', $propertyConfiguration['search']) && $propertyConfiguration['search']['indexing'] === false) {
+                     continue;
+                 }
+
+From 2fc44ab6de2d7d9720dd56714924e12da07d4e5a Mon Sep 17 00:00:00 2001
+From: Daniel Lienert <daniel@lienert.cc>
+Date: Fri, 9 May 2025 12:42:11 +0200
+Subject: [PATCH 2/2] BUGFIX: Add type info for boolean fields
+
+---
+ Configuration/NodeTypes.Override.Document.yaml | 1 +
+ Configuration/NodeTypes.Override.Hidable.yaml  | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/Configuration/NodeTypes.Override.Document.yaml b/Configuration/NodeTypes.Override.Document.yaml
+index b11e2ad6..1ed55d0e 100644
+--- a/Configuration/NodeTypes.Override.Document.yaml
++++ b/Configuration/NodeTypes.Override.Document.yaml
+@@ -37,6 +37,7 @@
+             'text':
+               type: text
+     'neos_hidden_in_menu':
++      type: boolean
+       search:
+         indexing: '${node.hiddenInMenu}'
+
+diff --git a/Configuration/NodeTypes.Override.Hidable.yaml b/Configuration/NodeTypes.Override.Hidable.yaml
+index 444b990f..616be852 100644
+--- a/Configuration/NodeTypes.Override.Hidable.yaml
++++ b/Configuration/NodeTypes.Override.Hidable.yaml
+@@ -1,5 +1,6 @@
+ 'Neos.Neos:Hidable':
+   properties:
+     'neos_hidden':
++      type: boolean
+       search:
+         indexing: '${Neos.Node.isDisabled(node)}'
