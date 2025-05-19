@@ -546,8 +546,12 @@ class PackageConverter
         OriginDimensionSpacePoint $originDimensionSpacePoint
     ): void
     {
+        $versionsNode = $this->storage->getPackageVersionsNode($packageNodeAggregateId);
+        if (!$versionsNode) {
+            return;
+        }
         $versions = $this->storage->getPackageVersionNodes(
-            $packageNodeAggregateId,
+            $versionsNode->aggregateId,
         );
 
         $lastActiveVersionTime = null;
