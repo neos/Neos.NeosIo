@@ -70,7 +70,8 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
                     loading = ${props.loading}
                     data-lightbox = Neos.Neos:ImageUri {
                         asset = ${props.image}
-                        @if.enabled = ${props.lightbox && !node.context.inBackend}
+                        @if.enabled = ${props.lightbox}
+                        @if.notInBackend = ${!renderingMode.isEdit && !renderingMode.isPreview}
                     }
                     style = Neos.Fusion:Join {
                         maxHeight = ${'max-height: ' + props.maximumHeight + 'px;'}
