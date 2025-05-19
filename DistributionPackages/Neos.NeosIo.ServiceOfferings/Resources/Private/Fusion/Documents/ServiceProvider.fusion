@@ -32,6 +32,10 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     property = 'country'
                     block = false
                 }
+                internalNotes = Neos.Neos:Editable {
+                    property = 'internalNotes'
+                    @if.inBackend = ${renderingMode.isEdit || renderingMode.isPreview}
+                }
 
                 # Only editable via inspector for validation
                 logo = ${q(node).property('logo')}
@@ -72,6 +76,10 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                 renderer = afx`
                     <div class="service-provider">
                         <Neos.Neos:NodeLink node={q(documentNode).parent().get(0)}>Back to the overview</Neos.Neos:NodeLink>
+
+                        <div class="service-provider__internal-notes" @if.set={props.internalNotes}>
+                            {props.internalNotes}
+                        </div>
 
                         <h1 class="service-provider__title">{props.title}</h1>
 
