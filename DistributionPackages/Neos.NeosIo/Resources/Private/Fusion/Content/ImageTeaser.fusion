@@ -9,7 +9,7 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
     }
     rawTitle = ${q(node).property('title')}
     rawSubTitle = ${q(node).property('subTitle')}
-    alternativeText = ${this.title}
+    alternativeText = ${q(node).property('title')}
     image = ${q(node).property('image')}
     text = Neos.Neos:Editable {
         property = 'text'
