@@ -7,13 +7,14 @@ prototype(Neos.NeosIo:CrowdUserListItem) < prototype(Neos.Fusion:Template) {
     user = ${q(site).crowdUser(userName).get()}
     @context.user = ${this.user}
 
-    profileId = ${'member-profile-' + node.identifier + '-' + String.pregReplace(userName, '/[^a-z0-9]/', '_')}
+    profileId = ${'member-profile-' + node.aggregateId + '-' + String.pregReplace(userName, '/[^a-z0-9]/', '_')}
     @context.profileId = ${this.profileId}
 
-    attributes = Neos.Fusion:Attributes {
+    attributes = Neos.Fusion:DataStructure {
         class = 'team-listing__profile'
         id = ${profileId}
     }
+    attributes.@process.toHtmlAttributesString = ${Neos.Array.toHtmlAttributesString(value)}
 
     userDetails = Neos.NeosIo:CrowdUserProfile {
         user = ${user}

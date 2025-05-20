@@ -16,15 +16,11 @@ namespace Neos\MarketPlace\Domain\Model;
 /**
  * @api
  */
-class LogAction
+enum LogAction: string
 {
-    public const SINGLE_PACKAGE_SYNC_STARTED = 'SinglePackageSyncStarted';
-
-    public const SINGLE_PACKAGE_SYNC_FINISHED = 'SinglePackageSyncFinished';
-
-    public const SINGLE_PACKAGE_SYNC_FAILED = 'SinglePackageSyncFailed';
-
-    public const FULL_SYNC_STARTED = 'FullSyncStarted';
-
-    public const FULL_SYNC_FINISHED = 'FullSyncFinished';
+    case SINGLE_PACKAGE_SYNC_STARTED = 'SinglePackageSyncStarted';
+    case SINGLE_PACKAGE_SYNC_FINISHED = 'SinglePackageSyncFinished';
+    case SINGLE_PACKAGE_SYNC_FAILED = 'SinglePackageSyncFailed';
+    case FULL_SYNC_STARTED = 'FullSyncStarted';
+    case FULL_SYNC_FINISHED = 'FullSyncFinished';
 }

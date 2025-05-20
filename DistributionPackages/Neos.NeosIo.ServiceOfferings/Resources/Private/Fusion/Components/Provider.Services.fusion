@@ -21,7 +21,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Services) < prototype(
             </span>
             <ul>
                 <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
-                    <li>{service.label}</li>
+                    <li>{Neos.Node.label(service)}</li>
                 </Neos.Fusion:Loop>
             </ul>
         </div>

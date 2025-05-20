@@ -123,3 +123,22 @@
       ui:
         label: 'Awards'
         showInCreationDialog: true
+    internalNotes:
+      type: string
+      ui:
+        label: 'Internal notes'
+        showInCreationDialog: true
+        inspector:
+          group: properties
+          position: start
+          editor: Neos.Neos/Inspector/Editors/RichTextEditor
+        inlineEditable: true
+        inline:
+          editorOptions:
+            formatting:
+              strong: true
+              em: true
+              u: true
+              sub: true
+              sup: true
+            placeholder: 'Enter internal notes'

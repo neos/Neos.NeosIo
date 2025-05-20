@@ -5,7 +5,7 @@ prototype(Neos.NeosIo:CountUp) < prototype(Neos.Neos:ContentComponent) {
         <div class="countUp u-alignCenter">
             <div class="countUp__numberLine h1 u-mb0">
                 <Neos.Neos:Editable property="prefix" block={false} />
-                <span data-component="CountUp" data-component.@if.live={!node.context.inBackend} data-to={props.rawNumber}>
+                <span data-component="CountUp" data-component.@if.live={!renderingMode.isEdit} data-to={props.rawNumber}>
                     <Neos.Neos:Editable property="number" block={false} />
                 </span>
                 <Neos.Neos:Editable property="suffix" block={false} />

@@ -1,3 +1,4 @@
 prototype(Neos.MarketPlace:Content) < prototype(Neos.Fusion:Template) {
-    attributes = Neos.Fusion:Attributes
+    attributes = Neos.Fusion:DataStructure
+    attributes.@process.toHtmlAttributesString = ${Neos.Array.toHtmlAttributesString(value)}
 }

@@ -70,7 +70,8 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
                     loading = ${props.loading}
                     data-lightbox = Neos.Neos:ImageUri {
                         asset = ${props.image}
-                        @if.enabled = ${props.lightbox && !node.context.inBackend}
+                        @if.enabled = ${props.lightbox}
+                        @if.notInBackend = ${!renderingMode.isEdit && !renderingMode.isPreview}
                     }
                     style = Neos.Fusion:Join {
                         maxHeight = ${'max-height: ' + props.maximumHeight + 'px;'}
@@ -80,7 +81,7 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
             }
         }
         fallback {
-            condition = ${!props.image && node.context.inBackend}
+            condition = ${!props.image && renderingMode.isEdit}
             renderer = afx`
                 <img
                     title="Dummy image"
@@ -98,7 +99,7 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
             <figure class={props.imageClassName}>
                 <a
                     href={props.link}
-                    href.@if.live={!node.context.inBackend}
+                    href.@if.live={!renderingMode.isEdit}
                     target={props.openInNewTab && '_blank'}
                     rel={props.openInNewTab && 'noopener'}
                     title={props.title}
