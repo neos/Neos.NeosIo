@@ -22,7 +22,7 @@ prototype(Neos.MarketPlace:Component.Feed.PackageVersions) < prototype(Neos.Fusi
             itemName = 'version'
             itemRenderer = Neos.Fusion:DataStructure {
                 time = ${q(version).property('time')}
-                identifier = ${version.identifier}
+                identifier = ${version.aggregateId}
                 version = ${q(version).property('version')}
                 description = ${q(description).property('version')}
 

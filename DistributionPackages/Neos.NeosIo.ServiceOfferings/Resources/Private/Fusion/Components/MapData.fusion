@@ -5,9 +5,9 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.MapData) < prototype(Neos.Fusio
     itemRenderer = Neos.Fusion:DataStructure {
         type = 'Feature'
         properties = Neos.Fusion:DataStructure {
-            tooltip = ${serviceProvider.label}
+            tooltip = ${Neos.Node.label(serviceProvider)}
             popup = afx`
-                <h4>{serviceProvider.label}</h4>
+                <h4>{Neos.Node.label(serviceProvider)}</h4>
                 <p @if.set={q(serviceProvider).property('description')}>{q(serviceProvider).property('description')}</p>
                 <address @if.set={q(serviceProvider).property('street')}>
                     {q(serviceProvider).property('street')}<br/>

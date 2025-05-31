@@ -10,6 +10,8 @@
   constraints:
     nodeTypes:
       '*': false
+      # Temporary workaround for the Neos UI to be able to keep existing non-flattened content
+      'Neos.Neos:ContentCollection': true
       'Neos.NodeTypes:Text': true
       'Neos.NodeTypes.ContentReferences:ContentReferences': true
       'Neos.NeosIo:Button': true

@@ -1,0 +1,16 @@
+Neos:
+  Neos:
+    nodeTypes:
+      groups:
+        marketplace:
+          position: 'after general'
+          label: 'Neos.MarketPlace:Main:nodeTypes.groups.marketplace'
+    userInterface:
+      translation:
+        autoInclude:
+          Neos.MarketPlace:
+            - Main
+            - 'NodeTypes/*'
+    fusion:
+      autoInclude:
+        Neos.MarketPlace: true

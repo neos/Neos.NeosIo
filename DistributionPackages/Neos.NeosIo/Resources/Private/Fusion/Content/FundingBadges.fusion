@@ -17,8 +17,8 @@ prototype(Neos.NeosIo:FundingBadges) < prototype(Neos.Neos:Content) {
     @cache {
         mode = 'cached'
         entryIdentifier {
-            documentNode = ${documentNode}
-            node = ${node}
+            documentNode = ${Neos.Caching.entryIdentifierForNode(documentNode)}
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
         }
         entryTags {
             1 = ${Neos.Caching.nodeTag(node)}

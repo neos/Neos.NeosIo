@@ -11,10 +11,9 @@ namespace Neos\NeosConIo\Eel\FlowQueryOperations;
  * source code.
  */
 
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Eel\FlowQuery\Operations\AbstractOperation;
-use Neos\ContentRepository\Domain\Model\Node;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
 
 /**
  * "sort" operation working on ContentRepository nodes.
@@ -40,7 +39,7 @@ class SortMultipleOperation extends AbstractOperation
      */
     public function canEvaluate($context)
     {
-        return count($context) === 0 || (isset($context[0]) && ($context[0] instanceof NodeInterface));
+        return count($context) === 0 || (isset($context[0]) && ($context[0] instanceof Node));
     }
 
     /**
@@ -83,11 +82,11 @@ class SortMultipleOperation extends AbstractOperation
                 $propertyValue = $node->getProperty($sortProperty);
             }
 
-            if ($propertyValue instanceof \DateTime) {
+            if ($propertyValue instanceof \DateTimeInterface) {
                 $propertyValue = $propertyValue->getTimestamp();
             }
 
-            $nodesByIdentifier[$node->getIdentifier()] = [
+            $nodesByIdentifier[$node->aggregateId->value] = [
                 'node' => $node,
                 'previousCount' => (new FlowQuery([$node]))->prevAll()->count(),
                 'propertyValue' => $propertyValue

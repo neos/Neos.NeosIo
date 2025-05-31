@@ -8,7 +8,7 @@ prototype(Neos.NeosIo:DefaultPage.FooterMenu) < prototype(Neos.Fusion:Component)
       <ul class="nav nav--stacked siteFooter__nav">
           <Neos.Fusion:Loop items={props.items}>
               <li>
-                  <Neos.Neos:NodeLink node={item} title={item.label} />
+                  <Neos.Neos:NodeLink node={item} attributes.title={Neos.Node.label(item)} />
               </li>
           </Neos.Fusion:Loop>
       </ul>
