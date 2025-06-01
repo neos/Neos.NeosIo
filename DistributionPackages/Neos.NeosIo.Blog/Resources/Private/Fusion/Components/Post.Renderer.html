@@ -49,14 +49,12 @@
 				<h3>Latest Posts</h3>
 				<ul class="nav nav--stacked u-mb1/2">
 					<f:for each="{latest}" as="post">
-						<f:if condition="{post} != {node}">
-							<li class="u-mb1/2" title="{post.properties.summary -> f:format.stripTags()}">
-								<div class="h5">
-									{post.properties.datePublished -> f:format.date(localeFormatType: 'date', forceLocale: true)} -
-									<neos:link.node node="{post}"/>
-								</div>
-							</li>
-						</f:if>
+                        <li class="u-mb1/2" title="{post.properties.summary -> f:format.stripTags()}">
+                            <div class="h5">
+                                {post.properties.datePublished -> f:format.date(localeFormatType: 'date', forceLocale: true)} -
+                                <neos:link.node node="{post}"/>
+                            </div>
+                        </li>
 					</f:for>
 				</ul>
 
