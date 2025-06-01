@@ -50,11 +50,11 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                 address = ${Array.join([q(node).property('street'), q(node).property('zipcode') + ' ' + q(node).property('city'), q(node).property('country')], ', ')}
 
                 # Lists
-                typesOfService = ${q(node).property('typesOfService')}
+                typesOfService = ${q(node).referenceNodes('typesOfService').get()}
                 showCases = ${q(node).referenceNodes('showCases').get()}
                 caseStudies = ${q(node).referenceNodes('caseStudies').get()}
-                vendors = ${q(node).property('vendors')}
-                packages = ${q(node).property('packages')}
+                vendors = ${q(node).referenceNodes('vendors').get()}
+                packages = ${q(node).referenceNodes('packages').get()}
                 badges = ${q(node).referenceNodes('badges').get()}
 
                 allPackages = Neos.Fusion:Reduce {

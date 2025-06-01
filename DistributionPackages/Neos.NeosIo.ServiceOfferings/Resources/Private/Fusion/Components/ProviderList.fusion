@@ -39,7 +39,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
                 city = ${q(serviceProvider).property('city') || ''}
                 country = ${q(serviceProvider).property('country')}
                 typesOfService = Neos.Fusion:Map {
-                    items = ${q(serviceProvider).property('typesOfService') || []}
+                    items = ${q(serviceProvider).referenceNodes('typesOfService').get() || []}
                     itemRenderer = ${Neos.Node.label(item)}
                     @process.sort = ${Array.sort(value)}
                 }
