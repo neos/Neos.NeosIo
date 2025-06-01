@@ -44,7 +44,7 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
     @cache {
         mode = 'cached'
         entryIdentifier {
-            node = ${case}
+            node = ${Neos.Caching.entryIdentifierForNode(case)}
         }
         entryTags {
             node = ${Neos.Caching.nodeTag(case)}

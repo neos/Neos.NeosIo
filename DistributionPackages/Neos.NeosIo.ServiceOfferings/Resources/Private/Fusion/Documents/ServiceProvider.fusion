@@ -51,11 +51,11 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
 
                 # Lists
                 typesOfService = ${q(node).property('typesOfService')}
-                showCases = ${q(node).property('showCases')}
-                caseStudies = ${q(node).property('caseStudies')}
+                showCases = ${q(node).referenceNodes('showCases').get()}
+                caseStudies = ${q(node).referenceNodes('caseStudies').get()}
                 vendors = ${q(node).property('vendors')}
                 packages = ${q(node).property('packages')}
-                badges = ${q(node).property('badges')}
+                badges = ${q(node).referenceNodes('badges').get()}
 
                 allPackages = Neos.Fusion:Reduce {
                     initialValue = ${q(node).property('packages')}

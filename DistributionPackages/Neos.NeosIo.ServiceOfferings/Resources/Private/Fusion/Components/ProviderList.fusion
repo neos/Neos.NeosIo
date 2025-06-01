@@ -51,7 +51,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
                 latitude = ${q(serviceProvider).property('latitude') || 0}
                 longitude = ${q(serviceProvider).property('longitude') || 0}
                 badges = Neos.Fusion:Map {
-                    items = ${q(serviceProvider).property('badges') || []}
+                    items = ${q(serviceProvider).referenceNodes('badges').get() || []}
                     itemName = 'badge'
                     itemRenderer = Neos.Neos:ImageUri {
                         asset = ${q(badge).property('image')}
@@ -61,7 +61,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
                             alt = ${q(badge).property('description')}
                         }
                     }
-                    @if.hasBadges = ${Type.isArray(q(serviceProvider).property('badges')) && Array.length(q(serviceProvider).property('badges'))}
+                    @if.hasBadges = ${Array.length(q(serviceProvider).referenceNodes('badges').get())}
                 }
                 awards = ${Array.map(q(serviceProvider).children('awards').children().get(), a => Neos.Node.label(q(a).property('award')) + ' (' + q(a).property('title') + ')')}
             }
