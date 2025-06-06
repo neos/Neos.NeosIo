@@ -18,7 +18,7 @@ prototype(Neos.NeosIo:Event.List) < prototype(Neos.Neos:ContentComponent) {
     }
 
     renderer = Neos.NeosIo:Component.Event.List {
-        alwaysShowNoEntriesNotice = ${node.context.inBackend}
+        alwaysShowNoEntriesNotice = ${renderingMode.isEdit}
         noEntriesNotice = Neos.Neos:Editable {
             property = 'noEntriesNotice'
             block = true
@@ -43,7 +43,7 @@ prototype(Neos.NeosIo:Event.List) < prototype(Neos.Neos:ContentComponent) {
         # 86400 seconds == 1 day
         maximumLifetime = '86400'
         entryIdentifier {
-            node = ${node}
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
         }
         entryTags {
             node = ${Neos.Caching.nodeTag(node)}

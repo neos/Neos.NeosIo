@@ -18,7 +18,7 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:ContentComponent) {
     renderer = afx`
         <section class={['stage', props.backgroundColor ? 'stage--' + props.backgroundColor : 'stage--bright']}>
             <div class={['stage__contents', props.isContentTextInverted && 'u-invertText', props.isContentExtraPadded && 'stage__contents--extraPadding', props.padding && 'stage__contents--padding-' + props.padding, props.contentWidth && 'stage__contents--' + props.contentWidth]}>
-                <h2 @if={node.context.inBackend || props.title}>{props.editableTitle}</h2>
+                <h2 @if={renderingMode.isEdit || props.title}>{props.editableTitle}</h2>
                 <Neos.Neos:ContentCollection />
             </div>
             <Neos.NeosIo:Stage.FixedBackgroundImage

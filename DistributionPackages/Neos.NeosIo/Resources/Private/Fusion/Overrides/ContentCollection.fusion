@@ -1,7 +1,0 @@
-# Optimisation to reduce number of db queries due to too many calculations in nested ContentCollections
-prototype(Neos.Neos:ContentCollection) {
-    @cache.maximumLifetime = ${q(node).context({'invisibleContentShown': true}).find('[instanceof Neos.Neos:Content]').cacheLifetime()}
-    prototype(Neos.Neos:ContentCollection) {
-        @cache.maximumLifetime >
-    }
-}

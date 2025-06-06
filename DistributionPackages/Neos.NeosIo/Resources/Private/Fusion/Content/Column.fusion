@@ -28,7 +28,7 @@ prototype(Neos.NeosIo:Content.Column) < prototype(Neos.Neos:ContentComponent) {
                 class="grid-layout--item--more-link"
                 @if={props.moreLink}
                 href={props.moreLink}
-                href.@if={!node.context.inBackend}
+                href.@if={!renderingMode.isEdit}
                 title={props.moreLinkLabel}
                 rel="noreferrer noopener"
                 target={props.moreLinkExternal ? '_blank' : null}

@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neos.NeosIo:DefaultPage) {
-    body {
+    body.template {
         content {
             keyVisual {
                 keyVisualImage = ${q(documentNode).property('bannerImage')}
@@ -32,6 +32,10 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     property = 'country'
                     block = false
                 }
+                internalNotes = Neos.Neos:Editable {
+                    property = 'internalNotes'
+                    @if.inBackend = ${renderingMode.isEdit || renderingMode.isPreview}
+                }
 
                 # Only editable via inspector for validation
                 logo = ${q(node).property('logo')}
@@ -46,12 +50,12 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                 address = ${Array.join([q(node).property('street'), q(node).property('zipcode') + ' ' + q(node).property('city'), q(node).property('country')], ', ')}
 
                 # Lists
-                typesOfService = ${q(node).property('typesOfService')}
-                showCases = ${q(node).property('showCases')}
-                caseStudies = ${q(node).property('caseStudies')}
-                vendors = ${q(node).property('vendors')}
-                packages = ${q(node).property('packages')}
-                badges = ${q(node).property('badges')}
+                typesOfService = ${q(node).referenceNodes('typesOfService').get()}
+                showCases = ${q(node).referenceNodes('showCases').get()}
+                caseStudies = ${q(node).referenceNodes('caseStudies').get()}
+                vendors = ${q(node).referenceNodes('vendors').get()}
+                packages = ${q(node).referenceNodes('packages').get()}
+                badges = ${q(node).referenceNodes('badges').get()}
 
                 allPackages = Neos.Fusion:Reduce {
                     initialValue = ${q(node).property('packages')}
@@ -59,8 +63,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     itemName = 'vendor'
                     carryName = 'packageList'
                     itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
-                    @process.unique = ${value ? Array.unique(value) : value}
-                    @process.sort = ${value ? q(value).sort('downloadTotal').get() : value}
+                    @process.uniqueAndSort = ${value ? q(value).unique().sort('downloadTotal').get() : value}
                 }
 
                 fundingBadges = ${q(site).fundingBadges().get()}
@@ -68,11 +71,15 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                     getBadges = ${value['customers'][q(node).property('fundingPlatformName')]['badges'] || []}
                 }
 
-                awards = ${Array.map(q(node).children('awards').children().get(), a => q(a).property('award').label + ' (' + q(a).property('title') + ')')}
+                awards = ${Array.map(q(node).children('awards').children().get(), a => Neos.Node.label(q(a).property('award')) + ' (' + q(a).property('title') + ')')}
 
                 renderer = afx`
                     <div class="service-provider">
                         <Neos.Neos:NodeLink node={q(documentNode).parent().get(0)}>Back to the overview</Neos.Neos:NodeLink>
+
+                        <div class="service-provider__internal-notes" @if.set={props.internalNotes}>
+                            {props.internalNotes}
+                        </div>
 
                         <h1 class="service-provider__title">{props.title}</h1>
 

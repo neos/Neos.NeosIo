@@ -1,0 +1,24 @@
+prototype(Neos.Neos:ContentComponent) {
+    attributes.class.@process.addResponsiveClasses = Neos.Fusion:Value {
+        responsiveClasses = Neos.Fusion:Join {
+            displaySmallMq = 'mOnly'
+            displaySmallMq.@if.set = ${q(node).property('displaySmallMq')}
+            displayLargeMq = 'lOnly'
+            displayLargeMq.@if.set = ${q(node).property('displayLargeMq')}
+            displayAllMq = 'ml'
+            displayAllMq.@if.set = ${q(node).property('displayAllMq')}
+            @glue = ' '
+        }
+        value = ${Array.push(value, this.responsiveClasses)}
+        @if.supportsMediaQueries = ${q(node).property('displaySmallMq') || q(node).property('displayLargeMq') || q(node).property('displayAllMq')}
+    }
+
+    @process.addAnchor = Neos.Fusion:Value {
+        @if.anchorIsSet = ${q(node).property('anchorName')}
+        anchorTag = Neos.Fusion:Tag {
+            tagName = 'a'
+            attributes.name = ${q(node).property('anchorName')}
+        }
+        value = ${this.anchorTag + value}
+    }
+}

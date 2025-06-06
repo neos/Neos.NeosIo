@@ -26,6 +26,6 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Template) {
         @process.contentElementWrapping >
     }
 
-    latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').slice(0, 6).sort('datePublished', 'DESC').get()}
+    latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').remove(node).slice(0, 6).sort('datePublished', 'DESC').get()}
 }
 

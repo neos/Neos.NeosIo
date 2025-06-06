@@ -13,36 +13,47 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
-use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\Eel\FlowQuery\FlowQuery;
+use Neos\ContentRepository\Core\Feature\NodeRemoval\Command\RemoveNodeAggregate;
+use Neos\ContentRepository\Core\Feature\Security\Exception\AccessDenied;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
+use Neos\ContentRepository\Core\SharedModel\Node\NodeVariantSelectionStrategy;
+use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Neos\MarketPlace\Domain\Model\Storage;
 use Packagist\Api\Result\Package;
+use Psr\Log\LoggerInterface;
 
 /**
  * Package Importer
  *
- * @Flow\Scope("singleton")
  * @api
  */
+#[Flow\Scope('singleton')]
 class PackageImporter
 {
-    private bool $forceUpdates = false;
+    protected array $processedPackages = [];
 
-    private array $processedPackages = [];
+    /**
+     * @var LoggerInterface
+     */
+    #[Flow\Inject('Neos.MarketPlace:Logger')]
+    protected $logger;
 
-    private $packageConverter;
+    public function __construct(
+        protected PackageConverter          $packageConverter,
+        protected ContentRepositoryRegistry $contentRepositoryRegistry,
+        protected Storage                   $storage)
+    {
+    }
+
 
     public function forceUpdates(bool $forceUpdates): void
     {
-        $this->forceUpdates = $forceUpdates;
+        $this->packageConverter->setForceUpdate($forceUpdates);
     }
 
     public function process(Package $package): bool
     {
-        if (!$this->packageConverter) {
-            $this->packageConverter = new PackageConverter($this->forceUpdates);
-        }
         $processed = $this->packageConverter->convert($package);
         $this->processedPackages[$package->getName()] = true;
         return $processed;
@@ -50,28 +61,34 @@ class PackageImporter
 
     /**
      * Remove local package not preset in the processed packages list
-     *
-     * @throws \Neos\Eel\Exception
-     * @throws \Neos\ContentRepository\Exception\NodeException
-     * @throws \Neos\MarketPlace\Exception
      */
     public function cleanupPackages(?callable $callback = null): int
     {
         $count = 0;
-        $storageNode = (new Storage())->node();
-        $query = new FlowQuery([$storageNode]);
-        $query = $query->find('[instanceof Neos.MarketPlace:Package]');
+        $packageNodes = $this->storage->getPackageNodes();
         $upstreamPackages = $this->getProcessedPackages();
-        foreach ($query as $package) {
-            /** @var NodeInterface $package */
-            if (in_array($package->getProperty('title'), $upstreamPackages, true)) {
+        foreach ($packageNodes as $packageNode) {
+            if (in_array($packageNode->getProperty('title'), $upstreamPackages, true)) {
                 continue;
             }
-            $package->remove();
-            if ($callback !== null) {
-                $callback($package);
+
+            try {
+                $this->contentRepositoryRegistry->get($packageNode->contentRepositoryId)
+                    ->handle(
+                        RemoveNodeAggregate::create(
+                            $packageNode->workspaceName,
+                            $packageNode->aggregateId,
+                            $packageNode->dimensionSpacePoint, NodeVariantSelectionStrategy::STRATEGY_ALL_VARIANTS
+                        )
+                    );
+            } catch (AccessDenied $e) {
+                $this->logger->error('Access denied while trying to remove package node: ' . $e->getMessage());
             }
-            $this->emitPackageDeleted($package);
+
+            if ($callback !== null) {
+                $callback($packageNode);
+            }
+            $this->emitPackageDeleted($packageNode);
             $count++;
         }
         return $count;
@@ -79,28 +96,34 @@ class PackageImporter
 
     /**
      * Remove vendors without packages
-     *
-     * @throws \Neos\Eel\Exception
-     * @throws \Neos\MarketPlace\Exception
      */
     public function cleanupVendors(?callable $callback = null): int
     {
         $count = 0;
-        $storageNode = (new Storage())->node();
-        $query = new FlowQuery([$storageNode]);
-        $query = $query->find('[instanceof Neos.MarketPlace:Vendor]');
-        foreach ($query as $vendor) {
-            /** @var NodeInterface $vendor */
-            $hasPackageQuery = new FlowQuery([$vendor]);
-            $packageCount = $hasPackageQuery->find('[instanceof Neos.MarketPlace:Package]')->count();
+        $vendorNodes = $this->storage->getVendorNodes();
+        foreach ($vendorNodes as $vendorNode) {
+            $packageCount = $this->storage->countPackageNodes($vendorNode);
             if ($packageCount > 0) {
                 continue;
             }
-            $vendor->remove();
-            if ($callback !== null) {
-                $callback($vendor);
+
+            try {
+                $this->contentRepositoryRegistry->get($vendorNode->contentRepositoryId)
+                    ->handle(
+                        RemoveNodeAggregate::create(
+                            $vendorNode->workspaceName,
+                            $vendorNode->aggregateId,
+                            $vendorNode->dimensionSpacePoint, NodeVariantSelectionStrategy::STRATEGY_ALL_VARIANTS
+                        )
+                    );
+            } catch (AccessDenied $e) {
+                $this->logger->error('Access denied while trying to remove vendor node: ' . $e->getMessage());
             }
-            $this->emitVendorDeleted($vendor);
+
+            if ($callback !== null) {
+                $callback($vendorNode);
+            }
+            $this->emitVendorDeleted($vendorNode);
             $count++;
         }
         return $count;
@@ -118,23 +141,17 @@ class PackageImporter
 
     /**
      * Signals that a package node was deleted.
-     *
-     * @Flow\Signal
-     * @param NodeInterface $node
-     * @return void
      */
-    protected function emitPackageDeleted(NodeInterface $node): void
+    #[Flow\Signal]
+    protected function emitPackageDeleted(Node $node): void
     {
     }
 
     /**
      * Signals that a package node was deleted.
-     *
-     * @Flow\Signal
-     * @param NodeInterface $node
-     * @return void
      */
-    protected function emitVendorDeleted(NodeInterface $node): void
+    #[Flow\Signal]
+    protected function emitVendorDeleted(Node $node): void
     {
     }
 }
