@@ -56,7 +56,7 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
             }
 
             itemRenderer.@if.talkHasCorrectSpeaker = true
-            itemRenderer.@if.talkIsNotFeatured = ${node != featuredTalkNode}
+            itemRenderer.@if.talkIsNotFeatured = ${node.aggregateId.value != featuredTalkNode.aggregateId.value}
         }
 
     }
