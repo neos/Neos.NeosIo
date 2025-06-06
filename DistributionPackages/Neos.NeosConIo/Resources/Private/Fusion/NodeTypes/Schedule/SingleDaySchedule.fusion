@@ -1,11 +1,11 @@
 prototype(Neos.NeosConIo:SingleDaySchedule) < prototype(Neos.Neos:ContentComponent) {
     @if.eventNodeIsSet = ${q(event).is('[instanceof Neos.NeosConIo:Event]')}
-    @if.dateIsSet = ${q(q(event).property('eventDate')).is('[instanceof DateTime]')}
+    @if.dateIsSet = ${q(q(event).property('eventDate')).is('[instanceof DateTimeInterface]')}
 
     @context {
-        event = ${q(node).property('event')}
+        event = ${q(node).referenceNodes('event').get(0)}
         days = Neos.Fusion:DataStructure {
-           day1 = ${q(node).property('event') && q(q(node).property('event')).property('eventDate')}
+           day1 = ${q(node).referenceNodes('event').get(0) && q(node).referenceNodes('event').property('eventDate')}
         }
     }
 
