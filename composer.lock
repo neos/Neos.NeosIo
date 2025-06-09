@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a1a94d0645103f4f1b6358d1a4d0a5b",
+    "content-hash": "a4e583ee2516b5a64fadf45b8f60019f",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3001,6 +3001,58 @@
                 "source": "https://github.com/Flowpack/Flowpack.Listable/tree/4.0.0"
             },
             "time": "2025-04-03T13:06:58+00:00"
+        },
+        {
+            "name": "flowpack/media-ui",
+            "version": "3.0.0-beta1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Flowpack/media-ui.git",
+                "reference": "5c210c841dca1d7beb8b7ec43b53f5e126d7364f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Flowpack/media-ui/zipball/5c210c841dca1d7beb8b7ec43b53f5e126d7364f",
+                "reference": "5c210c841dca1d7beb8b7ec43b53f5e126d7364f",
+                "shasum": ""
+            },
+            "require": {
+                "neos/media": "~9.0",
+                "neos/neos": "~9.0",
+                "neos/neos-ui": "~9.0",
+                "php": "^8.2",
+                "webonyx/graphql-php": "^15",
+                "wwwision/types": "^1.6",
+                "wwwision/types-graphql": "^1.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "suggest": {
+                "phpstan/phpstan": "For running code quality checks"
+            },
+            "type": "neos-package",
+            "autoload": {
+                "psr-4": {
+                    "Flowpack\\Media\\Ui\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "This module allows managing media assets including pictures, videos, audio and documents.",
+            "support": {
+                "issues": "https://github.com/Flowpack/media-ui/issues",
+                "source": "https://github.com/Flowpack/media-ui/tree/3.0.0-beta1"
+            },
+            "funding": [
+                {
+                    "url": "https://shop.neos.io/neosfunding/onetime-badges/",
+                    "type": "custom"
+                }
+            ],
+            "time": "2025-06-06T07:01:08+00:00"
         },
         {
             "name": "flowpack/neos-matomo",
@@ -7859,6 +7911,7 @@
                 "flowpack/elasticsearch-contentrepositoryadaptor": "^9.0",
                 "flowpack/fullpagecache": "^3.0",
                 "flowpack/listable": "^4.0",
+                "flowpack/media-ui": "^3.0",
                 "flowpack/neos-matomo": "^4.0",
                 "flowpack/searchplugin": "^6.0",
                 "goe/neos-package": "^0.1.1",
@@ -15064,6 +15117,199 @@
             "time": "2022-06-03T18:03:27+00:00"
         },
         {
+            "name": "webonyx/graphql-php",
+            "version": "v15.20.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webonyx/graphql-php.git",
+                "reference": "60feb7ad5023c0ef411efbdf9792d3df5812e28f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/60feb7ad5023c0ef411efbdf9792d3df5812e28f",
+                "reference": "60feb7ad5023c0ef411efbdf9792d3df5812e28f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^7.4 || ^8"
+            },
+            "require-dev": {
+                "amphp/amp": "^2.6",
+                "amphp/http-server": "^2.1",
+                "dms/phpunit-arraysubset-asserts": "dev-master",
+                "ergebnis/composer-normalize": "^2.28",
+                "friendsofphp/php-cs-fixer": "3.73.1",
+                "mll-lab/php-cs-fixer-config": "5.11.0",
+                "nyholm/psr7": "^1.5",
+                "phpbench/phpbench": "^1.2",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "2.1.8",
+                "phpstan/phpstan-phpunit": "2.0.4",
+                "phpstan/phpstan-strict-rules": "2.0.4",
+                "phpunit/phpunit": "^9.5 || ^10.5.21 || ^11",
+                "psr/http-message": "^1 || ^2",
+                "react/http": "^1.6",
+                "react/promise": "^2.0 || ^3.0",
+                "rector/rector": "^2.0",
+                "symfony/polyfill-php81": "^1.23",
+                "symfony/var-exporter": "^5 || ^6 || ^7",
+                "thecodingmachine/safe": "^1.3 || ^2 || ^3"
+            },
+            "suggest": {
+                "amphp/http-server": "To leverage async resolving with webserver on AMPHP platform",
+                "psr/http-message": "To use standard GraphQL server",
+                "react/promise": "To leverage async resolving on React PHP platform"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GraphQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP port of GraphQL reference implementation",
+            "homepage": "https://github.com/webonyx/graphql-php",
+            "keywords": [
+                "api",
+                "graphql"
+            ],
+            "support": {
+                "issues": "https://github.com/webonyx/graphql-php/issues",
+                "source": "https://github.com/webonyx/graphql-php/tree/v15.20.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/webonyx-graphql-php",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-03-21T08:45:04+00:00"
+        },
+        {
+            "name": "wwwision/types",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bwaidelich/types.git",
+                "reference": "7c3ede30afaa7e7a57391708aa8c546f66c003cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bwaidelich/types/zipball/7c3ede30afaa7e7a57391708aa8c546f66c003cb",
+                "reference": "7c3ede30afaa7e7a57391708aa8c546f66c003cb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "ramsey/uuid": "^4.7",
+                "webmozart/assert": "^1.11"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.65",
+                "phpbench/phpbench": "84.x-dev",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^10.1",
+                "roave/security-advisories": "dev-latest"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/instantiate.php"
+                ],
+                "psr-4": {
+                    "Wwwision\\Types\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "bwaidelich",
+                    "email": "b.waidelich@wwwision.de"
+                }
+            ],
+            "description": "Tools to create PHP types that adhere to JSON schema like rules",
+            "support": {
+                "issues": "https://github.com/bwaidelich/types/issues",
+                "source": "https://github.com/bwaidelich/types/tree/1.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/bwaidelich",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.paypal.me/bwaidelich",
+                    "type": "paypal"
+                }
+            ],
+            "time": "2025-03-29T11:12:03+00:00"
+        },
+        {
+            "name": "wwwision/types-graphql",
+            "version": "1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bwaidelich/types-graphql.git",
+                "reference": "cc2c11d316169b40fabe1d198aef7bffd27edba6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bwaidelich/types-graphql/zipball/cc2c11d316169b40fabe1d198aef7bffd27edba6",
+                "reference": "cc2c11d316169b40fabe1d198aef7bffd27edba6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "webmozart/assert": "^1.11",
+                "wwwision/types": "^1.2"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^10.1",
+                "roave/security-advisories": "dev-latest",
+                "squizlabs/php_codesniffer": "^4.0.x-dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Wwwision\\TypesGraphQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "bwaidelich",
+                    "email": "b.waidelich@wwwision.de"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/bwaidelich/types-graphql/issues",
+                "source": "https://github.com/bwaidelich/types-graphql/tree/1.3.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/bwaidelich",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.paypal.me/bwaidelich",
+                    "type": "paypal"
+                }
+            ],
+            "time": "2025-01-17T13:38:15+00:00"
+        },
+        {
             "name": "yoast/yoast-seo-for-neos",
             "version": "2.0.0",
             "source": {
@@ -16123,6 +16369,12 @@
     ],
     "aliases": [
         {
+            "package": "flowpack/media-ui",
+            "version": "3.0.0.0-beta1",
+            "alias": "3.0.0",
+            "alias_normalized": "3.0.0.0"
+        },
+        {
             "package": "ttree/outofbandrendering",
             "version": "dev-neos-9",
             "alias": "5.0.0",
@@ -16131,6 +16383,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "flowpack/media-ui": 10,
         "roave/security-advisories": 20,
         "ttree/outofbandrendering": 20
     },
