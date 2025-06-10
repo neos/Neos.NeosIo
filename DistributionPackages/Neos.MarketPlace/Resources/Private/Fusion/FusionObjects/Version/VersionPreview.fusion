@@ -1,16 +1,18 @@
 prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
-    version = ${String.isBlank(request.arguments.version) ? null : String.trim(request.arguments.version)}
-    @context.version = ${this.version ? this.version : 'latest'}
-
+    version = ${MarketPlace.Package.sanitiseVersionArgument(request.arguments.version)}
     findByVersionQuery = ${q(node).children('versions').find('[instanceof Neos.MarketPlace:Version][version = "' + this.version + '"]').get(0)}
     findLastVersionQuery = ${q(q(node).property('lastVersion')).get(0)}
     versionNode = ${this.version ? this.findByVersionQuery : this.findLastVersionQuery}
+
+    renderer.@process.debug = Neos.Fusion:Debug.Console {
+        value = ${props}
+    }
 
     renderer = afx`
       <section
         class="block block--versions"
         data-component="PackageVersionBrowser"
-        data-version={version}
+        data-version={props.version}
         data-path={Neos.Node.serializedNodeAddress(node)}
       >
           <Neos.MarketPlace:Version @context.node={props.versionNode} @if.hasNode={props.versionNode} />
@@ -19,25 +21,4 @@ prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
           </span>
       </section>
     `
-
-    @cache {
-        mode = 'dynamic'
-        entryDiscriminator = ${request.arguments.version ? false : 'latest'}
-
-        entryIdentifier {
-            node = ${Neos.Caching.entryIdentifierForNode(node)}
-            format = ${request.format}
-        }
-
-        context {
-            site = 'site'
-            documentNode = 'documentNode'
-            node = 'node'
-        }
-
-        entryTags {
-            1 = ${Neos.Caching.nodeTag(node)}
-            2 = ${Neos.Caching.descendantOfTag(node)}
-        }
-    }
 }

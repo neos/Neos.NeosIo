@@ -35,4 +35,20 @@ prototype(Neos.MarketPlace:Package) < prototype(Neos.MarketPlace:DefaultPage) {
             }
         }
     }
+
+    @cache {
+        mode = 'dynamic'
+        entryIdentifier {
+            version = ${request.arguments.version ? false : 'latest'}
+        }
+        context {
+            site = 'site'
+            documentNode = 'documentNode'
+            node = 'node'
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
+            2 = ${Neos.Caching.descendantOfTag(node)}
+        }
+    }
 }
