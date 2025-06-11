@@ -1,0 +1,30 @@
+From 833d47522ee42ecdbc9c3733ea1180406fa432d9 Mon Sep 17 00:00:00 2001
+From: Sebastian Helzle <sebastian@helzle.it>
+Date: Wed, 11 Jun 2025 18:07:17 +0200
+Subject: [PATCH] BUGFIX: Use cached node uris
+
+By providing a node address as string, the RouterCachingService does not
+return null anymore for the given RouteValue.
+
+Though this leads to the address being serialised and deserialised for each built uri.
+This could be further optimised in the future by also accepting the nodeaddress as array in
+`\Neos\Neos\FrontendRouting\EventSourcedFrontendNodeRoutePartHandler::resolveWithParameters`
+
+Resolves: #5568
+---
+ Neos.Neos/Classes/FrontendRouting/NodeUriBuilder.php | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Neos.Neos/Classes/FrontendRouting/NodeUriBuilder.php b/Neos.Neos/Classes/FrontendRouting/NodeUriBuilder.php
+index 930b1328d7..d775139715 100644
+--- a/Neos.Neos/Classes/FrontendRouting/NodeUriBuilder.php
++++ b/Neos.Neos/Classes/FrontendRouting/NodeUriBuilder.php
+@@ -135,7 +135,7 @@ public function uriFor(NodeAddress $nodeAddress, ?Options $options = null): UriI
+         }
+ 
+         $routeValues = $options->routingArguments;
+-        $routeValues['node'] = $nodeAddress;
++        $routeValues['node'] = $nodeAddress->toJson();
+         $routeValues['@action'] = strtolower('show');
+         $routeValues['@controller'] = strtolower('Frontend\Node');
+         $routeValues['@package'] = strtolower('Neos.Neos');
