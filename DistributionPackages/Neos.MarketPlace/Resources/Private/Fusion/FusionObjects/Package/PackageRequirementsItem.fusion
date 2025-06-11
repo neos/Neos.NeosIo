@@ -2,13 +2,9 @@ prototype(Neos.MarketPlace:PackageRequirementsItem) < prototype(Neos.Fusion:Comp
     package = ${package}
     version = ${version}
 
-    uri = Neos.MarketPlace:PackageUri {
-        packageKey = ${package}
-    }
-
     renderer = afx`
       <li>
-        <a href={props.uri} title={props.package}>{props.package}</a>: {props.version}
+        {props.package}: {props.version}
       </li>
     `
 }
