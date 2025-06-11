@@ -159,7 +159,9 @@ class Storage
         return $this->subGraph->findChildNodes(
             $this->storageRootNodeAggregateId,
             FindChildNodesFilter::create(
-                NodeTypeName::fromString(MarketplaceNodeType::VENDOR->value)
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::VENDOR->value]
+                    )),
             )
         );
     }
