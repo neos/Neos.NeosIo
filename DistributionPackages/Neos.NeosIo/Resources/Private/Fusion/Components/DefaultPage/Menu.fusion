@@ -7,47 +7,19 @@ prototype(Neos.NeosIo:DefaultPage.Menu.Renderer) < prototype(Neos.Fusion:Compone
         entryLevel = 1
         maximumLevels = 2
         filter = 'Neos.Neos:Document,!Neos.NeosIo:Reference.ShowCase'
+        itemUriRenderer = ''
     }
 
     renderer = afx`
-      <nav role="navigation" class="offCanvas print-hidden" id="offCanvas">
-        <div class="offCanvas__navWrapper">
-          <ul class="nav siteHeader__nav offCanvas__nav">
-            <Neos.Fusion:Loop items={props.items}>
-              <li class="offCanvas__category">
-                <a href={item.uri}
-                   role="button"
-                   aria-haspopup="true"
-                   aria-expanded="false"
-                   role.@if={item.subItems}
-                   aria-haspopup.@if={item.subItems}
-                   aria-expanded.@if={item.subItems}
-                   title={item.label}
-                >
-                  {item.label}
-                </a>
-                <ul class="nav nav--stacked siteHeader__dropDownNav offCanvas__categoryList" @if={item.subItems}>
-                  <Neos.Fusion:Loop items={item.subItems} itemName="subItem">
-                    <li>
-                      <hr
-                        @if={q(subItem.node).is('[instanceof Neos.NeosIo:SpacerPage]')}
-                        class="offCanvas__categorySeparator u-mb1/4 u-mt1/4"
-                      />
-                      <a
-                        href={subItem.uri}
-                        title={subItem.label}
-                        @if={!q(subItem.node).is('[instanceof Neos.NeosIo:SpacerPage]')}
-                      >
-                        {subItem.label}
-                      </a>
-                    </li>
-                  </Neos.Fusion:Loop>
+        <nav role="navigation" class="offCanvas print-hidden" id="offCanvas">
+            <div class="offCanvas__navWrapper">
+                <ul class="nav siteHeader__nav offCanvas__nav">
+                    <Neos.Fusion:Loop items={props.items}>
+                        <Neos.NeosIo:DefaultPage.Menu.Item item={item} />
+                    </Neos.Fusion:Loop>
                 </ul>
-              </li>
-            </Neos.Fusion:Loop>
-          </ul>
-        </div>
-      </nav>
+            </div>
+        </nav>
     `
 
     @cache {
