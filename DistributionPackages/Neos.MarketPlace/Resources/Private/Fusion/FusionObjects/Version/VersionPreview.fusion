@@ -4,10 +4,6 @@ prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
     findLastVersionQuery = ${q(q(node).property('lastVersion')).get(0)}
     versionNode = ${this.version ? this.findByVersionQuery : this.findLastVersionQuery}
 
-    renderer.@process.debug = Neos.Fusion:Debug.Console {
-        value = ${props}
-    }
-
     renderer = afx`
       <section
         class="block block--versions"
