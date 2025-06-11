@@ -1,7 +1,8 @@
 prototype(Neos.Form:Form) {
-    attributes = Neos.Fusion:Attributes {
-         class = 'form--form-builder'
+    attributes = Neos.Fusion:DataStructure {
+        class = 'form--form-builder'
     }
+    attributes.@process.toHtmlAttributesString = ${Neos.Array.toHtmlAttributesString(value)}
 }
 
 prototype(Neos.NodeTypes.Form:Form) {

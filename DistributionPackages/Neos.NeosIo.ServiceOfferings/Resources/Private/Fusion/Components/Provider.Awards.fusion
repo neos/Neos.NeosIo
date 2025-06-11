@@ -4,7 +4,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Awards) < prototype(Ne
         nodePath = 'awards'
     }
 
-    @if.hasAwards = ${node.context.inBackend || q(node).children('awards').children().count() > 0}
+    @if.hasAwards = ${renderingMode.isEdit || q(node).children('awards').children().count() > 0}
 
     renderer = afx`
         <div class="service-provider__awards">

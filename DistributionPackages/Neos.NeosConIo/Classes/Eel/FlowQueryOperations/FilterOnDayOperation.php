@@ -1,9 +1,9 @@
 <?php
 namespace Neos\NeosConIo\Eel\FlowQueryOperations;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Eel\FlowQuery\FlowQueryException;
 use Neos\Eel\FlowQuery\Operations\AbstractOperation;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
 
 
 class FilterOnDayOperation extends AbstractOperation
@@ -25,7 +25,7 @@ class FilterOnDayOperation extends AbstractOperation
      */
     public function canEvaluate($context)
     {
-        return (!isset($context[0]) || ($context[0] instanceof NodeInterface));
+        return (!isset($context[0]) || ($context[0] instanceof Node));
     }
 
     /**
@@ -53,7 +53,7 @@ class FilterOnDayOperation extends AbstractOperation
 
         $filteredNodes = [];
         foreach ($flowQuery->getContext() as $node) {
-            /** @var NodeInterface $node */
+            /** @var Node $node */
             $propertyValue = $node->getProperty($filterByPropertyPath);
             if ($propertyValue instanceof \DateTimeInterface && $propertyValue->format('Y-m-d') === $day->format('Y-m-d')) {
                 $filteredNodes[] = $node;

@@ -1,0 +1,22 @@
+prototype(Neos.NeosIo:DocumentationPageSubMenu.MenuRenderer.ItemRenderer) < prototype(Neos.Fusion:Component) {
+
+    node = ${null}
+    state = ${null}
+
+    @context {
+        node = ${this.node}
+        state = ${this.state}
+    }
+
+    label = ${String.stripTags(q(this.node).property('title'))}
+    url = Neos.Neos:NodeUri {
+        node = ${node}
+        section = ${state.value == 'current' ? 'mainContent' : ''}
+    }
+
+    renderer = afx`
+        <a class="secondaryMenu__link" href={props.url}>
+            {props.label}
+        </a>
+    `
+}

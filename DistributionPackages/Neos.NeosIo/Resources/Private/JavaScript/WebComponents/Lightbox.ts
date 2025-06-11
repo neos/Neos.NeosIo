@@ -188,6 +188,10 @@ const initLightboxes = (): void => {
     const body = document.querySelector('body');
     const lightbox = document.querySelector('sh-lightbox');
 
+    if (!lightbox) {
+        return;
+    }
+
     lightbox.addEventListener('onOpen', () => {
         body.classList.add('has-lightbox');
     });

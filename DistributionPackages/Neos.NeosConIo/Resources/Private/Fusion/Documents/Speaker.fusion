@@ -1,13 +1,12 @@
 prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
-    body.content.keyVisual = ""
-    body.content.main = Neos.Fusion:Template {
+    body.template.content.keyVisual = ""
+    body.template.content.main = Neos.Fusion:Template {
         templatePath = 'resource://Neos.NeosConIo/Private/Templates/NodeTypes/Speaker.html'
 
         title = ${q(node).property('title')}
         text = ${q(node).property('text')}
         image = ${q(node).property('image')}
         event = ${q(node).property('event')}
-        featuredTalk = ${q(node).property('featuredTalk')}
         company = ${q(node).property('company')}
         position = ${q(node).property('position')}
         twitter = ${q(node).property('twitter')}
@@ -15,7 +14,7 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
         github = ${q(node).property('github')}
 
         // node is the speaker here
-        @context.featuredTalkNode = ${q(node).property('featuredTalk')}
+        @context.featuredTalkNode = ${q(node).referenceNodes('featuredTalk').get(0)}
 
         featuredTalk = Neos.NeosIo:ImageTeaser {
             title = ${q(featuredTalkNode).property('title')}
@@ -35,7 +34,7 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
 
         moreTalks = Neos.Fusion:Loop {
             // node is speaker here
-            items = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').arrayPropertyContains("speakers", node)}
+            items = ${q(node).backReferenceNodes("speakers").filter('[instanceof Neos.NeosConIo:Talk]').sort('talkDate', 'DESC')}
 
             @process.wrapWithUl = ${value ? '<ul class="talkList">' + value + '</ul>' : ''}
             itemName = "node"
@@ -57,7 +56,7 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
             }
 
             itemRenderer.@if.talkHasCorrectSpeaker = true
-            itemRenderer.@if.talkIsNotFeatured = ${node != featuredTalkNode}
+            itemRenderer.@if.talkIsNotFeatured = ${node.aggregateId.value != featuredTalkNode.aggregateId.value}
         }
 
     }

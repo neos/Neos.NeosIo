@@ -1,8 +1,9 @@
 prototype(Neos.NodeTypes:Page) < prototype(Neos.NeosIo:DefaultPage) {
-    body {
+    body.main >
+    body.template {
         templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
         content {
-            main = Neos.Neos:PrimaryContent {
+            main = Neos.Neos:ContentCollection {
                 nodePath = 'main'
             }
         }

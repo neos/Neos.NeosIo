@@ -16,12 +16,14 @@ prototype(Neos.MarketPlace:RepositoryStorage) < prototype(Neos.MarketPlace:Defau
     }
 
     body {
-        content {
-            main = Neos.Fusion:Join {
-                content = Neos.Neos:PrimaryContent {
-                    nodePath = 'main'
+        template {
+            content {
+                main = Neos.Fusion:Join {
+                    content = Neos.Neos:ContentCollection {
+                        nodePath = 'main'
+                    }
+                    marketplace = Neos.MarketPlace:Search
                 }
-                marketplace = Neos.MarketPlace:Search
             }
         }
     }

@@ -57,7 +57,7 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
         mode = 'dynamic'
 
         entryIdentifier {
-            documentNode = ${documentNode}
+            documentNode = ${Neos.Caching.entryIdentifierForNode(documentNode)}
             format = 'json'
         }
 

@@ -15,28 +15,23 @@
     "require": {
         "php": "^8.3",
 
-        "neos/neosio": "@dev",
-        "neos/flowneosio": "@dev",
-        "neos/neosconio": "@dev",
-        "neos/neosio-featurelist": "@dev",
-        "neos/neosio-serviceofferings": "@dev",
-        "neos/neosio-marketplace": "@dev",
-        "neos/neosio-casestudies": "@dev",
-        "neos/neosio-release-plan": "@dev",
-        "neos/neosio-blog": "@dev",
+        "neos/neosio": "^1.0",
+        "neos/flowneosio": "^1.0",
+        "neos/neosconio": "^1.0",
 
-        "flownative/google-cloudstorage": "^5.3",
+        "flownative/google-cloudstorage": "^6.1",
+        "flowpack/media-ui": "3.0.0-beta1 as 3.0.0",
         "rokka/imagine-vips": "^0.31",
 
-        "flowpack/media-ui": "0.13.0-beta7 as 0.13.0",
-
-        "ttree/outofbandrendering": "dev-task/newer-neos-versions as 4.0.0",
         "cweagans/composer-patches": "^1.7",
-        "jcupitt/vips": "^1.0"
+        "jcupitt/vips": "^1.0",
+        "neos/contentrepository-legacynodemigration": "^9.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "t3n/neos-debug": "^2.0",
+        "flowpack/neos-debug": "^1.0"
+    },
+    "needsUpdateDev": {
         "shel/nodetypes-analyzer": "^1.2"
     },
     "extra": {
@@ -49,10 +44,6 @@
             "options": {
                 "reference": "none"
             }
-        },
-        {
-            "type": "vcs",
-            "url":  "https://github.com/kdambekalns/OutOfBandRendering.git"
         }
     ],
     "scripts": {

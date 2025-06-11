@@ -1,0 +1,13 @@
+prototype(Neos.NeosIo:DocumentationPageSubMenu.MenuRenderer.SubItemRenderer) < prototype(Neos.Fusion:Component) {
+
+    label = ${null}
+    anchorName = ${null}
+    url = ${null}
+
+    renderer = afx`
+        <a data-component="ScrollTo" data-targetSelector={"a[name="+props.anchorName+"]"} class="secondaryMenu__link"
+           href={props.url}>
+            {props.label}
+        </a>
+    `
+}

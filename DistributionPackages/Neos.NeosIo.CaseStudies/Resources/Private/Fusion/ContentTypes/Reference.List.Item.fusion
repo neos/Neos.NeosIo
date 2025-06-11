@@ -2,7 +2,7 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
     title = ${q(case).property('title')}
     alternativeText = ${q(case).property('title')}
     image = ${q(case).property('image')}
-    url = ${q(case).property('url') ? q(case).property('url') : 'node://' + case.identifier}
+    url = ${q(case).property('url') ? q(case).property('url') : 'node://' + case.aggregateId}
     url.@process.convertUris = Neos.Neos:ConvertUris {
         absolute = true
     }
@@ -44,7 +44,7 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
     @cache {
         mode = 'cached'
         entryIdentifier {
-            node = ${case}
+            node = ${Neos.Caching.entryIdentifierForNode(case)}
         }
         entryTags {
             node = ${Neos.Caching.nodeTag(case)}

@@ -5,7 +5,7 @@ prototype(Neos.NeosIo:EventArchive) < prototype(Neos.NeosIo:DefaultPage) {
         twitterCard.description.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
     }
 
-    body {
+    body.template {
         content {
             main = Neos.Fusion:Join {
                 headline = ${'<h1>Event Archive (' + q(node).property('title') + ')</h1>'}

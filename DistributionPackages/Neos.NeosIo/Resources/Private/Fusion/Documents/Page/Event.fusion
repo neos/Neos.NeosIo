@@ -5,7 +5,7 @@ prototype(Neos.NeosIo:Event) < prototype(Neos.NeosIo:DefaultPage) {
         twitterCard.description.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
     }
 
-    body {
+    body.template {
         content.main = Neos.Fusion:Join {
             event = Neos.NeosIo:Component.Event {
                 name = Neos.Neos:Editable {

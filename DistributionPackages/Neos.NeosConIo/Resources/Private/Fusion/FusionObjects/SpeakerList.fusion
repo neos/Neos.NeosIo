@@ -1,6 +1,6 @@
 prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Loop) {
     // API to the outside: "items" to render
-    items = ${q(site).find('[instanceof Neos.NeosConIo:Speaker]').arrayPropertyContains("event", q(node).property('eventToShowSpeakersFor'))}
+    items = ${q(node).referenceNodes('eventToShowSpeakersFor').backReferenceNodes("event").filter('[instanceof Neos.NeosConIo:Speaker]').sort('title', 'ASC')}
 
     @context.eventToFilter = ${q(node).property('eventToShowSpeakersFor')}
     @process.wrapWithUl = ${'<ul class="speaker__speakerList">' + value + '</ul>'}
@@ -9,7 +9,7 @@ prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Loop) {
     @cache {
         mode = 'cached'
         entryIdentifier {
-            node = ${node}
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
         }
         tags {
             1 = ${Neos.Caching.nodeTag(node)}

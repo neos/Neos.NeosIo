@@ -11,26 +11,13 @@
 # in the same section and render them below, again only is an anchor name is set.
 ##
 prototype(Neos.NeosIo:DocumentationPageSubMenu) < prototype(Neos.Neos:Menu) {
-    prototype(Neos.Neos:MenuItems) {
-        @class = 'Neos\\NeosIo\\Fusion\\DocumentationPageSubMenuImplementation'
-    }
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/DocumentationPageSubMenu.html'
 
-    itemCollection = Neos.Fusion:Map {
-        # The first documentation page is the documentation root, show all pages below
-        items = ${q(site).find('[instanceof Neos.NeosIo:DocumentationPage]').first().children().filter('[instanceof Neos.NeosIo:DocumentationPage]')}
-        itemRenderer = Neos.NeosIo:DocumentationPageSubMenuItemRenderer
-    }
+    itemCollection = ${q(site).find('[instanceof Neos.NeosIo:DocumentationPage]').first().children().filter('[instanceof Neos.NeosIo:DocumentationPage]').get()}
+    calculateItemStates = ${true}
 
-    attributes.class = 'secondaryMenu'
-    active.attributes {
-        class = ${'secondaryMenu__item secondaryMenu__item--active secondaryMenu__item--menuLevel-' + item.menuLevel}
-    }
-    current.attributes {
-        class = ${'secondaryMenu__item secondaryMenu__item--current secondaryMenu__item--menuLevel-' + item.menuLevel}
-    }
-    normal.attributes {
-        class = ${'secondaryMenu__item secondaryMenu__item--normal secondaryMenu__item--menuLevel-' + item.menuLevel}
+    renderer = Neos.NeosIo:DocumentationPageSubMenu.MenuRenderer {
+        items = ${private.items}
+        subItems = Neos.NeosIo:DocumentationPageSubMenuItemRenderer
     }
 
     @cache {
