@@ -38,9 +38,7 @@ prototype(Neos.MarketPlace:Package) < prototype(Neos.MarketPlace:DefaultPage) {
 
     @cache {
         mode = 'dynamic'
-        entryIdentifier {
-            version = ${request.arguments.version ? false : 'latest'}
-        }
+        entryDiscriminator = ${request.arguments.version ? false : 'latest'}
         context {
             site = 'site'
             documentNode = 'documentNode'
