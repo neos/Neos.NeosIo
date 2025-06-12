@@ -10,7 +10,7 @@
       handler: 'Neos\Neos\FrontendRouting\FrontendNodeRoutePartHandlerInterface'
       options:
         uriPathSuffix: ''
-        onlyMatchSiteNodes: true
+        nodeType: 'Neos.NeosIo:RootPage'
 
 - name: 'RSS Feed'
   uriPattern: '{node}rss.xml'
@@ -24,7 +24,7 @@
       handler: 'Neos\Neos\FrontendRouting\FrontendNodeRoutePartHandlerInterface'
       options:
         uriPathSuffix: ''
-        onlyMatchSiteNodes: true
+        nodeType: 'Neos.NeosIo:RootPage'
 
 - name: 'Listable'
   uriPattern: '<ListableSubroutes>'
