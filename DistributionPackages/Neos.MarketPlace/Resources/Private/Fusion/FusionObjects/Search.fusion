@@ -135,7 +135,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
 
         maximumLifetime = 3600
 
-        entryDiscriminator = ${!request.arguments.search && !request.arguments.version && request.pluginArguments.currentPage > 1}
+        entryDiscriminator = ${!request.arguments.search && !request.arguments.version && request.pluginArguments.currentPage > 1 ? 'static' : false}
 
         entryTags {
             documentNode = ${Neos.Caching.nodeTag(documentNode)}
