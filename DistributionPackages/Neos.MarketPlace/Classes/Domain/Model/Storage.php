@@ -28,6 +28,7 @@ use Neos\ContentRepository\Core\Feature\Security\Exception\AccessDenied;
 use Neos\ContentRepository\Core\NodeType\NodeTypeName;
 use Neos\ContentRepository\Core\NodeType\NodeTypeNames;
 use Neos\ContentRepository\Core\Projection\ContentGraph\ContentSubgraphInterface;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\CountDescendantNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindDescendantNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
@@ -171,12 +172,12 @@ class Storage
      */
     public function countPackageNodes(?NodeAggregateId $vendorAggregateId = null): int
     {
-        return $this->subGraph->findDescendantNodes(
+        return $this->subGraph->countDescendantNodes(
             $vendorAggregateId ?? $this->storageRootNodeAggregateId,
-            FindDescendantNodesFilter::create(
+            CountDescendantNodesFilter::create(
                 NodeTypeName::fromString(MarketplaceNodeType::PACKAGE->value)
             )
-        )->count();
+        );
     }
 
     public function getPackageNode(
