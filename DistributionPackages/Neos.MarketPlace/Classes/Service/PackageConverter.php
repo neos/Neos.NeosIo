@@ -419,15 +419,15 @@ class PackageConverter
      */
     protected function createOrUpdateMaintainers(Package $package, Node $packageNode): void
     {
-        $upstreamMaintainers = array_map(static function (Package\Maintainer $maintainer) {
-            return Slug::create($maintainer->getName());
+        $upstreamMaintainerNames = array_map(static function (Package\Maintainer $maintainer) {
+            return $maintainer->getName();
         }, $package->getMaintainers());
 
         $maintainerNodes = $this->storage->getPackageMaintainerNodes($packageNode->aggregateId);
 
         // Remove all maintainers that are not in the upstream package
         foreach ($maintainerNodes as $maintainerNode) {
-            if (!in_array($maintainerNode->getProperty('title'), $upstreamMaintainers, true)) {
+            if (!in_array($maintainerNode->getProperty('title'), $upstreamMaintainerNames, true)) {
                 $this->storage->removeNode($maintainerNode);
             }
         }
@@ -457,7 +457,8 @@ class PackageConverter
 
         $versionNodes = $this->storage->getPackageVersionNodes($versionsNode->aggregateId);
         foreach ($versionNodes as $versionNode) {
-            if (!in_array($versionNode->getProperty('title'), $upstreamVersions, true)) {
+            $versionSlug = Slug::create($versionNode->getProperty('version'));
+            if (!in_array($versionSlug, $upstreamVersions, true)) {
                 $this->storage->removeNode($versionNode);
             }
         }
