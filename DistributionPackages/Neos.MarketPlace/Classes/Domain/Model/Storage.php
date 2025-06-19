@@ -86,6 +86,13 @@ class Storage
         $this->workspaceName = WorkspaceName::fromString('live');
     }
 
+    public function getNodeByAggregateId(
+        NodeAggregateId $vendorNodeAggregateId
+    ): ?Node
+    {
+        return $this->subGraph->findNodeById($vendorNodeAggregateId);
+    }
+
     /**
      * @throws AccessDenied
      */
@@ -258,22 +265,43 @@ class Storage
     }
 
     public function updateNode(
-        NodeAggregateId           $nodeAggregateId,
+        Node                      $node,
         OriginDimensionSpacePoint $originDimensionSpacePoint,
-        PropertyValuesToWrite     $properties
+        array                     $properties
     ): bool
     {
+        // Skip properties that are already set to the same value
+        $serializedNodeProperties = $node->properties->serialized();
+        foreach ($properties as $propertyName => $propertyValue) {
+            if (!$serializedNodeProperties->propertyExists($propertyName)) {
+                if ($propertyValue === null) {
+                    // If the property does not exist and the value is null, we can skip it
+                    unset($properties[$propertyName]);
+                }
+                continue;
+            }
+            if ($propertyValue instanceof \DateTimeInterface) {
+                $propertyValue = $propertyValue->format(\DateTimeInterface::ATOM);
+            }
+            if ($serializedNodeProperties->getProperty($propertyName)->value === $propertyValue) {
+                unset($properties[$propertyName]);
+            }
+        }
+        if (empty($properties)) {
+            // No properties to update
+            return true;
+        }
         try {
             $this->contentRepository->handle(
                 SetNodeProperties::create(
                     $this->workspaceName,
-                    $nodeAggregateId,
+                    $node->aggregateId,
                     $originDimensionSpacePoint,
-                    $properties
+                    PropertyValuesToWrite::fromArray($properties),
                 )
             );
         } catch (AccessDenied) {
-            $this->logger->error('Access denied while updating node: ' . $nodeAggregateId);
+            $this->logger->error('Access denied while updating node: ' . $node->aggregateId);
             return false;
         }
         return true;
@@ -284,20 +312,19 @@ class Storage
         Node       $packageNode
     ): bool
     {
-        $name = Slug::create($maintainer->getName());
         $maintainerNode = $this->getPackageMaintainerNode(
             $packageNode->aggregateId,
-            $name
+            $maintainer->getName()
         );
-        $properties = PropertyValuesToWrite::fromArray([
+        $properties = [
             'title' => $maintainer->getName(),
             'email' => $maintainer->getEmail(),
             'homepage' => $maintainer->getHomepage()
-        ]);
+        ];
 
         if ($maintainerNode) {
             $this->updateNode(
-                $maintainerNode->aggregateId,
+                $maintainerNode,
                 $maintainerNode->originDimensionSpacePoint,
                 $properties
             );
@@ -321,7 +348,7 @@ class Storage
                     NodeTypeName::fromString(MarketplaceNodeType::MAINTAINER->value),
                     $maintainersNode->originDimensionSpacePoint,
                     $maintainersNode->aggregateId,
-                    initialPropertyValues: $properties
+                    initialPropertyValues: PropertyValuesToWrite::fromArray($properties)
                 )
             );
             return true;
@@ -388,8 +415,8 @@ class Storage
                     NodeTypeNames::fromStringArray([MarketplaceNodeType::VERSION->value])
                 ),
                 propertyValue: PropertyValueEquals::create(
-                    PropertyName::fromString('title'),
-                    Slug::create($version),
+                    PropertyName::fromString('version'),
+                    $version,
                     true
                 )
             )
@@ -416,7 +443,7 @@ class Storage
                 ),
                 propertyValue: PropertyValueEquals::create(
                     PropertyName::fromString('title'),
-                    Slug::create($maintainerName),
+                    $maintainerName,
                     true
                 )
             )
@@ -424,9 +451,9 @@ class Storage
     }
 
     public function updateChildNode(
-        NodeAggregateId       $parentNodeAggregateId,
-        NodeName              $childNodeName,
-        PropertyValuesToWrite $properties,
+        NodeAggregateId $parentNodeAggregateId,
+        NodeName        $childNodeName,
+        array           $properties,
     ): bool
     {
         $childNode = $this->subGraph->findNodeByPath(
@@ -435,7 +462,7 @@ class Storage
         );
         if ($childNode) {
             return $this->updateNode(
-                $childNode->aggregateId,
+                $childNode,
                 $childNode->originDimensionSpacePoint,
                 $properties
             );
@@ -444,10 +471,10 @@ class Storage
     }
 
     public function createOrUpdateVersionNode(
-        NodeAggregateId       $versionsNodeAggregateId,
-        string                $versionString,
-        MarketplaceNodeType   $nodeType,
-        PropertyValuesToWrite $properties,
+        NodeAggregateId     $versionsNodeAggregateId,
+        string              $versionString,
+        MarketplaceNodeType $nodeType,
+        array               $properties,
     ): ?NodeAggregateId
     {
         $versionNode = $this->getPackageVersionNode(
@@ -456,7 +483,7 @@ class Storage
         );
         if ($versionNode) {
             $this->updateNode(
-                $versionNode->aggregateId,
+                $versionNode,
                 $versionNode->originDimensionSpacePoint,
                 $properties
             );
@@ -492,7 +519,7 @@ class Storage
                     NodeTypeName::fromString($nodeType->value),
                     OriginDimensionSpacePoint::fromDimensionSpacePoint($this->subGraph->getDimensionSpacePoint()),
                     $versionsNodeAggregateId,
-                    initialPropertyValues: $properties,
+                    initialPropertyValues: PropertyValuesToWrite::fromArray($properties),
                 )
             );
         } catch (AccessDenied) {

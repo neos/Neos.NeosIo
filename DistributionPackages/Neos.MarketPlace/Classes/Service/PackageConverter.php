@@ -153,9 +153,9 @@ class PackageConverter
         }
 
         $updated = $this->storage->updateNode(
-            $packageNode->aggregateId,
+            $packageNode,
             $packageNode->originDimensionSpacePoint,
-            PropertyValuesToWrite::fromArray([
+            [
                 'description' => $package->getDescription(),
                 'time' => \DateTime::createFromFormat(
                     Storage::DATE_FORMAT,
@@ -165,7 +165,7 @@ class PackageConverter
                 'repository' => $package->getRepository(),
                 'favers' => $package->getFavers(),
                 'lastSync' => new \DateTime(),
-            ])
+            ]
         );
         if (!$updated) {
             return false;
@@ -175,9 +175,10 @@ class PackageConverter
         $this->createOrUpdateVersions($package, $packageNode);
 
         $this->updatePackageLastActivity(
-            $packageNode->aggregateId,
+            $packageNode,
             $packageNode->originDimensionSpacePoint,
         );
+        // TODO: Update vendors once at the end of the package sync to reduce the number of updates
         $this->updateVendorLastActivity(
             $vendorNodeAggregateId,
             $packageNode->originDimensionSpacePoint,
@@ -240,13 +241,13 @@ class PackageConverter
             return;
         }
         $this->storage->updateNode(
-            $packageNode->aggregateId,
+            $packageNode,
             $packageNode->originDimensionSpacePoint,
-            PropertyValuesToWrite::fromArray([
+            [
                 'downloadTotal' => $downloads->getTotal(),
                 'downloadMonthly' => $downloads->getMonthly(),
                 'downloadDaily' => $downloads->getDaily(),
-            ]));
+            ]);
     }
 
     protected function updateGithubMetrics(Package $package, Node $packageNode): void
@@ -300,15 +301,15 @@ class PackageConverter
                 return;
             }
             $this->storage->updateNode(
-                $packageNode->aggregateId,
+                $packageNode,
                 $packageNode->originDimensionSpacePoint,
-                PropertyValuesToWrite::fromArray([
+                [
                     'githubStargazers' => (integer)Arrays::getValueByPath($meta, 'stargazers_count'),
                     'githubWatchers' => (integer)Arrays::getValueByPath($meta, 'watchers_count'),
                     'githubForks' => (integer)Arrays::getValueByPath($meta, 'forks_count'),
                     'githubIssues' => (integer)Arrays::getValueByPath($meta, 'open_issues_count'),
                     'githubAvatar' => trim((string)Arrays::getValueByPath($meta, 'organization.avatar_url'))
-                ])
+                ]
             );
             $this->updateGithubReadme($organization, $repository, $packageNode);
         }
@@ -355,11 +356,11 @@ class PackageConverter
             return;
         }
         $this->storage->updateNode(
-            $readmeNode->aggregateId,
+            $readmeNode,
             $readmeNode->originDimensionSpacePoint,
-            PropertyValuesToWrite::fromArray([
+            [
                 'readmeSource' => $content,
-            ])
+            ]
         );
     }
 
@@ -385,15 +386,15 @@ class PackageConverter
     protected function resetGithubMetrics(Node $packageNode): void
     {
         $this->storage->updateNode(
-            $packageNode->aggregateId,
+            $packageNode,
             $packageNode->originDimensionSpacePoint,
-            PropertyValuesToWrite::fromArray([
+            [
                 'githubStargazers' => 0,
                 'githubWatchers' => 0,
                 'githubForks' => 0,
                 'githubIssues' => 0,
                 'githubAvatar' => null
-            ])
+            ]
         );
     }
 
@@ -402,11 +403,11 @@ class PackageConverter
     protected function updatePackageAbandonedState(Package $package, Node $packageNode): void
     {
         $this->storage->updateNode(
-            $packageNode->aggregateId,
+            $packageNode,
             $packageNode->originDimensionSpacePoint,
-            PropertyValuesToWrite::fromArray([
+            [
                 'abandoned' => (string)$package->isAbandoned(),
-            ])
+            ]
         );
         if ($package->isAbandoned() && trim((string)$packageNode->getProperty('abandoned')) === '') {
             $this->emitPackageAbandoned($packageNode);
@@ -465,7 +466,6 @@ class PackageConverter
             $versionStability = VersionNumber::isVersionStable($version->getVersionNormalized());
             $stabilityLevel = VersionNumber::getStabilityLevel($version->getVersionNormalized());
             $versionNormalized = VersionNumber::toInteger($version->getVersionNormalized());
-            $versionString = Slug::create($version->getVersion());
             $versionNodeType = match ($stabilityLevel) {
                 'stable' => MarketPlaceNodeType::VERSION_STABLE,
                 'dev' => MarketPlaceNodeType::VERSION_DEV,
@@ -475,9 +475,9 @@ class PackageConverter
             try {
                 $versionNodeAggregateId = $this->storage->createOrUpdateVersionNode(
                     $versionsNode->aggregateId,
-                    $versionString,
+                    $version->getVersion(),
                     $versionNodeType,
-                    PropertyValuesToWrite::fromArray([
+                    [
                         'version' => $version->getVersion(),
                         'description' => $version->getDescription(),
                         'keywords' => $this->arrayToStringCaster($version->getKeywords()),
@@ -495,7 +495,7 @@ class PackageConverter
                         'suggest' => $this->arrayToJsonCaster($version->getSuggest()),
                         'conflict' => $this->arrayToJsonCaster($version->getConflict()),
                         'replace' => $this->arrayToJsonCaster($version->getReplace()),
-                    ]),
+                    ],
                 );
             } catch (\JsonException $e) {
                 $this->logger->error(
@@ -513,11 +513,11 @@ class PackageConverter
                 $this->storage->updateChildNode(
                     $versionNodeAggregateId,
                     NodeName::fromString('source'),
-                    PropertyValuesToWrite::fromArray([
+                    [
                         'type' => $version->getSource()->getType(),
                         'reference' => $version->getSource()->getReference(),
                         'url' => $version->getSource()->getUrl(),
-                    ])
+                    ]
                 );
             }
 
@@ -525,12 +525,12 @@ class PackageConverter
                 $this->storage->updateChildNode(
                     $versionNodeAggregateId,
                     NodeName::fromString('dist'),
-                    PropertyValuesToWrite::fromArray([
+                    [
                         'type' => $version->getDist()->getType(),
                         'reference' => $version->getDist()->getReference(),
                         'url' => $version->getDist()->getUrl(),
                         'shasum' => $version->getDist()->getShasum(),
-                    ])
+                    ]
                 );
             }
         }
@@ -542,11 +542,11 @@ class PackageConverter
      * Iterates over all versions of the package and updates the last activity of the package node.
      */
     protected function updatePackageLastActivity(
-        NodeAggregateId           $packageNodeAggregateId,
+        Node                      $packageNode,
         OriginDimensionSpacePoint $originDimensionSpacePoint
     ): void
     {
-        $versionsNode = $this->storage->getPackageVersionsNode($packageNodeAggregateId);
+        $versionsNode = $this->storage->getPackageVersionsNode($packageNode->aggregateId);
         if (!$versionsNode) {
             return;
         }
@@ -566,14 +566,14 @@ class PackageConverter
         }
         $lastVersion = PackageVersion::extractLastVersion($versions);
         $this->storage->updateNode(
-            $packageNodeAggregateId,
+            $packageNode,
             $originDimensionSpacePoint,
-            PropertyValuesToWrite::fromArray([
+            [
                 'lastActivity' => $lastActiveVersionTime,
-            ])
+            ]
         );
         $this->storage->updateNodeReferences(
-            $packageNodeAggregateId,
+            $packageNode->aggregateId,
             $originDimensionSpacePoint,
             NodeReferencesToWrite::create(
                 NodeReferencesForName::fromTargets(
@@ -594,6 +594,15 @@ class PackageConverter
     ): void
     {
         $packages = $this->storage->getPackageNodes($vendorNodeAggregateId);
+        $vendorNode = $this->storage->getNodeByAggregateId($vendorNodeAggregateId);
+
+        if (!$vendorNode) {
+            $this->logger->error(
+                sprintf('Vendor node with aggregate ID %s not found.', $vendorNodeAggregateId->value),
+                LogEnvironment::fromMethodName(__METHOD__)
+            );
+            return;
+        }
 
         $lastActivePackageTime = null;
         foreach ($packages as $packageNode) {
@@ -603,11 +612,11 @@ class PackageConverter
             }
         }
         $this->storage->updateNode(
-            $vendorNodeAggregateId,
+            $vendorNode,
             $originDimensionSpacePoint,
-            PropertyValuesToWrite::fromArray([
+            [
                 'lastActivity' => $lastActivePackageTime,
-            ])
+            ]
         );
         unset($packages);
     }
