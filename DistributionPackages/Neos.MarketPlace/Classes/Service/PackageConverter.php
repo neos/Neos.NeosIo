@@ -456,6 +456,11 @@ class PackageConverter
             $versionSlug = Slug::create($versionNode->getProperty('version'));
             if (!in_array($versionSlug, $upstreamVersions, true)) {
                 $this->storage->removeNode($versionNode);
+            } else {
+                // Remove the version from the upstream versions to avoid duplicates
+                $upstreamVersions = array_filter($upstreamVersions, static function ($slug) use ($versionSlug) {
+                    return $slug !== $versionSlug;
+                });
             }
         }
 
