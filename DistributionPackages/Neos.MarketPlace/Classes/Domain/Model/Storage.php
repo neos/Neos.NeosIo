@@ -20,6 +20,7 @@ use Neos\ContentRepository\Core\Feature\NodeCreation\Command\CreateNodeAggregate
 use Neos\ContentRepository\Core\Feature\NodeModification\Command\SetNodeProperties;
 use Neos\ContentRepository\Core\Feature\NodeModification\Dto\PropertyValuesToWrite;
 use Neos\ContentRepository\Core\Feature\NodeReferencing\Command\SetNodeReferences;
+use Neos\ContentRepository\Core\Feature\NodeReferencing\Dto\NodeReferencesForName;
 use Neos\ContentRepository\Core\Feature\NodeReferencing\Dto\NodeReferencesToWrite;
 use Neos\ContentRepository\Core\Feature\NodeRemoval\Command\RemoveNodeAggregate;
 use Neos\ContentRepository\Core\Feature\NodeTypeChange\Command\ChangeNodeAggregateType;
@@ -31,6 +32,7 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\ContentSubgraphInterface
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\CountDescendantNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindDescendantNodesFilter;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindReferencesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\PropertyValueEquals;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
@@ -38,9 +40,11 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\NodePath;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\SharedModel\ContentRepository\ContentRepositoryId;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
+use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateIds;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeName;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeVariantSelectionStrategy;
 use Neos\ContentRepository\Core\SharedModel\Node\PropertyName;
+use Neos\ContentRepository\Core\SharedModel\Node\ReferenceName;
 use Neos\ContentRepository\Core\SharedModel\Workspace\WorkspaceName;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
@@ -563,25 +567,38 @@ class Storage
         );
     }
 
-    public function updateNodeReferences(
-        NodeAggregateId           $packageNodeAggregateId,
+    public function updateNodeReference(
+        Node                      $node,
         OriginDimensionSpacePoint $originDimensionSpacePoint,
-        NodeReferencesToWrite     $references
-    ): bool
+        ReferenceName             $referenceName,
+        ?NodeAggregateId          $referenceAggregateId = null
+    ): void
     {
+        $existingReferences = $this->subGraph->findReferences(
+            $node->aggregateId,
+            FindReferencesFilter::create(referenceName: $referenceName)
+        );
+        if ($existingReferences->getNodes()->first()?->aggregateId === $referenceAggregateId) {
+            return; // No change needed, the reference is up-to-date
+        }
+        $references = NodeReferencesToWrite::create(
+            NodeReferencesForName::fromTargets(
+                $referenceName,
+                $referenceAggregateId ?
+                    NodeAggregateIds::fromArray([$referenceAggregateId]) : NodeAggregateIds::createEmpty(),
+            )
+        );
         try {
             $this->contentRepository->handle(
                 SetNodeReferences::create(
                     $this->workspaceName,
-                    $packageNodeAggregateId,
+                    $node->aggregateId,
                     $originDimensionSpacePoint,
                     $references
                 )
             );
-            return true;
         } catch (AccessDenied) {
-            $this->logger->error('Access denied while updating node references: ' . $packageNodeAggregateId);
+            $this->logger->error('Access denied while updating node references: ' . $node->aggregateId);
         }
-        return false;
     }
 }

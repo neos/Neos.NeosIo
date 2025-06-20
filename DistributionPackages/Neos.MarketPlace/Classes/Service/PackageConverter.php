@@ -27,12 +27,8 @@ use Neos\Cache\EnvironmentConfiguration;
 use Neos\Cache\Exception\InvalidBackendException;
 use Neos\Cache\Psr\Cache\CacheFactory;
 use Neos\ContentRepository\Core\DimensionSpace\OriginDimensionSpacePoint;
-use Neos\ContentRepository\Core\Feature\NodeModification\Dto\PropertyValuesToWrite;
-use Neos\ContentRepository\Core\Feature\NodeReferencing\Dto\NodeReferencesForName;
-use Neos\ContentRepository\Core\Feature\NodeReferencing\Dto\NodeReferencesToWrite;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
-use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateIds;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeName;
 use Neos\ContentRepository\Core\SharedModel\Node\ReferenceName;
 use Neos\Flow\Annotations as Flow;
@@ -565,7 +561,6 @@ class PackageConverter
                 $lastActiveVersionTime = $lastActivity;
             }
         }
-        $lastVersion = PackageVersion::extractLastVersion($versions);
         $this->storage->updateNode(
             $packageNode,
             $originDimensionSpacePoint,
@@ -573,15 +568,11 @@ class PackageConverter
                 'lastActivity' => $lastActiveVersionTime,
             ]
         );
-        $this->storage->updateNodeReferences(
-            $packageNode->aggregateId,
+        $this->storage->updateNodeReference(
+            $packageNode,
             $originDimensionSpacePoint,
-            NodeReferencesToWrite::create(
-                NodeReferencesForName::fromTargets(
-                    ReferenceName::fromString('lastVersion'),
-                    $lastVersion ? NodeAggregateIds::fromArray([$lastVersion->aggregateId]) : NodeAggregateIds::createEmpty(),
-                )
-            )
+            ReferenceName::fromString('lastVersion'),
+            PackageVersion::extractLastVersion($versions)
         );
         unset($versions);
     }
