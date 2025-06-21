@@ -577,7 +577,7 @@ class PackageConverter
             $packageNode,
             $originDimensionSpacePoint,
             ReferenceName::fromString('lastVersion'),
-            PackageVersion::extractLastVersion($versions)
+            PackageVersion::extractLastVersion($versions)?->aggregateId
         );
         unset($versions);
     }
