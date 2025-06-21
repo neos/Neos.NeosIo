@@ -20,6 +20,7 @@ use Neos\ContentRepository\Core\Feature\NodeCreation\Command\CreateNodeAggregate
 use Neos\ContentRepository\Core\Feature\NodeModification\Command\SetNodeProperties;
 use Neos\ContentRepository\Core\Feature\NodeModification\Dto\PropertyValuesToWrite;
 use Neos\ContentRepository\Core\Feature\NodeReferencing\Command\SetNodeReferences;
+use Neos\ContentRepository\Core\Feature\NodeReferencing\Dto\NodeReferencesForName;
 use Neos\ContentRepository\Core\Feature\NodeReferencing\Dto\NodeReferencesToWrite;
 use Neos\ContentRepository\Core\Feature\NodeRemoval\Command\RemoveNodeAggregate;
 use Neos\ContentRepository\Core\Feature\NodeTypeChange\Command\ChangeNodeAggregateType;
@@ -28,8 +29,10 @@ use Neos\ContentRepository\Core\Feature\Security\Exception\AccessDenied;
 use Neos\ContentRepository\Core\NodeType\NodeTypeName;
 use Neos\ContentRepository\Core\NodeType\NodeTypeNames;
 use Neos\ContentRepository\Core\Projection\ContentGraph\ContentSubgraphInterface;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\CountDescendantNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindDescendantNodesFilter;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindReferencesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\PropertyValueEquals;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
@@ -37,9 +40,11 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\NodePath;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\SharedModel\ContentRepository\ContentRepositoryId;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
+use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateIds;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeName;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeVariantSelectionStrategy;
 use Neos\ContentRepository\Core\SharedModel\Node\PropertyName;
+use Neos\ContentRepository\Core\SharedModel\Node\ReferenceName;
 use Neos\ContentRepository\Core\SharedModel\Workspace\WorkspaceName;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
@@ -83,6 +88,13 @@ class Storage
     )
     {
         $this->workspaceName = WorkspaceName::fromString('live');
+    }
+
+    public function getNodeByAggregateId(
+        NodeAggregateId $vendorNodeAggregateId
+    ): ?Node
+    {
+        return $this->subGraph->findNodeById($vendorNodeAggregateId);
     }
 
     /**
@@ -171,12 +183,12 @@ class Storage
      */
     public function countPackageNodes(?NodeAggregateId $vendorAggregateId = null): int
     {
-        return $this->subGraph->findDescendantNodes(
+        return $this->subGraph->countDescendantNodes(
             $vendorAggregateId ?? $this->storageRootNodeAggregateId,
-            FindDescendantNodesFilter::create(
+            CountDescendantNodesFilter::create(
                 NodeTypeName::fromString(MarketplaceNodeType::PACKAGE->value)
             )
-        )->count();
+        );
     }
 
     public function getPackageNode(
@@ -257,22 +269,43 @@ class Storage
     }
 
     public function updateNode(
-        NodeAggregateId           $nodeAggregateId,
+        Node                      $node,
         OriginDimensionSpacePoint $originDimensionSpacePoint,
-        PropertyValuesToWrite     $properties
+        array                     $properties
     ): bool
     {
+        // Skip properties that are already set to the same value
+        $serializedNodeProperties = $node->properties->serialized();
+        foreach ($properties as $propertyName => $propertyValue) {
+            if (!$serializedNodeProperties->propertyExists($propertyName)) {
+                if ($propertyValue === null) {
+                    // If the property does not exist and the value is null, we can skip it
+                    unset($properties[$propertyName]);
+                }
+                continue;
+            }
+            if ($propertyValue instanceof \DateTimeInterface) {
+                $propertyValue = $propertyValue->format(\DateTimeInterface::ATOM);
+            }
+            if ($serializedNodeProperties->getProperty($propertyName)->value === $propertyValue) {
+                unset($properties[$propertyName]);
+            }
+        }
+        if (empty($properties)) {
+            // No properties to update
+            return true;
+        }
         try {
             $this->contentRepository->handle(
                 SetNodeProperties::create(
                     $this->workspaceName,
-                    $nodeAggregateId,
+                    $node->aggregateId,
                     $originDimensionSpacePoint,
-                    $properties
+                    PropertyValuesToWrite::fromArray($properties),
                 )
             );
         } catch (AccessDenied) {
-            $this->logger->error('Access denied while updating node: ' . $nodeAggregateId);
+            $this->logger->error('Access denied while updating node: ' . $node->aggregateId);
             return false;
         }
         return true;
@@ -283,20 +316,19 @@ class Storage
         Node       $packageNode
     ): bool
     {
-        $name = Slug::create($maintainer->getName());
         $maintainerNode = $this->getPackageMaintainerNode(
             $packageNode->aggregateId,
-            $name
+            $maintainer->getName()
         );
-        $properties = PropertyValuesToWrite::fromArray([
+        $properties = [
             'title' => $maintainer->getName(),
             'email' => $maintainer->getEmail(),
             'homepage' => $maintainer->getHomepage()
-        ]);
+        ];
 
         if ($maintainerNode) {
             $this->updateNode(
-                $maintainerNode->aggregateId,
+                $maintainerNode,
                 $maintainerNode->originDimensionSpacePoint,
                 $properties
             );
@@ -320,7 +352,7 @@ class Storage
                     NodeTypeName::fromString(MarketplaceNodeType::MAINTAINER->value),
                     $maintainersNode->originDimensionSpacePoint,
                     $maintainersNode->aggregateId,
-                    initialPropertyValues: $properties
+                    initialPropertyValues: PropertyValuesToWrite::fromArray($properties)
                 )
             );
             return true;
@@ -387,8 +419,8 @@ class Storage
                     NodeTypeNames::fromStringArray([MarketplaceNodeType::VERSION->value])
                 ),
                 propertyValue: PropertyValueEquals::create(
-                    PropertyName::fromString('title'),
-                    Slug::create($version),
+                    PropertyName::fromString('version'),
+                    $version,
                     true
                 )
             )
@@ -415,7 +447,7 @@ class Storage
                 ),
                 propertyValue: PropertyValueEquals::create(
                     PropertyName::fromString('title'),
-                    Slug::create($maintainerName),
+                    $maintainerName,
                     true
                 )
             )
@@ -423,9 +455,9 @@ class Storage
     }
 
     public function updateChildNode(
-        NodeAggregateId       $parentNodeAggregateId,
-        NodeName              $childNodeName,
-        PropertyValuesToWrite $properties,
+        NodeAggregateId $parentNodeAggregateId,
+        NodeName        $childNodeName,
+        array           $properties,
     ): bool
     {
         $childNode = $this->subGraph->findNodeByPath(
@@ -434,7 +466,7 @@ class Storage
         );
         if ($childNode) {
             return $this->updateNode(
-                $childNode->aggregateId,
+                $childNode,
                 $childNode->originDimensionSpacePoint,
                 $properties
             );
@@ -443,10 +475,10 @@ class Storage
     }
 
     public function createOrUpdateVersionNode(
-        NodeAggregateId       $versionsNodeAggregateId,
-        string                $versionString,
-        MarketplaceNodeType   $nodeType,
-        PropertyValuesToWrite $properties,
+        NodeAggregateId     $versionsNodeAggregateId,
+        string              $versionString,
+        MarketplaceNodeType $nodeType,
+        array               $properties,
     ): ?NodeAggregateId
     {
         $versionNode = $this->getPackageVersionNode(
@@ -455,7 +487,7 @@ class Storage
         );
         if ($versionNode) {
             $this->updateNode(
-                $versionNode->aggregateId,
+                $versionNode,
                 $versionNode->originDimensionSpacePoint,
                 $properties
             );
@@ -491,7 +523,7 @@ class Storage
                     NodeTypeName::fromString($nodeType->value),
                     OriginDimensionSpacePoint::fromDimensionSpacePoint($this->subGraph->getDimensionSpacePoint()),
                     $versionsNodeAggregateId,
-                    initialPropertyValues: $properties,
+                    initialPropertyValues: PropertyValuesToWrite::fromArray($properties),
                 )
             );
         } catch (AccessDenied) {
@@ -535,25 +567,38 @@ class Storage
         );
     }
 
-    public function updateNodeReferences(
-        NodeAggregateId           $packageNodeAggregateId,
+    public function updateNodeReference(
+        Node                      $node,
         OriginDimensionSpacePoint $originDimensionSpacePoint,
-        NodeReferencesToWrite     $references
-    ): bool
+        ReferenceName             $referenceName,
+        ?NodeAggregateId          $referenceAggregateId = null
+    ): void
     {
+        $existingReferences = $this->subGraph->findReferences(
+            $node->aggregateId,
+            FindReferencesFilter::create(referenceName: $referenceName)
+        );
+        if ($existingReferences->getNodes()->first()?->aggregateId === $referenceAggregateId) {
+            return; // No change needed, the reference is up-to-date
+        }
+        $references = NodeReferencesToWrite::create(
+            NodeReferencesForName::fromTargets(
+                $referenceName,
+                $referenceAggregateId ?
+                    NodeAggregateIds::fromArray([$referenceAggregateId]) : NodeAggregateIds::createEmpty(),
+            )
+        );
         try {
             $this->contentRepository->handle(
                 SetNodeReferences::create(
                     $this->workspaceName,
-                    $packageNodeAggregateId,
+                    $node->aggregateId,
                     $originDimensionSpacePoint,
                     $references
                 )
             );
-            return true;
         } catch (AccessDenied) {
-            $this->logger->error('Access denied while updating node references: ' . $packageNodeAggregateId);
+            $this->logger->error('Access denied while updating node references: ' . $node->aggregateId);
         }
-        return false;
     }
 }
