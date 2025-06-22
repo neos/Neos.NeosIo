@@ -1,15 +1,16 @@
 <?php
+declare(strict_types=1);
 
-namespace Neos\NeosIo\TypoScript\FlowQueryOperations;
+namespace Neos\NeosIo\Fusion\FlowQueryOperations;
 
 /*
  * The Neos project is licensed under GPL v3 or later
  */
 
-use Neos\NeosIo\Service\CrowdApiConnector;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Eel\FlowQuery\Operations\AbstractOperation;
 use Neos\Flow\Annotations as Flow;
+use Neos\NeosIo\Service\CrowdApiConnector;
 
 class CrowdGroupsOperation extends AbstractOperation
 {

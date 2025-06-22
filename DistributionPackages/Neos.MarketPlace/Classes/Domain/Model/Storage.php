@@ -186,7 +186,9 @@ class Storage
         return $this->subGraph->countDescendantNodes(
             $vendorAggregateId ?? $this->storageRootNodeAggregateId,
             CountDescendantNodesFilter::create(
-                NodeTypeName::fromString(MarketplaceNodeType::PACKAGE->value)
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::PACKAGE->value])
+                )
             )
         );
     }
