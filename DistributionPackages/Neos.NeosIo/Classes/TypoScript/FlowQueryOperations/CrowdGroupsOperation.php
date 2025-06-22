@@ -27,24 +27,7 @@ class CrowdGroupsOperation extends AbstractOperation
      */
     protected $apiConnector;
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param array (or array-like object) $context onto which this operation should be applied
-     *
-     * @return bool TRUE if the operation can be applied onto the $context, FALSE otherwise
-     */
-    public function canEvaluate($context)
-    {
-        return true;
-    }
-
-    /**
-     * @param FlowQuery $flowQuery the FlowQuery object
-     * @param array $arguments the arguments for this operation
-     * @return void
-     */
-    public function evaluate(FlowQuery $flowQuery, array $arguments)
+    public function evaluate(FlowQuery $flowQuery, array $arguments): void
     {
         $groups = $this->apiConnector->fetchGroups();
         $flowQuery->setContext($groups);

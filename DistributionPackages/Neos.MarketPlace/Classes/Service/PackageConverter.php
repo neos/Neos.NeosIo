@@ -16,6 +16,7 @@ namespace Neos\MarketPlace\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Indexer\NodeIndexer;
+use Github\Api\Markdown;
 use Github\Api\Repository\Contents;
 use Github\AuthMethod;
 use Github\Client;
@@ -325,7 +326,9 @@ class PackageConverter
         try {
             $contents = new Contents($client);
             $metadata = $contents->readme($organization, $repository);
-            $rendered = $client->api('markdown')->render(file_get_contents($metadata['download_url']));
+            /** @var Markdown $markdownApi */
+            $markdownApi = $client->api('markdown');
+            $rendered = $markdownApi->render(file_get_contents($metadata['download_url']));
         } catch (ApiLimitExceedException $exception) {
             // Skip the processing if we hit the API rate limit
             $this->logger->warning($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));

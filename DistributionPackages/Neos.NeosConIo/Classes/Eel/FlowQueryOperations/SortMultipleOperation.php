@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\NeosConIo\Eel\FlowQueryOperations;
 
 /*
@@ -12,8 +14,11 @@ namespace Neos\NeosConIo\Eel\FlowQueryOperations;
  */
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
+use Neos\Eel\Exception as EelException;
 use Neos\Eel\FlowQuery\FlowQuery;
+use Neos\Eel\FlowQuery\FlowQueryException;
 use Neos\Eel\FlowQuery\Operations\AbstractOperation;
+use Neos\Utility\ObjectAccess;
 
 /**
  * "sort" operation working on ContentRepository nodes.
@@ -33,11 +38,8 @@ class SortMultipleOperation extends AbstractOperation
      * {@inheritdoc}
      *
      * We can only handle ContentRepository Nodes.
-     *
-     * @param mixed $context
-     * @return boolean
      */
-    public function canEvaluate($context)
+    public function canEvaluate($context): bool
     {
         return count($context) === 0 || (isset($context[0]) && ($context[0] instanceof Node));
     }
@@ -45,29 +47,26 @@ class SortMultipleOperation extends AbstractOperation
     /**
      * {@inheritdoc}
      *
-     * First argument is the node property to sort by. Works with internal arguments (_xyz) as well.
-     * Second argument is the sort direction (ASC or DESC).
-     *
-     * @param FlowQuery $flowQuery the FlowQuery object
-     * @param array $arguments the arguments for this operation.
-     * @return mixed
+     * The First argument is the node property to sort by. Works with internal arguments (_xyz) as well.
+     * The Second argument is the sort direction (ASC or DESC).
+     * @throws FlowQueryException|EelException
      */
-    public function evaluate(FlowQuery $flowQuery, array $arguments)
+    public function evaluate(FlowQuery $flowQuery, array $arguments): void
     {
         $nodes = $flowQuery->getContext();
 
         // Check sort property
-        if (isset($arguments[0]) && !empty($arguments[0])) {
+        if (!empty($arguments[0])) {
             $sortProperty = $arguments[0];
         } else {
-            throw new \Neos\Eel\FlowQuery\FlowQueryException('Please provide a node property to sort by.', 1467881104);
+            throw new FlowQueryException('Please provide a node property to sort by.', 1467881104);
         }
 
-        // Check sort direction
-        if (isset($arguments[1]) && !empty($arguments[1]) && in_array(strtoupper($arguments[1]), ['ASC', 'DESC'])) {
+        // Check the sort direction
+        if (!empty($arguments[1]) && in_array(strtoupper($arguments[1]), ['ASC', 'DESC'])) {
             $sortOrder = strtoupper($arguments[1]);
         } else {
-            throw new \Neos\Eel\FlowQuery\FlowQueryException('Please provide a valid sort direction (ASC or DESC)', 1467881105);
+            throw new FlowQueryException('Please provide a valid sort direction (ASC or DESC)', 1467881105);
         }
 
         $sortedNodes = [];
@@ -77,7 +76,7 @@ class SortMultipleOperation extends AbstractOperation
         /** @var Node $node */
         foreach ($nodes as $node) {
             if ($sortProperty[0] === '_') {
-                $propertyValue = \Neos\Utility\ObjectAccess::getPropertyPath($node, substr($sortProperty, 1));
+                $propertyValue = ObjectAccess::getPropertyPath($node, substr($sortProperty, 1));
             } else {
                 $propertyValue = $node->getProperty($sortProperty);
             }
@@ -94,9 +93,9 @@ class SortMultipleOperation extends AbstractOperation
         }
 
 
-        usort($nodesByIdentifier, function($a, $b) use($sortOrder) {
+        usort($nodesByIdentifier, function ($a, $b) use ($sortOrder) {
             $retval = $a['propertyValue'] <=> $b['propertyValue'];
-            if ($retval == 0) {
+            if ($retval === 0) {
                 $retval = $a['previousCount'] <=> $b['previousCount'];
             }
             if ($sortOrder === 'DESC') {
@@ -106,7 +105,7 @@ class SortMultipleOperation extends AbstractOperation
         });
 
         // Build the sorted context that is returned
-        foreach ($nodesByIdentifier as $nodeIdentifier => $value) {
+        foreach ($nodesByIdentifier as $value) {
             $sortedNodes[] = $value['node'];
         }
 

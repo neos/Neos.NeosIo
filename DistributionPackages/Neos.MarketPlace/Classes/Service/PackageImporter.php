@@ -102,7 +102,7 @@ class PackageImporter
         $count = 0;
         $vendorNodes = $this->storage->getVendorNodes();
         foreach ($vendorNodes as $vendorNode) {
-            $packageCount = $this->storage->countPackageNodes($vendorNode);
+            $packageCount = $this->storage->countPackageNodes($vendorNode->aggregateId);
             if ($packageCount > 0) {
                 continue;
             }

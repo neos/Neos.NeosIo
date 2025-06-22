@@ -1,0 +1,12 @@
+includes:
+    - './phpstan.config.php'
+parameters:
+    level: 3
+    paths:
+        - DistributionPackages
+    ignoreErrors:
+        - '#Call to an undefined method Neos\\Eel\\FlowQuery\\FlowQuery::prevAll\(\).#'
+
+    bootstrapFiles:
+      # Add Neos.Flow so global symbols like FLOW_PATH_ROOT can be resolved
+        - bootstrap-phpstan.php
