@@ -40,18 +40,6 @@ class SortByPropertyOperation extends AbstractOperation
     /**
      * {@inheritdoc}
      *
-     * This operation is only for normal arrays.
-     */
-    public function canEvaluate($context): bool
-    {
-        return is_array($context);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param FlowQuery $flowQuery the FlowQuery object
-     * @param array $arguments the arguments for this operation
      * @throws FlowQueryException
      */
     public function evaluate(FlowQuery $flowQuery, array $arguments): void

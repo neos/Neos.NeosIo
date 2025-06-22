@@ -45,7 +45,7 @@ class SortOperation extends AbstractOperation
      */
     public function canEvaluate($context): bool
     {
-        return (isset($context[0]) && ($context[0] instanceof Node)) || (is_array($context) && count($context) === 0);
+        return (isset($context[0]) && ($context[0] instanceof Node)) || count($context) === 0;
     }
 
     /**

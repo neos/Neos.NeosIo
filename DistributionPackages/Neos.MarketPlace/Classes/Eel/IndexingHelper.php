@@ -46,7 +46,7 @@ class IndexingHelper extends Eel\IndexingHelper
         if ($versionNode === null) {
             return [];
         }
-        /** @var \DateTime $time */
+        /** @var \DateTime|null $time */
         $time = $versionNode->getProperty('time');
         return [
             'name' => $versionNode->getProperty('name'),

@@ -59,7 +59,8 @@
             "@php ./flow domain:add --site-node-name neosio --hostname neosio.localbeach.net",
             "@php ./flow domain:add --site-node-name flowneosio --hostname flowio.localbeach.net",
             "@php ./flow domain:add --site-node-name neosconio --hostname neoscon.localbeach.net"
-        ]
+        ],
+        "lint:phpstan": "./bin/phpstan analyse -v"
     },
     "scripts-descriptions": {
         "prime-localbeach": "Primes the Local Beach Neos setup"

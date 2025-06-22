@@ -267,6 +267,7 @@ class PackageConverter
             }
             try {
                 $meta = $this->client->repositories()->show($organization, $repository);
+                /** @phpstan-ignore function.alreadyNarrowedType */
                 if (!is_array($meta)) {
                     $this->logger->warning(
                         sprintf('no repository info returned for %s', $repository),
