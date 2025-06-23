@@ -47,13 +47,13 @@ jobs:
       - name: Install dependencies
         uses: php-actions/composer@v6
         with:
-          php-version: ${{ env.PHP_VERSION }}
+          php_version: ${{ env.PHP_VERSION }}
           version: 2
 
       - name: PHPStan
         uses: php-actions/phpstan@v3
         with:
-          php-version: ${{ env.PHP_VERSION }}
+          php_version: ${{ env.PHP_VERSION }}
           version: 2.1.17
           command: analyse
           path: 'DistributionPackages/'
