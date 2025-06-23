@@ -494,7 +494,7 @@ class PackageConverter
             };
 
             try {
-                $versionNodeAggregateId = $this->storage->createOrUpdateVersionNode(
+                $this->storage->createOrUpdateVersionNode(
                     $versionsNode->aggregateId,
                     $version->getVersion(),
                     $versionNodeType,
@@ -516,6 +516,13 @@ class PackageConverter
                         'suggest' => $this->arrayToJsonCaster($version->getSuggest()),
                         'conflict' => $this->arrayToJsonCaster($version->getConflict()),
                         'replace' => $this->arrayToJsonCaster($version->getReplace()),
+                        'sourceType' => $version->getSource()?->getType(),
+                        'sourceReference' => $version->getSource()?->getReference(),
+                        'sourceUrl' => $version->getSource()?->getUrl(),
+                        'distType' => $version->getDist()?->getType(),
+                        'distReference' => $version->getDist()?->getReference(),
+                        'distUrl' => $version->getDist()?->getUrl(),
+                        'distShasum' => $version->getDist()?->getShasum(),
                     ],
                 );
             } catch (\JsonException $e) {
@@ -524,35 +531,6 @@ class PackageConverter
                     LogEnvironment::fromMethodName(__METHOD__)
                 );
                 continue;
-            }
-
-            if (!$versionNodeAggregateId) {
-                continue;
-            }
-
-            if ($version->getSource()) {
-                $this->storage->updateChildNode(
-                    $versionNodeAggregateId,
-                    NodeName::fromString('source'),
-                    [
-                        'type' => $version->getSource()->getType(),
-                        'reference' => $version->getSource()->getReference(),
-                        'url' => $version->getSource()->getUrl(),
-                    ]
-                );
-            }
-
-            if ($version->getDist()) {
-                $this->storage->updateChildNode(
-                    $versionNodeAggregateId,
-                    NodeName::fromString('dist'),
-                    [
-                        'type' => $version->getDist()->getType(),
-                        'reference' => $version->getDist()->getReference(),
-                        'url' => $version->getDist()->getUrl(),
-                        'shasum' => $version->getDist()->getShasum(),
-                    ]
-                );
             }
         }
         unset($versionNodes);
