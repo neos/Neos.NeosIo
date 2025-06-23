@@ -153,6 +153,9 @@ class PackageConverter
                 $package,
                 $vendorNodeAggregateId
             );
+            if (!$packageNode) {
+                return false;
+            }
         }
 
         $updated = $this->storage->updateNode(
@@ -392,7 +395,7 @@ class PackageConverter
             '/href="(?!https?:\/\/)(?!data:)(?!#)/' => 'href="' . $domain,
             '/src="(?!https?:\/\/)(?!data:)(?!#)/' => 'src="' . $domain
         ];
-        return trim(preg_replace(array_keys($r), array_values($r), $content));
+        return trim((string)preg_replace(array_keys($r), array_values($r), $content));
     }
 
     protected function resetGithubMetrics(Node $packageNode): void

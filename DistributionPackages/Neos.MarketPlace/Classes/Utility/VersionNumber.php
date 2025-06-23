@@ -35,7 +35,7 @@ class VersionNumber
         return match (true) {
             !$versionNormalized => 'stable',
             $versionNormalizedParts[0] === 'dev' => 'dev',
-            isset($versionNormalizedParts[1]) => preg_replace('/[\d]+/', '', strtolower($versionNormalizedParts[1])),
+            isset($versionNormalizedParts[1]) => (string)preg_replace('/[\d]+/', '', strtolower($versionNormalizedParts[1])),
             default => 'stable',
         };
     }

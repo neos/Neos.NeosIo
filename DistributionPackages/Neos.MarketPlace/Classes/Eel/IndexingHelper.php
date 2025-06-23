@@ -77,7 +77,7 @@ class IndexingHelper extends Eel\IndexingHelper
      */
     public function extractCompatibility(array $versionNodes = [], ?string $packageName = null): array
     {
-        if (!$versionNodes || !array_key_exists($packageName, $this->compatibilityCheck)) {
+        if (!$versionNodes || !$packageName || !array_key_exists($packageName, $this->compatibilityCheck)) {
             return [];
         }
 

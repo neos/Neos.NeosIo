@@ -25,6 +25,9 @@ class DateHelper implements ProtectedContextAwareInterface
         if ($dateTime instanceof \DateTime) {
             $dateTime = \DateTimeImmutable::createFromMutable($dateTime);
         }
+        if (!$timezone) {
+            return $dateTime;
+        }
         /** @var \DateTimeImmutable $dateTime */
         return $dateTime->setTimezone(new \DateTimeZone($timezone));
     }

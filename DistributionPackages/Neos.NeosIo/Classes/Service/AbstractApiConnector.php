@@ -155,7 +155,9 @@ abstract class AbstractApiConnector
         $browser = new Browser();
         $browser->setRequestEngine(new CurlEngine());
 
-        if (array_key_exists('username', $this->apiSettings) && !empty($this->apiSettings['username'])
+
+        if ($this->apiSettings
+            && array_key_exists('username', $this->apiSettings) && !empty($this->apiSettings['username'])
             && array_key_exists('password', $this->apiSettings) && !empty($this->apiSettings['password'])
         ) {
             $browser->addAutomaticRequestHeader('Authorization',
@@ -170,6 +172,9 @@ abstract class AbstractApiConnector
      */
     protected function buildRequestUri(string $actionName, array $additionalParameters = []): Uri
     {
+        if (!$this->apiSettings) {
+            throw new \RuntimeException('Api settings are not set. Please check your configuration.', 1750673308);
+        }
         $requestUri = new Uri($this->apiSettings['apiUrl']);
         $requestUri = $requestUri->withPath($requestUri->getPath() . $this->apiSettings['actions'][$actionName]);
         return $requestUri->withQuery(http_build_query(array_merge($this->apiSettings['parameters'], $additionalParameters)));

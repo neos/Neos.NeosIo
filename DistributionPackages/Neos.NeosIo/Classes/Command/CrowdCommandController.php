@@ -24,10 +24,10 @@ class CrowdCommandController extends CommandController
     protected CrowdApiConnector $crowdApiConnector;
 
     /**
-     * @var array{ additionalAttributes: array{ group: string[], user: string[] } }|null
+     * @var array{ additionalAttributes: array{ group: string[], user: string[] } }
      */
     #[Flow\InjectConfiguration('Neos.NeosIo', 'crowdApi')]
-    protected ?array $settings;
+    protected array $settings;
 
     #[Flow\Inject]
     protected Translator $translator;
@@ -187,12 +187,16 @@ class CrowdCommandController extends CommandController
                 $attributes = [];
                 for ($i = 0; $i < $fieldCount; $i++) {
                     $columnName = $columns[$i];
-                    if (in_array($columnName, $validAttributes)) {
+                    if (in_array($columnName, $validAttributes, true)) {
                         $attributes[$columnName] = $data[$i];
                     }
                 }
 
                 echo "Updating data: " . implode(', ', $data) . "\n";
+                if (!array_key_exists('username', $attributes) || !is_string($attributes['username']) || trim($attributes['username']) === '') {
+                    $this->outputLine('<error>Username is missing in the data row: ' . implode(', ', $data) . '</error>');
+                    continue;
+                }
                 $this->crowdApiConnector->setUserAttributes($attributes['username'], $attributes);
             }
             fclose($handle);
