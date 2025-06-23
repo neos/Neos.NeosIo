@@ -14,7 +14,8 @@
     "build": "webpack --mode production",
     "pipeline": "yarn install;yarn build",
     "analyze": "source-map-explorer 'DistributionPackages/Neos.NeosIo/Resources/Public/Scripts/*.js'",
-    "test:e2e": "yarn playwright test"
+    "test:e2e": "yarn playwright test",
+    "lint:yaml": "yarn validate -v validate DistributionPackages"
   },
   "dependencies": {
     "@babel/plugin-transform-react-jsx": "^7.7.0",
@@ -75,6 +76,7 @@
     "prettier": "^2.3.0",
     "prettier-loader": "^3.3.0",
     "sass-loader": "^13.0.0",
+    "shel-neos-schema": "^1.0.2",
     "sort-css-media-queries": "^2.0.0",
     "source-map-explorer": "^2.5.2",
     "terser-webpack-plugin": "^5.1.3",
