@@ -26,15 +26,27 @@ class Packages
     #[Flow\Inject]
     protected PackageRepository $packageRepository;
 
+    /**
+     * @var array<string, string>
+     */
     #[Flow\InjectConfiguration('typeMapping')]
     protected array $packageTypes;
 
+    /**
+     * @var array<string, bool>
+     */
     #[Flow\InjectConfiguration('vendorMapping')]
     protected array $vendors;
 
+    /**
+     * @var array<string, bool>
+     */
     #[Flow\InjectConfiguration('packageBlackList')]
     protected array $packageBlackList;
 
+    /**
+     * @var string[]
+     */
     protected array $processedPackages = [];
 
     public function packages(): \Generator

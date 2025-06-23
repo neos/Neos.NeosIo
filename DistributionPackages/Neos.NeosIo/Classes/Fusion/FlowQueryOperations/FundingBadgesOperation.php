@@ -21,13 +21,12 @@ class FundingBadgesOperation extends AbstractOperation
      */
     protected static $shortName = 'fundingBadges';
 
-    /**
-     * @Flow\Inject
-     *
-     * @var FundingApiConnector
-     */
-    protected $apiConnector;
+    #[Flow\Inject]
+    protected FundingApiConnector $apiConnector;
 
+    /**
+     * @param array{} $arguments
+     */
     public function evaluate(FlowQuery $flowQuery, array $arguments): void
     {
         $result = $this->apiConnector->fetchBadges();

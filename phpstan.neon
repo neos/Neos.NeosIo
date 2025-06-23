@@ -1,9 +1,10 @@
 includes:
     - './phpstan.config.php'
 parameters:
-    level: 5
+    level: 6
     paths:
         - DistributionPackages
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Call to an undefined method Neos\\Eel\\FlowQuery\\FlowQuery::prevAll\(\).#'
 

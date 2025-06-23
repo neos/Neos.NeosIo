@@ -16,16 +16,12 @@ class DonorsDataSource extends AbstractDataSource
      */
     static protected $identifier = 'neos-neosio-donors';
 
-    /**
-     * @Flow\Inject
-     * @var FundingApiConnector
-     */
-    protected $fundingApi;
+    #[Flow\Inject]
+    protected FundingApiConnector $fundingApi;
 
     /**
-     * @param Node $node The node that is currently edited (optional)
-     * @param array $arguments Additional arguments (key / value)
-     * @return array
+     * @param array{} $arguments Additional arguments (key / value)
+     * @return array<string, array{label: string}> An array of options for the donor data source
      */
     public function getData(Node $node = null, array $arguments = []): array
     {

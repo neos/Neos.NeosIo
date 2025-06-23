@@ -39,7 +39,7 @@ class SortByPropertyOperation extends AbstractOperation
 
     /**
      * {@inheritdoc}
-     *
+     * @param array{0?: string, 1?: string} $arguments
      * @throws FlowQueryException
      */
     public function evaluate(FlowQuery $flowQuery, array $arguments): void

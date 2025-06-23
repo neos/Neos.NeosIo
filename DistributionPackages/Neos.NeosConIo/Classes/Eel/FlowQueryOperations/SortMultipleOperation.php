@@ -38,10 +38,11 @@ class SortMultipleOperation extends AbstractOperation
      * {@inheritdoc}
      *
      * We can only handle ContentRepository Nodes.
+     * @param array<string|int, mixed> $context
      */
     public function canEvaluate($context): bool
     {
-        return count($context) === 0 || (isset($context[0]) && ($context[0] instanceof Node));
+        return count($context) === 0 || $context[0] instanceof Node;
     }
 
     /**
@@ -49,6 +50,7 @@ class SortMultipleOperation extends AbstractOperation
      *
      * The First argument is the node property to sort by. Works with internal arguments (_xyz) as well.
      * The Second argument is the sort direction (ASC or DESC).
+     * @param array{0?: string, 1?: string} $arguments
      * @throws FlowQueryException|EelException
      */
     public function evaluate(FlowQuery $flowQuery, array $arguments): void

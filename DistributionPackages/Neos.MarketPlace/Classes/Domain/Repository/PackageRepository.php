@@ -29,11 +29,17 @@ class PackageRepository
         return (new Client())->get($packageKey);
     }
 
+    /**
+     * @return string[]
+     */
     public function findByPackageType(string $type): array
     {
         return (new Client())->all(['type' => $type]);
     }
 
+    /**
+     * @return string[]
+     */
     public function findByVendor(string $vendor): array
     {
         return (new Client())->all(['vendor' => $vendor]);

@@ -54,6 +54,9 @@ use Psr\Log\LoggerInterface;
 class PackageConverter
 {
 
+    /**
+     * @var array{ cacheDirectory?: string, token?: string }
+     */
     #[Flow\InjectConfiguration('github')]
     protected array $githubSettings = [];
 
@@ -65,6 +68,9 @@ class PackageConverter
 
     private ?Client $client = null;
 
+    /**
+     * @var array<string, array{lastActivity: \DateTimeInterface|null, lastSync: \DateTimeInterface|null}>
+     */
     private array $packagesState = [];
 
     protected bool $forceUpdate = false;
@@ -622,6 +628,9 @@ class PackageConverter
         unset($packages);
     }
 
+    /**
+     * @param string[]|null $value
+     */
     protected function arrayToStringCaster(?array $value): string
     {
         $value = $value ?: [];
@@ -629,6 +638,7 @@ class PackageConverter
     }
 
     /**
+     * @param array<string|int, mixed>|null $value
      * @throws \JsonException
      */
     protected function arrayToJsonCaster(?array $value): ?string

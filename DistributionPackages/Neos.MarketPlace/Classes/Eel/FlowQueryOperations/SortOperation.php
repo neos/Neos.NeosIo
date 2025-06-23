@@ -42,6 +42,7 @@ class SortOperation extends AbstractOperation
      * {@inheritdoc}
      *
      * We can only handle CR Nodes.
+     * @param array<string|int, mixed> $context
      */
     public function canEvaluate($context): bool
     {
@@ -51,8 +52,7 @@ class SortOperation extends AbstractOperation
     /**
      * {@inheritdoc}
      *
-     * @param FlowQuery $flowQuery the FlowQuery object
-     * @param array $arguments the arguments for this operation
+     * @param array{0?: string, 1?: string} $arguments the arguments for this operation
      * @throws FlowQueryException
      */
     public function evaluate(FlowQuery $flowQuery, array $arguments): void

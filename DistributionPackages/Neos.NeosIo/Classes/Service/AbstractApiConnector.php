@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Neos\NeosIo\Service;
 
@@ -7,10 +8,12 @@ namespace Neos\NeosIo\Service;
  */
 
 use GuzzleHttp\Psr7\Uri;
+use Neos\Cache\Exception as CacheException;
 use Neos\Flow\Annotations as Flow;
 use Neos\Cache\Frontend\VariableFrontend;
 use Neos\Flow\Http\Client\Browser;
 use Neos\Flow\Http\Client\CurlEngine;
+use Neos\Flow\Http\Client\InfiniteRedirectionException;
 use Neos\Flow\Log\Utility\LogEnvironment;
 use Psr\Log\LoggerInterface;
 
@@ -33,51 +36,39 @@ use Psr\Log\LoggerInterface;
 abstract class AbstractApiConnector
 {
     /**
-     * This should be overriden for the implementation.
+     * This should be overridden for the implementation.
      *
-     * @Flow\InjectConfiguration(path="<implementationName>")
-     *
-     * @var array
+     * Define "@Flow\InjectConfiguration(path='<implementationName>')" in your custom implementation
+     * @var array{ username: string, password: string, apiUrl: string, actions: array<string, string>, parameters: array<string, mixed>}|null
      */
-    protected $apiSettings;
+    protected ?array $apiSettings;
 
     /**
-     * @Flow\Inject
-     *
      * @var VariableFrontend
      */
+    #[Flow\Inject]
     protected $apiCache;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $objectCache = [];
+    protected array $objectCache = [];
 
     /**
-     * @Flow\Inject
-     *
      * @var LoggerInterface
      */
+    #[Flow\Inject]
     protected $logger;
 
     /**
      * Creates a valid cache identifier.
-     *
-     * @param $identifier
-     *
-     * @return string
      */
-    protected function getCacheKey($identifier)
+    protected function getCacheKey(string $identifier): string
     {
         return sha1(self::class . '__' . $identifier);
     }
 
-    /**
-     * @param string $cacheKey
-     *
-     * @return mixed
-     */
-    protected function getItem($cacheKey)
+    protected function getItem(string $cacheKey): mixed
     {
         if (array_key_exists($cacheKey, $this->objectCache)) {
             return $this->objectCache[$cacheKey];
@@ -89,20 +80,16 @@ abstract class AbstractApiConnector
     }
 
     /**
-     * @param string $cacheKey
-     * @param mixed $value
-     * @param array $tags
+     * @param string[] $tags
+     * @throws CacheException
      */
-    protected function setItem($cacheKey, $value, $tags = array())
+    protected function setItem(string $cacheKey, mixed $value, array $tags = []): void
     {
         $this->objectCache[$cacheKey] = $value;
         $this->apiCache->set($cacheKey, $value, $tags);
     }
 
-    /**
-     * @param string $cacheKey
-     */
-    protected function unsetItem($cacheKey)
+    protected function unsetItem(string $cacheKey): void
     {
         unset($this->objectCache[$cacheKey]);
         $this->apiCache->remove($cacheKey);
@@ -111,15 +98,15 @@ abstract class AbstractApiConnector
     /**
      * Retrieves data from the api.
      *
-     * @param string $actionName
-     * @param array $additionalParameters
-     * @return array|false
+     * @param array<string, mixed> $additionalParameters
+     * @return array<string|int, mixed>|false
+     * @throws \JsonException|InfiniteRedirectionException
      */
-    protected function fetchJsonData($actionName, array $additionalParameters = [])
+    protected function fetchJsonData(string $actionName, array $additionalParameters = []): array|false
     {
         $browser = $this->getBrowser();
         $requestUri = $this->buildRequestUri($actionName, $additionalParameters);
-        $response = $browser->request($requestUri, 'GET');
+        $response = $browser->request($requestUri);
 
         if ($response->getStatusCode() !== 200) {
             $this->logger->error(sprintf('Get request to Api failed with code "%s"!', $response->getStatusCode()),
@@ -128,23 +115,25 @@ abstract class AbstractApiConnector
             return false;
         }
 
-        return json_decode($response->getBody()->getContents(), true);
+        return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
     }
 
     /**
      * Json encodes data and posts it to the api
      *
-     * @param string $actionName
-     * @param array $additionalParameters
-     * @param array $data
-     * @return bool
+     * @param array<string, mixed> $additionalParameters
+     * @param array<string|int, mixed> $data
      */
-    protected function postJsonData($actionName, array $additionalParameters, array $data)
+    protected function postJsonData(string $actionName, array $additionalParameters, array $data): bool
     {
         $browser = $this->getBrowser();
         $browser->addAutomaticRequestHeader('Content-Type', 'application/json');
         $requestUri = $this->buildRequestUri($actionName, $additionalParameters);
-        $response = $browser->request($requestUri, 'POST', [], [], [], json_encode($data));
+        try {
+            $response = $browser->request($requestUri, 'POST', [], [], [], json_encode($data));
+        } catch (InfiniteRedirectionException) {
+            return false;
+        }
 
         if (!in_array($response->getStatusCode(), [200, 204])) {
             $this->logger->error(sprintf('Post request to Api failed with message "%s"!', $response->getStatusCode()),
@@ -156,10 +145,8 @@ abstract class AbstractApiConnector
 
     /**
      * Returns a browser instance with curlengine and authentication parameters set
-     *
-     * @return Browser
      */
-    protected function getBrowser()
+    protected function getBrowser(): Browser
     {
         $browser = new Browser();
         $browser->setRequestEngine(new CurlEngine());
@@ -175,16 +162,12 @@ abstract class AbstractApiConnector
     }
 
     /**
-     * @param string $actionName
-     * @param array $additionalParameters
-     *
-     * @return Uri
+     * @param array<string, mixed> $additionalParameters
      */
-    protected function buildRequestUri($actionName, array $additionalParameters = [])
+    protected function buildRequestUri(string $actionName, array $additionalParameters = []): Uri
     {
         $requestUri = new Uri($this->apiSettings['apiUrl']);
         $requestUri = $requestUri->withPath($requestUri->getPath() . $this->apiSettings['actions'][$actionName]);
-        $requestUri = $requestUri->withQuery(http_build_query(array_merge($this->apiSettings['parameters'], $additionalParameters)));
-        return $requestUri;
+        return $requestUri->withQuery(http_build_query(array_merge($this->apiSettings['parameters'], $additionalParameters)));
     }
 }

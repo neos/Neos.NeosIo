@@ -31,6 +31,9 @@ use Psr\Log\LoggerInterface;
 #[Flow\Scope('singleton')]
 class PackageImporter
 {
+    /**
+     * @var array<string, bool> Processed packages list
+     */
     protected array $processedPackages = [];
 
     /**
@@ -129,6 +132,9 @@ class PackageImporter
         return $count;
     }
 
+    /**
+     * @return string[] List of processed packages
+     */
     public function getProcessedPackages(): array
     {
         return array_keys(array_filter($this->processedPackages));

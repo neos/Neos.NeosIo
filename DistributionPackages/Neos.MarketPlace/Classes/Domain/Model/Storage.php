@@ -81,6 +81,9 @@ class Storage
 
     protected ContentSubgraphInterface $subGraph;
 
+    /**
+     * @var array<string, NodeAggregateId>
+     */
     protected array $vendorCache = [];
 
     public function __construct(
@@ -270,6 +273,9 @@ class Storage
         );
     }
 
+    /**
+     * @param array<string, mixed> $properties
+     */
     public function updateNode(
         Node                      $node,
         OriginDimensionSpacePoint $originDimensionSpacePoint,
@@ -456,6 +462,9 @@ class Storage
         )->first();
     }
 
+    /**
+     * @param array<string, mixed> $properties
+     */
     public function updateChildNode(
         NodeAggregateId $parentNodeAggregateId,
         NodeName        $childNodeName,
@@ -476,6 +485,9 @@ class Storage
         return false;
     }
 
+    /**
+     * @param array<string, mixed> $properties
+     */
     public function createOrUpdateVersionNode(
         NodeAggregateId     $versionsNodeAggregateId,
         string              $versionString,

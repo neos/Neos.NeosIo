@@ -21,13 +21,12 @@ class CrowdGroupsOperation extends AbstractOperation
      */
     protected static $shortName = 'crowdGroups';
 
-    /**
-     * @Flow\Inject
-     *
-     * @var CrowdApiConnector
-     */
-    protected $apiConnector;
+    #[Flow\Inject]
+    protected CrowdApiConnector $apiConnector;
 
+    /**
+     * @param array{} $arguments
+     */
     public function evaluate(FlowQuery $flowQuery, array $arguments): void
     {
         $groups = $this->apiConnector->fetchGroups();

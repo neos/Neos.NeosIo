@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Neos\NeosIo\Command;
 
@@ -19,28 +20,22 @@ use Neos\Flow\I18n\Translator;
 class CrowdCommandController extends CommandController
 {
 
-    /**
-     * @Flow\Inject
-     * @var CrowdApiConnector
-     */
-    protected $crowdApiConnector;
+    #[Flow\Inject]
+    protected CrowdApiConnector $crowdApiConnector;
 
     /**
-     * @Flow\InjectConfiguration(package="Neos.NeosIo", path="crowdApi")
-     * @var array
+     * @var array{ additionalAttributes: array{ group: string[], user: string[] } }|null
      */
-    protected $settings;
+    #[Flow\InjectConfiguration('Neos.NeosIo', 'crowdApi')]
+    protected ?array $settings;
 
-    /**
-     * @Flow\Inject
-     * @var Translator
-     */
-    protected $translator;
+    #[Flow\Inject]
+    protected Translator $translator;
 
     /**
      * Retrieves the list of groups from crowd and prints their attributes
      */
-    public function listGroupsCommand()
+    public function listGroupsCommand(): void
     {
         $validAttributes = $this->settings['additionalAttributes']['group'];
         $headerRow = ['Name', 'Description'];
@@ -68,9 +63,8 @@ class CrowdCommandController extends CommandController
 
     /**
      * Retrieves a user from crowd and prints their attributes
-     * @param string $userName
      */
-    public function showUserCommand($userName)
+    public function showUserCommand(string $userName): void
     {
         $validAttributes = $this->settings['additionalAttributes']['user'];
         $headerRow = ['Name', 'Fullname'];
@@ -96,19 +90,15 @@ class CrowdCommandController extends CommandController
     /**
      * Sets the value of the given attribute in crowd.
      * Only predefined attributes are allowed.
-     *
-     * @param string $groupName
-     * @param string $attribute
-     * @param string $value
      */
-    public function setGroupAttributeCommand($groupName, $attribute, $value)
+    public function setGroupAttributeCommand(string $groupName, string $attribute, string $value): void
     {
         $validAttributes = $this->settings['additionalAttributes']['group'];
 
-        if (!in_array($attribute, $validAttributes)) {
+        if (!in_array($attribute, $validAttributes, true)) {
             $this->outputFormatted('The attribute "%s" is not in the list of allowed attributes "%s"', [
                 $attribute,
-                join(', ', $validAttributes),
+                implode(', ', $validAttributes),
             ]);
         } else if (empty($value)) {
             $this->outputFormatted('The value for attribute "%s" cannot be empty', [$attribute]);
@@ -129,19 +119,15 @@ class CrowdCommandController extends CommandController
     /**
      * Sets the value of the given attribute in crowd.
      * Only predefined attributes are allowed.
-     *
-     * @param string $userName
-     * @param string $attribute
-     * @param string $value
      */
-    public function setUserAttributeCommand($userName, $attribute, $value)
+    public function setUserAttributeCommand(string $userName, string $attribute, string $value): void
     {
         $validAttributes = $this->settings['additionalAttributes']['user'];
 
-        if (!in_array($attribute, $validAttributes)) {
+        if (!in_array($attribute, $validAttributes, true)) {
             $this->outputFormatted('The attribute "%s" is not in the list of allowed attributes "%s"', [
                 $attribute,
-                join(', ', $validAttributes),
+                implode(', ', $validAttributes),
             ]);
         } else if (empty($value)) {
             $this->outputFormatted('The value for attribute "%s" cannot be empty', [$attribute]);
@@ -174,16 +160,16 @@ class CrowdCommandController extends CommandController
      *
      * @param string $csvPath the path to a csv file with userdata
      */
-    public function importUserAttributesCommand($csvPath, $delimiter = ';')
+    public function importUserAttributesCommand(string $csvPath, string $delimiter = ';'): void
     {
         $validAttributes = $this->settings['additionalAttributes']['user'];
-        $validAttributes[]= 'username';
+        $validAttributes[] = 'username';
         $columns = [];
         $fieldCount = 0;
 
         if (($handle = fopen($csvPath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
-                // First line are the column headers
+                // The first line is the column headers
                 if (empty($columns)) {
                     $columns = $data;
                     $fieldCount = count($columns);
@@ -198,7 +184,7 @@ class CrowdCommandController extends CommandController
                     }
                 }
 
-                echo "Updating data: " . join(', ', $data) . "\n";
+                echo "Updating data: " . implode(', ', $data) . "\n";
                 $this->crowdApiConnector->setUserAttributes($attributes['username'], $attributes);
             }
             fclose($handle);

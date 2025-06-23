@@ -39,8 +39,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
     }
 
     /**
-     * @param string $searchWord
-     * @param array $options Options to configure the query_string, see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-query-string-query.html
+     * @param array{} $options Options to configure the query_string, see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-query-string-query.html
      */
     public function fulltext(string $searchWord, array $options = []): QueryBuilderInterface
     {

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Neos\NeosIo\Service;
 
@@ -7,42 +8,37 @@ namespace Neos\NeosIo\Service;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Http\Client\InfiniteRedirectionException;
 use Neos\Flow\Log\Utility\LogEnvironment;
 
-/**
- * @Flow\Scope("singleton")
- */
+#[Flow\Scope('singleton')]
 class CrowdApiConnector extends AbstractApiConnector
 {
-    /**
-     * @Flow\InjectConfiguration(path="crowdApi", package="Neos.NeosIo")
-     *
-     * @var array
-     */
-    protected $apiSettings;
+    #[Flow\InjectConfiguration('crowdApi', 'Neos.NeosIo')]
+    protected ?array $apiSettings;
 
     /**
      * Retrieves the list of groups from crowd
-     *
-     * @param bool $useCache
-     * @return array
+     * @return array{ name: string, description: string, members: array<string>, neos_group_type?: string, ... }[]|false An array of groups or false if no groups could be fetched
+     * @throws \JsonException
+     * @throws InfiniteRedirectionException
      */
-    public function fetchGroups($useCache = true)
+    public function fetchGroups(bool $useCache = true): false|array
     {
         $cacheKey = $this->getCacheKey('groups');
         $groups = $useCache ? $this->getItem($cacheKey) : false;
         if ($groups === false) {
             $groups = [];
-            $this->logger->info(sprintf('Fetching groups from Crowd Api'), LogEnvironment::fromMethodName(__METHOD__));
+            $this->logger->info('Fetching groups from Crowd Api', LogEnvironment::fromMethodName(__METHOD__));
             $searchResult = $this->fetchJsonData('search', [
                 'entity-type' => 'group',
                 'expand' => 'group,attributes'
             ]);
 
             if (is_array($searchResult) && array_key_exists('groups', $searchResult)) {
-               $groups = $this->storeGroups($searchResult['groups']);
+                $groups = $this->storeGroups($searchResult['groups']);
             } else {
-                $this->logger->error(sprintf('Unknown error when fetching groups from Crowd Api, see system log'), LogEnvironment::fromMethodName(__METHOD__));
+                $this->logger->error('Unknown error when fetching groups from Crowd Api, see system log', LogEnvironment::fromMethodName(__METHOD__));
             }
         }
 
@@ -88,10 +84,9 @@ class CrowdApiConnector extends AbstractApiConnector
      *   ]
      * }
      *
-     * @param string $groupName
-     * @return array
+     * @return array<array{link: array{href: string, rel: string}, name: string, password: array{link: array{href: string, rel: string}}, key: string, active: bool, attributes: array{attributes: array<array{name: string, values: array<string>}>, link: array{href: string, rel: string}}, 'first-name': string, 'last-name': string, 'display-name': string, email: string}>
      */
-    protected function fetchGroupMembers($groupName)
+    protected function fetchGroupMembers(string $groupName): array
     {
         $result = $this->fetchJsonData('getGroupMembers', [
             'groupname' => $groupName,
@@ -99,13 +94,12 @@ class CrowdApiConnector extends AbstractApiConnector
         ]);
 
         if (array_key_exists('users', $result)) {
-            $groupMembers = array_reduce($result['users'], function ($users, $userData) {
+            return array_reduce($result['users'], static function ($users, $userData) {
                 if ($userData['active']) {
                     $users[] = $userData['name'];
                 }
                 return $users;
             }, []);
-            return $groupMembers;
         }
         return [];
     }
@@ -142,12 +136,9 @@ class CrowdApiConnector extends AbstractApiConnector
      *   "display-name": "<firstname> <lastname>",
      *   "email": "<email>"
      * }
-     *
-     * @param string $userName
-     * @param bool $useCache
-     * @return array|bool The users data or False if no user could be found
+     * @return false|array{name: string, display-name: string, email: string, first-name: string, last-name: string} An array with the user data or false if the user could not be fetched
      */
-    public function fetchUser($userName, $useCache = true)
+    public function fetchUser(string $userName, bool $useCache = true): false|array
     {
         $cacheKey = $this->getCacheKey('user__' . $userName);
         $user = $useCache ? $this->getItem($cacheKey) : false;
@@ -171,10 +162,10 @@ class CrowdApiConnector extends AbstractApiConnector
     }
 
     /**
-     * @param array $userData
-     * @return array The processed user data
+     * @param array{name: string, display-name: string, email: string, first-name: string, last-name: string, attributes: array{ attributes: array{ values: array<int, mixed>, name: string }[] }} $userData
+     * @return array{name: string, display-name: string, email: string, first-name: string, last-name: string} The processed user data
      */
-    protected function storeUser(array $userData)
+    protected function storeUser(array $userData): array
     {
         $cacheKey = $this->getCacheKey('user__' . $userData['name']);
 
@@ -198,15 +189,16 @@ class CrowdApiConnector extends AbstractApiConnector
     }
 
     /**
-     * @param array $groupsData
+     * @param array{ name: string, description?: string, attributes: array{ attributes: array<int, mixed> } }[] $groupsData
+     * @return array{ name: string, description: string, members: array<string>, ... }[] An array of groups with their attributes and members
      */
-    protected function storeGroups(array $groupsData)
+    protected function storeGroups(array $groupsData): array
     {
         $groups = array_map(function ($group) {
             // Add crowd base attributes and members
             $groupData = [
                 'name' => $group['name'],
-                'description' => array_key_exists('description', $group) ? $group['description'] : '',
+                'description' => $group['description'] ?? '',
                 'members' => $this->fetchGroupMembers($group['name']),
             ];
 
@@ -227,18 +219,16 @@ class CrowdApiConnector extends AbstractApiConnector
     /**
      * Remotely sets the given groups attributes in crowd
      *
-     * @param string $groupName
-     * @param array $attributes A key value list of attributes and their desired values
-     * @return bool
+     * @param array<string, mixed> $attributes A key value list of attributes and their desired values
      */
-    public function setGroupAttributes($groupName, array $attributes)
+    public function setGroupAttributes(string $groupName, array $attributes): bool
     {
         $attributesData = [
             'attributes' => []
         ];
 
         foreach ($attributes as $attribute => $value) {
-            $attributesData['attributes'][]= [
+            $attributesData['attributes'][] = [
                 'name' => $attribute,
                 'values' => [$value], // Crowd expects an array here
             ];
@@ -252,19 +242,16 @@ class CrowdApiConnector extends AbstractApiConnector
 
     /**
      * Remotely sets the given users attributes in crowd
-     *
-     * @param string $userName
-     * @param array $attributes A key value list of attributes and their desired values
-     * @return bool
+     * @param array<string, mixed> $attributes A key value list of attributes and their desired values
      */
-    public function setUserAttributes($userName, array $attributes)
+    public function setUserAttributes(string $userName, array $attributes): bool
     {
         $attributesData = [
             'attributes' => []
         ];
 
         foreach ($attributes as $attribute => $value) {
-            $attributesData['attributes'][]= [
+            $attributesData['attributes'][] = [
                 'name' => $attribute,
                 'values' => [$value], // Crowd expects an array here
             ];

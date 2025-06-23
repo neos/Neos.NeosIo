@@ -21,13 +21,12 @@ class CrowdUserOperation extends AbstractOperation
      */
     protected static $shortName = 'crowdUser';
 
-    /**
-     * @Flow\Inject
-     *
-     * @var CrowdApiConnector
-     */
-    protected $apiConnector;
+    #[Flow\Inject]
+    protected CrowdApiConnector $apiConnector;
 
+    /**
+     * @param array{0?: string|null} $arguments
+     */
     public function evaluate(FlowQuery $flowQuery, array $arguments): void
     {
         $user = false;
@@ -38,12 +37,12 @@ class CrowdUserOperation extends AbstractOperation
 
         if ($user) {
             $groups = $this->apiConnector->fetchGroups();
-            $user['memberships'] = array_filter($groups, function ($group) use ($user) {
-                return in_array($user['name'], $group['members']) && isset($group['neos_group_type']) && !empty($group['neos_group_type']);
+            $user['memberships'] = array_filter($groups, static function ($group) use ($user) {
+                return in_array($user['name'], $group['members'], true) && !empty($group['neos_group_type']);
             });
 
             $user['additionalProperties'] = array_filter($user, function ($key) {
-                return strpos($key, 'neos_') === 0;
+                return str_starts_with($key, 'neos_');
             }, ARRAY_FILTER_USE_KEY);
         }
 
