@@ -26,6 +26,7 @@ class PackageRepository
 {
     public function findByPackageKey(string $packageKey): Package
     {
+        /** @phpstan-ignore return.type */
         return (new Client())->get($packageKey);
     }
 
@@ -34,6 +35,7 @@ class PackageRepository
      */
     public function findByPackageType(string $type): array
     {
+        /** @phpstan-ignore return.type */
         return (new Client())->all(['type' => $type]);
     }
 
@@ -42,6 +44,7 @@ class PackageRepository
      */
     public function findByVendor(string $vendor): array
     {
+        /** @phpstan-ignore return.type */
         return (new Client())->all(['vendor' => $vendor]);
     }
 }

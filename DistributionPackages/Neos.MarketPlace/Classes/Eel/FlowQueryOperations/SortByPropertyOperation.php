@@ -48,6 +48,7 @@ class SortByPropertyOperation extends AbstractOperation
             throw new FlowQueryException('sort() needs property name by which entries should be sorted', 1581928004);
         }
 
+        /** @var array<string, mixed>[] $items */
         $items = $flowQuery->getContext();
         $propertyName = $arguments[0];
 

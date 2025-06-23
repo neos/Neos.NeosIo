@@ -130,8 +130,12 @@ abstract class AbstractApiConnector
         $browser->addAutomaticRequestHeader('Content-Type', 'application/json');
         $requestUri = $this->buildRequestUri($actionName, $additionalParameters);
         try {
-            $response = $browser->request($requestUri, 'POST', [], [], [], json_encode($data));
+            $response = $browser->request($requestUri, 'POST', [], [], [], json_encode($data, JSON_THROW_ON_ERROR));
         } catch (InfiniteRedirectionException) {
+            return false;
+        } catch (\JsonException $e) {
+            $this->logger->error(sprintf('Post request to Api failed with message "%s"!', $e->getMessage()),
+                LogEnvironment::fromMethodName(__METHOD__));
             return false;
         }
 

@@ -55,10 +55,10 @@ class PackageConverter
 {
 
     /**
-     * @var array{ cacheDirectory?: string, token?: string }
+     * @var array{ cacheDirectory: string, token: string }
      */
     #[Flow\InjectConfiguration('github')]
-    protected array $githubSettings = [];
+    protected array $githubSettings;
 
     /**
      * @var LoggerInterface
@@ -226,7 +226,9 @@ class PackageConverter
         $lastActivities = [];
         foreach ($package->getVersions() as $version) {
             $time = \DateTime::createFromFormat(Storage::DATE_FORMAT, $version->getTime());
-            $lastActivities[$time->getTimestamp()] = $time;
+            if ($time) {
+                $lastActivities[$time->getTimestamp()] = $time;
+            }
         }
         krsort($lastActivities);
         $lastActivity = reset($lastActivities) ?: new \DateTime();
@@ -335,7 +337,11 @@ class PackageConverter
             $metadata = $contents->readme($organization, $repository);
             /** @var Markdown $markdownApi */
             $markdownApi = $client->api('markdown');
-            $rendered = $markdownApi->render(file_get_contents($metadata['download_url']));
+            $markdownContent = file_get_contents($metadata['download_url']);
+            if (!$markdownContent) {
+                return;
+            }
+            $rendered = $markdownApi->render($markdownContent);
         } catch (ApiLimitExceedException $exception) {
             // Skip the processing if we hit the API rate limit
             $this->logger->warning($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));

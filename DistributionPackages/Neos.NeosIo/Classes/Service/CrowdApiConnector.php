@@ -20,8 +20,6 @@ class CrowdApiConnector extends AbstractApiConnector
     /**
      * Retrieves the list of groups from crowd
      * @return array{ name: string, description: string, members: array<string>, neos_group_type?: string, ... }[]|false An array of groups or false if no groups could be fetched
-     * @throws \JsonException
-     * @throws InfiniteRedirectionException
      */
     public function fetchGroups(bool $useCache = true): false|array
     {
@@ -30,10 +28,14 @@ class CrowdApiConnector extends AbstractApiConnector
         if ($groups === false) {
             $groups = [];
             $this->logger->info('Fetching groups from Crowd Api', LogEnvironment::fromMethodName(__METHOD__));
-            $searchResult = $this->fetchJsonData('search', [
-                'entity-type' => 'group',
-                'expand' => 'group,attributes'
-            ]);
+            try {
+                $searchResult = $this->fetchJsonData('search', [
+                    'entity-type' => 'group',
+                    'expand' => 'group,attributes'
+                ]);
+            } catch (\Exception) {
+                return [];
+            }
 
             if (is_array($searchResult) && array_key_exists('groups', $searchResult)) {
                 $groups = $this->storeGroups($searchResult['groups']);
@@ -93,15 +95,21 @@ class CrowdApiConnector extends AbstractApiConnector
             'expand' => 'user',
         ]);
 
-        if (array_key_exists('users', $result)) {
-            return array_reduce($result['users'], static function ($users, $userData) {
-                if ($userData['active']) {
-                    $users[] = $userData['name'];
-                }
-                return $users;
-            }, []);
+        if (!$result) {
+            $this->logger->error('Unknown error when fetching group members from Crowd Api, see system log',
+                LogEnvironment::fromMethodName(__METHOD__));
+            return [];
         }
-        return [];
+
+        if (!array_key_exists('users', $result)) {
+            return [];
+        }
+        return array_reduce($result['users'], static function ($users, $userData) {
+            if ($userData['active']) {
+                $users[] = $userData['name'];
+            }
+            return $users;
+        }, []);
     }
 
     /**
@@ -145,10 +153,17 @@ class CrowdApiConnector extends AbstractApiConnector
 
         if ($user === false) {
             $this->logger->info('Fetching user from Crowd Api', LogEnvironment::fromMethodName(__METHOD__));
-            $userData = $this->fetchJsonData('getUser', [
-                'username' => $userName,
-                'expand' => 'attributes'
-            ]);
+            try {
+                /** @var false|array{active: bool, name: string, display-name: string, email: string, first-name: string, last-name: string, attributes: array{attributes: array<array{values: array<int, mixed>, name: string}>}} $userData */
+                $userData = $this->fetchJsonData('getUser', [
+                    'username' => $userName,
+                    'expand' => 'attributes'
+                ]);
+            } catch (\Exception) {
+                $this->logger->error('Unknown exception when fetching groups from Crowd Api, see system log',
+                    LogEnvironment::fromMethodName(__METHOD__));
+                return false;
+            }
 
             if (is_array($userData) && $userData['active']) {
                 $user = $this->storeUser($userData);
@@ -163,12 +178,13 @@ class CrowdApiConnector extends AbstractApiConnector
 
     /**
      * @param array{name: string, display-name: string, email: string, first-name: string, last-name: string, attributes: array{ attributes: array{ values: array<int, mixed>, name: string }[] }} $userData
-     * @return array{name: string, display-name: string, email: string, first-name: string, last-name: string} The processed user data
+     * @return array{name: string, display-name: string, email: string, first-name: string, last-name: string} | array<string, mixed> The processed user data
      */
     protected function storeUser(array $userData): array
     {
         $cacheKey = $this->getCacheKey('user__' . $userData['name']);
 
+        /** @var array{name: string, display-name: string, email: string, first-name: string, last-name: string} $user */
         $user = [
             'name' => $userData['name'],
             'display-name' => $userData['display-name'],
@@ -190,7 +206,7 @@ class CrowdApiConnector extends AbstractApiConnector
 
     /**
      * @param array{ name: string, description?: string, attributes: array{ attributes: array<int, mixed> } }[] $groupsData
-     * @return array{ name: string, description: string, members: array<string>, ... }[] An array of groups with their attributes and members
+     * @return array{ name: string, description: string, members: array<string> }[] | array<string, mixed>[] An array of groups with their attributes and members
      */
     protected function storeGroups(array $groupsData): array
     {

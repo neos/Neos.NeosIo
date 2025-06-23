@@ -25,11 +25,14 @@ class CrowdGroupsOperation extends AbstractOperation
     protected CrowdApiConnector $apiConnector;
 
     /**
-     * @param array{} $arguments
+     * @param array<string|int, mixed> $arguments
      */
     public function evaluate(FlowQuery $flowQuery, array $arguments): void
     {
         $groups = $this->apiConnector->fetchGroups();
+        if (!$groups) {
+            return;
+        }
         $flowQuery->setContext($groups);
     }
 }

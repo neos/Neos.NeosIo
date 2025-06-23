@@ -46,6 +46,10 @@ class CrowdCommandController extends CommandController
         }
 
         $groups = $this->crowdApiConnector->fetchGroups(false);
+        if ($groups === false) {
+            $this->outputLine('No groups found or an error occurred while fetching groups.');
+            return;
+        }
         $tableRows = array_map(function ($item) use ($validAttributes) {
             $attributes = [
                 $item['name'],
@@ -75,6 +79,10 @@ class CrowdCommandController extends CommandController
         }
 
         $user = $this->crowdApiConnector->fetchUser($userName, false);
+        if ($user === false) {
+            $this->outputLine('No user found or an error occurred while fetching the user.');
+            return;
+        }
         $attributes = [
             $user['name'],
             $user['display-name'],

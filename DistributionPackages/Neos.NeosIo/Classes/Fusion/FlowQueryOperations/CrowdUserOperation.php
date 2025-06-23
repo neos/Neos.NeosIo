@@ -35,17 +35,20 @@ class CrowdUserOperation extends AbstractOperation
             $user = $this->apiConnector->fetchUser($arguments[0]);
         }
 
-        if ($user) {
-            $groups = $this->apiConnector->fetchGroups();
+        if (!$user) {
+            return;
+        }
+        $groups = $this->apiConnector->fetchGroups();
+        if ($groups) {
             $user['memberships'] = array_filter($groups, static function ($group) use ($user) {
                 return in_array($user['name'], $group['members'], true) && !empty($group['neos_group_type']);
             });
-
-            $user['additionalProperties'] = array_filter($user, function ($key) {
-                return str_starts_with($key, 'neos_');
-            }, ARRAY_FILTER_USE_KEY);
         }
 
+        $user['additionalProperties'] = array_filter(
+            $user,
+            static fn ($key) => str_starts_with($key, 'neos_'), ARRAY_FILTER_USE_KEY
+        );
         $flowQuery->setContext($user);
     }
 }
