@@ -26,15 +26,14 @@ use Github\Exception\RuntimeException;
 use Neos\Cache\Backend\SimpleFileBackend;
 use Neos\Cache\EnvironmentConfiguration;
 use Neos\Cache\Exception\InvalidBackendException;
+use Neos\Cache\Frontend\StringFrontend;
 use Neos\Cache\Psr\Cache\CacheFactory;
 use Neos\ContentRepository\Core\DimensionSpace\OriginDimensionSpacePoint;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
-use Neos\ContentRepository\Core\SharedModel\Node\NodeName;
 use Neos\ContentRepository\Core\SharedModel\Node\ReferenceName;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Log\Utility\LogEnvironment;
-use Neos\Flow\Utility\Now;
 use Neos\MarketPlace\Domain\Model\MarketplaceNodeType;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
@@ -65,6 +64,12 @@ class PackageConverter
      */
     #[Flow\Inject('Neos.MarketPlace:Logger')]
     protected $logger;
+
+    /**
+     * @var StringFrontend
+     */
+    #[Flow\Inject('Neos.MarketPlace:PackageSyncCache')]
+    protected $packageSyncCache;
 
     private ?Client $client = null;
 
@@ -123,9 +128,10 @@ class PackageConverter
 
         $this->packagesState = [];
         foreach ($packageNodes as $packageNode) {
-            $this->packagesState[$packageNode->getProperty('title')] = [
+            $packageName = $packageNode->getProperty('title');
+            $this->packagesState[$packageName] = [
                 'lastActivity' => $packageNode->getProperty('lastActivity'),
-                'lastSync' => $packageNode->getProperty('lastSync'),
+                'lastSync' => (int)($this->packageSyncCache->get(Slug::create($packageName)) ?: 0),
             ];
         }
         unset($packageNodes);
@@ -158,6 +164,11 @@ class PackageConverter
             }
         }
 
+        $this->packageSyncCache->set(
+            Slug::create($package->getName()),
+            (string)time(),
+        );
+
         $updated = $this->storage->updateNode(
             $packageNode,
             $packageNode->originDimensionSpacePoint,
@@ -170,7 +181,6 @@ class PackageConverter
                 'type' => $package->getType(),
                 'repository' => $package->getRepository(),
                 'favers' => $package->getFavers(),
-                'lastSync' => new \DateTime(),
             ]
         );
         if (!$updated) {
@@ -222,7 +232,7 @@ class PackageConverter
         }
         $lastRecordedActivity = $this->packagesState[$package->getName()]['lastActivity'] ?? null;
         $lastSync = $this->packagesState[$package->getName()]['lastSync'] ?? null;
-        if (!$lastRecordedActivity instanceof \DateTimeInterface || !$lastSync instanceof \DateTimeInterface) {
+        if (!$lastRecordedActivity instanceof \DateTimeInterface || !$lastSync) {
             return true;
         }
 
@@ -238,7 +248,7 @@ class PackageConverter
 
         return (
             $lastActivity > $lastRecordedActivity
-            || $lastSync < (new Now())->sub(new \DateInterval('P1D'))
+            || $lastSync < (time() - 86400) // 1 day
         );
     }
 
