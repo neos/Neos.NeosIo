@@ -36,6 +36,7 @@ class CrowdUserOperation extends AbstractOperation
         }
 
         if (!$user) {
+            $flowQuery->setContext([]);
             return;
         }
         $groups = $this->apiConnector->fetchGroups();
