@@ -8,7 +8,6 @@ namespace Neos\NeosIo\Service;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Http\Client\InfiniteRedirectionException;
 use Neos\Flow\Log\Utility\LogEnvironment;
 
 #[Flow\Scope('singleton')]
@@ -34,6 +33,7 @@ class CrowdApiConnector extends AbstractApiConnector
                     'expand' => 'group,attributes'
                 ]);
             } catch (\Exception) {
+                // Error is already logged in `fetchJsonData`
                 return [];
             }
 
