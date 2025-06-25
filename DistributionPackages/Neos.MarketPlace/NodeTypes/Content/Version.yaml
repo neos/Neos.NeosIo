@@ -3,11 +3,8 @@
   label: '${q(node).property(''version'') + '' ('' + q(node).property(''type'') + '')''}'
   superTypes:
     'Neos.Neos:Content': true
-  childNodes:
-    source:
-      type: 'Neos.MarketPlace:Source'
-    dist:
-      type: 'Neos.MarketPlace:Dist'
+    'Neos.MarketPlace:Mixin.Source': true
+    'Neos.MarketPlace:Mixin.Dist': true
   ui:
     label: i18n
     icon: file

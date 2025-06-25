@@ -26,15 +26,14 @@ use Github\Exception\RuntimeException;
 use Neos\Cache\Backend\SimpleFileBackend;
 use Neos\Cache\EnvironmentConfiguration;
 use Neos\Cache\Exception\InvalidBackendException;
+use Neos\Cache\Frontend\StringFrontend;
 use Neos\Cache\Psr\Cache\CacheFactory;
 use Neos\ContentRepository\Core\DimensionSpace\OriginDimensionSpacePoint;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
-use Neos\ContentRepository\Core\SharedModel\Node\NodeName;
 use Neos\ContentRepository\Core\SharedModel\Node\ReferenceName;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Log\Utility\LogEnvironment;
-use Neos\Flow\Utility\Now;
 use Neos\MarketPlace\Domain\Model\MarketplaceNodeType;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
@@ -66,10 +65,16 @@ class PackageConverter
     #[Flow\Inject('Neos.MarketPlace:Logger')]
     protected $logger;
 
+    /**
+     * @var StringFrontend
+     */
+    #[Flow\Inject('Neos.MarketPlace:PackageSyncCache')]
+    protected $packageSyncCache;
+
     private ?Client $client = null;
 
     /**
-     * @var array<string, array{lastActivity: \DateTimeInterface|null, lastSync: \DateTimeInterface|null}>
+     * @var array<string, array{lastActivity: \DateTimeInterface|null, lastSync: int|null}>
      */
     private array $packagesState = [];
 
@@ -123,9 +128,10 @@ class PackageConverter
 
         $this->packagesState = [];
         foreach ($packageNodes as $packageNode) {
-            $this->packagesState[$packageNode->getProperty('title')] = [
+            $packageName = $packageNode->getProperty('title');
+            $this->packagesState[$packageName] = [
                 'lastActivity' => $packageNode->getProperty('lastActivity'),
-                'lastSync' => $packageNode->getProperty('lastSync'),
+                'lastSync' => (int)($this->packageSyncCache->get(Slug::create($packageName)) ?: 0),
             ];
         }
         unset($packageNodes);
@@ -158,6 +164,11 @@ class PackageConverter
             }
         }
 
+        $this->packageSyncCache->set(
+            Slug::create($package->getName()),
+            (string)time(),
+        );
+
         $updated = $this->storage->updateNode(
             $packageNode,
             $packageNode->originDimensionSpacePoint,
@@ -170,7 +181,6 @@ class PackageConverter
                 'type' => $package->getType(),
                 'repository' => $package->getRepository(),
                 'favers' => $package->getFavers(),
-                'lastSync' => new \DateTime(),
             ]
         );
         if (!$updated) {
@@ -222,7 +232,7 @@ class PackageConverter
         }
         $lastRecordedActivity = $this->packagesState[$package->getName()]['lastActivity'] ?? null;
         $lastSync = $this->packagesState[$package->getName()]['lastSync'] ?? null;
-        if (!$lastRecordedActivity instanceof \DateTimeInterface || !$lastSync instanceof \DateTimeInterface) {
+        if (!$lastRecordedActivity instanceof \DateTimeInterface || !$lastSync) {
             return true;
         }
 
@@ -238,7 +248,7 @@ class PackageConverter
 
         return (
             $lastActivity > $lastRecordedActivity
-            || $lastSync < (new Now())->sub(new \DateInterval('P1D'))
+            || $lastSync < (time() - 86400) // 1 day
         );
     }
 
@@ -494,7 +504,7 @@ class PackageConverter
             };
 
             try {
-                $versionNodeAggregateId = $this->storage->createOrUpdateVersionNode(
+                $this->storage->createOrUpdateVersionNode(
                     $versionsNode->aggregateId,
                     $version->getVersion(),
                     $versionNodeType,
@@ -516,6 +526,13 @@ class PackageConverter
                         'suggest' => $this->arrayToJsonCaster($version->getSuggest()),
                         'conflict' => $this->arrayToJsonCaster($version->getConflict()),
                         'replace' => $this->arrayToJsonCaster($version->getReplace()),
+                        'sourceType' => $version->getSource()?->getType(),
+                        'sourceReference' => $version->getSource()?->getReference(),
+                        'sourceUrl' => $version->getSource()?->getUrl(),
+                        'distType' => $version->getDist()?->getType(),
+                        'distReference' => $version->getDist()?->getReference(),
+                        'distUrl' => $version->getDist()?->getUrl(),
+                        'distShasum' => $version->getDist()?->getShasum(),
                     ],
                 );
             } catch (\JsonException $e) {
@@ -524,35 +541,6 @@ class PackageConverter
                     LogEnvironment::fromMethodName(__METHOD__)
                 );
                 continue;
-            }
-
-            if (!$versionNodeAggregateId) {
-                continue;
-            }
-
-            if ($version->getSource()) {
-                $this->storage->updateChildNode(
-                    $versionNodeAggregateId,
-                    NodeName::fromString('source'),
-                    [
-                        'type' => $version->getSource()->getType(),
-                        'reference' => $version->getSource()->getReference(),
-                        'url' => $version->getSource()->getUrl(),
-                    ]
-                );
-            }
-
-            if ($version->getDist()) {
-                $this->storage->updateChildNode(
-                    $versionNodeAggregateId,
-                    NodeName::fromString('dist'),
-                    [
-                        'type' => $version->getDist()->getType(),
-                        'reference' => $version->getDist()->getReference(),
-                        'url' => $version->getDist()->getUrl(),
-                        'shasum' => $version->getDist()->getShasum(),
-                    ]
-                );
             }
         }
         unset($versionNodes);
