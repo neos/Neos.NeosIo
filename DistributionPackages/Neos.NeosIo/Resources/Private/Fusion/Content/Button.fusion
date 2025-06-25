@@ -4,7 +4,7 @@ prototype(Neos.NeosIo:Button) < prototype(Neos.Neos:Content) {
     buttonLabel = ${q(node).property('buttonLabel')}
     openInNewTab = ${q(node).property('openInNewTab')}
     scrollToContentWhenClicked = ${q(node).property('scrollToContentWhenClicked')}
-    alignment = ${q(node).property('alignment')}
+    alignment = ${q(node).property('alignment') || 'inline'}
     style = ${q(node).property('style')}
     link = ${q(node).property('link')}
 

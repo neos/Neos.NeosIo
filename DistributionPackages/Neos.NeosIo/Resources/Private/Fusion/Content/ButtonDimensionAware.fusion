@@ -6,7 +6,7 @@ prototype(Neos.NeosIo:ButtonDimensionAware) < prototype(Neos.Neos:Content) {
 
     buttonLabel = ${q(node).property('buttonLabel')}
     openInNewTab = ${q(node).property('openInNewTab')}
-    alignment = ${q(node).property('alignment')}
+    alignment = ${q(node).property('alignment') || 'inline'}
     style = ${q(node).property('style')}
     link = Neos.Neos:NodeUri {
         node = Neos.Fusion:Case {

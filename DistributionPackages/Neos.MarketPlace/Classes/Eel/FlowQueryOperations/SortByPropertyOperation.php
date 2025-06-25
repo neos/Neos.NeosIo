@@ -39,19 +39,7 @@ class SortByPropertyOperation extends AbstractOperation
 
     /**
      * {@inheritdoc}
-     *
-     * This operation is only for normal arrays.
-     */
-    public function canEvaluate($context): bool
-    {
-        return is_array($context);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param FlowQuery $flowQuery the FlowQuery object
-     * @param array $arguments the arguments for this operation
+     * @param array{0?: string, 1?: string} $arguments
      * @throws FlowQueryException
      */
     public function evaluate(FlowQuery $flowQuery, array $arguments): void
@@ -60,6 +48,7 @@ class SortByPropertyOperation extends AbstractOperation
             throw new FlowQueryException('sort() needs property name by which entries should be sorted', 1581928004);
         }
 
+        /** @var array<string, mixed>[] $items */
         $items = $flowQuery->getContext();
         $propertyName = $arguments[0];
 

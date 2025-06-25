@@ -33,7 +33,8 @@
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "flowpack/neos-debug": "^1.0",
-        "shel/nodetypes-analyzer": "^2.0"
+        "shel/nodetypes-analyzer": "^2.0",
+        "phpstan/phpstan": "^2.1"
     },
     "extra": {
         "patches-file": "DistributionPackages/Neos.NeosIo/composer.patches.json"
@@ -58,7 +59,8 @@
             "@php ./flow domain:add --site-node-name neosio --hostname neosio.localbeach.net",
             "@php ./flow domain:add --site-node-name flowneosio --hostname flowio.localbeach.net",
             "@php ./flow domain:add --site-node-name neosconio --hostname neoscon.localbeach.net"
-        ]
+        ],
+        "lint:phpstan": "./bin/phpstan analyse -v"
     },
     "scripts-descriptions": {
         "prime-localbeach": "Primes the Local Beach Neos setup"

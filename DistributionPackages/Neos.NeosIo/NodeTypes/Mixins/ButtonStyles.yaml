@@ -3,7 +3,6 @@
   properties:
     alignment:
       type: string
-      defaultValue: inline
       ui:
         label: 'Button Alignment'
         reloadIfChanged: true
@@ -11,9 +10,9 @@
           group: appearance
           editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
+            allowEmpty: true
+            placeholder: Inline
             values:
-              inline:
-                label: 'Inline (Default)'
               Left:
                 label: Left
               Center:

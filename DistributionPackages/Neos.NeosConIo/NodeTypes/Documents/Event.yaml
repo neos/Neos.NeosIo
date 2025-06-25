@@ -15,12 +15,12 @@
   properties:
     eventDate:
       type: DateTime
-      placeholder: 'Select a date...'
       ui:
         label: 'Event date'
         inspector:
           group: 'event'
           editorOptions:
+            placeholder: 'Select a date...'
             format: 'd.m.Y'
     location:
       type: string
@@ -39,7 +39,7 @@
           editor: 'Neos.Neos/Inspector/Editors/TextAreaEditor'
           editorOptions:
             placeholder: 'Description'
-            rows: 4
+            minRows: 4
   childNodes:
     'rooms':
       type: 'Neos.Neos:ContentCollection'

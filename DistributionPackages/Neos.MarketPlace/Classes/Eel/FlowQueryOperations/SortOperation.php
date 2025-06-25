@@ -42,17 +42,17 @@ class SortOperation extends AbstractOperation
      * {@inheritdoc}
      *
      * We can only handle CR Nodes.
+     * @param array<string|int, mixed> $context
      */
     public function canEvaluate($context): bool
     {
-        return (isset($context[0]) && ($context[0] instanceof Node)) || (is_array($context) && count($context) === 0);
+        return (isset($context[0]) && ($context[0] instanceof Node)) || count($context) === 0;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @param FlowQuery $flowQuery the FlowQuery object
-     * @param array $arguments the arguments for this operation
+     * @param array{0?: string, 1?: string} $arguments the arguments for this operation
      * @throws FlowQueryException
      */
     public function evaluate(FlowQuery $flowQuery, array $arguments): void

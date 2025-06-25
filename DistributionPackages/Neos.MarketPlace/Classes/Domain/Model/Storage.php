@@ -81,6 +81,9 @@ class Storage
 
     protected ContentSubgraphInterface $subGraph;
 
+    /**
+     * @var array<string, NodeAggregateId>
+     */
     protected array $vendorCache = [];
 
     public function __construct(
@@ -118,6 +121,9 @@ class Storage
      */
     public function getOrCreateVendorNode(string $vendorName): ?NodeAggregateId
     {
+        if (!$this->storageRootNodeAggregateId) {
+            return null;
+        }
         if (array_key_exists($vendorName, $this->vendorCache)) {
             return $this->vendorCache[$vendorName];
         }
@@ -168,6 +174,9 @@ class Storage
 
     public function getVendorNodes(): Nodes
     {
+        if (!$this->storageRootNodeAggregateId) {
+            return Nodes::createEmpty();
+        }
         return $this->subGraph->findChildNodes(
             $this->storageRootNodeAggregateId,
             FindChildNodesFilter::create(
@@ -183,10 +192,15 @@ class Storage
      */
     public function countPackageNodes(?NodeAggregateId $vendorAggregateId = null): int
     {
+        if (!$this->storageRootNodeAggregateId) {
+            return 0;
+        }
         return $this->subGraph->countDescendantNodes(
             $vendorAggregateId ?? $this->storageRootNodeAggregateId,
             CountDescendantNodesFilter::create(
-                NodeTypeName::fromString(MarketplaceNodeType::PACKAGE->value)
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::PACKAGE->value])
+                )
             )
         );
     }
@@ -215,7 +229,7 @@ class Storage
     /**
      * @throws AccessDenied
      */
-    public function createPackageNode(Package $package, NodeAggregateId $vendorNodeAggregateId): Node
+    public function createPackageNode(Package $package, NodeAggregateId $vendorNodeAggregateId): ?Node
     {
         $nodeAggregateId = NodeAggregateId::create();
         $workspaceName = WorkspaceName::forLive();
@@ -248,6 +262,9 @@ class Storage
         ?NodeAggregateId $vendorNodeAggregateId = null,
     ): Nodes
     {
+        if (!$this->storageRootNodeAggregateId) {
+            return Nodes::createEmpty();
+        }
         if ($vendorNodeAggregateId) {
             return $this->subGraph->findChildNodes(
                 $vendorNodeAggregateId,
@@ -268,6 +285,9 @@ class Storage
         );
     }
 
+    /**
+     * @param array<string, mixed> $properties
+     */
     public function updateNode(
         Node                      $node,
         OriginDimensionSpacePoint $originDimensionSpacePoint,
@@ -287,7 +307,7 @@ class Storage
             if ($propertyValue instanceof \DateTimeInterface) {
                 $propertyValue = $propertyValue->format(\DateTimeInterface::ATOM);
             }
-            if ($serializedNodeProperties->getProperty($propertyName)->value === $propertyValue) {
+            if ($serializedNodeProperties->getProperty($propertyName)?->value === $propertyValue) {
                 unset($properties[$propertyName]);
             }
         }
@@ -454,6 +474,9 @@ class Storage
         )->first();
     }
 
+    /**
+     * @param array<string, mixed> $properties
+     */
     public function updateChildNode(
         NodeAggregateId $parentNodeAggregateId,
         NodeName        $childNodeName,
@@ -474,6 +497,9 @@ class Storage
         return false;
     }
 
+    /**
+     * @param array<string, mixed> $properties
+     */
     public function createOrUpdateVersionNode(
         NodeAggregateId     $versionsNodeAggregateId,
         string              $versionString,

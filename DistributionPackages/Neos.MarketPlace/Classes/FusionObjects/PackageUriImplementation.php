@@ -60,7 +60,7 @@ class PackageUriImplementation extends AbstractFusionObject
     {
         $packageKey = $this->getPackageKey();
         $packageKeyParts = explode('-', $packageKey);
-        if (isset($packageKeyParts[0], $packageKeyParts[1]) && $packageKeyParts[0] === 'ext') {
+        if (count($packageKeyParts) > 1 && $packageKeyParts[0] === 'ext') {
             return sprintf('https://php.net/manual-lookup.php?pattern=%s&scope=quickref', urlencode($packageKeyParts[1]));
         }
         $title = Slug::create($packageKey);

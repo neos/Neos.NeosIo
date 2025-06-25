@@ -1,34 +1,33 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\NeosIo\Eel\Helper;
 
+use Neos\Eel\Helper\ArrayHelper;
 use Neos\Flow\Annotations as Flow;
 use Neos\Neos\Domain\Model\User;
 use Neos\Neos\Domain\Repository\UserRepository;
 
-class DataHelper extends \Neos\Eel\Helper\ArrayHelper
+class DataHelper extends ArrayHelper
 {
 
-    /**
-     * @Flow\Inject
-     * @var UserRepository
-     */
-    protected $userRepository;
+    #[Flow\Inject]
+    protected UserRepository $userRepository;
 
     /**
-     * @param array $userIdentifiers
-     * @return array<User>
+     * @param string[] $userIdentifiers
      */
-    public function users($userIdentifiers)
+    public function users(array $userIdentifiers): string
     {
+        /** @var User[] $users */
         $users = [];
         foreach ($userIdentifiers as $userIdentifier) {
+            /** @var User|null $user */
             $user = $this->userRepository->findByIdentifier($userIdentifier);
             if ($user) {
                 $users[] = $user;
             }
         }
-        return implode(', ', array_map(function ($user) {
-            return $user->getLabel();
-        }, $users));
+        return implode(', ', array_map(static fn(User $user) => $user->getLabel(), $users));
     }
 }

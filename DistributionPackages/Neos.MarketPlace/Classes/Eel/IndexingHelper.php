@@ -24,9 +24,15 @@ use Neos\MarketPlace\Domain\Model\Storage;
  */
 class IndexingHelper extends Eel\IndexingHelper
 {
+    /**
+     * @var array<string, string>
+     */
     #[Flow\InjectConfiguration('typeMapping')]
     protected array $packageTypes;
 
+    /**
+     * @var array<string, string[]>
+     */
     #[Flow\InjectConfiguration("compatibilityCheck")]
     protected array $compatibilityCheck;
 
@@ -38,15 +44,18 @@ class IndexingHelper extends Eel\IndexingHelper
         if ($packageType === null) {
             return '[null]';
         }
-        return (string)($this->packageTypes[$packageType] ?? $packageType);
+        return $this->packageTypes[$packageType] ?? $packageType;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function prepareVersion(?Node $versionNode = null): array
     {
         if ($versionNode === null) {
             return [];
         }
-        /** @var \DateTime $time */
+        /** @var \DateTime|null $time */
         $time = $versionNode->getProperty('time');
         return [
             'name' => $versionNode->getProperty('name'),
@@ -68,7 +77,7 @@ class IndexingHelper extends Eel\IndexingHelper
      */
     public function extractCompatibility(array $versionNodes = [], ?string $packageName = null): array
     {
-        if (!$versionNodes || !array_key_exists($packageName, $this->compatibilityCheck)) {
+        if (!$versionNodes || !$packageName || !array_key_exists($packageName, $this->compatibilityCheck)) {
             return [];
         }
 
@@ -106,6 +115,9 @@ class IndexingHelper extends Eel\IndexingHelper
         return array_values(array_unique($compatibleVersions));
     }
 
+    /**
+     * @return array{name: string, email: string, homepage: string}[]
+     */
     public function extractMaintainers(Node $packageNode): array
     {
         $data = [];

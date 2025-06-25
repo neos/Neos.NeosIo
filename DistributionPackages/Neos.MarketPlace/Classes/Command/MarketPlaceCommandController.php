@@ -116,6 +116,7 @@ class MarketPlaceCommandController extends CommandController
             $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED->value, $package), LogEnvironment::fromMethodName(__METHOD__));
             $client = new Client();
             try {
+                /** @var Package $packagistPackage */
                 $packagistPackage = $client->get($package);
                 $this->processPackage($packagistPackage, $count);
                 $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED->value, $package, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));

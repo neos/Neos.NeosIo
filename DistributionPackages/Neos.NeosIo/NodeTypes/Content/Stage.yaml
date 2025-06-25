@@ -49,7 +49,6 @@
             placeholder: 'Stage title'
     isContentTextInverted:
       type: boolean
-      defaultValue: false
       ui:
         reloadIfChanged: true
         label: 'Invert Text-Color'
@@ -57,7 +56,6 @@
           group: content
     isContentExtraPadded:
       type: boolean
-      defaultValue: false
       ui:
         reloadIfChanged: true
         label: 'Create more padding around the contents'
@@ -149,7 +147,6 @@
           group: background
     backgroundShadePercentage:
       type: string
-      defaultValue: '0'
       ui:
         label: 'Background image shading'
         reloadIfChanged: true
@@ -157,9 +154,9 @@
           group: background
           editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
+            allowEmpty: true
+            placeholder: None
             values:
-              0:
-                label: None
               20:
                 label: 20%
               40:
