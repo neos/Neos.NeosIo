@@ -74,7 +74,7 @@ class PackageConverter
     private ?Client $client = null;
 
     /**
-     * @var array<string, array{lastActivity: \DateTimeInterface|null, lastSync: \DateTimeInterface|null}>
+     * @var array<string, array{lastActivity: \DateTimeInterface|null, lastSync: int|null}>
      */
     private array $packagesState = [];
 

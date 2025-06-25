@@ -18,7 +18,7 @@ use Neos\ContentRepository\NodeMigration\Transformation\TransformationStep;
 class SetPropertyOnParentTransformation implements TransformationFactoryInterface
 {
     /**
-     * @param array<string,string> $settings
+     * @param array{properties: array{ from: string, to: string }[]} $settings
      */
     public function build(
         array             $settings,
