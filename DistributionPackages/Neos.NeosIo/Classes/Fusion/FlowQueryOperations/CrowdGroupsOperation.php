@@ -31,6 +31,7 @@ class CrowdGroupsOperation extends AbstractOperation
     {
         $groups = $this->apiConnector->fetchGroups();
         if (!$groups) {
+            $flowQuery->setContext([]);
             return;
         }
         $flowQuery->setContext($groups);
