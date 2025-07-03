@@ -16,6 +16,7 @@ namespace Neos\MarketPlace\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Indexer\NodeIndexer;
+use Github\Api\Markdown;
 use Github\Api\Repository\Contents;
 use Github\AuthMethod;
 use Github\Client;
@@ -25,15 +26,14 @@ use Github\Exception\RuntimeException;
 use Neos\Cache\Backend\SimpleFileBackend;
 use Neos\Cache\EnvironmentConfiguration;
 use Neos\Cache\Exception\InvalidBackendException;
+use Neos\Cache\Frontend\StringFrontend;
 use Neos\Cache\Psr\Cache\CacheFactory;
 use Neos\ContentRepository\Core\DimensionSpace\OriginDimensionSpacePoint;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
-use Neos\ContentRepository\Core\SharedModel\Node\NodeName;
 use Neos\ContentRepository\Core\SharedModel\Node\ReferenceName;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Log\Utility\LogEnvironment;
-use Neos\Flow\Utility\Now;
 use Neos\MarketPlace\Domain\Model\MarketplaceNodeType;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
@@ -53,8 +53,11 @@ use Psr\Log\LoggerInterface;
 class PackageConverter
 {
 
+    /**
+     * @var array{ cacheDirectory: string, token: string }
+     */
     #[Flow\InjectConfiguration('github')]
-    protected array $githubSettings = [];
+    protected array $githubSettings;
 
     /**
      * @var LoggerInterface
@@ -62,8 +65,17 @@ class PackageConverter
     #[Flow\Inject('Neos.MarketPlace:Logger')]
     protected $logger;
 
+    /**
+     * @var StringFrontend
+     */
+    #[Flow\Inject('Neos.MarketPlace:PackageSyncCache')]
+    protected $packageSyncCache;
+
     private ?Client $client = null;
 
+    /**
+     * @var array<string, array{lastActivity: \DateTimeInterface|null, lastSync: int|null}>
+     */
     private array $packagesState = [];
 
     protected bool $forceUpdate = false;
@@ -116,9 +128,10 @@ class PackageConverter
 
         $this->packagesState = [];
         foreach ($packageNodes as $packageNode) {
-            $this->packagesState[$packageNode->getProperty('title')] = [
+            $packageName = $packageNode->getProperty('title');
+            $this->packagesState[$packageName] = [
                 'lastActivity' => $packageNode->getProperty('lastActivity'),
-                'lastSync' => $packageNode->getProperty('lastSync'),
+                'lastSync' => (int)($this->packageSyncCache->get(Slug::create($packageName)) ?: 0),
             ];
         }
         unset($packageNodes);
@@ -146,7 +159,15 @@ class PackageConverter
                 $package,
                 $vendorNodeAggregateId
             );
+            if (!$packageNode) {
+                return false;
+            }
         }
+
+        $this->packageSyncCache->set(
+            Slug::create($package->getName()),
+            (string)time(),
+        );
 
         $updated = $this->storage->updateNode(
             $packageNode,
@@ -160,7 +181,6 @@ class PackageConverter
                 'type' => $package->getType(),
                 'repository' => $package->getRepository(),
                 'favers' => $package->getFavers(),
-                'lastSync' => new \DateTime(),
             ]
         );
         if (!$updated) {
@@ -212,21 +232,23 @@ class PackageConverter
         }
         $lastRecordedActivity = $this->packagesState[$package->getName()]['lastActivity'] ?? null;
         $lastSync = $this->packagesState[$package->getName()]['lastSync'] ?? null;
-        if (!$lastRecordedActivity instanceof \DateTimeInterface || !$lastSync instanceof \DateTimeInterface) {
+        if (!$lastRecordedActivity instanceof \DateTimeInterface || !$lastSync) {
             return true;
         }
 
         $lastActivities = [];
         foreach ($package->getVersions() as $version) {
             $time = \DateTime::createFromFormat(Storage::DATE_FORMAT, $version->getTime());
-            $lastActivities[$time->getTimestamp()] = $time;
+            if ($time) {
+                $lastActivities[$time->getTimestamp()] = $time;
+            }
         }
         krsort($lastActivities);
         $lastActivity = reset($lastActivities) ?: new \DateTime();
 
         return (
             $lastActivity > $lastRecordedActivity
-            || $lastSync < (new Now())->sub(new \DateInterval('P1D'))
+            || $lastSync < (time() - 86400) // 1 day
         );
     }
 
@@ -266,6 +288,7 @@ class PackageConverter
             }
             try {
                 $meta = $this->client->repositories()->show($organization, $repository);
+                /** @phpstan-ignore function.alreadyNarrowedType */
                 if (!is_array($meta)) {
                     $this->logger->warning(
                         sprintf('no repository info returned for %s', $repository),
@@ -325,7 +348,13 @@ class PackageConverter
         try {
             $contents = new Contents($client);
             $metadata = $contents->readme($organization, $repository);
-            $rendered = $client->api('markdown')->render(file_get_contents($metadata['download_url']));
+            /** @var Markdown $markdownApi */
+            $markdownApi = $client->api('markdown');
+            $markdownContent = file_get_contents($metadata['download_url']);
+            if (!$markdownContent) {
+                return;
+            }
+            $rendered = $markdownApi->render($markdownContent);
         } catch (ApiLimitExceedException $exception) {
             // Skip the processing if we hit the API rate limit
             $this->logger->warning($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
@@ -376,7 +405,7 @@ class PackageConverter
             '/href="(?!https?:\/\/)(?!data:)(?!#)/' => 'href="' . $domain,
             '/src="(?!https?:\/\/)(?!data:)(?!#)/' => 'src="' . $domain
         ];
-        return trim(preg_replace(array_keys($r), array_values($r), $content));
+        return trim((string)preg_replace(array_keys($r), array_values($r), $content));
     }
 
     protected function resetGithubMetrics(Node $packageNode): void
@@ -475,7 +504,7 @@ class PackageConverter
             };
 
             try {
-                $versionNodeAggregateId = $this->storage->createOrUpdateVersionNode(
+                $this->storage->createOrUpdateVersionNode(
                     $versionsNode->aggregateId,
                     $version->getVersion(),
                     $versionNodeType,
@@ -497,6 +526,13 @@ class PackageConverter
                         'suggest' => $this->arrayToJsonCaster($version->getSuggest()),
                         'conflict' => $this->arrayToJsonCaster($version->getConflict()),
                         'replace' => $this->arrayToJsonCaster($version->getReplace()),
+                        'sourceType' => $version->getSource()?->getType(),
+                        'sourceReference' => $version->getSource()?->getReference(),
+                        'sourceUrl' => $version->getSource()?->getUrl(),
+                        'distType' => $version->getDist()?->getType(),
+                        'distReference' => $version->getDist()?->getReference(),
+                        'distUrl' => $version->getDist()?->getUrl(),
+                        'distShasum' => $version->getDist()?->getShasum(),
                     ],
                 );
             } catch (\JsonException $e) {
@@ -505,35 +541,6 @@ class PackageConverter
                     LogEnvironment::fromMethodName(__METHOD__)
                 );
                 continue;
-            }
-
-            if (!$versionNodeAggregateId) {
-                continue;
-            }
-
-            if ($version->getSource()) {
-                $this->storage->updateChildNode(
-                    $versionNodeAggregateId,
-                    NodeName::fromString('source'),
-                    [
-                        'type' => $version->getSource()->getType(),
-                        'reference' => $version->getSource()->getReference(),
-                        'url' => $version->getSource()->getUrl(),
-                    ]
-                );
-            }
-
-            if ($version->getDist()) {
-                $this->storage->updateChildNode(
-                    $versionNodeAggregateId,
-                    NodeName::fromString('dist'),
-                    [
-                        'type' => $version->getDist()->getType(),
-                        'reference' => $version->getDist()->getReference(),
-                        'url' => $version->getDist()->getUrl(),
-                        'shasum' => $version->getDist()->getShasum(),
-                    ]
-                );
             }
         }
         unset($versionNodes);
@@ -618,6 +625,9 @@ class PackageConverter
         unset($packages);
     }
 
+    /**
+     * @param string[]|null $value
+     */
     protected function arrayToStringCaster(?array $value): string
     {
         $value = $value ?: [];
@@ -625,6 +635,7 @@ class PackageConverter
     }
 
     /**
+     * @param array<string|int, mixed>|null $value
      * @throws \JsonException
      */
     protected function arrayToJsonCaster(?array $value): ?string

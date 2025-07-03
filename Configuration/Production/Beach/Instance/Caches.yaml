@@ -61,3 +61,10 @@ Flowpack_FullPageCache_Entries:
     password: '%env:BEACH_REDIS_PASSWORD%'
     port: '6379'
     database: 8
+NeosMarketPlace_PackageSyncCache:
+  backend: 'Neos\Cache\Backend\RedisBackend'
+  backendOptions:
+    hostname: '%env:BEACH_REDIS_HOST%'
+    password: '%env:BEACH_REDIS_PASSWORD%'
+    port: '6379'
+    database: 9

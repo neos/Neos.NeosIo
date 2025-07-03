@@ -31,6 +31,9 @@ use Psr\Log\LoggerInterface;
 #[Flow\Scope('singleton')]
 class PackageImporter
 {
+    /**
+     * @var array<string, bool> Processed packages list
+     */
     protected array $processedPackages = [];
 
     /**
@@ -102,7 +105,7 @@ class PackageImporter
         $count = 0;
         $vendorNodes = $this->storage->getVendorNodes();
         foreach ($vendorNodes as $vendorNode) {
-            $packageCount = $this->storage->countPackageNodes($vendorNode);
+            $packageCount = $this->storage->countPackageNodes($vendorNode->aggregateId);
             if ($packageCount > 0) {
                 continue;
             }
@@ -129,6 +132,9 @@ class PackageImporter
         return $count;
     }
 
+    /**
+     * @return string[] List of processed packages
+     */
     public function getProcessedPackages(): array
     {
         return array_keys(array_filter($this->processedPackages));

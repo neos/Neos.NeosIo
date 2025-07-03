@@ -31,10 +31,11 @@ class VersionNumber
     public static function getStabilityLevel(string $versionNormalized): string
     {
         $versionNormalizedParts = explode('-', $versionNormalized);
+        /** @noinspection PhpDuplicateMatchArmBodyInspection */
         return match (true) {
-            count($versionNormalizedParts) === 0 => 'stable',
+            !$versionNormalized => 'stable',
             $versionNormalizedParts[0] === 'dev' => 'dev',
-            isset($versionNormalizedParts[1]) => preg_replace('/[\d]+/', '', strtolower($versionNormalizedParts[1])),
+            isset($versionNormalizedParts[1]) => (string)preg_replace('/[\d]+/', '', strtolower($versionNormalizedParts[1])),
             default => 'stable',
         };
     }

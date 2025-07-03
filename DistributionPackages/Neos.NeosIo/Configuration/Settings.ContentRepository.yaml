@@ -12,6 +12,11 @@ Neos:
                 specializations:
                   de:
                     label: German
+
+    nodeMigration:
+      transformationFactories:
+        FlattenCollection: Neos\NeosIo\ContentRepository\Transformation\FlattenCollectionTransformation
+
   Neos:
     sites:
       '*':

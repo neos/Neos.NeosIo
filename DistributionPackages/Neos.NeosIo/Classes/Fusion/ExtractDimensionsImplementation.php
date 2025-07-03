@@ -17,13 +17,13 @@ use Neos\Neos\FrontendRouting\DimensionResolution\RequestToDimensionSpacePointCo
 
 class ExtractDimensionsImplementation extends AbstractFusionObject
 {
-    #[Flow\Inject()]
+    #[Flow\Inject]
     protected ContentRepositoryRegistry $contentRepositoryRegistry;
 
-    #[Flow\Inject()]
+    #[Flow\Inject]
     protected ObjectManagerInterface $objectManager;
 
-    #[Flow\Inject()]
+    #[Flow\Inject]
     protected SiteRepository $siteRepository;
 
     public function evaluate()
@@ -31,14 +31,21 @@ class ExtractDimensionsImplementation extends AbstractFusionObject
         /** @var Node $siteNode */
         $siteNode = $this->fusionValue('site');
 
+        if (!$siteNode->name) {
+            throw new \RuntimeException('Site node does not have a name', 1750671782);
+        }
+
         $site = $this->siteRepository->findOneByNodeName(SiteNodeName::fromNodeName($siteNode->name));
+        if (!$site) {
+            throw new \RuntimeException(sprintf('Site with node name "%s" not found', $siteNode->name), 1750671711);
+        }
         $siteConfiguration = $site->getConfiguration();
 
         /** @var DimensionResolverFactoryInterface $factory */
         $factory = $this->objectManager->get($siteConfiguration->contentDimensionResolverFactoryClassName);
         $contentDimensionResolver = $factory->create(ContentRepositoryId::fromString('default'), $siteConfiguration);
 
-        $requestToDimensionSpacepointContext = $contentDimensionResolver->fromRequestToDimensionSpacePoint(
+        $requestToDimensionSpacePointContext = $contentDimensionResolver->fromRequestToDimensionSpacePoint(
             RequestToDimensionSpacePointContext::fromUriPathAndRouteParametersAndResolvedSite(
                 $this->fusionValue('uriPath'),
                 RouteParameters::createEmpty(),
@@ -46,7 +53,6 @@ class ExtractDimensionsImplementation extends AbstractFusionObject
             )
         );
 
-        return $requestToDimensionSpacepointContext->resolvedDimensionSpacePoint->toLegacyDimensionArray();
+        return $requestToDimensionSpacePointContext->resolvedDimensionSpacePoint->toLegacyDimensionArray();
     }
 }
-
