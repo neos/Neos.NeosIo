@@ -1,26 +1,43 @@
-prototype(Neos.NeosIo:CrowdUserListItem) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/CrowdUser.html'
-
+prototype(Neos.NeosIo:CrowdUserListItem) < prototype(Neos.Fusion:Component) {
     gravatarSize = 100
     gravatarRenderSize = ${this.gravatarSize * 2}
 
-    user = ${q(site).crowdUser(userName).get()}
-    @context.user = ${this.user}
+    groupName = ''
+    userName = ''
 
-    profileId = ${'member-profile-' + node.aggregateId + '-' + String.pregReplace(userName, '/[^a-z0-9]/', '_')}
-    @context.profileId = ${this.profileId}
-
-    attributes = Neos.Fusion:DataStructure {
-        class = 'team-listing__profile'
-        id = ${profileId}
+    @private {
+        user = ${q(site).crowdUser(props.userName).get()}
+        profileId = ${'member-profile-' + node.aggregateId + '-' + String.pregReplace(props.userName, '/[^a-z0-9]/', '_')}
+        gravatarImage = ${Gravatar.img(
+            private.user.email,
+            props.gravatarRenderSize,
+            'retro',
+            'Gravatar for ' + private.user.display-name,
+            'gravatar',
+            props.gravatarSize,
+            props.gravatarSize
+        )}
     }
-    attributes.@process.toHtmlAttributesString = ${Neos.Array.toHtmlAttributesString(value)}
 
-    userDetails = Neos.NeosIo:CrowdUserProfile {
-        user = ${user}
-        userName = ${userName}
-        profileId = ${profileId}
-    }
-
-    @if.foundUser = ${this.user}
+    renderer = afx`
+        <details class="team-listing__profile" name={props.groupName} @if={private.user}>
+            <summary>
+                {private.gravatarImage}
+                <span class="team-listing-profile__header">
+                    <small>
+                        {I18n.translate('profile.about', 'About', [], 'CrowdApi', 'Neos.NeosIo')}
+                    </small>
+                    <strong>{private.user.display-name}</strong>
+                    <small @if={private.user.additionalProperties.neos_origin}>
+                        {I18n.translate('profile.origin', 'from {0}', [private.user.additionalProperties.neos_origin], 'CrowdApi', 'Neos.NeosIo')}
+                    </small>
+                </span>
+            </summary>
+            <Neos.NeosIo:CrowdUserProfile
+                user={private.user}
+                userName={props.userName}
+                profileId={private.profileId}
+            />
+        </details>
+    `
 }

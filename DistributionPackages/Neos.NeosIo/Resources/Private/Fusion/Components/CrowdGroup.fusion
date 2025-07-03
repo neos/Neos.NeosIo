@@ -13,7 +13,7 @@ prototype(Neos.NeosIo:CrowdGroup) < prototype(Neos.Fusion:Component) {
             <p @if.set={props.group.neos_summary}>{props.group.neos_summary}</p>
             <div class="team-listing__members" @if.set={props.group.members}>
                 <Neos.Fusion:Loop items={props.group.members} itemName="userName">
-                    <Neos.NeosIo:CrowdUserListItem userName={userName} />
+                    <Neos.NeosIo:CrowdUserListItem userName={userName} groupName={props.group.name} />
                 </Neos.Fusion:Loop>
             </div>
         </div>

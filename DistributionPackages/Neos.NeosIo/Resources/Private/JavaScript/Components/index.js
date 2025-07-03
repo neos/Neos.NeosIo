@@ -1,6 +1,5 @@
 
 import ClassToggler from './ClassToggler';
-import EmptyClickHandler from './EmptyClickHandler';
 import CountUp from './CountUp';
 import FundingBadges from './FundingBadges';
 import ScrollTo from './ScrollTo';
@@ -16,5 +15,4 @@ export {
     SentenceSwitcher,
     ProgressiveImage,
     ScrollClassToggler,
-    EmptyClickHandler,
 };
