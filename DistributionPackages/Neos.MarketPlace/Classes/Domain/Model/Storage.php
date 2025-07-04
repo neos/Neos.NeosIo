@@ -13,6 +13,7 @@ namespace Neos\MarketPlace\Domain\Model;
  * source code.
  */
 
+use Neos\ContentRepository\Core\CommandHandler\CommandInterface;
 use Neos\ContentRepository\Core\ContentRepository;
 use Neos\ContentRepository\Core\DimensionSpace\DimensionSpacePoint;
 use Neos\ContentRepository\Core\DimensionSpace\OriginDimensionSpacePoint;
@@ -26,6 +27,7 @@ use Neos\ContentRepository\Core\Feature\NodeRemoval\Command\RemoveNodeAggregate;
 use Neos\ContentRepository\Core\Feature\NodeTypeChange\Command\ChangeNodeAggregateType;
 use Neos\ContentRepository\Core\Feature\NodeTypeChange\Dto\NodeAggregateTypeChangeChildConstraintConflictResolutionStrategy;
 use Neos\ContentRepository\Core\Feature\Security\Exception\AccessDenied;
+use Neos\ContentRepository\Core\Feature\WorkspaceRebase\Dto\RebaseErrorHandlingStrategy;
 use Neos\ContentRepository\Core\NodeType\NodeTypeName;
 use Neos\ContentRepository\Core\NodeType\NodeTypeNames;
 use Neos\ContentRepository\Core\Projection\ContentGraph\ContentSubgraphInterface;
@@ -47,7 +49,9 @@ use Neos\ContentRepository\Core\SharedModel\Node\PropertyName;
 use Neos\ContentRepository\Core\SharedModel\Node\ReferenceName;
 use Neos\ContentRepository\Core\SharedModel\Workspace\WorkspaceName;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
+use Neos\EventStore\Exception\ConcurrencyException;
 use Neos\Flow\Annotations as Flow;
+use Neos\Neos\Domain\Service\WorkspacePublishingService;
 use Neos\Neos\Domain\SubtreeTagging\NeosVisibilityConstraints;
 use Packagist\Api\Result\Package;
 use Packagist\Api\Result\Package\Maintainer;
@@ -87,7 +91,8 @@ class Storage
     protected array $vendorCache = [];
 
     public function __construct(
-        protected ContentRepositoryRegistry $contentRepositoryRegistry,
+        protected ContentRepositoryRegistry  $contentRepositoryRegistry,
+        protected WorkspacePublishingService $workspacePublishingService,
     )
     {
         $this->workspaceName = WorkspaceName::fromString('live');
@@ -150,22 +155,19 @@ class Storage
         }
 
         $vendorNodeAggregateId = NodeAggregateId::create();
-        try {
-            $this->contentRepository->handle(
-                CreateNodeAggregateWithNode::create(
-                    $this->workspaceName,
-                    $vendorNodeAggregateId,
-                    NodeTypeName::fromString(MarketplaceNodeType::VENDOR->value),
-                    OriginDimensionSpacePoint::fromDimensionSpacePoint($this->subGraph->getDimensionSpacePoint()),
-                    $this->storageRootNodeAggregateId,
-                    initialPropertyValues: PropertyValuesToWrite::fromArray([
-                        'uriPathSegment' => $vendorName,
-                        'title' => $vendorName,
-                    ]),
-                )
-            );
-        } catch (AccessDenied) {
-            $this->logger->error('Access denied while creating vendor node: ' . $vendorName);
+        if (!$this->handleCommandWithRetry(
+            CreateNodeAggregateWithNode::create(
+                $this->workspaceName,
+                $vendorNodeAggregateId,
+                NodeTypeName::fromString(MarketplaceNodeType::VENDOR->value),
+                OriginDimensionSpacePoint::fromDimensionSpacePoint($this->subGraph->getDimensionSpacePoint()),
+                $this->storageRootNodeAggregateId,
+                initialPropertyValues: PropertyValuesToWrite::fromArray([
+                    'uriPathSegment' => $vendorName,
+                    'title' => $vendorName,
+                ]),
+            )
+        )) {
             return null;
         }
         $this->vendorCache[$vendorName] = $vendorNodeAggregateId;
@@ -233,7 +235,7 @@ class Storage
     {
         $nodeAggregateId = NodeAggregateId::create();
         $workspaceName = WorkspaceName::forLive();
-        $this->contentRepository->handle(
+        $this->handleCommandWithRetry(
             CreateNodeAggregateWithNode::create(
                 $workspaceName,
                 $nodeAggregateId,
@@ -250,7 +252,8 @@ class Storage
                     'repository' => $package->getRepository(),
                     'favers' => $package->getFavers()
                 ])
-            ));
+            )
+        );
         return $this->subGraph->findNodeById($nodeAggregateId);
     }
 
@@ -315,20 +318,14 @@ class Storage
             // No properties to update
             return true;
         }
-        try {
-            $this->contentRepository->handle(
-                SetNodeProperties::create(
-                    $this->workspaceName,
-                    $node->aggregateId,
-                    $originDimensionSpacePoint,
-                    PropertyValuesToWrite::fromArray($properties),
-                )
-            );
-        } catch (AccessDenied) {
-            $this->logger->error('Access denied while updating node: ' . $node->aggregateId);
-            return false;
-        }
-        return true;
+        return $this->handleCommandWithRetry(
+            SetNodeProperties::create(
+                $this->workspaceName,
+                $node->aggregateId,
+                $originDimensionSpacePoint,
+                PropertyValuesToWrite::fromArray($properties),
+            )
+        );
     }
 
     public function createOrUpdateMaintainerNode(
@@ -363,23 +360,17 @@ class Storage
             return false;
         }
 
-        try {
-            $maintainerNodeAggregateId = NodeAggregateId::create();
-            $this->contentRepository->handle(
-                CreateNodeAggregateWithNode::create(
-                    $this->workspaceName,
-                    $maintainerNodeAggregateId,
-                    NodeTypeName::fromString(MarketplaceNodeType::MAINTAINER->value),
-                    $maintainersNode->originDimensionSpacePoint,
-                    $maintainersNode->aggregateId,
-                    initialPropertyValues: PropertyValuesToWrite::fromArray($properties)
-                )
-            );
-            return true;
-        } catch (AccessDenied) {
-            $this->logger->error('Access denied while creating maintainer node');
-        }
-        return false;
+        $maintainerNodeAggregateId = NodeAggregateId::create();
+        return $this->handleCommandWithRetry(
+            CreateNodeAggregateWithNode::create(
+                $this->workspaceName,
+                $maintainerNodeAggregateId,
+                NodeTypeName::fromString(MarketplaceNodeType::MAINTAINER->value),
+                $maintainersNode->originDimensionSpacePoint,
+                $maintainersNode->aggregateId,
+                initialPropertyValues: PropertyValuesToWrite::fromArray($properties)
+            )
+        );
     }
 
     public function getPackageMaintainerNodes(
@@ -519,46 +510,28 @@ class Storage
             );
             $newNodeTypeName = NodeTypeName::fromString($nodeType->value);
             if ($versionNode->nodeTypeName !== $newNodeTypeName) {
-                try {
-                    $this->contentRepository->handle(
-                        ChangeNodeAggregateType::create(
-                            $this->workspaceName,
-                            $versionNode->aggregateId,
-                            $newNodeTypeName,
-                            NodeAggregateTypeChangeChildConstraintConflictResolutionStrategy::STRATEGY_PROMISED_CASCADE
-                        )
-                    );
-                } catch (AccessDenied) {
-                    $this->logger->error(
-                        'Access denied while changing node type: ' . $versionString,
-                        [
-                            'nodeAggregateId' => $versionNode->aggregateId,
-                            'newNodeTypeName' => $newNodeTypeName,
-                        ]
-                    );
-                }
+                $this->handleCommandWithRetry(
+                    ChangeNodeAggregateType::create(
+                        $this->workspaceName,
+                        $versionNode->aggregateId,
+                        $newNodeTypeName,
+                        NodeAggregateTypeChangeChildConstraintConflictResolutionStrategy::STRATEGY_PROMISED_CASCADE
+                    )
+                );
             }
             return $versionNode->aggregateId;
         }
         $versionNodeAggregateId = NodeAggregateId::create();
-        try {
-            $this->contentRepository->handle(
-                CreateNodeAggregateWithNode::create(
-                    $this->workspaceName,
-                    $versionNodeAggregateId,
-                    NodeTypeName::fromString($nodeType->value),
-                    OriginDimensionSpacePoint::fromDimensionSpacePoint($this->subGraph->getDimensionSpacePoint()),
-                    $versionsNodeAggregateId,
-                    initialPropertyValues: PropertyValuesToWrite::fromArray($properties),
-                )
-            );
-        } catch (AccessDenied) {
-            $this->logger->error(
-                'Access denied while creating version node: ' . $versionString,
-                [
-                    'versionsNodeAggregateId' => $versionsNodeAggregateId,
-                ]
-            );
+        if (!$this->handleCommandWithRetry(
+            CreateNodeAggregateWithNode::create(
+                $this->workspaceName,
+                $versionNodeAggregateId,
+                NodeTypeName::fromString($nodeType->value),
+                OriginDimensionSpacePoint::fromDimensionSpacePoint($this->subGraph->getDimensionSpacePoint()),
+                $versionsNodeAggregateId,
+                initialPropertyValues: PropertyValuesToWrite::fromArray($properties),
+            )
+        )) {
             return null;
         }
         return $versionNodeAggregateId;
@@ -568,21 +541,14 @@ class Storage
         Node $node
     ): bool
     {
-        try {
-            $this->contentRepositoryRegistry->get($node->contentRepositoryId)
-                ->handle(
-                    RemoveNodeAggregate::create(
-                        $node->workspaceName,
-                        $node->aggregateId,
-                        $node->dimensionSpacePoint,
-                        NodeVariantSelectionStrategy::STRATEGY_ALL_VARIANTS
-                    )
-                );
-        } catch (AccessDenied) {
-            $this->logger->error('Access denied while removing node: ' . $node->aggregateId);
-            return false;
-        }
-        return true;
+        return $this->handleCommandWithRetry(
+            RemoveNodeAggregate::create(
+                $node->workspaceName,
+                $node->aggregateId,
+                $node->dimensionSpacePoint,
+                NodeVariantSelectionStrategy::STRATEGY_ALL_VARIANTS
+            )
+        );
     }
 
     public function getReadmeNode(NodeAggregateId $packageNodeAggregateId): ?Node
@@ -614,17 +580,33 @@ class Storage
                     NodeAggregateIds::fromArray([$referenceAggregateId]) : NodeAggregateIds::createEmpty(),
             )
         );
+        $this->handleCommandWithRetry(
+            SetNodeReferences::create(
+                $this->workspaceName,
+                $node->aggregateId,
+                $originDimensionSpacePoint,
+                $references
+            )
+        );
+    }
+
+    protected function handleCommandWithRetry(CommandInterface $command): bool
+    {
         try {
-            $this->contentRepository->handle(
-                SetNodeReferences::create(
-                    $this->workspaceName,
-                    $node->aggregateId,
-                    $originDimensionSpacePoint,
-                    $references
-                )
+            $this->contentRepository->handle($command);
+            /** @phpstan-ignore catch.neverThrown */
+        } catch (ConcurrencyException) {
+            // Rebase the target workspace and try again
+            $this->workspacePublishingService->rebaseWorkspace(
+                $this->contentRepository->id,
+                $this->workspaceName,
+                RebaseErrorHandlingStrategy::STRATEGY_FORCE,
             );
+            $this->contentRepository->handle($command);
         } catch (AccessDenied) {
-            $this->logger->error('Access denied while updating node references: ' . $node->aggregateId);
+            $this->logger->error('Access denied while executing command');
+            return false;
         }
+        return true;
     }
 }
