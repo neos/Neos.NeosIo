@@ -101,6 +101,18 @@ class PackageConverter
     }
 
     /**
+     * Updates the index of the marketplace for all nodes added to the batch.
+     *
+     * @throws Exception
+     * @throws Exception\ConfigurationException
+     * @throws \Flowpack\ElasticSearch\Exception
+     */
+    public function updateIndex(): void
+    {
+        $this->nodeIndexer->flush();
+    }
+
+    /**
      * @throws InvalidBackendException
      */
     protected function initializeObject(): void
@@ -183,7 +195,7 @@ class PackageConverter
                 'favers' => $package->getFavers(),
             ]
         );
-        if (!$updated) {
+        if (!$updated && !$this->forceUpdate) {
             return false;
         }
 

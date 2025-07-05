@@ -1,5 +1,18 @@
 prototype(Neos.MarketPlace:VendorSearchResult) < prototype(Neos.MarketPlace:DocumentSearchResult) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/SearchResult/VendorSearchResult.html'
-
     lastActivity = ${q(node).property('lastActivity')}
+
+    renderer = afx`
+        <article class="result-list__item">
+            <header>
+                <h4 class="result-list__title">
+                    <Neos.Neos:NodeLink node={props.node}>
+                      <i class="fas fa-building"></i> {props.title}
+                    </Neos.Neos:NodeLink>
+                </h4>
+            </header>
+            <div class="result-list__description" @if={props.description}>
+                {String.stripTags(description)}
+            </div>
+        </article>
+    `
 }

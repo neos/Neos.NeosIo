@@ -62,6 +62,11 @@ class PackageImporter
         return $processed;
     }
 
+    public function updateIndex(): void
+    {
+        $this->packageConverter->updateIndex();
+    }
+
     /**
      * Remove local package not preset in the processed packages list
      */
