@@ -1,20 +1,30 @@
-prototype(Neos.MarketPlace:DocumentSearchResult) < prototype(Neos.Neos:DocumentSearchResult) {
-    templatePath = 'resource://Neos.MarketPlace/Private/Templates/FusionObjects/SearchResult/DocumentSearchResult.html'
+prototype(Neos.MarketPlace:DocumentSearchResult) < prototype(Neos.Fusion:Component) {
+    node = ${node}
+    title = ${q(node).property('title')}
+    description = ''
 
-    attributes = Neos.Fusion:DataStructure {
-        class = 'result-list__item'
-    }
-    attributes.@process.toHtmlAttributesString = ${Neos.Array.toHtmlAttributesString(value)}
+    renderer = afx`
+        <article class="result-list__item">
+            <header>
+                <h4 class="result-list__title">
+                    <Neos.Neos:NodeLink node={props.node}>
+                        {props.title}
+                    </Neos.Neos:NodeLink>
+                </h4>
+            </header>
+            <div class="result-list__description" @if={props.description}>
+                {props.description}
+            </div>
+        </article>
+    `
 
     @cache {
         mode = 'cached'
-
         entryIdentifier {
             node = ${Neos.Caching.entryIdentifierForNode(node)}
         }
-
         entryTags {
-            1 = ${Neos.Caching.nodeTag(node)}
+            node = ${Neos.Caching.nodeTag(node)}
         }
     }
 }
