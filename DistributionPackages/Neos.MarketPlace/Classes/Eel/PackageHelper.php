@@ -15,6 +15,7 @@ namespace Neos\MarketPlace\Eel;
 
 use Composer\Package\Version\VersionParser;
 use Neos\ContentRepository\Core\ContentRepository;
+use Neos\ContentRepository\Core\Feature\Security\Exception\AccessDenied;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\Ordering\Ordering;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\Ordering\OrderingDirection;
@@ -34,9 +35,6 @@ class PackageHelper implements ProtectedContextAwareInterface
 {
     #[Flow\Inject]
     protected ContentRepositoryRegistry $contentRepositoryRegistry;
-
-    #[Flow\Inject]
-    protected ElasticSearchQueryBuilder $elasticSearchQueryBuilder;
 
     protected ContentRepository $contentRepository;
 
@@ -72,6 +70,7 @@ class PackageHelper implements ProtectedContextAwareInterface
      *
      * @param Node[] $packageNodes Array of Packagist\Api\Result\Package objects
      * @return array{ time: \DateTimeInterface, identifier: string, version: string, description: string, packageName: string, authors: string[], repository: string}[]
+     * @throws AccessDenied
      */
     public function getReleasedVersions(array $packageNodes, \DateTimeInterface $dateFilter, int $limit = 10): array
     {
