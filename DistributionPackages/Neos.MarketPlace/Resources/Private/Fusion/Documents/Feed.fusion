@@ -5,8 +5,8 @@ prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Component) {
         packages = ${MarketPlaceSearch.query(documentNode)}
         packages.@process {
             nodeType = ${value.nodeType('Neos.MarketPlace:Package')}
-            onlyRecent = ${value.greaterThan('lastVersion.time', this.dateFilter)}
-            onlyRecent.@if.hasDateFilter = ${this.dateFilter}
+            onlyRecent = ${value.greaterThan('lastVersion.time', props.dateFilter)}
+            onlyRecent.@if.hasDateFilter = ${props.dateFilter}
             sort = ${value.sortDesc('lastVersion.time')}
             limit = ${value.limit(9999)}
             execute = ${value.execute().toArray()}

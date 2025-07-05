@@ -45,7 +45,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
             expression = ${value.exclude('abandoned', '1')}
         }
         sort {
-            expression = ${value.sortDesc('lastVersion.time')}
+            expression = ${value.sortDesc('lastVersion.timestamp')}
             @if.noQuery = ${!this.hasSearchQuery}
         }
         log {
