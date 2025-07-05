@@ -20,7 +20,7 @@ prototype(Neos.MarketPlace:Component.Feed.Version) < prototype(Neos.Fusion:Compo
             <id>urn:uuid:{props.identifier}</id>
             <updated>{Date.format(props.time, 'Y-m-d\TH:i:sP')}</updated>
             <summary type="html">
-                <p>{String.stripTags(props.description)}</p>
+                <p>{String.htmlSpecialChars(String.stripTags(props.description))}</p>
                 <p>
                     <a href={props.repository} title={'Go to the repository of the package ' + props.packageName}>Go to repository</a>
                 </p>
