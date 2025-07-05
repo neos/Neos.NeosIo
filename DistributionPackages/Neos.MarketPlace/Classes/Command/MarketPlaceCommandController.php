@@ -112,6 +112,9 @@ class MarketPlaceCommandController extends CommandController
 
             $this->outputLine();
             $this->outputLine('%d package(s) synced with success', [$this->importer->getProcessedPackagesCount()]);
+
+            $this->outputLine('Updating search index');
+            $this->importer->updateIndex();
         } else {
             $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED->value, $package), LogEnvironment::fromMethodName(__METHOD__));
             $client = new Client();
@@ -133,6 +136,8 @@ class MarketPlaceCommandController extends CommandController
             } else {
                 $this->outputLine('Package "%s" imported with success', [$package]);
             }
+            $this->outputLine('Updating search index');
+            $this->importer->updateIndex();
         }
 
         if ($hasError) {
