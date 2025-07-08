@@ -58,7 +58,6 @@ class IndexingHelper extends Eel\IndexingHelper
         /** @var \DateTime|null $time */
         $time = $versionNode->getProperty('time');
         return [
-            'name' => $versionNode->getProperty('name'),
             'description' => $versionNode->getProperty('description'),
             'keywords' => $this->trimExplode($versionNode->getProperty('keywords')),
             'homepage' => $versionNode->getProperty('homepage'),
