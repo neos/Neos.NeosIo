@@ -14,6 +14,10 @@ namespace Neos\MarketPlace\Command;
  */
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
+use Neos\ContentRepository\Core\Service\ContentRepositoryMaintainerFactory;
+use Neos\ContentRepository\Core\SharedModel\ContentRepository\ContentRepositoryId;
+use Neos\ContentRepository\Core\Subscription\Engine\SubscriptionEngine;
+use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\CommandController;
 use Neos\Flow\Log\ThrowableStorageInterface;
@@ -53,6 +57,9 @@ class MarketPlaceCommandController extends CommandController
     #[Flow\Inject]
     protected NodeLabelGeneratorInterface $nodeLabelGenerator;
 
+    #[Flow\Inject]
+    protected ContentRepositoryRegistry $contentRepositoryRegistry;
+
     /**
      * Sync packages from Packagist
      *
@@ -62,6 +69,16 @@ class MarketPlaceCommandController extends CommandController
     public function syncCommand(string $package = '', bool $force = false, int $limit = 0, bool $dontCountSkippedPackages = true): void
     {
         $beginTime = microtime(true);
+
+        // Make sure that the subscription engine is in sync by catching up.
+        $contentRepositoryMaintainer = $this->contentRepositoryRegistry->buildService(
+            ContentRepositoryId::fromString('default'),
+            new ContentRepositoryMaintainerFactory()
+        );
+
+        /** @var SubscriptionEngine $subscriptionEngine */
+        $subscriptionEngine = (new \ReflectionClass($contentRepositoryMaintainer))->getProperty('subscriptionEngine')->getValue($contentRepositoryMaintainer);
+        $subscriptionEngine->catchUpActive();
 
         $hasError = false;
         $elapsedTime = static function ($timer = null) use ($beginTime) {
