@@ -48,7 +48,7 @@ class FundingApiConnector extends AbstractApiConnector
             if (is_array($result)) {
                 $fundingData = array_reduce($result, function ($carry, $item) {
                     $fundingCategory = $item['badgeCategory'];
-                    $customerName = strlen($item['customerName']) ? $item['customerName'] : 'Anonymous';
+                    $customerName = is_string($item['customerName']) && $item['customerName'] !== '' ? $item['customerName'] : 'Anonymous';
 
                     // Store all available funding types
                     if (!empty($fundingCategory)) {
