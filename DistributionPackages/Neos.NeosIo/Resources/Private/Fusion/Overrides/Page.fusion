@@ -1,4 +1,9 @@
 prototype(Neos.Neos:Page) {
     // Disable prism inclusion as we use sitegeist slipstream and include the JS with the element itself
     @context.codeInstancesPresent = false
+
+    head {
+        // Disable goe script inclusion as we use sitegeist slipstream and include the JS with the element itself
+        goeHeadScript >
+    }
 }
