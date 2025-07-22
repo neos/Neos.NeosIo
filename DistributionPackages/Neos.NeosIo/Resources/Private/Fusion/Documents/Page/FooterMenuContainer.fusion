@@ -2,15 +2,15 @@ prototype(Neos.NeosIo:FooterContainer) < prototype(Neos.Fusion:Case) {
     backend {
         condition = ${renderingMode.isEdit}
         renderer = Neos.NeosIo:DefaultPage {
-            body.template {
-                templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/BackendPage.html'
-                explanation = 'All subpages of this page are rendered in the footer menu on the bottom left.'
-                content {
-                    main = Neos.Neos:ContentCollection {
-                        nodePath = 'main'
-                    }
-                }
-            }
+            body.content.renderer >
+            body.content.renderer = afx`
+                <div class="stage stage--bright" id="mainContent">
+                    <div class="stage__contents">
+                        <h3>All subpages of this page are rendered in the footer menu on the bottom left.</h3>
+                        {props.parts}
+                    </div>
+                </div>
+            `
         }
     }
 
