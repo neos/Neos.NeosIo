@@ -4,3 +4,10 @@ Neos:
       hitCounter: false
     statusCode:
       redirect: 301
+
+  Flow:
+    http:
+      middlewares:
+        redirect:
+          # Hotfix for https://github.com/neos/Neos.NeosIo/issues/623
+          position: 'after securityEntryPoint'
