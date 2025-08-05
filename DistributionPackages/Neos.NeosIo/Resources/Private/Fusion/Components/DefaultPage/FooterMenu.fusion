@@ -21,7 +21,7 @@ prototype(Neos.NeosIo:DefaultPage.FooterMenu) < prototype(Neos.Fusion:Component)
             site = ${Neos.Caching.entryIdentifierForNode(site)}
         }
 
-        tags {
+        entryTags {
             footerContainer = ${Neos.Caching.nodeTag(q(site).property('footerContentContainer'))}
             childNodes = ${Neos.Caching.descendantOfTag(q(site).property('footerContentContainer'))}
         }
