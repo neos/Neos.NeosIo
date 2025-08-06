@@ -121,10 +121,11 @@ class MarketPlaceCommandController extends CommandController
                     break;
                 }
             }
-            if ($limit === 0) {
-                $this->cleanupPackages();
-                $this->cleanupVendors();
-            }
+            // FIXME: Disabled cleanup as for some reason active packages and vendors are being removed
+//            if ($limit === 0) {
+//                $this->cleanupPackages();
+//                $this->cleanupVendors();
+//            }
             $this->logger->info(sprintf('action=%s duration=%f', LogAction::FULL_SYNC_FINISHED->value, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
 
             $this->outputLine();
