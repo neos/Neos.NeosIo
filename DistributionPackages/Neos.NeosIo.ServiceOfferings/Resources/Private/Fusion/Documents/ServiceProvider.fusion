@@ -1,11 +1,13 @@
 prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neos.NeosIo:DefaultPage) {
-    body.template {
-        content {
+    body {
+        header {
             keyVisual {
                 keyVisualImage = ${q(documentNode).property('bannerImage')}
             }
-
-            main  = Neos.Fusion:Component {
+        }
+        content.parts {
+            main >
+            parts.serviceProvider = Neos.Fusion:Component {
                 @process.wrap = Neos.Neos:ContentElementWrapping {
                     node = ${documentNode}
                 }

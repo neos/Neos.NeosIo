@@ -5,30 +5,27 @@ prototype(Neos.NeosIo:EventArchive) < prototype(Neos.NeosIo:DefaultPage) {
         twitterCard.description.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
     }
 
-    body.template {
-        content {
-            main = Neos.Fusion:Join {
-                headline = ${'<h1>Event Archive (' + q(node).property('title') + ')</h1>'}
-                eventList = Neos.NeosIo:Component.Event.List {
-                    noEntriesNotice = 'There are no archived events yet for this year'
-                    events = Neos.Fusion:Map {
-                        items = ${q(documentNode).find('[instanceof Neos.NeosIo:Event]')}
-                        items.@process {
-                            filterDate = ${value.filterByDate('startDate', Date.now(), '<')}
-                            sort = ${value.sort('startDate', 'DESC')}
-                        }
+    body.content.parts {
+        main >
+        headline = ${'<h1>Event Archive (' + q(node).property('title') + ')</h1>'}
+        eventList = Neos.NeosIo:Component.Event.List {
+            noEntriesNotice = 'There are no archived events yet for this year'
+            events = Neos.Fusion:Map {
+                items = ${q(documentNode).find('[instanceof Neos.NeosIo:Event]')}
+                items.@process {
+                    filterDate = ${value.filterByDate('startDate', Date.now(), '<')}
+                    sort = ${value.sort('startDate', 'DESC')}
+                }
 
-                        itemRenderer = Neos.Fusion:DataStructure {
-                            name = ${q(item).property('title')}
-                            startDate = ${q(item).property('startDate')}
-                            endDate = ${q(item).property('endDate')}
-                            location = ${q(item).property('location')}
-                            url = ${q(item).property('url')}
-                            organizer = ${q(item).property('organizer')}
-                            detailsUrl = Neos.Neos:NodeUri {
-                                node = ${item}
-                            }
-                        }
+                itemRenderer = Neos.Fusion:DataStructure {
+                    name = ${q(item).property('title')}
+                    startDate = ${q(item).property('startDate')}
+                    endDate = ${q(item).property('endDate')}
+                    location = ${q(item).property('location')}
+                    url = ${q(item).property('url')}
+                    organizer = ${q(item).property('organizer')}
+                    detailsUrl = Neos.Neos:NodeUri {
+                        node = ${item}
                     }
                 }
             }
