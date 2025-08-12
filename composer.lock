@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d75a3b844746b7ecfc2d848b3a9b433e",
+    "content-hash": "7035abe30e63e2e7fdc253d33b03cfb2",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2346,6 +2346,41 @@
                 "source": "https://github.com/flownative/flow-google-cloudstorage/tree/v6.1.1"
             },
             "time": "2025-04-03T15:31:50+00:00"
+        },
+        {
+            "name": "flownative/redis-backend",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/flownative/flow-redis-backend.git",
+                "reference": "a76aec8ca5446a00c3c9540360da80428cecf447"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/flownative/flow-redis-backend/zipball/a76aec8ca5446a00c3c9540360da80428cecf447",
+                "reference": "a76aec8ca5446a00c3c9540360da80428cecf447",
+                "shasum": ""
+            },
+            "require": {
+                "neos/cache": "^8.3 || ^9.0 || dev-main",
+                "php": "^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Flownative\\RedisBackend\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Opinionated Redis backend with persistent and lazy connections.",
+            "support": {
+                "source": "https://github.com/flownative/flow-redis-backend/tree/main",
+                "issues": "https://github.com/flownative/flow-redis-backend/issues"
+            },
+            "time": "2025-08-11T15:30:19+00:00"
         },
         {
             "name": "flownative/resource-tools",
@@ -18610,6 +18645,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "flownative/redis-backend": 20,
         "flowpack/media-ui": 10,
         "roave/security-advisories": 20
     },
