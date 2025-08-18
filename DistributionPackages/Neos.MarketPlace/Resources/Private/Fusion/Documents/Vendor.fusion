@@ -1,14 +1,9 @@
 prototype(Neos.MarketPlace:Vendor) < prototype(Neos.MarketPlace:DefaultPage) {
-    body {
-        template {
-            content {
-                main = Neos.Fusion:Join {
-                    search = Neos.MarketPlace:Search {
-                        showResult = false
-                    }
-                    vendor = Neos.MarketPlace:VendorRenderer
-                }
-            }
+    body.content.parts {
+        main >
+        search = Neos.MarketPlace:Search {
+            showResult = false
         }
+        vendor = Neos.MarketPlace:VendorRenderer
     }
 }

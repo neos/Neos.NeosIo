@@ -1,30 +1,52 @@
 prototype(Neos.NeosIo:DocumentationPage) < prototype(Neos.NeosIo:DefaultPage) {
-    body.template {
-        templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/DocumentationPage.html'
-
-        parts {
-            breadcrumb {
-                attributes.class = 'nav nav--breadcrumb-ingrid'
+    body {
+        header {
+            keyVisual {
+                content = Neos.Neos:ContentCollection {
+                    nodePath = 'keyvisual'
+                }
             }
+            breadcrumb >
+        }
+        content {
+            secondaryMenu = Neos.NeosIo:DocumentationPageSubMenu
             languages = Neos.Neos:DimensionsMenu {
                 templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/DocumentationPageDimensionsMenu.html'
                 attributes.class = 'nav nav--language-switcher'
             }
-            secondaryMenu = Neos.NeosIo:DocumentationPageSubMenu
-        }
-
-        content {
-            keyVisual.content = Neos.Neos:ContentCollection {
-                nodePath = 'keyvisual'
-            }
-
-            main = Neos.Neos:ContentCollection {
-                nodePath = 'main'
+            breadcrumb = Neos.NeosIo:DefaultPage.BreadcrumbMenu {
+                attributes.class = 'nav nav--breadcrumb-ingrid'
             }
 
             prototype(Neos.NodeTypes:Text) {
                 text.@process.replaceIcons = Neos.NeosIo:DocumentationContentIconProcessor
             }
+
+            renderer >
+            renderer = afx`
+                <div class="stage stage--bright" id="mainContent">
+                    <div class="stage__contents stage__contents--big">
+                        <main class="content" role="main">
+                            <div class="g">
+                                <div class="gi u-w1/1 u-wm4/12 u-wl4/12">
+                                    {props.secondaryMenu}
+                                </div>
+                                <div class="gi u-w1/1 u-wm8/12 u-wl8/12">
+                                    <div class="g">
+                                        <nav class="gi">
+                                            {props.breadcrumb}
+                                        </nav>
+                                        <nav class="gi" style="float: right;">
+                                            {props.languages}
+                                        </nav>
+                                    </div>
+                                    {props.parts}
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            `
         }
     }
 }
