@@ -27,6 +27,12 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
     }
 
     head {
+        // prevent google & co from indexing dev and preview domains
+        // Flownative Beach uses a Subcontext like "Production/Beach/Instance"
+        metaRobotsTag.attributes.content {
+            @process.hideDevContext = ${String.indexOf(Configuration.setting('Neos.Flow.core.context'), 'Staging') == -1 && String.indexOf(Configuration.setting('Neos.Flow.core.context'), 'Development') == -1 ? value : 'noindex,nofollow'}
+            @process.hideFlownativeDefaultDomain = ${String.endsWith(request.httpRequest.uri.host, '.flownative.cloud') ? 'noindex,nofollow' : value}
+        }
         metaTags = Neos.NeosIo:MetaTags
         stylesheets = Neos.NeosIo:PageStyles
     }
