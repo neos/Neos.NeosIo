@@ -75,6 +75,11 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
             @if.set = ${private.thumbnail}
         }
 
+        lightboxSrc = Neos.Fusion:ResourceUri {
+            resource = ${props.image.resource}
+            @if.set = ${props.image}
+        }
+
         image = Neos.Fusion:Case {
             image {
                 condition = ${private.imageSrc}
@@ -88,6 +93,8 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
                         height={private.thumbnail.height || props.height}
                         loading={props.loading}
                         src={private.imageSrc}
+                        data-lightbox={private.imageSrc}
+                        data-lightbox.@if={props.lightbox}
                     />
                 `
             }
