@@ -94,7 +94,7 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
                         loading={props.loading}
                         src={private.imageSrc}
                         data-lightbox={private.imageSrc}
-                        data-lightbox.@if={props.lightbox}
+                        data-lightbox.@if={props.lightbox && !props.link}
                     />
                 `
             }
