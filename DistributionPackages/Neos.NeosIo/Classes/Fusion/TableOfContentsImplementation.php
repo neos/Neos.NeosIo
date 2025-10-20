@@ -80,7 +80,7 @@ class TableOfContentsImplementation extends AbstractMenuItemsImplementation
 
         $node = $subtree->node;
         $nodeType = $this->getNodeType($node);
-        if (!$nodeType->isOfType($this->getItemFilter())) {
+        if (!$nodeType?->isOfType($this->getItemFilter())) {
             return $items;
         }
 
@@ -101,12 +101,15 @@ class TableOfContentsImplementation extends AbstractMenuItemsImplementation
         return $items;
     }
 
-    protected function getNodeType(Node $node): NodeType
+    protected function getNodeType(Node $node): ?NodeType
     {
         $nodeTypeManager = $this->contentRepositoryRegistry->get($node->contentRepositoryId)->getNodeTypeManager();
         return $nodeTypeManager->getNodeType($node->nodeTypeName);
     }
 
+    /**
+     * @return array{0: string, 1: int}
+     */
     protected function getLabelAndLevel(Node $node): array
     {
         $label = '';
