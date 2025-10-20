@@ -1,0 +1,19 @@
+prototype(Neos.NeosIo:Component.TableOfContents.MenuLevel) < prototype(Neos.Neos:ContentComponent) {
+    items = ${[]}
+
+    renderer = afx`
+        <ol>
+            <Neos.Fusion:Loop items={props.items}>
+                <li>
+                    <a href={item.uri} title={item.label}>
+                        {item.label}
+                    </a>
+                    <Neos.NeosIo:Component.TableOfContents.MenuLevel
+                        items={item.children}
+                        @if={item.children}
+                    />
+                </li>
+            </Neos.Fusion:Loop>
+        </ol>
+    `
+}
