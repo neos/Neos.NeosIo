@@ -1,4 +1,4 @@
-prototype(Neos.NeosIo:Component.SiteHeader) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosIo:Fragment.SiteHeader) < prototype(Neos.Fusion:Component) {
     className = 'siteHeader'
     siteTitle = ${q(site).property('title')}
     toggleScrollClass = true
@@ -37,7 +37,7 @@ prototype(Neos.NeosIo:Component.SiteHeader) < prototype(Neos.Fusion:Component) {
             <a href="https://www.neoscon.io/tickets" target="_blank" class="siteHeader__buyTickets menuBuyTickets" @if.set={props.showBuyTickets}>
                 Buy Tickets
             </a>
-            <Neos.NeosIo:DefaultPage.Menu/>
+            <Neos.NeosIo:Fragment.Menu/>
         </header>
     `
 }

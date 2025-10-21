@@ -1,8 +1,8 @@
-prototype(Neos.NeosIo:DefaultPage.Menu) < prototype(Neos.Fusion:Renderer) {
+prototype(Neos.NeosIo:Fragment.Menu) < prototype(Neos.Fusion:Renderer) {
     renderPath = '/mainNavigation'
 }
 
-prototype(Neos.NeosIo:DefaultPage.Menu.Renderer) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosIo:Fragment.Menu.Renderer) < prototype(Neos.Fusion:Component) {
     items = Neos.Neos:MenuItems {
         entryLevel = 1
         maximumLevels = 2
@@ -15,7 +15,7 @@ prototype(Neos.NeosIo:DefaultPage.Menu.Renderer) < prototype(Neos.Fusion:Compone
             <div class="offCanvas__navWrapper">
                 <ul class="nav siteHeader__nav offCanvas__nav">
                     <Neos.Fusion:Loop items={props.items}>
-                        <Neos.NeosIo:DefaultPage.Menu.Item item={item} />
+                        <Neos.NeosIo:Fragment.Menu.Item item={item} />
                     </Neos.Fusion:Loop>
                 </ul>
             </div>
@@ -33,4 +33,4 @@ prototype(Neos.NeosIo:DefaultPage.Menu.Renderer) < prototype(Neos.Fusion:Compone
     }
 }
 
-mainNavigation = Neos.NeosIo:DefaultPage.Menu.Renderer
+mainNavigation = Neos.NeosIo:Fragment.Menu.Renderer

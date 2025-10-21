@@ -1,67 +1,92 @@
-prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Neos:Page) {
-    httpResponseHead {
-        # https://scotthelme.co.uk/content-security-policy-an-introduction/
-        headers.Content-Security-Policy = Neos.Fusion:Join {
-            @glue = '; '
-            object-src = "object-src 'self'"
-            img-src = "img-src 'self' data: https://analytics.neos.io/ https://uptimerobot.com https://i.ytimg.com https://www.youtube-nocookie.com/ https://user-images.githubusercontent.com/ *.tile.openstreetmap.org/ https://raw.githubusercontent.com/ https://camo.githubusercontent.com/ https://m.neos.io/ https://www.gravatar.com/ https://img.youtube.com/"
-            font-src = "font-src 'self' https://fonts.gstatic.com"
-            script-src = "script-src 'self' 'unsafe-inline' https://analytics.neos.io/ https://www.youtube-nocookie.com/ https://www.google.com/ https://app.goessential.com https://m.neos.io/ https://slack.neos.io"
-            style-src = "style-src 'self' 'unsafe-inline' data: https://www.youtube.com/ https://www.youtube-nocookie.com/ https://m.neos.io/"
-            connect-src = "connect-src 'self' https://analytics.neos.io/"
-            media-src = "media-src 'self'"
-            base-uri = "base-uri 'self'"
-            form-action = "form-action 'self' https://m.neos.io/ https://typo3.us3.list-manage.com/"
-            frame-ancestors = "frame-ancestors 'self'"
-            frame-src = "frame-src 'self' https://www.youtube-nocookie.com/ https://www.youtube.com/ https://app.goessential.com/ https://analytics.neos.io/ https://m.neos.io/"
-            report-uri = "report-uri /__csp-report"
+prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
+    header = Neos.Fusion:Join {
+        siteHeader = Neos.NeosIo:Fragment.SiteHeader
+        keyVisual = Neos.NeosIo:KeyVisual {
+            keyVisualImage = ${q(documentNode).property('keyVisualImage')}
+            keyVisualImageSmall = ${q(documentNode).property('keyVisualImageSmall')}
+            isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
         }
-
-        # https://owasp.org/www-project-secure-headers/#div-headers
-        headers.X-Frame-Options = 'sameorigin'
-        headers.X-Content-Type-Options = 'nosniff'
-        headers.Referrer-Policy = 'same-origin'
-        headers.Permissions-Policy = 'camera=(), display-capture=(), geolocation=(), microphone=()'
-        # disabled, see https://owasp.org/www-project-secure-headers/index.html#x-xss-protection
-        headers.X-XSS-Protection = '0'
+        breadcrumb = Neos.NeosIo:Fragment.BreadcrumbMenu
     }
 
-    head {
-        // prevent google & co from indexing dev and preview domains
-        // Flownative Beach uses a Subcontext like "Production/Beach/Instance"
-        metaRobotsTag.attributes.content {
-            @process.hideDevContext = ${String.indexOf(Configuration.setting('Neos.Flow.core.context'), 'Staging') == -1 && String.indexOf(Configuration.setting('Neos.Flow.core.context'), 'Development') == -1 ? value : 'noindex,nofollow'}
-            @process.hideFlownativeDefaultDomain = ${String.endsWith(request.httpRequest.uri.host, '.flownative.cloud') ? 'noindex,nofollow' : value}
-        }
-        metaTags = Neos.NeosIo:MetaTags
-        stylesheets = Neos.NeosIo:PageStyles
-    }
-
-    body {
-        template = Neos.Fusion:Template {
-            templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/Default.html'
-            sectionName = 'body'
-            parts {
-                siteHeader = Neos.NeosIo:Component.SiteHeader
-                breadcrumb = Neos.NeosIo:DefaultPage.BreadcrumbMenu
-                footer = Neos.NeosIo:Component.SiteFooter
+    content = Neos.Fusion:Component {
+        parts = Neos.Fusion:Join {
+            main = Neos.Neos:ContentCollection {
+                nodePath = 'main'
+                @position = 'start'
             }
-
-            homepage = ${site}
-
-            content.keyVisual = Neos.NeosIo:KeyVisual {
-                keyVisualImage = ${q(documentNode).property('keyVisualImage')}
-                keyVisualImageSmall = ${q(documentNode).property('keyVisualImageSmall')}
-                isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
-            }
-
         }
-        javascripts.site = afx`
-            <script @children="attributes.src" async="">
-                <Neos.Fusion:ResourceUri path="resource://Neos.NeosIo/Public/Scripts/Main.js"/>
-            </script>
+
+        renderer = afx`
+            <div class="stage stage--bright" id="mainContent">
+                <div class="stage__contents">
+                    <div class="g">
+                        <main class="gi u-w1/1" role="main">
+                            <section>
+                                {props.parts}
+                            </section>
+                        </main>
+                    </div>
+                </div>
+            </div>
         `
     }
 
-    @cache.entryTags.site = ${Neos.Caching.nodeTag(site)}
+    footer = Neos.Fusion:Join {
+        footer = Neos.NeosIo:Component.SiteFooter
+        lightbox = '<sh-lightbox></sh-lightbox>'
+    }
+
+    renderer = Neos.Neos:Page {
+        httpResponseHead {
+            # https://scotthelme.co.uk/content-security-policy-an-introduction/
+            headers.Content-Security-Policy = Neos.Fusion:Join {
+                @glue = '; '
+                object-src = "object-src 'self'"
+                img-src = "img-src 'self' data: https://analytics.neos.io/ https://uptimerobot.com https://i.ytimg.com https://www.youtube-nocookie.com/ https://user-images.githubusercontent.com/ *.tile.openstreetmap.org/ https://raw.githubusercontent.com/ https://camo.githubusercontent.com/ https://m.neos.io/ https://www.gravatar.com/ https://img.youtube.com/"
+                font-src = "font-src 'self' https://fonts.gstatic.com"
+                script-src = "script-src 'self' 'unsafe-inline' https://analytics.neos.io/ https://www.youtube-nocookie.com/ https://www.google.com/ https://app.goessential.com https://m.neos.io/ https://slack.neos.io"
+                style-src = "style-src 'self' 'unsafe-inline' data: https://www.youtube.com/ https://www.youtube-nocookie.com/ https://m.neos.io/"
+                connect-src = "connect-src 'self' https://analytics.neos.io/"
+                media-src = "media-src 'self'"
+                base-uri = "base-uri 'self'"
+                form-action = "form-action 'self' https://m.neos.io/ https://typo3.us3.list-manage.com/"
+                frame-ancestors = "frame-ancestors 'self'"
+                frame-src = "frame-src 'self' https://www.youtube-nocookie.com/ https://www.youtube.com/ https://app.goessential.com/ https://analytics.neos.io/ https://m.neos.io/"
+                report-uri = "report-uri /__csp-report"
+            }
+
+            # https://owasp.org/www-project-secure-headers/#div-headers
+            headers.X-Frame-Options = 'sameorigin'
+            headers.X-Content-Type-Options = 'nosniff'
+            headers.Referrer-Policy = 'same-origin'
+            headers.Permissions-Policy = 'camera=(), display-capture=(), geolocation=(), microphone=()'
+            # disabled, see https://owasp.org/www-project-secure-headers/index.html#x-xss-protection
+            headers.X-XSS-Protection = '0'
+        }
+
+        head {
+            // prevent google & co from indexing dev and preview domains
+            // Flownative Beach uses a Subcontext like "Production/Beach/Instance"
+            metaRobotsTag.attributes.content {
+                @process.hideDevContext = ${
+                    String.indexOf(Configuration.setting('Neos.Flow.core.context'), 'Staging') == -1
+                        && String.indexOf(Configuration.setting('Neos.Flow.core.context'), 'Development') == -1
+                        ? value : 'noindex,nofollow'
+                }
+                @process.hideFlownativeDefaultDomain = ${String.endsWith(request.httpRequest.uri.host, '.flownative.cloud') ? 'noindex,nofollow' : value}
+            }
+            metaTags = Neos.NeosIo:Fragment.MetaTags
+            stylesheets = Neos.NeosIo:Fragment.PageStyles
+        }
+
+        body {
+            header = ${props.header}
+            content = ${props.content}
+            footer = ${props.footer}
+            javascripts.site = Neos.NeosIo:Fragment.PageScripts
+        }
+
+        @cache.entryTags.site = ${Neos.Caching.nodeTag(site)}
+    }
 }

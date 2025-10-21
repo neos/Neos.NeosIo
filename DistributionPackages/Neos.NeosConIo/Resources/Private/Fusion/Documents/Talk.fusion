@@ -1,6 +1,7 @@
 prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
-    body.template.content.keyVisual = ""
-    body.template.content.main = Neos.Fusion:Template {
+    header.keyVisual >
+    # TODO: Refactor to AFX
+    content.parts.main = Neos.Fusion:Template {
         templatePath = 'resource://Neos.NeosConIo/Private/Templates/NodeTypes/Talk.html'
 
         title = ${q(node).property('title')}
@@ -31,4 +32,3 @@ prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
         roomName = ${q(this.room).property('name')}
     }
 }
-

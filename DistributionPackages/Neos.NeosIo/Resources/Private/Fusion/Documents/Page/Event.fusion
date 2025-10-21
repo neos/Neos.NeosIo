@@ -1,59 +1,58 @@
 prototype(Neos.NeosIo:Event) < prototype(Neos.NeosIo:DefaultPage) {
-    head {
+    renderer.head {
         metaDescriptionTag.attributes.content.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
         openGraphMetaTags.description.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
         twitterCard.description.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
     }
 
-    body.template {
-        content.main = Neos.Fusion:Join {
-            event = Neos.NeosIo:Component.Event {
-                name = Neos.Neos:Editable {
-                    property = 'title'
-                    block = false
-                }
-                description = Neos.Neos:Editable {
-                    property = 'description'
-                }
-                startDate = ${q(node).property('startDate')}
-                endDate = ${q(node).property('endDate')}
-                location = Neos.Neos:Editable {
-                    property = 'location'
-                    block = false
-                }
-                url = ${q(node).property('url')}
-                organizer = Neos.Neos:Editable {
-                    property = 'organizer'
-                    block = false
-                }
-                type = ${q(node).property('type')}
+    content.parts {
+        main >
+        event = Neos.NeosIo:Component.Event {
+            name = Neos.Neos:Editable {
+                property = 'title'
+                block = false
+            }
+            description = Neos.Neos:Editable {
+                property = 'description'
+            }
+            startDate = ${q(node).property('startDate')}
+            endDate = ${q(node).property('endDate')}
+            location = Neos.Neos:Editable {
+                property = 'location'
+                block = false
+            }
+            url = ${q(node).property('url')}
+            organizer = Neos.Neos:Editable {
+                property = 'organizer'
+                block = false
+            }
+            type = ${q(node).property('type')}
 
-                @process.contentElementWrapping = Neos.Neos:ContentElementWrapping
+            @process.contentElementWrapping = Neos.Neos:ContentElementWrapping
+        }
+
+        structuredData = Neos.Fusion:Component {
+            name = ${q(node).property('title')}
+            startDate = ${Date.format(q(node).property('startDate'), 'Y-m-d')}
+            endDate = ${Date.format(q(node).property('endDate'), 'Y-m-d')}
+            endDate.@if.set = ${q(node).property('endDate')}
+            description = ${String.stripTags(q(node).property('description'))}
+            location = Neos.Seo:StructuredData.Object {
+                type = 'Place'
+                attributes {
+                    name = ${q(node).property('location')}
+                    address = ${q(node).property('location')}
+                }
+            }
+            url = Neos.Neos:NodeUri {
+                node = ${documentNode}
+                absolute = true
+            }
+            image = Neos.Seo:StructuredData.ImageObject {
+                image = ${q(node).property('keyVisualImage')}
             }
 
-            structuredData = Neos.Fusion:Component {
-                name = ${q(node).property('title')}
-                startDate = ${Date.format(q(node).property('startDate'), 'Y-m-d')}
-                endDate = ${Date.format(q(node).property('endDate'), 'Y-m-d')}
-                endDate.@if.set = ${q(node).property('endDate')}
-                description = ${String.stripTags(q(node).property('description'))}
-                location = Neos.Seo:StructuredData.Object {
-                    type = 'Place'
-                    attributes {
-                        name = ${q(node).property('location')}
-                        address = ${q(node).property('location')}
-                    }
-                }
-                url = Neos.Neos:NodeUri {
-                    node = ${documentNode}
-                    absolute = true
-                }
-                image = Neos.Seo:StructuredData.ImageObject {
-                    image = ${q(node).property('keyVisualImage')}
-                }
-
-                renderer = afx`<Neos.Seo:StructuredData.RootObject type="Event" attributes={props}/>`
-            }
+            renderer = afx`<Neos.Seo:StructuredData.RootObject type="Event" attributes={props}/>`
         }
     }
 }

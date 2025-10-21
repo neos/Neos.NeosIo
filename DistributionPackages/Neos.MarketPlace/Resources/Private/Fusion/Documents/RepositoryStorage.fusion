@@ -1,5 +1,5 @@
 prototype(Neos.MarketPlace:RepositoryStorage) < prototype(Neos.MarketPlace:DefaultPage) {
-    head {
+    renderer.head {
         atomFeedLink = Neos.Fusion:Tag {
             @position = 'after metaTags'
             attributes {
@@ -15,16 +15,5 @@ prototype(Neos.MarketPlace:RepositoryStorage) < prototype(Neos.MarketPlace:Defau
         }
     }
 
-    body {
-        template {
-            content {
-                main = Neos.Fusion:Join {
-                    content = Neos.Neos:ContentCollection {
-                        nodePath = 'main'
-                    }
-                    marketplace = Neos.MarketPlace:Search
-                }
-            }
-        }
-    }
+    content.parts.marketplace = Neos.MarketPlace:Search
 }

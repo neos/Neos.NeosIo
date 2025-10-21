@@ -1,5 +1,7 @@
 prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
-    head {
+    content.parts.main = Neos.NeosIo:PostRenderer
+
+    renderer.head {
         metaDescriptionTag.attributes.content = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 152, '...')}
         metaDescriptionTag.@if.isNotBlank = true
 
@@ -69,9 +71,5 @@ prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
 
             renderer = afx`<Neos.Seo:StructuredData.RootObject type="NewsArticle" attributes={props}/>`
         }
-    }
-
-    body {
-        template.content.main = Neos.NeosIo:PostRenderer
     }
 }
