@@ -1,8 +1,5 @@
 prototype(Neos.NeosConIo:Speakers) < prototype(Neos.NeosIo:DefaultPage) {
-    body.template.content.keyVisual.content = Neos.Neos:ContentCollection {
+    header.keyVisual.content = Neos.Neos:ContentCollection {
         nodePath = 'keyvisual'
-    }
-    body.template.content.main = Neos.Neos:ContentCollection {
-        nodePath = 'main'
     }
 }

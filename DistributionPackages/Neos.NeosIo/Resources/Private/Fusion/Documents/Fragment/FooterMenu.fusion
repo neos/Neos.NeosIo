@@ -1,4 +1,4 @@
-prototype(Neos.NeosIo:DefaultPage.FooterMenu) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosIo:Fragment.FooterMenu) < prototype(Neos.Fusion:Component) {
     footerContainer = ${q(site).property('footerContentContainer')}
     items = ${q(this.footerContainer).children('[instanceof Neos.Neos:Document]').get()}
 

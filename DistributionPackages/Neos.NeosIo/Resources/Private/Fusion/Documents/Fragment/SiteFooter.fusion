@@ -12,13 +12,13 @@ prototype(Neos.NeosIo:Component.SiteFooter.Renderer) < prototype(Neos.Fusion:Com
 
     renderer = afx`
         <footer role="contentinfo" class={props.className}>
-            <Neos.NeosIo:DefaultPage.FooterContent/>
+            <Neos.NeosIo:Fragment.FooterContent/>
             <hr/>
 
             <div class="siteFooter__nav-wrapper">
                 <div>
                     <h6 class="siteFooter__heading">{props.siteName}</h6>
-                    <Neos.NeosIo:DefaultPage.FooterMenu/>
+                    <Neos.NeosIo:Fragment.FooterMenu/>
                 </div>
                 <div>
                     <h6 class="siteFooter__heading">Community</h6>

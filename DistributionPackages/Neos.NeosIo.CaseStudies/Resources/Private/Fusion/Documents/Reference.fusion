@@ -1,10 +1,10 @@
 prototype(Neos.NeosIo:Reference) < prototype(Neos.NeosIo:DefaultPage) {
-    body.content.parts {
+    content.parts {
         main >
         referenceItem = Neos.NeosIo:ReferenceItem
     }
 
-    @cache {
+    renderer.@cache {
         entryTags {
             reference = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Reference', node)}
         }

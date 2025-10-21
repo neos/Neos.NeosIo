@@ -1,11 +1,11 @@
 prototype(Neos.NeosIo:EventArchive) < prototype(Neos.NeosIo:DefaultPage) {
-    head {
+    renderer.head {
         metaDescriptionTag.attributes.content.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
         openGraphMetaTags.description.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
         twitterCard.description.@process.fallback = ${q(node).property('description') ? String.stripTags(q(node).property('description')) : value}
     }
 
-    body.content.parts {
+    content.parts {
         main >
         headline = ${'<h1>Event Archive (' + q(node).property('title') + ')</h1>'}
         eventList = Neos.NeosIo:Component.Event.List {

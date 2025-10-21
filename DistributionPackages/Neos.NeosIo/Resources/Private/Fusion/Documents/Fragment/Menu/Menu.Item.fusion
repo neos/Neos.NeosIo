@@ -1,4 +1,4 @@
-prototype(Neos.NeosIo:DefaultPage.Menu.Item) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosIo:Fragment.Menu.Item) < prototype(Neos.Fusion:Component) {
     item = null
 
     @private {
@@ -21,7 +21,7 @@ prototype(Neos.NeosIo:DefaultPage.Menu.Item) < prototype(Neos.Fusion:Component) 
             </Neos.Neos:NodeLink>
             <ul class="nav nav--stacked siteHeader__dropDownNav offCanvas__categoryList" @if={private.hasSubItems}>
                 <Neos.Fusion:Loop items={props.item.subItems} itemName="subItem">
-                    <Neos.NeosIo:DefaultPage.Menu.SubItem item={subItem} />
+                    <Neos.NeosIo:Fragment.Menu.SubItem item={subItem} />
                 </Neos.Fusion:Loop>
             </ul>
         </li>

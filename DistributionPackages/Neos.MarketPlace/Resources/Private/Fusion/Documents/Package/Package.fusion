@@ -8,7 +8,7 @@ prototype(Neos.MarketPlace:Package) < prototype(Neos.MarketPlace:DefaultPage) {
         @if.isNotBlank = ${!String.isBlank(q(node).property('description'))}
     }
 
-    body.content {
+    content {
         renderer >
         renderer = afx`
             <div class="stage stage--bright" id="mainContent">
