@@ -9,6 +9,7 @@ prototype(Neos.NeosIo:Youtube) < prototype(Neos.Neos:ContentComponent) {
             src={'https://www.youtube-nocookie.com/embed/' + props.video + '?wmode=transparent&rel=0'}
             allowfullscreen=""
             frameborder="0"
+            referrerpolicy="strict-origin-when-cross-origin"
           ></iframe>
           <div class="flexibleEmbed__ratio flexibleEmbed__ratio--16/9"></div>
         </figure>
