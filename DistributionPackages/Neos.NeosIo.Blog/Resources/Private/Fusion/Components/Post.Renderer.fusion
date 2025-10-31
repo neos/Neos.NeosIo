@@ -1,6 +1,4 @@
-prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Template) {
-    templatePath = 'resource://Neos.NeosIo.Blog/Private/Fusion/Components/Post.Renderer.html'
-
+prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Component) {
     node = ${node}
     datePublished = ${q(node).property('datePublished')}
     title = ${q(node).property('title')}
@@ -15,17 +13,80 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Template) {
         nodePath = 'main'
     }
 
-    backToListButton = Neos.NeosIo:Button {
-        style = 'btn--solidPrimary'
-        buttonLabel = 'Back to list'
-        alignment = 'Right'
-        link = Neos.Neos:NodeUri {
+    @private {
+        overviewUri = Neos.Neos:NodeUri {
             node = ${q(documentNode).parent().get(0)}
             absolute = true
         }
-        @process.contentElementWrapping >
+        latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').remove(node).slice(0, 6).sort('datePublished', 'DESC').get()}
     }
 
-    latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').remove(node).slice(0, 6).sort('datePublished', 'DESC').get()}
-}
+    renderer = afx`
+        <article>
+            <Neos.Neos:ContentElementWrapping>
+                <header>
+                    <h1 class="u-alignCenter">
+                        <Neos.Neos:Editable property="title" block={false} />
+                    </h1>
 
+                    <p class="u-alignCenter">
+                        <Neos.Neos:Editable property="summary" block={false} />
+                    </p>
+                    <p class="u-alignCenter u-microCopy">
+                        <time datetime={Date.format(props.datePublished, 'c')}>
+                            {Date.formatCldrDate(props.datePublished)}
+                        </time>
+                        <span @if={props.author}>
+                            &nbsp;– Written by <span>{author}</span>
+                        </span>
+                    </p>
+                    <hr />
+                </header>
+            </Neos.Neos:ContentElementWrapping>
+
+            <main class="postBody">
+                {props.content}
+            </main>
+
+            <footer class="post__footer">
+                <hr />
+                <section class="u-mt1/1">
+                    <div class="u-pt1/1" @if={props.relatedDocuments}>
+                        <h3>Related</h3>
+                        <ul class="nav nav--stacked u-mb1/2">
+                            <Neos.Fusion:Loop items={props.relatedDocuments} itemName="relatedDocument">
+                                <li class="u-mb1/2">
+                                    <Neos.Neos:NodeLink node={relatedDocument} />
+                                </li>
+                            </Neos.Fusion:Loop>
+                        </ul>
+                    </div>
+
+                    <div class="u-pt1/1">
+                        <h3>Latest Posts</h3>
+                        <ul class="nav nav--stacked u-mb1/2">
+                            <Neos.Fusion:Loop items={private.latest} itemName="post">
+                                <li class="u-mb1/2" title={String.stripTags(post.properties.summary)}>
+                                    <div class="h5">
+                                        {Date.formatCldrDate(post.properties.datePublished)}
+                                        -
+                                        <Neos.Neos:NodeLink node={post} />
+                                    </div>
+                                </li>
+                            </Neos.Fusion:Loop>
+                        </ul>
+
+                        <div class="u-alignRight">
+                            <Neos.NeosIo:Component.Button
+                                color="btn--solidPrimary"
+                                uri={private.overviewUri}
+                            >
+                                Back to list
+                            </Neos.NeosIo:Component.Button>
+                        </div>
+                    </div>
+                </section>
+            </footer>
+        </article>
+    `
+}
