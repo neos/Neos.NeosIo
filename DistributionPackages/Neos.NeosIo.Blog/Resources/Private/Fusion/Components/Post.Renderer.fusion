@@ -21,28 +21,30 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Component) {
         latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').remove(node).slice(0, 6).sort('datePublished', 'DESC').get()}
     }
 
+    @process.editable = Neos.Neos:ContentElementWrapping {
+        @position = 'end 999999999'
+    }
+
     renderer = afx`
         <article>
-            <Neos.Neos:ContentElementWrapping>
-                <header>
-                    <h1 class="u-alignCenter">
-                        <Neos.Neos:Editable property="title" block={false} />
-                    </h1>
+            <header>
+                <h1 class="u-alignCenter">
+                    <Neos.Neos:Editable property="title" block={false} />
+                </h1>
 
-                    <p class="u-alignCenter">
-                        <Neos.Neos:Editable property="summary" block={false} />
-                    </p>
-                    <p class="u-alignCenter u-microCopy">
-                        <time datetime={Date.format(props.datePublished, 'c')}>
-                            {Date.formatCldrDate(props.datePublished)}
-                        </time>
-                        <span @if={props.author}>
-                            &nbsp;– Written by <span>{author}</span>
-                        </span>
-                    </p>
-                    <hr />
-                </header>
-            </Neos.Neos:ContentElementWrapping>
+                <p class="u-alignCenter">
+                    <Neos.Neos:Editable property="summary" block={false} />
+                </p>
+                <p class="u-alignCenter u-microCopy">
+                    <time datetime={Date.format(props.datePublished, 'c')}>
+                        {Date.formatCldrDate(props.datePublished)}
+                    </time>
+                    <span @if={props.author}>
+                        &nbsp;– Written by <span>{author}</span>
+                    </span>
+                </p>
+                <hr />
+            </header>
 
             <main class="postBody">
                 {props.content}
