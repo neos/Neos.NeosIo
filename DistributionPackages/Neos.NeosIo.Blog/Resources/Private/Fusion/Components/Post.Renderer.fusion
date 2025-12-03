@@ -32,9 +32,9 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Component) {
                     <Neos.Neos:Editable property="title" block={false} />
                 </h1>
 
-                <p class="u-alignCenter">
-                    <Neos.Neos:Editable property="summary" block={false} />
-                </p>
+                <div class="u-alignCenter">
+                    <Neos.Neos:Editable property="summary" />
+                </div>
                 <p class="u-alignCenter u-microCopy">
                     <time datetime={Date.format(props.datePublished, 'c')}>
                         {Date.formatCldrDate(props.datePublished)}
