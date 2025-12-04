@@ -40,7 +40,7 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Component) {
                         {Date.formatCldrDate(props.datePublished)}
                     </time>
                     <span @if={props.author}>
-                        &nbsp;– Written by <span>{author}</span>
+                        &nbsp;– Written by <span>{props.author}</span>
                     </span>
                 </p>
                 <hr />
