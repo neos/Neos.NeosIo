@@ -121,7 +121,7 @@ class TableOfContentsImplementation extends AbstractMenuItemsImplementation
                 break;
             }
         }
-        if (preg_match('/<h([1-6])[^>]*>(.+)<\/h[1-6]>/', $label, $matches)) {
+        if (preg_match('/<h([1-6])(?:\s[^>]*)?>(.+?)<\/h\1>/is', $label, $matches)) {
             $level = (int)$matches[1];
             $label = trim(str_replace('&nbsp;', '', strip_tags($matches[2])));
         } else {
