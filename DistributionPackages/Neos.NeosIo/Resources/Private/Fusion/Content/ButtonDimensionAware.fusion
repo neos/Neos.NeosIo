@@ -2,7 +2,7 @@ prototype(Neos.NeosIo:ButtonDimensionAware) < prototype(Neos.Neos:Content) {
     templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/ButtonDimensionAware.html'
 
     @context.linkedNode = ${q(node).property('linkedNode')}
-    @context.setLanguage = ${q(node).property('language')}
+    @context.setLanguage = ${q(node).property('language') || ''}
 
     buttonLabel = ${q(node).property('buttonLabel')}
     openInNewTab = ${q(node).property('openInNewTab')}
