@@ -65,6 +65,7 @@ prototype(Neos.NeosConIo:ScheduleSpeakerImages) < prototype(Neos.Fusion:Componen
 }
 prototype(Neos.NeosConIo:ScheduleSpeakerImage) < prototype(Neos.Fusion:Component)  {
     imageUri = Neos.Neos:ImageUri {
+        @if.hasAsset = ${this.asset}
         asset = ${q(speaker).property('image')}
         maximumWidth = 50
         maximumHeight = 50
