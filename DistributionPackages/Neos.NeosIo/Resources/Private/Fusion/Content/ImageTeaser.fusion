@@ -35,7 +35,7 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
             attributes.class={['imageTeaser', props.link && 'imageTeaser--isLink', className]}
         >
             <Neos.Neos:ImageTag
-                @if={props.image}
+                @if={props.image && thumbnail.resource}
                 asset={props.image}
                 title={props.rawTitle}
                 maximumHeight={props.maximumHeight}
