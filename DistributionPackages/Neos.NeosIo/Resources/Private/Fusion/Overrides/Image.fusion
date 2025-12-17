@@ -19,11 +19,13 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     height = null
     maximumHeight = null
     maximumHeight.@process.override = ${q(node).property('customHeight') || value}
+    maximumHeight.@process.toInt = ${Type.isString(value) ? String.toInteger(value) : value}
 
     width = null
     // The maximum page width 1096 * 2
     maximumWidth = 2192
-    maximumWidth.@process.override = ${q(node).property('customWidth') || value}
+    maximumWidth.@process.override = ${String.toInteger(q(node).property('customWidth') || value)}
+    maximumWidth.@process.toInt = ${Type.isString(value) ? String.toInteger(value) : value}
 
     allowCropping = false
     allowUpScaling = false
@@ -58,7 +60,7 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
             addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
         }
 
-        thumbnail = ${props.image ? Neos.Seo.Image.createThumbnail(
+        thumbnail = ${props.image ? Neos.Media.Image.createThumbnail(
             props.image,
             null,
             props.width,
