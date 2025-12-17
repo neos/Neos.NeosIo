@@ -72,12 +72,12 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
 
         imageSrc = Neos.Fusion:ResourceUri {
             resource = ${private.thumbnail.resource}
-            @if.set = ${private.thumbnail}
+            @if.set = ${this.resource}
         }
 
         lightboxSrc = Neos.Fusion:ResourceUri {
             resource = ${props.image.resource}
-            @if.set = ${props.image}
+            @if.set = ${this.resource}
         }
 
         image = Neos.Fusion:Case {
