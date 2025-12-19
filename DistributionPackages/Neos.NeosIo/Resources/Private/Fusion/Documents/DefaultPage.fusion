@@ -5,6 +5,9 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
             keyVisualImage = ${q(documentNode).property('keyVisualImage')}
             keyVisualImageSmall = ${q(documentNode).property('keyVisualImageSmall')}
             isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
+            content = Neos.Neos:ContentCollection {
+                nodePath = 'keyvisual'
+            }
         }
         breadcrumb = Neos.NeosIo:Fragment.BreadcrumbMenu
     }
