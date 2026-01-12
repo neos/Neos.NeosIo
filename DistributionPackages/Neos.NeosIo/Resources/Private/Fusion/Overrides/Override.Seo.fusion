@@ -26,3 +26,16 @@ prototype(Neos.Seo:AlternateLanguageLink) {
     @if.hasMetaRobotsNoIndexNotSet = ${q(this.node).property('metaRobotsNoindex') || q(this.node).is('[instanceof Neos.Seo:NoindexMixin]') ? false : true}
     @if.hasNoForeignCanonical = ${String.isBlank(q(this.node).property('canonicalLink'))}
 }
+
+prototype(Neos.Seo:CanonicalLink) {
+    attributes.href.node = Neos.Fusion:Case {
+        useFallback {
+            condition = ${node.originDimensionSpacePoint != node.dimensionSpacePoint}
+            renderer = ${q(node).context({dimensions: NeosIo.Node.dimensionSpacePointArray(node.originDimensionSpacePoint)}).get(0)}
+        }
+        default {
+            condition = true
+            renderer = ${node}
+        }
+    }
+}
