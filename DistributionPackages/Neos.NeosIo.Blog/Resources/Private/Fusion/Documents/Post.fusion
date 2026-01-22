@@ -1,5 +1,9 @@
 prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
-    content.parts.main = Neos.NeosIo:PostRenderer
+    content.parts.main = Neos.NeosIo:PostRenderer {
+        @process.editable = Neos.Neos:ContentElementWrapping {
+            @position = 'end 999999999'
+        }
+    }
 
     renderer.head {
         metaDescriptionTag.attributes.content = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 152, '...')}

@@ -21,12 +21,8 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Component) {
         latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').remove(node).slice(0, 6).sort('datePublished', 'DESC').get()}
     }
 
-    @process.editable = Neos.Neos:ContentElementWrapping {
-        @position = 'end 999999999'
-    }
-
     renderer = afx`
-        <article>
+        <article class="post">
             <header>
                 <h1 class="u-alignCenter">
                     <Neos.Neos:Editable property="title" block={false} />
