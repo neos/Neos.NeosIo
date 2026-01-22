@@ -1,7 +1,8 @@
-prototype(Neos.NeosIo:Post.Short) < prototype(Neos.NeosIo:PostRenderer) {
-    content >
+prototype(Neos.NeosIo:Post.Short) < prototype(Neos.Fusion:Component) {
+    datePublished = ${q(node).property('datePublished')}
+    title = ${q(node).property('title')}
+    summary = ${q(node).property('summary')}
 
-    renderer >
     renderer = afx`
         <Neos.Neos:NodeLink node={node} attributes.class="u-linkReset">
             <time class="u-microCopy">
