@@ -4,7 +4,7 @@ export default function (ctx) {
             "postcss-import": {
                 resolve: ctx.resolve,
             },
-            "@tailwindcss/postcss": {},
+            "@tailwindcss/postcss": true,
         },
     };
 }
