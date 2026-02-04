@@ -8,30 +8,30 @@ additional_hostnames: []
 additional_fqdns: []
 database:
     type: mariadb
-    version: "10.8"
-use_dns_when_possible: true
-composer_version: "2"
-timezone: Europe/Berlin
-nodejs_version: "22"
-webimage_extra_packages: ["php${DDEV_PHP_VERSION}-vips"]
+    version: "11.8"
 hooks:
-  post-composer:
-    - exec: ./flow flow:package:rescan >> /dev/null
+    post-composer:
+        - exec: ./flow flow:package:rescan >> /dev/null
 upload_dirs:
-  - '../Data/Persistent'
-  - '../Data/Temporary'
-  - '/_Resources'
+    - ../Data/Persistent
+    - ../Data/Temporary
+    - /_Resources
+webimage_extra_packages: ['php${DDEV_PHP_VERSION}-vips']
+use_dns_when_possible: true
+timezone: Europe/Berlin
+composer_version: "2"
 web_environment:
-  - FLOW_CONTEXT=Development/ddev
-  - FLOW_REWRITEURLS=1
-  - FLOW_PATH_TEMPORARY_BASE=/tmp/neos
-  - FLOW_ROOTPATH=/var/www/html
-  - FLOW_HTTP_TRUSTED_PROXIES=*
-  - COMPOSER_MEMORY_LIMIT=-1
-  - COMPOSER_ROOT_VERSION=dev-main
-  - NEOS_DB_HOST=db
-  - NEOS_DB_NAME=db
-  - NEOS_DB_USER=db
-  - NEOS_DB_PASSWORD=db
-  - NEOS_DB_PORT=3306
-  - NEOS_REDIS_ENDPOINT=redis
+    - FLOW_CONTEXT=Development/ddev
+    - FLOW_REWRITEURLS=1
+    - FLOW_PATH_TEMPORARY_BASE=/tmp/neos
+    - FLOW_ROOTPATH=/var/www/html
+    - FLOW_HTTP_TRUSTED_PROXIES=*
+    - COMPOSER_MEMORY_LIMIT=-1
+    - COMPOSER_ROOT_VERSION=dev-main
+    - NEOS_DB_HOST=db
+    - NEOS_DB_NAME=db
+    - NEOS_DB_USER=db
+    - NEOS_DB_PASSWORD=db
+    - NEOS_DB_PORT=3306
+    - NEOS_REDIS_ENDPOINT=redis
+corepack_enable: true
