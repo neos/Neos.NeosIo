@@ -6,8 +6,8 @@ Alpine.data('NavigationItem', () => ({
         Alpine.bind(this.$root, this.root);
     },
     root: {
-        ['x-on:focusout'](event) {
-            if (!event.currentTarget.contains(event.relatedTarget)) {
+        ['x-on:blur']({currentTarget, relatedTarget} : FocusEvent) {
+            if (!(currentTarget as HTMLElement)?.contains(relatedTarget as Node)) {
                 this.open = false;
             }
         },

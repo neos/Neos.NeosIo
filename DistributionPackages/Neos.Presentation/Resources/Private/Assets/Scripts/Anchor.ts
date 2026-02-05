@@ -1,17 +1,29 @@
-import { computePosition, autoUpdate, flip, offset, shift, arrow } from '@floating-ui/dom';
+import { Alpine as AlpineType, ElementWithXAttributes } from 'alpinejs';
+import { computePosition, autoUpdate, flip, offset, shift, arrow, Placement, Padding } from '@floating-ui/dom';
 
 // This is basically the same as the Alpine anchor directive, but it adds an arrowClass option
 // use it like this x-anchor.arrow.arrowClassName.arrowPadding (e.g. x-anchor.arrow.arrow-anchor.0)
 // the fix it to the mouse use target as mouse
 
-export default function (Alpine) {
-    Alpine.magic('anchor', (el) => {
+// Extend the element type to include the _x_anchor property
+interface ElementWithAnchor extends ElementWithXAttributes {
+    _x_anchor?: { x: number; y: number };
+}
+
+type ArrowOptions = {
+    element: Element;
+    padding: number | Padding;
+    length: number;
+};
+
+export default function (Alpine: AlpineType) {
+    Alpine.magic('anchor', (el: ElementWithAnchor) => {
         if (!el._x_anchor) throw 'Alpine: No x-anchor directive found on element using $anchor...';
 
         return el._x_anchor;
     });
 
-    Alpine.interceptClone((from, to) => {
+    Alpine.interceptClone((from: ElementWithAnchor, to: ElementWithAnchor) => {
         if (from && from._x_anchor && !to._x_anchor) {
             to._x_anchor = from._x_anchor;
         }
@@ -20,7 +32,7 @@ export default function (Alpine) {
     Alpine.directive(
         'anchor',
         Alpine.skipDuringClone(
-            (el, { expression, modifiers }, { cleanup, evaluate }) => {
+            (el: ElementWithAnchor, { expression, modifiers }, { cleanup, evaluate }) => {
                 let { placement, offsetValue, unstyled, arrowOptions } = getOptions(el, modifiers);
 
                 el._x_anchor = Alpine.reactive({ x: 0, y: 0 });
@@ -31,7 +43,7 @@ export default function (Alpine) {
                 }
 
                 if (expression == 'mouse') {
-                    const mouseEventFunction = (position) => {
+                    const mouseEventFunction = (position: { clientX: any; clientY: any }) => {
                         const reference = createVirtualElement(position);
                         initComputePosition({ reference, el, placement, middleware, unstyled, arrowOptions });
                     };
@@ -43,7 +55,7 @@ export default function (Alpine) {
                     return;
                 }
 
-                const reference = evaluate(expression);
+                const reference = evaluate(expression) as Element;
                 if (!reference) {
                     throw 'Alpine: no element provided to x-anchor...';
                 }
@@ -59,7 +71,7 @@ export default function (Alpine) {
                     });
                 };
 
-                let release = autoUpdate(reference, el, () => compute());
+                let release = autoUpdate(reference as Element, el, () => compute());
 
                 cleanup(() => release());
             },
@@ -76,7 +88,7 @@ export default function (Alpine) {
     );
 }
 
-function setStyles(el, x, y) {
+function setStyles(el: ElementWithAnchor, x: string | number, y: string | number) {
     Object.assign(el.style, {
         left: x + 'px',
         top: y + 'px',
@@ -84,7 +96,7 @@ function setStyles(el, x, y) {
     });
 }
 
-function getOptions(el, modifiers) {
+function getOptions(el: ElementWithAnchor, modifiers: string[]) {
     let positions = [
         'top',
         'top-start',
@@ -99,7 +111,7 @@ function getOptions(el, modifiers) {
         'left-start',
         'left-end',
     ];
-    let placement = positions.find((i) => modifiers.includes(i));
+    let placement = positions.find((i) => modifiers.includes(i)) as Placement | undefined;
     let offsetValue = 0;
     let arrowOptions = null;
     if (modifiers.includes('arrow')) {
@@ -107,13 +119,13 @@ function getOptions(el, modifiers) {
         const arrowClass = modifiers[idx + 1] !== undefined ? `.${modifiers[idx + 1]}` : null;
         const arrowPadding = modifiers[idx + 2] !== undefined ? Number(modifiers[idx + 2]) : 0;
         const arrowElement = arrowClass ? el.querySelector(arrowClass) : null;
-        const arrowLength = arrowElement.offsetWidth;
+        const arrowLength = (arrowElement as HTMLElement)?.offsetWidth || 0;
         offsetValue = Math.sqrt(2 * arrowLength ** 2) / 2;
         arrowOptions = {
             element: arrowElement,
             padding: arrowPadding,
             length: arrowLength,
-        };
+        } as ArrowOptions;
     }
     if (modifiers.includes('offset')) {
         let idx = modifiers.findIndex((i) => i === 'offset');
@@ -132,9 +144,17 @@ function initComputePosition({
     middleware,
     unstyled,
     arrowOptions,
-    callback = (data) => {},
+    callback = (data: any) => {},
+}: {
+    reference: Element | ReturnType<typeof createVirtualElement>;
+    el: ElementWithAnchor;
+    placement: Placement | undefined;
+    middleware: any[];
+    unstyled: boolean;
+    arrowOptions: any;
+    callback?: (data: any) => void;
 }) {
-    let previousValue;
+    let previousValue: string;
     computePosition(reference, el, {
         placement,
         middleware,
@@ -158,7 +178,7 @@ function initComputePosition({
                 // flipping to other placements' axes.
                 right: '',
                 bottom: '',
-                [staticSide]: `${-arrowOptions.length / 2}px`,
+                [staticSide as string]: `${-arrowOptions.length / 2}px`,
                 transform: 'rotate(45deg)',
                 position: 'absolute',
             });
@@ -166,8 +186,10 @@ function initComputePosition({
 
         // Only trigger Alpine reactivity when the value actually changes...
         if (JSON.stringify({ x, y }) !== previousValue) {
-            el._x_anchor.x = x;
-            el._x_anchor.y = y;
+            if (el._x_anchor) {
+                el._x_anchor.x = x;
+                el._x_anchor.y = y;
+            }
         }
 
         previousValue = JSON.stringify({ x, y });
@@ -176,7 +198,7 @@ function initComputePosition({
     });
 }
 
-function createVirtualElement({ clientX, clientY }) {
+function createVirtualElement({ clientX, clientY }: { clientX: number; clientY: number }) {
     return {
         getBoundingClientRect() {
             return {
