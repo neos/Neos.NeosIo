@@ -24,22 +24,22 @@ prototype(Neos.Presentation:Template.Default) < prototype(Neos.Fusion:Component)
                     prototypeName = 'Neos.Presentation:LogoBar'
                 }
                 personcards = Sitegeist.Monocle:Preview.Prototype {
-                    prototypeName = 'Neos.Presentation:Module.PersonCards'
+                    prototypeName = 'Neos.Presentation:PersonCards'
                 }
                 textwithimage = Sitegeist.Monocle:Preview.Prototype {
-                    prototypeName = 'Neos.Presentation:Module.TextAndImage'
+                    prototypeName = 'Neos.Presentation:TextAndImage'
                     props.image.imageSource = Sitegeist.Kaleidoscope:ResourceImageSource {
                         path = 'resource://Neos.Presentation/Public/Assets/Styleguide/Images/textwithimage.png'
                     }
                 }
                 teaser = Sitegeist.Monocle:Preview.Prototype {
-                    prototypeName = 'Neos.Presentation:Module.Teaser'
+                    prototypeName = 'Neos.Presentation:Teaser'
                     props.image.imageSource = Sitegeist.Kaleidoscope:ResourceImageSource {
                         path = 'resource://Neos.Presentation/Public/Assets/Styleguide/Images/readyforneos.png'
                     }
                 }
                 footer = Sitegeist.Monocle:Preview.Prototype {
-                    prototypeName = 'Neos.Presentation:Module.Footer'
+                    prototypeName = 'Neos.Presentation:Footer'
                 }
             }
         }

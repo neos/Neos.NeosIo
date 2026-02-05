@@ -1,3 +1,36 @@
+@layer base {
+  @media (prefers-reduced-motion: no-preference) {
+    :root {
+      --anim-opacity: none;
+      --anim-transform: none;
+      --anim-clip: none;
+      --delay: 0s;
+      --duration: 0.5s;
+    }
+
+    body.neos-backend {
+      --delay: 0s;
+      --duration: 0s;
+    }
+
+    .intersect-start:not(.intersected),
+    .intersect-start:not(.intersected) > * {
+      animation-play-state: paused !important;
+    }
+
+    :where(.fade-in, .slide-up) {
+      animation: var(--anim-opacity), var(--anim-transform);
+    }
+
+    body:not(.neos-backend) .fade-in {
+      --anim-opacity: fade-in var(--duration) var(--delay) ease backwards;
+    }
+    body:not(.neos-backend) .slide-up {
+      --anim-transform: slide-up var(--duration) var(--delay) ease backwards;
+    }
+  }
+}
+
 @theme {
   --animate-infinite-scroll: infinite-scroll 20s linear infinite;
 
@@ -22,37 +55,6 @@
 @utility animation-state-finish {
   animation-play-state: paused;
   animation-direction: reverse;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  :root {
-    --anim-opacity: none;
-    --anim-transform: none;
-    --anim-clip: none;
-    --delay: 0s;
-    --duration: 0.5s;
-  }
-
-  body.neos-backend {
-    --delay: 0s;
-    --duration: 0s;
-  }
-
-  .intersect-start:not(.intersected),
-  .intersect-start:not(.intersected) > * {
-    animation-play-state: paused !important;
-  }
-
-  :where(.fade-in, .slide-up) {
-    animation: var(--anim-opacity), var(--anim-transform);
-  }
-
-  body:not(.neos-backend) .fade-in {
-    --anim-opacity: fade-in var(--duration) var(--delay) ease backwards;
-  }
-  body:not(.neos-backend) .slide-up {
-    --anim-transform: slide-up var(--duration) var(--delay) ease backwards;
-  }
 }
 
 @keyframes slide-up {

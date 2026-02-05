@@ -1,12 +1,13 @@
-prototype(Neos.Presentation:Module.TextAndImage) < prototype(Neos.Fusion:Component) {
+prototype(Neos.Presentation:TextAndImage) < prototype(Neos.Fusion:Component) {
 
     @styleguide {
         title = "Text and Image"
         props {
-            headline.text = 'Meet the <strong>Community</strong>'
-            description.text = 'The Neos Team consists of many independent individuals who are actively contributing to Neos. Each has their own focus and specialty. Together with the Neos community they push the project forward. This includes the organisation of Neos events, contributing code, writing documentation, managing the websites & services used by the community and much more.'
+            headline = 'Meet the <strong>Community</strong>'
+            description = 'The Neos Team consists of many independent individuals who are actively contributing to Neos. Each has their own focus and specialty. Together with the Neos community they push the project forward. This includes the organisation of Neos events, contributing code, writing documentation, managing the websites & services used by the community and much more.'
             image.imageSource = Sitegeist.Kaleidoscope:DummyImageSource
             button.content = 'More information'
+            hasButton = true
         }
     }
 
@@ -14,12 +15,8 @@ prototype(Neos.Presentation:Module.TextAndImage) < prototype(Neos.Fusion:Compone
         image = PropTypes:DataStructure {
             imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
         }
-        headline = PropTypes:FromPrototype {
-            prototypeName = "Neos.Presentation:Headline"
-        }
-        description = PropTypes:FromPrototype {
-            prototypeName = "Neos.Presentation:Paragraph"
-        }
+        headline = PropTypes:String
+        description = PropTypes:String
         imageRight = PropTypes:Bool
         hasButton = PropTypes:Bool
     }
@@ -35,10 +32,10 @@ prototype(Neos.Presentation:Module.TextAndImage) < prototype(Neos.Fusion:Compone
                 </figure>
                 <Neos.Presentation:Spacing x y="small">
                     <Neos.Presentation:Spacing y="small">
-                        <Neos.Presentation:Headline {...props.headline} display="headline-lg" />
+                        <Neos.Presentation:Headline content={props.headline} display="headline-lg" />
                     </Neos.Presentation:Spacing>
                     <Neos.Presentation:Spacing y="small">
-                        <Neos.Presentation:Paragraph {...props.description} display="lead" />
+                        <Neos.Presentation:Paragraph content={props.description} display="lead" />
                     </Neos.Presentation:Spacing>
                     <Neos.Presentation:Spacing y="small" @if={props.hasButton}>
                         <Neos.Presentation:Button @if={props.hasButton} {...props.button}/>

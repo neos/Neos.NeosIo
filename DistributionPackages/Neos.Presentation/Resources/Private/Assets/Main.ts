@@ -1,7 +1,7 @@
 import Alpine from './Scripts';
 import '../Fusion/Presentation/LogoBar';
-import '../Fusion/Organism/ImageCollage';
-import '../Fusion/Organism/Navigation/Navigation.js';
+import '../Fusion/Presentation/ImageCollage';
+import '../Fusion/Presentation/Navigation';
 
 // @ts-ignore: Set Alpine as a global variable
 window.Alpine = Alpine;

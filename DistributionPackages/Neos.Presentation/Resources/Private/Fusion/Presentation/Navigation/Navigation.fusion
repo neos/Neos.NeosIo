@@ -230,12 +230,12 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <Neos.Presentation:Spacing tagName="nav" size x y="small" class="z-navigation">
             <ul class="flex justify-between gap-x-6 relative">
-                <Neos.Presentation:Icon name="neos-white-logo" class="h-10 self-center" />
+                <Neos.Presentation:Icon icon="neosLogoDark" class="h-10 self-center" />
                 <div class="hidden lg:flex gap-5 2xl:gap-10">
                     <Neos.Fusion:Loop items={props.links} itemName="link">
                         <li class="group/navitem h-14" x-data="NavigationItem">
                             <div class="h-full flex items-center group-hover/navitem:z-10">
-                                <div class="rounded-md group-hover/navitem:bg-white/10 flex items-center" x-bind:class="{ '!bg-white/10': open }">
+                                <div class="rounded-md group-hover/navitem:bg-white/10 flex items-center" x-bind:class="{ 'bg-white/10!': open }">
                                     <Neos.Fusion:Tag tagName={link.link ? 'a' : 'span'} attributes.href={link.link} attributes.class="inline-block py-1 px-4 display-lead">{link.label}</Neos.Fusion:Tag>
                                     <button
                                         @if={link.flyoutItems && link.flyoutItems != []}
@@ -246,8 +246,8 @@ prototype(Neos.Presentation:Navigation) < prototype(Neos.Fusion:Component) {
                                         aria-haspopup="true"
                                         "x-on:click.outside"="open = false">
                                         <Neos.Presentation:Icon
-                                                name="chevron-down"
-                                                class="h-6"
+                                            icon="chevron-down"
+                                            class="h-6"
                                         />
                                     </button>
                                 </div>

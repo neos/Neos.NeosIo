@@ -8,4 +8,9 @@ prototype(Sitegeist.Monocle:Preview.Page) {
     bodyTag {
         attributes.class.color = "bg-white"
     }
+
+    additionalMarkup = Neos.Fusion:Join {
+        @position = 'before closingBodyTag'
+        tooltip = Neos.Presentation:Atom.Tooltip
+    }
 }
