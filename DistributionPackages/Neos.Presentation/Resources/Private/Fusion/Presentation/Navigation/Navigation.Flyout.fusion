@@ -21,7 +21,7 @@ prototype(Neos.Presentation:Navigation.Flyout) < prototype(Neos.Fusion:Component
                     <div class="grid grid-cols-3 gap-6 fade-in slide-up">
                         <Neos.Fusion:Loop items={props.flyoutItems} itemName="flyoutItem">
                             <div @if={!flyoutItem.body}>
-                                <Neos.Presentation:Headline text={flyoutItem.title} display="title-md" class={Carbon.String.classNames("mb-8", {
+                                <Neos.Presentation:Headline content={flyoutItem.title} display="title-md" class={Carbon.String.classNames("mb-8", {
                                     'text-blue-light': private.isDefault,
                                     'text-blue-light ': private.isWhite
                                 })} />
@@ -33,7 +33,7 @@ prototype(Neos.Presentation:Navigation.Flyout) < prototype(Neos.Fusion:Component
                                                 'group-hover/li:bg-blue-dark/15': private.isWhite
                                             })}>
                                                 <div class="flex transition -translate-x-1 group-hover/li:translate-x-0 gap-4 ">
-                                                    <Neos.Presentation:Icon name={item.icon} class="w-5" />
+                                                    <Neos.Presentation:Icon icon={item.icon} class="w-5" />
                                                     <span class="grid gap-1">
                                                         <strong class="display-label-lg">{item.label}</strong>
                                                         <span class="display-body-md">{item.description}</span>

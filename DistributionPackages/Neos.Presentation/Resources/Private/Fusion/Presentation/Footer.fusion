@@ -1,5 +1,4 @@
-prototype(Neos.Presentation:Module.Footer) < prototype(Neos.Fusion:Component) {
-
+prototype(Neos.Presentation:Footer) < prototype(Neos.Fusion:Component) {
     @styleguide {
         title = 'Footer'
         description = 'Footer of the page'
@@ -103,8 +102,8 @@ prototype(Neos.Presentation:Module.Footer) < prototype(Neos.Fusion:Component) {
         <Neos.Presentation:Spacing y>
           <Neos.Presentation:Spacing x y="small" size>
             <div class="flex flex-wrap gap-12 mb-10">
-              <div class="flex-grow grid gap-y-14">
-                <Neos.Presentation:Icon name="neos-white-logo" class="h-12" />
+              <div class="grow grid gap-y-14">
+                <Neos.Presentation:Icon icon="neosAvatarMonochrome" class="h-12" />
                 <Neos.Presentation:Paragraph
                   content="Neos is free and open source software licensed under GPL v3 or later. Created with passion by over 100 contributors around the world."
                   class="max-w-screen-xxs"
@@ -114,9 +113,9 @@ prototype(Neos.Presentation:Module.Footer) < prototype(Neos.Fusion:Component) {
                 <Neos.Fusion:Loop items={props.linkGroups} itemName="group">
                   <div class="grow">
                     <Neos.Presentation:Headline display="title-md" content={group.title} />
-                    <div class="grid gap-y-1 mt-6">
+                    <div class="grid justify-start gap-y-1 mt-6">
                         <Neos.Fusion:Loop items={group.links} itemName="link">
-                            <a href={link.link} class="py-1 hover:underline underline-offset-8 display-body-lg">{link.title}</a>
+                            <a href={link.link} class="inline-block py-1 underline-offset-8 display-body-lg hocus:underline">{link.title}</a>
                         </Neos.Fusion:Loop>
                     </div>
                   </div>
@@ -125,20 +124,20 @@ prototype(Neos.Presentation:Module.Footer) < prototype(Neos.Fusion:Component) {
             </div>
           </Neos.Presentation:Spacing>
           <Neos.Presentation:Spacing x y="small" size>
-            <ul class="flex flex-wrap gap-4 -mx-2">
+            <ul class="flex flex-wrap gap-4 -mx-2" x-tooltips x-data>
               <Neos.Fusion:Loop items={props.socials}>
-                <li><a href={item.link} class="flex p-2 border border-transparent hover:border-current rounded-full">
-                  <Neos.Fusion:Augmenter aria-label={item.label}>
-                    <Neos.Presentation:Icon name={item.icon} class="h-6 w-6" />
-                  </Neos.Fusion:Augmenter>
-                </a></li>
+                <li>
+                    <a href={item.link} class="flex items-center justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" aria-label={item.label}>
+                        <Neos.Presentation:Icon icon={item.icon} class="size-6" />
+                    </a>
+                </li>
               </Neos.Fusion:Loop>
             </ul>
           </Neos.Presentation:Spacing>
           <Neos.Presentation:Spacing x y="small" size>
             <p class="flex flex-wrap gap-6">
               <Neos.Fusion:Loop items={props.endlinks}>
-                <a href={item.link} class="hover:underline underline-offset-8">{item.label}</a>
+                <a href={item.link} class="hocus:underline underline-offset-8">{item.label}</a>
               </Neos.Fusion:Loop>
             </p>
           </Neos.Presentation:Spacing>
