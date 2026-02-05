@@ -10,7 +10,7 @@ prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
         icon = ${PropTypes.oneOf([
             'animatedArrow', 'animatedArrowLeft',
             'neosAvatarPrimary', 'neosAvatarLight', 'neosAvatarDark', 'neosAvatarMonochrome', 'neosLogoPrimary', 'neosLogoLight', 'neosLogoDark', 'neosLogoMonochrome',
-            'arrow-right', 'briefcase', 'calculator', 'calendar', 'chevron-down', 'chevron-left', 'chevron-right', 'chevron-up', 'clock', 'cloud', 'desktop',
+            'arrow-right', 'briefcase', 'calculator', 'calendar', 'chevron-down', 'chevron-left', 'chevron-right', 'chevron-up', 'clock', 'cloud', 'cursor', 'desktop',
             'development', 'document', 'eye', 'facebook', 'file', 'github', 'globe', 'headphones', 'heart', 'house', 'instagram', 'linkedin', 'mail-open',
             'mail', 'mastodon', 'place', 'plus', 'quote', 'search', 'slack', 'smile', 'square', 'time', 'user', 'youtube', 'notfound'
         ])}
@@ -27,22 +27,22 @@ prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
     ariaHidden = null
 
     @private {
-        icon = ${props.icon ? String.trim(String.toLowerCase(props.icon)) : null}
+        icon = ${props.icon ? String.trim(props.icon) : null}
         neosColorFirst = Neos.Fusion:Match {
-            @subject = ${props.icon}
+            @subject = ${private.icon}
             @default = 'fill-blue-dark'
             neosAvatarDark = 'fill-blue-light'
             neosLogoDark = 'fill-blue-light'
         }
         neosColorSecond = Neos.Fusion:Match {
-            @subject = ${props.icon}
+            @subject = ${private.icon}
             @default = 'fill-white'
             neosAvatarPrimary = 'fill-blue-light'
             neosLogoPrimary = 'fill-blue-light'
         }
         class = ${Tailwind.merge(
-            props.icon == 'animatedArrow' && 'transition-transform duration-300 ease-[steps(5)] group-hocus-within/icon:translate-x-1/2',
-            props.icon == 'animatedArrowLeft' && 'rotate-180 transition-transform duration-300 ease-[steps(5)] group-hocus-within/icon:-translate-x-1/2',
+            private.icon == 'animatedArrow' && 'transition-transform duration-300 ease-[steps(5)] group-hocus-within/icon:translate-x-1/2',
+            private.icon == 'animatedArrowLeft' && 'rotate-180 transition-transform duration-300 ease-[steps(5)] group-hocus-within/icon:-translate-x-1/2',
             props.sizeClass,
             props.class
         )}
@@ -81,20 +81,20 @@ prototype(Neos.Presentation:Icon) < prototype(Neos.Fusion:Component) {
 
         content = Neos.Fusion:Case {
             animatedArrow {
-                condition = ${props.icon == 'animatedArrow' || props.icon == 'animatedArrowLeft'}
+                condition = ${private.icon == 'animatedArrow' || private.icon == 'animatedArrowLeft'}
                 renderer = ${private.animatedArrow}
             }
             neosAvatar {
-                condition = ${props.icon == 'neosAvatarPrimary' || props.icon == 'neosAvatarLight' || props.icon == 'neosAvatarDark'}
+                condition = ${private.icon == 'neosAvatarPrimary' || private.icon == 'neosAvatarLight' || private.icon == 'neosAvatarDark'}
                 renderer = ${private.neosAvatar}
             }
             neosLogo {
-                condition = ${props.icon == 'neosLogoPrimary' || props.icon == 'neosLogoLight' || props.icon == 'neosLogoDark'}
+                condition = ${private.icon == 'neosLogoPrimary' || private.icon == 'neosLogoLight' || private.icon == 'neosLogoDark'}
                 renderer = ${private.neosLogo}
             }
             fileExists {
-                condition = ${File.exists('resource://Neos.Presentation/Public/Assets/Icons/' + props.icon + '.svg')}
-                renderer = ${StaticResource.content('Neos.Presentation', 'Public/Assets/Icons/' + props.icon + '.svg')}
+                condition = ${File.exists('resource://Neos.Presentation/Public/Assets/Icons/' + private.icon + '.svg')}
+                renderer = ${StaticResource.content('Neos.Presentation', 'Public/Assets/Icons/' + private.icon + '.svg')}
             }
             error {
                 condition = true
