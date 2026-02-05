@@ -1,27 +1,27 @@
 import Alpine from 'alpinejs';
 
 // function that returns a random number
-function getRandomNumber(min, max, substract = 0) {
+function getRandomNumber(min: number, max: number, substract = 0) {
     return Math.round(min + Math.random() * (max - min) - substract);
 }
 
 // get the size of an element
-function getSize(element) {
+function getSize(element: HTMLElement) {
     return { x: element.clientWidth, y: element.clientHeight };
 }
 
 Alpine.data('collage', () => ({
     atropos: null,
-    figure: null,
-    positions: [],
-    rendered: [],
-    elements: [],
+    figure: null as HTMLElement | null,
+    positions: [] as { x: number; y: number; size: { x: number; y: number }; type: string }[],
+    rendered: [] as HTMLElement[],
+    elements: [] as HTMLElement[],
     maxX: 0,
     maxY: 0,
     padding: 30,
     objectMargin: 10,
     maxAttempts: 50,
-    placeElement(element, size, type, attempts = 0) {
+    placeElement(element: HTMLElement, size: { x: number; y: number }, type: string, attempts = 0) {
         if (attempts >= this.maxAttempts) {
             // console.error('Max attempts reached');
             return;
@@ -51,7 +51,7 @@ Alpine.data('collage', () => ({
         this.rendered.push(element);
         element.classList.remove('opacity-0');
     },
-    isOverlap(x, y, size, type) {
+    isOverlap(x: number, y: number, size: { x: number; y: number }, type: string): boolean {
         // return true if overlapping another element of the same type
         for (const p of this.positions.filter((p) => p.type === '*' || p.type === type)) {
             if (x - this.objectMargin > p.x + p.size.x || p.x > x + this.objectMargin + size.x) {
@@ -66,17 +66,21 @@ Alpine.data('collage', () => ({
         return false;
     },
     processElements() {
-        this.maxX = this.figure.clientWidth;
-        this.maxY = this.figure.clientHeight;
+        this.maxX = this.figure?.clientWidth ?? 0;
+        this.maxY = this.figure?.clientHeight ?? 0;
         this.positions = [];
         this.rendered = [];
         this.elements.forEach((element) => {
             element.classList.add('opacity-0');
 
             // Get the inner image if it exists and set max height and width
-            const image = element.querySelector('img.image-collage-item');
-            image?.style.setProperty('max-width', this.maxX / 3 + 'px');
-            image?.style.setProperty('max-height', this.maxY / 3 + 'px');
+            const image = element.querySelector('img.image-collage-item') as HTMLImageElement | null;
+            if (image && this.maxY) {
+                image.style.setProperty('max-width', this.maxX / 3 + 'px');
+            }
+            if (image && this.maxX) {
+                image.style.setProperty('max-height', this.maxY / 3 + 'px');
+            }
 
             if (!image || image.complete) {
                 // Element is not an image, or is already loaded; we can place
@@ -93,7 +97,7 @@ Alpine.data('collage', () => ({
     },
     init() {
         this.figure = this.$el.querySelector('figure');
-        this.elements = [...(this.figure?.children ?? [])];
+        this.elements = [...(this.figure?.children ?? [])] as HTMLElement[];
 
         // Init atropos
         // this.elements.forEach((item) => {
