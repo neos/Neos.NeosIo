@@ -35,7 +35,7 @@ prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
                 class={Carbon.String.classNames(
                     'n-background',
                     props.background && 'n-background--' + props.background,
-                    props.background == 'gradient' && 'bg-gradient-to-r from-blue-dark to-blue',
+                    props.background == 'gradient' && 'bg-linear-to-r from-blue-dark to-blue',
                     private.class,
                     props.class
                 )}
