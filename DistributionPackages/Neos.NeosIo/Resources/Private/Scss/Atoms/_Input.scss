@@ -42,7 +42,7 @@ input {
 //
 input, textarea {
 	@include placeholder() {
-		font: $base-font-weight calc($base-font-size / 16 * 100%) / calc($base-line-height / $base-font-size) $base-font-family;
+		font: #{$base-font-weight} #{$base-font-size / 16 * 100%} / #{$base-line-height/$base-font-size} #{$base-font-family};
 	}
 }
 
