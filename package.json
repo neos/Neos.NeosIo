@@ -40,9 +40,13 @@
     "watch:classic": "yarn watch:classic:js & yarn watch:classic:css",
     "watch:classic:js": "node Build/Carbon.Pipeline/esbuild.mjs --watch --configFile=pipelineClassic.yaml",
     "watch:classic:css": "node Build/Carbon.Pipeline/postcss.mjs --watch --configFile=pipelineClassic.yaml",
-    "pipeline": "yarn install;yarn build"
+    "pipeline": "yarn install;yarn build",
+    "analyze": "source-map-explorer 'DistributionPackages/Neos.NeosIo/Resources/Public/Scripts/*.js'",
+    "test:e2e": "yarn playwright test",
+    "lint:yaml": "yarn validate -v validate DistributionPackages"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/alpinejs": "^3.13.11",
     "@types/leaflet": "^1.9.21",
