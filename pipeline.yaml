@@ -16,57 +16,16 @@
 # jsFileExtension.script   <string>        (default: `.js`) Extension for script files. If you set `jsFileExtension` to `false`, it will set to `.js`
 # jsFileExtension.module   <string>        (default: `.mjs`) Extension for module files. If you set `jsFileExtension` to `false`, it will set to `.js`
 # jsFileExtension.commonJS <string>        (default: `.cjs`) Extension for commonJS files. If you set `jsFileExtension` to `false`, it will set to `.js`
+# alias                    <object>        (default: `{}`) This feature lets you substitute one package for another when bundling. https://esbuild.github.io/api/#alias
 
 packages:
   - package: Neos.Presentation
     folder:
       input: Assets
 
-# Pass options to the postcss config file
-# In this example, you would have access to the key `prefix` with `ctx.prefix` in your postcss config file (`.postcssrc.js`)
-# postcssOptions:
-#   prefix: true
-
-# If you want to use esbuild features or plugins, you can enable them here.
-# If you have nothing changed here, you can delete this section.
-esbuild:
-  # Set Neos Flow settings as FLOW variable. If `true` all the settings are passed.
-  # It is recommended to set it to a path (e.g. Flownative.Sentry)
-  # This is the same as passing --path to the ./flow configuration:show command
-  # In Javascript the value is available under the variable FLOW
-  # (e.g. FLOW.Flownative.Sentry)
-  defineFlowSettings: false
-
-  # Set options for esbuild
-  options:
-    # Define a string (for only one function) or an array with functions who can be removed on production builds.
-    # eg. ['console.log','console.info']
-    # https://esbuild.github.io/api/#pure
-    pure: null
-
-    # The log level can be changed to prevent esbuild from printing warning and/or error messages to the terminal.
-    # https://esbuild.github.io/api/#log-level
-    logLevel: info
-
-    # A "legal comment" is considered to be any statement-level comment
-    # that contains @license or @preserve or that starts with //! or /*!.
-    # https://esbuild.github.io/api/#legal-comments
-    legalComments: linked
-
-  plugins:
-    vue:
-      enable: false
-      options: null
-    svelte:
-      enable: false
-    babel:
-      enable: false
-      options: null
-  # additionalPlugins:
-  #   esbuild-envfile-plugin:
-  #     functionName: setup
-  #     options: null
-
 buildDefaults:
   content:
     - './DistributionPackages/Neos.Presentation/**/*.{fusion,js,ts,mts,cpx,html}'
+
+postcssOptions:
+  tailwindcss: true
