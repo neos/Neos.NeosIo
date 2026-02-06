@@ -1,7 +1,7 @@
 prototype(Neos.NeosConIo:Schedule.Talks) < prototype(Neos.Fusion:Component) {
     // specified from outside
     day = ''
-    talks = ${q(site).find('[instanceof Neos.NeosConIo:Talk]').filterByReference('event', event).filterOnDay('talkDate', day).get()}
+    talks = ${q(event).backReferenceNodes('event').filter('[instanceof Neos.NeosConIo:Talk]').filterOnDay('talkDate', day).get()}
     breaksInSchedule = ${q(event).find('[instanceof Neos.NeosConIo:BreakInSchedule]').filterOnDay('talkDate', day).get()}
 
     talksAndBreaks = ${q(this.talks).add(this.breaksInSchedule).sortMultiple('talkDate', 'ASC')}
@@ -14,27 +14,41 @@ prototype(Neos.NeosConIo:Schedule.Talks) < prototype(Neos.Fusion:Component) {
             </div>
         </Neos.Fusion:Loop>
         <Neos.Fusion:Loop items={props.talksAndBreaks} itemName="talk" @children="itemRenderer">
-            <div data-date={Date.format(q(talk).property('talkDate'), 'y-m-d')} data-room-id={talk.properties.room.identifier} class={"talk " + (talk.properties.room.identifier ? 'talk--room' + q(talk.properties.room).prevAll().count() + ' talk--totalRooms' + Array.length(props.rooms) : 'talk--fullWidthBecauseNoRoom talk--totalRooms' + Array.length(props.rooms))}>
-                <header class="talk__header">
-                    <div class="talk__time">
-                        <i class="fas fa-clock"></i>
-                        {Date.format(Neos.NeosConIo.Date.timezone(q(talk).property('talkDate'), 'Europe/Berlin'), 'G:i')}
-                    </div>
-
-                    <Neos.NeosConIo:ScheduleSpeakerImages talk={talk} />
-                    <h4 class="talk__title">
-                        {q(talk).property('title')}
-                        <div class="talk__roomSmallDevice">
-                            {q(talk.properties.room).property('name')}
-                        </div>
-                    </h4>
-                </header>
-
-                <div class="talk__description">
-                    {q(talk).property('text')}
-                </div>
-            </div>
+            <Neos.NeosConIo:Schedule.Talk talk={talk} rooms={props.rooms} />
         </Neos.Fusion:Loop>
+    `
+}
+
+prototype(Neos.NeosConIo:Schedule.Talk) < prototype(Neos.Fusion:Component) {
+
+    talk = ${null}
+    rooms = ${null}
+
+    room = ${q(this.talk).referenceNodes('room').get(0)}
+
+    renderer = afx`
+        <div data-date={Date.format(q(props.talk).property('talkDate'), 'y-m-d')}
+             data-room-id={props.room.aggregateId}
+             class={"talk " + (props.room.aggregateId ? 'talk--room' + q(props.room).prevAll().count() + ' talk--totalRooms' + Array.length(props.rooms) : 'talk--fullWidthBecauseNoRoom talk--totalRooms' + Array.length(props.rooms))}>
+            <header class="talk__header">
+                <div class="talk__time">
+                    <i class="fas fa-clock"></i>
+                    {Date.format(Neos.NeosConIo.Date.timezone(q(props.talk).property('talkDate'), 'Europe/Berlin'), 'G:i')}
+                </div>
+
+                <Neos.NeosConIo:ScheduleSpeakerImages talk={props.talk}/>
+                <h4 class="talk__title">
+                    {q(props.talk).property('title')}
+                    <div class="talk__roomSmallDevice">
+                        {q(props.room).property('name')}
+                    </div>
+                </h4>
+            </header>
+
+            <div class="talk__description">
+                {q(props.talk).property('text')}
+            </div>
+        </div>
     `
 }
 
@@ -51,6 +65,7 @@ prototype(Neos.NeosConIo:ScheduleSpeakerImages) < prototype(Neos.Fusion:Componen
 }
 prototype(Neos.NeosConIo:ScheduleSpeakerImage) < prototype(Neos.Fusion:Component)  {
     imageUri = Neos.Neos:ImageUri {
+        @if.hasAsset = ${this.asset}
         asset = ${q(speaker).property('image')}
         maximumWidth = 50
         maximumHeight = 50

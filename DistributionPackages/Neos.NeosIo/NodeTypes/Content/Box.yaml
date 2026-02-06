@@ -6,10 +6,13 @@
   superTypes:
     'Neos.Neos:Content': true
     'Neos.Neos:ContentCollection': true
-    Neos.NeosIo:Constraints.Column: true
+    'Neos.NeosIo:Constraints.Column': true
+    'Neos.NeosIo:Constraints.SemanticSection': true
   constraints:
     nodeTypes:
       '*': false
+      # Temporary workaround for the Neos UI to be able to keep existing non-flattened content
+      'Neos.Neos:ContentCollection': true
       'Neos.NodeTypes:Text': true
       'Neos.NodeTypes.ContentReferences:ContentReferences': true
       'Neos.NeosIo:Button': true
@@ -22,7 +25,6 @@
   properties:
     style:
       type: string
-      defaultValue: ''
       ui:
         label: 'Box Style'
         reloadIfChanged: true

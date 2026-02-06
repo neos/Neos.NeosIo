@@ -8,29 +8,24 @@ prototype(Neos.MarketPlace:Package) < prototype(Neos.MarketPlace:DefaultPage) {
         @if.isNotBlank = ${!String.isBlank(q(node).property('description'))}
     }
 
-    body {
-        templatePath = 'resource://Neos.MarketPlace/Private/Templates/Documents/Package.html'
-
-        content {
-            main = Neos.Fusion:Component {
-                renderer = afx`
-                    <div class="stage stage--bright" id="mainContent">
-                        <div class="stage__contents">
-                            <main role="main" class="g">
-                                <header>
-                                    <Neos.MarketPlace:Search showResult={false}/>
-                                </header>
-                                <section class="gi u-w1/1 u-wm8/12 u-wl9/12">
-                                    <Neos.MarketPlace:PackageRenderer/>
-                                </section>
-                                <aside class="gi u-w1/1 u-wm4/12 u-wl3/12">
-                                    <Neos.MarketPlace:Package.SubMenu/>
-                                </aside>
-                            </main>
-                        </div>
-                    </div>
-                `
-            }
-        }
+    content {
+        renderer >
+        renderer = afx`
+            <div class="stage stage--bright" id="mainContent">
+                <div class="stage__contents">
+                    <main role="main" class="g">
+                        <header>
+                            <Neos.MarketPlace:Search showResult={false} />
+                        </header>
+                        <section class="gi u-w1/1 u-wm8/12 u-wl9/12">
+                            <Neos.MarketPlace:PackageRenderer />
+                        </section>
+                        <aside class="gi u-w1/1 u-wm4/12 u-wl3/12">
+                            <Neos.MarketPlace:Package.SubMenu />
+                        </aside>
+                    </main>
+                </div>
+            </div>
+        `
     }
 }

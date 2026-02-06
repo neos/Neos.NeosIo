@@ -39,31 +39,16 @@ class SortByPropertyOperation extends AbstractOperation
 
     /**
      * {@inheritdoc}
-     *
-     * This operation is only for normal arrays.
-     *
-     * @param mixed $context
-     * @return boolean
-     */
-    public function canEvaluate($context)
-    {
-        return is_array($context);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param FlowQuery $flowQuery the FlowQuery object
-     * @param array $arguments the arguments for this operation
-     * @return mixed
+     * @param array{0?: string, 1?: string} $arguments
      * @throws FlowQueryException
      */
-    public function evaluate(FlowQuery $flowQuery, array $arguments)
+    public function evaluate(FlowQuery $flowQuery, array $arguments): void
     {
-        if (!isset($arguments[0]) || empty($arguments[0])) {
+        if (empty($arguments[0])) {
             throw new FlowQueryException('sort() needs property name by which entries should be sorted', 1581928004);
         }
 
+        /** @var array<string, mixed>[] $items */
         $items = $flowQuery->getContext();
         $propertyName = $arguments[0];
 
@@ -74,7 +59,7 @@ class SortByPropertyOperation extends AbstractOperation
             return ($a[$propertyName] < $b[$propertyName]) ? -1 : 1;
         });
 
-        if (isset($arguments[1]) && !empty($arguments[1]) && $arguments[1] === 'DESC') {
+        if (!empty($arguments[1]) && $arguments[1] === 'DESC') {
             $items = array_reverse($items);
         }
 

@@ -1,0 +1,41 @@
+prototype(Neos.NeosIo:DocumentationPageSubMenu.MenuRenderer) < prototype(Neos.Fusion:Component) {
+
+    items = ${null}
+    subItems = ${null}
+    documentNode = ${documentNode}
+
+    itemClass = Neos.Fusion:DataStructure {
+        active = 'secondaryMenu__item secondaryMenu__item--active secondaryMenu__item--menuLevel-1'
+        current = 'secondaryMenu__item secondaryMenu__item--current secondaryMenu__item--menuLevel-1'
+        normal = 'secondaryMenu__item secondaryMenu__item--normal secondaryMenu__item--menuLevel-1'
+    }
+
+    renderer = afx`
+        <ul class="secondaryMenu">
+            <Neos.Fusion:Loop items={props.items} itemName="item">
+                <li class={props.itemClass[item.state.value]}>
+                    <Neos.NeosIo:DocumentationPageSubMenu.MenuRenderer.ItemRenderer node={item.node}
+                                                                                       state={item.state}/>
+                    <ul class="secondaryMenu__submenu"
+                        @if.isCurrentAndHasSubItems={item.state.value == 'current' && props.subItems}>
+                        <Neos.Fusion:Loop items={props.subItems} itemName="subItem">
+                            <li class="secondaryMenu__item secondaryMenu__item--current secondaryMenu__item--menuLevel-2">
+                                <Neos.NeosIo:DocumentationPageSubMenu.MenuRenderer.SubItemRenderer
+                                    label={subItem.label} anchorName={subItem.anchorName} url={subItem.url} />
+                                <ul class="secondaryMenu__submenu"
+                                    @if.hasSubItems={ subItem.subItems}>
+                                    <Neos.Fusion:Loop items={subItem.subItems} itemName="subSubItem">
+                                        <li class="secondaryMenu__item secondaryMenu__item--current secondaryMenu__item--menuLevel-3">
+                                            <Neos.NeosIo:DocumentationPageSubMenu.MenuRenderer.SubItemRenderer
+                                                label={subSubItem.label} anchorName={subSubItem.anchorName} url={subSubItem.url}/>
+                                        </li>
+                                    </Neos.Fusion:Loop>
+                                </ul>
+                            </li>
+                        </Neos.Fusion:Loop>
+                    </ul>
+                </li>
+            </Neos.Fusion:Loop>
+        </ul>
+    `
+}

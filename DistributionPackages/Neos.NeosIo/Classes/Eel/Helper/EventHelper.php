@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\NeosIo\Eel\Helper;
 
 use Neos\Eel\ProtectedContextAwareInterface;
@@ -12,8 +14,8 @@ class EventHelper implements ProtectedContextAwareInterface
     /**
      * Groups a list of events by their start date month
      *
-     * @param array $events
-     * @return array in the format ['<month-name1>' => [<event1>, <event2>], '<month-name2>' => [...
+     * @param array{ startDate: \DateTimeInterface, ... }[] $events
+     * @return array<string, array{ startDate: \DateTimeInterface }[]> in the format ['<month-name1>' => [<event1>, <event2>], '<month-name2>' => [...
      */
     public function groupByMonth(array $events): array
     {

@@ -73,7 +73,6 @@
                 label: Secondary
     alignment:
       type: string
-      defaultValue: inline
       ui:
         label: Alignment
         reloadIfChanged: true
@@ -81,9 +80,9 @@
           editor: Content/Inspector/Editors/SelectBoxEditor
           group: appearance
           editorOptions:
+            allowEmpty: true
+            placeholder: Inline
             values:
-              inline:
-                label: Inline
               Left:
                 label: Left
               Center:
@@ -92,7 +91,6 @@
                 label: Right
     isPadded:
       type: boolean
-      defaultValue: false
       ui:
         label: 'Is the icon padded?'
         reloadIfChanged: true

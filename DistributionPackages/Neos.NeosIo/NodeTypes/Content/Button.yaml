@@ -8,7 +8,8 @@
     'Neos.Neos:Content': true
     'Neos.NodeTypes:LinkMixin': true
     'Neos.NeosIo:Mixin.ButtonStyles': true
-    Neos.NeosIo:Constraints.Column: true
+    'Neos.NeosIo:Constraints.Column': true
+    'Neos.NeosIo:Constraints.SemanticSection': true
   ui:
     label: Button
     icon: link
@@ -28,7 +29,7 @@
         inspector:
           group: content
           editorOptions:
-            startingPoint: '/'
+            startingPoint: '/<Neos.Neos:Sites>/'
     openInNewTab:
       ui:
         inspector:

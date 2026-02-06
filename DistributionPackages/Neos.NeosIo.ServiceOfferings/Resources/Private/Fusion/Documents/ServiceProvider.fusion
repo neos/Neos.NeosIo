@@ -1,163 +1,168 @@
 prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neos.NeosIo:DefaultPage) {
-    body {
-        content {
-            keyVisual {
-                keyVisualImage = ${q(documentNode).property('bannerImage')}
+    header.keyVisual {
+        keyVisualImage = ${q(documentNode).property('bannerImage')}
+    }
+    content.parts {
+        main >
+        serviceProvider = Neos.Fusion:Component {
+            @process.wrap = Neos.Neos:ContentElementWrapping {
+                node = ${documentNode}
             }
 
-            main  = Neos.Fusion:Component {
-                @process.wrap = Neos.Neos:ContentElementWrapping {
-                    node = ${documentNode}
-                }
+            title = Neos.Neos:Editable {
+                property = 'title'
+            }
+            description = Neos.Neos:Editable {
+                property = 'description'
+            }
+            street = Neos.Neos:Editable {
+                property = 'street'
+                block = false
+            }
+            zipcode = Neos.Neos:Editable {
+                property = 'zipcode'
+                block = false
+            }
+            city = Neos.Neos:Editable {
+                property = 'city'
+                block = false
+            }
+            country = Neos.Neos:Editable {
+                property = 'country'
+                block = false
+            }
+            internalNotes = Neos.Neos:Editable {
+                property = 'internalNotes'
+                @if.inBackend = ${renderingMode.isEdit || renderingMode.isPreview}
+            }
 
-                title = Neos.Neos:Editable {
-                    property = 'title'
-                }
-                description = Neos.Neos:Editable {
-                    property = 'description'
-                }
-                street = Neos.Neos:Editable {
-                    property = 'street'
-                    block = false
-                }
-                zipcode = Neos.Neos:Editable {
-                    property = 'zipcode'
-                    block = false
-                }
-                city = Neos.Neos:Editable {
-                    property = 'city'
-                    block = false
-                }
-                country = Neos.Neos:Editable {
-                    property = 'country'
-                    block = false
-                }
+            # Only editable via inspector for validation
+            logo = ${q(node).property('logo')}
+            email = ${q(node).property('email')}
+            website = ${q(node).property('website')}
+            phone = ${q(node).property('phone')}
+            longitude = ${q(node).property('longitude')}
+            latitude = ${q(node).property('latitude')}
+            fundingPlatformName = ${q(node).property('fundingPlatformName')}
+            githubName = ${q(node).property('githubName')}
+            size = ${q(node).property('size')}
+            address = ${Array.join([q(node).property('street'), q(node).property('zipcode') + ' ' + q(node).property('city'), q(node).property('country')], ', ')}
 
-                # Only editable via inspector for validation
-                logo = ${q(node).property('logo')}
-                email = ${q(node).property('email')}
-                website = ${q(node).property('website')}
-                phone = ${q(node).property('phone')}
-                longitude = ${q(node).property('longitude')}
-                latitude = ${q(node).property('latitude')}
-                fundingPlatformName = ${q(node).property('fundingPlatformName')}
-                githubName = ${q(node).property('githubName')}
-                size = ${q(node).property('size')}
-                address = ${Array.join([q(node).property('street'), q(node).property('zipcode') + ' ' + q(node).property('city'), q(node).property('country')], ', ')}
+            # Lists
+            typesOfService = ${q(node).referenceNodes('typesOfService').get()}
+            showCases = ${q(node).referenceNodes('showCases').get()}
+            caseStudies = ${q(node).referenceNodes('caseStudies').get()}
+            vendors = ${q(node).referenceNodes('vendors').get()}
+            packages = ${q(node).referenceNodes('packages').get()}
+            badges = ${q(node).referenceNodes('badges').get()}
 
-                # Lists
-                typesOfService = ${q(node).property('typesOfService')}
-                showCases = ${q(node).property('showCases')}
-                caseStudies = ${q(node).property('caseStudies')}
-                vendors = ${q(node).property('vendors')}
-                packages = ${q(node).property('packages')}
-                badges = ${q(node).property('badges')}
+            allPackages = Neos.Fusion:Reduce {
+                initialValue = ${q(node).property('packages')}
+                items = ${q(node).property('vendors')}
+                itemName = 'vendor'
+                carryName = 'packageList'
+                itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
+                @process.uniqueAndSort = ${value ? q(value).unique().sort('downloadTotal').get() : value}
+            }
 
-                allPackages = Neos.Fusion:Reduce {
-                    initialValue = ${q(node).property('packages')}
-                    items = ${q(node).property('vendors')}
-                    itemName = 'vendor'
-                    carryName = 'packageList'
-                    itemReducer = ${Array.concat(packageList, q(vendor).children('[instanceof Neos.MarketPlace:Package]').get())}
-                    @process.unique = ${value ? Array.unique(value) : value}
-                    @process.sort = ${value ? q(value).sort('downloadTotal').get() : value}
-                }
+            fundingBadges = ${q(site).fundingBadges().get()}
+            fundingBadges.@process {
+                getBadges = ${value['customers'][q(node).property('fundingPlatformName')]['badges'] || []}
+            }
 
-                fundingBadges = ${q(site).fundingBadges().get()}
-                fundingBadges.@process {
-                    getBadges = ${value['customers'][q(node).property('fundingPlatformName')]['badges'] || []}
-                }
+            awards = ${Array.map(q(node).children('awards').children().get(), a => Neos.Node.label(q(a).property('award')) + ' (' + q(a).property('title') + ')')}
 
-                awards = ${Array.map(q(node).children('awards').children().get(), a => q(a).property('award').label + ' (' + q(a).property('title') + ')')}
+            renderer = afx`
+                <div class="service-provider">
+                    <Neos.Neos:NodeLink node={q(documentNode).parent().get(0)}>Back to the overview</Neos.Neos:NodeLink>
 
-                renderer = afx`
-                    <div class="service-provider">
-                        <Neos.Neos:NodeLink node={q(documentNode).parent().get(0)}>Back to the overview</Neos.Neos:NodeLink>
-
-                        <h1 class="service-provider__title">{props.title}</h1>
-
-                        <img class="service-provider__logo" alt={props.title} @children="attributes.src" @if.set={props.logo}>
-                            <Neos.Neos:ImageUri asset={props.logo} maximumWidth={300} maximumHeight={300} />
-                        </img>
-
-                        <p class="service-provider__description" @if.set={props.description}>{props.description}</p>
-
-                        <section class="service-provider__details">
-                            <div>
-                                <Neos.NeosIo.ServiceOfferings:Component.Provider.Contact
-                                    email={props.email} website={props.website} phone={props.phone}
-                                    street={props.street} city={props.city} zipcode={props.zipcode}
-                                    country={props.country}
-                                />
-
-                                <Neos.NeosIo.ServiceOfferings:Component.Provider.Services
-                                    size={props.size}
-                                    typesOfService={props.typesOfService}
-                                />
-
-                                <Neos.NeosIo.ServiceOfferings:Component.Provider.Awards />
-                             </div>
-
-                            <Neos.NeosIo.ServiceOfferings:Component.Provider.Map
-                                address={props.address} lat={props.latitude} lon={props.longitude}
-                            />
-                        </section>
-
-                        <section class="service-provider__contributions">
-                            <Neos.NeosIo.ServiceOfferings:Component.Provider.Packages
-                                packages={props.allPackages} githubName={props.githubName}
-                            />
-                            <Neos.NeosIo.ServiceOfferings:Component.Provider.Donations
-                                badges={props.badges}
-                                fundingBadges={props.fundingBadges}
-                                fundingPlatformName={props.fundingPlatformName}
-                            />
-                        </section>
-
-                        <Neos.NeosIo.ServiceOfferings:Component.Provider.CaseStudies caseStudies={props.caseStudies} />
-                        <Neos.NeosIo.ServiceOfferings:Component.Provider.ShowCases showCases={props.showCases} />
-
-                        <Neos.Seo:StructuredData.RootObject
-                            type="LocalBusiness"
-                            attributes.name={props.title}
-                            attributes.description={String.stripTags(props.description)}
-                            attributes.telephone={props.phone}
-                            attributes.telephone.@if.set={props.phone}
-                            attributes.award={Array.join(props.awards, ', ')}
-                            attributes.award.@if.set={props.awards}
-                            attributes.email={props.email}
-                            attributes.url={props.website}
-                            attributes.address={props.address}
-                        >
-                            <Neos.Neos:ImageUri
-                                @path="attributes.logo"
-                                asset={props.logo}
-                                @if.set={props.logo}
-                                maximumWidth={300}
-                                maximumHeight={300}
-                            />
-                            <Neos.Seo:StructuredData.Object
-                                @path="attributes.address"
-                                type="PostalAddress"
-                                attributes.streetAddress={q(node).property('street')}
-                                attributes.addressLocality={q(node).property('city')}
-                                attributes.postalCode={q(node).property('zipcode')}
-                                attributes.addressCountry={q(node).property('country')}
-                            />
-                            <Neos.Seo:StructuredData.Object
-                                @path="attributes.geo"
-                                type="GeoCoordinates"
-                                attributes.latitude={q(node).property('latitude')}
-                                attributes.longitude={q(node).property('longitude')}
-                            />
-                        </Neos.Seo:StructuredData.RootObject>
+                    <div class="service-provider__internal-notes" @if.set={props.internalNotes}>
+                        {props.internalNotes}
                     </div>
-                `
-            }
+
+                    <h1 class="service-provider__title">{props.title}</h1>
+
+                    <img class="service-provider__logo" alt={props.title} @children="attributes.src" @if.set={props.logo}>
+                        <Neos.Neos:ImageUri asset={props.logo} maximumWidth={300} maximumHeight={300} />
+                    </img>
+
+                    <p class="service-provider__description" @if.set={props.description}>{props.description}</p>
+
+                    <section class="service-provider__details">
+                        <div>
+                            <Neos.NeosIo.ServiceOfferings:Component.Provider.Contact
+                                email={props.email} website={props.website} phone={props.phone}
+                                street={props.street} city={props.city} zipcode={props.zipcode}
+                                country={props.country}
+                            />
+
+                            <Neos.NeosIo.ServiceOfferings:Component.Provider.Services
+                                size={props.size}
+                                typesOfService={props.typesOfService}
+                            />
+
+                            <Neos.NeosIo.ServiceOfferings:Component.Provider.Awards />
+                         </div>
+
+                        <Neos.NeosIo.ServiceOfferings:Component.Provider.Map
+                            address={props.address} lat={props.latitude} lon={props.longitude}
+                        />
+                    </section>
+
+                    <section class="service-provider__contributions">
+                        <Neos.NeosIo.ServiceOfferings:Component.Provider.Packages
+                            packages={props.allPackages} githubName={props.githubName}
+                        />
+                        <Neos.NeosIo.ServiceOfferings:Component.Provider.Donations
+                            badges={props.badges}
+                            fundingBadges={props.fundingBadges}
+                            fundingPlatformName={props.fundingPlatformName}
+                        />
+                    </section>
+
+                    <Neos.NeosIo.ServiceOfferings:Component.Provider.CaseStudies caseStudies={props.caseStudies} />
+                    <Neos.NeosIo.ServiceOfferings:Component.Provider.ShowCases showCases={props.showCases} />
+
+                    <Neos.Seo:StructuredData.RootObject
+                        type="LocalBusiness"
+                        attributes.name={props.title}
+                        attributes.description={String.stripTags(props.description)}
+                        attributes.telephone={props.phone}
+                        attributes.telephone.@if.set={props.phone}
+                        attributes.award={Array.join(props.awards, ', ')}
+                        attributes.award.@if.set={props.awards}
+                        attributes.email={props.email}
+                        attributes.url={props.website}
+                        attributes.address={props.address}
+                    >
+                        <Neos.Neos:ImageUri
+                            @path="attributes.logo"
+                            asset={props.logo}
+                            @if.set={props.logo}
+                            maximumWidth={300}
+                            maximumHeight={300}
+                        />
+                        <Neos.Seo:StructuredData.Object
+                            @path="attributes.address"
+                            type="PostalAddress"
+                            attributes.streetAddress={q(node).property('street')}
+                            attributes.addressLocality={q(node).property('city')}
+                            attributes.postalCode={q(node).property('zipcode')}
+                            attributes.addressCountry={q(node).property('country')}
+                        />
+                        <Neos.Seo:StructuredData.Object
+                            @path="attributes.geo"
+                            type="GeoCoordinates"
+                            attributes.latitude={q(node).property('latitude')}
+                            attributes.longitude={q(node).property('longitude')}
+                        />
+                    </Neos.Seo:StructuredData.RootObject>
+                </div>
+            `
         }
     }
 
-    @cache {
+    renderer.@cache {
         maximumLifetime = 86400
     }
 }

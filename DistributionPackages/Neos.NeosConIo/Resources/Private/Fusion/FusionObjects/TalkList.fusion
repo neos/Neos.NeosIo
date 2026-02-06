@@ -23,7 +23,7 @@ prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Loop) {
 
     }
     // "node" is the current talk here
-    itemRenderer.@if.talkHasCorrectEvent = ${q(node).property('event') == eventToFilter}
+    itemRenderer.@if.talkHasCorrectEvent = ${q(node).property('event').aggregateId.value == eventToFilter.aggregateId.value}
 
     @cache {
         mode = 'cached'

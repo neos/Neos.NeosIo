@@ -13,46 +13,37 @@ namespace Neos\MarketPlace\Utility;
  * source code.
  */
 
+use Neos\Flow\Annotations as Flow;
+
 /**
  * Version Number Utility
  */
+#[Flow\Proxy(false)]
 class VersionNumber
 {
 
-    /**
-     * @param string $versionNormalized
-     * @return boolean
-     */
     public static function isVersionStable(string $versionNormalized): bool
     {
-        $versionNormalized = explode('-', $versionNormalized);
-        return isset($versionNormalized[1]) ? false : true;
+        $versionParts = explode('-', $versionNormalized);
+        return !isset($versionParts[1]);
     }
 
-    /**
-     * @param string $versionNormalized
-     * @return string
-     */
     public static function getStabilityLevel(string $versionNormalized): string
     {
-        $versionNormalized = explode('-', $versionNormalized);
-        if (count($versionNormalized) === 0) {
-            return 'stable';
-        }
-        if ($versionNormalized[0] === 'dev') {
-            return 'dev';
-        }
-        return isset($versionNormalized[1]) ? preg_replace('/[0-9]+/', '', strtolower($versionNormalized[1])) : 'stable';
+        $versionNormalizedParts = explode('-', $versionNormalized);
+        /** @noinspection PhpDuplicateMatchArmBodyInspection */
+        return match (true) {
+            !$versionNormalized => 'stable',
+            $versionNormalizedParts[0] === 'dev' => 'dev',
+            isset($versionNormalizedParts[1]) => (string)preg_replace('/[\d]+/', '', strtolower($versionNormalizedParts[1])),
+            default => 'stable',
+        };
     }
 
-    /**
-     * @param string $versionNormalized
-     * @return integer
-     */
     public static function toInteger(string $versionNormalized): int
     {
-        $versionNormalized = explode('-', $versionNormalized);
-        $versionParts = explode('.', $versionNormalized[0]);
+        $versionNormalizedParts = explode('-', $versionNormalized);
+        $versionParts = explode('.', $versionNormalizedParts[0]);
         $version = $versionParts[0];
         for ($i = 1; $i < 4; $i++) {
             if (!empty($versionParts[$i])) {

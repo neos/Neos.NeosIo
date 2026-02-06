@@ -1,4 +1,32 @@
+article.post {
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    h1 {
+      margin-bottom: 0;
+    }
+  }
+}
+
 .postBody {
-	max-width: $layout-small-width;
-	margin: 0 auto;
+  max-width: $layout-small-width;
+  margin: 0 auto;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1.625em;
+  }
+}
+
+.post__footer {
+  .nav > li > a {
+    color: brand("primary");
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

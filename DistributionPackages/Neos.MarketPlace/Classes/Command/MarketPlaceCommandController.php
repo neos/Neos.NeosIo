@@ -13,8 +13,11 @@ namespace Neos\MarketPlace\Command;
  * source code.
  */
 
-use Neos\ContentRepository\Domain\Model\NodeInterface;
-use Neos\ContentRepository\Domain\Repository\WorkspaceRepository;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
+use Neos\ContentRepository\Core\Service\ContentRepositoryMaintainerFactory;
+use Neos\ContentRepository\Core\SharedModel\ContentRepository\ContentRepositoryId;
+use Neos\ContentRepository\Core\Subscription\Engine\SubscriptionEngine;
+use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\CommandController;
 use Neos\Flow\Log\ThrowableStorageInterface;
@@ -23,7 +26,7 @@ use Neos\Flow\Persistence\Doctrine\PersistenceManager;
 use Neos\MarketPlace\Domain\Model\LogAction;
 use Neos\MarketPlace\Domain\Model\Packages;
 use Neos\MarketPlace\Service\PackageImporter;
-use Neos\Neos\Domain\Service\ContentContextFactory;
+use Neos\Neos\Domain\NodeLabel\NodeLabelGeneratorInterface;
 use Packagist\Api\Client;
 use Packagist\Api\Result\Package;
 use Psr\Log\LoggerInterface;
@@ -33,51 +36,49 @@ use Psr\Log\LoggerInterface;
  */
 class MarketPlaceCommandController extends CommandController
 {
-    /**
-     * @var PackageImporter
-     * @Flow\Inject
-     */
-    protected $importer;
-
-    /**
-     * @var ContentContextFactory
-     * @Flow\Inject
-     */
-    protected $contextFactory;
+    #[Flow\Inject]
+    protected PackageImporter $importer;
 
     /**
      * @var LoggerInterface
-     * @Flow\Inject
      */
+    #[Flow\Inject('Neos.MarketPlace:Logger')]
     protected $logger;
 
     /**
      * @var ThrowableStorageInterface
-     * @Flow\Inject
      */
+    #[Flow\Inject]
     protected $throwableStorage;
 
-    /**
-     * @var PersistenceManager
-     * @Flow\Inject
-     */
-    protected $persistenceManager;
+    #[Flow\Inject]
+    protected PersistenceManager $persistenceManager;
 
-    /**
-     * @Flow\Inject
-     * @var WorkspaceRepository
-     */
-    protected $workspaceRepository;
+    #[Flow\Inject]
+    protected NodeLabelGeneratorInterface $nodeLabelGenerator;
+
+    #[Flow\Inject]
+    protected ContentRepositoryRegistry $contentRepositoryRegistry;
 
     /**
      * Sync packages from Packagist
      *
-     * @param string|null $package Sync only the given package
+     * @param string $package Sync only the given package
      * @param boolean $force Force sync even if the package is not update on packagist
      */
     public function syncCommand(string $package = '', bool $force = false, int $limit = 0, bool $dontCountSkippedPackages = true): void
     {
         $beginTime = microtime(true);
+
+        // Make sure that the subscription engine is in sync by catching up.
+        $contentRepositoryMaintainer = $this->contentRepositoryRegistry->buildService(
+            ContentRepositoryId::fromString('default'),
+            new ContentRepositoryMaintainerFactory()
+        );
+
+        /** @var SubscriptionEngine $subscriptionEngine */
+        $subscriptionEngine = (new \ReflectionClass($contentRepositoryMaintainer))->getProperty('subscriptionEngine')->getValue($contentRepositoryMaintainer);
+        $subscriptionEngine->catchUpActive();
 
         $hasError = false;
         $elapsedTime = static function ($timer = null) use ($beginTime) {
@@ -91,10 +92,10 @@ class MarketPlaceCommandController extends CommandController
         $this->importer->forceUpdates($force);
 
         if ($package === '') {
-            $this->logger->info(sprintf('action=%s', LogAction::FULL_SYNC_STARTED), LogEnvironment::fromMethodName(__METHOD__));
+            $this->logger->info(sprintf('action=%s', LogAction::FULL_SYNC_STARTED->value), LogEnvironment::fromMethodName(__METHOD__));
             $packages = new Packages();
             foreach ($packages->packages() as $packagistPackage) {
-                $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED, $packagistPackage->getName()), LogEnvironment::fromMethodName(__METHOD__));
+                $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED->value, $packagistPackage->getName()), LogEnvironment::fromMethodName(__METHOD__));
                 $timer = microtime(true);
 
                 if ($packagistPackage->isAbandoned()) {
@@ -107,9 +108,9 @@ class MarketPlaceCommandController extends CommandController
                     if (!$result && $limit > 0 && $dontCountSkippedPackages) {
                         $limit++;
                     }
-                    $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED, $packagistPackage->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
+                    $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED->value, $packagistPackage->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
                 } catch (\Exception $exception) {
-                    $this->logger->error(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FAILED, $packagistPackage->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
+                    $this->logger->error(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FAILED->value, $packagistPackage->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
                     $logMessage = $this->throwableStorage->logThrowable($exception);
                     $this->logger->error($logMessage, LogEnvironment::fromMethodName(__METHOD__));
                     $hasError = true;
@@ -120,23 +121,28 @@ class MarketPlaceCommandController extends CommandController
                     break;
                 }
             }
-            if ($limit === 0) {
-                $this->cleanupPackages();
-                $this->cleanupVendors();
-            }
-            $this->logger->info(sprintf('action=%s duration=%f', LogAction::FULL_SYNC_FINISHED, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
+            // FIXME: Disabled cleanup as for some reason active packages and vendors are being removed
+//            if ($limit === 0) {
+//                $this->cleanupPackages();
+//                $this->cleanupVendors();
+//            }
+            $this->logger->info(sprintf('action=%s duration=%f', LogAction::FULL_SYNC_FINISHED->value, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
 
             $this->outputLine();
             $this->outputLine('%d package(s) synced with success', [$this->importer->getProcessedPackagesCount()]);
+
+            $this->outputLine('Updating search index');
+            $this->importer->updateIndex();
         } else {
-            $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED, $package), LogEnvironment::fromMethodName(__METHOD__));
+            $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED->value, $package), LogEnvironment::fromMethodName(__METHOD__));
             $client = new Client();
             try {
+                /** @var Package $packagistPackage */
                 $packagistPackage = $client->get($package);
                 $this->processPackage($packagistPackage, $count);
-                $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED, $package, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
+                $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED->value, $package, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
             } catch (\Exception $exception) {
-                $this->logger->error(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FAILED, $package, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
+                $this->logger->error(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FAILED->value, $package, $elapsedTime()), LogEnvironment::fromMethodName(__METHOD__));
                 $logMessage = $this->throwableStorage->logThrowable($exception);
                 $this->logger->error($logMessage, LogEnvironment::fromMethodName(__METHOD__));
                 $hasError = true;
@@ -148,6 +154,8 @@ class MarketPlaceCommandController extends CommandController
             } else {
                 $this->outputLine('Package "%s" imported with success', [$package]);
             }
+            $this->outputLine('Updating search index');
+            $this->importer->updateIndex();
         }
 
         if ($hasError) {
@@ -184,8 +192,8 @@ class MarketPlaceCommandController extends CommandController
         $this->outputLine();
         $this->outputLine('Cleanup packages ...');
         $this->outputLine('--------------------');
-        $count = $this->importer->cleanupPackages(function (NodeInterface $package) {
-            $this->outputLine('%s deleted', [$package->getLabel()]);
+        $count = $this->importer->cleanupPackages(function (Node $package) {
+            $this->outputLine('%s deleted', [$this->nodeLabelGenerator->getLabel($package)]);
         });
         if ($count > 0) {
             $this->outputFormatted('Deleted %d package(s)', [$count], 2);
@@ -200,8 +208,8 @@ class MarketPlaceCommandController extends CommandController
         $this->outputLine();
         $this->outputLine('Cleanup vendors ...');
         $this->outputLine('-------------------');
-        $count = $this->importer->cleanupVendors(function (NodeInterface $vendor) {
-            $this->outputLine('%s deleted', [$vendor->getLabel()]);
+        $count = $this->importer->cleanupVendors(function (Node $vendor) {
+            $this->outputLine('%s deleted', [$this->nodeLabelGenerator->getLabel($vendor)]);
         });
         if ($count > 0) {
             $this->outputFormatted('Deleted %d vendor(s)', [$count], 2);

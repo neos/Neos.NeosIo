@@ -43,12 +43,13 @@ $team-profile-background: #fcfcfc;
     flex: 0 0 33.33333%;
   }
 
-  a {
+  summary {
     display: flex;
     align-items: center;
     text-decoration: none;
     line-height: 1;
     position: relative;
+    cursor: pointer;
 
     &::before {
       content: "";
@@ -59,12 +60,16 @@ $team-profile-background: #fcfcfc;
       border-top-left-radius: 50px;
       background: #fcfcfc;
       opacity: 0;
-      transition: opacity 0.3s linear 0.6s;
+      transition: opacity 0.1s linear;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       z-index: -1;
+    }
+
+    &:hover::before {
+      opacity: 0.8;
     }
 
     small {
@@ -84,9 +89,9 @@ $team-profile-background: #fcfcfc;
     height: 100px;
   }
 
-  a:hover,
-  a:focus,
-  .member-active {
+  summary:hover,
+  summary:focus,
+  &[open] {
     .gravatar {
       border-color: #{brand('primary')};
       filter: grayscale(0%);
@@ -97,14 +102,14 @@ $team-profile-background: #fcfcfc;
     }
   }
 
-  .member-active::before {
-    opacity: 1;
-    transition-delay: 0s;
-  }
-
-  &.team-listing-profile--visible {
+  &[open] {
     z-index: 9999;
-    transition: background .6s ease-in;
+    transition: background .2s ease-in;
+
+    summary::before {
+      opacity: 1;
+      transition-delay: 0s;
+    }
   }
 }
 
@@ -121,6 +126,7 @@ $team-profile-background: #fcfcfc;
   width: calc(100% - #{$grid-gutter * 2});
   font-size: 90%;
   will-change: transform, opacity;
+  transition: transform 0.4s ease-in, opacity 0.4s ease-in;
 
   ul {
     display: block;
@@ -149,8 +155,7 @@ $team-profile-background: #fcfcfc;
     margin: 0 0 .5em;
   }
 
-  .team-listing-profile--visible & {
-    transition: transform 0.4s ease-in, opacity 0.4s ease-in;
+  .team-listing__profile[open] > & {
     opacity: 1;
     transform: rotateX(0deg);
     pointer-events: auto;
@@ -163,5 +168,11 @@ $team-profile-background: #fcfcfc;
     border-bottom-right-radius: 20px;
     padding: $team-profile-padding;
     box-shadow: 1px 4px 4px -3px rgba(0, 0, 0, .1);
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
   }
 }

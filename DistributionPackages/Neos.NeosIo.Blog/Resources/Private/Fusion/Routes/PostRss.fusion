@@ -1,17 +1,50 @@
 xml = Neos.Fusion:Http.Message {
-    feed = Neos.Fusion:Template {
-        templatePath = 'resource://Neos.NeosIo.Blog/Private/Templates/PostRss.xml'
+    feed = Neos.Fusion:Component {
         posts = ${q(site).find('[instanceof Neos.NeosIo:Post]').sort('datePublished').slice(0, 20).get()}
         site = ${site}
+        feedUri = Neos.Neos:NodeUri {
+            node = ${site}
+            format = 'html'
+            absolute = true
+            @process.appendFeed = ${value + 'rss.xml'}
+        }
+
+        renderer = afx`
+            <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+                <channel>
+                    <title>Neos - Feed</title>
+                    <link><Neos.Neos:NodeUri node={props.site} format="html" absolute={true} /></link>
+                    <Neos.Fusion:Tag
+                        tagName="atom:link"
+                        attributes.href={props.feedUri}
+                        attributes.rel="self"
+                        attributes.type="application/rss+xml"
+                        selfClosingTag={true}
+                    />
+                    <description>Neos blog posts</description>
+                    <language>en</language>
+                    <lastBuildDate>{Date.format('now', 'D, d M Y H:i:s O')}</lastBuildDate>
+                    <Neos.Fusion:Loop items={props.posts} itemName="post">
+                        <item>
+                            <title>{'<![CDATA[' + String.stripTags(q(post).property('title')) + ']]>'}</title>
+                            {'<link>'}<Neos.Neos:NodeUri node={post} format="html" absolute={true} />{'</link>'}
+                            <description>{'<![CDATA[' + String.stripTags(q(post).property('summary')) + ']]>'}</description>
+                            <pubDate>{Date.format(q(post).property('datePublished'), 'D, d M Y H:i:s O')}</pubDate>
+                            <guid isPermaLink="false">{post.aggregateId}</guid>
+                        </item>
+                    </Neos.Fusion:Loop>
+                </channel>
+            </rss>
+        `
+        renderer.@process.prefix = ${'<?xml version="1.0" encoding="utf-8"?>' + value}
+
         @cache {
             mode = 'cached'
-
             entryIdentifier {
                 identifier = 'postRss'
             }
-
             entryTags {
-                1 = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Post', node)}
+                node = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Post', node)}
             }
         }
     }

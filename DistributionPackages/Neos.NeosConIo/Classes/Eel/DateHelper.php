@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Neos\NeosConIo\Eel;
 
@@ -16,7 +17,7 @@ use Neos\Eel\ProtectedContextAwareInterface;
 
 class DateHelper implements ProtectedContextAwareInterface
 {
-    public function timezone(\DateTimeInterface $dateTime = null, $timezone = null)
+    public function timezone(\DateTimeInterface $dateTime = null, string $timezone = null): ?\DateTimeImmutable
     {
         if ($dateTime === null) {
             return null;
@@ -24,15 +25,14 @@ class DateHelper implements ProtectedContextAwareInterface
         if ($dateTime instanceof \DateTime) {
             $dateTime = \DateTimeImmutable::createFromMutable($dateTime);
         }
-        /** @var $dateTime \DateTimeImmutable */
+        if (!$timezone) {
+            return $dateTime;
+        }
+        /** @var \DateTimeImmutable $dateTime */
         return $dateTime->setTimezone(new \DateTimeZone($timezone));
     }
 
-    /**
-     * @param string $methodName
-     * @return boolean
-     */
-    public function allowsCallOfMethod($methodName)
+    public function allowsCallOfMethod($methodName): bool
     {
         return true;
     }

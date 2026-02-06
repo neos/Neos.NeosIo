@@ -10,32 +10,34 @@
             "ocramius/package-versions": true,
             "cweagans/composer-patches": true,
             "php-http/discovery": true
+        },
+        "platform": {
+            "ext-vips": "0.1.2"
         }
     },
     "require": {
         "php": "^8.3",
-        "neos/presentation": "@dev",
-        "neos/neosio": "@dev",
-        "neos/flowneosio": "@dev",
-        "neos/neosconio": "@dev",
-        "neos/neosio-featurelist": "@dev",
-        "neos/neosio-serviceofferings": "@dev",
-        "neos/neosio-marketplace": "@dev",
-        "neos/neosio-casestudies": "@dev",
-        "neos/neosio-release-plan": "@dev",
-        "neos/neosio-blog": "@dev",
+        "neos/presentation": "^1.0",
+        "carbon/pipeline": "^0.18.7",
+        "neos/neosio": "^1.0",
+        "neos/flowneosio": "^1.0",
+        "neos/neosconio": "^1.0",
 
         "flownative/google-cloudstorage": "^6.1",
-        "rokka/imagine-vips": "^0.31",
+
+        "shel/nodetypes-analyzer": "^2.0",
 
         "cweagans/composer-patches": "^1.7",
-        "jcupitt/vips": "^1.0",
-        "carbon/pipeline": "^0.18.7"
+        "flownative/redis-backend": "dev-main"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "flowpack/neos-debug": "^1.0",
         "shel/nodetypes-analyzer": "^1.2"
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^9.5",
+        "neos/buildessentials": "^9.0",
+        "neos/behat": "^9.0"
     },
     "extra": {
         "patches-file": "DistributionPackages/Neos.NeosIo/composer.patches.json"
@@ -47,6 +49,10 @@
             "options": {
                 "reference": "none"
             }
+        },
+        {
+            "type": "github",
+            "url": "git@github.com:flownative/flow-redis-backend.git"
         }
     ],
     "scripts": {
@@ -60,7 +66,8 @@
             "@php ./flow domain:add --site-node-name neosio --hostname neosio.localbeach.net",
             "@php ./flow domain:add --site-node-name flowneosio --hostname flowio.localbeach.net",
             "@php ./flow domain:add --site-node-name neosconio --hostname neoscon.localbeach.net"
-        ]
+        ],
+        "lint:phpstan": "./bin/phpstan analyse -v"
     },
     "scripts-descriptions": {
         "prime-localbeach": "Primes the Local Beach Neos setup"

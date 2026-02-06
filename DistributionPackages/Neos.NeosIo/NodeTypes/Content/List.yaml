@@ -2,6 +2,7 @@
 'Neos.NeosIo:Event.List':
   superTypes:
     'Neos.Neos:Content': true
+    'Neos.NeosIo:Constraints.SemanticSection': true
   ui:
     label: 'Neos Event List'
     icon: calendar
@@ -53,7 +54,6 @@
                 label: 'Only past events (archive)'
     limit:
       type: integer
-      defaultValue: 0
       ui:
         label: 'Max number to show (0 = no limit)'
         inspector:
@@ -70,8 +70,8 @@
               - 'Neos.Neos:Document'
     noEntriesNotice:
       type: string
-      inlineEditable: true
       ui:
+        inlineEditable: true
         inline:
           editorOptions:
             formatting:

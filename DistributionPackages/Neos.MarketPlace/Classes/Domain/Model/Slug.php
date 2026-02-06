@@ -14,17 +14,18 @@ namespace Neos\MarketPlace\Domain\Model;
  */
 
 use Cocur\Slugify\Slugify;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * Package Tree by vendor
  *
  * @api
  */
+#[Flow\Proxy(false)]
 class Slug
 {
     public static function create(string $string): string
     {
-        $slugify = new Slugify();
-        return $slugify->slugify($string);
+        return (new Slugify())->slugify($string);
     }
 }

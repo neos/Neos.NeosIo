@@ -1,11 +1,17 @@
 'Neos.NodeTypes:Text':
   superTypes:
-    Neos.NeosIo:Constraints.Column: true
+    'Neos.NeosIo:Constraints.Column': true
+    'Neos.NeosIo:Constraints.SemanticSection': true
   properties:
     text:
       ui:
         inline:
           editorOptions:
+            linking:
+              anchor: true
+              title: true
+              relNofollow: true
+              targetBlank: true
             formatting:
               h4: true
               h5: true

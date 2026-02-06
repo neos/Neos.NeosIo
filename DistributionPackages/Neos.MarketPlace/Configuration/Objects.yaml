@@ -1,0 +1,18 @@
+'Neos.MarketPlace:Logger':
+  className: Psr\Log\LoggerInterface
+  scope: singleton
+  factoryObjectName: Neos\Flow\Log\PsrLoggerFactoryInterface
+  factoryMethodName: get
+  arguments:
+    1:
+      value: marketPlaceLogger
+
+Neos\MarketPlace\Service\PackageConverter:
+  properties:
+    packageSyncCache:
+      object:
+        factoryObjectName: Neos\Flow\Cache\CacheManager
+        factoryMethodName: getCache
+        arguments:
+          1:
+            value: NeosMarketPlace_PackageSyncCache

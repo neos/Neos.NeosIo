@@ -2,6 +2,8 @@ import * as siteComponents from './Components';
 import * as marketPlaceComponents from 'DistributionPackages/Neos.MarketPlace/Resources/Private/JavaScript';
 import * as neosConComponents from 'DistributionPackages/Neos.NeosConIo/Resources/Private/JavaScript/Components';
 
+import { initLightboxes } from './WebComponents/Lightbox';
+
 const components = {};
 
 for (let componentKey in siteComponents) {
@@ -31,6 +33,8 @@ const run = () => {
             new components[componentName](element);
         }
     }
+
+    initLightboxes();
 }
 
 setTimeout(() => run(), 0);

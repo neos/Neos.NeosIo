@@ -1,15 +1,22 @@
 .neos-nodetypes-textwithimage,
 .neos-nodetypes-image {
-  @include u-cf();
+  display: flex;
+  gap: rs($half-spacing, $unit: rem) rs($basic-spacing, $unit: rem);
+  flex-direction: column;
+  align-items: start;
 
   figure {
     --background-color: none;
     --color: currentColor;
     background-color: var(--background-color);
     color: var(--color);
+    display: flex;
+    flex-direction: column;
 
-    & + * {
-      margin-top: 1em;
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
     }
 
     figcaption {
@@ -76,17 +83,25 @@
 }
 
 .neos-alignment-left {
-  text-align: left;
+  flex-direction: row;
 }
 
 .neos-alignment-center {
-  text-align: center;
+  align-items: center;
 }
 
 .neos-alignment-right {
-  text-align: right;
+  flex-direction: row-reverse;
+
+  figure {
+    justify-content: end;
+  }
 }
 
-.neos-nodetypes-image {
-  margin-bottom: rs($basic-spacing, $unit: rem);
+img[data-lightbox]:hover {
+  cursor: pointer;
+}
+
+body.has-lightbox {
+  overflow: hidden;
 }

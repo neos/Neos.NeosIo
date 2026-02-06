@@ -28,6 +28,17 @@ _Note: We require [nvm](https://github.com/creationix/nvm#install-script) as wel
 | `yarn pipeline` | Runs install and then build all assets            |
 | `yarn start`    | Watches the sources and rebuilds assets on change |
 
+
+### Testing before live deployment
+
+In addition to manual tests you should run the e2e tests before deploying to production:
+
+```console
+yarn test:e2e
+```
+
+You can set the environment variable `E2E_BASE_URL` to point to your local or staging instance if needed.
+
 ### Troubleshooting Performance Issues with Neos.IO
 
 If you experience slow website behavior on your machine while using Neos.IO, follow these steps to check for potential solutions:

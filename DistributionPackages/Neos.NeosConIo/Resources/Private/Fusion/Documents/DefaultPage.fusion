@@ -1,4 +1,4 @@
-prototype(Neos.NeosIo:PageStyles) {
+prototype(Neos.NeosIo:Fragment.PageStyles) {
     neosConIo = Neos.Fusion:Component {
         @position = 'after main'
         renderer = afx`
@@ -9,11 +9,11 @@ prototype(Neos.NeosIo:PageStyles) {
     }
 }
 
-prototype(Neos.NeosIo:DefaultPage.Menu) {
-    @cache.entryIdentifier.documentNode = ${documentNode}
+prototype(Neos.NeosIo:Fragment.Menu) {
+    @cache.entryIdentifier.documentNode = ${Neos.Caching.entryIdentifierForNode(documentNode)}
 }
 
-prototype(Neos.NeosIo:Component.SiteHeader) {
+prototype(Neos.NeosIo:Fragment.SiteHeader) {
     showBuyTickets = true
     className.@process.addShaded = ${value + ' siteHeader--shaded'}
 }

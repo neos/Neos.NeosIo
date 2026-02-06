@@ -1,0 +1,7 @@
+prototype(PunktDe.CodeView:Code) {
+    @process.appendScript = afx`
+        {value}
+        <script data-slipstream src={StaticResource.uri('PunktDe.CodeView', 'Public/JavaScript/Prism.min.js')}>
+        </script>
+    `
+}

@@ -1,4 +1,21 @@
-prototype(Neos.NeosIo:Post.Short) < prototype(Neos.NeosIo:PostRenderer) {
-    templatePath = 'resource://Neos.NeosIo.Blog/Private/Fusion/Components/Post.Short.html'
-    content >
+prototype(Neos.NeosIo:Post.Short) < prototype(Neos.Fusion:Component) {
+    datePublished = ${q(node).property('datePublished')}
+    title = ${q(node).property('title')}
+    summary = ${q(node).property('summary')}
+
+    renderer = afx`
+        <Neos.Neos:NodeLink node={node} attributes.class="u-linkReset">
+            <time class="u-microCopy">
+                {Date.formatCldrDate(props.datePublished)}
+            </time>
+            <h3 class="u-mt0 u-mb1/2 u-brandColor-primary">
+                {String.stripTags(props.title)}
+            </h3>
+            <div class="media">
+                <div class="media__content">
+                    {props.summary}
+                </div>
+            </div>
+        </Neos.Neos:NodeLink>
+    `
 }

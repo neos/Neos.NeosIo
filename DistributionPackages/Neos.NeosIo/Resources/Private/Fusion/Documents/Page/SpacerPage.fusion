@@ -1,6 +1,10 @@
 prototype(Neos.NeosIo:SpacerPage) < prototype(Neos.NeosIo:DefaultPage) {
-    body {
-        templatePath = 'resource://Neos.NeosIo/Private/Templates/Page/BackendPage.html'
-        explanation = 'Spacer page for the menu.'
-    }
+    content.renderer >
+    content.renderer = afx`
+        <div class="stage stage--bright" id="mainContent">
+            <div class="stage__contents">
+                <h3>Spacer page for the menu.</h3>
+            </div>
+        </div>
+    `
 }

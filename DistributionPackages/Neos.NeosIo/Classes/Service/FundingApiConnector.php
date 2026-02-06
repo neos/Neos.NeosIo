@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Neos\NeosIo\Service;
 
@@ -14,12 +15,8 @@ use Neos\Flow\Log\Utility\LogEnvironment;
  */
 class FundingApiConnector extends AbstractApiConnector
 {
-    /**
-     * @Flow\InjectConfiguration(path="fundingApi", package="Neos.NeosIo")
-     *
-     * @var array
-     */
-    protected $apiSettings;
+    #[Flow\InjectConfiguration('fundingApi', 'Neos.NeosIo')]
+    protected ?array $apiSettings;
 
     /**
      * Retrieves data for sold badges and returns array with customers and their badges and the funding types
@@ -39,10 +36,9 @@ class FundingApiConnector extends AbstractApiConnector
      *      },
      *      ...
      *  }
-     *
-     * @return array
+     * @return array{ customerName: string, customerLogo: string, customerSum: int, customerLink: string, badgeType: string, badgeCategory: string, fundingType: string, startDate: string, endDate: string }[]
      */
-    public function fetchBadges()
+    public function fetchBadges(): array
     {
         $cacheKey = $this->getCacheKey('allBadges');
         $result = $this->getItem($cacheKey);
@@ -52,7 +48,7 @@ class FundingApiConnector extends AbstractApiConnector
             if (is_array($result)) {
                 $fundingData = array_reduce($result, function ($carry, $item) {
                     $fundingCategory = $item['badgeCategory'];
-                    $customerName = strlen($item['customerName']) ? $item['customerName'] : 'Anonymous';
+                    $customerName = is_string($item['customerName']) && $item['customerName'] !== '' ? $item['customerName'] : 'Anonymous';
 
                     // Store all available funding types
                     if (!empty($fundingCategory)) {

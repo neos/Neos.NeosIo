@@ -13,3 +13,24 @@ NeosNeosIo_CrowdApiCache:
   backend: Neos\Cache\Backend\FileBackend
   backendOptions:
     defaultLifetime: 3600
+
+##
+# Various file caches (sqlite is faster than Redis for these)
+#
+Eel_Expression_Code:
+  backend: Neos\Cache\Backend\PdoBackend
+  backendOptions:
+    defaultLifetime: 0
+    dataSourceName: 'sqlite:%FLOW_PATH_TEMPORARY%Cache/Data/Eel_Expression_Code.sqlite'
+
+Neos_Fusion_ParsePartials:
+  backend: Neos\Cache\Backend\PdoBackend
+  backendOptions:
+    defaultLifetime: 0
+    dataSourceName: 'sqlite:%FLOW_PATH_TEMPORARY%Cache/Data/Neos_Fusion_ParsePartials.sqlite'
+
+Flow_Persistence_Doctrine:
+  backend: Neos\Cache\Backend\PdoBackend
+  backendOptions:
+    defaultLifetime: 0
+    dataSourceName: 'sqlite:%FLOW_PATH_TEMPORARY%Cache/Data/Flow_Persistence_Doctrine.sqlite'

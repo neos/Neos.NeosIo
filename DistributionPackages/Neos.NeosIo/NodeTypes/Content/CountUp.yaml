@@ -16,10 +16,10 @@
     text:
       ui:
         inline:
-          editorOptions: {  }
+          editorOptions:
+            placeholder: 'Description text'
     prefix:
       type: string
-      defaultValue: ''
       ui:
         inlineEditable: true
         inline:
@@ -28,8 +28,8 @@
     number:
       type: string
       validation:
-        'Neos.Neos/Validation/NotEmptyValidator': []
-        'Neos.Neos/Validation/IntegerValidator': []
+        'Neos.Neos/Validation/NotEmptyValidator': {}
+        'Neos.Neos/Validation/IntegerValidator': {}
       defaultValue: '101'
       ui:
         inlineEditable: true
@@ -38,7 +38,6 @@
             placeholder: nr
     suffix:
       type: string
-      defaultValue: ''
       ui:
         inlineEditable: true
         inline:
