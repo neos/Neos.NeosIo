@@ -9,6 +9,17 @@ packages:
 postcssOptions:
   tailwindcss: false
 
+sassOptions:
+  quietDeps: true
+  silenceDeprecations:
+    - import
+    - slash-div
+    - legacy-js-api
+    - strict-unary
+    - color-functions
+    - global-builtin
+    - if-function
+
 esbuild:
   options:
     alias:
