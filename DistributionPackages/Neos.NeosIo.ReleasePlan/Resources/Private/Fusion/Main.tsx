@@ -1,6 +1,3 @@
-// load scss
-import './Main.scss';
-
 import { AmChart } from '../JavaScript';
 
 const run = () => {
