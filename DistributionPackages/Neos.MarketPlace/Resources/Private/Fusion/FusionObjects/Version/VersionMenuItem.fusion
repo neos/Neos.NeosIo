@@ -1,10 +1,16 @@
 prototype(Neos.MarketPlace:VersionMenuItem) < prototype(Neos.Fusion:Component) {
     version = ${q(node).property('version')}
     time = ${q(node).property('time')}
+    versionLink = Neos.Neos:NodeUri {
+        node = ${documentNode}
+        arguments {
+            version = ${q(node).property('version')}
+        }
+    }
 
     renderer = afx`
         <li class="version-nav__item">
-          <a href={'#version:' + props.version} class="version-nav__link">
+          <a href={props.versionLink} class="version-nav__link">
             <span class="version-nav__version">
               {props.version}
             </span>

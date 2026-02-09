@@ -14,11 +14,10 @@ namespace Neos\MarketPlace\Eel;
  */
 
 use Composer\Semver\Semver;
-use Neos\MarketPlace\Service\PackageVersion;
-use Neos\Eel\FlowQuery\FlowQuery;
-use Neos\Flow\Annotations as Flow;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Search\Eel;
+use Neos\Flow\Annotations as Flow;
+use Neos\MarketPlace\Domain\Model\Storage;
 
 /**
  * IndexingHelper
@@ -26,67 +25,39 @@ use Neos\ContentRepository\Search\Eel;
 class IndexingHelper extends Eel\IndexingHelper
 {
     /**
-     * @var array
-     * @Flow\InjectConfiguration(path="typeMapping")
+     * @var array<string, string>
      */
-    protected $packageTypes;
+    #[Flow\InjectConfiguration('typeMapping')]
+    protected array $packageTypes;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration(path="compatibilityCheck")
+     * @var array<string, string[]>
      */
-    protected $compatibilityCheck;
+    #[Flow\InjectConfiguration("compatibilityCheck")]
+    protected array $compatibilityCheck;
 
-    /**
-     * @var PackageVersion
-     * @Flow\Inject
-     */
-    protected $packageVersion;
+    #[Flow\Inject]
+    protected Storage $storage;
 
-    /**
-     * @param string|null $packageType
-     * @return string
-     */
     public function packageTypeMapping(?string $packageType): string
     {
         if ($packageType === null) {
             return '[null]';
         }
-        return (string)($this->packageTypes[$packageType] ?? $packageType);
+        return $this->packageTypes[$packageType] ?? $packageType;
     }
 
     /**
-     * @param NodeInterface $node
-     * @return array
-     * @throws \Neos\Eel\Exception
+     * @return array<string, mixed>
      */
-    public function extractVersions(NodeInterface $node): array
-    {
-        $data = [];
-        /** @var NodeInterface[] $versions */
-        $versions = $this->packageVersion->extractVersions($node);
-
-        foreach ($versions as $versionNode) {
-            $data[] = $this->prepareVersion($versionNode);
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param NodeInterface|null $versionNode
-     * @return array
-     * @throws \Neos\ContentRepository\Exception\NodeException
-     */
-    public function prepareVersion(NodeInterface $versionNode = null): array
+    public function prepareVersion(?Node $versionNode = null): array
     {
         if ($versionNode === null) {
             return [];
         }
-        /** @var \DateTime $time */
+        /** @var \DateTime|null $time */
         $time = $versionNode->getProperty('time');
         return [
-            'name' => $versionNode->getProperty('name'),
             'description' => $versionNode->getProperty('description'),
             'keywords' => $this->trimExplode($versionNode->getProperty('keywords')),
             'homepage' => $versionNode->getProperty('homepage'),
@@ -94,18 +65,18 @@ class IndexingHelper extends Eel\IndexingHelper
             'versionNormalized' => $versionNode->getProperty('versionNormalized'),
             'stability' => $versionNode->getProperty('stability'),
             'stabilityLevel' => $versionNode->getProperty('stabilityLevel'),
-            'time' => $time ? $time->format('Y-m-d\TH:i:sP') : null,
+            'time' => $time?->format('Y-m-d\TH:i:sP'),
             'timestamp' => $time ? $time->getTimestamp() : 0,
         ];
     }
 
     /**
-     * @param array<NodeInterface> $versionNodes
-     * @return array<string>
+     * @param Node[] $versionNodes
+     * @return string[]
      */
-    public function extractCompatibility(array $versionNodes = [], string $packageName = null): array
+    public function extractCompatibility(array $versionNodes = [], ?string $packageName = null): array
     {
-        if (!$versionNodes || !array_key_exists($packageName, $this->compatibilityCheck)) {
+        if (!$versionNodes || !$packageName || !array_key_exists($packageName, $this->compatibilityCheck)) {
             return [];
         }
 
@@ -119,7 +90,7 @@ class IndexingHelper extends Eel\IndexingHelper
 
             try {
                 $require = json_decode($requireJson, true, 512, JSON_THROW_ON_ERROR);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 continue;
             }
 
@@ -132,7 +103,7 @@ class IndexingHelper extends Eel\IndexingHelper
                     if (Semver::satisfies($version, $require[$packageName])) {
                         $compatibleVersions[]= $version;
                     }
-                } catch (\Exception $e) {
+                } catch (\Exception) {
                     // Exceptions can be thrown on strings like "self.version"
                     // might be looked at more closely
                     continue;
@@ -144,21 +115,14 @@ class IndexingHelper extends Eel\IndexingHelper
     }
 
     /**
-     * @param NodeInterface $node
-     * @return array
-     * @throws \Neos\Eel\Exception
-     * @throws \Neos\ContentRepository\Exception\NodeException
+     * @return array{name: string, email: string, homepage: string}[]
      */
-    public function extractMaintainers(NodeInterface $node): array
+    public function extractMaintainers(Node $packageNode): array
     {
         $data = [];
-        $query = new FlowQuery([$node]);
-        $query = $query
-            ->find('maintainers')
-            ->find('[instanceof Neos.MarketPlace:Maintainer]');
-
-        foreach ($query as $maintainerNode) {
-            /** @var NodeInterface $maintainerNode */
+        $maintainerNodes = $this->storage->getPackageMaintainerNodes($packageNode->aggregateId);
+        foreach ($maintainerNodes as $maintainerNode) {
+            /** @var Node $maintainerNode */
             $data[] = [
                 'name' => $maintainerNode->getProperty('title'),
                 'email' => $maintainerNode->getProperty('email'),
@@ -170,8 +134,7 @@ class IndexingHelper extends Eel\IndexingHelper
     }
 
     /**
-     * @param string|null $value
-     * @return array
+     * @return string[]
      */
     public function trimExplode(?string $value): array
     {

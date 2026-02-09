@@ -1,0 +1,9 @@
+prototype(Neos.NeosIo:Content.TableOfContents) < prototype(Neos.Neos:ContentComponent) {
+    items = Neos.NeosIo:Fragment.TableOfContents.MenuItems
+
+    renderer = afx`
+        <nav class="table-of-contents">
+            <Neos.NeosIo:Component.TableOfContents.MenuLevel items={props.items} />
+        </nav>
+    `
+}

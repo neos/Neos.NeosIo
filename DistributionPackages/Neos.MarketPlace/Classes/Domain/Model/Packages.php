@@ -23,30 +23,30 @@ use Neos\Flow\Annotations as Flow;
  */
 class Packages
 {
-    /**
-     * @var PackageRepository
-     * @Flow\Inject
-     */
-    protected $packageRepository;
+    #[Flow\Inject]
+    protected PackageRepository $packageRepository;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration(path="typeMapping")
+     * @var array<string, string>
      */
-    protected $packageTypes;
+    #[Flow\InjectConfiguration('typeMapping')]
+    protected array $packageTypes;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration(path="vendorMapping")
+     * @var array<string, bool>
      */
-    protected $vendors;
+    #[Flow\InjectConfiguration('vendorMapping')]
+    protected array $vendors;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration(path="packageBlackList")
+     * @var array<string, bool>
      */
-    protected $packageBlackList;
+    #[Flow\InjectConfiguration('packageBlackList')]
+    protected array $packageBlackList;
 
+    /**
+     * @var string[]
+     */
     protected array $processedPackages = [];
 
     public function packages(): \Generator

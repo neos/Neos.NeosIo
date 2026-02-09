@@ -6,6 +6,7 @@
 'Neos.NeosIo:RootPage':
   superTypes:
     'Neos.NeosIo:LandingPage': true
+    'Neos.Neos:Site': true
   ui:
     label: 'Root Page'
     icon: home
@@ -16,7 +17,6 @@
   properties:
     titlePostfix:
       type: string
-      defaultValue: ''
       ui:
         label: 'Website Title Postfix'
         inspector:
@@ -53,3 +53,12 @@
           editorOptions:
             nodeTypes:
               - Neos.NeosIo:FooterContainer
+    blogFolder:
+      type: reference
+      ui:
+        label: 'Blog folder'
+        inspector:
+          group: additional
+          editorOptions:
+            nodeTypes:
+              - Neos.Neos:Document

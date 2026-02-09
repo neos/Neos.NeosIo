@@ -1,45 +1,33 @@
-prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Fusion:Loop) {
-    // API to the outside: "items" to render
-    items = ${q(site).find('[instanceof Neos.NeosConIo:Speaker]').arrayPropertyContains("event", q(node).property('eventToShowSpeakersFor'))}
+prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Neos:ContentComponent) {
+    items = ${q(node).referenceNodes('eventToShowSpeakersFor').backReferenceNodes("event").filter('[instanceof Neos.NeosConIo:Speaker]').sort('title', 'ASC')}
 
-    @context.eventToFilter = ${q(node).property('eventToShowSpeakersFor')}
-    @process.wrapWithUl = ${'<ul class="speaker__speakerList">' + value + '</ul>'}
-
+    renderer = afx`
+        <ul class="speaker__speakerList">
+            <Neos.Fusion:Loop items={props.items} itemName="node">
+                <li class="speaker__speakerList__item">
+                    <Neos.NeosIo:ImageTeaser
+                        subTitle=""
+                        title={q(node).property('title')}
+                        image={q(node).property('image')}
+                        text={String.stripTags(q(node).property('company'))}
+                        className="imageTeaser--speaker"
+                    >
+                        <Neos.Neos:NodeUri node={node} absolute={true} @path="link" />
+                    </Neos.NeosIo:ImageTeaser>
+                </li>
+            </Neos.Fusion:Loop>
+        </ul>
+    `
 
     @cache {
         mode = 'cached'
         entryIdentifier {
-            node = ${node}
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
         }
-        tags {
-            1 = ${Neos.Caching.nodeTag(node)}
-            2 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk')}
-            3 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event')}
-            4 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Room')}
-            5 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Speaker')}
-        }
-    }
-
-
-    itemName = "node"
-    itemRenderer = Neos.Fusion:Tag {
-        tagName = 'li'
-        attributes.class = 'speaker__speakerList__item'
-        content = Neos.NeosIo:ImageTeaser {
-            // node is the speaker here
-            subTitle = ""
-            title = ${q(node).property('title')}
-            image = ${q(node).property('image')}
-            text = ${String.stripTags(q(node).property('company'))}
-
-            // Ensure Text has no tags (especially link tag) in the markup, as this
-            // will otherwise lead to two nested <a> tags which makes the browser break.
-            text.@process.stripTags = ${String.stripTags(value)}
-            className = 'imageTeaser--speaker'
-            link = Neos.Neos:NodeUri {
-                node = ${node}
-                absolute = true
-            }
+        entryTags {
+            node = ${Neos.Caching.nodeTag(node)}
+            events = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event', node)}
+            speakers = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Speaker', node)}
         }
     }
 }

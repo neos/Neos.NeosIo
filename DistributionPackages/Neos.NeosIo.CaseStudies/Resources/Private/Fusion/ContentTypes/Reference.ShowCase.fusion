@@ -4,10 +4,9 @@
 
 
 prototype(Neos.NeosIo:Reference.ShowCase) < prototype(Neos.NeosIo:Reference) {
-    body {
-        content {
-            main = Neos.NeosIo:Reference.ShowCaseItem
-        }
+    body.content.parts {
+        main >
+        showCaseItem = Neos.NeosIo:Reference.ShowCaseItem
     }
 
     @cache {

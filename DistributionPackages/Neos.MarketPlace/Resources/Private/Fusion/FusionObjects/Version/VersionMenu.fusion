@@ -3,15 +3,25 @@ prototype(Neos.MarketPlace:VersionMenu) < prototype(Neos.Fusion:Component) {
     versions = Neos.MarketPlace:VersionsQuery
 
     renderer = afx`
-      <nav data-component="ShowMore" data-selector="ul">
-        <header>
-          <h4>{props.title}</h4>
-        </header>
-        <ul class="version-nav">
-          <Neos.Fusion:Loop items={props.versions} itemName="node">
-            <Neos.MarketPlace:VersionMenuItem />
-          </Neos.Fusion:Loop>
-        </ul>
-      </nav>
+        <nav class="version-nav__container">
+            <header>
+                <h4>{props.title}</h4>
+            </header>
+            <ul class="version-nav">
+                <Neos.Fusion:Loop items={Array.slice(props.versions, 0, 5)} itemName="node">
+                    <Neos.MarketPlace:VersionMenuItem />
+                </Neos.Fusion:Loop>
+            </ul>
+            <details>
+                <summary>
+                    <strong>Toggle older versions</strong>
+                </summary>
+                <ul class="version-nav">
+                    <Neos.Fusion:Loop items={Array.slice(props.versions, 5)} itemName="node">
+                        <Neos.MarketPlace:VersionMenuItem />
+                    </Neos.Fusion:Loop>
+                </ul>
+            </details>
+        </nav>
     `
 }

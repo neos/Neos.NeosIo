@@ -1,0 +1,12 @@
+Neos:
+  ContentRepository:
+    Search:
+      realtimeIndexing:
+        enabled: false
+      defaultContext:
+        MarketIndexing: Neos\MarketPlace\Eel\IndexingHelper
+
+  ContentRepositoryRegistry:
+    nodeMigration:
+      transformationFactories:
+        SetPropertyOnParent: Neos\MarketPlace\ContentRepository\Transformation\SetPropertyOnParentTransformation

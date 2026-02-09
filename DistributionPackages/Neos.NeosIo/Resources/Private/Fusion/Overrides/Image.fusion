@@ -12,26 +12,20 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     }
 
     image = ${q(node).property('image')}
-    className = Neos.Fusion:DataStructure {
-        main = 'neos-nodetypes-image'
-
-        alignment = ${'neos-alignment-' + q(node).property('alignment')}
-        alignment.@if.isSet = ${q(node).property('alignment')}
-
-        addImageStyle = ${'image--style image--style-' + q(node).property('imageStyle')}
-        addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
-    }
 
     loading = 'lazy'
+    lightbox = true
 
     height = null
     maximumHeight = null
     maximumHeight.@process.override = ${q(node).property('customHeight') || value}
+    maximumHeight.@process.toInt = ${Type.isString(value) ? String.toInteger(value) : value}
 
     width = null
     // The maximum page width 1096 * 2
     maximumWidth = 2192
-    maximumWidth.@process.override = ${q(node).property('customWidth') || value}
+    maximumWidth.@process.override = ${String.toInteger(q(node).property('customWidth') || value)}
+    maximumWidth.@process.toInt = ${Type.isString(value) ? String.toInteger(value) : value}
 
     allowCropping = false
     allowUpScaling = false
@@ -53,71 +47,88 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
         }
     }
 
-    renderer.@context.image = Neos.Fusion:Case {
-        default {
-            condition = ${props.image}
-            renderer = Neos.Fusion:Component {
-                @apply.props = ${props}
+    @private {
+        className = Neos.Fusion:DataStructure {
+            main = 'neos-nodetypes-image'
 
-                thumbnail = ${Neos.Seo.Image.createThumbnail(
-                props.image,
-                null,
-                props.width,
-                props.maximumWidth,
-                props.height,
-                props.maximumHeight,
-                props.allowCropping,
-                props.allowUpScaling,
-                true
-                )}
+            alignment = ${'neos-alignment-' + q(node).property('alignment')}
+            alignment.@if.isSet = ${q(node).property('alignment')}
+        }
 
-                renderer.@process.debug = Neos.Fusion:Debug.Console {
-                    value = ${props}
-                }
+        figureClassName = Neos.Fusion:DataStructure {
+            addImageStyle = ${'image--style image--style-' + q(node).property('imageStyle')}
+            addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
+        }
 
+        thumbnail = ${props.image ? Neos.Media.Image.createThumbnail(
+            props.image,
+            null,
+            props.width,
+            props.maximumWidth,
+            props.height,
+            props.maximumHeight,
+            props.allowCropping,
+            props.allowUpScaling,
+            false
+        ) : null}
+
+        imageSrc = Neos.Fusion:ResourceUri {
+            resource = ${private.thumbnail.resource}
+            @if.set = ${this.resource}
+        }
+
+        lightboxSrc = Neos.Fusion:ResourceUri {
+            resource = ${props.image.resource}
+            @if.set = ${this.resource}
+        }
+
+        image = Neos.Fusion:Case {
+            image {
+                condition = ${private.imageSrc}
                 renderer = afx`
                     <img
                         title={props.title}
                         alt={props.alternativeText}
                         style={'max-height: ' + props.maximumHeight + 'px;'}
                         style.@if={props.maximumHeight}
-                        width={props.thumbnail.width || props.width}
-                        height={props.thumbnail.height || props.height}
+                        width={private.thumbnail.width || props.width}
+                        height={private.thumbnail.height || props.height}
                         loading={props.loading}
-                    >
-                      <Neos.Fusion:ResourceUri resource={props.thumbnail.resource} @path='attributes.src'/>
-                    </img>
+                        src={private.imageSrc}
+                        data-lightbox={private.imageSrc}
+                        data-lightbox.@if={props.lightbox && !props.link}
+                    />
                 `
             }
-        }
-        fallback {
-            condition = ${!props.image && node.context.inBackend}
-            renderer = afx`
-                <img
-                    title="Dummy image"
-                    alt="Dummy image"
-                    class="neos-handle"
-                    loading={props.loading}
-                    src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
-                />
-            `
+            fallback {
+                condition = true
+                renderer = afx`
+                    <img
+                        title="Dummy image"
+                        alt="Dummy image"
+                        class="neos-handle"
+                        loading={props.loading}
+                        src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
+                    />
+                `
+            }
         }
     }
 
     renderer = afx`
-        <div class={props.className}>
-            <figure>
+        <div class={private.className}>
+            <figure class={private.figureClassName}>
                 <a
                     href={props.link}
-                    href.@if.live={!node.context.inBackend}
+                    href.@if.live={!renderingMode.isEdit}
                     target={props.openInNewTab && '_blank'}
                     rel={props.openInNewTab && 'noopener'}
                     title={props.title}
                     @if.set={props.link}
                 >
-                    {image}
+                    {private.image}
                 </a>
-                {!props.link ? image : ''}
+                {!props.link ? private.image : ''}
                 <figcaption @if.set={props.caption}>
                     {props.caption}
                 </figcaption>

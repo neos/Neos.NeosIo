@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Neos\NeosIo\DataSource;
 
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Flow\Annotations as Flow;
 use Neos\Neos\Service\DataSource\AbstractDataSource;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\NeosIo\Service\FundingApiConnector;
 
 class DonorsDataSource extends AbstractDataSource
@@ -16,18 +16,14 @@ class DonorsDataSource extends AbstractDataSource
      */
     static protected $identifier = 'neos-neosio-donors';
 
-    /**
-     * @Flow\Inject
-     * @var FundingApiConnector
-     */
-    protected $fundingApi;
+    #[Flow\Inject]
+    protected FundingApiConnector $fundingApi;
 
     /**
-     * @param NodeInterface $node The node that is currently edited (optional)
-     * @param array $arguments Additional arguments (key / value)
-     * @return array
+     * @param array{} $arguments Additional arguments (key / value)
+     * @return array<string, array{label: string}> An array of options for the donor data source
      */
-    public function getData(NodeInterface $node = null, array $arguments = []): array
+    public function getData(Node $node = null, array $arguments = []): array
     {
         $options = [];
 

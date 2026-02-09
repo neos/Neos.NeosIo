@@ -1,0 +1,8 @@
+prototype(Neos.NeosIo:Fragment.TableOfContents.MenuItems) {
+    @class = 'Neos\\NeosIo\\Fusion\\TableOfContentsImplementation'
+    node = ${documentNode}
+    filter = 'Neos.Neos:Content,Neos.Neos:ContentCollection'
+    labelPropertyNames = ${['title', 'text']}
+    itemFilter = 'Neos.NeosIo:AnchorMixin'
+    itemUriRenderer = ${q(itemNode).property('anchorName') || ''}
+}

@@ -33,13 +33,15 @@
 </f:section>
 
 <f:section name="buttonInner">
-	<f:if condition="{neos:rendering.inBackend()}">
-		<!-- Hint: Buttons might still contain links (old content); and this breaks the element in the frontend -- that is why we need to strip tags in FE. -->
-		<f:then>
-			<neos:contentElement.editable property="buttonLabel" class="btn__content" />
-		</f:then>
-		<f:else>
-			<div class="btn__content">{buttonLabel -> f:format.stripTags()}</div>
-		</f:else>
-	</f:if>
+    <div class="btn__content">
+        <f:if condition="{neos:rendering.inBackend()}">
+            <!-- Hint: Buttons might still contain links (old content); and this breaks the element in the frontend -- that is why we need to strip tags in FE. -->
+            <f:then>
+                <neos:contentElement.editable property="buttonLabel" tag="span" />
+            </f:then>
+            <f:else>
+                {buttonLabel -> f:format.stripTags()}
+            </f:else>
+        </f:if>
+    </div>
 </f:section>

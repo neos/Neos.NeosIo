@@ -1,11 +1,13 @@
 <?php
+declare(strict_types=1);
+
 namespace Neos\NeosIo\DataSource;
 
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\Neos\Domain\Service\UserService;
 use Neos\Neos\Service\DataSource\AbstractDataSource;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
 
 class EditorsDataSource extends AbstractDataSource
 {
@@ -15,28 +17,24 @@ class EditorsDataSource extends AbstractDataSource
      */
     static protected $identifier = 'neos-neosio-editors';
 
-    /**
-     * @Flow\Inject
-     * @var UserService
-     */
-    protected $userService;
+    #[Flow\Inject]
+    protected UserService $userService;
 
     /**
-     * @Flow\Inject
      * @var PersistenceManagerInterface
      */
+    #[Flow\Inject]
     protected $persistenceManager;
 
     /**
-     * @param NodeInterface|null $node The node that is currently edited (optional)
-     * @param array $arguments Additional arguments (key / value)
-     * @return array
+     * @param array{} $arguments Additional arguments (key / value)
+     * @return array<string, array{label: string}> An array of options for the editor data source
      */
-    public function getData(NodeInterface $node = null, array $arguments = [])
+    public function getData(Node $node = null, array $arguments = []): array
     {
         $options = [];
         foreach ($this->userService->getUsers() as $user) {
-            $options[$this->persistenceManager->getIdentifierByObject($user)] = ['label' => $user->getLabel()];
+            $options[(string)$this->persistenceManager->getIdentifierByObject($user)] = ['label' => (string)$user->getLabel()];
         }
         return $options;
     }

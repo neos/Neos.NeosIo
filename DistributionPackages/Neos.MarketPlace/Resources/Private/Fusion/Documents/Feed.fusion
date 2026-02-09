@@ -1,75 +1,66 @@
-prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Http.Message) {
-    httpResponseHead {
-        headers.Content-Type = 'application/xml'
-    }
+prototype(Neos.MarketPlace:Feed) < prototype(Neos.Fusion:Component) {
+    dateFilter = ${Date.subtract(Date.now(), 'P30D')}
 
-    doctype = '<?xml version="1.0" encoding="utf-8"?>'
-    doctype.@position = 'start 100'
-
-    xsl = Neos.Fusion:ResourceUri {
-        path = 'resource://Neos.MarketPlace/Public/Assets/feed.xsl'
-    }
-    xsl.@process.wrap = ${'<?xml-stylesheet media="screen" type="text/xsl" href="' + value + '" version="2.0"?>'}
-    xsl.@position = 'after doctype 100'
-
-    feed = Neos.Fusion:Component {
-        @position = 'after doctype'
-
-        dateFilter = ${Date.subtract(Date.now(), 'P30D')}
-
+    @private {
         packages = ${MarketPlaceSearch.query(documentNode)}
         packages.@process {
             nodeType = ${value.nodeType('Neos.MarketPlace:Package')}
-            onlyRecent = ${value.greaterThan('lastVersion.time', this.dateFilter)}
-            onlyRecent.@if.hasDateFilter = ${this.dateFilter}
+            onlyRecent = ${value.greaterThan('lastVersion.time', props.dateFilter)}
+            onlyRecent.@if.hasDateFilter = ${props.dateFilter}
             sort = ${value.sortDesc('lastVersion.time')}
             limit = ${value.limit(9999)}
             execute = ${value.execute().toArray()}
         }
 
-        renderer = Neos.Fusion:Component {
-            releasedVersions = Neos.Fusion:Reduce {
-                items = ${props.packages}
-                carryName = 'allVersions'
-                initialValue = ${[]}
-                itemReducer = Neos.Fusion:Value {
-                    versions = Neos.MarketPlace:Component.Feed.PackageVersions {
-                        package = ${item}
-                    }
-                    value = ${Array.concat(allVersions, this.versions)}
-                }
-                @process.filter = ${Array.filter(value, x => x.time > props.dateFilter)}
-                @process.filter.@if.hasDateFilter = ${props.dateFilter}
-                @process.sort = ${q(value).sortByProperty('time', 'DESC').get()}
-            }
+        releasedVersions = ${MarketPlace.Package.getReleasedVersions(
+            private.packages,
+            props.dateFilter
+        )}
+    }
 
-            renderer = afx`
-                <feed xmlns="http://www.w3.org/2005/Atom">
-                    <title>Latest Neos CMS package releases</title>
-                    <subtitle>This feed contains all Neos CMS and Flow Framework compatible package releases in the last 30 days.</subtitle>
-                    <logo>
-                        <Neos.Fusion:ResourceUri path="resource://Neos.NeosIo/Public/Images/NeosLogoSocial.png" absolute={true} />
-                    </logo>
-                    <id>urn:uuid:{documentNode.identifier}</id>
-                    <updated @if.hasEntries={props.query}>{Date.format(q(q(props.query[0]).property('lastVersion')).property('time'), 'Y-m-d\TH:i:sP')}</updated>
-                    <link rel="alternate" type="text/html" @children="attributes.href">
-                    <Neos.Neos:NodeUri node={documentNode} format="html" absolute={true} />
-                    </link>
-                    <link rel="self" type="application/atom+xml" @children="attributes.href">
-                    <Neos.Neos:NodeUri node={documentNode} format="atom" absolute={true} />
-                    </link>
-                    <Neos.Fusion:Loop items={props.releasedVersions} itemName="version">
-                        <Neos.MarketPlace:Component.Feed.Version {...version} />
-                    </Neos.Fusion:Loop>
-                </feed>
-            `
+    renderer = Neos.Fusion:Http.Message {
+        httpResponseHead {
+            headers.Content-Type = 'application/xml'
         }
+
+        doctype = '<?xml version="1.0" encoding="utf-8"?>'
+        doctype.@position = 'start 100'
+
+        xsl = Neos.Fusion:ResourceUri {
+            path = 'resource://Neos.MarketPlace/Public/Assets/feed.xsl'
+        }
+        xsl.@process.wrap = ${'<?xml-stylesheet media="screen" type="text/xsl" href="' + value + '" version="2.0"?>'}
+        xsl.@position = 'after doctype 100'
+
+        feed = afx`
+            <feed xmlns="http://www.w3.org/2005/Atom">
+                <title>Latest Neos CMS package releases</title>
+                <subtitle>This feed contains all Neos CMS and Flow Framework compatible package releases in the last
+                    30 days.
+                </subtitle>
+                <logo>
+                    <Neos.Fusion:ResourceUri path="resource://Neos.NeosIo/Public/Images/NeosLogoSocial.png"
+                                             absolute={true} />
+                </logo>
+                <id>urn:uuid:{documentNode.aggregateId}</id>
+                <link rel="alternate" type="text/html" @children="attributes.href">
+                <Neos.Neos:NodeUri node={documentNode} format="html" absolute={true} />
+                </link>
+                <link rel="self" type="application/atom+xml" @children="attributes.href">
+                <Neos.Neos:NodeUri node={documentNode} format="atom" absolute={true} />
+                </link>
+                <Neos.Fusion:Loop items={private.releasedVersions} itemName="version">
+                    <Neos.MarketPlace:Component.Feed.Version {...version} />
+                </Neos.Fusion:Loop>
+            </feed>
+        `
+        feed.@position = 'after doctype'
     }
 
     @cache {
         mode = 'cached'
         entryIdentifier {
-            node = ${documentNode}
+            node = ${Neos.Caching.entryIdentifierForNode(documentNode)}
             format = 'atom'
         }
         entryTags {

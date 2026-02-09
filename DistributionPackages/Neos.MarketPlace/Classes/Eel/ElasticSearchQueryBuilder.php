@@ -15,7 +15,6 @@ namespace Neos\MarketPlace\Eel;
 
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Driver\QueryInterface;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Eel;
-use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception\QueryBuildingException;
 use Neos\ContentRepository\Search\Search\QueryBuilderInterface;
 
 /**
@@ -23,14 +22,10 @@ use Neos\ContentRepository\Search\Search\QueryBuilderInterface;
  */
 class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
 {
-    /**
-     * @var boolean
-     */
-    protected $hasFulltext = false;
+    protected bool $hasFulltext = false;
 
     /**
      * @return QueryInterface
-     * @throws QueryBuildingException
      */
     public function getRequest(): QueryInterface
     {
@@ -44,9 +39,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
     }
 
     /**
-     * @param string $searchWord
-     * @param array $options Options to configure the query_string, see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-query-string-query.html
-     * @return QueryBuilderInterface
+     * @param array{} $options Options to configure the query_string, see https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-query-string-query.html
      */
     public function fulltext(string $searchWord, array $options = []): QueryBuilderInterface
     {
@@ -56,7 +49,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
         }
         $this->hasFulltext = true;
 
-        $this->request->setValueByPath('query.bool.filter.bool.minimum_should_match', 1);
+        $this->request->setValueByPath('query.bool.filter.bool.minimum_should_match', '1');
         $this->request->setValueByPath('query.bool.filter.bool.should', [
             'multi_match' => [
                 'fields' => [
@@ -79,10 +72,6 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
     }
 
 
-    /**
-     * @param QueryInterface $request
-     * @return void
-     */
     protected static function enforceFunctionScoring(QueryInterface $request): void
     {
         $request->setValueByPath('query',

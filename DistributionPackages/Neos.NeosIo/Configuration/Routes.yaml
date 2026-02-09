@@ -1,5 +1,4 @@
--
-  name: 'RSS Feed'
+- name: 'RSS Feed'
   uriPattern: '{node}/rss.xml'
   defaults:
     '@package': 'Neos.Neos'
@@ -8,11 +7,12 @@
     '@format': 'xml'
   routeParts:
     'node':
-      handler: 'Neos\Neos\Routing\FrontendNodeRoutePartHandlerInterface'
+      handler: 'Neos\Neos\FrontendRouting\FrontendNodeRoutePartHandlerInterface'
       options:
-        onlyMatchSiteNodes: TRUE
--
-  name: 'RSS Feed'
+        uriPathSuffix: ''
+        onlyMatchSiteNodes: true
+
+- name: 'RSS Feed'
   uriPattern: '{node}rss.xml'
   defaults:
     '@package': 'Neos.Neos'
@@ -21,11 +21,12 @@
     '@format': 'xml'
   routeParts:
     'node':
-      handler: 'Neos\Neos\Routing\FrontendNodeRoutePartHandlerInterface'
+      handler: 'Neos\Neos\FrontendRouting\FrontendNodeRoutePartHandlerInterface'
       options:
-        onlyMatchSiteNodes: TRUE
--
-  name: 'Listable'
+        uriPathSuffix: ''
+        onlyMatchSiteNodes: true
+
+- name: 'Listable'
   uriPattern: '<ListableSubroutes>'
   subRoutes:
     'ListableSubroutes':

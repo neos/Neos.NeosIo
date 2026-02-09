@@ -4,14 +4,16 @@ prototype(Neos.MarketPlace:PackageMetrics) < prototype(Neos.Fusion:Component) {
     downloads = ${q(node).property('downloadTotal')}
 
     renderer = afx`
-      <span class="metrics__item" @if={props.favers}>
-          <i class="fas fa-star"></i> {props.favers}
-      </span>
-      <span class="metrics__item" @if={props.forks}>
-          <i class="fas fa-code-branch"></i> {props.forks}
-      </span>
-      <span class="metrics__item" @if={props.downloads}>
-          <i class="fas fa-download"></i> {props.downloads}
-      </span>
+        <span class="metrics">
+            <span class="metrics__item" @if={props.favers}>
+                <i class="fas fa-star"></i> {props.favers}
+            </span>
+            <span class="metrics__item" @if={props.forks}>
+                <i class="fas fa-code-branch"></i> {props.forks}
+            </span>
+            <span class="metrics__item" @if={props.downloads}>
+                <i class="fas fa-download"></i> {props.downloads}
+            </span>
+        </span>
     `
 }

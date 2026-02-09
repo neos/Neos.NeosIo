@@ -1,24 +1,53 @@
 prototype(Neos.MarketPlace:Readme) < prototype(Neos.Neos:ContentComponent) {
     readmeSource = ${q(node).property('readmeSource')}
-    hasReadme = ${this.readmeSource != '<p>Enter HTML here</p>' && String.isBlank(this.readmeSource) == false}
+    repository = ${q(node).parent().property('repository')}
+    maxLength = 700
+
+    @private {
+        hasReadme = ${props.readmeSource != '<p>Enter HTML here</p>' && String.isBlank(props.readmeSource) == false}
+        formattedReadmeSource = ${props.readmeSource}
+        formattedReadmeSource.@process.strip = ${String.stripTags(
+            props.readmeSource,
+            '<br><strong><p><em><ul><ol><li>'
+        )}
+        formattedReadmeSource.@process.crop = ${String.cropAtWord(value, props.maxLength, '…')}
+    }
 
     renderer = afx`
-      <article
-        class="readme"
-        data-component="ShowMore"
-        data-selector=".readme__wrapper"
-        data-maximumHeight={700}
-      >
-        <div class="readme__wrapper">
-          <div class="readme-content">
-            {props.hasReadme ? props.readmeSource : 'No readme available'}
-          </div>
-          <footer>
-            <div class="readme__notice">
-              The content of the readme is provided by <i class="fab fa-github"></i> <a href="https://github.com/" rel="noopener noreferrer">Github</a>
+        <article class="readme">
+            <div class="readme__wrapper">
+                <div class="readme-content">
+                    <h3 @if={private.hasReadme}>Readme excerpt</h3>
+                    {private.hasReadme ? private.formattedReadmeSource : 'No readme available'}
+                    <Neos.Fusion:Fragment
+                        @if={private.hasReadme && String.length(props.readmeSource) > props.maxLength}
+                    >
+                        <br/>
+                        <a
+                            href={props.repository}
+                            title="Read the original readme"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Read more
+                        </a>
+                    </Neos.Fusion:Fragment>
+                </div>
+                <footer @if={private.hasReadme}>
+                    <div class="readme__notice">
+                        The content of the readme is provided by an external source, which we have no control over.
+                        Check out the actual readme at its{' '}
+                        <a
+                            href={props.repository}
+                            title="Read the readme"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            source
+                        </a>.
+                    </div>
+                </footer>
             </div>
-          </footer>
-        </div>
-      </article>
+        </article>
     `
 }

@@ -1,5 +1,6 @@
 prototype(Neos.NeosIo:PostArchive) < prototype(Flowpack.Listable:PaginatedCollection) {
-    collection = ${q(site).find('[instanceof Neos.NeosIo:Post]').get()}
+    blogFolder = ${q(site).referenceNodes('blogFolder').get(0)}
+    collection = ${this.blogFolder ? q(this.blogFolder).children('[instanceof Neos.NeosIo:Post]').get() : q(site).find('[instanceof Neos.NeosIo:Post]').get()}
     itemsPerPage = 15
     maximumNumberOfLinks = 10
 

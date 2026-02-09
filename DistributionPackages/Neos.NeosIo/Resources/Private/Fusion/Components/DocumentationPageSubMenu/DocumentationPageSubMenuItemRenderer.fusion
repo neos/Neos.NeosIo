@@ -1,0 +1,29 @@
+prototype(Neos.NeosIo:DocumentationPageSubMenuItemRenderer) < prototype(Neos.Fusion:Value) {
+    value = Neos.Fusion:Map {
+        // The Fusion code below extracts all headlines and renders them as on-page subItems into the menu.
+        // It is necessary to set an "anchorName" for each headline for these links to work.
+        items = ${q(documentNode).find('[instanceof Neos.NeosIo:SemanticSection]').children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h2>"][anchorName][anchorName != ""]')}
+        itemRenderer = Neos.Fusion:DataStructure {
+            @context.currentSection = ${q(item).parents('[instanceof Neos.NeosIo:SemanticSection]').get(0)}
+            node = ${documentNode}
+            label = ${String.stripTags(q(item).property('title'))}
+            anchorName = ${q(item).property('anchorName')}
+            url = Neos.Neos:NodeUri {
+                node = ${documentNode}
+                section = ${q(node).property('anchorName')}
+            }
+            subItems = Neos.Fusion:Map {
+                items = ${q(currentSection).children('contents').children('[instanceof Neos.NodeTypes:Headline]').filter('[title ^= "<h3>"][anchorName][anchorName != ""]')}
+                itemRenderer = Neos.Fusion:DataStructure {
+                    node = ${documentNode}
+                    label = ${String.stripTags(q(item).property('title'))}
+                    anchorName = ${q(item).property('anchorName')}
+                    url = Neos.Neos:NodeUri {
+                        node = ${documentNode}
+                        section = ${q(node).property('anchorName')}
+                    }
+                }
+            }
+        }
+    }
+}

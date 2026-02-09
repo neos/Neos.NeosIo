@@ -45,7 +45,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
             expression = ${value.exclude('abandoned', '1')}
         }
         sort {
-            expression = ${value.sortDesc('lastActivity')}
+            expression = ${value.sortDesc('lastVersion.timestamp')}
             @if.noQuery = ${!this.hasSearchQuery}
         }
         log {
@@ -130,12 +130,12 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
         mode = 'dynamic'
 
         entryIdentifier {
-            documentNode = ${documentNode}
+            documentNode = ${Neos.Caching.entryIdentifierForNode(documentNode)}
         }
 
         maximumLifetime = 3600
 
-        entryDiscriminator = ${!request.arguments.search && !request.arguments.version && request.pluginArguments.currentPage > 1}
+        entryDiscriminator = ${!request.arguments.search && !request.arguments.version && request.pluginArguments.currentPage > 1 ? 'static' : false}
 
         entryTags {
             documentNode = ${Neos.Caching.nodeTag(documentNode)}

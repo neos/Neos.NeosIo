@@ -3,7 +3,8 @@
 ##################################
 
 'Neos.NodeTypes.ColumnLayouts:Column':
-  aggregate: true
+  superTypes:
+    'Neos.NeosIo:Constraints.SemanticSection': true
 
 'Neos.NodeTypes.ColumnLayouts:TwoColumn':
   properties:
