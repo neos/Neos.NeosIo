@@ -43,8 +43,8 @@ prototype(Neos.NeosIo.Blog:Content.BlogTeaser) < prototype(Neos.Neos:ContentComp
         }
         entryTags {
             node = ${Neos.Caching.nodeTag(node)}
-            blogFeed = ${Neos.Caching.descendantOfTag(q(node).referenceNodes('blogFeed'))}
-            blogPost = ${Neos.Caching.nodeTag(q(node).referenceNodes('blogPost'))}
+            blogFeed = ${q(node).referenceNodes('blogFeed') ? Neos.Caching.descendantOfTag(q(node).referenceNodes('blogFeed')) : null}
+            blogPost = ${q(node).referenceNodes('blogPost') ? Neos.Caching.nodeTag(q(node).referenceNodes('blogPost')) : null}
         }
     }
 }
