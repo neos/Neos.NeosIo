@@ -1,6 +1,7 @@
 prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
     header = Neos.Fusion:Join {
         siteHeader = Neos.NeosIo:Fragment.SiteHeader
+        disruptor = Neos.NeosIo:Content.Disruptor
         keyVisual = Neos.NeosIo:KeyVisual {
             keyVisualImage = ${q(documentNode).property('keyVisualImage')}
             keyVisualImageSmall = ${q(documentNode).property('keyVisualImageSmall')}

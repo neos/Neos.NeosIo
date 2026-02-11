@@ -1,0 +1,66 @@
+prototype(Neos.NeosConIo:Component.TicketSalesDisruptor) < prototype(Neos.Fusion:Component) {
+    title = ''
+    text = ''
+    salesBarTitle = ''
+
+    buttonLabel = ''
+    link = ''
+
+    sold = 0
+    goal = 0
+    stretchGoal = 0
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+        text = ${PropTypes.string}
+        salesBarTitle = ${PropTypes.string}
+
+        buttonLabel = ${PropTypes.string}
+        link = ${PropTypes.string}
+
+        sold = ${PropTypes.integer}
+        goal = ${PropTypes.integer}
+        stretchGoal = ${PropTypes.integer}
+    }
+
+    renderer = afx`
+        <div class="ticket-sales-disruptor__fixed-placeholder"></div>
+        <div
+            class="ticket-sales-disruptor"
+            data-component="ScrollClassToggler"
+            data-scrollClasses='{"245":{"className": "ticket-sales-disruptor--fixed","removeOnScrollDecrease": false}}'
+        >
+            <div class="ticket-sales-disruptor__inner">
+                <div class="ticket-sales-disruptor__text">
+                    <h2>{props.title}</h2>
+                    <p>{props.text}</p>
+                </div>
+                <div class="ticket-sales-disruptor__sales">
+                    <strong>{props.salesBarTitle}</strong>
+                    <div class="ticket-sales-disruptor__sales-bar">
+                        <div class="ticket-sales-disruptor__sales-bar__sold" style={"width:"+ props.sold / props.stretchGoal * 100  +"%"}>
+                            <div class="ticket-sales-disruptor__sales-bar__bar"></div>
+                            <span @if={props.sold}>sold {props.sold}</span>
+                        </div>
+                        <div class="ticket-sales-disruptor__sales-bar__minimum-goal" style={"width:"+ props.goal / props.stretchGoal * 100  +"%"}></div>
+                        <div class="ticket-sales-disruptor__sales-bar__goal">goal {props.stretchGoal}</div>
+                    </div>
+                    <div class="ticket-sales-disruptor__minimum-goal" >
+                        <span style={"left:"+ props.goal / props.stretchGoal * 100  +"%"}>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            minimum {props.goal}
+                        </span>
+                    </div>
+
+                    <div class="ticket-sales-disruptor__call-to-action">
+                        <a class="btn btn--solidSecondary" href={props.link} target="_blank"
+                           rel="noopener external">
+                            <div class="btn__content">{props.buttonLabel}</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+}
