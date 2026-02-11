@@ -1,0 +1,38 @@
+###########################################
+# A blog post based teaser which is best used in
+# grid elements to promote a specific or the latest blog post of a blog feed.
+###########################################
+
+'Neos.NeosIo.Blog:Content.BlogTeaser':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NeosIo:Mixin.Teaser': true
+  ui:
+    label: 'Blog teaser'
+    icon: newspaper
+    group: special
+  properties:
+    subTitle:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Enter text here…'
+  references:
+    blogPost:
+      ui:
+        label: 'Blog post'
+        inspector:
+          group: default
+          editorOptions:
+            nodeTypes:
+              - Neos.NeosIo:Post
+    blogFeed:
+      ui:
+        label: 'Blog feed'
+        inspector:
+          group: default
+          editorOptions:
+            nodeTypes:
+              - Neos.Neos:Document
