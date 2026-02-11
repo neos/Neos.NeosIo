@@ -1,0 +1,23 @@
+###########################################
+# Mixin which is responsible for all options
+# regarding the document disruptor.
+###########################################
+
+'Neos.NeosIo:Mixin.Disruptor':
+  abstract: TRUE
+  childNodes:
+    'disruptor':
+      type: 'Neos.Neos:ContentCollection'
+      position: 'start'
+      constraints:
+        nodeTypes:
+          '*': FALSE
+          Neos.NeosIo:Constraints.Disruptor: true
+  ui:
+    inspector:
+      groups:
+        'disruptor':
+          label: 'Disruptor'
+          position: 5
+          collapsed: true
+

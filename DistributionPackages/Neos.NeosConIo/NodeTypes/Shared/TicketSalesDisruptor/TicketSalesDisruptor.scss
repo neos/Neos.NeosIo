@@ -1,0 +1,198 @@
+.ticket-sales-disruptor__fixed-placeholder {
+  height: 300px;
+  width: 100%;
+  display: block;
+
+  @media screen and (max-width: 992px) {
+    display: none;
+  }
+}
+
+.ticket-sales-disruptor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding-top: $header-height--medium;
+  padding-bottom: 20px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #{brand('primary')};
+  box-shadow: inset 0 0 15px 5px rgba(0, 0, 0, 0.2);
+  z-index: z('disruptor');
+
+  color: #353535;
+
+  h2 {
+    margin-top: 0;
+
+    color: #353535;
+  }
+
+  @include max-screen(992px) {
+    position: relative;
+    height: auto;
+  }
+}
+
+.ticket-sales-disruptor.ticket-sales-disruptor--fixed {
+  @include min-screen(993px) {
+    position: fixed;
+    width: 100%;
+    padding-block: 10px;
+    box-shadow: none;
+    height: $header-height--fixed;
+
+    .ticket-sales-disruptor__text, .ticket-sales-disruptor__minimum-goal {
+      display: none;
+    }
+
+    .ticket-sales-disruptor__inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .ticket-sales-disruptor__sales {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      align-items: center;
+
+      > strong {
+        flex-shrink: 0;
+      }
+    }
+
+    .ticket-sales-disruptor__call-to-action {
+      flex-shrink: 0;
+      margin-top: 0;
+    }
+
+    .ticket-sales-disruptor__sales-bar {
+      margin-top: 0;
+    }
+
+    .ticket-sales-disruptor__sales-bar__sold {
+      height: 38px;
+    }
+  }
+}
+
+.ticket-sales-disruptor__inner {
+  width: 100%;
+  max-width: 1200px;
+  padding-inline: 20px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-gap: 40px;
+
+  @include max-screen(992px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-gap: 20px;
+  }
+}
+
+.ticket-sales-disruptor__call-to-action {
+  margin-top: 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ticket-sales-disruptor__sales-bar {
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
+
+  background-color: #fff;
+  border: 3px solid #fff;
+  clip-path: polygon(0 10px, 10px 0, 100% 0, 100% 100%, 0 100%);
+
+  font-size: 1.1rem;
+}
+
+.ticket-sales-disruptor__sales-bar__minimum-goal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+
+  border-right: 2px solid #F1C21B;
+}
+
+.ticket-sales-disruptor__minimum-goal {
+  position: relative;
+  width: 100%;
+
+  font-size: 1.1rem;
+
+  > span {
+    position: absolute;
+    margin-left: -11px;
+
+    color: #353535;
+    white-space: nowrap;
+
+    i {
+      margin-right: 5px;
+    }
+  }
+}
+
+.ticket-sales-disruptor__sales-bar__goal {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+
+  z-index: 5;
+}
+
+.ticket-sales-disruptor__sales-bar__sold {
+  position: relative;
+  height: 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
+
+  z-index: 10;
+
+  span {
+    position: relative;
+    z-index: 1;
+
+    line-height: 1;
+    text-align: right;
+  }
+}
+
+.ticket-sales-disruptor__sales-bar__bar {
+  position: absolute;
+  height: 100%;
+  width: 0;
+  left: 0;
+  top: 0;
+
+  background-color: #F1C21B;
+  clip-path: polygon(0 10px, 10px 0, 100% 0, 100% 30px, calc(100% - 10px) 100%, 0 100%);
+  animation: grow 1.5s ease-out 500ms forwards;
+}
+
+// animation for bar growing from 0 to 100% width, the width is set in the html as an inline style
+@keyframes grow {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+

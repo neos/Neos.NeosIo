@@ -1,0 +1,108 @@
+###########################################
+# NodeType to render a ticket sales disruptor, showing the amount of tickets sold and the goal, as well as a button to buy tickets.
+###########################################
+
+'Neos.NeosConIo:TicketSalesDisruptor':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NeosIo:ContentInspectorGroupMixin': true
+    'Neos.NodeTypes:LinkMixin': true
+    'Neos.NeosIo:Constraints.Disruptor': true
+  ui:
+    label: Ticket sales disruptor
+    icon: ticket
+    inlineEditable: true
+  properties:
+    title:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Get your ticket now'
+            autoparagraph: false
+    text:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Why should I buy a ticket?'
+            autoparagraph: false
+            formatting:
+              strong: true
+              em: true
+              u: true
+              underline: true
+              strikethrough: true
+              sub: true
+              sup: true
+              del: true
+              p: true
+              h3: true
+              h4: true
+              h5: true
+              h6: true
+              pre: true
+              removeFormat: true
+              left: false
+              right: false
+              center: false
+              justify: false
+              table: true
+              ol: true
+              ul: true
+              a: true
+
+    salesBarTitle:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Sold Tickets'
+            autoparagraph: false
+
+    buttonLabel:
+      type: string
+      defaultValue: 'Buy ticket'
+      ui:
+        label: 'Ticket Button Label'
+        reloadIfChanged: true
+        inspector:
+          position: 300
+          group: content
+    link:
+      ui:
+        label: 'Ticket Link'
+        inspector:
+          group: content
+          editorOptions:
+            startingPoint: '/<Neos.Neos:Sites>/'
+
+    sold:
+      type: integer
+      defaultValue: 0
+      ui:
+        label: 'Amount of tickets sold'
+        reloadIfChanged: true
+        inspector:
+          group: content
+
+    goal:
+      type: integer
+      defaultValue: 50
+      ui:
+        label: 'Goal number of tickets'
+        reloadIfChanged: true
+        inspector:
+          group: content
+
+    stretchGoal:
+      type: integer
+      defaultValue: 80
+      ui:
+        label: 'Stretch Goal number of tickets'
+        reloadIfChanged: true
+        inspector:
+          group: content
