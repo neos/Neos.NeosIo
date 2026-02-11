@@ -1,0 +1,64 @@
+prototype(Neos.NeosIo:Component.ImageTeaser) < prototype(Neos.Fusion:Component) {
+    title = null
+    subTitle = null
+    rawTitle = ${this.title}
+    rawSubTitle = ${this.subTitle}
+    alternativeText = null
+    image = null
+    text = null
+    fallbackImageUrl = null
+    className = null
+    openInNewTab = false
+    link = null
+    maximumHeight = 450
+    maximumWidth = 700
+
+    renderer = afx`
+        <Neos.Fusion:Tag
+            tagName={props.link ? 'a' : 'div'}
+            attributes.href={props.link}
+            attributes.href.@if={props.link && !renderingMode.isEdit}
+            attributes.target={props.openInNewTab ? '_blank' : null}
+            attributes.target.@if={props.link && props.openInNewTab}
+            attributes.class={['imageTeaser', props.link && 'imageTeaser--isLink', className]}
+        >
+            <Neos.Neos:ImageTag
+                @if={props.image && thumbnail.resource}
+                asset={props.image}
+                title={props.rawTitle}
+                maximumHeight={props.maximumHeight}
+                maximumWidth={props.maximumWidth}
+                allowCropping={true}
+                width={props.width}
+                height={props.height}
+                attributes.class="imageTeaser__image"
+                attributes.alt={props.alternativeText}
+                attributes.style={'max-height: ' + props.maximumHeight + 'px;'}
+                attributes.style.@if.set={props.maximumHeight}
+            />
+            <img
+                @if={!props.image && props.fallbackImageUrl}
+                src={props.fallbackImageUrl}
+                alt={props.alternativeText}
+                title={props.rawTitle}
+            />
+            <img
+                @if={renderingMode.isEdit && !props.image && !props.fallbackImageUrl}
+                class="imageTeaser__image neos-handle"
+                src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
+                title="Dummy image"
+                alt="Dummy image"
+            />
+
+            <div class="imageTeaser__contents u-invertText">
+                <h5 class="imageTeaser__contents__subHeading">
+                    {props.subTitle}
+                </h5>
+                <h3 class="imageTeaser__contents__heading">
+                    {props.title}
+                </h3>
+                <div class="imageTeaser__contents__text">{props.text}</div>
+            </div>
+        </Neos.Fusion:Tag>
+    `
+}
