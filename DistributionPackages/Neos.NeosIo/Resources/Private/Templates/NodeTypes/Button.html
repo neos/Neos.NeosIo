@@ -33,7 +33,7 @@
 </f:section>
 
 <f:section name="buttonInner">
-    <div class="btn__content">
+    <span class="btn__content">
         <f:if condition="{neos:rendering.inBackend()}">
             <!-- Hint: Buttons might still contain links (old content); and this breaks the element in the frontend -- that is why we need to strip tags in FE. -->
             <f:then>
@@ -43,5 +43,5 @@
                 {buttonLabel -> f:format.stripTags()}
             </f:else>
         </f:if>
-    </div>
+    </span>
 </f:section>
