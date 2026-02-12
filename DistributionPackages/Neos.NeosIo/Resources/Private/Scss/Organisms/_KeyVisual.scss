@@ -41,6 +41,11 @@
   vertical-align: middle;
   background-size: cover;
   background-position: center center;
+  padding: $grid-gutter;
+  >.neos-contentcollection {
+    max-width: $layout-small-width;
+    margin: 0 auto;
+  }
 
   &:before {
     content: '';
@@ -58,7 +63,11 @@
   }
 
   h1, .h1 {
-    font-size: 60px;
+    font-size: 40px;
+    line-height: 1.25;
+    @include mq('medium') {
+      font-size: 60px;
+    }
   }
 
   h1, h2, h3,
