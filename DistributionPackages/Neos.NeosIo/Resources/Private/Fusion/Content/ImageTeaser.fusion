@@ -63,13 +63,15 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
             />
 
             <div class="imageTeaser__contents u-invertText">
-                <h5 class="imageTeaser__contents__subHeading">
-                    {props.subTitle}
-                </h5>
-                <h3 class="imageTeaser__contents__heading">
-                    {props.title}
+                <h3 class="imageTeaser__contents__heading" @if={props.title || props.subTitle}>
+                    <span class="imageTeaser__contents__subHeading" @if={props.subTitle}>
+                        {props.subTitle}
+                    </span>
+                    <span @if={props.title}>
+                      {props.title}
+                    </span>
                 </h3>
-                <div class="imageTeaser__contents__text">{props.text}</div>
+                <div class="imageTeaser__contents__text" @if={props.text}>{props.text}</div>
             </div>
         </Neos.Fusion:Tag>
     `
