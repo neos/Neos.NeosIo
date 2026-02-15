@@ -1,0 +1,35 @@
+###########################################
+# Displays an overview of sponsors depending
+# on the selected level, default is all sponsors
+###########################################
+
+'Neos.NeosIo:Sponsors':
+  superTypes:
+    'Neos.Neos:Content': true
+
+  constraints:
+    nodeTypes:
+      '*': false
+
+  ui:
+    label: Longtime Supporters
+    icon: sack-dollar
+
+    inspector:
+      groups:
+        level:
+          label: Sponsoring Level
+  properties:
+    level:
+      type: reference
+      ui:
+        help:
+          message: 'If no level is chosen, all longtime supporters will be shown grouped by their sponsoring level'
+        label: 'Level'
+        reloadIfChanged: true
+        showInCreationDialog: true
+        inspector:
+          group: level
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo:Badge'
