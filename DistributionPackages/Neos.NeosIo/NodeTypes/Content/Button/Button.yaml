@@ -27,12 +27,14 @@
       ui:
         label: 'Button Link'
         inspector:
+          hidden: 'ClientEval:node.properties.scrollToContentWhenClicked ? true : false'
           group: content
           editorOptions:
             startingPoint: '/<Neos.Neos:Sites>/'
     openInNewTab:
       ui:
         inspector:
+          hidden: 'ClientEval:node.properties.scrollToContentWhenClicked ? true : false'
           group: content
     scrollToContentWhenClicked:
       type: boolean
