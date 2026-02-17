@@ -10,7 +10,6 @@
       groups:
         properties:
           label: 'Badge properties'
-          position: 1
           icon: gears
   properties:
     highlight:
@@ -28,7 +27,6 @@
         inspector:
           group: properties
           editor: Neos.Neos/Inspector/Editors/LinkEditor
-          position: 10
     image:
       type: Neos\Media\Domain\Model\ImageInterface
       ui:
@@ -36,13 +34,13 @@
         reloadIfChanged: true
         inspector:
           group: properties
-          position: 20
     description:
       type: string
       ui:
         inlineEditable: true
         inline:
           editorOptions:
+            autoparagraph: false
             formatting:
               strong: true
               em: true
@@ -56,4 +54,5 @@
         inlineEditable: true
         inline:
           editorOptions:
+            autoparagraph: false
             placeholder: 'Enter the label for the link'
