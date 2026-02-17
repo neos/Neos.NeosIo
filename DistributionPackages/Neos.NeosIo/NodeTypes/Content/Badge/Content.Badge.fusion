@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo:Badge) < prototype(Neos.Neos:ContentComponent) {
-    renderer = Neos.NeosIo:Components.Badge {
+    renderer = Neos.NeosIo:Component.Badge {
         image = ${q(node).property('image')}
         highlight = ${q(node).property('highlight')}
         description = Neos.Neos:Editable {
