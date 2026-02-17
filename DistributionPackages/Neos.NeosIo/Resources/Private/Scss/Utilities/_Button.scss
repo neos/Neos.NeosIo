@@ -1,0 +1,191 @@
+/**
+ * Base Button:
+ * `.btn` - The base class for all buttons.
+ * Button styles can be applied to any element. Typically you'll want to use
+ * either a `<button>` or an `<a>` element:
+ *
+ *     @example
+ *     a.btn My Button
+ */
+@mixin btn() {
+  --btn-vertical-padding: #{$btn-vertical-padding};
+  --btn-horizontal-padding: #{$btn-horizontal-padding};
+  --btn-clip-width: 14px;
+  --btn-clip-height: 10px;
+  --btn-fill-color: transparent;
+  --btn-transition: background .15s ease-in;
+  --btn-color: currentColor;
+
+  display: inline-block;
+
+  // Set in em's so we can change the size of the button depending on the font-size.
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+
+  // Normalize some rules across the targeted elements (<input>, <button> and the .btn class).
+  font-weight: $regular;
+  line-height: 1;
+  color: #{brand('primary')}; // Fallback for IE11
+  color: var(--btn-color);
+  vertical-align: top;
+  transition: all #{$transition-duration} ease;
+  text-align: center;
+  background: 0;
+
+  & + & {
+    margin-left: 1em;
+  }
+
+  &,
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: none;
+  }
+
+  &:active,
+  &:focus {
+    transform: translateY(3px);
+  }
+
+  //
+  // Edge case for the neos backend.
+  //
+  a {
+    color: currentColor;
+  }
+}
+
+
+@mixin btnClippedBorder() {
+  .btn__content {
+    $clip-path: polygon(var(--btn-clip-width) 0px, 0 var(--btn-clip-height), 0 100%, calc(100% - var(--btn-clip-width)) 100%, 100% calc(100% - var(--btn-clip-height)), 100% 0);
+
+    // Autoprefixer doesn't add the required webkit prefix for some reason
+    -webkit-clip-path: #{$clip-path};
+    clip-path: #{$clip-path};
+  }
+}
+
+@mixin btnBorder() {
+  &::before {
+    $clip-path: polygon(calc(var(--btn-clip-width) + 1px) 0px, 0 calc(var(--btn-clip-height) + 1px), 0 100%, calc(100% - var(--btn-clip-width) - 1px) 100%, 100% calc(100% - var(--btn-clip-height) - 1px), 100% 0);
+
+    position: absolute;
+    content: "";
+    background: var(--btn-stroke-color);
+    left: -1px;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+
+    // Autoprefixer doesn't add the required webkit prefix for some reason
+    -webkit-clip-path: #{$clip-path};
+    clip-path: #{$clip-path};
+  }
+}
+
+/**
+ * Full-Width Button:
+ * `.btn--full` - Set the button width to the width of it's parent element.
+ *
+ *     @example
+ *     a.btn.btn--full My Button
+ */
+@mixin btn--full() {
+  display: block;
+  text-align: center;
+
+  // The following is so that this class works properly on inputs as well as anchor tags.
+  padding-right: 0;
+  padding-left: 0;
+  width: 100%;
+}
+
+
+/**
+ * Bordered Primary Button:
+ * `.btn--primary` - Sets the button to a bordered button which is themed after the primary brand color.
+ *
+ *     @example
+ *     a.btn.btn--primary My Button
+ */
+@mixin btn--primary() {
+  --btn-fill-color: var(--stage-background-color);
+  --btn-stroke-color: #{transparentize(brand('primary'), 0.4)};
+  --btn-color: #{brand('primary')};
+
+  @include btnClippedBorder;
+  @include btnBorder;
+
+  &:hover {
+    --btn-stroke-color: #{brand('primary')};
+  }
+}
+
+
+/**
+ * Bordered Secondary Button:
+ * `.btn--secondary` - Sets the button to a bordered button which is themed after the secondary brand color.
+ *
+ *     @example
+ *     a.btn.btn--secondary My Button
+ */
+@mixin btn--secondary() {
+  --btn-fill-color: var(--stage-background-color);
+  --btn-stroke-color: #ccc;
+  --btn-color: #{brand('secondary')};
+
+  @include btnClippedBorder;
+  @include btnBorder;
+
+  &:hover {
+    --btn-stroke-color: #{brand('teritary')};
+  }
+}
+
+
+/**
+ * Bordered Bright Button:
+ * `.btn--bright` - Sets the button to a bordered button which is themed in white.
+ *
+ *     @example
+ *     <div style="background:#000;">
+ *       <a class="btn btn--bright">My Button</a>
+ *     </div>
+ */
+@mixin btn--bright() {
+  --btn-fill-color: var(--stage-background-color);
+  --btn-stroke-color: #{transparentize(#fff, 0.4)};
+  --btn-color: #FFF;
+
+  @include btnClippedBorder;
+  @include btnBorder;
+
+  &:hover {
+    --btn-stroke-color: #fff;
+  }
+}
+
+
+/**
+ * Solid Bright Button:
+ * `.btn--solidBright` - Sets the button to a solid button which is themed in white.
+ *
+ *     @example
+ *     <div style="background:#000;">
+ *       <a class="btn btn--solidBright">My Button</a>
+ *     </div>
+ */
+@mixin btn--solidBright() {
+  --btn-fill-color: #{transparentize(#fff, 0.1)};
+  --btn-color: currentColor;
+
+  @include btnClippedBorder;
+
+  &:hover {
+    --btn-fill-color: #fff;
+  }
+}

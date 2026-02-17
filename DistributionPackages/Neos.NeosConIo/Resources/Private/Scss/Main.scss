@@ -18,6 +18,7 @@ $font-path: "../../Neos.NeosIo/Assets";
 @import "Variables";
 
 // Utilities
+@import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Utilities/Button";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Utilities/Animations";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Utilities/Brand";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Utilities/Display";
@@ -31,7 +32,6 @@ $font-path: "../../Neos.NeosIo/Assets";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Alert";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Avatar";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Base";
-@import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Button";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/ButtonChoiceLabel";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Code";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Form";
@@ -90,8 +90,11 @@ $font-path: "../../Neos.NeosIo/Assets";
 // Templates
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Templates/Print";
 
-// NodeTypes
-@import "DistributionPackages/Neos.NeosConIo/NodeTypes/**/*.scss";
+// Styles for NodeTypes
+@import "DistributionPackages/Neos.NeosIo/NodeTypes/**/*.scss";
+
+// Shared NodeTypes from Neos Con Package
+@import "DistributionPackages/Neos.NeosConIo/NodeTypes/Shared/**/*.scss";
 
 .neos-neosio-youtube {
   margin-bottom: #{$basic-spacing}px;
