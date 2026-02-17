@@ -1,0 +1,59 @@
+prototype(Neos.NeosIo:Components.Badge) < prototype(Neos.Fusion:Component) {
+    image = ''
+    highlight = false
+    description = ''
+    link = ''
+    linkText = ''
+    openInNewTab = false
+
+    @propTypes {
+        @strict = true
+        image = ${PropTypes.string}
+        highlight = ${PropTypes.bool}
+        description = ${PropTypes.string}
+        link = ${PropTypes.string}
+        linkText = ${PropTypes.string}
+        openInNewTab = ${PropTypes.bool}
+    }
+
+    @private {
+        inBackend = ${renderingMode.isEdit && renderingMode.isEdit}
+        class = 'badge gi u-w1/2 u-wm4/12 u-wl2/12 neos-neosio-badge'
+        class.@process.highlight = ${value + ' badge--highlighted'}
+        class.@process.highlight.@if.set = ${props.highlight}
+    }
+
+    renderer = afx`
+        <div class={private.class}>
+            <Neos.Neos:ImageTag
+                @if={props.image}
+                asset={props.image}
+                maximumWidth="360"
+                attributes.class="badge__image"
+                attributes.alt={"Logo of " + props.linkText + " badge"}
+            />
+            <img
+                @if={private.inBackend && !props.image}
+                class="badge__image"
+                src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
+                title="Dummy image"
+                alt="Dummy image"
+            />
+
+            <div @if.set={!String.isBlank(props.description)} class="badge__description">
+                {props.description}
+            </div>
+            <Neos.Fusion:Tag
+                tagName={(props.link && !private.inBackend) ? 'a' : 'div'}
+                attributes.class="badge__linktext btn btn--solidPrimary"
+                attributes.href={props.href ? props.href : null}
+                attributes.target={props.openInNewTab ? '_blank' : null}
+            >
+                <div class="btn__content">
+                    {props.linkText}
+                </div>
+            </Neos.Fusion:Tag>
+        </div>
+
+    `
+}
