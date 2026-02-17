@@ -18,9 +18,11 @@ prototype(Neos.NeosIo:Components.Badge) < prototype(Neos.Fusion:Component) {
 
     @private {
         inBackend = ${renderingMode.isEdit}
-        class = 'badge gi u-w1/2 u-wm4/12 u-wl2/12 neos-neosio-badge'
-        class.@process.highlight = ${value + ' badge--highlighted'}
-        class.@process.highlight.@if.set = ${props.highlight}
+        class = Neos.Fusion:DataStructure {
+            main = 'badge gi u-w1/2 u-wm4/12 u-wl2/12 neos-neosio-badge'
+            highlight = ${'badge--highlighted'}
+            highlight.@if.set = ${props.highlight}
+        }
     }
 
     renderer = afx`
