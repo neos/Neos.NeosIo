@@ -4,6 +4,7 @@ prototype(Neos.NeosIo:Badge) < prototype(Neos.Neos:ContentComponent) {
         highlight = ${q(node).property('highlight')}
         description = Neos.Neos:Editable {
             property = 'description'
+            block = false
         }
         link = ${q(node).property('link')}
         link.@process.convertUris = Neos.Neos:ConvertUris {
@@ -11,6 +12,7 @@ prototype(Neos.NeosIo:Badge) < prototype(Neos.Neos:ContentComponent) {
         }
         linkText = Neos.Neos:Editable {
             property = 'linkText'
+            block = false
         }
         openInNewTab = true
     }
