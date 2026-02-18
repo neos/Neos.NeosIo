@@ -1,0 +1,66 @@
+prototype(Neos.NeosIo:Component.Icon) < prototype(Neos.Fusion:Component) {
+    alignment = ''
+    icon = ''
+    color = ''
+    size = ''
+    isPadded = false
+
+    @propTypes {
+        @strict = true
+        alignment = ${PropTypes.oneOf(['Left', 'Center', 'Right', 'inline'])}
+        icon = ${PropTypes.string}
+        color = ${PropTypes.oneOf(['inherit', 'primary', 'secondary'])}
+        size = ${PropTypes.oneOf(['regular', 'large', 'huge'])}
+        isPadded = ${PropTypes.boolean}
+    }
+
+    @private {
+        inBackend = ${renderingMode.isEdit}
+        iconClass = Neos.Fusion:DataStructure {
+            main = 'i'
+            isPadded = ${props.isPadded ? 'i--padded' : ''}
+            size = ${'i--' + props.size}
+            color = ${'u-brandColor-' + props.color}
+        }
+    }
+
+    renderer = afx`
+        <Neos.NeosIo:Component.IconWrapper alignment={props.alignment}>
+            <svg @if={props.icon != "none"} class={private.iconClass} viewBox="0 0 24 24" aria-hidden="true">
+                <path d={props.icon} />
+            </svg>
+
+            <svg @if={props.icon == "none" && private.inBackend} class={private.iconClass} viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z" />
+            </svg>
+        </Neos.NeosIo:Component.IconWrapper>
+    `
+}
+
+// TODO maybe create alignment wrapper component to avoid code duplication with Button and Icon?
+prototype(Neos.NeosIo:Component.IconWrapper) < prototype(Neos.Fusion:Component) {
+    alignment = ''
+
+    @propTypes {
+        @strict = true
+        alignment = ${PropTypes.oneOf(['Left', 'Center', 'Right', 'inline'])}
+    }
+
+    renderer = Neos.Fusion:Case {
+        inline {
+            condition = ${props.alignment == 'inline'}
+            renderer = afx`
+                {props.content}
+            `
+        }
+
+        default {
+            condition = ${true}
+            renderer = afx`
+                <div class={"u-align" + props.alignment}>
+                    {props.content}
+                </div>
+            `
+        }
+    }
+}
