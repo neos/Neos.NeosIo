@@ -1,8 +1,10 @@
 prototype(Neos.NeosIo:LandingPage) < prototype(Neos.NeosIo:DefaultPage) {
-    header.keyVisual {
-        // to use the "large" key visual, we need to append a CSS class to the outer container; and change the default-Image.
-        prototype(Neos.NeosIo:KeyVisual.AbstractRenderer).classes.@process.appendLarge = ${value + " keyVisual--large"}
-        prototype(Neos.NeosIo:KeyVisual.StaticPlaceholderImageRenderer).@context.staticUrlPrefix.path = 'Images/DefaultKeyvisual'
+    header.keyVisualWrapper {
+        keyVisualSize = 'large'
+        keyVisual {
+            // to use the "large" key visual, we need to append a CSS class to the outer container; and change the default-Image.
+            prototype(Neos.NeosIo:KeyVisual.StaticPlaceholderImageRenderer).@context.staticUrlPrefix.path = 'Images/DefaultKeyvisual'
+        }
     }
 
     content.renderer >

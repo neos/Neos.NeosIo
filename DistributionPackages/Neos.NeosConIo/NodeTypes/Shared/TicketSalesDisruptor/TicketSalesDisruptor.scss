@@ -1,28 +1,13 @@
-.ticket-sales-disruptor__fixed-placeholder {
-  height: 300px;
-  width: 100%;
-  display: block;
-
-  @media screen and (max-width: 992px) {
-    display: none;
-  }
-}
-
 .ticket-sales-disruptor {
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   padding-top: $header-height--medium;
-  padding-bottom: 20px;
-  height: 300px;
+  padding-bottom: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
 
   background-color: #{brand('primary')};
   box-shadow: inset 0 0 15px 5px rgba(0, 0, 0, 0.2);
-  z-index: z('disruptor');
 
   color: #353535;
 
@@ -33,51 +18,7 @@
   }
 
   @include max-screen(992px) {
-    position: relative;
-    height: auto;
-  }
-}
-
-.ticket-sales-disruptor.ticket-sales-disruptor--fixed {
-  @include min-screen(993px) {
-    position: fixed;
-    width: 100%;
-    padding-block: 10px;
-    box-shadow: none;
-    height: $header-height--fixed;
-
-    .ticket-sales-disruptor__text, .ticket-sales-disruptor__minimum-goal {
-      display: none;
-    }
-
-    .ticket-sales-disruptor__inner {
-      grid-template-columns: 1fr;
-      text-align: center;
-    }
-
-    .ticket-sales-disruptor__sales {
-      display: flex;
-      flex-direction: row;
-      gap: 40px;
-      align-items: center;
-
-      > strong {
-        flex-shrink: 0;
-      }
-    }
-
-    .ticket-sales-disruptor__call-to-action {
-      flex-shrink: 0;
-      margin-top: 0;
-    }
-
-    .ticket-sales-disruptor__sales-bar {
-      margin-top: 0;
-    }
-
-    .ticket-sales-disruptor__sales-bar__sold {
-      height: 38px;
-    }
+    padding-bottom: 20px;
   }
 }
 
@@ -87,19 +28,27 @@
   padding-inline: 20px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 2fr 3fr auto;
   grid-gap: 40px;
 
   @include max-screen(992px) {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     grid-gap: 20px;
   }
 }
 
 .ticket-sales-disruptor__call-to-action {
-  margin-top: 40px;
-  display: flex;
-  justify-content: flex-end;
+  align-self: flex-end;
+  margin-bottom: 10px;
+
+  .btn__content {
+    height: 46px;
+  }
+
+  @include max-screen(992px) {
+    justify-self: center;
+    margin-top: 30px;
+  }
 }
 
 .ticket-sales-disruptor__sales-bar {
@@ -196,3 +145,66 @@
   }
 }
 
+.ticket-sales-disruptor__fixed {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: $header-height--fixed;
+
+  background-color: #{brand('primary')};
+  z-index: z('disruptor');
+
+  color: #353535;
+
+  &--visible {
+    display: flex;
+  }
+
+  @include max-screen(992px) {
+    display: none !important;
+  }
+
+  .ticket-sales-disruptor__text, .ticket-sales-disruptor__minimum-goal {
+    display: none;
+  }
+
+  .ticket-sales-disruptor__inner {
+    grid-template-columns: 1fr auto;
+    text-align: center;
+
+    max-width: 900px;
+  }
+
+  .ticket-sales-disruptor__sales {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+
+    > strong {
+      flex-shrink: 0;
+    }
+  }
+
+  .ticket-sales-disruptor__call-to-action {
+    flex-shrink: 0;
+    margin: 0;
+  }
+
+  .ticket-sales-disruptor__sales-bar {
+    margin-top: 0;
+  }
+
+  .ticket-sales-disruptor__sales-bar__bar {
+    animation: none;
+    width: 100%;
+  }
+
+  .ticket-sales-disruptor__sales-bar__sold {
+    height: 38px;
+  }
+}

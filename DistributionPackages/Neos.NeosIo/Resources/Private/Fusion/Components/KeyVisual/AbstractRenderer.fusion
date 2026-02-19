@@ -10,13 +10,11 @@ prototype(Neos.NeosIo:KeyVisual.AbstractRenderer) < prototype(Neos.Fusion:Compon
     highQualityImageUri = ''
     imageSrcSet = ''
 
-    classes = ${"keyVisual keyVisual--" + props.keyVisualSize + " print-hidden"}
-
     divClasses = ${"keyVisual__contents u-alignCenter " + (this.isKeyVisualContentsInverted ? "u-invertText" : "")}
     previewImageStyleAttribute = ${"background-image: url('" + this.previewImageUri + "')"}
 
     renderer = afx`
-        <section class={props.classes}>
+        <section class="keyVisual">
             <div class={props.divClasses}
                 data-component="ProgressiveImage"
                 data-isInline="true"
