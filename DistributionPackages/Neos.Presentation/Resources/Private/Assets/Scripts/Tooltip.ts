@@ -28,19 +28,6 @@ The tooltip element should look like this
     <div id="tooltip-arrow"></div>
 </div>
 
-this is an example with Tailwind CSS
-
-<div
-    id="tooltip"
-    role="tooltip"
-    class="absolute opacity-0 w-max top-0 left-0 pointer-events-none z-[9999] transition duration-300 text-sm rounded text-white px-2 py-1 drop-shadow bg-neutral-800"
-    style="transition:none"
-    aria-hidden="true"
->
-    <span id="tooltip-content"></span>
-    <div id="tooltip-arrow" class="absolute size-2 rotate-45 bg-neutral-800"></div>
-</div>
-
 I you remove the div with the id tooltip-arrow the arrow will be disabled
 
 Per default the id of the tooltip is tooltip, but you can change it with the id modifier
