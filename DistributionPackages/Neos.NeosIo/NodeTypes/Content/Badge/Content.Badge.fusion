@@ -1,0 +1,19 @@
+prototype(Neos.NeosIo:Badge) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.NeosIo:Component.Badge {
+        image = ${q(node).property('image')}
+        highlight = ${q(node).property('highlight')}
+        description = Neos.Neos:Editable {
+            property = 'description'
+            block = false
+        }
+        link = ${q(node).property('link')}
+        link.@process.convertUris = Neos.Neos:ConvertUris {
+            absolute = true
+        }
+        linkText = Neos.Neos:Editable {
+            property = 'linkText'
+            block = false
+        }
+        openInNewTab = true
+    }
+}
