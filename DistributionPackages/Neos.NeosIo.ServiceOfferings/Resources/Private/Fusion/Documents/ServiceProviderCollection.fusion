@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection) < prototype(Neos.NeosIo:DefaultPage) {
-    header.keyVisual.keyVisualSize = 'small'
+    header.keyVisualWrapper.keyVisualSize = 'small'
     content.parts {
         listing  = Neos.Fusion:Component {
             serviceProviders = ${q(node).children('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]').get()}

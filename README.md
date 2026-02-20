@@ -15,6 +15,10 @@ Clone the repository, and setup Neos as always:
   - `./flow domain:add --site-node-name neosio --hostname neosio.localbeach.net --scheme https`
   - `./flow domain:add --site-node-name flowneosio --hostname flowneosio.localbeach.net --scheme https`
   - `./flow domain:add --site-node-name neosconio --hostname neosconio.localbeach.net --scheme https`
+- To build css/js assets
+  - Run `yarn` inside root of the project to install dependencies
+  - Run `yarn build` to build the assets
+
 
 _Note: We require [nvm](https://github.com/creationix/nvm#install-script) as well as the `yarn` binary to be installed on your system._
 
