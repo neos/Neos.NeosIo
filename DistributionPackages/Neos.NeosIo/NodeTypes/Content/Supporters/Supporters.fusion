@@ -14,7 +14,6 @@ prototype(Neos.NeosIo:Supporters) < prototype(Neos.Neos:ContentComponent) {
 
     serviceProvidersWithBadge = ${q(this.levelFilter).backReferenceNodes().unique().filter('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
 
-                  //<Neos.Fusion:Debug>{}</Neos.Fusion:Debug>
     renderer = afx`
         <div class="supporters" @if.notEmpty={Array.length(props.serviceProvidersWithBadge) > 0}>
             <h2 class="headline" > {props.badgeName} {Translation.translate('supporters', '', [], 'Main', 'Neos.NeosIo')}</h2>
@@ -31,5 +30,16 @@ prototype(Neos.NeosIo:Supporters) < prototype(Neos.Neos:ContentComponent) {
             </ul>
         </div>
     `
-    //cache config if service provider or badges change
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            name = 'supporters'
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
+        entryTags {
+            documentNode = ${Neos.Caching.nodeTag(documentNode)}
+            serviceProviders = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.ServiceOfferings:Document.ServiceProvider', node)}
+            longtimeSupporterBadges = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Badge', node)}
+        }
+    }
 }
