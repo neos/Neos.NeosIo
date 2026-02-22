@@ -1,16 +1,11 @@
-<<<<<<<< HEAD:DistributionPackages/Neos.NeosIo/NodeTypes/Mixins/BadgeMixin.yaml
 'Neos.NeosIo:BadgeMixin':
   label: "${String.cropAtWord(String.trim(String.stripTags(String.pregReplace(q(node).property('name') || ((I18n.translate(node.nodeType.label) || node.nodeType.name) + (node.autoCreated ? ' (' + node.name + ')' : '')), '/<br\\W*?\\/?>|\\x{00a0}|[[^:print:]]|\\s+/u', ' '))), 100, '...')}"
 
   abstract: true
-========
-'Neos.NeosIo:Badge':
->>>>>>>> minedesign/feature/637-sponsors-module:DistributionPackages/Neos.NeosIo/NodeTypes/Content/Badge.yaml
 
   superTypes:
-    'Neos.NeosIo:BadgeMixin': true
+    'Neos.Neos:Content': true
   ui:
-<<<<<<<< HEAD:DistributionPackages/Neos.NeosIo/NodeTypes/Mixins/BadgeMixin.yaml
     icon: credit-card
     inlineEditable: true
     inspector:
@@ -87,6 +82,3 @@
         inline:
           editorOptions:
             placeholder: 'Enter the label for the link'
-========
-    label: Longtime Supporter
->>>>>>>> minedesign/feature/637-sponsors-module:DistributionPackages/Neos.NeosIo/NodeTypes/Content/Badge.yaml
