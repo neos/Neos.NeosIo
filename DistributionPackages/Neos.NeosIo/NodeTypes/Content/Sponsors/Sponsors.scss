@@ -1,0 +1,39 @@
+.sponsors {
+  --sponsor-item-width: 10%;
+  .headline {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  &-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-inline: -#{$grid-gutter};
+    margin-bottom: -#{$grid-gutter *2};
+    padding: 0;
+    justify-content: center;
+  }
+  &-item {
+    margin: 0 0 #{$grid-gutter * 2};
+    width: var(--sponsor-item-width);
+    padding-inline: #{$grid-gutter};
+    display: block;
+    min-width: 120px;
+    .neos-nodetypes-image {
+      width: 100%;
+      figure {
+        width: 100%;
+        a {
+          display: block;
+        }
+
+        img {
+          width: 100%;
+          height: unset;
+          aspect-ratio: 2 / 1;
+          object-fit: contain;
+          object-position: center;
+        }
+      }
+    }
+  }
+}

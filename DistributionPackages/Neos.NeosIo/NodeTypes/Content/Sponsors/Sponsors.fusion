@@ -1,0 +1,35 @@
+prototype(Neos.NeosIo:Sponsors) < prototype(Neos.Neos:ContentComponent) {
+    levelFilter = ${q(node).property('level')}
+    badgeName = ${q(this.levelFilter).property('name')}
+    badgeLevel = ${q(this.levelFilter).property('level')}
+    @context.allLongTimeSupporterBadges = ${q(site).find('[instanceof Neos.NeosIo:Badge]').sort('level', 'DESC')}
+
+    itemWidthPerLevel = Neos.Fusion:Map {
+        items = ${allLongTimeSupporterBadges}
+        itemRenderer = ${100 / (iterator.index + 2) + '%'}
+        keyRenderer = Neos.Fusion:Value {
+            value = ${q(item).property('level')}
+        }
+    }
+
+    serviceProvidersWithBadge = ${q(this.levelFilter).backReferenceNodes().unique().filter('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider][disabled!=true]')}
+
+    //<Neos.Fusion:Debug>{props.itemWidthPerLevel[props.badgeLevel]}</Neos.Fusion:Debug>
+    renderer = afx`
+        <div class="sponsors" @if.notEmpty={Array.length(props.serviceProvidersWithBadge) > 0}>
+            <h2 class="headline" > {props.badgeName} {Translation.translate('sponsors', '', [], 'Main', 'Neos.NeosIo')}</h2>
+            <ul class="sponsors-list" style={"--sponsor-item-width: " + props.itemWidthPerLevel[props.badgeLevel]}>
+                <Neos.Fusion:Loop items={props.serviceProvidersWithBadge} itemName="item">
+                    <li class="sponsors-item">
+                        <Neos.NodeTypes:Image image={q(item).property('logo')}
+                                              lightbox={false}
+                                              link={q(item).property('website')}
+                                              alternativeText={"Logo " + q(item).property('title')}
+                        />
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
+        </div>
+    `
+    //cache config if service provider or badges change
+}
