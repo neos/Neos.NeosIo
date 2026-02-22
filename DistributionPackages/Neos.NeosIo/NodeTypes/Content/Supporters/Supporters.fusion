@@ -12,15 +12,15 @@ prototype(Neos.NeosIo:Supporters) < prototype(Neos.Neos:ContentComponent) {
         }
     }
 
-    serviceProvidersWithBadge = ${q(this.levelFilter).backReferenceNodes().unique().filter('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider][disabled!=true]')}
+    serviceProvidersWithBadge = ${q(this.levelFilter).backReferenceNodes().unique().filter('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
 
-    //<Neos.Fusion:Debug>{props.itemWidthPerLevel[props.badgeLevel]}</Neos.Fusion:Debug>
+                  //<Neos.Fusion:Debug>{}</Neos.Fusion:Debug>
     renderer = afx`
         <div class="supporters" @if.notEmpty={Array.length(props.serviceProvidersWithBadge) > 0}>
             <h2 class="headline" > {props.badgeName} {Translation.translate('supporters', '', [], 'Main', 'Neos.NeosIo')}</h2>
             <ul class="supporters-list" style={"--supporters-item-width: " + props.itemWidthPerLevel[props.badgeLevel]}>
-                <Neos.Fusion:Loop items={props.serviceProvidersWithBadge} itemName="item">
-                    <li class="supporters-item">
+                  <Neos.Fusion:Loop items={props.serviceProvidersWithBadge} itemName="item">
+                    <li class="supporters-item" @if.notHidden={Neos.Node.isDisabled(item) == false}>
                         <Neos.NodeTypes:Image image={q(item).property('logo')}
                                               lightbox={false}
                                               link={q(item).property('website')}
