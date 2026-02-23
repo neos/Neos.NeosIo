@@ -79,3 +79,21 @@ services:
       interval: 1s
       timeout: 5s
       retries: 120
+
+  elasticsearch:
+    image: ${BEACH_ELASTICSEARCH_IMAGE:-flownative/elasticsearch}:${BEACH_ELASTICSEARCH_IMAGE_VERSION:-latest}
+    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_elasticsearch
+    networks:
+      - local_beach
+    ports:
+      - 9200:9200
+    volumes:
+      - ./.LocalBeach/elasticsearch/data:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    environment:
+      - cluster.name=neosio
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
