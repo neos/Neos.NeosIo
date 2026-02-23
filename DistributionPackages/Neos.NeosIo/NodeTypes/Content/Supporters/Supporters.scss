@@ -1,5 +1,9 @@
 .supporters {
   --supporters-item-width: 10%;
+  --supporter-spacing: #{$grid-gutter * 1.5};
+  @media (max-width: 979px) {
+    --supporter-spacing: #{$grid-gutter};
+  }
   .headline {
     margin-bottom: 2rem;
     text-align: center;
@@ -8,15 +12,15 @@
   &-list {
     display: flex;
     flex-wrap: wrap;
-    margin-inline: -#{$grid-gutter * 1.5};
-    margin-bottom: -#{$grid-gutter * 1.5};
+    margin-inline: calc(-1 * var(--supporter-spacing));
+    margin-bottom: calc(-1 * var(--supporter-spacing));
     padding: 0;
     justify-content: center;
   }
   &-item {
-    margin: #{$grid-gutter * 1.5} 0;
+    margin: var(--supporter-spacing) 0;
     width: var(--supporters-item-width);
-    padding-inline: #{$grid-gutter * 1.5};
+    padding-inline: var(--supporter-spacing) ;
     display: block;
     min-width: 120px;
     filter: grayscale(1);

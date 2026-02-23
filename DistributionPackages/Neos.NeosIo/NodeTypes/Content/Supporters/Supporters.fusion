@@ -13,7 +13,8 @@ prototype(Neos.NeosIo:Supporters) < prototype(Neos.Neos:ContentComponent) {
     }
 
     serviceProvidersWithBadge = ${q(this.levelFilter).backReferenceNodes().unique().filter('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]')}
-
+//@ToDoFE - why does Neos.NodeTypes:Image require thumbnails to render image?
+    //@ToDoFe -min-width per level?
     renderer = afx`
         <div class="supporters" @if.notEmpty={Array.length(props.serviceProvidersWithBadge) > 0}>
             <h2 class="headline" > {props.badgeName} {Translation.translate('supporters', '', [], 'Main', 'Neos.NeosIo')}</h2>
