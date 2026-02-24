@@ -1,0 +1,21 @@
+prototype(Neos.NeosIo:Content.HeroStage.LandingPage) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:Stage {
+        headline = Neos.Neos:Editable {
+            property = 'headline'
+            block = false
+        }
+
+        subline = Neos.Neos:Editable {
+            property = 'subline'
+            block = false
+        }
+
+        imageUri = Neos.Neos:ImageUri {
+            asset = ${q(node).property('image')}
+        }
+
+        icons = Neos.Neos:ContentCollection {
+            nodePath = 'icons'
+        }
+    }
+}

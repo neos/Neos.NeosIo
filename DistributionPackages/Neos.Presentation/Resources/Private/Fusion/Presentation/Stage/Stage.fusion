@@ -4,24 +4,27 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
         description = 'Main Stage component for header'
 
         props {
-            headline.text = 'The First Visual Enterprise <strong>Content Management System</strong>'
-            subline.text = 'Neos CMS is an open source modern digital content creation and publishing system. Unlock your potential with a system your devs and publishers will love.'
-            image = '<img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />'
-            icons = Neos.Fusion:DataStructure {
-                0 {
-                    text = 'Forever Open Source'
+            headline = 'The First Visual Enterprise <strong>Content Management System</strong>'
+            subline = 'Neos CMS is an open source modern digital content creation and publishing system. Unlock your potential with a system your devs and publishers will love.'
+            imageUri = 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            icons = Neos.Fusion:Join {
+                0 = Neos.Presentation:SquareIcon {
+                    content = 'Forever Open Source'
+                    color = 'black'
                     icon = 'heart'
-                    color = 'blue-light'
+                    background = 'blue-light'
                 }
-                1 {
-                    text = 'Planned Extensibility'
+                1 = Neos.Presentation:SquareIcon {
+                    content = 'Planned Extensibility'
+                    color = 'white'
                     icon = 'square'
-                    color = 'purple'
+                    background = 'purple'
                 }
-                2 {
-                    text = 'One click publishing'
+                2 = Neos.Presentation:SquareIcon {
+                    content = 'One click publishing'
+                    color = 'black'
                     icon = 'clock'
-                    color = 'yellow'
+                    background = 'yellow'
                 }
             }
         }
@@ -29,47 +32,35 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
 
     @propTypes {
         navSlot = PropTypes:String
-        headline = PropTypes:FromPrototype {
-            prototypeName = "Neos.Presentation:Headline"
-        }
-        subline = PropTypes:FromPrototype {
-            prototypeName = "Neos.Presentation:Paragraph"
-        }
-        image = PropTypes:String
-        icons = PropTypes:Array {
-            type = PropTypes:FromPrototype {
-                prototypeName = "Neos.Presentation:SquareIcon"
-            }
-        }
-    }
-
-    @private.iconPositionClass = Neos.Fusion:DataStructure {
-        1 = 'top-[30%] left-[10%]'
-        2 = 'top-[20%] right-[10%]'
-        3 = 'top-[50%] right-0'
+        headline = PropTypes:String
+        subline = PropTypes:String
+        imageUri = PropTypes:String
+        icons = PropTypes:String
     }
 
     renderer = afx`
-        <section class="n-stage relative flex flex-col items-center text-white">
+        <section
+            class="xl:pt-24 n-stage !relative h-[100vh] !flex flex-col items-center justify-center text-white mb-[6rem] xl:mb-[10rem]"
+        >
             {props.navSlot}
 
-            <div @if={props.icons} class="absolute size-full top-0 left-0 hidden pointer-events-none xl:block">
-                <Neos.Fusion:Loop items={props.icons}>
-                    <Neos.Presentation:SquareIcon
-                        @if={iterator.cycle <= 3}
-                        {...item}
-                        class={private.iconPositionClass[iterator.cycle]}
-                    />
-                </Neos.Fusion:Loop>
+            <div @if={props.icons} data-component="hero-stage-icon-box-container" class="!absolute size-full top-0 left-0 hidden pointer-events-none xl:block">
+                {props.icons}
             </div>
 
-            <Neos.Presentation:Spacing x y class="flex flex-col items-center text-center max-w-screen-xl w-full relative">
-                <Neos.Presentation:Headline {...props.headline} class="max-w-3xl pb-12 !text-white" tagName="h1" display="headline-lg" />
-                <Neos.Presentation:Paragraph {...props.subline} class="max-w-lg pb-12" />
-            </Neos.Presentation:Spacing>
+            <div class="flex flex-col items-center text-center max-w-screen-xl w-full relative px-4">
+                <h1 class="max-w-4xl display-headline-xl !text-white">{props.headline}</h1>
+                <div class="max-w-3xl">{props.subline}</div>
+            </div>
+            <figure
+                class="!absolute xl:-bottom-[8rem] -bottom-[4rem] *:object-cover xl:w-[min(80vw,1400px)] xl:h-auto h-[50vh] right-[15%] xl:right-auto rounded-3xl aspect-[21/9] *:aspect-[21/9] overflow-hidden *:size-full"
+                style="box-shadow: 0 0 0 8px #161616;"
+            >
+                <img
+                    src={props.imageUri}
+                    alt="Stage Image"
+                />
+            </figure>
         </section>
-        <figure class="relative -mt-[24rem] mx-auto max-w-7xl mb-6 rounded-3xl overflow-hidden object-cover outline-neutral-900 outline-8 border border-neutral-500 *:object-cover *:aspect-[21/9]">
-            {props.image}
-        </figure>
     `
 }
