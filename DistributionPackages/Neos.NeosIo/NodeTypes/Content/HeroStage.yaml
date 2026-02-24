@@ -1,0 +1,39 @@
+'Neos.NeosIo:Content.HeroStage':
+  abstract: true
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    group: rebranding
+  properties:
+    headline:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Headline...'
+            formatting:
+              strong: true
+    subline:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Subline...'
+            formatting:
+              strong: true
+              em: true
+              underline: true
+    image:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: Image
+        reloadIfChanged: true
+        inspector:
+          group: content
+          editorOptions:
+            features:
+              crop: true

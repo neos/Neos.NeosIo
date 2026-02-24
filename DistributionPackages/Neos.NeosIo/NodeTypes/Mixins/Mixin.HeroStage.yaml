@@ -1,0 +1,10 @@
+'Neos.NeosIo:Mixin.HeroStage':
+  abstract: true
+  childNodes:
+    'hero-stage-contents':
+      type: 'Neos.Neos:ContentCollection'
+      position: 'before main'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:Content.HeroStage.LandingPage': true

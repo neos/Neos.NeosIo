@@ -1,0 +1,8 @@
+prototype(Neos.NeosIo:Content.SquareIcon) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:SquareIcon {
+        content = ${node.properties.textContent}
+        color = ${node.properties.textColor}
+        icon = ${node.properties.icon}
+        background = ${node.properties.backgroundColor}
+    }
+}

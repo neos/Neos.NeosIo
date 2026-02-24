@@ -1,0 +1,13 @@
+'Neos.NeosIo:Content.HeroStage.LandingPage':
+  superTypes:
+    'Neos.NeosIo:Content.HeroStage': true
+  ui:
+    label: 'Landing Page Hero Stage'
+    icon: 'plane-arrival'
+  childNodes:
+    icons:
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:Content.SquareIcon': true
