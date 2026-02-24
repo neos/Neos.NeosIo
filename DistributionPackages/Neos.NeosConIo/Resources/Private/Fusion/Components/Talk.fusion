@@ -1,0 +1,67 @@
+prototype(Neos.NeosConIo:Component.Talk) < prototype(Neos.Fusion:Component) {
+    title = ''
+    text = ''
+    video = ''
+    speakerList = ''
+    eventTitle = ''
+    talkDate = null
+    roomName = ''
+    isTalkListVisible = false
+    talkList = ''
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+        text = ${PropTypes.string}
+        video = ${PropTypes.string}
+        speakerList = ${PropTypes.string}
+        eventTitle = ${PropTypes.string}
+        talkDate = ${PropTypes.instanceOf('\DateTimeInterface')}
+        roomName = ${PropTypes.string}
+        isTalkListVisible = ${PropTypes.bool}
+        talkList = ${PropTypes.string}
+    }
+
+    @private {
+        hasTalkDate = ${props.talkDate}
+        talkDate = ${Date.format(Neos.NeosConIo.Date.timezone(props.talkDate, 'Europe/Berlin'), 'd.m.Y')}
+        talkTime = ${Date.format(Neos.NeosConIo.Date.timezone(props.talkDate, 'Europe/Berlin'), 'G:i')}
+    }
+
+    renderer = afx`
+        <div class="talk">
+            <h1>{props.title}</h1>
+            <div @if.hasVideo={props.video}
+                 class="talk__video"
+            >
+                {props.video}
+            </div>
+            <div class="talk__details">
+                {props.speakerList}
+                <div class="talk__description">
+                    {props.text}
+                    <ul class="talk__infos">
+                        <li class="talk__infos__item">{props.eventTitle}</li>
+                        <Neos.Fusion:Fragment @if.hasTalkDate={private.hasTalkDate}>
+                            <li class="talk__infos__item">
+                                <i class="fas fa-calendar"></i> {private.talkDate}
+                            </li>
+                            <li class="talk__infos__item">
+                                <i class="fas fa-clock"></i> {private.talkTime}
+                            </li>
+                        </Neos.Fusion:Fragment>
+                        <li @if.hasRoom={props.roomName}>
+                            {props.roomName}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div @if.isTalkListVisible={props.isTalkListVisible}
+                 class="relatedTalks"
+            >
+                <h2>Related Talks</h2>
+                {props.talkList}
+            </div>
+        </div>
+    `
+}

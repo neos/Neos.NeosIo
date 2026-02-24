@@ -1,34 +1,36 @@
 prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
     header.keyVisualWrapper.keyVisual >
-    # TODO: Refactor to AFX
-    content.parts.main = Neos.Fusion:Template {
-        templatePath = 'resource://Neos.NeosConIo/Private/Templates/NodeTypes/Talk.html'
 
-        title = ${q(node).property('title')}
-        text = ${q(node).property('text')}
-        thumbnail = ${q(node).property('thumbnail')}
-        talkDate = ${Neos.NeosConIo.Date.timezone(q(node).property('talkDate'), 'Europe/Berlin')}
-        speakers = ${q(node).property('speakers')}
-        event = ${q(node).property('event')}
-        relatedTalks = ${q(node).property('relatedTalks')}
-        room = ${q(node).property('room')}
-        video = ${q(node).property('video')}
+    content.parts.main = Neos.Neos:ContentComponent {
+        renderer = Neos.NeosConIo:Component.Talk {
+            title = Neos.Neos:Editable {
+                property = 'title'
+            }
 
-        speakerList = Neos.NeosConIo:SpeakerList {
-            items = ${q(node).property('speakers')}
+            text = Neos.Neos:Editable {
+                property = 'text'
+            }
+
+            video = Neos.NeosIo:Youtube {
+                video = ${node.properties.video}
+            }
+
+            speakerList = Neos.NeosConIo:SpeakerList {
+                @if.hasSpeakers = ${!Array.isEmpty(q(node).referenceNodes('speakers'))}
+                items = ${q(node).referenceNodes('speakers')}
+            }
+
+            eventTitle = ${q(node).referenceNodes('event').property('title')}
+
+            talkDate = ${node.properties.talkDate}
+
+            roomName = ${q(node).referenceNodes('room').property('name')}
+
+            isTalkListVisible = ${!Array.isEmpty(q(node).referenceNodes('relatedTalks'))}
+            talkList = Neos.NeosConIo:TalkList {
+                items = ${q(node).referenceNodes('relatedTalks')}
+                itemRenderer.@if.talkHasCorrectEvent = true
+            }
         }
-
-        talkListVisible = ${this.relatedTalks}
-
-        talkList = Neos.NeosConIo:TalkList {
-            items = ${q(node).property('relatedTalks')}
-            itemRenderer.@if.talkHasCorrectEvent = true
-        }
-
-        video = Neos.NeosIo:Youtube {
-            video = ${q(node).property('video')}
-        }
-
-        roomName = ${q(this.room).property('name')}
     }
 }
