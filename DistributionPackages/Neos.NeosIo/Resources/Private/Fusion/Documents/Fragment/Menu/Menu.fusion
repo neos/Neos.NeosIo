@@ -1,25 +1,19 @@
-prototype(Neos.NeosIo:Fragment.Menu) < prototype(Neos.Fusion:Renderer) {
-    renderPath = '/mainNavigation'
-}
-
-prototype(Neos.NeosIo:Fragment.Menu.Renderer) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosIo:Fragment.Menu) < prototype(Neos.Fusion:Component) {
     items = Neos.Neos:MenuItems {
         entryLevel = 1
         maximumLevels = 2
         filter = 'Neos.Neos:Document,!Neos.NeosIo:Reference.ShowCase,!Neos.NeosIo:Post'
-        itemUriRenderer = ''
+        calculateItemStates = true
+    }
+
+    languageItems = Neos.Neos:DimensionsMenuItems {
+        dimension = "language"
+        calculateItemStates = true
     }
 
     renderer = afx`
-        <nav role="navigation" class="offCanvas print-hidden" id="offCanvas">
-            <div class="offCanvas__navWrapper">
-                <ul class="nav siteHeader__nav offCanvas__nav">
-                    <Neos.Fusion:Loop items={props.items}>
-                        <Neos.NeosIo:Fragment.Menu.Item item={item} />
-                    </Neos.Fusion:Loop>
-                </ul>
-            </div>
-        </nav>
+      <Neos.Presentation:DesktopNavigation items={props.items} languageItems={props.languageItems} />
+      <Neos.Presentation:MobileNavigation items={props.items} languageItems={props.languageItems} />
     `
 
     @cache {
@@ -33,4 +27,3 @@ prototype(Neos.NeosIo:Fragment.Menu.Renderer) < prototype(Neos.Fusion:Component)
     }
 }
 
-mainNavigation = Neos.NeosIo:Fragment.Menu.Renderer

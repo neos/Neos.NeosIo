@@ -1,0 +1,54 @@
+prototype(Neos.Presentation:MobileNavigation.LevelFirst) < prototype(Neos.Fusion:Component) {
+    items = null
+    languageItems = null
+
+    @propTypes {
+        @strict = true
+        items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
+        languageItems = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\DimensionMenuItem') ) }
+    }
+
+    renderer = afx`
+        <nav
+            class="fixed top-0 left-0 z-999 w-full h-full bg-blue-dark backdrop-blur-3xl text-white overflow-y-auto"
+            x-show="mobileMenuIsOpen"
+            "x-on:resize.window"="closeMobileMenu()"
+            "x-trap.inert.noscroll"="mobileMenuIsOpen"
+            x-transition:enter="transition-right ease-out duration-250"
+            x-transition:enter-start="left-full"
+            x-transition:enter-end="left-0"
+            x-transition:leave="transition-right ease-in duration-250"
+            x-transition:leave-start="left-0"
+            x-transition:leave-end="left-full"
+            x-cloak
+        >
+            <div class="flex flex-col w-full h-full">
+                <div class="flex h-16 px-4 w-full justify-between items-center">
+                    <Neos.Presentation:Icon icon="neosLogoDark" class="h-10 self-center shrink-0" />
+                    <button
+                        x-on:click="mobileMenuIsOpen = false"
+                        class="p-1 h-8 w-8 text-white"
+                    >
+                        <span class="sr-only">Menü schließen</span>
+                        <Neos.Presentation:Icon icon={"chevron-up"} />
+                    </button>
+                </div>
+
+                <ul class="!m-0 !p-0 !list-none flex flex-col">
+                    <Neos.Fusion:Loop items={props.items} itemName="item">
+                        <li class="w-full border-b border-neutral-30 py-4">
+                            <Neos.Presentation:MobileNavigation.ExpandableLevel item={item}>
+                                <Neos.Presentation:MobileNavigation.LevelSecond items={item.subItems}/>
+                            </Neos.Presentation:MobileNavigation.ExpandableLevel>
+                        </li>
+                    </Neos.Fusion:Loop>
+                </ul>
+                <div class="mt-auto flex justify-between items-center px-4 py-2">
+                    <Neos.Presentation:LanguageMenu languageItems={props.languageItems} />
+                    <Neos.Presentation:Button content="Try Neos" />
+                </div>
+            </div>
+
+        </nav>
+    `
+}

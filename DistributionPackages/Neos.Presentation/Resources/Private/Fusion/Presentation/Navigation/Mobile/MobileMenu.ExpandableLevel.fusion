@@ -1,0 +1,47 @@
+// A wrapper for menu levels to allow easy "drill down" into the menu structure on mobile.
+// Will render a clickable text and a button to differentiate between opening the page or opening the submenu.
+prototype(Neos.Presentation:MobileNavigation.ExpandableLevel) < prototype(Neos.Fusion:Component) {
+    item = ''
+    content = ''
+
+    @propTypes {
+        @strict = true
+        item = ${PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem')}
+        content = ${PropTypes.string}
+    }
+
+    renderer = afx`
+        <div class="flex flex-row h-full items-center justify-between">
+            <Neos.Presentation:MobileNavigation.Link item={item} />
+            <button
+                @if={item.subItems}
+                class="ml-auto text-white h-full px-2 !mr-2"
+                x-on:click={"toggleSubMenu('" + item.node.aggregateId.value + "')"}
+            >
+                <span class="sr-only">Untermenü öffnen</span>
+                <Neos.Presentation:Icon icon={"chevron-right"} />
+            </button>
+        </div>
+        <div
+            @if={item.subItems}
+            class="fixed z-1000 top-0 w-full h-full bg-blue-dark backdrop-blur-3xl text-white overflow-y-auto"
+            x-show={"isExpanded('" + item.node.aggregateId.value + "')"}
+            "x-trap.inert.noscroll"={"isExpanded('" + item.node.aggregateId.value + "')"}
+            x-transition:enter="transition-right ease-out duration-250"
+            x-transition:enter-start="left-full"
+            x-transition:enter-end="left-0"
+            x-transition:leave="transition-right ease-in duration-250"
+            x-transition:leave-start="left-0"
+            x-transition:leave-end="left-full"
+        >
+            <button
+                x-on:click={"toggleSubMenu('" + item.node.aggregateId.value + "')"}
+                class="flex px-4 h-16 w-full justify-between items-center !text-white"
+            >
+                Untermenü schließen
+                <Neos.Presentation:Icon icon={"chevron-left"} />
+            </button>
+            {props.content}
+        </div>
+    `
+}

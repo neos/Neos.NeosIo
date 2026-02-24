@@ -1,0 +1,26 @@
+prototype(Neos.Presentation:DesktopNavigation) < prototype(Neos.Fusion:Component) {
+
+    items = null
+    languageItems = null
+
+    @propTypes {
+        @strict = true
+        items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
+        languageItems = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\DimensionMenuItem') ) }
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Spacing size x={false} y="small" class="z-navigation hidden xl:flex px-4">
+            <div class="flex items-center justify-between gap-x-6 relative w-full">
+                <a href="/" class="inline-block" title="Link zur Startseite">
+                    <Neos.Presentation:Icon icon="neosLogoDark" class="h-10 self-center shrink-0" />
+                </a>
+                <Neos.Presentation:DesktopNavigation.LevelFirst items={props.items} />
+                <div class="ml-auto">
+                    <Neos.Presentation:LanguageMenu languageItems={props.languageItems} />
+                </div>
+                <Neos.Presentation:Button content="Try Neos" />
+            </div>
+        </Neos.Presentation:Spacing>
+    `
+}

@@ -1,43 +1,9 @@
 prototype(Neos.NeosIo:Fragment.SiteHeader) < prototype(Neos.Fusion:Component) {
-    className = 'siteHeader'
-    siteTitle = ${q(site).property('title')}
-    toggleScrollClass = true
-    logo = null
-    logoLink = Neos.Neos:NodeUri {
-        node = ${site}
-    }
-    showBuyTickets = false
-
     renderer = afx`
-        <header
-            class={props.className}
-            role="banner"
-            data-component="ScrollClassToggler" data-component.@if.set={props.toggleScrollClass}
-            data-scrollClasses='{"200":{"className": "siteHeader--hidden","removeOnScrollDecrease": true}, "350":{"className": "siteHeader--shaded"}}' data-scrollClasses.@if.set={props.toggleScrollClass}>
-            <a href={props.logoLink} title={props.siteTitle} class="u-linkReset">
-                <Neos.NeosIo:Component.BrandLogo size="small" additionalClassName="siteHeader__brandLogo" @if.noLogo={!props.logo}/>
-                <Neos.Fusion:Tag
-                    tagName="img" title={props.siteTitle} alt={props.siteTitle} @children="content"
-                    class="u-brandLogo u-brandLogo--bright u-brandLogo--small siteHeader__brandLogo event-logo"
-                    @if.hasLogo={props.logo}>
-                    <Neos.Neos:ImageUri asset={props.logo} allowUpScaling="false"/>
-                </Neos.Fusion:Tag>
-            </a>
-            <a class="hamburger siteHeader__navToggler print-hidden"
-                href="#siteNav"
-                data-component="ClassToggler"
-                data-activeClass="hamburger--active"
-                data-documentActiveClass="html--scrollDisabled"
-                data-targetSelector="#offCanvas"
-                data-targetActiveClass="offCanvas--visible">
-                <div class="hamburger__line hamburger__line--top"></div>
-                <div class="hamburger__line"></div>
-                <div class="hamburger__line hamburger__line--bottom"></div>
-            </a>
-            <a href="https://www.neoscon.io/tickets" target="_blank" class="siteHeader__buyTickets menuBuyTickets" @if.set={props.showBuyTickets}>
-                Buy Tickets
-            </a>
-            <Neos.NeosIo:Fragment.Menu/>
+        <header>
+            <Neos.Presentation:Background background={"gradient"}>
+                <Neos.NeosIo:Fragment.Menu />
+            </Neos.Presentation:Background>
         </header>
     `
 }
