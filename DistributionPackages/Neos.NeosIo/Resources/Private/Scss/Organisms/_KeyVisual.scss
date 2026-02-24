@@ -1,29 +1,29 @@
-.keyVisual__wrapper {
+  .keyVisual__wrapper {
   display: flex;
   flex-direction: column;
 
-  &--default {
-    height: MIN(100vh, 25vw);
-
-    .keyVisual {
-      min-height: 250px;
+  &--small {
+    .keyVisual__contents {
+      min-height: MIN(250px, 25vw);
     }
   }
 
-  &--small {
-    .keyVisual {
-      height: MIN(250px, 25vw);
+  &--default {
+    .keyVisual__contents {
+      min-height: 350px;
     }
   }
 
   &--large {
     height: 100vh;
 
-    .keyVisual {
-      min-height: 400px;
+    @include max-screen(992px) {
+      height: auto;
     }
 
     .keyVisual__contents {
+      min-height: 400px;
+
       background-color: rgba(0, 0, 0, 0.5);
       background-blend-mode: darken;
     }
@@ -62,6 +62,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 40px;
+
   background-size: cover;
   background-position: center center;
   padding: $grid-gutter;
