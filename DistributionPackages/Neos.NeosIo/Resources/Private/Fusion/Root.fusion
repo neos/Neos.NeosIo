@@ -1,2 +1,7 @@
 include: **/*.fusion
 include: nodetypes://Neos.NeosIo/**/*.fusion
+
+// We cannot include the Root.fusion of the NeosConIo package or we would end up in a circular dependency.
+// Auto including the fusion via Settings.yaml is also not possible currently as the NeosCon Fusion overwrites several Neos.io components.
+// Thats why we include the shared components of the NeosConIo package here.
+include: nodetypes://Neos.NeosConIo/Shared/**/*.fusion

@@ -1,20 +1,23 @@
 prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
     header = Neos.Fusion:Join {
         siteHeader = Neos.NeosIo:Fragment.SiteHeader
-        keyVisual = Neos.NeosIo:KeyVisual {
-            keyVisualImage = ${q(documentNode).property('keyVisualImage')}
-            keyVisualImageSmall = ${q(documentNode).property('keyVisualImageSmall')}
-            isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
-            content = Neos.Fusion:Case {
-                hasContentSection {
-                    condition = ${q(documentNode).is('[instanceof Neos.NeosIo:KeyVisualMixin]')}
-                    renderer = Neos.Neos:ContentCollection {
-                        nodePath = 'keyvisual'
+        keyVisualWrapper = Neos.NeosIo:KeyVisualWrapper {
+            disruptor = Neos.NeosIo:Content.Disruptor
+            keyVisual = Neos.NeosIo:KeyVisual {
+                keyVisualImage = ${q(documentNode).property('keyVisualImage')}
+                keyVisualImageSmall = ${q(documentNode).property('keyVisualImageSmall')}
+                isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
+                content = Neos.Fusion:Case {
+                    hasContentSection {
+                        condition = ${q(documentNode).is('[instanceof Neos.NeosIo:KeyVisualMixin]')}
+                        renderer = Neos.Neos:ContentCollection {
+                            nodePath = 'keyvisual'
+                        }
                     }
-                }
-                fallback {
-                    condition = true
-                    renderer = ''
+                    fallback {
+                        condition = true
+                        renderer = ''
+                    }
                 }
             }
         }
