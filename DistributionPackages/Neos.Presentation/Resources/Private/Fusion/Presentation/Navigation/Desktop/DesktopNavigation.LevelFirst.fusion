@@ -1,0 +1,51 @@
+prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusion:Component) {
+    items = null
+
+    @propTypes {
+        @strict = true
+        items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
+    }
+
+    renderer = afx`
+        <nav>
+            <ul class="flex gap-5 2xl:gap-10 !list-none !p-0 !m-0">
+                <Neos.Fusion:Loop items={props.items} itemName="item">
+                    <li class="group/navitem h-14" x-data="NavigationItem">
+                        <div class="h-full flex items-center group-hover/navitem:z-10">
+                            <div class="rounded-md group-hover/navitem:bg-white/10 flex items-center" x-bind:class="{ 'bg-white/10!': open }">
+                                <Neos.Neos:NodeLink
+                                    node={item.node}
+                                    attributes.title={item.label}
+                                    attributes.class={Carbon.String.classNames(
+                                        'inline-block py-1 px-4 display-lead whitespace-nowrap',
+                                        {
+                                            '!text-white': item.state.value == 'normal',
+                                            '!text-blue-light': item.state.value == 'current' || item.state.value == 'active'
+                                        }
+                                    )}
+                                >
+                                    {item.label}
+                                </Neos.Neos:NodeLink>
+                                <button
+                                    @if={item.subItems}
+                                    class="-ml-2 mr-2 group-hover/navitem:rotate-180 transition duration-500"
+                                    x-bind:class="{'rotate-180': open}"
+                                    x-on:click="open = !open"
+                                    x-bind:aria-expanded="open"
+                                    aria-haspopup="true"
+                                    "x-on:click.outside"="open = false">
+                                    <Neos.Presentation:Icon
+                                        icon="chevron-down"
+                                        class="h-6"
+                                    />
+                                </button>
+                            </div>
+                        </div>
+                        <div class="itemblocker pointer-events-none group-hover/navitem:pointer-events-default group-hover/navitem:block"></div>
+                        <Neos.Presentation:DesktopNavigation.LevelSecond item={item} flyoutVariant={'default'} />
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
+        </nav>
+    `
+}

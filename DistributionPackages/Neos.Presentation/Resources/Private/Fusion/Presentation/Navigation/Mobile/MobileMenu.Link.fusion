@@ -1,0 +1,26 @@
+prototype(Neos.Presentation:MobileNavigation.Link) < prototype(Neos.Fusion:Component) {
+    item = ''
+
+    @propTypes {
+        @strict = true
+        item = ${PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem')}
+    }
+
+    renderer = afx`
+        <Neos.Neos:NodeLink
+            node={item.node}
+            attributes.title={"Link zu Seite"+ item.label}
+            attributes.class={Carbon.String.classNames(
+                'state-' + item.state.value,
+                'block no-underline text-lg px-4 py-1',
+                {
+                    '!text-white': item.state.value == 'normal',
+                    '!text-blue-light': item.state.value == 'current' || item.state.value == 'active'
+                }
+            )}
+            attributes.data-id={item.node.aggregateId.value}
+        >
+            {item.label}
+        </Neos.Neos:NodeLink>
+    `
+}

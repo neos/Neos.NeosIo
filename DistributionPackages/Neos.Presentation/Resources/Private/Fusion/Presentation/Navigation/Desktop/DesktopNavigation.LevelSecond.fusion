@@ -1,0 +1,47 @@
+prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusion:Component) {
+
+    item = null
+    flyoutVariant = 'default'
+
+    @propTypes {
+        @strict = true
+        item = ${PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem')}
+        flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
+    }
+
+    @private {
+        isDefault = ${props.flyoutVariant == 'default'}
+        isWhite = ${props.flyoutVariant == 'white'}
+    }
+
+    renderer = afx`
+        <div @if={props.item.subItems} class="absolute z-999 hidden group-hover/navitem:block top-full left-0 right-0 pt-spacing-y-small" x-bind:class="{'!block': open}">
+            <div class={Carbon.String.classNames('flow-root fade-in slide-up', {
+                'bg-blue-dark backdrop-blur-3xl': private.isDefault,
+                'bg-white text-blue-dark': private.isWhite
+            })}>
+                <Neos.Presentation:Spacing y x>
+                    <ul class="!list-none !m-0 !p-0 flex flex-col gap-y-2">
+                        <Neos.Fusion:Loop items={props.item.subItems} itemName="item">
+                            <li>
+                                <Neos.Neos:NodeLink
+                                    node={item.node}
+                                    attributes.title={item.label}
+                                    attributes.class={Carbon.String.classNames(
+                                    'inline-block py-1 px-4 display-lead whitespace-nowrap',
+                                    {
+                                        '!text-white': item.state.value == 'normal',
+                                        '!text-blue-light': item.state.value == 'current' || item.state.value == 'active'
+                                    }
+                                )}
+                                >
+                                    {item.label}
+                                </Neos.Neos:NodeLink>
+                            </li>
+                        </Neos.Fusion:Loop>
+                    </ul>
+                </Neos.Presentation:Spacing>
+            </div>
+        </div>
+    `
+}

@@ -1,1 +1,11 @@
-@import "../Scss/Main";
+@layer rebrand, legacy;
+
+@layer legacy {
+  @import "../Scss/Main";
+}
+
+@layer rebrand {
+  @import "DistributionPackages/Neos.Presentation/Resources/Public/Styles/Main";
+}
+
+

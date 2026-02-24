@@ -48,7 +48,7 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
             private.hasIcon ? 'group/icon gap-2 items-center' : null
         ]}
         button = ${[
-            'px-8 py-4 text-black bg-green display-cta-lg hocus:text-white hocus:bg-green-dark',
+            'px-8 py-4 text-black whitespace-nowrap bg-green display-cta-lg hocus:text-white hocus:bg-green-dark',
             private.isButton ? 'disabled:bg-neutral-40! disabled:text-black!' : 'aria-disabled:bg-neutral-40! aria-disabled:text-black!',
             props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
         ]}

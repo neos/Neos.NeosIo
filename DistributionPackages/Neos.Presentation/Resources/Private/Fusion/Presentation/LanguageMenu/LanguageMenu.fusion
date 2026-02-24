@@ -1,0 +1,42 @@
+prototype(Neos.Presentation:LanguageMenu) < prototype(Neos.Fusion:Component) {
+    languageItems = null
+
+    @propTypes {
+        @strict = true
+        languageItems = ${PropTypes.any}
+    }
+
+    renderer = afx`
+        <div class="flex-nowrap lg:justify-end">
+            <nav aria-label="Languages">
+                <ul class="h-full flex flex-row !p-0 !my-0 !list-none gap-4">
+                    <Neos.Fusion:Loop items={props.languageItems}>
+                        <Neos.Presentation:LanguageMenu.Item item={item} />
+                    </Neos.Fusion:Loop>
+                </ul>
+            </nav>
+        </div>
+    `
+}
+
+prototype(Neos.Presentation:LanguageMenu.Item) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        @strict = true
+        item = ${PropTypes.any}
+    }
+
+    renderer = afx`
+        <li class="">
+            <Neos.Neos:NodeLink
+                attributes.title={I18n.translate('MyVendor.AwesomeNeosProject:Base:linkToPage') + item.label}
+                attributes.class={Carbon.String.classNames(
+                    'no-underline display-lead',
+                    item.state.value == 'current' ? '!text-blue-light' : '!text-white'
+                )}
+                node={item.node}
+            >
+                {item.label}
+            </Neos.Neos:NodeLink>
+        </li>
+    `
+}

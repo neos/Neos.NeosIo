@@ -12,6 +12,9 @@ export default function (ctx) {
 
     return {
         plugins: {
+            'postcss-import': {
+                resolve: ctx.resolve,
+            },
             'postcss-assets': {
                 cachebuster: false,
                 basePath: 'DistributionPackages/',

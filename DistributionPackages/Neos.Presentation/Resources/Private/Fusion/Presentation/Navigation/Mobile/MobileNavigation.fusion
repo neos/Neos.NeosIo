@@ -1,0 +1,32 @@
+prototype(Neos.Presentation:MobileNavigation) < prototype(Neos.Fusion:Component) {
+    items = null
+    languageItems = null
+
+    @propTypes {
+        @strict = true
+        items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
+        languageItems = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\DimensionMenuItem') ) }
+    }
+
+    renderer = afx`
+        <div
+            class="flex xl:hidden items-center justify-between gap-x-6 relative p-4"
+            x-data={AlpineJS.xData('mobileMenu')}
+            x-ref="mobileMenu"
+        >
+            <Neos.Presentation:MobileNavigation.LevelFirst items={props.items} languageItems={props.languageItems} />
+            <a href="/" class="inline-block" title="Link zur Startseite">
+              <Neos.Presentation:Icon icon="neosLogoDark" class="h-10 self-center shrink-0" />
+            </a>
+            <button
+                x-on:click="toggleMobileMenu()"
+                id="open-mobile-menu"
+                class="flex justify-center items-center flex-col p-1 h-8 w-8 text-2xl text-primary-main hover:text-primary-dark focus:text-primary-dark focus:border focus:border-primary-dark"
+                title=""
+            >
+                <Neos.Presentation:Icon icon={"chevron-down"}  />
+                <span class="sr-only">Menü öffnen</span>
+            </button>
+        </div>
+    `
+}
