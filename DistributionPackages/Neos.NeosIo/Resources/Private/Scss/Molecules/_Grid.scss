@@ -99,7 +99,7 @@ $grid-gutter: $column-gutter / 2;
     // three column layouts
     &.layout--33-33-33,
     &.layout--4-4-4 {
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     &.layout--50-25-25 {
