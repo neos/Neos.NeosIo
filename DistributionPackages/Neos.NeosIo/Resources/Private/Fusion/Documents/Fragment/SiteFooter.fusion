@@ -9,10 +9,34 @@ prototype(Neos.NeosIo:Component.SiteFooter.Renderer) < prototype(Neos.Fusion:Com
     githubRepositoryEndpoint = 'repos/Neos/neos-development-collection/stats/contributors'
     licenseText = 'Neos is free and open source software licensed under <a href="https://opensource.org/licenses/GPL-3.0" target="_blank" rel="noopener">GPL v3</a> or later.'
     legalLinkNode = ${q(site).property('imprintLinkNode')}
+    nlUser = ${q(site).property('nlUser')}
+    nlId = ${q(site).property('nlId')}
 
     renderer = afx`
         <footer role="contentinfo" class={props.className}>
             <Neos.NeosIo:Fragment.FooterContent/>
+
+            <Neos.Fusion.Form:Form
+                form.target={"https://typo3.us3.list-manage.com/subscribe/post?u="+props.nlUser+"&id="+props.nlId}
+                form.method="post"
+                attributes.class="siteFooter__nl-signup"
+                @if.userAndId={props.nlUser && props.nlId}
+            >
+                <legend>Join the Content Revolution | Regular updates on all things Neos</legend>
+                <div class="input-wrapper">
+                    <Neos.Fusion.Form:Input
+                        field.name="EMAIL"
+                        attributes.id="mce-EMAIL"
+                        attributes.placeholder={"email address"}
+                        attributes.required={true}
+                        attributes.autocomplete="email"
+                    />
+                </div>
+                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <Neos.Fusion.Form:Input field.name={"b_"+props.nlUser+"_"+props.nlId} attributes.style="position: absolute; left: -5000px;"/>
+                <Neos.Fusion.Form:Button attributes.class="btn btn--solidPrimary"> <span class="btn__content">Subscribe</span></Neos.Fusion.Form:Button>
+            </Neos.Fusion.Form:Form>
+
             <hr/>
 
             <div class="siteFooter__nav-wrapper">

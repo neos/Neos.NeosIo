@@ -7,6 +7,9 @@
 	margin-bottom: $base-line-height+px;
 	overflow: hidden;
 	background: #000;
+  &:only-child {
+    margin-bottom: 0;
+  }
 
 	$clip-path: polygon(var(--image-clip-width) 0px, 0 var(--image-clip-height), 0 100%, calc(100% - var(--image-clip-width)) 100%, 100% calc(100% - var(--image-clip-height)), 100% 0);
 	// Autoprefixer doesn't add the required webkit prefix for some reason
@@ -78,8 +81,10 @@
 }
 
 .imageTeaser__contents__subHeading {
+  display: block;
 	text-transform: uppercase;
 	line-height: 1.8;
+  font-weight: $bold;
 
 	@include u-microCopy();
 }

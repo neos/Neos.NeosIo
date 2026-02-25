@@ -11,6 +11,12 @@
   ui:
     label: 'Root Page'
     icon: home
+    inspector:
+      groups:
+        newsletter:
+          label: 'Mailchimp Settings'
+          icon: icon-mailchimp
+          position: 'after additional'
   constraints:
     nodeTypes:
       'Neos.NodeTypes:Page': true
@@ -63,3 +69,15 @@
           editorOptions:
             nodeTypes:
               - Neos.Neos:Document
+    nlUser:
+      type: string
+      ui:
+        label: 'User ID'
+        inspector:
+          group: newsletter
+    nlId:
+      type: string
+      ui:
+        label: 'Newsletter ID'
+        inspector:
+          group: newsletter

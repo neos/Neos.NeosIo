@@ -62,11 +62,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 20px;
-  padding-bottom: 40px;
-
   background-size: cover;
   background-position: center center;
+  padding: $grid-gutter;
+  >.neos-contentcollection {
+    max-width: $layout-small-width;
+    margin: 0 auto;
+  }
 
   &:before {
     content: '';
@@ -85,8 +87,6 @@
 
   h1, .h1 {
     font-size: 40px;
-    max-width: 90vw;
-
     @include mq('medium') {
       font-size: 60px;
     }

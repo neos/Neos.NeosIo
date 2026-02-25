@@ -55,13 +55,11 @@ $grid-gutter: $column-gutter / 2;
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: 100%;
+  grid-gap: #{$grid-gutter * 2};
 
   &--item {
     display: flex;
     flex-direction: column;
-    padding-left: $grid-gutter;
-    padding-right: $grid-gutter;
-    margin-bottom: $basic-spacing + px;
 
     &--more-link {
       margin-top: auto;
@@ -69,62 +67,59 @@ $grid-gutter: $column-gutter / 2;
   }
 
   @include mq("medium") {
-    &--item {
-      margin-bottom: 0;
-    }
 
     // two column layouts
     &.layout--75-25 {
-      grid-template-columns: 75% 25%;
+      grid-template-columns: 3fr 1fr;
     }
 
     &.layout--25-75 {
-      grid-template-columns: 25% 75%;
+      grid-template-columns: 1fr 3fr;
     }
 
     &.layout--50-50,
     &.layout--6-6 {
-      grid-template-columns: 50% 50%;
+      grid-template-columns: 1fr 1fr;
     }
 
     &.layout--66-33,
     &.layout--8-4 {
-      grid-template-columns: 66.66% 33.33%;
+      grid-template-columns: 2fr 1fr;
     }
 
     &.layout--33-66,
     &.layout--4-8 {
-      grid-template-columns: 33.33% 66.66%;
+      grid-template-columns: 1fr 2fr;
     }
 
     &.layout--12-12 {
-      grid-template-columns: 100%;
+      grid-template-columns: 1fr;
     }
 
     // three column layouts
     &.layout--33-33-33,
     &.layout--4-4-4 {
-      grid-template-columns: 33.33% 33.33% 33.33%;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     &.layout--50-25-25 {
-      grid-template-columns: 50% 25% 25%;
+      grid-template-columns: 2fr 1fr 1fr;
     }
 
     &.layout--25-50-25 {
-      grid-template-columns: 25% 50% 25%;
+      grid-template-columns: 1fr 2fr 1fr;
     }
 
     &.layout--25-25-50 {
-      grid-template-columns: 25% 25% 50%;
+      grid-template-columns: 1fr 1fr 2fr;
     }
 
     &.layout--12-12-12 {
-      grid-template-columns: 100%;
+      grid-template-columns: 1fr;
     }
 
     &.layout--12-12-12 {
-      grid-template-columns: 100%;
+      grid-template-columns: 1fr;
     }
 
     &.layout--12-6-6,
@@ -147,7 +142,7 @@ $grid-gutter: $column-gutter / 2;
     // four column layouts
     &.layout--3-3-3-3,
     &.layout--25-25-25-25 {
-      grid-template-columns: 25% 25% 25% 25%;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 
     &.layout--6-6-6-6 {
@@ -155,30 +150,30 @@ $grid-gutter: $column-gutter / 2;
     }
 
     &.layout--12-12-12-12 {
-      grid-template-columns: 100%;
+      grid-template-columns: 1fr;
     }
   }
 
   // Repsponsive views
   @include mq("large") {
     &.wide-layout--6-6 {
-      grid-template-columns: 50% 50%;
+      grid-template-columns: 1fr 1fr;
     }
 
     &.wide-layout--8-4 {
-      grid-template-columns: 66.66% 33.33%;
+      grid-template-columns: 2fr 1fr;
     }
 
     &.wide-layout--4-8 {
-      grid-template-columns: 33.33% 66.66%;
+      grid-template-columns: 1fr 2fr;
     }
 
     &.wide-layout--4-4-4 {
-      grid-template-columns: 33.33% 33.33% 33.33%;
+      grid-template-columns: 1fr 1fr 1fr;
     }
 
     &.wide-layout--3-3-3-3 {
-      grid-template-columns: 25% 25% 25% 25%;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
     }
   }
 }
