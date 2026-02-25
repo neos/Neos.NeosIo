@@ -28,7 +28,9 @@ prototype(Neos.NeosIo:Component.SiteFooter.Renderer) < prototype(Neos.Fusion:Com
                         field.name="EMAIL"
                         attributes.id="mce-EMAIL"
                         attributes.placeholder={"email address"}
-                        attributes.required={true}/>
+                        attributes.required={true}
+                        attributes.autocomplete="email"
+                    />
                 </div>
                 <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
                 <Neos.Fusion.Form:Input field.name={"b_"+props.nlUser+"_"+props.nlId} attributes.style="position: absolute; left: -5000px;"/>
