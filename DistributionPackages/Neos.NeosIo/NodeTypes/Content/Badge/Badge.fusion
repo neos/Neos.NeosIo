@@ -19,7 +19,7 @@ prototype(Neos.NeosIo:Component.Badge) < prototype(Neos.Fusion:Component) {
     @private {
         inBackend = ${renderingMode.isEdit}
         class = Neos.Fusion:DataStructure {
-            main = 'badge gi u-w1/2 u-wm4/12 u-wl2/12 neos-neosio-badge'
+            main = 'badge neos-neosio-badge'
             highlight = ${'badge--highlighted'}
             highlight.@if.set = ${props.highlight}
         }
