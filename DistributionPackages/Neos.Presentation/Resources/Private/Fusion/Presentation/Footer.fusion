@@ -1,157 +1,102 @@
 prototype(Neos.Presentation:Footer) < prototype(Neos.Fusion:Component) {
-    @styleguide {
-        title = 'Footer'
-        description = 'Footer of the page'
-        props {
-            linkGroups = Neos.Fusion:Map {
-                items = ${Array.range(1, 4)}
-                itemRenderer = Neos.Fusion:DataStructure {
-                    title = 'Features'
-                    links = Neos.Fusion:Map {
-                        items = ${Array.range(1, 5)}
-                        itemRenderer = Neos.Fusion:DataStructure {
-                            title = 'Why Neos'
-                            link = '#'
-                        }
-                    }
-                }
-            }
+    licenseText = ''
+    footerLinkItems = null
+    siteName = ''
 
-            socials = Neos.Fusion:DataStructure {
-                facebook {
-                    link = 'https://www.facebook.com/neoscms'
-                    icon = 'facebook'
-                    label = 'Facebook'
-                }
-                github {
-                    link = 'https://github.com/neos/neos'
-                    icon = 'github'
-                    label = 'Github'
-                }
-                linkedin {
-                    link = 'https://www.linkedin.com/company/neoscms'
-                    icon = 'linkedin'
-                    label = 'LinkedIn'
-                }
-                youtube {
-                    link = 'https://www.youtube.com/channel/UCQp8FVUGr9gGZbU8ZgN6aaw'
-                    icon = 'youtube'
-                    label = 'YouTube'
-                }
-                slack {
-                    link = 'https://slack.neos.io/'
-                    icon = 'slack'
-                    label = 'Slack'
-                }
-                mastodon {
-                    link = 'https://mastodon.neos.io/'
-                    icon = 'mastodon'
-                    label = 'Mastodon'
-                }
-            }
-
-            endlinks = Neos.Fusion:DataStructure {
-                imprint {
-                    link = 'https://www.neos.io/imprint.html'
-                    label = 'Imprint'
-                }
-                privacy {
-                    link = 'https://www.neos.io/privacy.html'
-                    label = 'Privacy'
-                }
-                terms {
-                    link = 'https://www.neos.io/terms.html'
-                    label = 'Terms'
-                }
-            }
-        }
-    }
+    nlUser = ''
+    nlId = ''
 
     @propTypes {
-        // does not work with monocle yet
-        //linkGroups = PropTypes:Array {
-        //    type = PropTypes:DataStructure {
-        //        title = PropTypes:String
-        //        links = PropTypes:Array {
-        //            type = Neos.Fusion:DataStructure {
-        //                title = PropTypes:String
-        //                link = PropTypes:String
-        //            }
-        //        }
-        //    }
-        //}
-
-        socials = PropTypes:Array {
-            type = PropTypes:DataStructure {
-                link = PropTypes:String
-                icon = PropTypes:String
-                label = PropTypes:String
-            }
-        }
-
-        endlinks = PropTypes:Array {
-            type = PropTypes:DataStructure {
-                link = PropTypes:String
-                label = PropTypes:String
-            }
-        }
+        @strict = true
+        licenseText = ${PropTypes.string}
+        footerLinkItems = ${PropTypes.arrayOf(PropTypes.instanceOf('Neos.Neos:Document'))}
+        siteName = ${PropTypes.string}
+        nlUser = ${PropTypes.string}
+        nlId = ${PropTypes.string}
     }
 
     renderer = afx`
-      <Neos.Presentation:Background background="gradient" tagName="footer">
-        <Neos.Presentation:Spacing y>
-          <Neos.Presentation:Spacing x y="small" size>
-            <div class="flex flex-wrap gap-12 mb-10">
-              <div class="grow grid gap-y-14">
-                <Neos.Presentation:Icon icon="neosAvatarMonochrome" class="h-12" />
-                <Neos.Presentation:Paragraph
-                  content="Neos is free and open source software licensed under GPL v3 or later. Created with passion by over 100 contributors around the world."
-                  class="max-w-screen-xxs"
-                />
-              </div>
-              <nav class="flex grow-3 flex-wrap gap-8" @if={Carbon.Array.check(props.linkGroups)}>
-                <Neos.Fusion:Loop items={props.linkGroups} itemName="group">
-                  <div class="grow flex flex-col gap-y-1" @if={Carbon.Array.check(group.links)}>
-                    <Neos.Presentation:Headline display="title-md" class="mb-3" content={group.title} />
-                    <Neos.Fusion:Loop items={group.links}>
-                        <a
-                            href={item.link}
-                            class="inline-block py-1 underline-offset-8 display-body-lg hocus:underline"
-                        >
-                            {item.title}
-                        </a>
-                    </Neos.Fusion:Loop>
-                  </div>
-                </Neos.Fusion:Loop>
-              </nav>
-            </div>
-          </Neos.Presentation:Spacing>
-          <Neos.Presentation:Spacing x y="small" size @if={Carbon.Array.check(props.socials)}>
-            <nav class="flex flex-wrap gap-4 -mx-2" x-tooltips x-data>
-              <Neos.Fusion:Loop items={props.socials}>
-                <a
-                    href={item.link}
-                    aria-label={item.label}
-                    class="flex items-center justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current"
-                >
-                    <Neos.Presentation:Icon icon={item.icon} class="size-6" />
-                </a>
-              </Neos.Fusion:Loop>
-            </nav>
-          </Neos.Presentation:Spacing>
-          <Neos.Presentation:Spacing x y="small" size @if={Carbon.Array.check(props.endlinks)}>
-            <nav class="flex flex-wrap gap-6">
-              <Neos.Fusion:Loop items={props.endlinks}>
-                <a
-                    href={item.link}
-                    class="underline-offset-8 hocus:underline"
-                >
-                    {item.label}
-                </a>
-              </Neos.Fusion:Loop>
-            </nav>
-          </Neos.Presentation:Spacing>
-        </Neos.Presentation:Spacing>
-      </Neos.Presentation:Background>
+        <Neos.Presentation:Background background="gradient" tagName="footer">
+            <Neos.Presentation:Spacing size x={false} y={false} class={"py-12"}>
+                <div class="grid grid-cols-6 gap-8">
+                    <div class="flex flex-col gap-y-14 col-span-2">
+                        <div class="flex items-center justify-start">
+                            <a href="/" title={I18n.translate('Neos.Presentation:Navigation:linkToStartPage')}>
+                                <Neos.Presentation:Icon ariaLabel="Neos Logo" icon="neosLogoDark" class="h-12" />
+                            </a>
+                        </div>
+
+                        <p class="max-w-screen-xxs">
+                            {props.licenseText}
+                        </p>
+
+                        <nav class="flex flex-wrap gap-4" x-tooltips x-data>
+                            <ul class="!list-none !m-0 !p-0 flex flex-row gap-4">
+                                <li>
+                                    <a class="flex items-center !text-white justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://github.com/neos">
+                                        <Neos.Presentation:Icon ariaHidden={true} icon={"github"} class="size-6" /> <span class="sr-only">GitHub</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center !text-white justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://neos.social/@team">
+                                        <Neos.Presentation:Icon ariaHidden={true} icon={"mastodon"} class="size-6" /><span class="sr-only">Mastodon</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center !text-white justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://youtube.com/c/NeosCMS">
+                                        <Neos.Presentation:Icon ariaHidden={true} icon={"youtube"} class="size-6" /> <span class="sr-only">YouTube</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div class="grid grid-cols-4 col-span-4">
+                        <div>
+                            <h5 class="!text-white !mb-4 !text-lg">{props.siteName}</h5>
+                            <ul class="!list-none !m-0 !p-0 flex flex-col gap-2">
+                                <Neos.Fusion:Loop items={props.footerLinkItems}>
+                                    <li>
+                                        <Neos.Neos:NodeLink attributes.class={"!text-white"} node={item} attributes.title={Neos.Node.label(item)} />
+                                    </li>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="!text-white !mb-4 !text-lg">Community</h5>
+                            <ul class="!list-none !m-0 !p-0 flex flex-col gap-2">
+                                <li><a class="!text-white" target="_blank" rel="noopener" href="https://discuss.neos.io">discuss.neos.io</a></li>
+                                <li><a class="!text-white" target="_blank" rel="noopener" href="https://id.neos.io">id.neos.io</a></li>
+                                <li><a class="!text-white" target="_blank" rel="noopener" href="https://slack.neos.io">slack.neos.io</a></li>
+                                <li><a class="!text-white" target="_blank" rel="noopener" href="https://translate.neos.io">translate.neos.io</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <Neos.Fusion.Form:Form
+                                form.target={"https://typo3.us3.list-manage.com/subscribe/post?u="+props.nlUser+"&id="+props.nlId}
+                                form.method="post"
+                                attributes.class="siteFooter__nl-signup"
+                                @if.userAndId={props.nlUser && props.nlId}
+                            >
+                                <legend>Join the Content Revolution | Regular updates on all things Neos</legend>
+                                <div class="input-wrapper">
+                                    <Neos.Fusion.Form:Input
+                                        field.name="EMAIL"
+                                        attributes.id="mce-EMAIL"
+                                        attributes.placeholder={"email address"}
+                                        attributes.required={true}
+                                        attributes.autocomplete="email"
+                                    />
+                                </div>
+                                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                <Neos.Fusion.Form:Input field.name={"b_"+props.nlUser+"_"+props.nlId} attributes.style="position: absolute; left: -5000px;"/>
+                                <Neos.Fusion.Form:Button attributes.class="btn btn--solidPrimary"> <span class="btn__content">Subscribe</span></Neos.Fusion.Form:Button>
+                            </Neos.Fusion.Form:Form>
+                        </div>
+                    </div>
+                </div>
+
+            </Neos.Presentation:Spacing>
+        </Neos.Presentation:Background>
     `
 }

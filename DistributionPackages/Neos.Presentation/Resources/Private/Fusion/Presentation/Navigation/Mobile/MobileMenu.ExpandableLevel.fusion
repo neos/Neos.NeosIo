@@ -17,8 +17,9 @@ prototype(Neos.Presentation:MobileNavigation.ExpandableLevel) < prototype(Neos.F
                 @if={item.subItems}
                 class="ml-auto text-white h-full px-2 !mr-2"
                 x-on:click={"toggleSubMenu('" + item.node.aggregateId.value + "')"}
+                title={I18n.translate('Neos.Presentation:Navigation:openSubmenu')}
             >
-                <span class="sr-only">Untermenü öffnen</span>
+                <span class="sr-only">{I18n.translate('Neos.Presentation:Navigation:openSubmenu')}</span>
                 <Neos.Presentation:Icon icon={"chevron-right"} />
             </button>
         </div>
@@ -37,8 +38,9 @@ prototype(Neos.Presentation:MobileNavigation.ExpandableLevel) < prototype(Neos.F
             <button
                 x-on:click={"toggleSubMenu('" + item.node.aggregateId.value + "')"}
                 class="flex px-4 h-16 w-full justify-between items-center !text-white"
+                title={I18n.translate('Neos.Presentation:Navigation:back')}
             >
-                Untermenü schließen
+                {I18n.translate('Neos.Presentation:Navigation:back')}
                 <Neos.Presentation:Icon icon={"chevron-left"} />
             </button>
             {props.content}

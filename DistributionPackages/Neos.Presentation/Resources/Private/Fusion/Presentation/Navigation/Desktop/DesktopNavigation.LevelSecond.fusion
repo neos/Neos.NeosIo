@@ -26,7 +26,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
                             <li>
                                 <Neos.Neos:NodeLink
                                     node={item.node}
-                                    attributes.title={item.label}
+                                    attributes.title={I18n.translate('Neos.Presentation:Navigation:linkToPage') + item.label}
                                     attributes.class={Carbon.String.classNames(
                                     'inline-block py-1 px-4 display-lead whitespace-nowrap',
                                     {

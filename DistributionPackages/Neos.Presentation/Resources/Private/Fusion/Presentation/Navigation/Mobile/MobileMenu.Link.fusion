@@ -9,7 +9,7 @@ prototype(Neos.Presentation:MobileNavigation.Link) < prototype(Neos.Fusion:Compo
     renderer = afx`
         <Neos.Neos:NodeLink
             node={item.node}
-            attributes.title={"Link zu Seite"+ item.label}
+            attributes.title={I18n.translate('Neos.Presentation:Navigation:linkToPage') + item.label}
             attributes.class={Carbon.String.classNames(
                 'state-' + item.state.value,
                 'block no-underline text-lg px-4 py-1',
