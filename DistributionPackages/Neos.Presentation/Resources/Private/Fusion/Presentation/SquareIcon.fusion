@@ -26,7 +26,7 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <Neos.Presentation:Background
             class={[
-                'absolute w-44 lg:w-56 lg:p-4 p-3 !flex !flex-col !aspect-square square-icon fade-in slide-up',
+                'absolute w-44 lg:w-56 lg:p-4 p-3 flex! flex-col! aspect-square! square-icon fade-in slide-up',
                 'text-' + props.color,
                 'nth-[1]:top-[25%] nth-[1]:left-[5%] nth-[1]:[animation-delay:200ms]',
                 'nth-[2]:top-[10%] nth-[2]:right-[10%] nth-[2]:[animation-delay:400ms]',
@@ -36,7 +36,7 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
             background={props.background}
         >
             <Neos.Presentation:Icon icon={props.icon} sizeClass="h-8 lg:h-12 mr-auto" />
-            <span @if={props.content} class="block mt-auto wrap-break-word hyphens-auto text-lg lg:text-2xl font-medium !text-left">{props.content}</span>
+            <span @if={props.content} class="block mt-auto wrap-break-word hyphens-auto text-lg lg:text-2xl font-medium text-left!">{props.content}</span>
         </Neos.Presentation:Background>
     `
 }

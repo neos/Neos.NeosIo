@@ -40,20 +40,20 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <section
-            class="xl:pt-24 n-stage !relative h-[100vh] !flex flex-col items-center justify-center text-white mb-[6rem] xl:mb-[10rem]"
+            class="xl:pt-24 n-stage relative! h-[100vh] flex! flex-col items-center justify-center text-white mb-[6rem] xl:mb-[10rem]"
         >
             {props.navSlot}
 
-            <div @if={props.icons} data-component="hero-stage-icon-box-container" class="!absolute size-full top-0 left-0 hidden pointer-events-none xl:block">
+            <div @if={props.icons} data-component="hero-stage-icon-box-container" class="absolute! size-full top-0 left-0 hidden pointer-events-none xl:block">
                 {props.icons}
             </div>
 
             <div class="flex flex-col items-center text-center max-w-screen-xl w-full relative px-4">
-                <h1 class="max-w-4xl display-headline-xl !text-white">{props.headline}</h1>
+                <h1 class="max-w-4xl display-headline-xl text-white!">{props.headline}</h1>
                 <div class="max-w-3xl">{props.subline}</div>
             </div>
             <figure
-                class="!absolute xl:-bottom-[8rem] -bottom-[4rem] *:object-cover xl:w-[min(80vw,1400px)] xl:h-auto h-[50vh] right-[15%] xl:right-auto rounded-3xl aspect-[21/9] *:aspect-[21/9] overflow-hidden *:size-full"
+                class="absolute! xl:-bottom-[8rem] -bottom-[4rem] *:object-cover xl:w-[min(80vw,1400px)] xl:h-auto h-[50vh] right-[15%] xl:right-auto rounded-3xl aspect-[21/9] *:aspect-[21/9] overflow-hidden *:size-full"
                 style="box-shadow: 0 0 0 8px #161616;"
             >
                 <img
