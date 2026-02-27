@@ -14,7 +14,7 @@ prototype(Neos.NeosIo:Button) < prototype(Neos.Neos:ContentComponent) {
 
         default {
             condition = true
-            renderer = Neos.NeosIo:Component.Button {
+            renderer = Neos.NeosIo:Component.WrappedButton {
                 buttonLabel = Neos.Neos:Editable {
                     property = 'buttonLabel'
                     block = false
