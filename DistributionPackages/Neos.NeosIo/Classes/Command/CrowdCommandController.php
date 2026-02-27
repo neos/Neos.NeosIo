@@ -68,7 +68,7 @@ class CrowdCommandController extends CommandController
     /**
      * Retrieves a user from crowd and prints their attributes
      */
-    public function showUserCommand(?string $userName = null): void
+    public function showUserCommand(string $userName): void
     {
         $validAttributes = $this->settings['additionalAttributes']['user'];
         $headerRow = ['Name', 'Fullname'];
