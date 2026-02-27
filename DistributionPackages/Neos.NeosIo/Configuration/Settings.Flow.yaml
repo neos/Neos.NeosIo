@@ -2,10 +2,6 @@ Neos:
   Flow:
     http:
       applicationToken: 'MajorVersion'
-      middlewares:
-        'Neos.ContentSecurityPolicy':
-          position: 'after routing'
-          middleware: 'Neos\NeosIo\Http\CspMiddleware'
     mvc:
       routes:
         'Neos.NeosIo': {}

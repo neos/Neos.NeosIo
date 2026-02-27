@@ -1,0 +1,62 @@
+Flowpack:
+  ContentSecurityPolicy:
+    enabled: true
+    report-only: false
+    content-security-policy:
+      custom:
+        font-src:
+          'self:': true
+        img-src:
+          'self:': true
+          'data:': true
+          'https://analytics.neos.io/': true
+          'https://uptimerobot.com': true
+          'https://i.ytimg.com': true
+          'https://www.youtube-nocookie.com/': true
+          'https://user-images.githubusercontent.com/': true
+          '*.tile.openstreetmap.org/': true
+          'https://raw.githubusercontent.com/': true
+          'https://camo.githubusercontent.com/': true
+          'https://m.neos.io/': true
+          'https://www.gravatar.com/': true
+          'https://img.youtube.com/': true
+        script-src:
+          'self:': true
+          'unsafe-inline': true
+          'https://analytics.neos.io/': true
+          'https://www.youtube-nocookie.com/': true
+          'https://www.google.com/': true
+          'https://app.goessential.com': true
+          'https://m.neos.io/': true
+          'https://slack.neos.io': true
+        style-src:
+          'self:': true
+          'unsafe-inline': true
+          'data:': true
+          'https://www.youtube.com/': true
+          'https://www.youtube-nocookie.com/': true
+          'https://m.neos.io/': true
+        style-src-elem:
+          'unsafe-inline': true
+        style-src-attr:
+          'unsafe-inline': true
+        connect-src:
+          'self:': true
+          'https://analytics.neos.io/': true
+        media-src:
+          'self:': true
+        base-uri:
+          'self:': true
+        form-action:
+          'self:': true
+          'https://m.neos.io/': true
+          'https://typo3.us3.list-manage.com/': true
+        frame-ancestors:
+          'self:': true
+        frame-src:
+          'self:': true
+          'https://www.youtube-nocookie.com/': true
+          'https://www.youtube.com/': true
+          'https://app.goessential.com/': true
+          'https://analytics.neos.io/': true
+          'https://m.neos.io/': true

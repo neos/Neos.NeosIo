@@ -2529,6 +2529,53 @@
             "time": "2023-06-02T06:22:35+00:00"
         },
         {
+            "name": "flowpack/content-security-policy",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Flowpack/Flowpack.ContentSecurityPolicy.git",
+                "reference": "70424f94bca48cdb0210e5b7bb80ac46b1106bcb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Flowpack/Flowpack.ContentSecurityPolicy/zipball/70424f94bca48cdb0210e5b7bb80ac46b1106bcb",
+                "reference": "70424f94bca48cdb0210e5b7bb80ac46b1106bcb",
+                "shasum": ""
+            },
+            "require": {
+                "neos/flow": "^8.3 || ^9.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^1.12",
+                "phpstan/phpstan-phpunit": "^1.4",
+                "phpstan/phpstan-strict-rules": "^1.6",
+                "phpunit/phpunit": "^11.4"
+            },
+            "type": "neos-package",
+            "extra": {
+                "neos": {
+                    "package-key": "Flowpack.ContentSecurityPolicy"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Flowpack\\ContentSecurityPolicy\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Configure your content-security-policy header easily with yaml.",
+            "support": {
+                "issues": "https://github.com/Flowpack/Flowpack.ContentSecurityPolicy/issues",
+                "source": "https://github.com/Flowpack/Flowpack.ContentSecurityPolicy/tree/1.2.0"
+            },
+            "time": "2026-01-19T11:57:26+00:00"
+        },
+        {
             "name": "flowpack/elasticsearch",
             "version": "5.4.0",
             "source": {
@@ -7747,6 +7794,7 @@
             "require": {
                 "flownative/resource-tools": "^2.2",
                 "flowpack/cachebuster": "^1.0",
+                "flowpack/content-security-policy": "^1.2",
                 "flowpack/elasticsearch-contentrepositoryadaptor": "^9.0",
                 "flowpack/fullpagecache": "^3.0",
                 "flowpack/listable": "^4.0",
