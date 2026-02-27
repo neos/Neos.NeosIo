@@ -1,12 +1,14 @@
 prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
     @styleguide.props {
         content = 'Forever Open Source'
+        color = 'white'
         icon = 'heart'
         background = 'purple'
     }
 
     @propTypes {
         content = PropTypes:String
+        color = ${PropTypes.oneOf(['white', 'black'])}
         icon = ${PropTypes.oneOf([
             'animatedArrow', 'animatedArrowLeft',
             'neosAvatarPrimary', 'neosAvatarLight', 'neosAvatarDark', 'neosAvatarMonochrome', 'neosLogoPrimary', 'neosLogoLight', 'neosLogoDark', 'neosLogoMonochrome',
@@ -19,16 +21,22 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
     }
 
     background = 'blue'
-
-    @if.hasIcon = ${this.icon}
+    color = 'white'
 
     renderer = afx`
         <Neos.Presentation:Background
-            class={['w-44 lg:w-56 lg:p-4 p-3 flex flex-col square-icon aspect-square text-white', props.class]}
+            class={[
+                'absolute w-44 lg:w-56 lg:p-4 p-3 flex! flex-col! aspect-square! square-icon fade-in slide-up',
+                'text-' + props.color,
+                'nth-[1]:top-[25%] nth-[1]:left-[5%] nth-[1]:[animation-delay:200ms]',
+                'nth-[2]:top-[10%] nth-[2]:right-[10%] nth-[2]:[animation-delay:400ms]',
+                'nth-[3]:top-[45%] nth-[3]:-right-12 nth-[3]:[animation-delay:600ms]',
+                props.class
+            ]}
             background={props.background}
         >
             <Neos.Presentation:Icon icon={props.icon} sizeClass="h-8 lg:h-12 mr-auto" />
-            <span @if={props.content} class="block mt-auto wrap-break-word hyphens-auto text-lg lg:text-2xl font-medium">{props.content}</span>
+            <span @if={props.content} class="block mt-auto wrap-break-word hyphens-auto text-lg lg:text-2xl font-medium text-left!">{props.content}</span>
         </Neos.Presentation:Background>
     `
 }
