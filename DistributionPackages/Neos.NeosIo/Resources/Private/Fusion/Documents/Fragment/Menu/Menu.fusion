@@ -3,27 +3,71 @@ prototype(Neos.NeosIo:Fragment.Menu) < prototype(Neos.Fusion:Component) {
         entryLevel = 1
         maximumLevels = 2
         filter = 'Neos.Neos:Document,!Neos.NeosIo:Reference.ShowCase,!Neos.NeosIo:Post'
-        calculateItemStates = true
-    }
-
-    languageItems = Neos.Neos:DimensionsMenuItems {
-        dimension = "language"
-        calculateItemStates = true
     }
 
     renderer = afx`
-      <Neos.Presentation:DesktopNavigation items={props.items} languageItems={props.languageItems} />
-      <Neos.Presentation:MobileNavigation items={props.items} languageItems={props.languageItems} />
+        <nav role="navigation" class="offCanvas print-hidden" id="offCanvas">
+            <div class="offCanvas__navWrapper">
+                <ul class="nav siteHeader__nav offCanvas__nav">
+                    <Neos.Fusion:Loop items={props.items}>
+                        <Neos.NeosIo:Fragment.Menu.Item item={item} />
+                    </Neos.Fusion:Loop>
+                </ul>
+            </div>
+        </nav>
     `
-
-    @cache {
-        mode = 'cached'
-        entryIdentifier {
-            site = ${Neos.Caching.entryIdentifierForNode(site)}
-        }
-        entryTags {
-            pages = ${Neos.Caching.nodeTypeTag('Neos.Neos:Document', site)}
-        }
-    }
 }
 
+prototype(Neos.NeosIo:Fragment.Menu.Item) < prototype(Neos.Fusion:Component) {
+    item = null
+
+    @private {
+        hasSubItems = ${!!props.item.subItems}
+    }
+
+    renderer = afx`
+        <li class="offCanvas__category">
+            <Neos.Neos:NodeLink
+                node={props.item.node}
+                attributes.title={props.item.label}
+                attributes.role="button"
+                attributes.role.@if={private.hasSubItems}
+                attributes.aria-haspopup="true"
+                attributes.aria-haspopup.@if={private.hasSubItems}
+                attributes.aria-expanded="false"
+                attributes.aria-expanded.@if={private.hasSubItems}
+            >
+                {props.item.label}
+            </Neos.Neos:NodeLink>
+            <ul class="nav nav--stacked siteHeader__dropDownNav offCanvas__categoryList" @if={private.hasSubItems}>
+                <Neos.Fusion:Loop items={props.item.subItems} itemName="subItem">
+                    <Neos.NeosIo:Fragment.Menu.SubItem item={subItem} />
+                </Neos.Fusion:Loop>
+            </ul>
+        </li>
+    `
+}
+
+prototype(Neos.NeosIo:Fragment.Menu.SubItem) < prototype(Neos.Fusion:Component) {
+    item = null
+
+    @private {
+        isSpacer = ${q(props.item.node).is('[instanceof Neos.NeosIo:SpacerPage]')}
+    }
+
+    renderer = afx`
+        <li>
+            <hr
+                @if={private.isSpacer}
+                class="offCanvas__categorySeparator u-mb1/4 u-mt1/4"
+            />
+            <Neos.Neos:NodeLink
+                node={props.item.node}
+                attributes.title={props.item.label}
+                @if={!private.isSpacer}
+            >
+                {props.item.label}
+            </Neos.Neos:NodeLink>
+        </li>
+    `
+}
