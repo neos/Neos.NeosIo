@@ -15,15 +15,5 @@ prototype(Neos.NeosIo:Fragment.Menu) < prototype(Neos.Fusion:Component) {
       <Neos.Presentation:DesktopNavigation items={props.items} languageItems={props.languageItems} />
       <Neos.Presentation:MobileNavigation items={props.items} languageItems={props.languageItems} />
     `
-
-    @cache {
-        mode = 'cached'
-        entryIdentifier {
-            site = ${Neos.Caching.entryIdentifierForNode(site)}
-        }
-        entryTags {
-            pages = ${Neos.Caching.nodeTypeTag('Neos.Neos:Document', site)}
-        }
-    }
 }
 

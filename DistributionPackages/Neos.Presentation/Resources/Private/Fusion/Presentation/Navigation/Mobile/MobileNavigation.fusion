@@ -15,17 +15,17 @@ prototype(Neos.Presentation:MobileNavigation) < prototype(Neos.Fusion:Component)
             x-ref="mobileMenu"
         >
             <Neos.Presentation:MobileNavigation.LevelFirst items={props.items} languageItems={props.languageItems} />
-            <a href="/" class="inline-block" title="Link zur Startseite">
-              <Neos.Presentation:Icon icon="neosLogoDark" class="h-10 self-center shrink-0" />
+            <a href="/" class="inline-block" title={I18n.translate('Neos.Presentation:Navigation:linkToStartPage')}>
+              <Neos.Presentation:Icon ariaLabel="Neos Logo" icon="neosLogoDark" class="h-10 self-center shrink-0" />
             </a>
             <button
                 x-on:click="toggleMobileMenu()"
                 id="open-mobile-menu"
                 class="flex justify-center items-center flex-col p-1 h-8 w-8 text-2xl text-primary-main hover:text-primary-dark focus:text-primary-dark focus:border focus:border-primary-dark"
-                title=""
+                title={I18n.translate('Neos.Presentation:Navigation:openMenu')}
             >
                 <Neos.Presentation:Icon icon={"chevron-down"}  />
-                <span class="sr-only">Menü öffnen</span>
+                <span class="sr-only">{I18n.translate('Neos.Presentation:Navigation:openMenu')}</span>
             </button>
         </div>
     `

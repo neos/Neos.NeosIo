@@ -28,8 +28,9 @@ prototype(Neos.Presentation:MobileNavigation.LevelFirst) < prototype(Neos.Fusion
                     <button
                         x-on:click="mobileMenuIsOpen = false"
                         class="p-1 h-8 w-8 text-white"
+                        title={I18n.translate('Neos.Presentation:Navigation:closeMenu')}
                     >
-                        <span class="sr-only">Menü schließen</span>
+                        <span class="sr-only">{I18n.translate('Neos.Presentation:Navigation:closeMenu')}</span>
                         <Neos.Presentation:Icon icon={"chevron-up"} />
                     </button>
                 </div>
@@ -45,7 +46,7 @@ prototype(Neos.Presentation:MobileNavigation.LevelFirst) < prototype(Neos.Fusion
                 </ul>
                 <div class="mt-auto flex justify-between items-center px-4 py-2">
                     <Neos.Presentation:LanguageMenu languageItems={props.languageItems} />
-                    <Neos.Presentation:Button content="Try Neos" />
+                    <Neos.Presentation:Button icon={"chevron-right"} content="Try Neos" />
                 </div>
             </div>
 

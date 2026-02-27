@@ -1,72 +1,15 @@
-// Global cache optimised implementation
-prototype(Neos.NeosIo:Component.SiteFooter) < prototype(Neos.Fusion:Renderer) {
-    renderPath = '/siteFooter'
-}
-
-prototype(Neos.NeosIo:Component.SiteFooter.Renderer) < prototype(Neos.Fusion:Component) {
-    className = 'siteFooter u-invertText print-hidden'
+prototype(Neos.NeosIo:Component.SiteFooter) < prototype(Neos.Fusion:Component) {
     siteName = 'Neos'
-    githubRepositoryEndpoint = 'repos/Neos/neos-development-collection/stats/contributors'
-    licenseText = 'Neos is free and open source software licensed under <a href="https://opensource.org/licenses/GPL-3.0" target="_blank" rel="noopener">GPL v3</a> or later.'
-    legalLinkNode = ${q(site).property('imprintLinkNode')}
+    licenseText = 'Neos is free and open source software licensed under <a href="https://opensource.org/licenses/GPL-3.0" target="_blank" rel="noopener">GPL v3</a> or later. Created with passion by over 100 contributors around the world.'
+
+    footerContainer = ${q(site).property('footerContentContainer')}
+    footerLinkItems = ${q(this.footerContainer).children('[instanceof Neos.Neos:Document]').get()}
 
     renderer = afx`
-        <footer role="contentinfo" class={props.className}>
-            <Neos.NeosIo:Fragment.FooterContent/>
-            <hr/>
-
-            <div class="siteFooter__nav-wrapper">
-                <div>
-                    <h6 class="siteFooter__heading">{props.siteName}</h6>
-                    <Neos.NeosIo:Fragment.FooterMenu/>
-                </div>
-                <div>
-                    <h6 class="siteFooter__heading">Community</h6>
-                    <ul class="nav nav--stacked siteFooter__nav">
-                        <li><a target="_blank" rel="noopener" href="https://discuss.neos.io">discuss.neos.io</a></li>
-                        <li><a target="_blank" rel="noopener" href="https://id.neos.io">id.neos.io</a></li>
-                        <li><a target="_blank" rel="noopener" href="https://slack.neos.io">slack.neos.io</a></li>
-                        <li><a target="_blank" rel="noopener" href="https://translate.neos.io">translate.neos.io</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h6 class="siteFooter__heading">Follow {props.siteName}</h6>
-                    <ul class="nav nav--stacked siteFooter__nav">
-                        <li><a target="_blank" rel="noopener" href="https://github.com/neos"><i class="fab fa-fw fa-github"></i> GitHub</a></li>
-                        <li><a rel="me noopener" target="_blank" href="https://neos.social/@team"><i class="fab fa-fw fa-mastodon"></i> Mastodon</a></li>
-                        <li><a target="_blank" rel="noopener" href="https://youtube.com/c/NeosCMS"><i class="fab fa-fw fa-youtube"></i> YouTube</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <p class="u-alignCenter u-mt1/1">
-                <a href="/" title="Home">
-                    <Neos.NeosIo:Component.BrandLogoOutline size="square"/>
-                </a>
-            </p>
-
-            <p class="u-alignCenter u-mt1/1 siteFooter__contribution">
-                {props.licenseText}<br />
-                Created with passion by over <span>100</span> contributors around the world.<br />
-                Website hosted by <a href="https://www.flownative.com" target="_blank" rel="noopener">Flownative</a>.<br />
-                <a target="_blank" rel="noopener" href="https://stats.uptimerobot.com/275vWHgGq">System status</a> powered by <a href="https://uptimerobot.com/" target="_blank">
-                <img src="https://uptimerobot.com/assets/images/uptimerobot-logo.svg" width="100"/></a>.<br />
-
-                <Neos.Neos:NodeLink node={props.legalLinkNode} @if.set={props.legalLinkNode}/>
-            </p>
-        </footer>
+        <Neos.Presentation:Footer
+            licenseText={props.licenseText}
+            siteName={props.siteName}
+            footerLinkItems={props.footerLinkItems}
+        />
     `
-
-    @cache {
-        mode = 'cached'
-        entryIdentifier {
-            name = 'footer'
-            site = ${Neos.Caching.entryIdentifierForNode(site)}
-        }
-        entryTags {
-            site = ${Neos.Caching.nodeTag(site)}
-        }
-    }
 }
-
-siteFooter = Neos.NeosIo:Component.SiteFooter.Renderer
