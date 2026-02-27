@@ -93,12 +93,12 @@ $imageTeaser--speaker__animation: 0.2s linear;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-
-  margin: 0 #{-$basic-spacing / 2}px;
-  width: calc(100% + #{$basic-spacing}px);
+  gap: $basic-spacing;
+  margin: 0;
+  width: 100%;
 
   &__item {
-    padding: 0 #{$basic-spacing / 2}px;
+    padding: 0;
 
     @media all and (max-width: 441px) {
       margin: 0 auto;

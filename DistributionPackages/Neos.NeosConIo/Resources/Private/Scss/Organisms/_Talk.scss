@@ -38,17 +38,14 @@
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
-      margin: 0 #{-$basic-spacing / 2}px;
-      width: calc(100% + #{$basic-spacing}px);
+      gap: #{$basic-spacing}px;
+      margin: 0;
+      width: 100%;
     }
   }
 
   .speaker__speakerList__item {
     padding: 0;
-
-    @include mq("small") {
-      padding: 0 #{$basic-spacing / 2}px;
-    }
 
     @media all and (max-width: 441px) {
       margin: 0 auto;
