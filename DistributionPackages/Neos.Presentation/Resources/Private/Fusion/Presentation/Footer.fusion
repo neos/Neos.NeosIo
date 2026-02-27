@@ -33,18 +33,25 @@ prototype(Neos.Presentation:Footer) < prototype(Neos.Fusion:Component) {
                         <nav class="flex flex-wrap m-0!" x-tooltips x-data>
                             <ul class="list-none! m-0! p-0! flex flex-row gap-4">
                                 <li>
-                                    <a class="flex items-center text-white! justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://github.com/neos">
-                                        <Neos.Presentation:Icon ariaHidden={true} icon={"github"} class="size-6" /> <span class="sr-only">GitHub</span>
+                                    <a class="flex items-center text-white! justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current"
+                                       target="_blank" rel="noopener" href="https://github.com/neos">
+                                        <Neos.Presentation:Icon ariaHidden={true} icon={"github"} class="size-6" />
+                                        <span class="sr-only">GitHub</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="flex items-center text-white! justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://neos.social/@team">
-                                        <Neos.Presentation:Icon ariaHidden={true} icon={"mastodon"} class="size-6" /><span class="sr-only">Mastodon</span>
+                                    <a class="flex items-center text-white! justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current"
+                                       target="_blank" rel="noopener" href="https://neos.social/@team">
+                                        <Neos.Presentation:Icon ariaHidden={true} icon={"mastodon"}
+                                                                class="size-6" />
+                                        <span class="sr-only">Mastodon</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="flex items-center text-white! justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://youtube.com/c/NeosCMS">
-                                        <Neos.Presentation:Icon ariaHidden={true} icon={"youtube"} class="size-6" /> <span class="sr-only">YouTube</span>
+                                    <a class="flex items-center text-white! justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current"
+                                       target="_blank" rel="noopener" href="https://youtube.com/c/NeosCMS">
+                                        <Neos.Presentation:Icon ariaHidden={true} icon={"youtube"} class="size-6" />
+                                        <span class="sr-only">YouTube</span>
                                     </a>
                                 </li>
                             </ul>
@@ -57,7 +64,8 @@ prototype(Neos.Presentation:Footer) < prototype(Neos.Fusion:Component) {
                             <ul class="list-none! m-0! p-0! flex flex-col gap-2">
                                 <Neos.Fusion:Loop items={props.footerLinkItems}>
                                     <li>
-                                        <Neos.Neos:NodeLink attributes.class={"text-white!"} node={item} attributes.title={Neos.Node.label(item)} />
+                                        <Neos.Neos:NodeLink attributes.class={"text-white!"} node={item}
+                                                            attributes.title={Neos.Node.label(item)} />
                                     </li>
                                 </Neos.Fusion:Loop>
                             </ul>
@@ -65,20 +73,29 @@ prototype(Neos.Presentation:Footer) < prototype(Neos.Fusion:Component) {
                         <div class="col-span-2 lg:col-span-1">
                             <h5 class="text-white! mb-4! text-lg!">Community</h5>
                             <ul class="list-none! m-0! p-0! flex flex-col gap-2">
-                                <li><a class="text-white!" target="_blank" rel="noopener" href="https://discuss.neos.io">discuss.neos.io</a></li>
-                                <li><a class="text-white!" target="_blank" rel="noopener" href="https://id.neos.io">id.neos.io</a></li>
-                                <li><a class="text-white!" target="_blank" rel="noopener" href="https://slack.neos.io">slack.neos.io</a></li>
-                                <li><a class="text-white!" target="_blank" rel="noopener" href="https://translate.neos.io">translate.neos.io</a></li>
+                                <li><a class="text-white!" target="_blank" rel="noopener"
+                                       href="https://discuss.neos.io">discuss.neos.io</a></li>
+                                <li><a class="text-white!" target="_blank" rel="noopener" href="https://id.neos.io">id.neos.io</a>
+                                </li>
+                                <li><a class="text-white!" target="_blank" rel="noopener"
+                                       href="https://slack.neos.io">slack.neos.io</a></li>
+                                <li><a class="text-white!" target="_blank" rel="noopener"
+                                       href="https://translate.neos.io">translate.neos.io</a></li>
                             </ul>
                         </div>
-                        <div class="col-span-4 order-first lg:col-span-2 md:order-none" @if={props.nlUser && props.nlId}>
+                        <div class="col-span-4 order-first lg:col-span-2 md:order-none"
+                             @if={props.nlUser && props.nlId}>
                             <Neos.Fusion.Form:Form
                                 form.target={"https://typo3.us3.list-manage.com/subscribe/post?u="+props.nlUser+"&id="+props.nlId}
                                 form.method="post"
                             >
-                                <legend class="text-left text-white mb-4! text-lg border-none! font-medium">Join the Content Revolution | Regular updates on all things Neos</legend>
-                                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                                <Neos.Fusion.Form:Input field.name={"b_"+props.nlUser+"_"+props.nlId} attributes.style="position: absolute; left: -5000px;"/>
+                                <legend class="text-left text-white mb-4! text-lg border-none! font-medium">Join the
+                                    Content Revolution | Regular updates on all things Neos
+                                </legend>
+                                <!-- real people should not fill this in and expect good things - do not remove this
+                                or risk form bot signups-->
+                                <Neos.Fusion.Form:Input field.name={"b_"+props.nlUser+"_"+props.nlId}
+                                                        attributes.style="position: absolute; left: -5000px;" />
                                 <div class="flex flex-row gap-4 flex-wrap">
                                     <Neos.Fusion.Form:Input
                                         field.name="EMAIL"
@@ -88,7 +105,8 @@ prototype(Neos.Presentation:Footer) < prototype(Neos.Fusion:Component) {
                                         attributes.autocomplete="email"
                                         attributes.class={"bg-white px-4 py-2 text-black grow-1"}
                                     />
-                                    <Neos.Fusion.Form:Button attributes.class="btn btn--solidPrimary"> <span class="btn__content">Subscribe</span></Neos.Fusion.Form:Button>
+                                    <Neos.Fusion.Form:Button attributes.class="btn btn--solidPrimary"><span
+                                        class="btn__content">Subscribe</span></Neos.Fusion.Form:Button>
                                 </div>
                             </Neos.Fusion.Form:Form>
                         </div>
