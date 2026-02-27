@@ -8,9 +8,9 @@ namespace Neos\NeosIo\Command;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Neos\NeosIo\Service\CrowdApiConnector;
 use Neos\Flow\Cli\CommandController;
 use Neos\Flow\I18n\Translator;
-use Neos\NeosIo\Service\CrowdApiConnector;
 
 /**
  * The Crowd Command Controller
