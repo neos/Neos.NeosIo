@@ -1,0 +1,87 @@
+Sitegeist:
+  Kaleidoscope:
+    dummyImage:
+      overrideImagineDriver: 'Imagick'
+  Monocle:
+    ui:
+      structure:
+        atom:
+          position: -10
+          match: Atom\.
+          label: Atom
+          icon: atom
+          color: '#AAA'
+        block:
+          position: -20
+          match: Block\.
+          label: Block
+          icon: gear
+          color: '#4DBCE9'
+        module:
+          position: -30
+          match: Module\.
+          label: Module
+          icon: gears
+          color: '#26ADE4'
+        section:
+          position: -40
+          match: Section\.
+          label: Section
+          icon: certificate
+          color: '#D1E751'
+        template:
+          position: -50
+          match: Template\.
+          label: Template
+          icon: file
+          color: '#FFFFFF'
+        presentation:
+          position: -60
+          match: Presentation\.
+          label: Presentation
+          icon: eye
+          color: '#84cc16'
+        presentationPlain:
+          position: -60
+          match: Presentation$
+          label: Presentation
+          icon: eye
+          color: '#84cc16'
+        presentationPackage:
+          position: -60
+          match: 'Presentation:'
+          label: Presentation
+          icon: eye
+          color: '#84cc16'
+      viewportPresets:
+        xs:
+          label: xs
+          width: 400
+          height: 600
+        sm:
+          label: sm
+          width: 640
+          height: 800
+        md:
+          label: md
+          width: 768
+          height: 400
+        l:
+          label: lg
+          width: 1024
+          height: 800
+        xl:
+          label: xl
+          width: 1280
+          height: 1024
+        xxl:
+          label: xxl
+          width: 1520
+          height: 1280
+        xxxl:
+          label: 3xl
+          width: 1740
+          height: 1520
+    hiddenPrototypeNamePatterns:
+      - 'Sitegeist.Kaleidoscope:*'
+    alwaysShowPrototypes: {  }

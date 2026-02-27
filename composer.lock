@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f5f1b983f3b48eb7eb657b3cbe462a19",
+    "content-hash": "c017de4264395ff3205caf7c6a600bf3",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -115,6 +115,144 @@
                 }
             ],
             "time": "2026-02-10T14:33:43+00:00"
+        },
+        {
+            "name": "carbon/eel",
+            "version": "2.25.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CarbonPackages/Carbon.Eel.git",
+                "reference": "15c1ecafbac65ea9d3b08bf7d17ac7b1ba334bdf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CarbonPackages/Carbon.Eel/zipball/15c1ecafbac65ea9d3b08bf7d17ac7b1ba334bdf",
+                "reference": "15c1ecafbac65ea9d3b08bf7d17ac7b1ba334bdf",
+                "shasum": ""
+            },
+            "require": {
+                "behat/transliterator": "^1.2",
+                "gehrisandro/tailwind-merge-php": "^1.0",
+                "hidehalo/nanoid-php": "^2.0",
+                "matthiasmullie/minify": "^1.3",
+                "neos/flow": "^7.0 || ^8.0 || ^9.0",
+                "php": "^8.1"
+            },
+            "type": "neos-carbon",
+            "extra": {
+                "neos": {
+                    "package-key": "Carbon.Eel"
+                },
+                "installer-name": "Carbon.Eel"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Carbon\\Eel\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Uhlmann",
+                    "email": "hello@uhlmann.pro",
+                    "homepage": "https://www.uhlmann.pro",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Some nice Eel helper for Neos.io",
+            "keywords": [
+                "FUSION",
+                "Neos",
+                "carbon",
+                "eel",
+                "helper"
+            ],
+            "support": {
+                "issues": "https://github.com/CarbonPackages/Carbon.Eel/issues",
+                "source": "https://github.com/CarbonPackages/Carbon.Eel/tree/2.25.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/Jonnitto/20eur",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/jonnitto",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-12-19T06:04:47+00:00"
+        },
+        {
+            "name": "carbon/pipeline",
+            "version": "0.18.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CarbonPackages/Carbon.Pipeline.git",
+                "reference": "756c8ade7d6381f7d80d42db85cda8793f94c14a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CarbonPackages/Carbon.Pipeline/zipball/756c8ade7d6381f7d80d42db85cda8793f94c14a",
+                "reference": "756c8ade7d6381f7d80d42db85cda8793f94c14a",
+                "shasum": ""
+            },
+            "type": "neos-build",
+            "extra": {
+                "neos/flow": {
+                    "post-update": "Carbon\\Pipeline\\Composer::postPackageUpdateAndInstall",
+                    "post-install": "Carbon\\Pipeline\\Composer::postPackageUpdateAndInstall"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Carbon\\Pipeline\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Uhlmann",
+                    "email": "hello@uhlmann.pro",
+                    "homepage": "https://www.uhlmann.pro"
+                }
+            ],
+            "description": "Ultra-fast build stack for Neos CMS based on esbuild and PostCSS",
+            "keywords": [
+                "Neos",
+                "Preact",
+                "css",
+                "esbuild",
+                "javascript",
+                "postcss",
+                "react",
+                "sass",
+                "svelte",
+                "tailwind",
+                "typescript",
+                "vue"
+            ],
+            "support": {
+                "issues": "https://github.com/CarbonPackages/Carbon.Pipeline/issues",
+                "source": "https://github.com/CarbonPackages/Carbon.Pipeline/tree/0.18.7"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/Jonnitto/20eur",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/jonnitto",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-02-06T12:29:39+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -1263,16 +1401,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.10.4",
+            "version": "3.10.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "63a46cb5aa6f60991186cc98c1d1b50c09311868"
+                "reference": "95d84866bf3c04b2ddca1df7c049714660959aef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/63a46cb5aa6f60991186cc98c1d1b50c09311868",
-                "reference": "63a46cb5aa6f60991186cc98c1d1b50c09311868",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/95d84866bf3c04b2ddca1df7c049714660959aef",
+                "reference": "95d84866bf3c04b2ddca1df7c049714660959aef",
                 "shasum": ""
             },
             "require": {
@@ -1293,9 +1431,9 @@
                 "jetbrains/phpstorm-stubs": "2023.1",
                 "phpstan/phpstan": "2.1.30",
                 "phpstan/phpstan-strict-rules": "^2",
-                "phpunit/phpunit": "9.6.29",
-                "slevomat/coding-standard": "8.24.0",
-                "squizlabs/php_codesniffer": "4.0.0",
+                "phpunit/phpunit": "9.6.34",
+                "slevomat/coding-standard": "8.27.1",
+                "squizlabs/php_codesniffer": "4.0.1",
                 "symfony/cache": "^5.4|^6.0|^7.0|^8.0",
                 "symfony/console": "^4.4|^5.4|^6.0|^7.0|^8.0"
             },
@@ -1357,7 +1495,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.10.4"
+                "source": "https://github.com/doctrine/dbal/tree/3.10.5"
             },
             "funding": [
                 {
@@ -1373,7 +1511,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-11-29T10:46:08+00:00"
+            "time": "2026-02-24T08:03:57+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -2229,16 +2367,16 @@
         },
         {
             "name": "flownative/google-cloudstorage",
-            "version": "v6.1.3",
+            "version": "v6.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/flownative/flow-google-cloudstorage.git",
-                "reference": "2d08275fa121fd4e3af129878044cc3b8e4eba69"
+                "reference": "885930a61ad44530bc06c57dc35b4ac08b1597e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flownative/flow-google-cloudstorage/zipball/2d08275fa121fd4e3af129878044cc3b8e4eba69",
-                "reference": "2d08275fa121fd4e3af129878044cc3b8e4eba69",
+                "url": "https://api.github.com/repos/flownative/flow-google-cloudstorage/zipball/885930a61ad44530bc06c57dc35b4ac08b1597e0",
+                "reference": "885930a61ad44530bc06c57dc35b4ac08b1597e0",
                 "shasum": ""
             },
             "require": {
@@ -2330,9 +2468,9 @@
             "description": "This Flow package allows you to store assets (resources) in Google Cloud Storage and publish resources to GCS.",
             "support": {
                 "issues": "https://github.com/flownative/flow-google-cloudstorage/issues",
-                "source": "https://github.com/flownative/flow-google-cloudstorage/tree/v6.1.3"
+                "source": "https://github.com/flownative/flow-google-cloudstorage/tree/v6.1.4"
             },
-            "time": "2025-12-17T16:00:17+00:00"
+            "time": "2026-02-27T08:26:25+00:00"
         },
         {
             "name": "flownative/redis-backend",
@@ -2751,16 +2889,16 @@
         },
         {
             "name": "flowpack/fullpagecache",
-            "version": "3.0.3",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Flowpack/Flowpack.FullPageCache.git",
-                "reference": "f32229d00fb4803912d01ad3abf0029ae24e1c84"
+                "reference": "a92fbfbdb9867caf82b7fd3f2df728c723625d21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Flowpack/Flowpack.FullPageCache/zipball/f32229d00fb4803912d01ad3abf0029ae24e1c84",
-                "reference": "f32229d00fb4803912d01ad3abf0029ae24e1c84",
+                "url": "https://api.github.com/repos/Flowpack/Flowpack.FullPageCache/zipball/a92fbfbdb9867caf82b7fd3f2df728c723625d21",
+                "reference": "a92fbfbdb9867caf82b7fd3f2df728c723625d21",
                 "shasum": ""
             },
             "require": {
@@ -2785,9 +2923,9 @@
             "description": "Cache full Neos page responses",
             "support": {
                 "issues": "https://github.com/Flowpack/Flowpack.FullPageCache/issues",
-                "source": "https://github.com/Flowpack/Flowpack.FullPageCache/tree/3.0.3"
+                "source": "https://github.com/Flowpack/Flowpack.FullPageCache/tree/3.0.4"
             },
-            "time": "2025-01-07T10:32:29+00:00"
+            "time": "2026-02-27T06:04:43+00:00"
         },
         {
             "name": "flowpack/listable",
@@ -2909,16 +3047,16 @@
         },
         {
             "name": "flowpack/media-ui",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Flowpack/media-ui.git",
-                "reference": "95a13870bc2500bb3dca58c37347910863b9d3df"
+                "reference": "48e8beccf5c49109dbb80c8629457ec110deca7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Flowpack/media-ui/zipball/95a13870bc2500bb3dca58c37347910863b9d3df",
-                "reference": "95a13870bc2500bb3dca58c37347910863b9d3df",
+                "url": "https://api.github.com/repos/Flowpack/media-ui/zipball/48e8beccf5c49109dbb80c8629457ec110deca7a",
+                "reference": "48e8beccf5c49109dbb80c8629457ec110deca7a",
                 "shasum": ""
             },
             "require": {
@@ -2949,7 +3087,7 @@
             "description": "This module allows managing media assets including pictures, videos, audio and documents.",
             "support": {
                 "issues": "https://github.com/Flowpack/media-ui/issues",
-                "source": "https://github.com/Flowpack/media-ui/tree/3.1.0"
+                "source": "https://github.com/Flowpack/media-ui/tree/3.1.1"
             },
             "funding": [
                 {
@@ -2957,20 +3095,20 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-12-18T11:00:02+00:00"
+            "time": "2026-02-27T07:07:21+00:00"
         },
         {
             "name": "flowpack/neos-matomo",
-            "version": "4.0.2",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Flowpack/neos-matomo.git",
-                "reference": "d51142878e3dd36ca925801cde07afbc9312e194"
+                "reference": "ee603b82a14788a68e4d9fd8db0ee1e3dfea2fd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Flowpack/neos-matomo/zipball/d51142878e3dd36ca925801cde07afbc9312e194",
-                "reference": "d51142878e3dd36ca925801cde07afbc9312e194",
+                "url": "https://api.github.com/repos/Flowpack/neos-matomo/zipball/ee603b82a14788a68e4d9fd8db0ee1e3dfea2fd8",
+                "reference": "ee603b82a14788a68e4d9fd8db0ee1e3dfea2fd8",
                 "shasum": ""
             },
             "require": {
@@ -3073,9 +3211,9 @@
             "description": "Track visits of your Neos site with the Matomo Open Analytics Platform!",
             "support": {
                 "issues": "https://github.com/Flowpack/neos-matomo/issues",
-                "source": "https://github.com/Flowpack/neos-matomo/tree/4.0.2"
+                "source": "https://github.com/Flowpack/neos-matomo/tree/4.0.3"
             },
-            "time": "2025-06-25T17:55:04+00:00"
+            "time": "2026-02-27T06:00:21+00:00"
         },
         {
             "name": "flowpack/searchplugin",
@@ -3197,6 +3335,73 @@
                 "source": "https://github.com/Flowpack/Flowpack.SearchPlugin/tree/6.0.1"
             },
             "time": "2025-04-04T09:10:48+00:00"
+        },
+        {
+            "name": "gehrisandro/tailwind-merge-php",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gehrisandro/tailwind-merge-php.git",
+                "reference": "dc11b9d4a625dd5be885900e5ef14c3efa260277"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gehrisandro/tailwind-merge-php/zipball/dc11b9d4a625dd5be885900e5ef14c3efa260277",
+                "reference": "dc11b9d4a625dd5be885900e5ef14c3efa260277",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1.0",
+                "psr/simple-cache": "^3.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.13.8",
+                "nunomaduro/collision": "^7.10",
+                "pestphp/pest": "^v2.24.0",
+                "pestphp/pest-plugin-arch": "^2.6",
+                "pestphp/pest-plugin-mock": "^2.0.0",
+                "pestphp/pest-plugin-type-coverage": "^2.8",
+                "phpstan/phpstan": "^1.10.55",
+                "rector/rector": "^1.0.5",
+                "symfony/var-dumper": "^6.4.2"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/TailwindMerge.php"
+                ],
+                "psr-4": {
+                    "TailwindMerge\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sandro Gehri",
+                    "email": "sandrogehri@gmail.com"
+                }
+            ],
+            "description": "TailwindMerge for PHP merges multiple Tailwind CSS classes by automatically resolving conflicts between them",
+            "keywords": [
+                "classes",
+                "merge",
+                "php",
+                "tailwindcss"
+            ],
+            "support": {
+                "issues": "https://github.com/gehrisandro/tailwind-merge-php/issues",
+                "source": "https://github.com/gehrisandro/tailwind-merge-php/tree/v1.1.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/gehrisandro",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-05-21T17:32:42+00:00"
         },
         {
             "name": "goe/neos-package",
@@ -4039,6 +4244,63 @@
             "time": "2025-08-23T21:21:41+00:00"
         },
         {
+            "name": "hidehalo/nanoid-php",
+            "version": "2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hidehalo/nanoid-php.git",
+                "reference": "3aa4f874d36e2368a57b2ad4c9ca1abe13514e66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hidehalo/nanoid-php/zipball/3aa4f874d36e2368a57b2ad4c9ca1abe13514e66",
+                "reference": "3aa4f874d36e2368a57b2ad4c9ca1abe13514e66",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/random_compat": ">=2.0",
+                "php": "~7.1|~8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=5.6",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hidehalo\\Nanoid\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "hidehalo",
+                    "email": "tianchen_cc@yeah.net",
+                    "homepage": "https://github.com/hidehalo",
+                    "role": "Owner"
+                }
+            ],
+            "description": "A copy of nanoid in PHP",
+            "homepage": "https://github.com/hidehalo/nanoid-php",
+            "keywords": [
+                "hidehalo",
+                "nanoid-php"
+            ],
+            "support": {
+                "issues": "https://github.com/hidehalo/nanoid-php/issues",
+                "source": "https://github.com/hidehalo/nanoid-php/tree/2.0"
+            },
+            "time": "2024-11-04T03:00:05+00:00"
+        },
+        {
             "name": "imagine/imagine",
             "version": "1.5.2",
             "source": {
@@ -4804,6 +5066,129 @@
                 "source": "https://github.com/Masterminds/html5-php/tree/2.10.0"
             },
             "time": "2025-07-25T09:04:22+00:00"
+        },
+        {
+            "name": "matthiasmullie/minify",
+            "version": "1.3.75",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasmullie/minify.git",
+                "reference": "76ba4a5f555fd7bf4aa408af608e991569076671"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/76ba4a5f555fd7bf4aa408af608e991569076671",
+                "reference": "76ba4a5f555fd7bf4aa408af608e991569076671",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "matthiasmullie/path-converter": "~1.1",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": ">=2.0",
+                "matthiasmullie/scrapbook": ">=1.3",
+                "phpunit/phpunit": ">=4.8"
+            },
+            "suggest": {
+                "psr/cache-implementation": "Cache implementation to use with Minify::cache"
+            },
+            "bin": [
+                "bin/minifycss",
+                "bin/minifyjs"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MatthiasMullie\\Minify\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Mullie",
+                    "email": "minify@mullie.eu",
+                    "homepage": "https://www.mullie.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CSS & JavaScript minifier, in PHP. Removes whitespace, strips comments, combines files (incl. @import statements and small assets in CSS files), and optimizes/shortens a few common programming patterns.",
+            "homepage": "https://github.com/matthiasmullie/minify",
+            "keywords": [
+                "JS",
+                "css",
+                "javascript",
+                "minifier",
+                "minify"
+            ],
+            "support": {
+                "issues": "https://github.com/matthiasmullie/minify/issues",
+                "source": "https://github.com/matthiasmullie/minify/tree/1.3.75"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/matthiasmullie",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-06-25T09:56:19+00:00"
+        },
+        {
+            "name": "matthiasmullie/path-converter",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasmullie/path-converter.git",
+                "reference": "e7d13b2c7e2f2268e1424aaed02085518afa02d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/e7d13b2c7e2f2268e1424aaed02085518afa02d9",
+                "reference": "e7d13b2c7e2f2268e1424aaed02085518afa02d9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MatthiasMullie\\PathConverter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Mullie",
+                    "email": "pathconverter@mullie.eu",
+                    "homepage": "http://www.mullie.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Relative path converter",
+            "homepage": "http://github.com/matthiasmullie/path-converter",
+            "keywords": [
+                "converter",
+                "path",
+                "paths",
+                "relative"
+            ],
+            "support": {
+                "issues": "https://github.com/matthiasmullie/path-converter/issues",
+                "source": "https://github.com/matthiasmullie/path-converter/tree/1.1.3"
+            },
+            "time": "2019-02-05T23:41:09+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -9681,6 +10066,35 @@
             "time": "2023-05-09T14:08:57+00:00"
         },
         {
+            "name": "neos/presentation",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "./DistributionPackages/Neos.Presentation"
+            },
+            "require": {
+                "carbon/eel": "^2.21",
+                "neos/neos": "^9.1",
+                "packagefactory/atomicfusion-proptypes": "^2.2",
+                "sitegeist/kaleidoscope": "^7.1",
+                "sitegeist/monocle": "^7.11",
+                "sitegeist/monocle-proptypes": "^1.0"
+            },
+            "type": "neos-package",
+            "autoload": {
+                "psr-4": {
+                    "Neos\\Presentation\\": "Classes"
+                }
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "description": "Presentational components for neos.io",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "neos/redirecthandler",
             "version": "6.0.2",
             "source": {
@@ -10854,6 +11268,172 @@
                 "source": "https://github.com/networkteam/Networkteam.Neos.MailObfuscator/tree/4.0.0"
             },
             "time": "2025-04-03T07:13:20+00:00"
+        },
+        {
+            "name": "packagefactory/atomicfusion-proptypes",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PackageFactory/atomic-fusion-proptypes.git",
+                "reference": "8eaeddd80faa909b197476ae4babacba3ca5e63e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PackageFactory/atomic-fusion-proptypes/zipball/8eaeddd80faa909b197476ae4babacba3ca5e63e",
+                "reference": "8eaeddd80faa909b197476ae4babacba3ca5e63e",
+                "shasum": ""
+            },
+            "require": {
+                "neos/fusion": "^8.0 || ^9.0 || dev-master"
+            },
+            "type": "neos-package",
+            "extra": {
+                "neos": {
+                    "package-key": "PackageFactory.AtomicFusion.PropTypes"
+                },
+                "applied-flow-migrations": [
+                    "TYPO3.FLOW3-201201261636",
+                    "TYPO3.Fluid-201205031303",
+                    "TYPO3.FLOW3-201205292145",
+                    "TYPO3.FLOW3-201206271128",
+                    "TYPO3.FLOW3-201209201112",
+                    "TYPO3.Flow-201209251426",
+                    "TYPO3.Flow-201211151101",
+                    "TYPO3.Flow-201212051340",
+                    "TYPO3.TypoScript-130516234520",
+                    "TYPO3.TypoScript-130516235550",
+                    "TYPO3.TYPO3CR-130523180140",
+                    "TYPO3.Flow-201310031523",
+                    "TYPO3.Flow-201405111147",
+                    "TYPO3.Neos-201407061038",
+                    "TYPO3.Neos-201409071922",
+                    "TYPO3.TYPO3CR-140911160326",
+                    "TYPO3.Neos-201410010000",
+                    "TYPO3.TYPO3CR-141101082142",
+                    "TYPO3.Neos-20141113115300",
+                    "TYPO3.Fluid-20141113120800",
+                    "TYPO3.Flow-20141113121400",
+                    "TYPO3.Fluid-20141121091700",
+                    "TYPO3.Neos-20141218134700",
+                    "TYPO3.Fluid-20150214130800",
+                    "TYPO3.Neos-20150303231600",
+                    "TYPO3.TYPO3CR-20150510103823",
+                    "TYPO3.Flow-20151113161300",
+                    "TYPO3.Form-20160601101500",
+                    "TYPO3.Flow-20161115140400",
+                    "TYPO3.Flow-20161115140430",
+                    "Neos.Flow-20161124204700",
+                    "Neos.Flow-20161124204701",
+                    "Neos.Twitter.Bootstrap-20161124204912",
+                    "Neos.Form-20161124205254",
+                    "Neos.Flow-20161124224015",
+                    "Neos.Party-20161124225257",
+                    "Neos.Eel-20161124230101",
+                    "Neos.Kickstart-20161124230102",
+                    "Neos.Setup-20161124230842",
+                    "Neos.Imagine-20161124231742",
+                    "Neos.Media-20161124233100",
+                    "Neos.SiteKickstarter-20161125002311",
+                    "Neos.Neos-20161125002322",
+                    "Neos.ContentRepository-20161125012000",
+                    "Neos.Fusion-20161125013710",
+                    "Neos.Setup-20161125014759",
+                    "Neos.SiteKickstarter-20161125095901",
+                    "Neos.Fusion-20161125104701",
+                    "Neos.Neos-20161125104802",
+                    "Neos.Kickstarter-20161125110814",
+                    "Neos.Neos-20161125122412",
+                    "Neos.Flow-20161125124112",
+                    "TYPO3.FluidAdaptor-20161130112935",
+                    "Neos.Fusion-20161201202543",
+                    "Neos.Neos-20161201222211",
+                    "Neos.Fusion-20161202215034",
+                    "Neos.Fusion-20161219092345",
+                    "Neos.ContentRepository-20161219093512",
+                    "Neos.Media-20161219094126",
+                    "Neos.Neos-20161219094403",
+                    "Neos.Neos-20161219122512",
+                    "Neos.Fusion-20161219130100",
+                    "Neos.Neos-20161220163741",
+                    "Neos.Neos-20170115114620",
+                    "Neos.Fusion-20170120013047",
+                    "Neos.Flow-20170125103800",
+                    "Neos.Seo-20170127154600",
+                    "Neos.Flow-20170127183102",
+                    "Neos.Fusion-20180211175500",
+                    "Neos.Fusion-20180211184832",
+                    "Neos.Flow-20180415105700",
+                    "Neos.Neos-20180907103800",
+                    "Neos.Neos.Ui-20190319094900",
+                    "Neos.Flow-20190425144900",
+                    "Neos.Flow-20190515215000"
+                ]
+            },
+            "autoload": {
+                "psr-4": {
+                    "PackageFactory\\AtomicFusion\\PropTypes\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Fusion port of react-propTypes for the fusion-prototypes PackageFactory.AtomicFusion:Component and Neos.Fusion:Component",
+            "support": {
+                "issues": "https://github.com/PackageFactory/atomic-fusion-proptypes/issues",
+                "source": "https://github.com/PackageFactory/atomic-fusion-proptypes/tree/v2.2.1"
+            },
+            "time": "2025-12-02T11:25:27+00:00"
+        },
+        {
+            "name": "paragonie/random_compat",
+            "version": "v9.99.100",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/random_compat.git",
+                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/996434e5492cb4c3edcb9168db6fbb1359ef965a",
+                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*|5.*",
+                "vimeo/psalm": "^1"
+            },
+            "suggest": {
+                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paragon Initiative Enterprises",
+                    "email": "security@paragonie.com",
+                    "homepage": "https://paragonie.com"
+                }
+            ],
+            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
+            "keywords": [
+                "csprng",
+                "polyfill",
+                "pseudorandom",
+                "random"
+            ],
+            "support": {
+                "email": "info@paragonie.com",
+                "issues": "https://github.com/paragonie/random_compat/issues",
+                "source": "https://github.com/paragonie/random_compat"
+            },
+            "time": "2020-10-15T08:29:30+00:00"
         },
         {
             "name": "php-http/cache-plugin",
@@ -12473,16 +13053,16 @@
         },
         {
             "name": "shel/neos-commandbar",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Sebobo/Shel.Neos.CommandBar.git",
-                "reference": "84a15bf1415d35930ee2e6ff6474a58ea394e8d4"
+                "reference": "5f91ea56155ec0e9f255d06a871957053431d285"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Sebobo/Shel.Neos.CommandBar/zipball/84a15bf1415d35930ee2e6ff6474a58ea394e8d4",
-                "reference": "84a15bf1415d35930ee2e6ff6474a58ea394e8d4",
+                "url": "https://api.github.com/repos/Sebobo/Shel.Neos.CommandBar/zipball/5f91ea56155ec0e9f255d06a871957053431d285",
+                "reference": "5f91ea56155ec0e9f255d06a871957053431d285",
                 "shasum": ""
             },
             "require": {
@@ -12520,7 +13100,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Sebobo/Shel.Neos.CommandBar/issues",
-                "source": "https://github.com/Sebobo/Shel.Neos.CommandBar/tree/2.0.3"
+                "source": "https://github.com/Sebobo/Shel.Neos.CommandBar/tree/2.0.4"
             },
             "funding": [
                 {
@@ -12536,7 +13116,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2025-10-28T09:19:52+00:00"
+            "time": "2026-02-27T06:06:10+00:00"
         },
         {
             "name": "shel/neos-next-node",
@@ -12594,16 +13174,16 @@
         },
         {
             "name": "shel/neos-terminal",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Sebobo/Shel.Neos.Terminal.git",
-                "reference": "2856bd2c709ae5d63016ba8dff044a392ed164ea"
+                "reference": "9874fc889b7f8c398554359a557e2f70cc0e8bd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Sebobo/Shel.Neos.Terminal/zipball/2856bd2c709ae5d63016ba8dff044a392ed164ea",
-                "reference": "2856bd2c709ae5d63016ba8dff044a392ed164ea",
+                "url": "https://api.github.com/repos/Sebobo/Shel.Neos.Terminal/zipball/9874fc889b7f8c398554359a557e2f70cc0e8bd2",
+                "reference": "9874fc889b7f8c398554359a557e2f70cc0e8bd2",
                 "shasum": ""
             },
             "require": {
@@ -12640,7 +13220,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Sebobo/Shel.Neos.Terminal/issues",
-                "source": "https://github.com/Sebobo/Shel.Neos.Terminal/tree/2.0.0"
+                "source": "https://github.com/Sebobo/Shel.Neos.Terminal/tree/2.0.1"
             },
             "funding": [
                 {
@@ -12652,7 +13232,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2025-06-24T12:53:55+00:00"
+            "time": "2026-02-27T06:05:29+00:00"
         },
         {
             "name": "shel/nodetypes-analyzer",
@@ -12779,6 +13359,53 @@
                 "source": "https://github.com/sitegeist/Sitegeist.Iconoclasm/tree/v2.1.0"
             },
             "time": "2025-01-28T10:34:31+00:00"
+        },
+        {
+            "name": "sitegeist/kaleidoscope",
+            "version": "v7.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sitegeist/Sitegeist.Kaleidoscope.git",
+                "reference": "e8f5dbdc94faef57c9a7928a400cebc8d00e0be1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sitegeist/Sitegeist.Kaleidoscope/zipball/e8f5dbdc94faef57c9a7928a400cebc8d00e0be1",
+                "reference": "e8f5dbdc94faef57c9a7928a400cebc8d00e0be1",
+                "shasum": ""
+            },
+            "require": {
+                "neos/fusion-afx": "^8.3 || ^9.0 || dev-master",
+                "neos/imagine": "*",
+                "neos/media": "*",
+                "neos/neos": "^8.3 || ^9.0 || dev-master"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^3.7"
+            },
+            "type": "neos-package",
+            "extra": {
+                "neos": {
+                    "package-key": "Sitegeist.Kaleidoscope"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sitegeist\\Kaleidoscope\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Responsive-images for Neos",
+            "support": {
+                "issues": "https://github.com/sitegeist/Sitegeist.Kaleidoscope/issues",
+                "source": "https://github.com/sitegeist/Sitegeist.Kaleidoscope/tree/v7.1.0"
+            },
+            "time": "2026-01-07T14:53:00+00:00"
         },
         {
             "name": "sitegeist/monocle",
@@ -12908,6 +13535,52 @@
                 "source": "https://github.com/sitegeist/Sitegeist.Monocle/tree/v7.11.0"
             },
             "time": "2025-02-14T15:49:04+00:00"
+        },
+        {
+            "name": "sitegeist/monocle-proptypes",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sitegeist/Sitegeist.Monocle.PropTypes.git",
+                "reference": "003b03a8e29f0f937fd165b85aa59db47c15a924"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sitegeist/Sitegeist.Monocle.PropTypes/zipball/003b03a8e29f0f937fd165b85aa59db47c15a924",
+                "reference": "003b03a8e29f0f937fd165b85aa59db47c15a924",
+                "shasum": ""
+            },
+            "require": {
+                "packagefactory/atomicfusion-proptypes": "*",
+                "sitegeist/monocle": "~7.3 || dev-master"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "neos": {
+                    "package-key": "Sitegeist.Monocle.PropTypes"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sitegeist\\Monocle\\PropTypes\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wilhelm Behncke",
+                    "email": "behncke@sitegeist.de"
+                }
+            ],
+            "description": "An addon for Sitegeist.Monocle that generates a rich prop editor configuration from PackageFactory.AtomicFusion.PropTypes",
+            "support": {
+                "issues": "https://github.com/sitegeist/Sitegeist.Monocle.PropTypes/issues",
+                "source": "https://github.com/sitegeist/Sitegeist.Monocle.PropTypes/tree/v1.1.0"
+            },
+            "time": "2023-01-10T12:59:08+00:00"
         },
         {
             "name": "sitegeist/slipstream",
@@ -15668,16 +16341,16 @@
         },
         {
             "name": "flowpack/neos-debug",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Flowpack/neos-debug.git",
-                "reference": "6d3bb5db4aa2c00aa147d1d5e03db4b0a5e7f489"
+                "reference": "8ba51a2f3329e2069b0a0c99ef2ff0836cde6b58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Flowpack/neos-debug/zipball/6d3bb5db4aa2c00aa147d1d5e03db4b0a5e7f489",
-                "reference": "6d3bb5db4aa2c00aa147d1d5e03db4b0a5e7f489",
+                "url": "https://api.github.com/repos/Flowpack/neos-debug/zipball/8ba51a2f3329e2069b0a0c99ef2ff0836cde6b58",
+                "reference": "8ba51a2f3329e2069b0a0c99ef2ff0836cde6b58",
                 "shasum": ""
             },
             "require": {
@@ -15706,9 +16379,9 @@
             "description": "Neos CMS helper package to visualize debug information for page rendering",
             "support": {
                 "issues": "https://github.com/Flowpack/neos-debug/issues",
-                "source": "https://github.com/Flowpack/neos-debug/tree/1.2.0"
+                "source": "https://github.com/Flowpack/neos-debug/tree/1.2.1"
             },
-            "time": "2025-09-26T12:01:28+00:00"
+            "time": "2026-02-26T21:50:40+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -16554,12 +17227,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "67b44a783410e6d9912db53af50c8ddf048c9845"
+                "reference": "cd20769dbf60afc57ec72a8865aecaf78a95fc71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/67b44a783410e6d9912db53af50c8ddf048c9845",
-                "reference": "67b44a783410e6d9912db53af50c8ddf048c9845",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/cd20769dbf60afc57ec72a8865aecaf78a95fc71",
+                "reference": "cd20769dbf60afc57ec72a8865aecaf78a95fc71",
                 "shasum": ""
             },
             "conflict": {
@@ -16863,7 +17536,7 @@
                 "froxlor/froxlor": "<=2.2.5",
                 "frozennode/administrator": "<=5.0.12",
                 "fuel/core": "<1.8.1",
-                "funadmin/funadmin": "<=5.0.2",
+                "funadmin/funadmin": "<=7.1.0.0-RC4",
                 "gaoming13/wechat-php-sdk": "<=1.10.2",
                 "genix/cms": "<=1.1.11",
                 "georgringer/news": "<1.3.3",
@@ -17573,7 +18246,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-25T20:13:14+00:00"
+            "time": "2026-02-26T16:22:02+00:00"
         },
         {
             "name": "sebastian/cli-parser",

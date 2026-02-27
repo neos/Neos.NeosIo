@@ -1,0 +1,47 @@
+prototype(Neos.Presentation:TextAndImage) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Text and Image"
+        props {
+            headline = 'Meet the <strong>Community</strong>'
+            description = 'The Neos Team consists of many independent individuals who are actively contributing to Neos. Each has their own focus and specialty. Together with the Neos community they push the project forward. This includes the organisation of Neos events, contributing code, writing documentation, managing the websites & services used by the community and much more.'
+            image.imageSource = Sitegeist.Kaleidoscope:DummyImageSource
+            button.content = 'More information'
+            hasButton = true
+        }
+    }
+
+    @propTypes {
+        image = PropTypes:DataStructure {
+            imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        }
+        headline = PropTypes:String
+        description = PropTypes:String
+        imageRight = PropTypes:Bool
+        hasButton = PropTypes:Bool
+    }
+
+    imageRight = false
+    hasButton = false
+
+    renderer = afx`
+        <Neos.Presentation:Spacing size y>
+            <div class="grid md:grid-cols-2 items-center">
+                <figure class={['mx-auto', props.imageRight ? 'order-last' : null]}>
+                    <Sitegeist.Kaleidoscope:Image {...props.image} />
+                </figure>
+                <Neos.Presentation:Spacing x y="small">
+                    <Neos.Presentation:Spacing y="small">
+                        <Neos.Presentation:Headline content={props.headline} display="headline-lg" />
+                    </Neos.Presentation:Spacing>
+                    <Neos.Presentation:Spacing y="small">
+                        <Neos.Presentation:Paragraph content={props.description} display="lead" />
+                    </Neos.Presentation:Spacing>
+                    <Neos.Presentation:Spacing y="small" @if={props.hasButton}>
+                        <Neos.Presentation:Button @if={props.hasButton} {...props.button}/>
+                    </Neos.Presentation:Spacing>
+                </Neos.Presentation:Spacing>
+            </div>
+        </Neos.Presentation:Spacing>
+    `
+}

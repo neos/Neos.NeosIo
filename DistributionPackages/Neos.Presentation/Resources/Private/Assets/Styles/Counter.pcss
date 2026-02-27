@@ -1,0 +1,13 @@
+@layer components {
+  .n-counter {
+    counter-reset: counter;
+  }
+
+  .n-counter__increment {
+    counter-increment: counter;
+  }
+
+  .n-counter__decimal-leading-zero::before {
+    content: "#" counter(counter, decimal-leading-zero);
+  }
+}

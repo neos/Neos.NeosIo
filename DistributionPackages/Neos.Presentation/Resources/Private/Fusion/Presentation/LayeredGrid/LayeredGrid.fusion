@@ -1,0 +1,24 @@
+prototype(Neos.Presentation:LayeredGrid) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        tagName = PropTypes:String
+        content = PropTypes:String
+        inline = PropTypes:Bool
+        class = ${PropTypes.any}
+        attributes = ${PropTypes.any}
+    }
+
+    attributes = Neos.Fusion:DataStructure
+    inline = false
+    tagName = ${this.inline ? 'span' : 'div'}
+
+    renderer = Neos.Fusion:Tag {
+        tagName = ${props.tagName}
+        attributes = afx`
+            <Neos.Fusion:DataStructure
+                {...props.attributes}
+                class={Carbon.String.classNames(props.inline ? 'inline-grid' : 'grid', 'layered-grid', props.class)}
+            />
+        `
+        content = ${props.content}
+    }
+}

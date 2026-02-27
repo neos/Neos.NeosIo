@@ -1,0 +1,57 @@
+prototype(Neos.Presentation:Template.Default) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = 'Default template'
+        description = 'Default template for Neos Home'
+
+        props {
+            stage = Neos.Presentation:Monocle.Preview.Props {
+                prototypeName = 'Neos.Presentation:Stage'
+                props {
+                    image = Sitegeist.Kaleidoscope:Image {
+                        attributes.class = 'w-full h-full object-top'
+                        imageSource = Sitegeist.Kaleidoscope:ResourceImageSource {
+                            path = 'resource://Neos.Presentation/Public/Assets/Styleguide/Images/hero.png'
+                        }
+                    }
+                }
+            }
+            nav = Neos.Presentation:Monocle.Preview.Props {
+                prototypeName = 'Neos.Presentation:Navigation'
+            }
+            content = Neos.Fusion:Join {
+                logobar = Sitegeist.Monocle:Preview.Prototype {
+                    prototypeName = 'Neos.Presentation:LogoBar'
+                }
+                personcards = Sitegeist.Monocle:Preview.Prototype {
+                    prototypeName = 'Neos.Presentation:PersonCards'
+                }
+                testimonial = Sitegeist.Monocle:Preview.Prototype {
+                    prototypeName = 'Neos.Presentation:Testimonial'
+                }
+                textwithimage = Sitegeist.Monocle:Preview.Prototype {
+                    prototypeName = 'Neos.Presentation:TextAndImage'
+                    props.image.imageSource = Sitegeist.Kaleidoscope:ResourceImageSource {
+                        path = 'resource://Neos.Presentation/Public/Assets/Styleguide/Images/textwithimage.png'
+                    }
+                }
+                teaser = Sitegeist.Monocle:Preview.Prototype {
+                    prototypeName = 'Neos.Presentation:Teaser'
+                    props.image.imageSource = Sitegeist.Kaleidoscope:ResourceImageSource {
+                        path = 'resource://Neos.Presentation/Public/Assets/Styleguide/Images/readyforneos.png'
+                    }
+                }
+                footer = Sitegeist.Monocle:Preview.Prototype {
+                    prototypeName = 'Neos.Presentation:Footer'
+                }
+            }
+        }
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Stage {...props.stage}>
+            <Neos.Presentation:Navigation @path="navSlot" {...props.nav} />
+        </Neos.Presentation:Stage>
+        {props.content}
+    `
+}

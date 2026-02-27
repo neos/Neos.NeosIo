@@ -1,0 +1,11 @@
+.bg-slideup {
+  --bg-color: var(--color-yellow);
+  transition: background-position-y 0.4s ease-out;
+  background-size: 1px calc(200% + 10px);
+  background-position-y: top;
+  background-image: linear-gradient(to top, transparent 1px, var(--bg-color) 1px, var(--bg-color) calc(50% + 1px), transparent calc(50% + 1px));
+
+  &:where(:hover, :focus-within) {
+    background-position-y: calc(100% + 5px);
+  }
+}

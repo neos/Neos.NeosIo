@@ -1,0 +1,77 @@
+prototype(Neos.Presentation:HighlightBoxes.Box) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        displayType = ${PropTypes.oneOf(['icon', 'imageCircle', 'imageHeader'])}
+        imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        tag = PropTypes:String
+        headline = PropTypes:String
+        description = PropTypes:String
+        link = PropTypes:String
+        linkLabel = PropTypes:String
+    }
+
+    displayType = 'icon'
+    imageWidth = 576
+
+    @private {
+        isIcon = ${props.displayType == 'icon'}
+        isImageHeader = ${props.displayType == 'imageHeader'}
+        imageRatio = ${private.isImageHeader ? 16 / 9 : 1}
+    }
+
+    renderer = afx`
+        <div class={Carbon.String.classNames('relative flex flex-col bg-neutral-05', { 'group/icon': !!props.link })}>
+            <figure
+                @if={private.isIcon}
+                class="w-12 h-12 aspect-square rounded-full mx-4 mt-6 bg-blue-light/70 text-white grid place-content-center"
+            >
+                <Neos.Presentation:Icon icon={props.icon} class="size-6" />
+            </figure>
+
+            <figure
+                @if={!private.isIcon}
+                class={Carbon.String.classNames('overflow-hidden', private.isImageHeader ? 'aspect-video' : 'size-32 aspect-square rounded-full overflow-hidden self-center mx-4 mt-8 mb-2')}
+            >
+                <Sitegeist.Kaleidoscope:Image
+                    @if={props.imageSource}
+                    imageSource={props.imageSource}
+                    class="size-full object-cover will-change-transform duration-700 group-hover:scale-110"
+                    srcset="1x,2x"
+                    width={props.imageWidth}
+                    height={Math.round(props.imageWidth / private.imageRatio)}
+                />
+            </figure>
+
+            <div class="flex-1 grid gap-2 p-4">
+                <div
+                    @if={!private.isIcon && props.tag}
+                    class={Carbon.String.classNames('text-xs bg-blue-light/70 text-white px-2 py-1 rounded-full', private.isImageHeader ? 'absolute top-4 left-4' : 'self-start justify-self-start')}
+                >
+                    {props.tag}
+                </div>
+
+                <Neos.Presentation:Headline
+                    @if={props.headline}
+                    tagName="h3"
+                    display="title-md"
+                    class="text-blue-dark group-hover:text-blue-light duration-300"
+                    content={props.headline}
+                />
+
+                <Neos.Presentation:Paragraph
+                    @if={!private.isImageHeader && props.description}
+                    class="text-pretty"
+                    content={props.description}
+                />
+
+                <a
+                    @if={props.link && props.linkLabel}
+                    href={props.link}
+                    class="mt-4 flex gap-2 text-blue-dark items-end self-end after:absolute after:inset-0 after:z-10 after:pointer-events-auto"
+                >
+                    <span class="flex-1 text-balance">{props.linkLabel}</span>
+                    <Neos.Presentation:Icon icon="animatedArrow" class="-translate-y-1 h-[1em]" />
+                </a>
+            </div>
+        </div>
+    `
+}

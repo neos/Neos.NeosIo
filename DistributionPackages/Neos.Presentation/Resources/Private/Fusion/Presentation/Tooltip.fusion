@@ -1,0 +1,26 @@
+prototype(Neos.Presentation:Atom.Tooltip) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        id = ${PropTypes.string.isRequired}
+        class = ${PropTypes.anyOf( PropTypes.string, PropTypes.arrayOf( PropTypes.string ) )}
+        arrowClass = ${PropTypes.anyOf( PropTypes.string, PropTypes.arrayOf( PropTypes.string ) )}
+        backgroundClass = ${PropTypes.anyOf( PropTypes.string, PropTypes.arrayOf( PropTypes.string ) )}
+    }
+
+    backgroundClass = 'bg-neutral-90'
+    textClass = 'text-neutral-10'
+    fixed = false
+    id = ${this.fixed ? 'tooltip-fixed' : 'tooltip'}
+
+    renderer = afx`
+        <div
+            id={props.id}
+            role="tooltip"
+            class={Tailwind.merge(props.fixed ? 'fixed' : 'absolute', 'opacity-0 w-max top-0 left-0 pointer-events-none z-9999 transition text-xs rounded-sm px-2 py-1 drop-shadow-sm font-sans font-normal', props.textClass, props.backgroundClass, props.class)}
+            style="transition:none"
+            aria-hidden="true"
+        >
+            <span id={props.id + "-content"}></span>
+            <div id={props.id + "-arrow"} class={Tailwind.merge("absolute size-2 rotate-45", props.backgroundClass, props.arrowClass)}></div>
+        </div>
+    `
+}

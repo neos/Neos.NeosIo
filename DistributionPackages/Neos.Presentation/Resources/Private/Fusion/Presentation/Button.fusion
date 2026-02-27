@@ -1,0 +1,87 @@
+prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
+    @styleguide {
+        props {
+            content = 'Button Text'
+            attributes.style = "margin: 50px"
+        }
+        useCases {
+            icon.props {
+                content = 'Button with Icon'
+                icon = 'animatedArrow'
+                attributes.style = "margin: 50px"
+            }
+            href.props {
+                content = 'Link with Icon'
+                icon = 'animatedArrow'
+                href = '#link'
+                attributes.style = "margin: 50px"
+            }
+        }
+    }
+
+    @propTypes {
+        variant = ${PropTypes.oneOf(['button', 'transparent', 'link'])}
+        type = ${PropTypes.oneOf(['button', 'submit', 'reset'])}
+        href = null
+        content = PropTypes:String
+        ariaLabel = PropTypes:String
+        href = PropTypes:String
+        icon = PropTypes:String
+        disabled = PropTypes:Bool
+        fullWidth = PropTypes:Bool
+        iconLeft = PropTypes:Bool
+        class = ${PropTypes.any}
+    }
+
+    variant = 'button'
+    type = 'button'
+    fullWidth = false
+    attributes = Neos.Fusion:DataStructure
+    iconLeft = ${this.icon == 'animatedArrowLeft'}
+
+    @private {
+        isButton = ${!props.href}
+        hasIcon = ${props.icon && props.variant != 'link'}
+        global = ${[
+            'transition cursor-pointer',
+            private.isButton ? 'disabled:cursor-not-allowed' : 'aria-disabled:cursor-not-allowed',
+            private.hasIcon ? 'group/icon gap-2 items-center' : null
+        ]}
+        button = ${[
+            'px-8 py-4 text-black bg-green display-cta-lg hocus:text-white hocus:bg-green-dark',
+            private.isButton ? 'disabled:bg-neutral-40! disabled:text-black!' : 'aria-disabled:bg-neutral-40! aria-disabled:text-black!',
+            props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
+        ]}
+        transparent = ${[
+            'inline-flex text-black display-cta-xl hocus:opacity-66 disabled:text-neutral-40! aria-disabled:text-neutral-40!',
+            private.isButton ? 'disabled:text-neutral-40!' :  'aria-disabled:text-neutral-40!'
+        ]}
+        link = ${[
+            'display-cta-lg text-black underline decoration-2 underline-offset-8 decoration-blue-light hocus:text-blue-light',
+            private.isButton ? 'disabled:text-neutral-40! disabled:decoration-neutral-40' : 'aria-disabled:text-neutral-40! aria-disabled:decoration-neutral-40'
+        ]}
+    }
+
+    @if.hasLabelOrContent = ${this.content || this.ariaLabel}
+
+    renderer = Neos.Fusion:Tag {
+        tagName = ${private.isButton ? 'button' : 'a'}
+        attributes = afx`
+            <Neos.Fusion:DataStructure
+                {...props.attributes}
+                disabled={private.isButton && props.disabled}
+                aria-disabled={!private.isButton && props.disabled ? 'true' : null}
+                aria-label={props.ariaLabel}
+                type={private.isButton ? props.type : null}
+                href={!props.disabled && props.href ? props.href : null}
+                class={Carbon.String.classNames(private.global, private[props.variant], props.class)}
+            />
+        `
+        content = afx`
+            <Neos.Presentation:Icon @if={private.hasIcon && props.iconLeft} icon={props.icon} class="shrink-0" />
+            {props.fullWidth && private.hasIcon ? "" : props.content}
+            <span @if={props.fullWidth && private.hasIcon && props.content} class="grow">{props.content}</span>
+            <Neos.Presentation:Icon @if={private.hasIcon && !props.iconLeft} icon={props.icon} class="shrink-0" />
+        `
+    }
+}

@@ -1,0 +1,187 @@
+@layer components {
+  :where(
+    .display-headline-xl,
+    .display-headline-lg,
+    .display-headline-md,
+    .display-headline-sm,
+    .display-title-lg,
+    .display-title-md,
+    .display-title-sm,
+    .display-lead,
+    .display-body-lg,
+    .display-body-md,
+    .display-body-sm,
+    .display-label-lg,
+    .display-label-md,
+    .display-label-sm,
+    .display-cta-xl,
+    .display-cta-lg,
+    .display-cta-sm
+  ) {
+    font-weight: var(--font-weight);
+    text-wrap: var(--text-wrap, pretty);
+
+    :where(strong, b) {
+      font-weight: var(--font-weight-strong);
+    }
+  }
+
+  .display-headline-xl,
+  .display-headline-lg,
+  .display-headline-md,
+  .display-headline-sm,
+  .display-title-lg,
+  .display-title-md,
+  .display-title-sm,
+  .display-cta-xl,
+  .display-cta-lg,
+  .display-cta-sm {
+    --font-weight: 500;
+    --font-weight-strong: 800;
+    --text-wrap: balance;
+  }
+
+  .display-lead,
+  .display-body-lg,
+  .display-body-md,
+  .display-body-sm,
+  .display-label-md,
+  .display-label-sm {
+    --font-weight: 400;
+    --font-weight-strong: 700;
+  }
+
+  .display-label-md {
+    --font-weight: 600;
+    --font-weight-strong: 600;
+  }
+
+  :where(.display-headline-xl, .display-headline-lg, .display-headline-md, .display-headline-sm, .display-title-lg, .display-title-md, .display-title-sm, .display-lead) {
+    --font-size: var(--font-size-mobile);
+    --line-height: var(--line-height-mobile);
+
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+
+    @media (width >= theme(--breakpoint-md)) {
+      --font-size: var(--font-size-tablet, var(--font-size-mobile));
+      --line-height-mobile: var(--line-height-tablet, var(--line-height-mobile));
+    }
+
+    @media (width >= theme(--breakpoint-lg)) {
+      --font-size: var(--font-size-desktop, var(--font-size-tablet, var(--font-size-mobile)));
+      --line-height-mobile: var(--line-height-desktop, var(--line-height-tablet, var(--line-height-mobile)));
+    }
+  }
+
+  .display-headline-xl {
+    --font-size-mobile: var(--text-6xl);
+    --line-height-mobile: var(--text-6xl--line-height);
+    --font-size-tablet: var(--text-8xl);
+    --line-height-tablet: var(--text-8xl--line-height);
+    --font-size-desktop: var(--text-10xl);
+    --line-height-desktop: var(--text-10xl--line-height);
+  }
+
+  .display-headline-lg {
+    --font-size-mobile: var(--text-5xl);
+    --line-height-mobile: var(--text-5xl--line-height);
+    --font-size-tablet: var(--text-7xl);
+    --line-height-tablet: var(--text-7xl--line-height);
+    --font-size-desktop: var(--text-9xl);
+    --line-height-desktop: var(--text-9xl--line-height);
+  }
+
+  .display-headline-md {
+    --font-size-mobile: var(--text-4xl);
+    --line-height-mobile: var(--text-4xl--line-height);
+    --font-size-tablet: var(--text-6xl);
+    --line-height-tablet: var(--text-6xl--line-height);
+    --font-size-desktop: var(--text-8xl);
+    --line-height-desktop: var(--text-8xl--line-height);
+  }
+
+  .display-headline-sm {
+    --font-size-mobile: var(--text-3xl);
+    --line-height-mobile: var(--text-3xl--line-height);
+    --font-size-tablet: var(--text-4xl);
+    --line-height-tablet: var(--text-4xl--line-height);
+    --font-size-desktop: var(--text-7xl);
+    --line-height-desktop: var(--text-7xl--line-height);
+  }
+
+  .display-title-lg {
+    --font-size-mobile: var(--text-2xl);
+    --line-height-mobile: var(--text-2xl--line-height);
+    --font-size-tablet: var(--text-3xl);
+    --line-height-tablet: var(--text-3xl--line-height);
+    --font-size-desktop: var(--text-4xl);
+    --line-height-desktop: var(--text-4xl--line-height);
+  }
+
+  .display-title-md {
+    --font-size-mobile: var(--text-lg);
+    --line-height-mobile: var(--text-lg--line-height);
+    --font-size-tablet: var(--text-xl);
+    --line-height-tablet: var(--text-xl--line-height);
+  }
+
+  .display-title-sm {
+    --font-size-mobile: var(--text-base);
+    --line-height-mobile: var(--text-base--line-height);
+    --font-size-desktop: var(--text-lg);
+    --line-height-desktop: var(--text-lg--line-height);
+  }
+
+  .display-lead {
+    --font-size-mobile: var(--text-base);
+    --line-height-mobile: var(--text-base--line-height);
+    --font-size-tablet: var(--text-lg);
+    --line-height-tablet: var(--text-lg--line-height);
+  }
+
+  .display-body-lg {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
+
+  .display-body-md {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  .display-body-sm {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+  }
+
+  .display-label-lg {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  .display-label-md {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+  }
+
+  .display-label-sm {
+    font-size: var(--text-xxs);
+    line-height: var(--text-xxs--line-height);
+  }
+
+  .display-cta-xl {
+    font-size: var(--text-lg);
+    line-height: var(--text-lg--line-height);
+  }
+
+  .display-cta-lg {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
+
+  .display-cta-sm {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+}

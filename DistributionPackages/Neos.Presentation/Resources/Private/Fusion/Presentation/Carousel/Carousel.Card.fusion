@@ -1,0 +1,13 @@
+prototype(Neos.Presentation:Molecule.Carousel.Card) < prototype(Neos.Fusion:Component) {
+
+    headline = ''
+    text = ''
+    button = null
+
+    renderer = afx`
+        <Neos.Presentation:Headline content={props.headline} tagName="h3" display="title-lg"/>
+        <Neos.Presentation:Paragraph content={props.text}/>
+        <div class="grow" @if={props.button}></div>
+        <Neos.Presentation:Button @if={props.button} variant="link" {...props.button} />
+    `
+}

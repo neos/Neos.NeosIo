@@ -1,39 +1,12 @@
 {
-  "extends": "stylelint-config-recommended-scss",
+  "extends": [
+    "stylelint-config-recommended",
+    "stylelint-config-tailwindcss"
+  ],
   "ignoreFiles": [
     "**/Public/**",
     "**/Private/Templates/**",
     "node_modules/**",
     "**/*.noLinter.*"
-  ],
-  "rules": {
-    "property-no-unknown": [
-      true,
-      {
-        "ignoreProperties": [
-          "font-range",
-          "min-font-size",
-          "max-font-size",
-          "lower-font-range",
-          "upper-font-range",
-          "font-awesome",
-          "tap-highlight-color",
-          "touch-callout"
-        ]
-      }
-    ],
-    "selector-pseudo-class-no-unknown": [
-      true,
-      {
-        "ignorePseudoClasses": ["at-least", "at-most", "between", "exactly"]
-      }
-    ],
-    "selector-pseudo-element-no-unknown": [
-      true,
-      {
-        "ignorePseudoElements": ["track", "thumb"]
-      }
-    ],
-    "selector-type-no-unknown": null
-  }
+  ]
 }

@@ -1,0 +1,59 @@
+prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
+    @styleguide.props {
+        assets = Neos.Fusion:Map {
+            items = ${['flownative', 'sitegeist', 'sandstorm', 'queo', 'visol', 'helzle']}
+            itemRenderer = Neos.Fusion:DataStructure {
+                src = ${StaticResource.uri('Neos.Presentation', 'Public/Assets/Styleguide/Logos/' + item + '.svg')}
+                alternativeText = ${'Logo from' + item}
+                href = ${'#' + item}
+            }
+        }
+    }
+
+    @propTypes {
+        assets = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                src = PropTypes:String
+                alternativeText = PropTypes:String
+            }
+        }
+        grayscale = PropTypes:Bool
+    }
+
+    assets = null
+    grayscale = true
+
+    @private {
+        assets = ${Type.isArray(props.assets) ? Array.filter(props.assets, item => !!item.src) : []}
+        numberOfAssets = ${Array.length(private.assets)}
+        duplications = ${private.numberOfAssets > 3 ? 3 : 0}
+    }
+
+    renderer = afx`
+        <div
+            @if={private.numberOfAssets}
+            class="flex justify-center overflow-x-clip"
+            x-data={AlpineJS.xData('LogoBar', private.duplications)}
+        >
+            <ul
+                x-random-children
+                class={['flex items-center', private.duplications ? 'animate-infinite-scroll' : null]}
+                style={private.duplications ? 'animation-duration:' + private.numberOfAssets * 10 + 's;' : null}
+            >
+                <Neos.Fusion:Loop items={private.assets}>
+                    <li class="mx-14">
+                        <Neos.Fusion:Tag
+                            tagName={item.href ? 'a' : 'figure'}
+                            attributes.href={item.href}
+                            attributes.class.grayscale={props.grayscale ? 'grayscale' : null}
+                            attributes.class.grayscaleLink={props.grayscale && item.href ? 'transition-[filter] hocus:grayscale-0' : null}
+                            attributes.aria-label={item.href ? item.alternativeText : null}
+                        >
+                            <img class="h-16 max-h-10 md:max-h-16 max-w-none w-auto" alt={item.alternativeText} src={item.src}/>
+                        </Neos.Fusion:Tag>
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
+        </div>
+    `
+}

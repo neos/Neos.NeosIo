@@ -1,0 +1,48 @@
+prototype(Neos.Presentation:DynamicGrid) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        tagName = PropTypes:String
+        content = PropTypes:String
+        class = ${PropTypes.any}
+        attributes = ${PropTypes.any}
+        maxCols = PropTypes:Int
+        gap = PropTypes:Union {
+            int = PropTypes:Int
+            string = PropTypes:String
+        }
+        minSize = PropTypes:Union {
+            int = PropTypes:Int
+            string = PropTypes:String
+        }
+    }
+
+    tagName = 'div'
+    attributes = Neos.Fusion:DataStructure
+
+    // You can use the properties below or tailwind classes to set the grid
+
+    /// integer Max number of cols / dynamic-grid-max-cols-*
+    maxCols = null
+
+    /// string|integer If it is an integer it will be converted to rem using the Tailwind scale / dynamic-grid-gap-*
+    gap = null
+
+    /// string|integer If it is an integer it will be converted to rem using the Tailwind scale / dynamic-grid-min-size-*
+    minSize = null
+
+    @private {
+        minSize = ${Type.isNumeric(props.minSize) ? (props.minSize / 4) + 'rem' : props.minSize}
+        gap = ${Type.isNumeric(props.gap) ? 'calc(var(--spacing) * ' + props.gap + ')' : props.gap}
+    }
+
+    renderer = Neos.Fusion:Tag {
+        tagName = ${props.tagName}
+        attributes = afx`
+            <Neos.Fusion:DataStructure
+                {...props.attributes}
+                class={Carbon.String.classNames('dynamic-grid', props.class)}
+                style={Carbon.String.styles({'--gap': private.gap, '--max-cols': props.maxCols, '--min-size': private.minSize})}
+            />
+        `
+        content = ${props.content}
+    }
+}

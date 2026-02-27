@@ -8,12 +8,12 @@ prototype(Neos.NeosIo:Component.Badge) < prototype(Neos.Fusion:Component) {
 
     @propTypes {
         @strict = true
-        image = ${PropTypes.string}
-        highlight = ${PropTypes.bool}
+        image = ${PropTypes.instanceOf('Neos\Media\Domain\Model\ImageInterface')}
+        highlight = ${PropTypes.boolean}
         description = ${PropTypes.string}
         link = ${PropTypes.string}
         linkText = ${PropTypes.string}
-        openInNewTab = ${PropTypes.bool}
+        openInNewTab = ${PropTypes.boolean}
     }
 
     @private {

@@ -1,0 +1,31 @@
+# A package entry can have the following options:
+
+# package                  <string>        (required) The name of the package
+# files                    <string|array>  The names of the entry files. If none given, all parsable files in the input folder get rendered
+# folder.input             <string>        (default: `Fusion`) The folder under `Resources/Private` where to look for the entry files
+# folder.output.package    <string|array>  If set, the files will be writen in a different package (one or multiple packages)
+# folder.output.inline     <string>        (default: `Private/Templates/InlineAssets`) The folder where inline files get rendered
+# folder.output.style      <string>        (default: `Public/Styles`) The folder where styles get rendered
+# folder.output.script     <string>        (default: `Public/Scripts`) The folder where scripts get rendered
+# folder.output.module     <string>        (default: `Public/Modules`) The folder where modules files get rendered
+# folder.output.commonJS   <string>        (default: `Public/CommonJS`) The folder where commonJS files get rendered
+# external                 <string|array>  (default: `null`) You can mark a file or a package as external to exclude it from your build. https://esbuild.github.io/api/#external
+# inline                   <boolean>       (default: `false`) Flag to toggle if the files should be written to `Resources/Private/Templates/InlineAssets`
+# sourcemap                <boolean>       (default: `true`) Flag to toggle source map generation
+# format                   <string>        (default: `iife`)
+# jsFileExtension.script   <string>        (default: `.js`) Extension for script files. If you set `jsFileExtension` to `false`, it will set to `.js`
+# jsFileExtension.module   <string>        (default: `.mjs`) Extension for module files. If you set `jsFileExtension` to `false`, it will set to `.js`
+# jsFileExtension.commonJS <string>        (default: `.cjs`) Extension for commonJS files. If you set `jsFileExtension` to `false`, it will set to `.js`
+# alias                    <object>        (default: `{}`) This feature lets you substitute one package for another when bundling. https://esbuild.github.io/api/#alias
+
+packages:
+  - package: Neos.Presentation
+    folder:
+      input: Assets
+
+buildDefaults:
+  content:
+    - './DistributionPackages/Neos.Presentation/**/*.{fusion,js,ts,mts,cpx,html}'
+
+postcssOptions:
+  tailwindcss: true

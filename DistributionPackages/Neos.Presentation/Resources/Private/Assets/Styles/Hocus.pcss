@@ -1,0 +1,32 @@
+@custom-variant hocus {
+  &:hover {
+    @media (hover: hover) {
+      @slot;
+    }
+  }
+  &:focus {
+    @slot;
+  }
+}
+
+@custom-variant hocus-within {
+  &:hover {
+    @media (hover: hover) {
+      @slot;
+    }
+  }
+  &:focus-within {
+    @slot;
+  }
+}
+
+@custom-variant hocus-visible {
+  &:hover {
+    @media (hover: hover) {
+      @slot;
+    }
+  }
+  &:focus-visible {
+    @slot;
+  }
+}

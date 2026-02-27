@@ -1,0 +1,17 @@
+prototype(Neos.Presentation:InlineVideo.Fixture) < prototype(Neos.Fusion:DataStructure) {
+    autoplay = true
+    loop = true
+    controls = false
+    poster = Sitegeist.Kaleidoscope:DummyImageSource {
+        baseWidth = 1920
+        baseHeight = 1080
+    }
+    sources = Neos.Fusion:Map {
+        items = ${['mp4', 'webm']}
+        itemRenderer = Neos.Fusion:DataStructure {
+            type = ${item}
+            src = ${StaticResource.uri('Neos.Presentation', 'Public/Assets/Videos/example.' + item)}
+        }
+    }
+    class = ''
+}

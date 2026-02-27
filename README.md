@@ -1,6 +1,6 @@
-# Neos.NeosIo
+# Neos.NeosIo Rebrand
 
-The official neos.io website package.
+In a first step we are creating a new [presentational components](DistributionPackages/Neos.Presentation) used for the rebranding of the neos.io website.
 
 ## Setup & Installation
 
@@ -26,11 +26,11 @@ _Note: We require [nvm](https://github.com/creationix/nvm#install-script) as wel
 
 ### Commands
 
-| Command         | Description                    |
-| --------------- | ------------------------------ |
-| `yarn build` | Builds all assets |
-| `yarn pipeline` | Runs install and then build all assets |
-| `yarn start` | Watches the sources and rebuilds assets on change |
+| Command         | Description                                       |
+|-----------------|---------------------------------------------------|
+| `yarn build`    | Builds all assets                                 |
+| `yarn pipeline` | Runs install and then build all assets            |
+| `yarn start`    | Watches the sources and rebuilds assets on change |
 
 
 ### Testing before live deployment

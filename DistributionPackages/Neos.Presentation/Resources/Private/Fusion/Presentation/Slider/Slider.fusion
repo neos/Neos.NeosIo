@@ -1,0 +1,71 @@
+prototype(Neos.Presentation:Slider) < prototype(Neos.Fusion:Component) {
+    @styleguide.props.items  = Neos.Fusion:Map {
+        items = ${Array.range(1, 10)}
+        itemRenderer = afx`
+            <img class="w-full" src={"https://picsum.photos/800/400?random=" + item} alt="placeholder image" />
+        `
+    }
+
+    @propTypes {
+        activeColor = ${PropTypes.oneOf([
+            'blue', 'blue-dark', 'blue-light',
+            'green', 'green-dark',
+            'purple', 'purple-dark',
+            'yellow', 'yellow-dark',
+            'orange', 'red',
+            'black', 'white',
+            'transparent', 'current',
+            'neutral-90', 'neutral-80', 'neutral-70', 'neutral-60', 'neutral-50', 'neutral-40', 'neutral-30', 'neutral-20', 'neutral-10', 'neutral-05'
+        ])}
+    }
+
+    tagName = 'section'
+    sliderIsDecoration = false
+    class = null
+    slideItemClass = 'flex flex-col items-center justify-center'
+    trackClass = null
+    listClass = null
+    activeColor = null
+
+    options = Neos.Fusion:DataStructure {
+        # The gap between slides. The CSS format is acceptable, such as 1em.
+        gap = 12
+    }
+
+    attributes = Neos.Fusion:DataStructure
+
+    @private {
+        hasItems = ${Type.isArray(props.items) && Array.length(props.items)}
+        i18n = Neos.Fusion:Map {
+            items = ${['prev', 'next', 'first', 'last', 'slideX', 'pageX', 'play', 'pause', 'carousel', 'select', 'slide', 'slideLabel', 'playVideo']}
+            keyRenderer = ${item}
+            itemRenderer = ${I18n.translate('Neos.Presentation:Main:splide.' + item)}
+        }
+    }
+
+    renderer = Neos.Fusion:Tag {
+        @if.hasItemsOrContent = ${private.hasItems || props.content}
+
+        tagName = ${props.tagName}
+        attributes {
+            x-data = 'slider'
+            data-splide = ${Json.stringify(Array.concat({i18n:private.i18n}, props.options))}
+            aria-label = ${props.label}
+            role = ${props.sliderIsDecoration ? 'group' : null}
+            class = ${Array.push('splide', props.class)}
+            style = ${props.activeColor ? '--active-color: var(--color-' + props.activeColor + ');' : null}
+            @apply.attributes = ${props.attributes}
+        }
+        content = afx`
+            <div class={['splide__track', props.trackClass]}>
+                <ul class={['splide__list', props.listClass]} @if={private.hasItems && !props.content}>
+                    <Neos.Fusion:Loop items={props.items}>
+                        <Neos.Presentation:Slider.Fragment.Item class={props.slideItemClass} content={item} />
+                    </Neos.Fusion:Loop>
+                </ul>
+                <!-- content is used as entry for contentcollections -->
+                {props.content}
+            </div>
+        `
+    }
+}

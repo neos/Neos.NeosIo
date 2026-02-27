@@ -1,18 +1,21 @@
-import inViewport from 'in-viewport';
 import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
 
 class CountUpComponent extends BaseComponent {
 
     constructor(el) {
         super(el);
-        const isAlreadyVisible = inViewport(el);
         const onVisible = () => setTimeout(this.animate, 400);
 
-        if (isAlreadyVisible) {
-            onVisible();
-        } else {
-            inViewport(el, onVisible);
-        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    onVisible();
+                    observer.unobserve(el);
+                }
+            });
+        });
+
+        observer.observe(el);
     }
 
     animate = () => {

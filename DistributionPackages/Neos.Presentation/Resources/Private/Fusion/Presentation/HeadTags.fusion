@@ -1,0 +1,6 @@
+prototype(Neos.Presentation:HeadTags) < prototype(Neos.Fusion:Component) {
+    renderer = afx`
+        <link rel="stylesheet" href={StaticResource.uri('Neos.Presentation', 'Public/Styles/Main.css')} />
+        <script src={StaticResource.uri('Neos.Presentation', 'Public/Scripts/Main.js')} defer></script>
+    `
+}

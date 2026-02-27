@@ -1,0 +1,70 @@
+/* Make sure classes are generated */
+@source inline("n-background--{gradient,blue,blue-dark,blue-light,purple,purple-dark,green,green-dark,yellow,yellow-dark,orange,red,black}");
+
+@layer components {
+  .n-background {
+    color: var(--n-fg);
+    background-color: var(--n-bg);
+  }
+
+  .n-background--gradient,
+  .n-background--blue-dark {
+    --n-fg: var(--color-white);
+    --n-bg: var(--color-blue-dark);
+  }
+
+  .n-background--blue {
+    --n-fg: var(--color-white);
+    --n-bg: var(--color-blue);
+  }
+
+  .n-background--blue-light {
+    --n-fg: var(--color-dark-blue);
+    --n-bg: var(--color-blue-light);
+  }
+
+  .n-background--purple {
+    --n-fg: var(--color-white);
+    --n-bg: var(--color-purple);
+  }
+
+  .n-background--purple-dark {
+    --n-fg: var(--color-white);
+    --n-bg: var(--color-purple-dark);
+  }
+
+  .n-background--green {
+    --n-fg: var(--color-black);
+    --n-bg: var(--color-green);
+  }
+
+  .n-background--green-dark {
+    --n-fg: var(--color-white);
+    --n-bg: var(--color-green-dark);
+  }
+
+  .n-background--yellow {
+    --n-fg: var(--color-black);
+    --n-bg: var(--color-yellow);
+  }
+
+  .n-background--yellow-dark {
+    --n-fg: var(--color-white);
+    --n-bg: var(--color-yellow-dark);
+  }
+
+  .n-background--orange {
+    --n-fg: var(--color-black);
+    --n-bg: var(--color-orange);
+  }
+
+  .n-background--red {
+    --n-fg: var(--color-black);
+    --n-bg: var(--color-red);
+  }
+
+  .n-background--black {
+    --n-fg: var(--color-white);
+    --n-bg: var(--color-black);
+  }
+}

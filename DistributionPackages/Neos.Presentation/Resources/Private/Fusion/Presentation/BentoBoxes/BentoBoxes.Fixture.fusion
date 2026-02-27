@@ -1,0 +1,43 @@
+prototype(Neos.Presentation:BentoBoxes.Fixture) < prototype(Neos.Fusion:DataStructure) {
+    headline = 'Tools that transform your digital journey'
+    text = 'Take control of HTML, CSS, and JavaScript in a visual canvas. Neos generates clean, semantic code that’s ready.'
+    boxes = Neos.Fusion:DataStructure {
+        1 = Neos.Fusion:DataStructure {
+            headline = 'Enterprise Features like Role Management and Media Center'
+            background = 'gradient'
+            imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                height = 480
+                width = 360
+            }
+            assetAlign = 'center'
+            link = '#'
+            linkLabel = 'Learn more'
+        }
+        2 = Neos.Fusion:DataStructure {
+            headline = 'What you see, is what you get. Our True Inline Editor.'
+            background = 'blue'
+            imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                width = 712
+                height = 400
+            }
+            assetAlign = 'right'
+        }
+        3 = Neos.Fusion:DataStructure {
+            headline = 'Multi-language and Multi-site Functionality'
+            link = '#'
+            linkLabel = 'Learn more'
+            background = 'blue-light'
+            video = Neos.Presentation:InlineVideo.Fixture
+            assetAlign = 'right'
+        }
+        4 = Neos.Fusion:DataStructure {
+            headline = 'SEO Optimization Tools for the best performance'
+            background = 'blue-dark'
+            imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                width = 600
+                height = 500
+            }
+            assetAlign = 'left'
+        }
+    }
+}

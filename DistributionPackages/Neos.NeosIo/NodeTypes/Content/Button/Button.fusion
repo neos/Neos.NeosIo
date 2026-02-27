@@ -35,11 +35,10 @@ prototype(Neos.NeosIo:Component.ScrollToContentButton) < prototype(Neos.Fusion:C
     `
 }
 
-prototype(Neos.NeosIo:Component.Button) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosIo:Component.WrappedButton) < prototype(Neos.Fusion:Component) {
     buttonLabel = ''
     alignment = ''
     style = ''
-
     link = ''
     openInNewTab = false
 
@@ -50,7 +49,7 @@ prototype(Neos.NeosIo:Component.Button) < prototype(Neos.Fusion:Component) {
         style = ${PropTypes.oneOf(['btn--primary', 'btn--solidPrimary', 'btn--secondary', 'btn--solidSecondary', 'btn--bright', 'btn--solidBright'])}
 
         link = ${PropTypes.string}
-        openInNewTab = ${PropTypes.bool}
+        openInNewTab = ${PropTypes.boolean}
     }
 
     @private {
@@ -76,18 +75,18 @@ prototype(Neos.NeosIo:Component.Button) < prototype(Neos.Fusion:Component) {
 
 prototype(Neos.NeosIo:Component.ButtonWrapper) < prototype(Neos.Fusion:Component) {
     alignment = ''
+    content = ''
 
     @propTypes {
         @strict = true
         alignment = ${PropTypes.oneOf(['Left', 'Center', 'Right', 'inline'])}
+        content = ${PropTypes.string}
     }
 
     renderer = Neos.Fusion:Case {
         inline {
             condition = ${props.alignment == 'inline'}
-            renderer = afx`
-                {props.content}
-            `
+            renderer = ${props.content}
         }
 
         default {

@@ -1,6 +1,3 @@
-// load scss
-import './Main.scss';
-
 import {h, render} from 'preact';
 import * as React from "preact/compat";
 import {CaseStudyListing, CasesData, TranslationData} from '../JavaScript/index';

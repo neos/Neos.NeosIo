@@ -1,27 +1,9 @@
 {
   "overrides": [
     {
-      "files": "*.json",
-      "options": {
-        "tabWidth": 4,
-        "printWidth": 1000
-      }
-    },
-    {
-      "files": "package.json",
-      "options": {
-        "tabWidth": 2
-      }
-    },
-    {
-      "files": ["*.yaml", "*.yml", ".prettierrc"],
-      "options": {
-        "tabWidth": 2,
-        "singleQuote": true
-      }
-    },
-    {
       "files": [
+        "*.yaml",
+        "*.yml",
         "*.js",
         "*.jsx",
         "*.mjs",
@@ -29,21 +11,17 @@
         "*.ts",
         "*.tsx",
         "*.mts",
-        "*.mtsx",
-        "*.vue",
-        "*.mvue"
+        "*.mtsx"
       ],
       "options": {
-        "tabWidth": 4,
-        "printWidth": 120,
         "singleQuote": true
       }
-    },
-    {
-      "files": "*.scss",
-      "options": {
-        "printWidth": 300
-      }
     }
-  ]
+  ],
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindAttributes": ["attributes.class", "additionalClass"],
+  "tailwindFunctions": ["clsx", "Tailwind.merge", "afx"],
+  "tailwindStylesheet": "./DistributionPackages/Neos.Presentation/Resources/Private/Assets/Main.pcss",
+  "tailwindPreserveDuplicates": true,
+  "tailwindPreserveWhitespace": true
 }
