@@ -17,9 +17,9 @@ prototype(Neos.Presentation:Footer) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <Neos.Presentation:Background background="gradient" tagName="footer">
-            <Neos.Presentation:Spacing size x={false} y={false} class={"py-12"}>
+            <Neos.Presentation:Spacing size x y={false} class={"py-12 px-8"}>
                 <div class="grid grid-cols-6 gap-8">
-                    <div class="flex flex-col gap-y-14 col-span-2">
+                    <div class="flex flex-col gap-8 md:gap-14 col-span-6 md:col-span-2">
                         <div class="flex items-center justify-start">
                             <a href="/" title={I18n.translate('Neos.Presentation:Navigation:linkToStartPage')}>
                                 <Neos.Presentation:Icon ariaLabel="Neos Logo" icon="neosLogoDark" class="h-12" />
@@ -30,20 +30,20 @@ prototype(Neos.Presentation:Footer) < prototype(Neos.Fusion:Component) {
                             {props.licenseText}
                         </p>
 
-                        <nav class="flex flex-wrap gap-4" x-tooltips x-data>
-                            <ul class="!list-none !m-0 !p-0 flex flex-row gap-4">
+                        <nav class="flex flex-wrap m-0!" x-tooltips x-data>
+                            <ul class="list-none! m-0! p-0! flex flex-row gap-4">
                                 <li>
-                                    <a class="flex items-center !text-white justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://github.com/neos">
+                                    <a class="flex items-center text-white! justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://github.com/neos">
                                         <Neos.Presentation:Icon ariaHidden={true} icon={"github"} class="size-6" /> <span class="sr-only">GitHub</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="flex items-center !text-white justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://neos.social/@team">
+                                    <a class="flex items-center text-white! justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://neos.social/@team">
                                         <Neos.Presentation:Icon ariaHidden={true} icon={"mastodon"} class="size-6" /><span class="sr-only">Mastodon</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="flex items-center !text-white justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://youtube.com/c/NeosCMS">
+                                    <a class="flex items-center text-white! justify-center p-2 border border-transparent transition-colors rounded-full hocus:border-current" target="_blank" rel="noopener" href="https://youtube.com/c/NeosCMS">
                                         <Neos.Presentation:Icon ariaHidden={true} icon={"youtube"} class="size-6" /> <span class="sr-only">YouTube</span>
                                     </a>
                                 </li>
@@ -51,46 +51,45 @@ prototype(Neos.Presentation:Footer) < prototype(Neos.Fusion:Component) {
                         </nav>
                     </div>
 
-                    <div class="grid grid-cols-4 col-span-4">
-                        <div>
-                            <h5 class="!text-white !mb-4 !text-lg">{props.siteName}</h5>
-                            <ul class="!list-none !m-0 !p-0 flex flex-col gap-2">
+                    <div class="grid grid-cols-4 col-span-6 md:col-span-4 gap-8">
+                        <div class="col-span-2 lg:col-span-1">
+                            <h5 class="text-white! mb-4! text-lg!">{props.siteName}</h5>
+                            <ul class="list-none! m-0! p-0! flex flex-col gap-2">
                                 <Neos.Fusion:Loop items={props.footerLinkItems}>
                                     <li>
-                                        <Neos.Neos:NodeLink attributes.class={"!text-white"} node={item} attributes.title={Neos.Node.label(item)} />
+                                        <Neos.Neos:NodeLink attributes.class={"text-white!"} node={item} attributes.title={Neos.Node.label(item)} />
                                     </li>
                                 </Neos.Fusion:Loop>
                             </ul>
                         </div>
-                        <div>
-                            <h5 class="!text-white !mb-4 !text-lg">Community</h5>
-                            <ul class="!list-none !m-0 !p-0 flex flex-col gap-2">
-                                <li><a class="!text-white" target="_blank" rel="noopener" href="https://discuss.neos.io">discuss.neos.io</a></li>
-                                <li><a class="!text-white" target="_blank" rel="noopener" href="https://id.neos.io">id.neos.io</a></li>
-                                <li><a class="!text-white" target="_blank" rel="noopener" href="https://slack.neos.io">slack.neos.io</a></li>
-                                <li><a class="!text-white" target="_blank" rel="noopener" href="https://translate.neos.io">translate.neos.io</a></li>
+                        <div class="col-span-2 lg:col-span-1">
+                            <h5 class="text-white! mb-4! text-lg!">Community</h5>
+                            <ul class="list-none! m-0! p-0! flex flex-col gap-2">
+                                <li><a class="text-white!" target="_blank" rel="noopener" href="https://discuss.neos.io">discuss.neos.io</a></li>
+                                <li><a class="text-white!" target="_blank" rel="noopener" href="https://id.neos.io">id.neos.io</a></li>
+                                <li><a class="text-white!" target="_blank" rel="noopener" href="https://slack.neos.io">slack.neos.io</a></li>
+                                <li><a class="text-white!" target="_blank" rel="noopener" href="https://translate.neos.io">translate.neos.io</a></li>
                             </ul>
                         </div>
-                        <div>
+                        <div class="col-span-4 order-first lg:col-span-2 md:order-none" @if={props.nlUser && props.nlId}>
                             <Neos.Fusion.Form:Form
                                 form.target={"https://typo3.us3.list-manage.com/subscribe/post?u="+props.nlUser+"&id="+props.nlId}
                                 form.method="post"
-                                attributes.class="siteFooter__nl-signup"
-                                @if.userAndId={props.nlUser && props.nlId}
                             >
-                                <legend>Join the Content Revolution | Regular updates on all things Neos</legend>
-                                <div class="input-wrapper">
+                                <legend class="text-left text-white mb-4! text-lg border-none! font-medium">Join the Content Revolution | Regular updates on all things Neos</legend>
+                                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                <Neos.Fusion.Form:Input field.name={"b_"+props.nlUser+"_"+props.nlId} attributes.style="position: absolute; left: -5000px;"/>
+                                <div class="flex flex-row gap-4 flex-wrap">
                                     <Neos.Fusion.Form:Input
                                         field.name="EMAIL"
                                         attributes.id="mce-EMAIL"
                                         attributes.placeholder={"email address"}
                                         attributes.required={true}
                                         attributes.autocomplete="email"
+                                        attributes.class={"bg-white px-4 py-2 text-black grow-1"}
                                     />
+                                    <Neos.Fusion.Form:Button attributes.class="btn btn--solidPrimary"> <span class="btn__content">Subscribe</span></Neos.Fusion.Form:Button>
                                 </div>
-                                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                                <Neos.Fusion.Form:Input field.name={"b_"+props.nlUser+"_"+props.nlId} attributes.style="position: absolute; left: -5000px;"/>
-                                <Neos.Fusion.Form:Button attributes.class="btn btn--solidPrimary"> <span class="btn__content">Subscribe</span></Neos.Fusion.Form:Button>
                             </Neos.Fusion.Form:Form>
                         </div>
                     </div>
