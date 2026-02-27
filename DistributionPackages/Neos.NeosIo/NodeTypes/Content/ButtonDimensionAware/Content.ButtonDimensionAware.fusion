@@ -1,0 +1,28 @@
+prototype(Neos.NeosIo:ButtonDimensionAware) < prototype(Neos.Neos:ContentComponent) {
+    linkedNode = ${q(node).property('linkedNode')}
+    setLanguage = ${q(node).property('language') || ''}
+
+    renderer = Neos.NeosIo:Component.Button {
+        buttonLabel = Neos.Neos:Editable {
+            property = 'buttonLabel'
+            block = false
+        }
+        alignment = ${q(node).property('alignment') || 'inline'}
+        style = ${q(node).property('style')}
+
+        link = Neos.Neos:NodeUri {
+            node = Neos.Fusion:Case {
+                withDimension {
+                    condition = ${props.setLanguage != ''}
+                    renderer = ${q(props.linkedNode).context({dimensions: {language: [props.setLanguage]}}).get(0)}
+                }
+                default {
+                    @position = 'end 9999'
+                    condition = ${true}
+                    renderer = ${props.linkedNode}
+                }
+            }
+        }
+        openInNewTab = ${q(node).property('openInNewTab')}
+    }
+}

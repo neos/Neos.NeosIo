@@ -1,16 +1,42 @@
-.keyVisual {
-  position: relative;
-  display: table;
-  width: 100%;
-  min-height: 190px;
-  overflow: hidden;
-  background: #000;
+.keyVisual__wrapper {
+  display: flex;
+  flex-direction: column;
 
   &--small {
     .keyVisual__contents {
-      height: MIN(250px, 25vw);
+      min-height: MIN(250px, 25vw);
     }
   }
+
+  &--default {
+    .keyVisual__contents {
+      min-height: 350px;
+    }
+  }
+
+  &--large {
+    height: 100vh;
+
+    @include max-screen(992px) {
+      height: auto;
+    }
+
+    .keyVisual__contents {
+      min-height: 400px;
+
+      background-color: rgba(0, 0, 0, 0.5);
+      background-blend-mode: darken;
+    }
+  }
+}
+
+.keyVisual {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
 
   &:before {
     content: '';
@@ -28,19 +54,21 @@
   z-index: -1;
 }
 
-.keyVisual--large {
-  min-height: 400px;
-}
-
 .keyVisual__contents {
   position: relative;
   z-index: 2;
-  display: table-cell;
-  height: 25vw;
+  height: 100%;
   width: 100%;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-size: cover;
   background-position: center center;
+  padding: $grid-gutter;
+  >.neos-contentcollection {
+    max-width: $layout-small-width;
+    margin: 0 auto;
+  }
 
   &:before {
     content: '';
@@ -58,7 +86,10 @@
   }
 
   h1, .h1 {
-    font-size: 60px;
+    font-size: 40px;
+    @include mq('medium') {
+      font-size: 60px;
+    }
   }
 
   h1, h2, h3,
@@ -66,12 +97,7 @@
   .h1, .h2, .h3,
   .h4, .h5, .h6 {
     font-weight: 400;
-  }
-
-  .keyVisual--large & {
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    background-blend-mode: darken;
+    line-height: 1.2;
   }
 
   @include mq('small') {

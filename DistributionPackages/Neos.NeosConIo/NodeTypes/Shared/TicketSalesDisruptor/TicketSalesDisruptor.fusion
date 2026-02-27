@@ -1,0 +1,121 @@
+prototype(Neos.NeosConIo:Component.TicketSalesDisruptor) < prototype(Neos.Fusion:Component) {
+    title = ''
+    text = ''
+    salesBarTitle = ''
+
+    buttonLabel = ''
+    link = ''
+
+    sold = 0
+    goal = 0
+    stretchGoal = 0
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+        text = ${PropTypes.string}
+        salesBarTitle = ${PropTypes.string}
+
+        buttonLabel = ${PropTypes.string}
+        link = ${PropTypes.string}
+
+        sold = ${PropTypes.integer}
+        goal = ${PropTypes.integer}
+        stretchGoal = ${PropTypes.integer}
+    }
+
+    // We render two version. A normal one and a fixed one.
+    // The fixed one is only visible when the user scrolls down.
+    // To avoid content jumping when scrolling the normal one stays always visible.
+    renderer = afx`
+        <div class="ticket-sales-disruptor">
+            <Neos.NeosConIo:Component.TicketSalesDisruptor.Inner
+                title={props.title}
+                text={props.text}
+                salesBarTitle={props.salesBarTitle}
+                buttonLabel={props.buttonLabel}
+                link={props.link}
+                sold={props.sold}
+                goal={props.goal}
+                stretchGoal={props.stretchGoal}
+            />
+        </div>
+        <div
+            class="ticket-sales-disruptor__fixed"
+            data-component="ScrollClassToggler"
+            data-scrollClasses='{"245":{"className": "ticket-sales-disruptor__fixed--visible","removeOnScrollDecrease": false}}'
+        >
+            <Neos.NeosConIo:Component.TicketSalesDisruptor.Inner
+                title={props.title}
+                text={props.text}
+                salesBarTitle={props.salesBarTitle}
+                buttonLabel={props.buttonLabel}
+                link={props.link}
+                sold={props.sold}
+                goal={props.goal}
+                stretchGoal={props.stretchGoal}
+            />
+        </div>
+    `
+}
+
+prototype(Neos.NeosConIo:Component.TicketSalesDisruptor.Inner) < prototype(Neos.Fusion:Component) {
+    title = ''
+    text = ''
+    salesBarTitle = ''
+
+    buttonLabel = ''
+    link = ''
+
+    sold = 0
+    goal = 0
+    stretchGoal = 0
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+        text = ${PropTypes.string}
+        salesBarTitle = ${PropTypes.string}
+
+        buttonLabel = ${PropTypes.string}
+        link = ${PropTypes.string}
+
+        sold = ${PropTypes.integer}
+        goal = ${PropTypes.integer}
+        stretchGoal = ${PropTypes.integer}
+    }
+
+    renderer = afx`
+        <div class="ticket-sales-disruptor__inner">
+            <div class="ticket-sales-disruptor__text">
+                <h2>{props.title}</h2>
+                <p>{props.text}</p>
+            </div>
+            <div class="ticket-sales-disruptor__sales">
+                <strong>{props.salesBarTitle}</strong>
+                <div class="ticket-sales-disruptor__sales-bar">
+                    <div class="ticket-sales-disruptor__sales-bar__sold" style={"width:"+ props.sold / props.stretchGoal * 100  +"%"}>
+                        <div class="ticket-sales-disruptor__sales-bar__bar"></div>
+                        <span @if={props.sold}>sold {props.sold}</span>
+                    </div>
+                    <div class="ticket-sales-disruptor__sales-bar__minimum-goal" style={"width:"+ props.goal / props.stretchGoal * 100  +"%"}></div>
+                    <div class="ticket-sales-disruptor__sales-bar__goal">goal {props.stretchGoal}</div>
+                </div>
+                <div class="ticket-sales-disruptor__minimum-goal" >
+                    <span style={"right:" +  (100 - (props.goal / props.stretchGoal * 100))  + "%"}>
+                        minimum {props.goal}
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="ticket-sales-disruptor__call-to-action">
+                <a class="btn btn--solidSecondary" href={props.link} target="_blank"
+                   rel="noopener external">
+                    <div class="btn__content">
+                        {props.buttonLabel}
+                    </div>
+                </a>
+            </div>
+        </div>
+    `
+}

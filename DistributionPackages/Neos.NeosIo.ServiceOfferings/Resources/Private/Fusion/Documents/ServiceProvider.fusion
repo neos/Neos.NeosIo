@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neos.NeosIo:DefaultPage) {
-    header.keyVisual {
+    header.keyVisualWrapper.keyVisual {
         keyVisualImage = ${q(documentNode).property('bannerImage')}
     }
     content.parts {
@@ -43,7 +43,6 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
             phone = ${q(node).property('phone')}
             longitude = ${q(node).property('longitude')}
             latitude = ${q(node).property('latitude')}
-            fundingPlatformName = ${q(node).property('fundingPlatformName')}
             githubName = ${q(node).property('githubName')}
             size = ${q(node).property('size')}
             address = ${Array.join([q(node).property('street'), q(node).property('zipcode') + ' ' + q(node).property('city'), q(node).property('country')], ', ')}
@@ -65,11 +64,6 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                 @process.uniqueAndSort = ${value ? q(value).unique().sort('downloadTotal').get() : value}
             }
 
-            fundingBadges = ${q(site).fundingBadges().get()}
-            fundingBadges.@process {
-                getBadges = ${value['customers'][q(node).property('fundingPlatformName')]['badges'] || []}
-            }
-
             awards = ${Array.map(q(node).children('awards').children().get(), a => Neos.Node.label(q(a).property('award')) + ' (' + q(a).property('title') + ')')}
 
             renderer = afx`
@@ -82,9 +76,14 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
 
                     <h1 class="service-provider__title">{props.title}</h1>
 
-                    <img class="service-provider__logo" alt={props.title} @children="attributes.src" @if.set={props.logo}>
-                        <Neos.Neos:ImageUri asset={props.logo} maximumWidth={300} maximumHeight={300} />
-                    </img>
+                    <Neos.Neos:ImageTag
+                        if.set={props.logo}
+                        asset={props.logo}
+                        maximumWidth={300}
+                        maximumHeight={300}
+                        attributes.class={"service-provider__logo"}
+                        attributes.alt={"Logo: " + props.title}
+                    />
 
                     <p class="service-provider__description" @if.set={props.description}>{props.description}</p>
 
@@ -115,8 +114,6 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
                         />
                         <Neos.NeosIo.ServiceOfferings:Component.Provider.Donations
                             badges={props.badges}
-                            fundingBadges={props.fundingBadges}
-                            fundingPlatformName={props.fundingPlatformName}
                         />
                     </section>
 

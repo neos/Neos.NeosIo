@@ -1,0 +1,30 @@
+prototype(Neos.NeosIo:Button) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Fusion:Case {
+        scrollToContent {
+            condition = ${q(node).property('scrollToContentWhenClicked')}
+            renderer = Neos.NeosIo:Component.ScrollToContentButton {
+                buttonLabel = Neos.Neos:Editable {
+                    property = 'buttonLabel'
+                    block = false
+                }
+                alignment = ${q(node).property('alignment') || 'inline'}
+                style = ${q(node).property('style')}
+            }
+        }
+
+        default {
+            condition = true
+            renderer = Neos.NeosIo:Component.Button {
+                buttonLabel = Neos.Neos:Editable {
+                    property = 'buttonLabel'
+                    block = false
+                }
+                alignment = ${q(node).property('alignment') || 'inline'}
+                style = ${q(node).property('style')}
+                link = ${q(node).property('link')}
+                link.@process.convertUris = Neos.Neos:ConvertUris
+                openInNewTab = ${q(node).property('openInNewTab')}
+            }
+        }
+    }
+}

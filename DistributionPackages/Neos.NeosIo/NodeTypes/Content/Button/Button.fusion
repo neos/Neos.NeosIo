@@ -1,0 +1,102 @@
+prototype(Neos.NeosIo:Component.ScrollToContentButton) < prototype(Neos.Fusion:Component) {
+    buttonLabel = ''
+    alignment = ''
+    style = ''
+
+    link = ''
+
+    @propTypes {
+        @strict = true
+        buttonLabel = ${PropTypes.string}
+        alignment = ${PropTypes.oneOf(['Left', 'Center', 'Right', 'inline'])}
+        style = ${PropTypes.oneOf(['btn--primary', 'btn--solidPrimary', 'btn--secondary', 'btn--solidSecondary', 'btn--bright', 'btn--solidBright'])}
+
+        link = ${PropTypes.string}
+    }
+
+    @private {
+        inBackend = ${renderingMode.isEdit}
+    }
+
+    renderer = afx`
+        <Neos.NeosIo:Component.ButtonWrapper alignment={props.alignment}>
+            <Neos.Fusion:Tag
+                tagName={!private.inBackend ? 'a' : 'div'}
+                attributes.class={"btn " + props.style}
+                attributes.href={!private.inBackend ? '#mainContent' : null}
+                attributes.data-component={!private.inBackend ? 'ScrollTo' : null}
+                attributes.data-targetSelector={!private.inBackend ? '#mainContent' : null}
+            >
+                <span class="btn__content">
+                    {props.buttonLabel}
+                </span>
+            </Neos.Fusion:Tag>
+        </Neos.NeosIo:Component.ButtonWrapper>
+    `
+}
+
+prototype(Neos.NeosIo:Component.Button) < prototype(Neos.Fusion:Component) {
+    buttonLabel = ''
+    alignment = ''
+    style = ''
+
+    link = ''
+    openInNewTab = false
+
+    @propTypes {
+        @strict = true
+        buttonLabel = ${PropTypes.string}
+        alignment = ${PropTypes.oneOf(['Left', 'Center', 'Right', 'inline'])}
+        style = ${PropTypes.oneOf(['btn--primary', 'btn--solidPrimary', 'btn--secondary', 'btn--solidSecondary', 'btn--bright', 'btn--solidBright'])}
+
+        link = ${PropTypes.string}
+        openInNewTab = ${PropTypes.bool}
+    }
+
+    @private {
+        inBackend = ${renderingMode.isEdit}
+    }
+
+    renderer = afx`
+        <Neos.NeosIo:Component.ButtonWrapper alignment={props.alignment}>
+            <Neos.Fusion:Tag
+                tagName={props.link && !private.inBackend ? 'a' : 'div'}
+                attributes.class={"btn " + props.style}
+                attributes.href={props.link}
+                attributes.href.@if={props.link && !private.inBackend}
+                attributes.target={props.openInNewTab ? '_blank' : null}
+            >
+                <span class="btn__content">
+                    {props.buttonLabel}
+                </span>
+            </Neos.Fusion:Tag>
+        </Neos.NeosIo:Component.ButtonWrapper>
+    `
+}
+
+prototype(Neos.NeosIo:Component.ButtonWrapper) < prototype(Neos.Fusion:Component) {
+    alignment = ''
+
+    @propTypes {
+        @strict = true
+        alignment = ${PropTypes.oneOf(['Left', 'Center', 'Right', 'inline'])}
+    }
+
+    renderer = Neos.Fusion:Case {
+        inline {
+            condition = ${props.alignment == 'inline'}
+            renderer = afx`
+                {props.content}
+            `
+        }
+
+        default {
+            condition = ${true}
+            renderer = afx`
+                <div class={"u-align" + props.alignment}>
+                    {props.content}
+                </div>
+            `
+        }
+    }
+}

@@ -18,6 +18,7 @@ $font-path: "../../Neos.NeosIo/Assets";
 @import "Variables";
 
 // Utilities
+@import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Utilities/Button";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Utilities/Animations";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Utilities/Brand";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Utilities/Display";
@@ -31,12 +32,10 @@ $font-path: "../../Neos.NeosIo/Assets";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Alert";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Avatar";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Base";
-@import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Button";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/ButtonChoiceLabel";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Code";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Form";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Hamburger";
-@import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Icon";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Heading";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Input";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/Label";
@@ -52,7 +51,6 @@ $font-path: "../../Neos.NeosIo/Assets";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Atoms/EventCosts";
 
 // Molecules
-@import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/Badge";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/Flag";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/FlexibleEmbed";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/Form";
@@ -62,10 +60,8 @@ $font-path: "../../Neos.NeosIo/Assets";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/Pagination";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/Spinner";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/Table";
-@import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/HeadlineSlider";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/Image";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/ImageTeaser";
-@import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/FundingBadges";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/ReferencesList.scss";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/BoxAside";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Molecules/Checked";
@@ -74,8 +70,6 @@ $font-path: "../../Neos.NeosIo/Assets";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Organisms/SiteHeader";
 @import "Organisms/SiteHeader";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Organisms/OffCanvas";
-@import "Organisms/KeyVisual";
-@import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Organisms/DeviceStage";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Organisms/Stage";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Organisms/Box";
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Organisms/Post";
@@ -95,6 +89,12 @@ $font-path: "../../Neos.NeosIo/Assets";
 
 // Templates
 @import "DistributionPackages/Neos.NeosIo/Resources/Private/Scss/Templates/Print";
+
+// Styles for NodeTypes
+@import "DistributionPackages/Neos.NeosIo/NodeTypes/**/*.scss";
+
+// Shared NodeTypes from Neos Con Package
+@import "DistributionPackages/Neos.NeosConIo/NodeTypes/Shared/**/*.scss";
 
 .neos-neosio-youtube {
   margin-bottom: #{$basic-spacing}px;

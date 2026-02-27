@@ -1,0 +1,4 @@
+prototype(Neos.NeosIo:Fragment.LanguageMenu) < prototype(Neos.Neos:DimensionMenu) {
+    attributes.class = 'nav nav--language-switcher'
+    @process.wrap = afx`<nav aria-label="languages">{value}</nav>`
+}

@@ -60,4 +60,39 @@
       }
     }
   }
+
+  &__nl-signup {
+    display: flex;
+    align-content: end;
+    gap: $column-gutter;
+    flex-wrap: wrap;
+    max-width: 600px;
+    margin:  0 auto;
+    justify-content: center;
+    legend {
+      @include h5;
+      @include u-invertText;
+      text-align: center;
+      width: 100%;
+      flex: 0 0 auto;
+      border: none;
+      margin: 0;
+    }
+    .input-wrapper {
+      margin: 0;
+      flex-grow: 1;
+      @media (max-width: 441px) {
+        width: 100%;
+      }
+      input {
+        margin: 0;
+        padding: 0.5rem 1rem ;
+        min-height: 2.75rem;
+        width: 100%;
+      }
+    }
+    .btn {
+      flex: 0 0 auto;
+    }
+  }
 }

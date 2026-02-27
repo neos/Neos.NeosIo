@@ -1,0 +1,24 @@
+prototype(Neos.NeosConIo:TicketSalesDisruptor) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.NeosConIo:Component.TicketSalesDisruptor {
+        title = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        text = Neos.Neos:Editable {
+            property = 'text'
+            block = false
+        }
+        salesBarTitle = Neos.Neos:Editable {
+            property = 'salesBarTitle'
+            block = false
+        }
+
+        buttonLabel = ${q(node).property('buttonLabel')}
+        link = ${q(node).property('link')}
+        link.@process.convert = Neos.Neos:ConvertUris
+
+        sold = ${q(node).property('sold')}
+        goal = ${q(node).property('goal')}
+        stretchGoal = ${q(node).property('stretchGoal')}
+    }
+}

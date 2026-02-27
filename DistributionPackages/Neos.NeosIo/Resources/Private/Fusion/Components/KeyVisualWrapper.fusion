@@ -1,0 +1,24 @@
+
+// Wrapper to also show a disruptor in the key visual if present.
+// We need the wrapper to get a large key visual and the disruptor inside the viewport of the browser.
+prototype(Neos.NeosIo:KeyVisualWrapper) < prototype(Neos.Fusion:Component) {
+    // API
+    // can be 'small', 'default' or 'large'
+    keyVisualSize = 'default'
+    keyVisual = null
+    disruptor = null
+
+    @propTypes {
+        @strict = true
+        keyVisualSize = ${PropTypes.oneOf(['', 'small', 'default', 'large'])}
+        keyVisual = ${PropTypes.string}
+        disruptor = ${PropTypes.string}
+    }
+
+    renderer = afx`
+        <section class={"print-hidden keyVisual__wrapper keyVisual__wrapper--" + props.keyVisualSize}>
+            {props.disruptor}
+            {props.keyVisual}
+        </section>
+    `
+}

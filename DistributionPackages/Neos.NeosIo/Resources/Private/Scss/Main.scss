@@ -15,6 +15,7 @@
 @import "_Variables";
 
 // Utilities
+@import "Utilities/_Button";
 @import "Utilities/_Animations";
 @import "Utilities/_Brand";
 @import "Utilities/_Display";
@@ -28,12 +29,10 @@
 @import "Atoms/_Alert";
 @import "Atoms/_Avatar";
 @import "Atoms/_Base";
-@import "Atoms/_Button";
 @import "Atoms/_ButtonChoiceLabel";
 @import "Atoms/_Code";
 @import "Atoms/_Form";
 @import "Atoms/_Hamburger";
-@import "Atoms/_Icon";
 @import "Atoms/_Heading";
 @import "Atoms/_Input";
 @import "Atoms/_Label";
@@ -49,7 +48,6 @@
 @import "Atoms/_EventCosts";
 
 // Molecules
-@import "Molecules/_Badge";
 @import "Molecules/_Flag";
 @import "Molecules/_FlexibleEmbed";
 @import "Molecules/_Form";
@@ -61,10 +59,8 @@
 @import "Molecules/_Pagination";
 @import "Molecules/_Spinner";
 @import "Molecules/_Table";
-@import "Molecules/_HeadlineSlider";
 @import "Molecules/_ImageGrid";
 @import "Molecules/_ImageTeaser";
-@import "Molecules/_FundingBadges";
 @import "Molecules/_ReferencesList.scss";
 @import "Molecules/_BoxAside";
 @import "Molecules/_Checked";
@@ -74,12 +70,12 @@
 @import "Molecules/_VidoeEmbed";
 @import "Molecules/_FormBuilder";
 @import "Molecules/_SemanticSection";
+@import "Molecules/_Text";
 
 // Organisms
 @import "Organisms/_SiteHeader";
 @import "Organisms/_OffCanvas";
 @import "Organisms/_KeyVisual";
-@import "Organisms/_DeviceStage";
 @import "Organisms/_Stage";
 @import "Organisms/_Box";
 @import "Organisms/_Post";
@@ -92,7 +88,12 @@
 @import "Organisms/_Speaker";
 
 @import "DistributionPackages/Neos.NeosIo.FeatureList/Resources/Private/Styles/Main";
+
+// Styles from NodeTypes
 @import "DistributionPackages/Neos.NeosIo/NodeTypes/Content/TableOfContents/TableOfContents";
+
+// Shared styles from neosConIo Package
+@import "DistributionPackages/Neos.NeosConIo/NodeTypes/Shared/**/*.scss";
 
 // Templates
 @import "Templates/_Print";

@@ -1,0 +1,44 @@
+###########################################
+# A configurable button which can be used
+# to display actions to the user.
+###########################################
+
+'Neos.NeosIo:Button':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NodeTypes:LinkMixin': true
+    'Neos.NeosIo:Mixin.ButtonStyles': true
+    'Neos.NeosIo:Constraints.Column': true
+    'Neos.NeosIo:Constraints.SemanticSection': true
+  ui:
+    label: Button
+    icon: link
+    inlineEditable: true
+  properties:
+    buttonLabel:
+      type: string
+      defaultValue: 'Button label'
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            autoparagraph: false
+    link:
+      ui:
+        label: 'Button Link'
+        inspector:
+          hidden: 'ClientEval:node.properties.scrollToContentWhenClicked ? true : false'
+          group: content
+          editorOptions:
+            startingPoint: '/<Neos.Neos:Sites>/'
+    openInNewTab:
+      ui:
+        inspector:
+          hidden: 'ClientEval:node.properties.scrollToContentWhenClicked ? true : false'
+          group: content
+    scrollToContentWhenClicked:
+      type: boolean
+      ui:
+        label: 'Scroll to Content-Area when clicked'
+        inspector:
+          group: content

@@ -1,0 +1,50 @@
+prototype(Neos.NeosIo.Blog:Content.BlogTeaser) < prototype(Neos.Neos:ContentComponent) {
+    blogFeed = ${q(node).referenceNodes('blogFeed').get(0)}
+    blogPost = ${q(node).referenceNodes('blogPost').get(0)}
+    subTitle = Neos.Neos:Editable {
+        property = 'subTitle'
+        block = false
+    }
+
+    @private {
+        blogPostToDisplay = Neos.Fusion:Case {
+            latestBlogPost {
+                condition = ${!props.blogPost && props.blogFeed}
+                renderer = ${q(props.blogFeed).children('[instanceof Neos.NeosIo:Post]').get(0)}
+            }
+            default {
+                condition = true
+                renderer = ${props.blogPost}
+            }
+        }
+        title = ${q(private.blogPostToDisplay).property('title')}
+        text = ${q(private.blogPostToDisplay).property('summary')}
+        alternativeText = 'TODO'
+        image = ${q(private.blogPostToDisplay).property('keyVisualImage')}
+        link = Neos.Neos:NodeUri {
+            node = ${private.blogPostToDisplay}
+            absolute = true
+        }
+    }
+
+    renderer = Neos.NeosIo:Component.ImageTeaser {
+        title = ${private.title}
+        subTitle = ${props.subTitle}
+        text = ${private.text}
+        alternativeText = ${private.alternativeText}
+        image = ${private.image}
+        link = ${private.link}
+    }
+
+    @cache {
+        mode = "cached"
+        entryIdentifier {
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
+        entryTags {
+            node = ${Neos.Caching.nodeTag(node)}
+            blogFeed = ${q(node).referenceNodes('blogFeed') ? Neos.Caching.descendantOfTag(q(node).referenceNodes('blogFeed')) : null}
+            blogPost = ${q(node).referenceNodes('blogPost') ? Neos.Caching.nodeTag(q(node).referenceNodes('blogPost')) : null}
+        }
+    }
+}

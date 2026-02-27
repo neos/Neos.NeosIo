@@ -1,0 +1,82 @@
+prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
+    title = ''
+    text = ''
+    imageUri = ''
+    company = ''
+    position = ''
+    twitter = ''
+    mastodon = ''
+    github = ''
+    featuredTalk = ''
+    moreTalks = ''
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+        text = ${PropTypes.string}
+        imageUri = ${PropTypes.string}
+        company = ${PropTypes.string}
+        position = ${PropTypes.string}
+        twitter = ${PropTypes.string}
+        mastodon = ${PropTypes.string}
+        github = ${PropTypes.string}
+        featuredTalk = ${PropTypes.string}
+        moreTalks = ${PropTypes.string}
+    }
+
+    renderer = afx`
+        <div class="speaker">
+            <h1>{props.title}</h1>
+            <div class="speaker__details">
+                <div class="speaker__imageWrapper">
+                    <img
+                        src={props.imageUri}
+                        alt={"Picture of " + props.title}
+                        class="speaker__image"
+                    />
+                </div>
+                <div class="speaker__description">
+                    {props.text}
+                    <ul class="speaker__infos">
+                        <li @if.hasCompany={props.company}
+                            class="speaker__infos__item"
+                        >
+                            <i class="fas fa-briefcase"></i> {props.company}
+                        </li>
+                        <li @if.hasPosition={props.position}
+                            class="speaker__infos__item"
+                        >
+                            <i class="fas fa-group"></i> {props.position}
+                        </li>
+                        <li @if.hasTwitter={props.twitter}
+                            class="speaker__infos__item"
+                        >
+                            <i class="fab fa-twitter"></i> <a href={"https://twitter.com/" + props.twitter} target="_blank" rel="noreferrer noopener" title="Go to their twitter profile">{props.twitter}</a>
+                        </li>
+                        <li @if.hasMastodon={props.mastodon}
+                            class="speaker__infos__item"
+                        >
+                            <i class="fab fa-mastodon"></i> <a href={props.mastodon} target="_blank" rel="noreferrer noopener" title="Go to their mastodon profile">{props.mastodon}</a>
+                        </li>
+                        <li @if.hasGithub={props.github}
+                            class="speaker__infos__item"
+                        >
+                            <i class="fab fa-github"></i> <a href={"https://github.com/" + props.github} target="_blank" rel="noreferrer noopener" title="Go to github profile">{props.github}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div @if.hasFeaturedTalk={props.featuredTalk}
+                 class="speaker__featuredTalk"
+            >
+                <h2>Featured talk</h2>
+                {props.featuredTalk}
+            </div>
+            <div @if.hasMoreTalks={props.moreTalks}
+                 class="speaker__moreTalks"
+            >
+                <h2>More talks</h2>
+                {props.moreTalks}
+            </div>
+        </div>
+    `
+}

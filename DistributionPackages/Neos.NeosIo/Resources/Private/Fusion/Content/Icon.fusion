@@ -1,8 +1,0 @@
-prototype(Neos.NeosIo:Icon) < prototype(Neos.Neos:Content) {
-    templatePath = 'resource://Neos.NeosIo/Private/Templates/NodeTypes/Icon.html'
-
-    alignment = ${q(node).property('alignment') || 'inline'}
-    icon = ${q(node).property('icon')}
-    color = ${q(node).property('color')}
-    size = ${q(node).property('size')}
-}
