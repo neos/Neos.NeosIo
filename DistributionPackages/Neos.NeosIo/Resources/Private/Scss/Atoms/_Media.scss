@@ -6,58 +6,58 @@ embed,
 iframe,
 object,
 img {
-	// Make images and other media related elements responsive.
-	max-width: 100%;
+  // Make images and other media related elements responsive.
+  max-width: 100%;
 
-	// Removes standard border, as well as the border when inside `a` element in IE6/7/8/9, FF3.
-	border: 0;
+  // Removes standard border, as well as the border when inside `a` element in IE6/7/8/9, FF3.
+  border: 0;
 }
 
 img {
-	// Styling the alt="" Text on images.
-	font-style: italic;
+  // Styling the alt="" Text on images.
+  font-style: italic;
 
-	// Remove the gap between images and the bottom of their containers.
-	vertical-align: middle;
+  // Remove the gap between images and the bottom of their containers.
+  vertical-align: middle;
 
-	// Make sure every image is fully scalable in the height as well.
-	&[height] {
-		height: auto;
-	}
+  // Make sure every image is fully scalable in the height as well.
+  &[height] {
+    height: auto;
+  }
 }
 
 figure {
-	// Resets margin in IE6/7/8/9, S5, O11.
-	margin: 0;
+  // Resets margin in IE6/7/8/9, S5, O11.
+  margin: 0;
 }
 
 figcaption {
-	// Decrease font-size on figcaption elements
-	font-size: rs($base-font-size - 2, $unit: rem);
+  // Decrease font-size on figcaption elements
+  font-size: rs($base-font-size - 2, $unit: rem);
 }
 
 audio,
 video,
 iframe {
-	margin: 0 0 rs($basic-spacing);
+  margin: 0 0 rs($basic-spacing);
 }
 
 audio {
-	// Set a min-width to prevent oddly looking audio controls.
-	min-width: 65%;
+  // Set a min-width to prevent oddly looking audio controls.
+  min-width: 65%;
 
-	&:not([controls]) {
-		// Prevents modern browsers from displaying `audio` without controls.
-		display: none;
+  &:not([controls]) {
+    // Prevents modern browsers from displaying `audio` without controls.
+    display: none;
 
-		// Remove excess height in iOS5 devices.
-		height: 0;
-	}
+    // Remove excess height in iOS5 devices.
+    height: 0;
+  }
 }
 
 svg {
-	&:not(:root) {
-		// Corrects overflow displayed oddly in IE9.
-		overflow: hidden;
-	}
+  &:not(:root) {
+    // Corrects overflow displayed oddly in IE9.
+    overflow: hidden;
+  }
 }
