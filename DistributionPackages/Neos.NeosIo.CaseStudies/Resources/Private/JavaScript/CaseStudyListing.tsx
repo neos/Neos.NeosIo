@@ -85,14 +85,22 @@ export default function CaseStudyListing() {
                     <div class="cases__grid-row form form--inline">
                         <div class="cases__grid-cell hide-md-down">
                             <div className="form__item">
-                                <i className={'grid-switcher fas fa-th-large' + (grid ? ' selected' : '')}
-                                   onClick={() => switchToGrid(true)}
-                                   title={translationData['gridView']}></i>
+                                <span
+                                    className={'grid-switcher' + (grid ? ' selected' : '')}
+                                    onClick={() => switchToGrid(true)}
+                                    title={translationData['gridView']}
+                                >
+                                    <i className="fas fa-th-large"></i>
+                                </span>
                             </div>
                             <div className="form__item">
-                                <i className={'grid-switcher fas fa-th-list' + (grid ? '' : ' selected')}
-                                   onClick={() => switchToGrid(false)}
-                                   title={translationData['tableView']}></i>
+                                <span
+                                    className={'grid-switcher' + (grid ? '' : ' selected')}
+                                    onClick={() => switchToGrid(false)}
+                                    title={translationData['tableView']}
+                                >
+                                    <i className="fas fa-th-list"></i>
+                                </span>
                             </div>
                         </div>
                         <div class="cases__grid-cell">
@@ -136,4 +144,3 @@ export default function CaseStudyListing() {
         </div>
     )
 }
-
