@@ -8,9 +8,9 @@ namespace Neos\NeosIo\Command;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\NeosIo\Service\CrowdApiConnector;
 use Neos\Flow\Cli\CommandController;
 use Neos\Flow\I18n\Translator;
+use Neos\NeosIo\Service\CrowdApiConnector;
 
 /**
  * The Crowd Command Controller
@@ -68,7 +68,7 @@ class CrowdCommandController extends CommandController
     /**
      * Retrieves a user from crowd and prints their attributes
      */
-    public function showUserCommand(string $userName): void
+    public function showUserCommand(?string $userName = null): void
     {
         $validAttributes = $this->settings['additionalAttributes']['user'];
         $headerRow = ['Name', 'Fullname'];
