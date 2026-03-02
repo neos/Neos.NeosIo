@@ -1,6 +1,7 @@
 prototype(Neos.NeosIo:Component.SiteFooter) < prototype(Neos.Fusion:Component) {
+    // Probs can be overriden from other packages like FlowNeosIo
     siteName = 'Neos'
-    // TODO neos editable
+
     licenseText = 'Neos is free and open source software licensed under <a href="https://opensource.org/licenses/GPL-3.0" target="_blank" rel="noopener">GPL v3</a> or later. Created with passion by over 100 contributors around the world.'
     footerContainer = ${q(site).property('footerContentContainer')}
     footerLinkItems = ${q(this.footerContainer).children('[instanceof Neos.Neos:Document]').get()}
