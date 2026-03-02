@@ -22,6 +22,8 @@ Flowpack:
           'https://img.youtube.com/': true
         script-src:
           'self:': true
+          # TODO Bad: Remove as soon as we use an CSP Build from alpine
+          'unsafe-eval': true
           'unsafe-inline': true
           'https://analytics.neos.io/': true
           'https://www.youtube-nocookie.com/': true
