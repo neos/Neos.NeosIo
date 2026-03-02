@@ -1,0 +1,17 @@
+prototype(Neos.Presentation:Slider.Fragment.Item) < prototype(Neos.Fusion:Component) {
+    videoUri = null
+    youtubeId = null
+    vimdeoId = null
+    content = null
+    class = 'flex flex-col items-center justify-center'
+    renderer = afx`
+        <li
+            data-splide-html-video={props.videoUri}
+            data-splide-youtube={props.youtubeId ? 'https://www.youtube.com/watch?v=' + props.youtubeId : null}
+            data-splide-vimeo={props.vimdeoId ? 'https://vimeo.com/' + props.vimdeoId : null}
+            class={Array.push("splide__slide", props.class)}
+        >
+            {props.content}
+        </li>
+    `
+}

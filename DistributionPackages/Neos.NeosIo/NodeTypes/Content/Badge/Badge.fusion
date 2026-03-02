@@ -8,18 +8,18 @@ prototype(Neos.NeosIo:Component.Badge) < prototype(Neos.Fusion:Component) {
 
     @propTypes {
         @strict = true
-        image = ${PropTypes.string}
-        highlight = ${PropTypes.bool}
+        image = ${PropTypes.instanceOf('Neos\Media\Domain\Model\ImageInterface')}
+        highlight = ${PropTypes.boolean}
         description = ${PropTypes.string}
         link = ${PropTypes.string}
         linkText = ${PropTypes.string}
-        openInNewTab = ${PropTypes.bool}
+        openInNewTab = ${PropTypes.boolean}
     }
 
     @private {
         inBackend = ${renderingMode.isEdit}
         class = Neos.Fusion:DataStructure {
-            main = 'badge gi u-w1/2 u-wm4/12 u-wl2/12 neos-neosio-badge'
+            main = 'badge neos-neosio-badge'
             highlight = ${'badge--highlighted'}
             highlight.@if.set = ${props.highlight}
         }

@@ -30,7 +30,7 @@ class EditorsDataSource extends AbstractDataSource
      * @param array{} $arguments Additional arguments (key / value)
      * @return array<string, array{label: string}> An array of options for the editor data source
      */
-    public function getData(Node $node = null, array $arguments = []): array
+    public function getData(?Node $node = null, array $arguments = []): array
     {
         $options = [];
         foreach ($this->userService->getUsers() as $user) {

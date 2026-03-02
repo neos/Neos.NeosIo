@@ -1,29 +1,18 @@
 prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Donations) < prototype(Neos.Fusion:Component) {
-    fundingPlatformName = ''
-    fundingBadges = ''
     badges = ''
 
     renderer = afx`
         <div class="service-provider__donations">
-            <div @if.set={props.fundingPlatformName && Type.isArray( props.fundingBadges) && Array.length( props.fundingBadges)} class="service-provider__sponsorships">
-                <h2>Funding badges</h2>
-                <ul>
-                    <Neos.Fusion:Loop items={props.fundingBadges} itemName="fundingBadge">
-                        <li>{fundingBadge.badgeType} <time>({fundingBadge.startDate} - {fundingBadge.endDate})</time></li>
-                    </Neos.Fusion:Loop>
-                </ul>
-            </div>
-
             <div @if.set={Type.isArray(props.badges) && Array.length(props.badges)} class="service-provider__badges">
                 <h2>Sponsorship badges</h2>
                 <div class="service-provider__badge-wrap">
                     <Neos.Fusion:Loop items={props.badges} itemName="badge">
                         <div>
                             <Neos.Neos:ImageTag
-                                    asset={q(badge).property('image')}
-                                    attributes.width={120}
-                                    attributes.height={180}
-                                    attributes.alt={q(badge).property('description')}
+                                asset={q(badge).property('image')}
+                                attributes.width={120}
+                                attributes.height={180}
+                                attributes.alt={q(badge).property('description')}
                             />
                         </div>
                     </Neos.Fusion:Loop>

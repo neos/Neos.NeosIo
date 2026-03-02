@@ -1,0 +1,14 @@
+/**
+This triangle prevents the closing of the flyout when the mouse hovers over other elements.
+ */
+@layer components {
+  .itemblocker {
+    display: none;
+    position: relative;
+    height: --spacing(20);
+    margin-top: calc(-1 * var(--n-spacing--y-small));
+    width: calc(100% + min(40vw, 500px));
+    left: calc(-1 * min(20vw, 250px));
+    clip-path: polygon(50% 0, 0 100%, 100% 100%);
+  }
+}

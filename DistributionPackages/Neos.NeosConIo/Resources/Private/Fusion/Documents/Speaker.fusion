@@ -1,64 +1,72 @@
 prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
     header.keyVisualWrapper.keyVisual >
-    # TODO: Refactor to AFX
-    content.parts.main = Neos.Fusion:Template {
-        templatePath = 'resource://Neos.NeosConIo/Private/Templates/NodeTypes/Speaker.html'
 
-        title = ${q(node).property('title')}
-        text = ${q(node).property('text')}
-        image = ${q(node).property('image')}
-        event = ${q(node).property('event')}
-        company = ${q(node).property('company')}
-        position = ${q(node).property('position')}
-        twitter = ${q(node).property('twitter')}
-        mastodon = ${q(node).property('mastodon')}
-        github = ${q(node).property('github')}
-
-        // node is the speaker here
-        @context.featuredTalkNode = ${q(node).referenceNodes('featuredTalk').get(0)}
-
-        featuredTalk = Neos.NeosIo:ImageTeaser {
-            title = ${q(featuredTalkNode).property('title')}
-            rawTitle = ${this.title}
-            image = ${q(featuredTalkNode).property('thumbnail')}
-            fallbackImageUrl = ${(q(featuredTalkNode).property('video') && !q(featuredTalkNode).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(featuredTalkNode).property('video') + "/maxresdefault.jpg" : null}
-            text = ${String.cropAtWord(q(featuredTalkNode).property('text'), 200, '…')}
-            className = 'imageTeaser--featuredTalk'
-            link = Neos.Neos:NodeUri {
-                node = ${featuredTalkNode}
-                absolute = true
+    content.parts.main = Neos.Neos:ContentComponent {
+        renderer = Neos.NeosConIo:Component.Speaker {
+            title = Neos.Neos:Editable {
+                property = "title"
             }
-        }
 
-        // Just show featured talk when defined in the backend
-        featuredTalk.@if.featuredTalkIsSelected = ${featuredTalkNode}
+            text = Neos.Neos:Editable {
+                property = "text"
+            }
 
-        moreTalks = Neos.Fusion:Loop {
-            // node is speaker here
-            items = ${q(node).backReferenceNodes("speakers").filter('[instanceof Neos.NeosConIo:Talk]').sort('talkDate', 'DESC')}
+            imageUri = Neos.Neos:ImageUri {
+                asset = ${q(node).property('image')}
+                allowCropping = true
+            }
 
-            @process.wrapWithUl = ${value ? '<ul class="talkList">' + value + '</ul>' : ''}
-            itemName = "node"
-            itemRenderer = Neos.Fusion:Tag {
-                tagName = 'li'
-                attributes.class = 'talkList__item'
-                content = Neos.NeosIo:ImageTeaser {
-                    // node is the talk here
-                    title = ${q(node).property('title')}
-                    image = ${q(node).property('thumbnail')}
-                    fallbackImageUrl = ${(q(node).property('video') && !q(node).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(node).property('video') + "/maxresdefault.jpg" : null}
-                    text = ''
-                    className = 'imageTeaser--relatedTalk'
-                    link = Neos.Neos:NodeUri {
-                        node = ${node}
-                        absolute = true
-                    }
+            company = ${node.properties.company}
+            position = ${node.properties.position}
+            twitter = ${node.properties.twitter}
+            mastodon = ${node.properties.mastodon}
+            github = ${node.properties.github}
+
+            // node is the speaker here
+            @context.featuredTalkNode = ${q(node).referenceNodes('featuredTalk').get(0)}
+
+            featuredTalk = Neos.NeosIo:ImageTeaser {
+                title = ${q(featuredTalkNode).property('title')}
+                rawTitle = ${this.title}
+                image = ${q(featuredTalkNode).property('thumbnail')}
+                fallbackImageUrl = ${(q(featuredTalkNode).property('video') && !q(featuredTalkNode).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(featuredTalkNode).property('video') + "/maxresdefault.jpg" : null}
+                text = ${String.cropAtWord(q(featuredTalkNode).property('text'), 200, '…')}
+                className = 'imageTeaser--featuredTalk'
+                link = Neos.Neos:NodeUri {
+                    node = ${featuredTalkNode}
+                    absolute = true
                 }
             }
 
-            itemRenderer.@if.talkHasCorrectSpeaker = true
-            itemRenderer.@if.talkIsNotFeatured = ${node.aggregateId.value != featuredTalkNode.aggregateId.value}
-        }
+            // Just show featured talk when defined in the backend
+            featuredTalk.@if.featuredTalkIsSelected = ${featuredTalkNode}
 
+            moreTalks = Neos.Fusion:Loop {
+                // node is speaker here
+            items = ${q(node).backReferenceNodes("speakers").filter('[instanceof Neos.NeosConIo:Talk]').sort('talkDate', 'DESC')}
+
+                @process.wrapWithUl = ${value ? '<ul class="talkList">' + value + '</ul>' : ''}
+                itemName = "node"
+                itemRenderer = Neos.Fusion:Tag {
+                    tagName = 'li'
+                    attributes.class = 'talkList__item'
+                    content = Neos.NeosIo:ImageTeaser {
+                        // node is the talk here
+                    title = ${q(node).property('title')}
+                        image = ${q(node).property('thumbnail')}
+                        fallbackImageUrl = ${(q(node).property('video') && !q(node).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(node).property('video') + "/maxresdefault.jpg" : null}
+                        text = ''
+                        className = 'imageTeaser--relatedTalk'
+                        link = Neos.Neos:NodeUri {
+                            node = ${node}
+                            absolute = true
+                        }
+                    }
+                }
+
+                itemRenderer.@if.talkHasCorrectSpeaker = true
+                itemRenderer.@if.talkIsNotFeatured = ${node.aggregateId.value != featuredTalkNode.aggregateId.value}
+            }
+        }
     }
 }

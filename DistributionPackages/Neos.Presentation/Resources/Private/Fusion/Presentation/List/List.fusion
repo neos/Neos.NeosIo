@@ -1,0 +1,80 @@
+prototype(Neos.Presentation:List) < prototype(Neos.Fusion:Component) {
+    @styleguide {
+        title = 'Feature List of link with preview'
+        description = 'List of link items with preview image'
+        props {
+            link = '#'
+            label = 'All case studies'
+            items = Neos.Fusion:Map {
+                items = Neos.Fusion:DataStructure {
+                    1 = ${{color: '#65a30d', label: 'E-commerce'}}
+                    2 = ${{color: '#65a30d', label: 'E-commerce'}}
+                    3 = ${{color: '#1e40af', label: 'Dev'}}
+                    4 = ${{color: '#b91c1c', label: 'Content Platform'}}
+                    5 = ${{color: '#b91c1c', label: 'Content Platform'}}
+                }
+                itemRenderer = Neos.Fusion:DataStructure {
+                    image {
+                        imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                            text = ${'Preview ' + item.label}
+                            backgroundColor = ${item.color}
+                        }
+                        alternativeText = ${item.label}
+                    }
+                    link = ${'#' + iterator.cycle}
+                    label = ${'Name of the client and his ' + item.label + ' project'}
+                    category = ${item}
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        link = PropTypes:String
+        label = PropTypes:String
+        items = PropTypes:DataStructure {
+            image = PropTypes:DataStructure {
+                imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+                alternativeText = PropTypes:String
+            }
+            link = PropTypes:String
+            label = PropTypes:String
+            category = PropTypes:DataStructure {
+                label = PropTypes:String
+                color = PropTypes:String
+            }
+        }
+    }
+
+    link = null
+    label = null
+    items = null
+
+    descriptionLabel = ${I18n.translate('Neos.Presentation:Main:description')}
+    categoryLabel = ${I18n.translate('Neos.Presentation:Main:category')}
+
+    @if.hasItems = ${Type.isArray(this.items) && Array.length(this.items)}
+    renderer = afx`
+        <Neos.Presentation:Spacing size y x>
+            <table class="w-full mb-12">
+                <thead class="sr-only">
+                    <tr>
+                        <th aria-hidden="true"></th>
+                        <th>{props.descriptionLabel}</th>
+                        <th class="hidden lg:table-cell">{props.categoryLabel}</th>
+                        <th class="hidden md:table-cell" aria-hidden="true"></th>
+                        <th class="hidden md:table-cell" aria-hidden="true"></th>
+                    </tr>
+                </thead>
+                <tbody class="n-counter">
+                    <Neos.Fusion:Loop items={props.items}>
+                        <Neos.Presentation:List.Fragment.Item {...item} />
+                    </Neos.Fusion:Loop>
+                </tbody>
+            </table>
+            <div @if={props.link && props.label} class="flex w-full justify-center mb-12">
+                <Neos.Presentation:Button variant="link" href={props.link} content={props.label} />
+            </div>
+        </Neos.Presentation:Spacing>
+    `
+}

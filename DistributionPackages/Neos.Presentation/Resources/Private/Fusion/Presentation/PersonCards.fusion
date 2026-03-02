@@ -1,0 +1,89 @@
+prototype(Neos.Presentation:PersonCards) < prototype(Neos.Fusion:Component) {
+    @styleguide.props {
+        label = 'People behind Neos CMS'
+        headline = 'Open Source, Open Minds'
+        cards = Neos.Fusion:DataStructure {
+            0 {
+                name = "Karsten Dambekalns"
+                email = "karsten@neos.io"
+                background = "gradient"
+                imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    uri = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=5&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                }
+            }
+            1 {
+                name = "Anke Häslich"
+                email = "anke@neos.io"
+                background = "purple"
+                imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    uri = 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&crop=faces&fp-y=0.8&fp-z=2&w=1024&h=1024&q=80'
+                }
+            }
+            2 {
+                name = "Christian Müller"
+                email = "christian@neos.io"
+                background = "green"
+                imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    uri = 'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&crop=faces&fp-y=0.8&fp-z=2&w=1024&h=1024&q=80'
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        headline = PropTypes:String
+        cards = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                name = PropTypes:String
+                email = PropTypes:String
+                imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+            }
+        }
+    }
+
+    headline = null
+    cards = null
+
+    @if.hasCards = ${Type.isArray(this.cards) && Array.length(this.cards)}
+
+    renderer = afx`
+        <Neos.Presentation:Spacing size x y>
+            <Neos.Presentation:Spacing y="small" @if={props.headline} tagName="h2" class="display-headline-lg text-center">
+                <small @if={props.label} class="block display-cta-sm">{props.label}</small>
+                {props.headline}
+            </Neos.Presentation:Spacing>
+            <Neos.Presentation:Spacing y="small">
+                <Neos.Presentation:DynamicGrid
+                    tagName="ul"
+                    attributes.role="list"
+                    class="items-stretch text-white dynamic-grid-gap-6 dynamic-grid-max-cols-3 dynamic-grid-min-size-76"
+                >
+                    <Neos.Fusion:Loop items={props.cards}>
+                        <li class="flex flex-col @container">
+                            <figure>
+                                <Sitegeist.Kaleidoscope:Image imageSource={item.imageSource} attributes.class="aspect-4/5 w-full object-cover"/>
+                            </figure>
+                            <Neos.Presentation:Background.Pixel
+                                background={item.background}
+                                pixelPosition="top"
+                                pixelCycle={iterator.cycle}
+                                delayBreakpoint="sm"
+                                class="px-8 pb-8 flex-1 flex flex-col"
+                            >
+                                <Neos.Presentation:Headline content={item.name} tagName="h3" display="title-lg" class="flex-1 pt-8" />
+                                <a href={"mailto:" + item.email} class="group inline-flex items-center gap-2 mr-auto">
+                                    <span class="sr-only">{I18n.translate('Neos.Presentation:Main:email')}</span>
+                                    <Neos.Presentation:LayeredGrid inline={true} class="-translate-y-0.5" attributes.aria-hidden="true">
+                                        <Neos.Presentation:Icon icon="mail" class="w-5 visible self-end group-hocus:invisible"/>
+                                        <Neos.Presentation:Icon icon="mail-open" class="w-5 invisible self-end group-hocus:visible"/>
+                                    </Neos.Presentation:LayeredGrid>
+                                    {item.email}
+                                </a>
+                            </Neos.Presentation:Background.Pixel>
+                        </li>
+                    </Neos.Fusion:Loop>
+                </Neos.Presentation:DynamicGrid>
+            </Neos.Presentation:Spacing>
+        </Neos.Presentation:Spacing>
+    `
+}

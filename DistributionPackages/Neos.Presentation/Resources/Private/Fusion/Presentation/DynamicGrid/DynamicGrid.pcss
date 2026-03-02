@@ -1,0 +1,25 @@
+@layer components {
+  .dynamic-grid {
+    /* calculations, do not touch */
+    ----size-calc: calc((100% - var(--gap, 0) * var(--max-cols)) / var(--max-cols));
+    ----min-size-calc: min(100%, max(var(--min-size), var(----size-calc)));
+
+    display: grid;
+    gap: var(--gap, 0);
+    grid-template-columns: repeat(auto-fit, minmax(var(----min-size-calc), 1fr));
+  }
+}
+
+@utility dynamic-grid-gap-* {
+  --gap: calc(var(--spacing) * --value(integer));
+  --gap: --value([length]);
+}
+
+@utility dynamic-grid-max-cols-* {
+  --max-cols: --value(integer);
+}
+
+@utility dynamic-grid-min-size-* {
+  --min-size: calc(var(--spacing) * --value(integer));
+  --min-size: --value([length]);
+}

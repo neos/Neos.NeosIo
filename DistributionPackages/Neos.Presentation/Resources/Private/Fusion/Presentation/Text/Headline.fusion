@@ -1,0 +1,8 @@
+prototype(Neos.Presentation:Headline) < prototype(Neos.Presentation:Paragraph) {
+    @styleguide.props.content = 'Headline Text'
+
+    @propTypes.tagName = ${PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'])}
+
+    tagName = 'h2'
+    @private.additionalClass = 'n-headline'
+}

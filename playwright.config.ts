@@ -35,6 +35,8 @@ export default defineConfig({
             username: process.env.E2E_HTTP_USERNAME ?? '',
             password: process.env.E2E_HTTP_PASSWORD ?? '',
         },
+
+        ignoreHTTPSErrors: true,
     },
 
     /* Configure projects for major browsers */

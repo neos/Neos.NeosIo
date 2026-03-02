@@ -17,7 +17,7 @@ use Neos\Eel\ProtectedContextAwareInterface;
 
 class DateHelper implements ProtectedContextAwareInterface
 {
-    public function timezone(\DateTimeInterface $dateTime = null, string $timezone = null): ?\DateTimeImmutable
+    public function timezone(?\DateTimeInterface $dateTime = null, ?string $timezone = null): ?\DateTimeImmutable
     {
         if ($dateTime === null) {
             return null;

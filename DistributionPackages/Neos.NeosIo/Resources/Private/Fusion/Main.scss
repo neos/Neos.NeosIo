@@ -1,1 +1,10 @@
-@import "../Scss/Main";
+@layer base, components, properties, legacy;
+
+@layer legacy {
+  @import "../Scss/Main";
+}
+
+@import "DistributionPackages/Neos.Presentation/Resources/Public/Styles/Main";
+
+
+

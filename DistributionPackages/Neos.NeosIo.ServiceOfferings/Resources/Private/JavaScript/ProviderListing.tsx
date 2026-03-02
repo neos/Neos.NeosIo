@@ -102,19 +102,33 @@ export default function ProviderListing() {
                     <div class="service-providers__grid-row remove-border form">
                         <div class="service-providers__grid-cell row">
                             <div class="form__item">
-                                <i class={'grid-switcher fas fa-th-large' + (grid ? ' selected' : '')}
-                                   onclick={e => switchToGrid(true)}
-                                   title={translationData['gridView']}></i>
+                                <button
+                                    type="button"
+                                    class={'grid-switcher' + (grid ? ' selected' : '')}
+                                    onclick={e => switchToGrid(true)}
+                                    title={translationData['gridView']}
+                                >
+                                    <i className="fas fa-th-large"></i>
+                                </button>
                             </div>
                             <div className="form__item">
-                                <i class={'grid-switcher fas fa-th-list' + (grid ? '' : ' selected')}
-                                   onclick={e => switchToGrid(false)}
-                                   title={translationData['tableView']}></i>
+                                <button
+                                    type="button"
+                                    class={'grid-switcher' + (grid ? '' : ' selected')}
+                                    onclick={e => switchToGrid(false)}
+                                    title={translationData['tableView']}
+                                >
+                                    <i className="fas fa-th-list"></i>
+                                </button>
                             </div>
                             <div className="form__item">
-                                <i class={'grid-switcher fas fa-sort-alpha-' + (sortingDirection === SortDirection.Desc ? 'up' : 'down')}
-                                   onclick={() => sortBy('title')}
-                                   title={translationData['name']}></i>
+                                <button
+                                    class="grid-switcher"
+                                    onclick={() => sortBy('title')}
+                                    title={translationData['name']}
+                                >
+                                    <i className={'fas fa-sort-alpha-' + (sortingDirection === SortDirection.Desc ? 'up' : 'down')}></i>
+                                </button>
                             </div>
                         </div>
                         <div class="service-providers__grid-cell">
@@ -169,4 +183,3 @@ export default function ProviderListing() {
         </div>
     )
 }
-

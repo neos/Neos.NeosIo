@@ -12,7 +12,7 @@ prototype(Neos.MarketPlace:Button) < prototype(Neos.Fusion:Component) {
           target.@if={props.openInNewTab}
           rel={props.openInNewTab ? 'noopener noreferrer' : ''}
       >
-        <div class="btn__content">{props.content}</div>
+        <span class="btn__content">{props.content}</span>
       </a>
     `
 

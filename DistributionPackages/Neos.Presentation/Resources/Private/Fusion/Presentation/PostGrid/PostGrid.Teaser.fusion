@@ -1,0 +1,57 @@
+prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        title = PropTypes:String
+        teaser = PropTypes:String
+        date = ${PropTypes.instanceOf('\\DateTimeInterface')}
+        href = PropTypes:String
+        linkText = PropTypes:String
+        isFeature = PropTypes:Bool
+        imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+    }
+
+    isFeature = false
+
+    @private {
+        accentColors = ${['purple', 'blue', 'blue-light', 'green', 'yellow', 'orange', 'red']}
+        background = ${props.isFeature ? Array.random(private.accentColors) : 'gradient'}
+    }
+
+    renderer = afx`
+        <li class={Carbon.String.classNames('group group/icon w-full h-full relative', props.isFeature ? 'aspect-[4/3] md:aspect-video xl:aspect-[4/3] md:col-span-2 md:row-span-2' : 'aspect-[7/5]')}>
+            <Neos.Presentation:Background
+                background={private.background}
+                class="w-full h-fit xs:h-full grid grid-cols-1 xs:grid-rows-1 overflow-clip">
+                <Sitegeist.Kaleidoscope:Image
+                    @if={props.imageSource}
+                    imageSource={props.imageSource}
+                    aria-hidden="true"
+                    class="xs:col-start-1 xs:row-start-1 inset-0 w-full h-full object-cover group-hover:scale-105 duration-700"
+                />
+
+                <div class="xs:col-start-1 xs:row-start-1 flex flex-col justify-between bg-black/25 z-10">
+                    <div class="grid p-8 pb-4">
+                        <h2 class={Carbon.String.classNames('text-white text-2xl font-bold text-balance', props.isFeature && 'sm:text-4xl')}>
+                            {props.title}
+                        </h2>
+
+                        <time @if={Type.instance(props.date, '\DateTimeInterface')} datetime={Date.format(props.date, 'Y-m-d')} class="text-white text-sm mb-8">{Date.format(props.date, 'd.m.Y')}</time>
+
+                        <p class={Carbon.String.classNames('max-w-md text-white text-sm text-pretty xs:line-clamp-3 sm:line-clamp-2', props.isFeature && 'sm:text-md md:line-clamp-6')}>
+                            {props.teaser}
+                        </p>
+                    </div>
+
+                    <div class="p-8 pt-4" @if={props.href}>
+                        <a
+                            href={props.href}
+                            class={Carbon.String.classNames('inline-flex items-center gap-2 text-white text-sm after:absolute after:inset-0 after:z-10', props.isFeature ? 'justify-end' : null)}
+                        >
+                            {props.linkText || I18n.translate('Neos.Presentation:Main:readMore')}
+                            <Neos.Presentation:Icon icon="animatedArrow" class="w-4" />
+                        </a>
+                    </div>
+                </div>
+            </Neos.Presentation:Background>
+        </li>
+    `
+}

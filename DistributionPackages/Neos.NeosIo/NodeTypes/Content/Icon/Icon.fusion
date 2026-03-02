@@ -40,10 +40,12 @@ prototype(Neos.NeosIo:Component.Icon) < prototype(Neos.Fusion:Component) {
 // TODO maybe create alignment wrapper component to avoid code duplication with Button and Icon?
 prototype(Neos.NeosIo:Component.IconWrapper) < prototype(Neos.Fusion:Component) {
     alignment = ''
+    content = ''
 
     @propTypes {
         @strict = true
         alignment = ${PropTypes.oneOf(['Left', 'Center', 'Right', 'inline'])}
+        content = ${PropTypes.string}
     }
 
     renderer = Neos.Fusion:Case {

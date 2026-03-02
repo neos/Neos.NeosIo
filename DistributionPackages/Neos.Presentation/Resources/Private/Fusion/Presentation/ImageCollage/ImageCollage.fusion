@@ -1,0 +1,94 @@
+prototype(Neos.Presentation:ImageCollage) < prototype(Neos.Fusion:Component) {
+    @styleguide.props {
+        headline = 'Projects created with Neos CMS'
+        text = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
+        squareIcons = ${[{content: 'Lorem ipsum', icon: 'heart', background: 'purple'}, {content: 'dolor sit', icon: 'square', background: 'yellow'}, {content: 'amet, consetetur', icon: 'clock', background: 'blue-light'}]}
+        images = Neos.Fusion:Map {
+            items = ${[
+                [ "Case 1", 800, 600, '#000000' ],
+                [ "Case 2", 1920, 1080, '#222222' ],
+                [ "Case 3", 600, 1024, '#444444' ],
+                [ "Case 4", 1080, 1920, '#666666' ],
+                [ "Case 5", 600, 600, '#888888' ],
+                [ "Case 6", 1440, 1024, '#AAAAAA' ],
+                [ "Case 7", 500, 400, '#CCCCCC' ]
+            ]}
+            itemRenderer = Neos.Fusion:DataStructure {
+                imageSource = Sitegeist.Kaleidoscope:DummyImageSource {
+                    title = ${item[0]}
+                    baseWidth = ${item[1]}
+                    baseHeight = ${item[2]}
+                    backgroundColor = ${item[3]}
+                }
+                alternativeText = ${'Case ' + props.item[0]}
+            }
+        }
+    }
+
+    @propTypes {
+        headline = PropTypes:String
+        text = PropTypes:String
+        squareIcons = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+                alternativeText = PropTypes:String
+            }
+        }
+        images = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                text = PropTypes:String
+                icon = PropTypes:String
+                color = PropTypes:String
+            }
+        }
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Background background="gradient" class="overflow-clip h-screen flex flex-col">
+            <div class="flex-initial">
+                <Neos.Presentation:Spacing size y x class="grid md:grid-cols-2 items-center">
+                    <Neos.Presentation:Headline content={props.headline} display="headline-lg" />
+                    <Neos.Presentation:Paragraph content={props.text} display="lead" />
+                </Neos.Presentation:Spacing>
+            </div>
+            <div class="grow" x-data="collage" "x-on:resize.window.debounce"="processElements">
+                <figure class="relative h-full w-full max-w-screen-2xl mx-auto">
+                    <Neos.Fusion:Loop items={props.squareIcons}>
+                        <div class="absolute transition-all opacity-0 duration-700 ease-in-out z-10 overflow-visible">
+                            <Neos.Presentation:SquareIcon class="image-collage-item" {...item} />
+                        </div>
+                    </Neos.Fusion:Loop>
+                    <Neos.Fusion:Loop items={props.images}>
+                        <div class="absolute opacity-0 transition-all duration-700 ease-in-out">
+                            <Sitegeist.Kaleidoscope:Image
+                                class="image-collage-item h-auto w-auto"
+                                imageSource={item.imageSource}
+                                alt={item.alternativeText}
+                                srcset="160w, 320w, 480w,1x ,2x"
+                                sizes="(min-width: 1440px) 480px, 33vw"
+                                lazy={true}
+                            />
+                        </div>
+                    </Neos.Fusion:Loop>
+                </figure>
+            </div>
+      </Neos.Presentation:Background>
+    `
+}
+
+prototype(Neos.Presentation:ImageCollage.Item) < prototype(Neos.Fusion:Component) {
+
+    class = null
+    @if.hasContent = ${this.content}
+    renderer = afx`
+        <div class={["atropos atropos-image-collage-item opacity-50 transition-all absolute", props.class]}>
+            <div class="atropos-scale">
+                <div class="atropos-rotate">
+                    <div class="atropos-inner">
+                        {props.content}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+}

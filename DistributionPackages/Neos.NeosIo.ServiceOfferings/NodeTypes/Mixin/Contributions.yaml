@@ -7,18 +7,6 @@
           label: 'Service Provider Contributions'
           icon: 'donate'
   properties:
-    fundingPlatformName:
-      type: string
-      ui:
-        label: 'Funding platform name'
-        reloadIfChanged: true
-        showInCreationDialog: true
-        inspector:
-          group: contributions
-          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
-          editorOptions:
-            placeholder: Choose
-            dataSourceIdentifier: neos-neosio-donors
     showCases:
       type: references
       ui:
