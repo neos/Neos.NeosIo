@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo:Fragment.FooterMenu) < prototype(Neos.Fusion:Component) {
-    footerContainer = ${q(site).property('footerContentContainer')}
+    footerContainer = ${q(site).referenceNodes('footerContentContainer').get(0)}
     items = ${q(this.footerContainer).children('[instanceof Neos.Neos:Document]').get()}
 
     @if.hasFooterContainer = ${this.footerContainer}
@@ -22,8 +22,8 @@ prototype(Neos.NeosIo:Fragment.FooterMenu) < prototype(Neos.Fusion:Component) {
         }
 
         entryTags {
-            footerContainer = ${Neos.Caching.nodeTag(q(site).property('footerContentContainer') || [])}
-            childNodes = ${Neos.Caching.descendantOfTag(q(site).property('footerContentContainer') || [])}
+            footerContainer = ${Neos.Caching.nodeTag(q(site).referenceNodes('footerContentContainer').get(0) || [])}
+            childNodes = ${Neos.Caching.descendantOfTag(q(site).referenceNodes('footerContentContainer').get(0) || [])}
         }
     }
 }

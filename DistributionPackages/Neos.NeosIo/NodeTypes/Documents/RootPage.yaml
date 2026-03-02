@@ -51,15 +51,6 @@
         label: 'iOS App Id'
         inspector:
           group: additional
-    footerContentContainer:
-      type: reference
-      ui:
-        label: 'Footer content container'
-        inspector:
-          group: additional
-          editorOptions:
-            nodeTypes:
-              - Neos.NeosIo:FooterContainer
     blogFolder:
       type: reference
       ui:
@@ -81,3 +72,17 @@
         label: 'Newsletter ID'
         inspector:
           group: newsletter
+  references:
+    footerContentContainer:
+      constraints:
+        maxItems: 1
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:FooterContainer': true
+      ui:
+        label: 'Footer content container'
+        inspector:
+          group: additional
+          editorOptions:
+            nodeTypes:
+              - Neos.NeosIo:FooterContainer

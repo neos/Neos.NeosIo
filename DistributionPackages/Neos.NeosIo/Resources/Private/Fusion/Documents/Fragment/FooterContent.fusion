@@ -1,5 +1,5 @@
 prototype(Neos.NeosIo:Fragment.FooterContent) < prototype(Neos.Neos:ContentCollectionRenderer) {
-    footerContainer = ${q(site).property('footerContentContainer')}
+    footerContainer = ${q(site).referenceNodes('footerContentContainer').get(0)}
     items = ${q(this.footerContainer).children('main').children().get()}
     @if.hasFooterContent = ${this.footerContainer}
 }
