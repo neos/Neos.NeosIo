@@ -1,0 +1,36 @@
+###########################################
+# Displays an overview of supporters depending
+# on the selected level, default is all supporters
+###########################################
+
+'Neos.NeosIo:Supporters':
+  superTypes:
+    'Neos.Neos:Content': true
+
+  constraints:
+    nodeTypes:
+      '*': false
+
+  ui:
+    label: Longtime Supporters
+    icon: 'fa-handshake'
+
+    inspector:
+      groups:
+        level:
+          label: Badge Level
+  properties:
+    level:
+      type: reference
+      ui:
+        help:
+          message: 'If no level is chosen, all longtime supporters will be shown grouped by their sponsoring level'
+        label: 'Level'
+        reloadIfChanged: true
+        showInCreationDialog: true
+        inspector:
+          group: level
+          editorOptions:
+            threshold: 0
+            nodeTypes:
+              - 'Neos.NeosIo:Badge'

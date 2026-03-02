@@ -1,0 +1,32 @@
+prototype(Neos.NeosIo:Badges) < prototype(Neos.Neos:ContentComponent) {
+    badgeType = ${q(node).property('badgeType')}
+    allBadgesOfType = ${q(site).find('[instanceof Neos.NeosIo:' + this.badgeType + ']').sort('level', 'ASC')}
+
+    renderer = afx`
+        <div class="badges" @if.notEmpty={Array.length(props.allBadgesOfType) > 0}>
+            <div class="badge-grid g">
+                <Neos.Fusion:Loop items={props.allBadgesOfType} itemName="badge">
+                    <Neos.NeosIo:Component.Badge
+                        image={q(badge).property('image')}
+                        highlight={q(badge).property('highlight')}
+                        description={q(badge).property('description')}
+                        link={q(badge).property('link')}
+                        linkText={q(badge).property('linkText')}
+                        openInNewTab
+                    />
+                </Neos.Fusion:Loop>
+            </div>
+        </div>
+    `
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            name = 'badges'
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
+        entryTags {
+            documentNode = ${Neos.Caching.nodeTag(documentNode)}
+            badges = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:' + badgeType, node)}
+        }
+    }
+}

@@ -1,0 +1,37 @@
+.supporters {
+  --supporter-spacing: #{$grid-gutter * 1.5};
+
+  @media (max-width: 979px) {
+    --supporter-spacing: #{$grid-gutter};
+  }
+
+  &-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--supporter-spacing);
+    padding: 0;
+  }
+
+  &-item {
+    display: block;
+    flex: 0 1 120px;
+
+    a {
+      display: block;
+      width: 100%;
+    }
+
+    img {
+      width: 100%;
+      height: unset;
+      aspect-ratio: 2 / 1;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+
+  + .supporters {
+    margin-top: #{$grid-gutter * 2};
+  }
+}

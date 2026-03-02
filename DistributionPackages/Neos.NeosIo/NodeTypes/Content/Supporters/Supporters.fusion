@@ -1,0 +1,37 @@
+prototype(Neos.NeosIo:Supporters) < prototype(Neos.Neos:ContentComponent) {
+    levelFilter = ${q(node).property('level')}
+
+    @private {
+        serviceProvidersWithBadge = ${props.levelFilter ? q(props.levelFilter).backReferenceNodes().unique().filter('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]') : []}
+    }
+
+    renderer = afx`
+        <div class="supporters" @if.notEmpty={Array.length(private.serviceProvidersWithBadge) > 0}>
+            <ul class="supporters-list">
+                <Neos.Fusion:Loop items={private.serviceProvidersWithBadge} itemName="serviceProvider">
+                    <li class="supporters-item" @if.notHidden={Neos.Node.isDisabled(serviceProvider) == false}>
+                        <a href={q(item).property('website')} title={Neos.Node.label(serviceProvider)} target="_blank" rel="noopener">
+                            <Neos.Neos:ImageTag
+                                asset={q(serviceProvider).property('logo')}
+                                attributes.alt={"Logo of " + Neos.Node.label(serviceProvider)}
+                            />
+                        </a>
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
+        </div>
+    `
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            name = 'supporters'
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
+        entryTags {
+            documentNode = ${Neos.Caching.nodeTag(documentNode)}
+            serviceProviders = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.ServiceOfferings:Document.ServiceProvider', node)}
+            longtimeSupporterBadges = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Badge', node)}
+        }
+    }
+}
