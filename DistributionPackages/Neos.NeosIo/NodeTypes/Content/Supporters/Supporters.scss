@@ -1,47 +1,43 @@
 .supporters {
-  --supporters-item-width: 10%;
   --supporter-spacing: #{$grid-gutter * 1.5};
+
   @media (max-width: 979px) {
     --supporter-spacing: #{$grid-gutter};
   }
+
   .headline {
     margin-bottom: 2rem;
     text-align: center;
     text-transform: uppercase;
   }
+
   &-list {
     display: flex;
     flex-wrap: wrap;
-    margin-inline: calc(-1 * var(--supporter-spacing));
-    margin-bottom: calc(-1 * var(--supporter-spacing));
-    padding: 0;
     justify-content: center;
+    gap: var(--supporter-spacing);
+    padding: 0;
   }
-  &-item {
-    margin: var(--supporter-spacing) 0;
-    width: var(--supporters-item-width);
-    padding-inline: var(--supporter-spacing) ;
-    display: block;
-    min-width: 120px;
-    filter: grayscale(1);
-    .neos-nodetypes-image {
-      width: 100%;
-      figure {
-        width: 100%;
-        a {
-          display: block;
-        }
 
-        img {
-          width: 100%;
-          height: unset;
-          aspect-ratio: 2 / 1;
-          object-fit: contain;
-          object-position: center;
-        }
-      }
+  &-item {
+    display: block;
+    flex: 0 1 120px;
+    filter: grayscale(1);
+
+    a {
+      display: block;
+      width: 100%;
+    }
+
+    img {
+      width: 100%;
+      height: unset;
+      aspect-ratio: 2 / 1;
+      object-fit: contain;
+      object-position: center;
     }
   }
+
   + .supporters {
     margin-top: #{$grid-gutter * 2};
   }

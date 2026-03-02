@@ -1,8 +1,6 @@
 'Neos.NeosIo:BadgeMixin':
-  label: "${String.cropAtWord(String.trim(String.stripTags(String.pregReplace(q(node).property('name') || ((I18n.translate(node.nodeType.label) || node.nodeType.name) + (node.autoCreated ? ' (' + node.name + ')' : '')), '/<br\\W*?\\/?>|\\x{00a0}|[[^:print:]]|\\s+/u', ' '))), 100, '...')}"
-
+  label: "${Neos.Node.labelForNode(node).properties('name')}"
   abstract: true
-
   superTypes:
     'Neos.Neos:Content': true
   ui:

@@ -2,23 +2,21 @@ prototype(Neos.NeosIo:Badges) < prototype(Neos.Neos:ContentComponent) {
     @context.badgeType = ${q(node).property('badgeType')}
     allBadgesOfType = ${q(site).find('[instanceof Neos.NeosIo:'+badgeType+']').sort('level', 'ASC')}
 
-/*
-
-*/
     renderer = afx`
-    <div class="neos-nodetypes-badges" @if.notEmpty={Array.length(props.allBadgesOfType) > 0}>
-        <div class="badge-grid g">
-            <Neos.Fusion:Loop items={props.allBadgesOfType} itemName="item">
-                <Neos.Fusion:Renderer
-                    type={'Neos.NeosIo:'+badgeType}
-                    @context.node={item}
-                    @if.notHidden={Neos.Node.isDisabled(item) == false}
-                />
-            </Neos.Fusion:Loop>
-
+        <div class="badges" @if.notEmpty={Array.length(props.allBadgesOfType) > 0}>
+            <div class="badge-grid g">
+                <Neos.Fusion:Loop items={props.allBadgesOfType} itemName="badge">
+                    <Neos.NeosIo:Component.Badge
+                        image={q(badge).property('image')}
+                        highlight={q(badge).property('highlight')}
+                        description={q(badge).property('description')}
+                        link={q(badge).property('link')}
+                        linkText={q(badge).property('linkText')}
+                        openInNewTab
+                    />
+                </Neos.Fusion:Loop>
+            </div>
         </div>
-    </div>
-
     `
     @cache {
         mode = 'cached'
