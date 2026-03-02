@@ -1,0 +1,22 @@
+prototype(Neos.NeosIo.Features:ItemWithImage) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.NeosIo.Features:FeaturesItemWithImage {
+        background = ${q(node).property('background')}
+        title = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        linkLabel = Neos.Neos:Editable {
+            property = 'linkLabel'
+            block = false
+        }
+        link = ${q(node).property('link')}
+        link.@process.convertUris = Neos.Neos:ConvertUris
+
+        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+            asset = ${q(node).property('image')}
+            // TODO image size
+            width = 1600
+            quality = 80
+        }
+    }
+}

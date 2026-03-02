@@ -1,0 +1,44 @@
+'Neos.NeosIo.Features:ItemWithIcon':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NodeTypes:LinkMixin': true
+    'Neos.NeosIo:Mixin.Background': true
+    'Neos.NeosIo:Mixin.Icon': true
+  ui:
+    label: 'Feature with Icon'
+    icon: th-large
+    group: feature
+    inspector:
+      groups:
+        feature:
+          label: 'Feature properties'
+          tab: default
+  properties:
+    title:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Feature Title'
+    linkLabel:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Learn more'
+    link:
+      ui:
+        label: 'Link'
+        reloadIfChanged: true
+        inspector:
+          group: feature
+    background:
+      ui:
+        inspector:
+          group: feature
+    icon:
+      ui:
+        inspector:
+          group: feature

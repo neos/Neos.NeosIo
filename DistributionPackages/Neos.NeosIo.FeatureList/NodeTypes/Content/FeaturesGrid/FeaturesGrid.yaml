@@ -1,0 +1,65 @@
+'Neos.NeosIo.Features:Grid':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.Neos:ContentCollection': true
+    'Neos.NodeTypes:LinkMixin': true
+  ui:
+    label: 'Features Grid'
+    icon: th-large
+    group: feature
+    inspector:
+      groups:
+        feature:
+          label: 'Feature properties'
+          tab: default
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.NeosIo.Features:ItemWithImage': true
+      'Neos.NeosIo.Features:ItemWithIcon': true
+  properties:
+    headline:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Headline'
+    text:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Feature Title'
+    ctaLabel:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Try Neos'
+    link:
+      ui:
+        label: 'Call to Action Link'
+        reloadIfChanged: true
+        inspector:
+          group: feature
+    type:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Grid Type'
+        reloadIfChanged: true
+        inspector:
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          group: feature
+          editorOptions:
+            values:
+              3-items:
+                label: '3 Items'
+              4-items:
+                label: '4 Items'
+              6-items:
+                label: '6 Items'

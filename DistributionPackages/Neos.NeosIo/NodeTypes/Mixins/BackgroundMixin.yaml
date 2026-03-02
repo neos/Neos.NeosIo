@@ -1,0 +1,36 @@
+'Neos.NeosIo:Mixin.Background':
+  abstract: true
+  properties:
+    background:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Background'
+        reloadIfChanged: true
+        inspector:
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          group: appearance
+          editorOptions:
+            values:
+              gradient:
+                label: 'Gradient'
+              blue-dark:
+                label: 'Blue Dark'
+              blue:
+                label: 'Blue'
+              blue-light:
+                label: 'Blue Light'
+              purple:
+                label: 'Purple'
+              green:
+                label: 'Green'
+              yellow:
+                label: 'Yellow'
+              orange:
+                label: 'Orange'
+              red:
+                label: 'Red'
+              black:
+                label: 'Black'
+
