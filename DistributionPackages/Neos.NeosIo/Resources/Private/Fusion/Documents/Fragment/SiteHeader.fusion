@@ -1,3 +1,4 @@
+// TODO remove when new menu is used
 prototype(Neos.NeosIo:Fragment.SiteHeader) < prototype(Neos.Fusion:Component) {
     className = 'siteHeader'
     siteTitle = ${q(site).property('title')}
@@ -24,12 +25,12 @@ prototype(Neos.NeosIo:Fragment.SiteHeader) < prototype(Neos.Fusion:Component) {
                 </Neos.Fusion:Tag>
             </a>
             <a class="hamburger siteHeader__navToggler print-hidden"
-                href="#siteNav"
-                data-component="ClassToggler"
-                data-activeClass="hamburger--active"
-                data-documentActiveClass="html--scrollDisabled"
-                data-targetSelector="#offCanvas"
-                data-targetActiveClass="offCanvas--visible">
+               href="#siteNav"
+               data-component="ClassToggler"
+               data-activeClass="hamburger--active"
+               data-documentActiveClass="html--scrollDisabled"
+               data-targetSelector="#offCanvas"
+               data-targetActiveClass="offCanvas--visible">
                 <div class="hamburger__line hamburger__line--top"></div>
                 <div class="hamburger__line"></div>
                 <div class="hamburger__line hamburger__line--bottom"></div>

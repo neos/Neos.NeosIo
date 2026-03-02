@@ -1,5 +1,4 @@
 import * as siteComponents from './Components';
-import * as marketPlaceComponents from 'DistributionPackages/Neos.MarketPlace/Resources/Private/JavaScript';
 import * as neosConComponents from 'DistributionPackages/Neos.NeosConIo/Resources/Private/JavaScript/Components';
 
 import { initLightboxes } from './WebComponents/Lightbox';
@@ -8,9 +7,6 @@ const components = {};
 
 for (let componentKey in siteComponents) {
     components[componentKey] = siteComponents[componentKey];
-}
-for (let componentKey in marketPlaceComponents) {
-    components[componentKey] = marketPlaceComponents[componentKey];
 }
 for (let componentKey in neosConComponents) {
     components[componentKey] = neosConComponents[componentKey];

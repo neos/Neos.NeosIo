@@ -1,4 +1,3 @@
-import inViewport from 'in-viewport';
 import getClosest from 'get-closest';
 import debounce from 'lodash.debounce';
 import BaseComponent from "DistributionPackages/Neos.NeosIo/Resources/Private/JavaScript/Components/BaseComponent";
@@ -7,7 +6,6 @@ class ProgressiveImage extends BaseComponent {
 
     constructor(el) {
         super(el);
-        const isAlreadyVisible = inViewport(el);
 
         //
         // In case the mode is set to `inline` styles, we firstly convert the
@@ -21,19 +19,20 @@ class ProgressiveImage extends BaseComponent {
         }
 
         //
-        // Now let's check initially for the visibility in the viewport.
+        // Use IntersectionObserver to check for visibility in the viewport.
         //
-        if (isAlreadyVisible) {
-            this.loadAndReplaceImage();
-        } else {
-            inViewport(
-                el,
-                {
-                    offset: 300
-                },
-                () => this.loadAndReplaceImage()
-            );
-        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.loadAndReplaceImage();
+                    observer.unobserve(el);
+                }
+            });
+        }, {
+            rootMargin: '300px'
+        });
+
+        observer.observe(el);
     }
 
     loadAndReplaceImage = () => {

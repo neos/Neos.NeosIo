@@ -1,0 +1,34 @@
+prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
+    @styleguide.props {
+        content = 'Forever Open Source'
+        icon = 'heart'
+        background = 'purple'
+    }
+
+    @propTypes {
+        content = PropTypes:String
+        icon = ${PropTypes.oneOf([
+            'animatedArrow', 'animatedArrowLeft',
+            'neosAvatarPrimary', 'neosAvatarLight', 'neosAvatarDark', 'neosAvatarMonochrome', 'neosLogoPrimary', 'neosLogoLight', 'neosLogoDark', 'neosLogoMonochrome',
+            'arrow-right', 'briefcase', 'calculator', 'calendar', 'chevron-down', 'chevron-left', 'chevron-right', 'chevron-up', 'clock', 'cloud', 'desktop',
+            'development', 'document', 'eye', 'facebook', 'file', 'github', 'globe', 'headphones', 'heart', 'house', 'instagram', 'linkedin', 'mail-open',
+            'mail', 'mastodon', 'place', 'plus', 'quote', 'search', 'slack', 'smile', 'square', 'time', 'user', 'youtube', 'notfound'
+        ])}
+        background = ${PropTypes.oneOf(['gradient', 'blue-dark', 'blue', 'blue-light', 'purple', 'purple-dark', 'green', 'green-dark', 'yellow', 'yellow-dark', 'orange', 'red', 'black'])}
+        class = ${PropTypes.any}
+    }
+
+    background = 'blue'
+
+    @if.hasIcon = ${this.icon}
+
+    renderer = afx`
+        <Neos.Presentation:Background
+            class={['w-44 lg:w-56 lg:p-4 p-3 flex flex-col square-icon aspect-square text-white', props.class]}
+            background={props.background}
+        >
+            <Neos.Presentation:Icon icon={props.icon} sizeClass="h-8 lg:h-12 mr-auto" />
+            <span @if={props.content} class="block mt-auto wrap-break-word hyphens-auto text-lg lg:text-2xl font-medium">{props.content}</span>
+        </Neos.Presentation:Background>
+    `
+}

@@ -1,0 +1,28 @@
+packages:
+  - package: Neos.MarketPlace
+  - package: Neos.NeosConIo
+  - package: Neos.NeosIo
+  - package: Neos.NeosIo.CaseStudies
+  - package: Neos.NeosIo.ReleasePlan
+  - package: Neos.NeosIo.ServiceOfferings
+
+postcssOptions:
+  tailwindcss: false
+
+sassOptions:
+  quietDeps: true
+  silenceDeprecations:
+    - import
+    - slash-div
+    - legacy-js-api
+    - strict-unary
+    - color-functions
+    - global-builtin
+    - if-function
+
+esbuild:
+  options:
+    alias:
+      react: 'preact/compat'
+      'react-dom/test-utils': 'preact/test-utils'
+      'react-dom': 'preact/compat'

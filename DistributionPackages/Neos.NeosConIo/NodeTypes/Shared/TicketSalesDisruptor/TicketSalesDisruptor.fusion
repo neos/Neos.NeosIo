@@ -28,7 +28,7 @@ prototype(Neos.NeosConIo:Component.TicketSalesDisruptor) < prototype(Neos.Fusion
     // The fixed one is only visible when the user scrolls down.
     // To avoid content jumping when scrolling the normal one stays always visible.
     renderer = afx`
-        <div class="ticket-sales-disruptor">
+        <Neos.Presentation:Background background="blue-light" class="ticket-sales-disruptor">
             <Neos.NeosConIo:Component.TicketSalesDisruptor.Inner
                 title={props.title}
                 text={props.text}
@@ -39,11 +39,12 @@ prototype(Neos.NeosConIo:Component.TicketSalesDisruptor) < prototype(Neos.Fusion
                 goal={props.goal}
                 stretchGoal={props.stretchGoal}
             />
-        </div>
-        <div
+        </Neos.Presentation:Background>
+        <Neos.Presentation:Background
+            background="blue-light"
             class="ticket-sales-disruptor__fixed"
-            data-component="ScrollClassToggler"
-            data-scrollClasses='{"245":{"className": "ticket-sales-disruptor__fixed--visible","removeOnScrollDecrease": false}}'
+            attributes.data-component="ScrollClassToggler"
+            attributes.data-scrollClasses='{"245":{"className": "ticket-sales-disruptor__fixed--visible","removeOnScrollDecrease": false}}'
         >
             <Neos.NeosConIo:Component.TicketSalesDisruptor.Inner
                 title={props.title}
@@ -55,7 +56,7 @@ prototype(Neos.NeosConIo:Component.TicketSalesDisruptor) < prototype(Neos.Fusion
                 goal={props.goal}
                 stretchGoal={props.stretchGoal}
             />
-        </div>
+        </Neos.Presentation:Background>
     `
 }
 

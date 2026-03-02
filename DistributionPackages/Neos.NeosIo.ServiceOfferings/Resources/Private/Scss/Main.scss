@@ -1,5 +1,5 @@
-@import 'Leaflet';
-@import 'Plugins/WebExcess.OpenStreetMap/Resources/Private/Assets/Main';
+@import './Leaflet';
+@import 'Packages/Plugins/WebExcess.OpenStreetMap/Resources/Private/Assets/Main';
 
 .service-provider {
   section + section {
@@ -100,6 +100,7 @@
       display: inline-block;
       padding: 0.7rem;
       transition: border-color .1s ease-in;
+      background: transparent;
 
       &:hover,
       &.selected {
@@ -113,7 +114,7 @@
     }
 
     .service-providers__badge {
-      max-width: 80px;
+      max-width: 80px !important;
     }
 
     .service-providers__grid-logo {
@@ -121,6 +122,7 @@
       max-width: 100px;
       max-height: 50px;
     }
+
     .service-providers__grid-tableview,
     .service-providers__grid-gridview {
       .service-providers__grid-row {
@@ -150,6 +152,7 @@
           .service-providers__grid-cell {
             padding-top: 0;
             width: 100%;
+
             &:nth-child(n+2) {
               padding-left: 16px;
             }
@@ -187,6 +190,7 @@
           grid-gap: 1rem;
         }
       }
+
       .service-providers__grid-cell {
         z-index: 2;
 
@@ -223,7 +227,7 @@
       .service-providers__grid-row {
         padding: 1rem;
         position: relative;
-        display:grid;
+        display: grid;
         grid-gap: .3rem;
         grid-template-rows: 1fr auto auto;
         grid-template-columns: 1fr auto;
@@ -239,7 +243,7 @@
       }
 
       .service-providers__badge {
-        max-width: 80px;
+        max-width: 80px !important;
       }
 
       .service-providers__list-entry__description {
@@ -261,6 +265,8 @@
       .service-providers__list-entry__badge {
         grid-area: badge;
         justify-self: flex-end;
+        display: flex;
+        gap: 5px;
       }
     }
   }
@@ -299,6 +305,6 @@
 
 @media(max-width: 1023px) {
   .hide-md-down {
-    display:none;
+    display: none;
   }
 }

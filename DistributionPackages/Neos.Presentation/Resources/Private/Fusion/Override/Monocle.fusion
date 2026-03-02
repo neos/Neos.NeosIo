@@ -1,0 +1,16 @@
+prototype(Sitegeist.Monocle:Preview.Page) {
+    prototype(Neos.NeosIo:PageStyles) {
+        // TODO: Remove this once, when all is done
+        @if.false = false
+    }
+    head.presentationHeadTags = Neos.Presentation:HeadTags
+
+    bodyTag {
+        attributes.class.color = 'bg-white'
+    }
+
+    additionalMarkup = Neos.Fusion:Join {
+        @position = 'before closingBodyTag'
+        tooltip = Neos.Presentation:Atom.Tooltip
+    }
+}

@@ -6,28 +6,28 @@
  * Base styling for all anchors/links.
  */
 a {
-	color: $link-color;
-	text-decoration: none;
+  color: $link-color;
+  text-decoration: none;
 
-	// Removes the gray background color from active links in IE 10.
-	background: transparent;
+  // Removes the gray background color from active links in IE 10.
+  background: transparent;
 
-	&:hover,
-	&:active,
-	&:focus {
-		text-decoration: underline;
-	}
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: underline;
+  }
 
-	&:active,
-	&:hover {
-		// Improves readability when focused and also mouse hovered in all browsers.
-		outline: 0;
-	}
+  &:active,
+  &:hover {
+    // Improves readability when focused and also mouse hovered in all browsers.
+    outline: 0;
+  }
 
-	// Increasing the clickable area of inline links inside a paragraph.
-	p & {
-		position: relative;
-		margin: -.33em;
-		padding: .33em;
-	}
+  // Increasing the clickable area of inline links inside a paragraph.
+  p & {
+    position: relative;
+    margin: -.33em;
+    padding: .33em;
+  }
 }

@@ -1,0 +1,78 @@
+prototype(Neos.Presentation:HighlightBoxes) < prototype(Neos.Fusion:Component) {
+    @styleguide.props = Neos.Presentation:HighlightBoxes.Fixture
+
+    @propTypes {
+        cols = ${PropTypes.oneOf([2, 3, 4])}
+        displayType = ${PropTypes.oneOf(['icon', 'imageCircle', 'imageHeader'])}
+        headline = PropTypes:String
+        imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        boxes = PropTypes:Array {
+            type = PropTypes:FromPrototype {
+                prototypeName = 'Neos.Presentation:HighlightBoxes.Box'
+            }
+        }
+    }
+
+    cols = 2
+    displayType = 'icon'
+
+    @private {
+        backgroundImage = ${props.imageSource ? 'background-image:url(' + props.imageSource + ');' : null}
+        colClass = Neos.Fusion:Match {
+            @subject = ${props.cols}
+            @default = ''
+            3 = 'md:grid-cols-3'
+            4 = 'lg:grid-cols-4'
+        }
+        imageWidth = Neos.Fusion:Case {
+            noImage {
+                condition = ${props.displayType == 'icon'}
+                renderer = 0
+            }
+            isImageCircle {
+                condition = ${props.displayType == 'imageCircle'}
+                renderer = 128
+            }
+            cols2 {
+                condition = ${props.cols == 2}
+                renderer = 576
+            }
+            cols3 {
+                condition = ${props.cols == 3}
+                renderer = 373
+            }
+            default {
+                condition = true
+                renderer = 272
+            }
+        }
+        content = afx`
+                <Neos.Presentation:Headline
+                    @if={props.headline}
+                    content={props.headline}
+                    display="headline-lg" class="text-blue-dark text-balance mb-16"
+                />
+                <div class={Carbon.String.classNames('grid gap-8 sm:grid-cols-2', private.colClass)}>
+                    <Neos.Fusion:Loop items={props.boxes} itemName="box">
+                        <Neos.Presentation:HighlightBoxes.Box {...box} displayType={props.displayType} imageWidth={private.imageWidth} />
+                    </Neos.Fusion:Loop>
+                </div>
+        `
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Spacing
+            @if={private.backgroundImage && private.content}
+            size={false}
+            y class="highlight-boxes bg-cover py-8"
+            attributes.style={private.backgroundImage}
+        >
+            <Neos.Presentation:Spacing size x content={private.content} />
+        </Neos.Presentation:Spacing>
+        <Neos.Presentation:Spacing
+            @if={!private.backgroundImage && private.content}
+            size x y class="highlight-boxes"
+            content={private.content}
+        />
+    `
+}

@@ -1,0 +1,72 @@
+prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        background = ${PropTypes.oneOf(['gradient', 'blue-dark', 'blue', 'blue-light', 'purple', 'green', 'yellow', 'orange', 'red', 'black'])}
+        assetAlign = ${PropTypes.oneOf(['left', 'center', 'right', '', null])}
+        link = PropTypes:String
+        headlineTagName = ${PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'])}
+        headline = PropTypes:String
+        linkLabel = PropTypes:String
+        video = PropTypes:FromPrototype {
+            prototypeName = 'Neos.Presentation:InlineVideo'
+        }
+        imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+    }
+
+    assetAlign = 'center'
+    video = Neos.Fusion:DataStructure {
+        sources = null
+        assets = null
+    }
+    alignEnd = false
+    headlineTagName = 'h2'
+
+    @private {
+        figureClass = ${Carbon.String.classNames(
+            'grow flex items-end mt-10',
+            props.assetAlign == 'right' && 'justify-end ml-8 lg:ml-10',
+            props.assetAlign == 'left' && 'justify-start mr-8 lg:mr-10',
+            props.assetAlign != 'left' && props.assetAlign != 'right' && 'justify-center mx-8 lg:mx-10'
+        )}
+        hasVideo = ${props.video && (props.video.sources || props.video.assets)}
+        hasImage = ${props.imageSource && !private.hasVideo}
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Background
+            background={props.background}
+            class={["h-full w-full flex flex-col relative group/icon", props.alignEnd ? "self-end" : null]}
+        >
+            <div class="p-8 lg:px-10">
+                <Neos.Presentation:Headline
+                    tagName={props.headlineTagName}
+                    display="title-lg"
+                >
+                    {props.link ? "" : props.headline}
+                    <a @if={props.link} href={props.link} class="block after:absolute after:inset-0 after:z-10">
+                        {props.headline}
+                    </a>
+                </Neos.Presentation:Headline>
+                <Neos.Presentation:Paragraph
+                    @if={props.link && props.linkLabel}
+                    display="cta-xl"
+                    class="flex mt-8 gap-2 items-center"
+                >
+                    {props.linkLabel}
+                    <Neos.Presentation:Icon icon="animatedArrow" />
+                </Neos.Presentation:Paragraph>
+            </div>
+            <figure @if={private.hasImage || private.hasVideo} class={private.figureClass}>
+                <Neos.Presentation:InlineVideo
+                    @if={private.hasVideo}
+                    {...props.video}
+                    poster={props.imageSource}
+                />
+
+                <Sitegeist.Kaleidoscope:Image
+                    @if={private.hasImage}
+                    imageSource={props.imageSource}
+                />
+            </figure>
+        </Neos.Presentation:Background>
+    `
+}

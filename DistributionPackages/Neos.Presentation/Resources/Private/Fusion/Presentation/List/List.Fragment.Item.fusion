@@ -1,0 +1,72 @@
+prototype(Neos.Presentation:List.Fragment.Item) < prototype(Neos.Fusion:Component) {
+
+    @propTypes {
+        image = PropTypes:DataStructure {
+            imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+            alternativeText = PropTypes:String
+        }
+        link = PropTypes:String
+        label = PropTypes:String
+        category = PropTypes:DataStructure {
+            label = PropTypes:String
+            color = PropTypes:String
+        }
+    }
+
+    @private {
+        hasImage = ${!!props.image.imageSource}
+        background = 'bg-yellow'
+    }
+
+    renderer = afx`
+        <tr
+            x-data={AlpineJS.object({link:props.link, image:false})}
+            x-on:click="window.location.href=link"
+            x-on:keydown.enter="window.location.href=link"
+            x-on:mouseenter={private.hasImage ? "image=true" : null}
+            x-on:mouseleave={private.hasImage ? "image=false" : null}
+            class="n-counter__increment relative bg-slideup group group/icon cursor-pointer border-y border-y-solid border-y-neutral-40 *:py-9 *:align-baseline"
+        >
+            <td aria-hidden="true" class="pr-6 text-xl lg:text-2xl lg:pr-8">
+                <span class="n-counter__decimal-leading-zero block transition-transform duration-300 delay-100 motion-safe:group-hocus-within:translate-x-6"></span>
+            </td>
+            <td class="w-full pr-6 lg:pr-8">
+                <a href={props.link} class="block transition-transform duration-300 delay-100 text-xl lg:text-2xl motion-safe:group-hocus-within:translate-x-6">
+                    {props.label}
+                </a>
+                <Neos.Presentation:List.Fragment.Item.Category {...props.category} class="flex lg:hidden mt-2 duration-300 delay-100" />
+            </td>
+            <td class="hidden lg:table-cell">
+                <Neos.Presentation:List.Fragment.Item.Category {...props.category} class="whitespace-nowrap duration-300 delay-100 pr-6 " />
+            </td>
+            <td class="hidden lg:relative md:table-cell" aria-hidden="true">
+                <Sitegeist.Kaleidoscope:Image
+                    @if={private.hasImage}
+                    imageSource={props.image.imageSource}
+                    alt={props.image.alternativeText}
+                    width={384}
+                    srcset="1x,2x"
+                    lazy={true}
+                    class="absolute pointer-events-none z-40 shadow-sm max-w-[calc(100vw-100px)] w-96 left-auto! right-0!"
+                    attributes.x-cloak
+                    attributes.x-show="image"
+                    attributes."x-transition:enter.duration.300ms.opacity"
+                    attributes."x-transition:leave.duration.300ms.delay.150ms.opacity"
+                    attributes."x-anchor.right.offset.50"="mouse"
+                />
+            </td>
+            <td class="hidden md:table-cell" aria-hidden="true">
+                <Neos.Presentation:Icon icon="animatedArrow" class="mx-8 w-4 lg:w-5" />
+            </td>
+        </tr>
+    `
+}
+
+prototype(Neos.Presentation:List.Fragment.Item.Category) < prototype(Neos.Fusion:Component) {
+    renderer = afx`
+        <span class={["flex items-center gap-3 transition-transform lg:text-2xl lg:gap-6 motion-safe:group-hocus-within:translate-x-6", props.class]}>
+            <span class="aspect-square rounded-xs size-3 lg:size-5" style={"background-color:" + props.color}></span>
+            <span>{props.label}</span>
+        </span>
+    `
+}

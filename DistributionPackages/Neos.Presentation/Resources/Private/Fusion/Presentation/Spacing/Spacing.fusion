@@ -1,0 +1,58 @@
+prototype(Neos.Presentation:Spacing) < prototype(Neos.Fusion:Component) {
+    @styleguide {
+        description = 'Spacing between elements (also available as CSS variables)'
+        props {
+            size = 'default'
+            x = 'default'
+            y = 'default'
+            class = ''
+            tagName = 'div'
+            content = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda atque cumque, dignissimos ea eos error in iure laboriosam libero mollitia nam nemo omnis, perferendis quisquam recusandae reiciendis repudiandae unde ut!'
+        }
+    }
+
+    @propTypes {
+        // this defines the max width of the content
+        size = ${PropTypes.anyOf(PropTypes.oneOf(['default']), PropTypes.boolean)}
+
+        // this defines the horizontal padding (if false, content can touch the edges)
+        x = ${PropTypes.anyOf(PropTypes.oneOf(['default']), PropTypes.boolean)}
+
+        // this defines the vertical margin (siblings margin collapse)
+        y = ${PropTypes.anyOf(PropTypes.oneOf(['default', 'small']), PropTypes.boolean)}
+
+        class = ${PropTypes.any}
+        attributes = ${PropTypes.any}
+        tagName = PropTypes:String
+    }
+
+    size = 'default'
+    x = null
+    y = null
+
+    class = null
+    attributes = Neos.Fusion:DataStructure
+    tagName = 'div'
+
+    content = null
+
+    renderer = Neos.Fusion:Tag {
+        tagName = ${props.tagName}
+        content = ${props.content}
+        attributes = afx`
+            <Neos.Fusion:DataStructure
+                {...props.attributes}
+                class={Carbon.String.classNames(
+                    'n-spacing',
+                    {
+                        'w-full max-w-screen-2xl mx-auto': props.size || props.size == 'default',
+                        'n-spacing--x': props.x || props.x == 'default',
+                        'n-spacing--y': props.y || props.y == 'default',
+                        'n-spacing--y-small': props.y == 'small'
+                    },
+                    props.class
+                )}
+            />
+        `
+    }
+}

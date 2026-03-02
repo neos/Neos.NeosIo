@@ -1,9 +1,15 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "target": "ES2020",
-        "esModuleInterop": true,
-        "sourceMap": true,
-        "jsx": "react"
-    }
+        "target": "es2022",
+        "module": "es2022",
+        "moduleResolution": "node",
+        "baseUrl": "./",
+        "jsxFactory": "h",
+        "jsxFragmentFactory": "Fragment",
+        "paths": {
+            "Packages/*": ["Packages/*"],
+            "DistributionPackages/*": ["DistributionPackages/*"]
+        }
+    },
+    "include": ["DistributionPackages/*"]
 }
