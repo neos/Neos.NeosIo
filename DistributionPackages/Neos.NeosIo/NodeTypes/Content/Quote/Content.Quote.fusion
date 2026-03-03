@@ -1,0 +1,29 @@
+prototype(Neos.NeosIo:Quote) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:Quote {
+        title = ${q(node).property('author')}
+        authorAvatar = Sitegeist.Kaleidoscope:AssetImageSource {
+            asset = ${q(node).property('authorAvatar')}
+            // TODO image size
+            width = 500
+            quality = 80
+        }
+        alternativeText = ${q(node).property('alternativeText')}
+        alternativeText = ${String.isBlank(value) ? q(node).property('image').label : value}
+        alternativeText.@process.authorNameFallback = ${q(node).property('author')}
+
+        quote = Neos.Neos:Editable {
+            property = 'quote'
+            block = false
+        }
+
+        author = Neos.Neos:Editable {
+            property = 'author'
+            block = false
+        }
+
+        position = Neos.Neos:Editable {
+            property = 'position'
+            block = false
+        }
+    }
+}
