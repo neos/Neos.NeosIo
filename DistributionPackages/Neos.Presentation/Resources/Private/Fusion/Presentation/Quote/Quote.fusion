@@ -27,6 +27,7 @@ prototype(Neos.Presentation:Quote) < prototype(Neos.Fusion:Component) {
                     @if={props.authorAvatar}
                     imageSource={props.authorAvatar}
                     attributes.class="object-cover h-full w-full"
+                    attributes.alt={props.author}
                 />
                 <img
                     @if={!props.authorAvatar && renderingMode.isEdit}

@@ -19,19 +19,25 @@
   properties:
     quote:
       type: string
-      defaultValue: 'Lorem ipsum dolor sit...'
       ui:
         inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Something the author said…'
     author:
       type: string
-      defaultValue: 'Max Mustermann'
       ui:
         inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Name of the author…'
     position:
       type: string
-      defaultValue: 'Founder of Neos'
       ui:
         inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Position of the author'
     authorAvatar:
       type: Neos\Media\Domain\Model\ImageInterface
       ui:
