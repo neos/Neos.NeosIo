@@ -1,0 +1,49 @@
+prototype(Neos.Presentation:Quote) < prototype(Neos.Fusion:Component) {
+    title = ''
+    authorAvatar = ''
+    alternativeText = ''
+    quote = ''
+    author = ''
+    position = ''
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+        authorAvatar = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        alternativeText = ${PropTypes.string}
+        quote = ${PropTypes.string}
+        author = ${PropTypes.string}
+        position = ${PropTypes.string}
+    }
+
+    @private {
+        inBackend = ${renderingMode.isEdit}
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Background background="blue-dark" tagName="blockquote" class="grid grid-cols-6 quote-clip-path">
+            <div class="col-span-6 md:col-span-2">
+                <Sitegeist.Kaleidoscope:Image
+                    @if={props.authorAvatar}
+                    imageSource={props.authorAvatar}
+                    attributes.class="object-cover h-full w-full"
+                    attributes.alt={props.author}
+                />
+                <img
+                    @if={!props.authorAvatar && renderingMode.isEdit}
+                    src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
+                    alt="Dummy image"
+                    class="object-cover h-full w-full"
+                    loading="lazy"
+                />
+            </div>
+
+            <div class="col-span-6 md:col-span-4 flex flex-col items-start gap-4 p-6 md:p-12">
+                <Neos.Presentation:Icon icon="quote" class="h-20 text-blue-light" />
+                <p>„{props.quote}“</p>
+                <div class="text-lg mt-0">{props.author}</div>
+                <div class="text-sm" @if={props.position || private.inBackend}>{props.position}</div>
+            </div>
+        </Neos.Presentation:Background>
+    `
+}
