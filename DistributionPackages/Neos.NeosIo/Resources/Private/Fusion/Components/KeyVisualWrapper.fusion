@@ -7,22 +7,22 @@ prototype(Neos.NeosIo:KeyVisualWrapper) < prototype(Neos.Fusion:Component) {
     keyVisualSize = 'default'
     keyVisual = null
     disruptor = null
-    treatKeyVisualAsContentArea = false
+    keyVisualVariant = ''
 
     @propTypes {
         @strict = true
         keyVisualSize = ${PropTypes.oneOf(['', 'small', 'default', 'large'])}
         keyVisual = ${PropTypes.string}
         disruptor = ${PropTypes.string}
-        treatKeyVisualAsContentArea = ${PropTypes.boolean}
+        keyVisualVariant = ${PropTypes.string}
     }
 
     @private {
         classNames = Neos.Fusion:DataStructure {
             default = ${"print-hidden keyVisual__wrapper keyVisual__wrapper--" + props.keyVisualSize}
-            default.@if.noContentArea = ${!props.treatKeyVisualAsContentArea}
+            default.@if.noContentArea = ${props.keyVisualVariant != 'contentOnly'}
             contentOnly = 'keyVisual__wrapper--contentOnly'
-            contentOnly.@if.contentArea = ${props.treatKeyVisualAsContentArea}
+            contentOnly.@if.contentArea = ${props.keyVisualVariant == 'contentOnly'}
         }
     }
 

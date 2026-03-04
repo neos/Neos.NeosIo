@@ -6,12 +6,17 @@ prototype(Neos.NeosIo:KeyVisual) < prototype(Neos.Fusion:Component) {
     keyVisualImage = null
     keyVisualImageSmall = null
     isKeyVisualContentsInverted = false
-    treatKeyVisualAsContentArea = false
+    keyVisualVariant = false
     content = null
 
     renderer = Neos.Fusion:Case {
+        hidden {
+            condition = ${props.keyVisualVariant == 'hidden'}
+            renderer = ''
+        }
+
         treatAsContentArea {
-            condition = ${props.treatKeyVisualAsContentArea}
+            condition = ${props.keyVisualVariant == 'contentOnly'}
             renderer = ${props.content}
         }
 
