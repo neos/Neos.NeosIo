@@ -21,4 +21,6 @@ prototype(Neos.NeosConIo:TicketSalesDisruptor) < prototype(Neos.Neos:ContentComp
         goal = ${q(node).property('goal')}
         stretchGoal = ${q(node).property('stretchGoal')}
     }
+
+    @if.enabled = ${!Neos.Node.isDisabled(node)}
 }

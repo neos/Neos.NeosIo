@@ -1,4 +1,6 @@
-prototype(Neos.NeosIo:Content.Disruptor) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosIo:Component.Disruptor) < prototype(Neos.Fusion:Component) {
+    disruptorNode = ${q(site).children('disruptor').get(0)}
+
     // enable editing only on start-page. Per default a content collection rendered on all pages would be editable on all pages.
     prototype(Neos.Neos:ContentCollection) {
         @process.contentElementWrapping.@if.enableOnlyOnStartPage = ${documentNode.aggregateId.value == site.aggregateId.value}
@@ -6,11 +8,12 @@ prototype(Neos.NeosIo:Content.Disruptor) < prototype(Neos.Fusion:Component) {
     prototype(Neos.Neos:ContentComponent) {
         @process.contentElementWrapping.@if.enableOnlyOnStartPage = ${documentNode.aggregateId.value == site.aggregateId.value}
     }
-    @private.disruptorContent = Neos.Fusion:Case {
+
+    renderer = Neos.Fusion:Case {
         hasContentSection {
-            condition = ${q(site).children('disruptor').get(0)}
+            condition = ${props.disruptorNode}
             renderer = Neos.Neos:ContentCollection {
-                @context.node = ${q(site).children('disruptor').get(0)}
+                @context.node = ${props.disruptorNode}
             }
         }
         fallback {
@@ -18,8 +21,4 @@ prototype(Neos.NeosIo:Content.Disruptor) < prototype(Neos.Fusion:Component) {
             renderer = ''
         }
     }
-
-    renderer = afx`
-        {private.disruptorContent}
-    `
 }

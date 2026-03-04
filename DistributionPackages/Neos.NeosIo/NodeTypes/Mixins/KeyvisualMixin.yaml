@@ -9,16 +9,11 @@
     'keyvisual':
       type: 'Neos.Neos:ContentCollection'
       position: 'start'
+      label: 'Key visual'
       constraints:
         nodeTypes:
           '*': FALSE
-          'Neos.NodeTypes:Headline': TRUE
-          'Neos.NodeTypes.ContentReferences:ContentReferences': TRUE
-          'Neos.NeosIo:ChoiceButtons': TRUE
-          'Neos.NeosIo:Button': TRUE
-          'Neos.NodeTypes.ColumnLayouts:TwoColumn': TRUE
-          'Neos.NodeTypes:Image': TRUE
-          'GoE.Neos:Content.Video': TRUE
+          'Neos.NeosIo:Constraints.KeyVisual': true
   ui:
     inspector:
       groups:
@@ -27,6 +22,25 @@
           position: 10
           collapsed: true
   properties:
+    keyVisualVariant:
+      type: string
+      ui:
+        label: 'How to display the key visual contents'
+        reloadIfChanged: true
+        inspector:
+          group: 'keyVisual'
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            allowEmpty: true
+            placeholder: 'Large image and text overlay'
+            placeholderIcon: 'picture'
+            values:
+              hidden:
+                label: 'Hidden'
+                icon: 'eye-slash'
+              contentOnly:
+                label: 'Content only'
+                icon: 'square'
     keyVisualImage:
       type: Neos\Media\Domain\Model\ImageInterface
       ui:
@@ -34,6 +48,7 @@
         reloadIfChanged: true
         inspector:
           group: 'keyVisual'
+          hidden: 'ClientEval: node.properties.keyVisualVariant != ""'
     keyVisualImageSmall:
       type: Neos\Media\Domain\Model\ImageInterface
       ui:
@@ -42,6 +57,7 @@
         inspector:
           group: 'keyVisual'
           position: 'after keyVisualImage'
+          hidden: 'ClientEval: node.properties.keyVisualVariant != ""'
     isKeyVisualContentsInverted:
       type: boolean
       ui:
@@ -49,3 +65,4 @@
         reloadIfChanged: true
         inspector:
           group: 'keyVisual'
+          hidden: 'ClientEval: node.properties.keyVisualVariant != ""'
