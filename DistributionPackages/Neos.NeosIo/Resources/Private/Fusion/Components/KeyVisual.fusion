@@ -6,13 +6,23 @@ prototype(Neos.NeosIo:KeyVisual) < prototype(Neos.Fusion:Component) {
     keyVisualImage = null
     keyVisualImageSmall = null
     isKeyVisualContentsInverted = false
+    treatKeyVisualAsContentArea = false
     content = null
 
     renderer = Neos.Fusion:Case {
-        keyVisualImageIsSet.condition = ${props.keyVisualImage}
-        keyVisualImageIsSet.renderer = Neos.NeosIo:KeyVisual.ImageRenderer
+        treatAsContentArea {
+            condition = ${props.treatKeyVisualAsContentArea}
+            renderer = ${props.content}
+        }
 
-        default.condition = true
-        default.renderer = Neos.NeosIo:KeyVisual.StaticPlaceholderImageRenderer
+        keyVisualImageIsSet {
+            condition = ${props.keyVisualImage}
+            renderer = Neos.NeosIo:KeyVisual.ImageRenderer
+        }
+
+        default {
+            condition = true
+            renderer = Neos.NeosIo:KeyVisual.StaticPlaceholderImageRenderer
+        }
     }
 }
