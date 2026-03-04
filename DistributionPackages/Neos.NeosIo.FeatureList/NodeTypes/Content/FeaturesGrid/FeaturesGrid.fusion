@@ -3,7 +3,6 @@ prototype(Neos.NeosIo.Features:FeaturesGrid) < prototype(Neos.Fusion:Component) 
     text = ''
     ctaLabel = ''
     link = ''
-    type = ''
     items = ''
 
     @propTypes {
@@ -12,7 +11,6 @@ prototype(Neos.NeosIo.Features:FeaturesGrid) < prototype(Neos.Fusion:Component) 
         text = ${PropTypes.string}
         ctaLabel = ${PropTypes.string}
         link = ${PropTypes.string}
-        type = ${PropTypes.oneOf(['3-items', '4-items', '6-items'])}
         items = ${PropTypes.string}
     }
 

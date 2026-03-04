@@ -16,18 +16,19 @@ prototype(Neos.NeosIo.Features:Grid) < prototype(Neos.Neos:ContentComponent) {
         link = ${q(node).property('link')}
         link.@process.convertUris = Neos.Neos:ConvertUris
 
-        type = ${q(node).property('type')}
         items = Neos.Neos:ContentCollection {
             attributes.class = Neos.Fusion:Case {
-                3-items {
-                    condition = ${q(node).property('type') == '3-items'}
+                // Grid of 3 items per row with equal width
+                variant-a {
+                    condition = ${q(node).property('type') == 'variant-a'}
                     renderer = Neos.Fusion:Join {
                         @glue = ' '
                         baseGrid = 'flex flex-wrap md:grid md:grid-cols-3 gap-6'
                     }
                 }
-                4-items {
-                    condition = ${q(node).property('type') == '4-items'}
+                // Grid of 4 items (2 per row) with different widths, alternating between wide and narrow
+                variant-b {
+                    condition = ${q(node).property('type') == 'variant-b'}
                     renderer = Neos.Fusion:Join {
                         @glue = ' '
                         baseGrid = 'flex flex-wrap md:grid md:grid-cols-11 md:grid-rows-12 gap-6'
@@ -37,8 +38,9 @@ prototype(Neos.NeosIo.Features:Grid) < prototype(Neos.Neos:ContentComponent) {
                         fourthItem = '[&>*:nth-child(4n)]:col-span-5 [&>*:nth-child(4n)]:row-span-6 [&>*:nth-child(4n)_figure]:px-8'
                     }
                 }
-                6-items {
-                    condition = ${q(node).property('type') == '6-items'}
+                // Grid of 6 items (3 per row) with different widths, alternating between wide and narrow
+                variant-c {
+                    condition = ${q(node).property('type') == 'variant-c'}
                     renderer = Neos.Fusion:Join {
                         @glue = ' '
                         baseGrid = 'flex flex-wrap md:grid md:grid-cols-8 md:grid-rows-12 gap-6'

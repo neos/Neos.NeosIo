@@ -15,8 +15,10 @@ prototype(Neos.NeosIo.Features:ItemWithImage) < prototype(Neos.Neos:ContentCompo
         imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
             asset = ${q(node).property('image')}
             // TODO image size
-            width = 1600
+            width = 800
             quality = 80
         }
+
+        altText = ${q(node).property('altText')}
     }
 }
