@@ -1,0 +1,152 @@
+prototype(Neos.NeosIo.Features:FeaturesItemWithImage) < prototype(Neos.Fusion:Component) {
+    background = 'gradient'
+    title = ''
+    linkLabel = ''
+    link = null
+    imageSource = null
+    videoSources = null
+    altText = ''
+
+    @propTypes {
+        @strict = true
+        background = ${PropTypes.string}
+        title = ${PropTypes.string}
+        linkLabel = ${PropTypes.string}
+        link = ${PropTypes.string}
+        imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        videoSources = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                src = PropTypes:String
+                type = ${PropTypes.oneOf(['webm', 'mp4', 'ogg'])}
+            }
+        }
+        altText = ${PropTypes.string}
+    }
+
+    @private {
+        hasVideo = ${props.videoSources && Array.length(props.videoSources)}
+        hasImage = ${props.imageSource && !private.hasVideo}
+    }
+
+    renderer = afx`
+        <Neos.NeosIo.Features:FeaturesItem.Wrapper background={props.background}>
+            <Neos.NeosIo.Features:FeaturesItem.Title title={props.title} />
+            <Neos.NeosIo.Features:FeaturesItem.Link link={props.link} linkLabel={props.linkLabel} />
+            <figure @if={private.hasImage || private.hasVideo} class="mt-auto">
+                <Neos.Presentation:InlineVideo
+                    @if={private.hasVideo}
+                    sources={props.videoSources}
+                    poster={props.imageSource}
+                    class="mb-0 object-cover w-full h-full"
+                />
+
+                <Sitegeist.Kaleidoscope:Image
+                    @if={private.hasImage}
+                    imageSource={props.imageSource}
+                    alt={props.altText}
+                    attributes.class="object-cover w-full h-full"
+                />
+            </figure>
+        </Neos.NeosIo.Features:FeaturesItem.Wrapper>
+    `
+}
+
+prototype(Neos.NeosIo.Features:FeaturesItemWithIcon) < prototype(Neos.Fusion:Component) {
+    background = 'gradient'
+    title = ''
+    linkLabel = ''
+    link = null
+    icon = ''
+
+    @propTypes {
+        @strict = true
+        background = ${PropTypes.string}
+        title = ${PropTypes.string}
+        linkLabel = ${PropTypes.string}
+        link = ${PropTypes.string}
+        icon = ${PropTypes.string}
+    }
+
+    renderer = afx`
+        <Neos.NeosIo.Features:FeaturesItem.Wrapper background={props.background}>
+            <div class="p-8 pb-0 mb-auto">
+                <Neos.Presentation:Icon sizeClass={"h-10"} icon={props.icon} ariaHidden={true} />
+            </div>
+            <Neos.NeosIo.Features:FeaturesItem.Title title={props.title} />
+
+            <Neos.NeosIo.Features:FeaturesItem.Link link={props.link} linkLabel={props.linkLabel} />
+        </Neos.NeosIo.Features:FeaturesItem.Wrapper>
+    `
+}
+
+prototype(Neos.NeosIo.Features:FeaturesItem.Wrapper) < prototype(Neos.Fusion:Component) {
+    background = 'gradient'
+    content = ''
+
+    @propTypes {
+        @strict = true
+        background = ${PropTypes.string}
+        content = ${PropTypes.string}
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Background
+            background={props.background}
+            class={"h-full w-full flex flex-col relative group/icon"}
+        >
+            <div class="flex flex-col h-full">
+                {props.content}
+            </div>
+        </Neos.Presentation:Background>
+    `
+}
+
+prototype(Neos.NeosIo.Features:FeaturesItem.Link) < prototype(Neos.Fusion:Component) {
+    linkLabel = ''
+    link = null
+
+    @propTypes {
+        @strict = true
+        linkLabel = ${PropTypes.string}
+        link = ${PropTypes.string}
+    }
+
+    @private {
+        inBackend = ${renderingMode.isEdit}
+    }
+
+
+    renderer = afx`
+        <Neos.Fusion:Tag
+            @if={props.link}
+            tagName={!private.inBackend ? 'a' : 'div'}
+            attributes.class={Carbon.String.classNames(
+                'display-cta-xl px-8 pb-8 flex gap-2 items-center',
+                !private.inBackend && props.link ? 'after:absolute after:inset-0 after:z-10 text-white!' : ''
+            )}
+            attributes.href={props.link}
+            attributes.href.@if={props.link && !private.inBackend}
+        >
+            {props.linkLabel}
+            <Neos.Presentation:Icon icon="animatedArrow" />
+        </Neos.Fusion:Tag>
+    `
+}
+
+prototype(Neos.NeosIo.Features:FeaturesItem.Title) < prototype(Neos.Fusion:Component) {
+    title = ''
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Headline
+            tagName="h3"
+            content={props.title}
+            display="title-lg"
+            class="p-8 n-headline text-white! m-0!"
+        />
+    `
+}

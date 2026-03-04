@@ -1,0 +1,33 @@
+prototype(Neos.NeosIo.Features:ItemWithVideo) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.NeosIo.Features:FeaturesItemWithImage {
+        background = ${q(node).property('background')}
+        title = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        linkLabel = Neos.Neos:Editable {
+            property = 'linkLabel'
+            block = false
+        }
+        link = ${q(node).property('link')}
+        link.@process.convertUris = Neos.Neos:ConvertUris
+
+        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+            asset = ${q(node).property('image')}
+            // TODO responsive image size with different breakpoints
+            width = 800
+            quality = 80
+        }
+
+        videoSources = Neos.Fusion:DataStructure {
+            1 = Neos.Fusion:DataStructure {
+                type = ${q(node).property('video').resource.fileExtension}
+                src = Neos.Fusion:ResourceUri {
+                    resource = ${q(node).property('video').resource}
+                }
+            }
+        }
+
+        altText = ${q(node).property('altText')}
+    }
+}

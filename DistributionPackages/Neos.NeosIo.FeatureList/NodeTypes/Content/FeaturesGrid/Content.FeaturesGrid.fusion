@@ -1,0 +1,58 @@
+prototype(Neos.NeosIo.Features:Grid) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.NeosIo.Features:FeaturesGrid {
+        headline = Neos.Neos:Editable {
+            property = 'headline'
+            block = false
+        }
+        text = Neos.Neos:Editable {
+            property = 'text'
+            block = false
+        }
+
+        ctaLabel = Neos.Neos:Editable {
+            property = 'ctaLabel'
+            block = false
+        }
+        link = ${q(node).property('link')}
+        link.@process.convertUris = Neos.Neos:ConvertUris
+
+        items = Neos.Neos:ContentCollection {
+            attributes.class = Neos.Fusion:Case {
+                // Grid of 4 items (2 per row) with different widths, alternating between wide and narrow
+                variant-a {
+                    condition = ${q(node).property('type') == 'variant-a'}
+                    renderer = Neos.Fusion:Join {
+                        @glue = ' '
+                        baseGrid = 'flex flex-wrap md:grid md:grid-cols-11 md:grid-rows-12 gap-6'
+                        firstItem = '[&>*:nth-child(1n)]:col-span-5 [&>*:nth-child(1n)]:row-span-6 [&>*:nth-child(1n)]:row-start-1 [&>*:nth-child(1n)_figure]:px-8'
+                        secondItem = '[&>*:nth-child(2n)]:col-span-6 [&>*:nth-child(2n)]:row-start-2 [&>*:nth-child(2n)]:row-span-5 [&>*:nth-child(2n)_figure]:px-0 [&>*:nth-child(2n)_figure]:pl-8'
+                        thirdItem = '[&>*:nth-child(3n)]:col-span-6 [&>*:nth-child(3n)]:row-span-5 [&>*:nth-child(3n)_figure]:px-0 [&>*:nth-child(3n)_figure]:pr-8'
+                        fourthItem = '[&>*:nth-child(4n)]:col-span-5 [&>*:nth-child(4n)]:row-span-6 [&>*:nth-child(4n)_figure]:px-8'
+                    }
+                }
+                // Grid of 6 items (3 per row) with different widths, alternating between wide and narrow
+                variant-b {
+                    condition = ${q(node).property('type') == 'variant-b'}
+                    renderer = Neos.Fusion:Join {
+                        @glue = ' '
+                        baseGrid = 'flex flex-wrap md:grid md:grid-cols-8 md:grid-rows-12 gap-6'
+                        firstItem = '[&>*:nth-child(1n)]:col-span-3 [&>*:nth-child(1n)]:row-start-2 [&>*:nth-child(1n)]:row-span-5'
+                        secondItem = '[&>*:nth-child(2n)]:col-span-3 [&>*:nth-child(2n)]:row-start-2 [&>*:nth-child(2n)]:row-span-5'
+                        thirdItem = '[&>*:nth-child(3n)]:col-span-2 [&>*:nth-child(3n)]:row-start-1 [&>*:nth-child(3n)]:row-span-6'
+                        fourthItem = '[&>*:nth-child(4n)]:col-span-2 [&>*:nth-child(4n)]:row-span-6'
+                        fifthItem = '[&>*:nth-child(5n)]:col-span-3 [&>*:nth-child(5n)]:row-span-5'
+                        sixthItem = '[&>*:nth-child(6n)]:col-span-3 [&>*:nth-child(6n)]:row-span-5'
+                    }
+                }
+                // Grid of 3 items per row with equal width
+                default {
+                    condition = true
+                    renderer = Neos.Fusion:Join {
+                        @glue = ' '
+                        baseGrid = 'flex flex-wrap md:grid md:grid-cols-3 gap-6'
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,51 @@
+'Neos.NeosIo.Features:ItemWithImage':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NodeTypes:LinkMixin': true
+    'Neos.NeosIo:Mixin.Background': true
+  ui:
+    label: 'Feature with Image'
+    icon: icon-image
+    group: feature
+    inspector:
+      groups:
+        feature:
+          label: 'Feature properties'
+          tab: default
+  properties:
+    title:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Feature Title'
+      options:
+        preset: neosIo.text.plain
+    linkLabel:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Learn more'
+      options:
+        preset: neosIo.text.plain
+    link:
+      ui:
+        label: 'Link'
+        reloadIfChanged: true
+        inspector:
+          group: feature
+    image:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Feature Image'
+        reloadIfChanged: true
+        inspector:
+          group: feature
+          position: 50
+    background:
+      ui:
+        inspector:
+          group: feature

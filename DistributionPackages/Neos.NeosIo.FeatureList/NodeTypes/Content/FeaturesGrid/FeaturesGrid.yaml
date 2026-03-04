@@ -1,0 +1,71 @@
+'Neos.NeosIo.Features:Grid':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.Neos:ContentCollection': true
+    'Neos.NodeTypes:LinkMixin': true
+  ui:
+    label: 'Features Grid'
+    icon: th-large
+    group: feature
+    inspector:
+      groups:
+        feature:
+          label: 'Feature properties'
+          tab: default
+  constraints:
+    nodeTypes:
+      '*': false
+      'Neos.NeosIo.Features:ItemWithImage': true
+      'Neos.NeosIo.Features:ItemWithVideo': true
+      'Neos.NeosIo.Features:ItemWithIcon': true
+  properties:
+    headline:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Headline'
+    text:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Feature Title'
+    ctaLabel:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Try Neos'
+    link:
+      ui:
+        label: 'Call to Action Link'
+        reloadIfChanged: true
+        inspector:
+          group: feature
+    type:
+      type: string
+      options:
+        showInCreationDialog: true
+      ui:
+        label: 'Grid Type'
+        reloadIfChanged: true
+        inspector:
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          group: feature
+          editorOptions:
+            allowEmpty: true
+            placeholder: 'Select a grid type'
+            values:
+              variant-a:
+                label: 'Grid of 4 items'
+                icon: resource://Neos.NeosIo.FeatureList/Images/FeaturesGrid/variant-A.svg
+              variant-b:
+                label: 'Grid of 6 items'
+                icon: resource://Neos.NeosIo.FeatureList/Images/FeaturesGrid/variant-B.svg
+              variant-c:
+                label: 'Grid of 3 items (repeatable)'
+                icon: resource://Neos.NeosIo.FeatureList/Images/FeaturesGrid/variant-C.svg

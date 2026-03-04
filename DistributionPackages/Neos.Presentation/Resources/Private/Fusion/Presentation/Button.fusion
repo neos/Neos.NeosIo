@@ -40,7 +40,7 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
     iconLeft = ${this.icon == 'animatedArrowLeft'}
 
     @private {
-        isButton = ${!props.href}
+        isButton = ${!props.href || renderingMode.isEdit}
         hasIcon = ${props.icon && props.variant != 'link'}
         global = ${[
             'transition cursor-pointer',
