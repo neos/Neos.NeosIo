@@ -12,13 +12,7 @@
       constraints:
         nodeTypes:
           '*': FALSE
-          'Neos.NodeTypes:Headline': TRUE
-          'Neos.NodeTypes.ContentReferences:ContentReferences': TRUE
-          'Neos.NeosIo:ChoiceButtons': TRUE
-          'Neos.NeosIo:Button': TRUE
-          'Neos.NodeTypes.ColumnLayouts:TwoColumn': TRUE
-          'Neos.NodeTypes:Image': TRUE
-          'GoE.Neos:Content.Video': TRUE
+          'Neos.NeosIo:Constraints.KeyVisual': true
   ui:
     inspector:
       groups:
@@ -46,6 +40,13 @@
       type: boolean
       ui:
         label: 'Invert the text-color for the Keyvisual contents'
+        reloadIfChanged: true
+        inspector:
+          group: 'keyVisual'
+    treatKeyVisualAsContentArea:
+      type: boolean
+      ui:
+        label: 'Treat the keyvisual as header content area'
         reloadIfChanged: true
         inspector:
           group: 'keyVisual'
