@@ -3,7 +3,8 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
         siteHeader = Neos.NeosIo:Fragment.SiteHeader
         //rebrandSiteHeader = Neos.NeosIo:Fragment.RebrandSiteHeader
         keyVisualWrapper = Neos.NeosIo:KeyVisualWrapper {
-            disruptor = Neos.NeosIo:Content.Disruptor
+            treatKeyVisualAsContentArea = ${q(documentNode).property('treatKeyVisualAsContentArea')}
+            disruptor = Neos.NeosIo:Component.Disruptor
             keyVisual = Neos.NeosIo:KeyVisual {
                 keyVisualImage = ${q(documentNode).property('keyVisualImage')}
                 keyVisualImageSmall = ${q(documentNode).property('keyVisualImageSmall')}
@@ -14,6 +15,7 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
                         condition = ${q(documentNode).is('[instanceof Neos.NeosIo:KeyVisualMixin]')}
                         renderer = Neos.Neos:ContentCollection {
                             nodePath = 'keyvisual'
+                            attributes.class = 'keyVisual__content'
                         }
                     }
                     fallback {
