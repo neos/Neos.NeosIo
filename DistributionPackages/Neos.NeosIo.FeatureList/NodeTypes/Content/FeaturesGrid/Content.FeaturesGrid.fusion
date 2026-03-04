@@ -39,8 +39,8 @@ prototype(Neos.NeosIo.Features:Grid) < prototype(Neos.Neos:ContentComponent) {
                     }
                 }
                 // Grid of 6 items (3 per row) with different widths, alternating between wide and narrow
-                variant-c {
-                    condition = ${q(node).property('type') == 'variant-c'}
+                default {
+                    condition = true
                     renderer = Neos.Fusion:Join {
                         @glue = ' '
                         baseGrid = 'flex flex-wrap md:grid md:grid-cols-8 md:grid-rows-12 gap-6'
