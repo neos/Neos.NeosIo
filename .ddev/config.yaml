@@ -1,10 +1,13 @@
 name: neos-io
 type: php
 docroot: Web
-php_version: "8.3"
+php_version: "8.4"
 webserver_type: nginx-fpm
 xdebug_enabled: false
-additional_hostnames: []
+additional_hostnames:
+  - flow-neos-io
+  - neoscon-io
+  - barcamp-neos-io
 additional_fqdns: []
 database:
     type: mariadb
@@ -28,6 +31,7 @@ web_environment:
     - FLOW_HTTP_TRUSTED_PROXIES=*
     - COMPOSER_MEMORY_LIMIT=-1
     - COMPOSER_ROOT_VERSION=dev-main
+    - COMPOSER_AUTH=${COMPOSER_AUTH}
     - NEOS_DB_HOST=db
     - NEOS_DB_NAME=db
     - NEOS_DB_USER=db
