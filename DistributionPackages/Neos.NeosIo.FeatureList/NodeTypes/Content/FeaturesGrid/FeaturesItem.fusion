@@ -4,6 +4,7 @@ prototype(Neos.NeosIo.Features:FeaturesItemWithImage) < prototype(Neos.Fusion:Co
     linkLabel = ''
     link = null
     imageSource = null
+    videoSources = null
     altText = ''
 
     @propTypes {
@@ -13,11 +14,17 @@ prototype(Neos.NeosIo.Features:FeaturesItemWithImage) < prototype(Neos.Fusion:Co
         linkLabel = ${PropTypes.string}
         link = ${PropTypes.string}
         imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        videoSources = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                src = PropTypes:String
+                type = ${PropTypes.oneOf(['webm', 'mp4', 'ogg'])}
+            }
+        }
         altText = ${PropTypes.string}
     }
 
     @private {
-        hasVideo = ${props.video && (props.video.sources || props.video.assets)}
+        hasVideo = ${props.videoSources && Array.length(props.videoSources)}
         hasImage = ${props.imageSource && !private.hasVideo}
     }
 
@@ -28,14 +35,16 @@ prototype(Neos.NeosIo.Features:FeaturesItemWithImage) < prototype(Neos.Fusion:Co
             <figure @if={private.hasImage || private.hasVideo} class="mt-auto">
                 <Neos.Presentation:InlineVideo
                     @if={private.hasVideo}
-                    {...props.video}
+                    sources={props.videoSources}
                     poster={props.imageSource}
+                    class="mb-0 object-cover w-full h-full"
                 />
 
                 <Sitegeist.Kaleidoscope:Image
                     @if={private.hasImage}
                     imageSource={props.imageSource}
                     alt={props.altText}
+                    attributes.class="object-cover w-full h-full"
                 />
             </figure>
         </Neos.NeosIo.Features:FeaturesItem.Wrapper>

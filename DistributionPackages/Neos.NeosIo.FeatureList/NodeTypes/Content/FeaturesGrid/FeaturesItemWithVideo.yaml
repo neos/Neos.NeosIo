@@ -1,0 +1,21 @@
+'Neos.NeosIo.Features:ItemWithVideo':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NeosIo.Features:ItemWithImage': true
+  ui:
+    label: 'Feature with Video'
+    icon: icon-video
+    group: feature
+  properties:
+    image:
+      ui:
+        label: 'Video Preview Image'
+    video:
+      type: Neos\Media\Domain\Model\Video
+      ui:
+        label: 'Feature Video'
+        reloadIfChanged: true
+        showInCreationDialog: true
+        inspector:
+          group: feature
+          position: 45
