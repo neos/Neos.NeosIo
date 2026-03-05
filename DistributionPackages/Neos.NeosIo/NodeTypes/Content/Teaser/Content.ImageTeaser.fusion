@@ -1,0 +1,29 @@
+prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:ContentTeaser {
+        title = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        subTitle = Neos.Neos:Editable {
+            property = 'subTitle'
+            block = false
+        }
+        text = Neos.Neos:Editable {
+            property = 'text'
+        }
+
+        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+            asset = ${q(node).property('image')}
+            // TODO responsive image size with different breakpoints
+            width = 800
+            quality = 80
+        }
+        altText = ${q(node).property('alternativeText')}
+
+        openInNewTab = ${q(node).property('openInNewTab')}
+        link = ${q(node).property('link')}
+        link.@process.convertUris = Neos.Neos:ConvertUris {
+            absolute = true
+        }
+    }
+}

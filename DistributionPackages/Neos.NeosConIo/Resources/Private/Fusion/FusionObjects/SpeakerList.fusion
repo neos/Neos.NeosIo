@@ -3,18 +3,8 @@ prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Neos:ContentComponent) {
 
     renderer = afx`
         <ul class="speaker__speakerList">
-            <Neos.Fusion:Loop items={props.items} itemName="node">
-                <li class="speaker__speakerList__item">
-                    <Neos.NeosIo:ImageTeaser
-                        subTitle=""
-                        title={q(node).property('title')}
-                        image={q(node).property('image')}
-                        text={String.stripTags(q(node).property('company'))}
-                        className="imageTeaser--speaker"
-                    >
-                        <Neos.Neos:NodeUri node={node} absolute={true} @path="link" />
-                    </Neos.NeosIo:ImageTeaser>
-                </li>
+            <Neos.Fusion:Loop items={props.items} itemName="item">
+                <Neos.NeosConIo:SpeakerList.Item item={item} />
             </Neos.Fusion:Loop>
         </ul>
     `
@@ -30,4 +20,38 @@ prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Neos:ContentComponent) {
             speakers = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Speaker', node)}
         }
     }
+}
+
+prototype(Neos.NeosConIo:SpeakerList.Item) < prototype(Neos.Fusion:Component) {
+    item = ''
+
+    @propTypes {
+        @strict = true
+        item = ${PropTypes.instanceOf('Neos.NeosConIo:Speaker')}
+    }
+
+    @private {
+        link = Neos.Neos:NodeUri {
+            node = ${props.item}
+            absolute = true
+        }
+
+        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+            asset = ${props.item.properties.image}
+            // TODO responsive image size with different breakpoints
+            width = 500
+            quality = 80
+        }
+    }
+
+    renderer = afx`
+        <li class="speaker__speakerList__item">
+            <Neos.Presentation:ContentTeaser
+                title={props.item.properties.title}
+                imageSource={private.imageSource}
+                text={String.stripTags(props.item.properties.company)}
+                link={private.link}
+            />
+        </li>
+    `
 }

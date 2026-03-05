@@ -25,13 +25,15 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
             // node is the speaker here
             @context.featuredTalkNode = ${q(node).referenceNodes('featuredTalk').get(0)}
 
-            featuredTalk = Neos.NeosIo:ImageTeaser {
+            featuredTalk = Neos.Presentation:ContentTeaser {
                 title = ${q(featuredTalkNode).property('title')}
-                rawTitle = ${this.title}
-                image = ${q(featuredTalkNode).property('thumbnail')}
-                fallbackImageUrl = ${(q(featuredTalkNode).property('video') && !q(featuredTalkNode).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(featuredTalkNode).property('video') + "/maxresdefault.jpg" : null}
+                imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+                    asset = ${q(node).property('thumbnail')}
+                    // TODO responsive image size with different breakpoints
+                    width = 500
+                    quality = 80
+                }
                 text = ${String.cropAtWord(q(featuredTalkNode).property('text'), 200, '…')}
-                className = 'imageTeaser--featuredTalk'
                 link = Neos.Neos:NodeUri {
                     node = ${featuredTalkNode}
                     absolute = true
@@ -43,20 +45,22 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
 
             moreTalks = Neos.Fusion:Loop {
                 // node is speaker here
-            items = ${q(node).backReferenceNodes("speakers").filter('[instanceof Neos.NeosConIo:Talk]').sort('talkDate', 'DESC')}
+                items = ${q(node).backReferenceNodes("speakers").filter('[instanceof Neos.NeosConIo:Talk]').sort('talkDate', 'DESC')}
 
                 @process.wrapWithUl = ${value ? '<ul class="talkList">' + value + '</ul>' : ''}
                 itemName = "node"
                 itemRenderer = Neos.Fusion:Tag {
                     tagName = 'li'
                     attributes.class = 'talkList__item'
-                    content = Neos.NeosIo:ImageTeaser {
+                    content = Neos.Presentation:ContentTeaser {
                         // node is the talk here
-                    title = ${q(node).property('title')}
-                        image = ${q(node).property('thumbnail')}
-                        fallbackImageUrl = ${(q(node).property('video') && !q(node).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(node).property('video') + "/maxresdefault.jpg" : null}
-                        text = ''
-                        className = 'imageTeaser--relatedTalk'
+                        title = ${q(node).property('title')}
+                        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+                            asset = ${q(node).property('thumbnail')}
+                            // TODO responsive image size with different breakpoints
+                            width = 500
+                            quality = 80
+                        }
                         link = Neos.Neos:NodeUri {
                             node = ${node}
                             absolute = true

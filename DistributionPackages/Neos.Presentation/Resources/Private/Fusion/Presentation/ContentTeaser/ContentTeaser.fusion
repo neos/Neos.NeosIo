@@ -1,0 +1,67 @@
+prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
+    title = ''
+    subTitle = ''
+    text = ''
+    imageSource = null
+    altText = ''
+    link = ''
+    openInNewTab = false
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+        text = ${PropTypes.string}
+        subTitle = ${PropTypes.string}
+        imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        altText = ${PropTypes.string}
+        link = ${PropTypes.string}
+        openInNewTab = ${PropTypes.boolean}
+    }
+
+    @private {
+        inBackend = ${renderingMode.isEdit}
+    }
+
+    renderer = afx`
+        <div class="relative">
+            <Sitegeist.Kaleidoscope:Image
+                imageSource={props.imageSource}
+                alt={props.altText}
+                attributes.class="absolute object-cover w-full h-full"
+            />
+
+            <div class="relative p-8 bg-gradient-to-t from-blue-dark to-transparent min-h-[350px] flex flex-col gap-2 justify-end hover:to-blue-dark/50 transition-colors">
+                <Neos.Presentation:Paragraph
+                    display="tagname"
+                    class="text-blue-light"
+                >
+                    {props.subTitle}
+                </Neos.Presentation:Paragraph>
+
+                <Neos.Fusion:Tag
+                    tagName={!private.inBackend ? 'a' : 'div'}
+                    attributes.class={Carbon.String.classNames(
+                        'display-cta-xl mt-0 flex gap-2 items-center',
+                        !private.inBackend && props.link ? 'after:absolute after:inset-0 after:z-10 text-white!' : ''
+                    )}
+                    attributes.href={props.link}
+                    attributes.href.@if={props.link && !private.inBackend}
+                    attributes.target={props.openInNewTab ? '_blank' : null}
+                >
+                    <Neos.Presentation:Headline
+                        tagName="h3"
+                        content={props.title}
+                        display="title-lg"
+                        class="n-headline text-white! m-0!"
+                    />
+                </Neos.Fusion:Tag>
+                <Neos.Presentation:Paragraph
+                    display="tagname"
+                    class="text-white"
+                >
+                    {props.text}
+                </Neos.Presentation:Paragraph>
+            </div>
+        </div>
+    `
+}
