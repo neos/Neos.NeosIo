@@ -11,9 +11,10 @@ prototype(Neos.NeosIo:Component.Disruptor) < prototype(Neos.Fusion:Component) {
 
     renderer = Neos.Fusion:Case {
         hasContentSection {
-            condition = ${props.disruptorNode}
+            condition = ${props.disruptorNode && q(props.disruptorNode).children().count() > 0}
             renderer = Neos.Neos:ContentCollection {
                 @context.node = ${props.disruptorNode}
+                attributes.class = 'disruptor-wrapper'
             }
         }
         fallback {
