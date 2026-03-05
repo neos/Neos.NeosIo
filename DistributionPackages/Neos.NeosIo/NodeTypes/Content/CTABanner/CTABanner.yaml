@@ -1,0 +1,66 @@
+'Neos.NeosIo:CTABanner':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NodeTypes:LinkMixin': true
+    'Neos.NeosIo:Mixin.Background': true
+    'Neos.NeosIo:Constraints.Main': true
+  ui:
+    label: 'CTA Banner'
+    icon: circle-exclamation
+    group: special
+  properties:
+    background:
+      type: string
+      defaultValue: 'gradient'
+    headline:
+      type: string
+      ui:
+        label: 'Headline'
+        showInCreationDialog: true
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Enter headline here…'
+    text:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Enter text here…'
+    link:
+      ui:
+        showInCreationDialog: true
+        label: 'CTA Link'
+        reloadIfChanged: true
+        inspector:
+          position: 5
+          group: content
+    linkLabel:
+      type: string
+      ui:
+        label: 'CTA Label'
+        showInCreationDialog: true
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Link label…'
+    secondaryLink:
+      type: string
+      ui:
+        label: 'Secondary CTA Link'
+        help:
+          message: 'Renders a secondary button if set.'
+        reloadIfChanged: true
+        inspector:
+          position: 10
+          group: content
+          editor: 'Neos.Neos/Inspector/Editors/LinkEditor'
+    secondaryLinkLabel:
+      type: string
+      ui:
+        label: 'Secondary CTA Label'
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Secondary label…'

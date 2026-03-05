@@ -1,0 +1,48 @@
+prototype(Neos.Presentation:CTABanner) < prototype(Neos.Fusion:Component) {
+    background = ''
+    headline = ''
+    text = ''
+
+    link = ''
+    linkLabel = ''
+    secondaryLink = ''
+    secondaryLinkLabel = ''
+
+    @propTypes {
+        @strict = true
+        background = ${PropTypes.string}
+        headline = ${PropTypes.string}
+        text = ${PropTypes.string}
+        link = ${PropTypes.string}
+        linkLabel = ${PropTypes.string}
+        secondaryLink = ${PropTypes.string}
+        secondaryLinkLabel = ${PropTypes.string}
+    }
+
+    @private {
+        inBackend = ${renderingMode.isEdit}
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Background background={props.background} tagName="div" class="p-4 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8 pb-17 md:pb-34 cta-banner-clip-path">
+            <Neos.Presentation:Headline
+                tagName="h2"
+                display="headline-xl"
+                class="text-white m-0"
+            >
+                {props.headline}
+            </Neos.Presentation:Headline>
+            <div class="flex flex-col items-start gap-8">
+                <Neos.Presentation:Paragraph display="tagname">
+                    {props.text}
+                </Neos.Presentation:Paragraph>
+                <div class="flex items-center flex-wrap flex-row gap-8 m-0">
+                    <Neos.Presentation:Button href={props.link} content={props.linkLabel} icon="animatedArrow" />
+                    <Neos.Presentation:Button @if={props.secondaryLink} href={props.secondaryLink} content={props.secondaryLinkLabel} variant="link" class="text-white" />
+                </div>
+            </div>
+
+        </Neos.Presentation:Background>
+    `
+}
+

@@ -17,10 +17,9 @@
       type: string
       validation:
         Neos.Neos/Validation/NotEmptyValidator: {  }
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Event type'
+        showInCreationDialog: true
         reloadIfChanged: true
         inspector:
           group: event
@@ -37,10 +36,9 @@
       type: DateTime
       validation:
         Neos.Neos/Validation/NotEmptyValidator: {  }
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Event start date'
+        showInCreationDialog: true
         reloadIfChanged: true
         inspector:
           group: event
@@ -48,10 +46,9 @@
             format: d.m.Y H:i
     endDate:
       type: DateTime
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Event end date (optional)'
+        showInCreationDialog: true
         reloadIfChanged: true
         inspector:
           group: event
@@ -59,30 +56,27 @@
             format: d.m.Y H:i
     location:
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Event location'
+        showInCreationDialog: true
         inlineEditable: true
         inline:
           editorOptions:
             placeholder: 'Event location'
     url:
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Event URL (optional)'
+        showInCreationDialog: true
         reloadIfChanged: true
         inspector:
           group: event
           editor: Neos.Neos/Inspector/Editors/LinkEditor
     organizer:
       type: string
-      options:
-        showInCreationDialog: true
       ui:
         label: 'Organizer(s) (comma separated, if more than one)'
+        showInCreationDialog: true
         inlineEditable: true
         inline:
           editorOptions:
