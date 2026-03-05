@@ -39,6 +39,7 @@
   }
 
 }
+
 .stage--secondary {
   --stage-background-color: #{brand('secondary')};
 
@@ -119,13 +120,13 @@
   z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem $double-spacing+px;
+  padding: 3rem $basic-spacing+px;
 
-	@include mq('small') {
-		*[style*=center],.u-alignCenter,.neos-alignment-center {
-			text-align: left!important;
-		}
-	}
+  @include mq('small') {
+    *[style*=center], .u-alignCenter, .neos-alignment-center {
+      text-align: left !important;
+    }
+  }
 
   > :last-child {
     margin-bottom: 0;
