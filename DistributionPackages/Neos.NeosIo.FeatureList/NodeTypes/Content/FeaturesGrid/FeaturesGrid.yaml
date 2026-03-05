@@ -3,6 +3,7 @@
     'Neos.Neos:Content': true
     'Neos.Neos:ContentCollection': true
     'Neos.NodeTypes:LinkMixin': true
+    'Neos.NeosIo:Constraints.Stage': true
   ui:
     label: 'Features Grid'
     icon: th-large
@@ -15,9 +16,7 @@
   constraints:
     nodeTypes:
       '*': false
-      'Neos.NeosIo.Features:ItemWithImage': true
-      'Neos.NeosIo.Features:ItemWithVideo': true
-      'Neos.NeosIo.Features:ItemWithIcon': true
+      'Neos.NeosIo.Features:Constraint.Features': true
   properties:
     headline:
       type: string
