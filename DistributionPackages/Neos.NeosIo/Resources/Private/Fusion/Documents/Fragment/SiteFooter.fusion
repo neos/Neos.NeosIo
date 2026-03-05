@@ -1,10 +1,11 @@
-prototype(Neos.NeosIo:Component.SiteFooter) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosIo:Component.SiteFooter.Renderer) < prototype(Neos.Fusion:Component) {
     // Props can be overriden from other packages like FlowNeosIo
     siteName = 'Neos'
 
     licenseText = 'Neos is free and open source software licensed under <a href="https://opensource.org/licenses/GPL-3.0" target="_blank" rel="noopener">GPL v3</a> or later. Created with passion by over 100 contributors around the world.'
     footerContainer = ${q(site).referenceNodes('footerContentContainer').get(0)}
     footerLinkItems = ${this.footerContainer ? q(this.footerContainer).children('[instanceof Neos.Neos:Document]').get() : []}
+    @context.footerLinkItems = ${this.footerLinkItems}
     nlUser = ${q(site).property('nlUser')}
     nlId = ${q(site).property('nlId')}
 
@@ -17,4 +18,22 @@ prototype(Neos.NeosIo:Component.SiteFooter) < prototype(Neos.Fusion:Component) {
             nlId={props.nlId}
         />
     `
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            static = 'footer'
+            site = ${Neos.Caching.entryIdentifierForNode(site)}
+        }
+        entryTags {
+            site = ${Neos.Caching.nodeTag(site)}
+            links = ${Neos.Caching.nodeTag(footerLinkItems)}
+        }
+    }
 }
+
+prototype(Neos.NeosIo:Component.SiteFooter) < prototype(Neos.Fusion:Renderer) {
+    renderPath = '/footer'
+}
+
+footer = Neos.NeosIo:Component.SiteFooter.Renderer
