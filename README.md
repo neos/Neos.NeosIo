@@ -4,8 +4,9 @@ In a first step we are creating a new [presentational components](DistributionPa
 
 ## Setup & Installation
 
-Clone the repository, and setup Neos as always:
+Clone the repository, and setup Neos as always. You can choose to use Local Beach, DDEV or your own setup.
 
+### Local Beach setup
 - Set up Local Beach as described here: https://www.flownative.com/en/documentation/guides/localbeach/local-beach-setup-docker-based-neos-development-howto.html
 - Run `composer install`
 - Run `beach start`
@@ -19,8 +20,29 @@ Clone the repository, and setup Neos as always:
   - Run `yarn` inside root of the project to install dependencies
   - Run `yarn build` to build the assets
 
-
 _Note: We require [nvm](https://github.com/creationix/nvm#install-script) as well as the `yarn` binary to be installed on your system._
+
+### DDEV setup
+- Set up DDEV as described here: https://docs.ddev.com/en/stable/users/install/ddev-installation/
+- Additional information about DDEV with Neos can be found here: https://docs.neos.io/guide/installation-development-setup/ddev-local-beach/all-platforms-using-ddev-and-docker
+- Run `ddev start`
+- You can call commands directly from outside with `ddev exec <command>`, but also enter the container with `ddev ssh`.
+- There is also a convenience commands for 
+  - Flow commands: `ddev flow <flow-command>`
+  - Composer commands: `ddev composer <composer-command>`
+  - NPM commands: `ddev npm <npm-command>`
+  - Yarn commands: `ddev yarn <yarn-command>`
+- Run `ddev composer install`
+- Run `ddev flow doctrine:migrate` and site imports etc. as needed
+- add the following domains:
+  - `ddev flow domain:add --site-node-name neosio --hostname neos-io.ddev.site --scheme https`
+  - `ddev flow domain:add --site-node-name flowneosio --hostname flow-neos-io.ddev.site --scheme https`
+  - `ddev flow domain:add --site-node-name neosconio --hostname neoscon-io.ddev.site --scheme https`
+  - `ddev flow domain:add --site-node-name barcamp --hostname barcamp-neos-io.ddev.site --scheme https`
+- To build css/js assets
+  - Run `ddev yarn` inside root of the project to install dependencies
+  - Run `ddev yarn build` to build the assets
+
 
 ## Building the assets
 
