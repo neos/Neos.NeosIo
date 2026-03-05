@@ -3,11 +3,10 @@
     'Neos.Neos:Content': true
     'Neos.NodeTypes:LinkMixin': true
     'Neos.NeosIo:Mixin.Background': true
-    'Neos.NeosIo:Constraints.Stage': true
+    'Neos.NeosIo:Constraints.Main': true
   ui:
-    label: CTA Banner
-    icon: link
-    inlineEditable: true
+    label: 'CTA Banner'
+    icon: circle-exclamation
     group: special
   properties:
     background:
@@ -21,14 +20,14 @@
         inlineEditable: true
         inline:
           editorOptions:
-            placeholder: 'Enter headline here'
+            placeholder: 'Enter headline here…'
     text:
       type: string
       ui:
         inlineEditable: true
         inline:
           editorOptions:
-            placeholder: 'Enter text here'
+            placeholder: 'Enter text here…'
     link:
       ui:
         showInCreationDialog: true
@@ -45,7 +44,7 @@
         inlineEditable: true
         inline:
           editorOptions:
-            placeholder: 'Try Neos'
+            placeholder: 'Link label…'
     secondaryLink:
       type: string
       ui:
@@ -64,6 +63,4 @@
         inlineEditable: true
         inline:
           editorOptions:
-            placeholder: 'View Features'
-
-
+            placeholder: 'Secondary label…'
