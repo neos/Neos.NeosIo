@@ -1,0 +1,31 @@
+prototype(Neos.NeosIo:CTABanner) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:CTABanner {
+        background = ${q(node).property('background')}
+
+        headline = Neos.Neos:Editable {
+            property = 'headline'
+            block = false
+        }
+
+        text = Neos.Neos:Editable {
+            property = 'text'
+            block = false
+        }
+
+        // CTA Button
+        link = ${q(node).property('link')}
+        link.@process.convertUris = Neos.Neos:ConvertUris
+        linkLabel = Neos.Neos:Editable {
+            property = 'linkLabel'
+            block = false
+        }
+
+        // Secondary Button
+        secondaryLink = ${q(node).property('secondaryLink')}
+        secondaryLink.@process.convertUris = Neos.Neos:ConvertUris
+        secondaryLinkLabel = Neos.Neos:Editable {
+            property = 'secondaryLinkLabel'
+            block = false
+        }
+    }
+}

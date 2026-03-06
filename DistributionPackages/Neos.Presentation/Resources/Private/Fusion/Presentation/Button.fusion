@@ -43,12 +43,12 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
         isButton = ${!props.href || renderingMode.isEdit}
         hasIcon = ${props.icon && props.variant != 'link'}
         global = ${[
-            'transition cursor-pointer',
+            'transition cursor-pointer whitespace-nowrap',
             private.isButton ? 'disabled:cursor-not-allowed' : 'aria-disabled:cursor-not-allowed',
             private.hasIcon ? 'group/icon gap-2 items-center' : null
         ]}
         button = ${[
-            'px-8 py-4 text-black whitespace-nowrap bg-green display-cta-lg hocus:text-white hocus:bg-green-dark',
+            'px-8 py-4 text-black bg-green display-cta-lg hocus:text-white hocus:bg-green-dark',
             private.isButton ? 'disabled:bg-neutral-40! disabled:text-black!' : 'aria-disabled:bg-neutral-40! aria-disabled:text-black!',
             props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
         ]}
@@ -78,10 +78,10 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
             />
         `
         content = afx`
-            <Neos.Presentation:Icon @if={private.hasIcon && props.iconLeft} icon={props.icon} class="shrink-0" />
+            <Neos.Presentation:Icon @if={private.hasIcon && props.iconLeft} icon={props.icon} ariaHidden={true} class="shrink-0" />
             {props.fullWidth && private.hasIcon ? "" : props.content}
             <span @if={props.fullWidth && private.hasIcon && props.content} class="grow">{props.content}</span>
-            <Neos.Presentation:Icon @if={private.hasIcon && !props.iconLeft} icon={props.icon} class="shrink-0" />
+            <Neos.Presentation:Icon @if={private.hasIcon && !props.iconLeft} icon={props.icon} ariaHidden={true} class="shrink-0" />
         `
     }
 }
