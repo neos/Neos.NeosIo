@@ -17,7 +17,8 @@ prototype(Neos.Form:ImageUpload) {
 prototype(Neos.Form.FusionRenderer:FormNavigationButton) {
     @context.label = ${this.label}
 
+    // TODO find out where this is used
     content = afx`
-        <span class="btn__content">{label}</span>
+        {label}
     `
 }

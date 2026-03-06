@@ -21,26 +21,25 @@
                 label: Right
     style:
       type: string
-      defaultValue: btn--primary
+      defaultValue: button
       ui:
-        label: 'Color of the Button'
+        label: 'Style of the Button'
         reloadIfChanged: true
         inspector:
           editor: Content/Inspector/Editors/SelectBoxEditor
           group: appearance
           editorOptions:
             allowEmpty: true
-            placeholder: Choose a color
+            placeholder: 'Choose a style'
             values:
-              btn--primary:
-                label: Primary
-              btn--solidPrimary:
-                label: 'Primary (Solid)'
-              btn--secondary:
-                label: Secondary
-              btn--solidSecondary:
-                label: 'Secondary (Solid)'
-              btn--bright:
-                label: Bright
-              btn--solidBright:
-                label: 'Bright (Solid)'
+              green:
+                label: 'Solid green Button'
+              purple:
+                label: 'Solid purple Button'
+              yellow:
+                label: 'Solid yellow Button'
+              transparent:
+                label: 'Transparent with underline'
+              link:
+                label: 'Link'
+

@@ -1,68 +1,87 @@
 prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
-    @styleguide {
-        props {
-            content = 'Button Text'
-            attributes.style = "margin: 50px"
-        }
-        useCases {
-            icon.props {
-                content = 'Button with Icon'
-                icon = 'animatedArrow'
-                attributes.style = "margin: 50px"
-            }
-            href.props {
-                content = 'Link with Icon'
-                icon = 'animatedArrow'
-                href = '#link'
-                attributes.style = "margin: 50px"
-            }
-        }
-    }
+    variant = 'green'
+    type = 'button'
+    content = ''
+    ariaLabel = ''
+    href = ''
+    icon = ''
+    disabled = false
+    fullWidth = false
+    class = ''
+    openInNewTab = false
+    attributes = Neos.Fusion:DataStructure
 
     @propTypes {
-        variant = ${PropTypes.oneOf(['button', 'transparent', 'link'])}
+        @strict = true
+        variant = ${PropTypes.oneOf(['green', 'purple', 'yellow', 'transparent', 'link'])}
         type = ${PropTypes.oneOf(['button', 'submit', 'reset'])}
-        href = null
-        content = PropTypes:String
-        ariaLabel = PropTypes:String
-        href = PropTypes:String
-        icon = PropTypes:String
-        disabled = PropTypes:Bool
-        fullWidth = PropTypes:Bool
-        iconLeft = PropTypes:Bool
-        class = ${PropTypes.any}
+        content = ${PropTypes.string}
+        ariaLabel = ${PropTypes.string}
+        href = ${PropTypes.string}
+        icon = ${PropTypes.string}
+        disabled = ${PropTypes.boolean}
+        fullWidth = ${PropTypes.boolean}
+        class = ${PropTypes.string}
+        openInNewTab = ${PropTypes.boolean}
+        attributes = ${PropTypes.any}
     }
-
-    variant = 'button'
-    type = 'button'
-    fullWidth = false
-    attributes = Neos.Fusion:DataStructure
-    iconLeft = ${this.icon == 'animatedArrowLeft'}
 
     @private {
         isButton = ${!props.href || renderingMode.isEdit}
         hasIcon = ${props.icon && props.variant != 'link'}
-        global = ${[
-            'transition cursor-pointer whitespace-nowrap',
-            private.isButton ? 'disabled:cursor-not-allowed' : 'aria-disabled:cursor-not-allowed',
-            private.hasIcon ? 'group/icon gap-2 items-center' : null
-        ]}
-        button = ${[
-            'px-8 py-4 text-black bg-green display-cta-lg hocus:text-white hocus:bg-green-dark',
-            private.isButton ? 'disabled:bg-neutral-40! disabled:text-black!' : 'aria-disabled:bg-neutral-40! aria-disabled:text-black!',
-            props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
-        ]}
-        transparent = ${[
-            'inline-flex text-black display-cta-xl hocus:opacity-66 disabled:text-neutral-40! aria-disabled:text-neutral-40!',
-            private.isButton ? 'disabled:text-neutral-40!' :  'aria-disabled:text-neutral-40!'
-        ]}
-        link = ${[
-            'display-cta-lg text-black underline decoration-2 underline-offset-8 decoration-blue-light hocus:text-blue-light',
-            private.isButton ? 'disabled:text-neutral-40! disabled:decoration-neutral-40' : 'aria-disabled:text-neutral-40! aria-disabled:decoration-neutral-40'
-        ]}
-    }
+        iconLeft = ${props.icon == 'animatedArrowLeft'}
 
-    @if.hasLabelOrContent = ${this.content || this.ariaLabel}
+        buttonClasses = Neos.Fusion:Join {
+            global = ${Carbon.String.classNames(
+                'transition cursor-pointer whitespace-nowrap text-center',
+                private.isButton ? 'disabled:cursor-not-allowed' : 'aria-disabled:cursor-not-allowed',
+                private.hasIcon ? 'group/icon gap-2 items-center' : null
+            )}
+
+            variant = Neos.Fusion:Case {
+                transparent {
+                    condition = ${props.variant == 'transparent'}
+                    renderer = ${Carbon.String.classNames(
+                        'display-cta-lg text-black underline decoration-2 underline-offset-8 decoration-blue-light hocus:text-blue-light',
+                        private.isButton ? 'disabled:text-neutral-40! disabled:decoration-neutral-40' : 'aria-disabled:text-neutral-40! aria-disabled:decoration-neutral-40'
+                    )}
+                }
+                link {
+                    condition = ${props.variant == 'link'}
+                    renderer = ${Carbon.String.classNames(
+                        'inline-flex text-black display-cta-xl hocus:opacity-66 disabled:text-neutral-40! aria-disabled:text-neutral-40!',
+                        private.isButton ? 'disabled:text-neutral-40!' :  'aria-disabled:text-neutral-40!'
+                    )}
+                }
+                purple {
+                    condition = ${props.variant == 'purple'}
+                    renderer = ${Carbon.String.classNames(
+                        'px-8 py-4 text-white bg-purple display-cta-lg hocus:text-white hocus:bg-purple-dark no-underline!',
+                        private.isButton ? 'disabled:bg-neutral-40! disabled:text-black!' : 'aria-disabled:bg-neutral-40! aria-disabled:text-black!',
+                        props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
+                    )}
+                }
+                yellow {
+                    condition = ${props.variant == 'yellow'}
+                    renderer = ${Carbon.String.classNames(
+                        'px-8 py-4 text-black bg-yellow display-cta-lg hocus:text-white hocus:bg-yellow-dark no-underline!',
+                        private.isButton ? 'disabled:bg-neutral-40! disabled:text-black!' : 'aria-disabled:bg-neutral-40! aria-disabled:text-black!',
+                        props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
+                    )}
+                }
+                // fallback is always the default green button
+                green {
+                    condition = ${true}
+                    renderer = ${Carbon.String.classNames(
+                        'px-8 py-4 text-black bg-green display-cta-lg hocus:text-white hocus:bg-green-dark no-underline!',
+                        private.isButton ? 'disabled:bg-neutral-40! disabled:text-black!' : 'aria-disabled:bg-neutral-40! aria-disabled:text-black!',
+                        props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
+                    )}
+                }
+            }
+            @glue = ' '
+        }
+    }
 
     renderer = Neos.Fusion:Tag {
         tagName = ${private.isButton ? 'button' : 'a'}
@@ -74,14 +93,16 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
                 aria-label={props.ariaLabel}
                 type={private.isButton ? props.type : null}
                 href={!props.disabled && props.href ? props.href : null}
-                class={Carbon.String.classNames(private.global, private[props.variant], props.class)}
+                class={Carbon.String.classNames(private.buttonClasses, props.class)}
+                target={props.openInNewTab ? '_blank' : null}
+                rel={props.openInNewTab ? 'noopener noreferrer' : null}
             />
         `
         content = afx`
-            <Neos.Presentation:Icon @if={private.hasIcon && props.iconLeft} icon={props.icon} ariaHidden={true} class="shrink-0" />
+            <Neos.Presentation:Icon @if={private.hasIcon && private.iconLeft} icon={props.icon} ariaHidden={true} class="shrink-0" />
             {props.fullWidth && private.hasIcon ? "" : props.content}
             <span @if={props.fullWidth && private.hasIcon && props.content} class="grow">{props.content}</span>
-            <Neos.Presentation:Icon @if={private.hasIcon && !props.iconLeft} icon={props.icon} ariaHidden={true} class="shrink-0" />
+            <Neos.Presentation:Icon @if={private.hasIcon && !private.iconLeft} icon={props.icon} ariaHidden={true} class="shrink-0" />
         `
     }
 }

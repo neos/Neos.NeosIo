@@ -75,12 +75,10 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Component) {
                         </ul>
 
                         <div class="u-alignRight">
-                            <Neos.NeosIo:Component.Button
-                                color="btn--solidPrimary"
-                                uri={private.overviewUri}
-                            >
-                                Back to list
-                            </Neos.NeosIo:Component.Button>
+                            <Neos.Presentation:Button
+                                href={private.overviewUri}
+                                content="Back to list"
+                            />
                         </div>
                     </div>
                 </section>

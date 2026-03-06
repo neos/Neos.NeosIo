@@ -38,7 +38,7 @@ prototype(Neos.Presentation:CTABanner) < prototype(Neos.Fusion:Component) {
                 </Neos.Presentation:Paragraph>
                 <div class="flex items-center flex-wrap flex-row gap-8 m-0">
                     <Neos.Presentation:Button href={props.link} content={props.linkLabel} icon="animatedArrow" />
-                    <Neos.Presentation:Button @if={props.secondaryLink} href={props.secondaryLink} content={props.secondaryLinkLabel} variant="link" class="text-white" />
+                    <Neos.Presentation:Button @if={props.secondaryLink} href={props.secondaryLink} content={props.secondaryLinkLabel} variant="transparent" class="text-white" />
                 </div>
             </div>
 

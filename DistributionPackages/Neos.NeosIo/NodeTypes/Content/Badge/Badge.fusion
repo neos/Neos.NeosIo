@@ -45,17 +45,13 @@ prototype(Neos.NeosIo:Component.Badge) < prototype(Neos.Fusion:Component) {
             <div @if.set={!String.isBlank(props.description)} class="badge__description">
                 {props.description}
             </div>
-            <Neos.Fusion:Tag
-                tagName={props.link && !private.inBackend ? 'a' : 'div'}
-                attributes.class="badge__linktext btn btn--solidPrimary"
-                attributes.href={props.link}
-                attributes.href.@if={props.link && !private.inBackend}
-                attributes.target={props.openInNewTab ? '_blank' : null}
-            >
-                <span class="btn__content">
-                    {props.linkText}
-                </span>
-            </Neos.Fusion:Tag>
+
+            <Neos.Presentation:Button
+                href={props.link}
+                content={props.linkText}
+                openInNewTab={props.openInNewTab}
+                class="whitespace-normal!"
+            />
         </div>
 
     `

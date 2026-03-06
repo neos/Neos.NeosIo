@@ -110,12 +110,13 @@ prototype(Neos.NeosConIo:Component.TicketSalesDisruptor.Inner) < prototype(Neos.
                 </div>
             </div>
             <div class="ticket-sales-disruptor__call-to-action">
-                <a class="btn btn--solidSecondary" href={props.link} target="_blank"
-                   rel="noopener external">
-                    <div class="btn__content">
-                        {props.buttonLabel}
-                    </div>
-                </a>
+                <Neos.Presentation:Button
+                    href={props.link}
+                    content={props.buttonLabel}
+                    openInNewTab={true}
+                    class="h-[46px] items-center py-0!"
+                    variant="purple"
+                />
             </div>
         </div>
     `
