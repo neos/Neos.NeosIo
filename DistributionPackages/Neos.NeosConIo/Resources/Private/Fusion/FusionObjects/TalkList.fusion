@@ -8,13 +8,10 @@ prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Loop) {
     itemRenderer = Neos.Fusion:Tag {
         tagName = 'li'
         attributes.class = 'talkList__item'
-        content = Neos.NeosIo:ImageTeaser {
+        content = Neos.Presentation:ContentTeaser {
             // node is the talk here
             title = ${q(node).property('title')}
             image = ${q(node).property('thumbnail')}
-            fallbackImageUrl = ${(q(node).property('video') && !q(node).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(node).property('video') + "/maxresdefault.jpg" : null}
-            text = ''
-            className = 'imageTeaser--relatedTalk'
             link = Neos.Neos:NodeUri {
                 node = ${node}
                 absolute = true

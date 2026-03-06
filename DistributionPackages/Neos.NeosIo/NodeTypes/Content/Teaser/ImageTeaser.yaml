@@ -7,33 +7,38 @@
   superTypes:
     'Neos.Neos:Content': true
     'Neos.NeosIo:Mixin.Teaser': true
-    'Neos.NodeTypes:TitleMixin': true
     'Neos.NodeTypes:ImageMixin': true
     'Neos.NodeTypes:LinkMixin': true
-    'Neos.NodeTypes:TextMixin': true
   ui:
     label: 'Teaser with image'
     icon: th-large
     group: special
   properties:
+    title:
+      type: string
+      ui:
+        label: 'Title'
+        showInCreationDialog: true
+        inlineEditable: true
+        inspector:
+          group: false
+        inline:
+          editorOptions:
+            placeholder: 'Enter title here'
     subTitle:
       type: string
       ui:
         inlineEditable: true
         inline:
           editorOptions:
-            placeholder: 'Sub-Headline...'
-    title:
+            placeholder: 'Enter subtitle here'
+    text:
       type: string
       ui:
+        inlineEditable: true
         inline:
           editorOptions:
-            placeholder: 'Headline...'
-            formatting: {}
-    text:
-      ui:
-        inline:
-          editorOptions: {  }
+            placeholder: 'Enter text here'
     link:
       ui:
         label: 'Teaser Link'
