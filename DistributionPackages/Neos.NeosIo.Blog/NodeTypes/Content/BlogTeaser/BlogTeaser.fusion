@@ -19,7 +19,7 @@ prototype(Neos.NeosIo.Blog:Content.BlogTeaser) < prototype(Neos.Neos:ContentComp
         }
         title = ${q(private.blogPostToDisplay).property('title')}
         text = ${q(private.blogPostToDisplay).property('summary')}
-        alternativeText = 'TODO'
+        altText = ${Neos.Node.label(private.blogPostToDisplay)}
         image = ${q(private.blogPostToDisplay).property('keyVisualImage')}
         link = Neos.Neos:NodeUri {
             node = ${private.blogPostToDisplay}
@@ -27,12 +27,17 @@ prototype(Neos.NeosIo.Blog:Content.BlogTeaser) < prototype(Neos.Neos:ContentComp
         }
     }
 
-    renderer = Neos.NeosIo:Component.ImageTeaser {
+    renderer = Neos.Presentation:ContentTeaser {
         title = ${private.title}
         subTitle = ${props.subTitle}
         text = ${private.text}
-        alternativeText = ${private.alternativeText}
-        image = ${private.image}
+        altText = ${private.altText}
+        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+            asset = ${private.image}
+            // TODO responsive image size with different breakpoints
+            width = 800
+            quality = 80
+        }
         link = ${private.link}
     }
 
