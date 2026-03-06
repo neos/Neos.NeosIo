@@ -1,5 +1,10 @@
 type IconElement = HTMLElement & {originalX: number, originalY: number};
 
+/**
+ * TODO: The calculations are not correct.
+ *       We need to take the position of the container into account because the animation should be based on the mouse position relative to the container, not the entire viewport.
+ */
+
 export function initStage() {
     // do not initialize the effect on devices that request reduced motion
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -16,17 +21,19 @@ export function initStage() {
             icon.style.transition = 'transform 0.3s ease-out';
         })
 
-        document.addEventListener('mousemove', (event) => {
+        container.parentElement.addEventListener('mousemove', (event) => {
+            // TODO: event is possibly on a child element like the Headline, Subline or Image
+            //       So we need to get the rect of the container and compute the relative mouse position to that container
             icons.forEach(icon => {
                 // move icon towards the mouse position with a slight offset depending on the distance
-                const offsetX = calcOffset(event.clientX, icon.originalX);
-                const offsetY = calcOffset(event.clientY, icon.originalY);
+                const offsetX = calcOffset(event.offsetX, icon.originalX);
+                const offsetY = calcOffset(event.offsetX, icon.originalY);
 
                 icon.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
             });
         });
 
-        document.addEventListener('mouseleave', (event) => {
+        container.parentElement.addEventListener('mouseleave', (event) => {
             icons.forEach(icon => {
                 icon.style.transform = '';
             });

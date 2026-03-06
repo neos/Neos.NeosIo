@@ -3,9 +3,6 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
         siteHeader = Neos.NeosIo:Fragment.SiteHeader
         //rebrandSiteHeader = Neos.NeosIo:Fragment.RebrandSiteHeader
 
-        heroStage = Neos.Neos:ContentCollection {
-            nodePath = 'hero-stage-contents'
-        }
 
         keyVisualWrapper = Neos.NeosIo:KeyVisualWrapper {
             keyVisualVariant = ${q(documentNode).property('keyVisualVariant')}
@@ -29,6 +26,10 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
                     }
                 }
             }
+        }
+
+        heroStage = Neos.Neos:ContentCollection {
+            nodePath = 'hero-stage-contents'
         }
 
         breadcrumb = Neos.NeosIo:Fragment.BreadcrumbMenu

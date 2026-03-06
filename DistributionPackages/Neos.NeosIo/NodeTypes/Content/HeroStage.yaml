@@ -15,6 +15,10 @@
             placeholder: 'Headline...'
             formatting:
               strong: true
+              styleDefinitions:
+                - name: 'Brand color'
+                  element: 'span'
+                  classes: ['color__neos-brand']
     subline:
       type: string
       defaultValue: ''
@@ -27,6 +31,10 @@
               strong: true
               em: true
               underline: true
+              styleDefinitions:
+                - name: 'Brand color'
+                  element: 'span'
+                  classes: ['color__neos-brand']
     image:
       type: Neos\Media\Domain\Model\ImageInterface
       ui:

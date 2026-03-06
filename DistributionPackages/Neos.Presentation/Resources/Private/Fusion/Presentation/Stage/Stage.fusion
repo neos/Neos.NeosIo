@@ -31,7 +31,6 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
     }
 
     @propTypes {
-        navSlot = PropTypes:String
         headline = PropTypes:String
         subline = PropTypes:String
         imageUri = PropTypes:String
@@ -42,8 +41,6 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
         <section
             class="xl:pt-24 n-stage relative! h-[100vh] flex! flex-col items-center justify-center text-white mb-[6rem] xl:mb-[10rem]"
         >
-            {props.navSlot}
-
             <div @if={props.icons} data-component="hero-stage-icon-box-container" class="absolute! size-full top-0 left-0 hidden pointer-events-none xl:block">
                 {props.icons}
             </div>

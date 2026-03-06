@@ -13,5 +13,6 @@ window.Alpine = Alpine;
 
 Alpine.data('mobileMenu', MobileMenu as (value: any) => AlpineComponent<MobileMenuComponent>)
 
-initStage();
+// Currently buggy because the implementation needs some more thought but not important enough
+// initStage();
 Alpine.start();
