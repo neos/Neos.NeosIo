@@ -1,0 +1,34 @@
+###########################################
+# A case study based teaser which.
+###########################################
+
+'Neos.NeosIo.CaseStudies:Content.CaseStudyTeaser':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NeosIo:Mixin.Teaser': true
+  ui:
+    label: 'Case study teaser'
+    icon: newspaper
+    group: special
+  properties:
+    subTitle:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Enter text here…'
+  references:
+    caseStudy:
+      constraints:
+        maxItems: 1
+        nodeTypes:
+          Neos.NeosIo:Reference.CaseStudy: true
+      ui:
+        label: 'Case study'
+        reloadIfChanged: true
+        inspector:
+          group: default
+          editorOptions:
+            nodeTypes:
+              - Neos.NeosIo:Reference.CaseStudy

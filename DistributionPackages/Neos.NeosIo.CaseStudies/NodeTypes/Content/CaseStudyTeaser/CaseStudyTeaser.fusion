@@ -1,0 +1,44 @@
+prototype(Neos.NeosIo.CaseStudies:Content.CaseStudyTeaser) < prototype(Neos.Neos:ContentComponent) {
+    caseStudy = ${q(node).referenceNodes('caseStudy').get(0)}
+    subTitle = Neos.Neos:Editable {
+        property = 'subTitle'
+        block = false
+    }
+
+    @private {
+        title = ${q(props.caseStudy).property('title')}
+        altText = ${props.caseStudy ? Neos.Node.label(props.caseStudy) : null}
+        image = ${q(props.caseStudy).property('image')}
+        link = Neos.Neos:NodeUri {
+            node = ${props.caseStudy}
+            absolute = true
+            @if.hasNode = ${props.caseStudy}
+        }
+    }
+
+    renderer = Neos.Presentation:ContentTeaser {
+        title = ${private.title}
+        subTitle = 'Case Study'
+        text = ${props.subTitle}
+        altText = ${private.altText}
+        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+            asset = ${private.image}
+            // TODO responsive image size with different breakpoints
+            width = 800
+            quality = 80
+            @if.hasAsset = ${this.asset}
+        }
+        link = ${private.link}
+    }
+
+    @cache {
+        mode = "cached"
+        entryIdentifier {
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
+        entryTags {
+            node = ${Neos.Caching.nodeTag(node)}
+            caseStudy = ${q(node).referenceNodes('caseStudy') ? Neos.Caching.nodeTag(q(node).referenceNodes('caseStudy')) : null}
+        }
+    }
+}
