@@ -4,16 +4,11 @@ prototype(Neos.MarketPlace:Button) < prototype(Neos.Fusion:Component) {
     openInNewTab = false
 
     renderer = afx`
-      <a
-          class="btn btn--solidPrimary"
-          style="width: 100%; margin-bottom: 10px;"
-          href={props.url}
-          target={props.openInNewTab ? '_blank' : ''}
-          target.@if={props.openInNewTab}
-          rel={props.openInNewTab ? 'noopener noreferrer' : ''}
-      >
-        <span class="btn__content">{props.content}</span>
-      </a>
+        <Neos.Presentation:Button
+            href={props.url}
+            openInNewTab={props.openInNewTab}
+            content={props.content}
+        />
     `
 
     @if.hasContent = ${this.content}

@@ -8,23 +8,50 @@ prototype(Neos.NeosIo:Button) < prototype(Neos.Neos:ContentComponent) {
                     block = false
                 }
                 alignment = ${q(node).property('alignment') || 'inline'}
-                style = ${q(node).property('style')}
+                style = Neos.NeosIo:Button.Helpers.StyleMapping {
+                    style = ${q(node).property('style')}
+                }
+                icon = ${q(node).property('icon')}
             }
         }
 
         default {
             condition = true
-            renderer = Neos.NeosIo:Component.WrappedButton {
+            renderer = Neos.NeosIo:Component.Button {
                 buttonLabel = Neos.Neos:Editable {
                     property = 'buttonLabel'
                     block = false
                 }
                 alignment = ${q(node).property('alignment') || 'inline'}
-                style = ${q(node).property('style')}
+                style = Neos.NeosIo:Button.Helpers.StyleMapping {
+                    style = ${q(node).property('style')}
+                }
                 link = ${q(node).property('link')}
                 link.@process.convertUris = Neos.Neos:ConvertUris
                 openInNewTab = ${q(node).property('openInNewTab')}
+                icon = ${q(node).property('icon')}
             }
         }
+    }
+}
+
+// Map old style values to new ones.
+// TODO: Remove when all buttons have been migrated to the new styles.
+prototype(Neos.NeosIo:Button.Helpers.StyleMapping) < prototype(Neos.Fusion:Component) {
+    style = ''
+    @propTypes {
+        @strict = true
+        style = ${PropTypes.oneOf(['green', 'purple', 'yellow', 'transparent', 'link', 'btn--primary', 'btn--solidPrimary', 'btn--secondary', 'btn--solidSecondary', 'btn--bright', 'btn--solidBright'])}
+    }
+
+    renderer = Neos.Fusion:Match {
+        @subject = ${props.style}
+        btn--primary = 'green'
+        btn--solidPrimary = 'green'
+        btn--secondary = 'purple'
+        btn--solidSecondary = 'purple'
+        btn--bright = 'yellow'
+        btn--solidBright = 'yellow'
+        @default = ${props.style}
     }
 }

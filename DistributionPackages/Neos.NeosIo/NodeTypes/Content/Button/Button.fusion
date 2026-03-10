@@ -3,13 +3,15 @@ prototype(Neos.NeosIo:Component.ScrollToContentButton) < prototype(Neos.Fusion:C
     alignment = ''
     style = ''
     link = ''
+    icon = ''
 
     @propTypes {
         @strict = true
         buttonLabel = ${PropTypes.string}
-        alignment = ${PropTypes.oneOf(['Left', 'Center', 'Right', 'inline'])}
-        style = ${PropTypes.oneOf(['btn--primary', 'btn--solidPrimary', 'btn--secondary', 'btn--solidSecondary', 'btn--bright', 'btn--solidBright'])}
+        alignment = ${PropTypes.string}
+        style = ${PropTypes.string}
         link = ${PropTypes.string}
+        icon = ${PropTypes.string}
     }
 
     @private {
@@ -18,36 +20,35 @@ prototype(Neos.NeosIo:Component.ScrollToContentButton) < prototype(Neos.Fusion:C
 
     renderer = afx`
         <Neos.NeosIo:Component.ButtonWrapper alignment={props.alignment}>
-            <Neos.Fusion:Tag
-                tagName={!private.inBackend ? 'a' : 'div'}
-                attributes.class={"btn " + props.style}
-                attributes.href={!private.inBackend ? '#mainContent' : null}
+            <Neos.Presentation:Button
+                href='#mainContent'
+                content={props.buttonLabel}
+                openInNewTab={props.openInNewTab}
+                variant={props.style}
+                icon={props.icon}
                 attributes.data-component={!private.inBackend ? 'ScrollTo' : null}
                 attributes.data-targetSelector={!private.inBackend ? '#mainContent' : null}
-            >
-                <span class="btn__content">
-                    {props.buttonLabel}
-                </span>
-            </Neos.Fusion:Tag>
+            />
         </Neos.NeosIo:Component.ButtonWrapper>
     `
 }
 
-prototype(Neos.NeosIo:Component.WrappedButton) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosIo:Component.Button) < prototype(Neos.Fusion:Component) {
     buttonLabel = ''
     alignment = ''
     style = ''
     link = ''
     openInNewTab = false
+    icon = ''
 
     @propTypes {
         @strict = true
         buttonLabel = ${PropTypes.string}
-        alignment = ${PropTypes.oneOf(['Left', 'Center', 'Right', 'inline'])}
-        style = ${PropTypes.oneOf(['btn--primary', 'btn--solidPrimary', 'btn--secondary', 'btn--solidSecondary', 'btn--bright', 'btn--solidBright'])}
-
+        alignment = ${PropTypes.string}
+        style = ${PropTypes.string}
         link = ${PropTypes.string}
         openInNewTab = ${PropTypes.boolean}
+        icon = ${PropTypes.string}
     }
 
     @private {
@@ -56,17 +57,13 @@ prototype(Neos.NeosIo:Component.WrappedButton) < prototype(Neos.Fusion:Component
 
     renderer = afx`
         <Neos.NeosIo:Component.ButtonWrapper alignment={props.alignment}>
-            <Neos.Fusion:Tag
-                tagName={props.link && !private.inBackend ? 'a' : 'div'}
-                attributes.class={"btn " + props.style}
-                attributes.href={props.link}
-                attributes.href.@if={props.link && !private.inBackend}
-                attributes.target={props.openInNewTab ? '_blank' : null}
-            >
-                <span class="btn__content">
-                    {props.buttonLabel}
-                </span>
-            </Neos.Fusion:Tag>
+            <Neos.Presentation:Button
+                href={props.link}
+                content={props.buttonLabel}
+                openInNewTab={props.openInNewTab}
+                variant={props.style}
+                icon={props.icon}
+            />
         </Neos.NeosIo:Component.ButtonWrapper>
     `
 }
@@ -81,6 +78,23 @@ prototype(Neos.NeosIo:Component.ButtonWrapper) < prototype(Neos.Fusion:Component
         content = ${PropTypes.string}
     }
 
+    @private {
+        alignClass = Neos.Fusion:Case {
+            Left {
+                condition = ${props.alignment == 'Left'}
+                renderer = 'justify-start'
+            }
+            Center {
+                condition = ${props.alignment == 'Center'}
+                renderer = 'justify-center'
+            }
+            Right {
+                condition = ${props.alignment == 'Right'}
+                renderer = 'justify-end'
+            }
+        }
+    }
+
     renderer = Neos.Fusion:Case {
         inline {
             condition = ${props.alignment == 'inline'}
@@ -90,7 +104,7 @@ prototype(Neos.NeosIo:Component.ButtonWrapper) < prototype(Neos.Fusion:Component
         default {
             condition = ${true}
             renderer = afx`
-                <div class={"u-align" + props.alignment}>
+                <div class={Carbon.String.classNames("flex ", private.alignClass)}>
                     {props.content}
                 </div>
             `

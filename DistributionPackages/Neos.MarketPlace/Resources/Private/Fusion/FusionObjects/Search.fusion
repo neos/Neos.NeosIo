@@ -107,15 +107,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
                         </Neos.Fusion:Loop>
                     </optgroup>
                 </select>
-                <button
-                    type="submit"
-                    class="btn btn--solidPrimary"
-                    title={I18n.translate('Neos.MarketPlace:Main:submit')}
-                >
-                    <span class="btn__content">
-                        <i class="fas fa-search"></i>
-                    </span>
-                </button>
+                <Neos.Presentation:Button type="submit" icon="search" content={I18n.translate('Neos.MarketPlace:Main:submit')} />
             </form>
         `
     }
