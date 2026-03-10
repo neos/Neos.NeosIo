@@ -13,7 +13,7 @@ prototype(Neos.Presentation:PostGrid.Teaser) < prototype(Neos.Fusion:Component) 
 
     @private {
         accentColors = ${['purple', 'blue', 'blue-light', 'green', 'yellow', 'orange', 'red']}
-        background = ${props.isFeature ? Array.random(private.accentColors) : 'gradient'}
+        background = ${props.isFeature ? Array.random(private.accentColors) : 'blue-dark-to-blue'}
     }
 
     renderer = afx`

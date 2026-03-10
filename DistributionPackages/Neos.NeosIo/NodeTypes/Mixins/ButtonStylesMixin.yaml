@@ -2,26 +2,10 @@
   abstract: true
   properties:
     alignment:
-      type: string
+      options:
+        preset: 'NeosIo.alignment'
       ui:
         label: 'Button Alignment'
-        reloadIfChanged: true
-        inspector:
-          group: appearance
-          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
-          editorOptions:
-            allowEmpty: true
-            placeholder: Inline
-            values:
-              Left:
-                label: Left
-                icon: align-left
-              Center:
-                label: Center
-                icon: align-center
-              Right:
-                label: Right
-                icon: align-right
     style:
       type: string
       ui:

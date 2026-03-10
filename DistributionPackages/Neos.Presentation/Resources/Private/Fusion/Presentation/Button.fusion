@@ -41,8 +41,9 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
             variant = Neos.Fusion:Match {
                 @subject = ${props.variant}
                 transparent = ${Carbon.String.classNames(
-                    'display-cta-lg text-black underline decoration-2 underline-offset-8 decoration-blue-light hocus:text-blue-light',
-                    private.isButton ? 'disabled:text-neutral-40! disabled:decoration-neutral-40' : 'aria-disabled:text-neutral-40! aria-disabled:decoration-neutral-40'
+                    'display-cta-lg text-black underline decoration-2 underline-offset-2 decoration-blue-light hocus:text-blue-light',
+                    private.isButton ? 'disabled:text-neutral-40! disabled:decoration-neutral-40' : 'aria-disabled:text-neutral-40! aria-disabled:decoration-neutral-40',
+                    props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
                 )}
                 link = ${Carbon.String.classNames(
                     'inline-flex text-black display-cta-xl hocus:opacity-66 disabled:text-neutral-40! aria-disabled:text-neutral-40!',

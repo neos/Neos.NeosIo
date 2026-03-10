@@ -1,6 +1,6 @@
 prototype(Neos.Presentation:BentoBoxes.Box) < prototype(Neos.Fusion:Component) {
     @propTypes {
-        background = ${PropTypes.oneOf(['gradient', 'blue-dark', 'blue', 'blue-light', 'purple', 'green', 'yellow', 'orange', 'red', 'black'])}
+        background = ${PropTypes.string}
         assetAlign = ${PropTypes.oneOf(['left', 'center', 'right', '', null])}
         link = PropTypes:String
         headlineTagName = ${PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'])}

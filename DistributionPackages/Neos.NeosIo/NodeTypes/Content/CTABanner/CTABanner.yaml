@@ -3,15 +3,17 @@
     'Neos.Neos:Content': true
     'Neos.NodeTypes:LinkMixin': true
     'Neos.NeosIo:Mixin.Background': true
+    'Neos.NeosIo:Mixin.ButtonStyles': true
     'Neos.NeosIo:Constraints.Stage': true
   ui:
     label: 'CTA Banner'
     icon: circle-exclamation
     group: special
   properties:
-    background:
-      type: string
-      defaultValue: 'gradient'
+    alignment:
+      ui:
+        inspector:
+          hidden: true
     headline:
       type: string
       ui:

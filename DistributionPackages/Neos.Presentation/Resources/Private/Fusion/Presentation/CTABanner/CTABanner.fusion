@@ -5,6 +5,7 @@ prototype(Neos.Presentation:CTABanner) < prototype(Neos.Fusion:Component) {
 
     link = ''
     linkLabel = ''
+    linkVariant = ''
     secondaryLink = ''
     secondaryLinkLabel = ''
 
@@ -15,6 +16,7 @@ prototype(Neos.Presentation:CTABanner) < prototype(Neos.Fusion:Component) {
         text = ${PropTypes.string}
         link = ${PropTypes.string}
         linkLabel = ${PropTypes.string}
+        linkVariant = ${PropTypes.string}
         secondaryLink = ${PropTypes.string}
         secondaryLinkLabel = ${PropTypes.string}
     }
@@ -24,7 +26,11 @@ prototype(Neos.Presentation:CTABanner) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = afx`
-        <Neos.Presentation:Background background={props.background} tagName="div" class="p-4 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8 pb-17 md:pb-34 cta-banner-clip-path">
+        <Neos.Presentation:Background
+            background={props.background}
+            tagName="div"
+            class="p-4 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8 pb-17 md:pb-34 cta-banner-clip-path"
+        >
             <Neos.Presentation:Headline
                 tagName="h2"
                 display="headline-xl"
@@ -37,7 +43,12 @@ prototype(Neos.Presentation:CTABanner) < prototype(Neos.Fusion:Component) {
                     {props.text}
                 </Neos.Presentation:Paragraph>
                 <div class="flex items-center flex-wrap flex-row gap-8 m-0">
-                    <Neos.Presentation:Button href={props.link} content={props.linkLabel} icon="animatedArrow" />
+                    <Neos.Presentation:Button
+                        href={props.link}
+                        content={props.linkLabel}
+                        icon="animatedArrow"
+                        variant={props.linkVariant}
+                    />
                     <Neos.Presentation:Button @if={props.secondaryLink} href={props.secondaryLink} content={props.secondaryLinkLabel} variant="transparent" class="text-white" />
                 </div>
             </div>
@@ -45,4 +56,3 @@ prototype(Neos.Presentation:CTABanner) < prototype(Neos.Fusion:Component) {
         </Neos.Presentation:Background>
     `
 }
-

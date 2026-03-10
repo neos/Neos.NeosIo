@@ -55,24 +55,10 @@
           group: content
           position: 30
     alignment:
-      type: string
-      defaultValue: inline
+      options:
+        preset: 'NeosIo.alignment'
       ui:
         label: 'Button Alignment'
-        reloadIfChanged: true
-        inspector:
-          group: appearance
-          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
-          editorOptions:
-            values:
-              inline:
-                label: 'Inline (Default)'
-              Left:
-                label: Left
-              Center:
-                label: Center
-              Right:
-                label: Right
     style:
       type: string
       defaultValue: btn--primary

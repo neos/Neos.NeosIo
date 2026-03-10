@@ -5,10 +5,11 @@ prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
     }
 
     @propTypes {
-        background = ${PropTypes.oneOf(['gradient', 'blue-dark', 'blue', 'blue-light', 'purple', 'purple-dark', 'green', 'green-dark', 'yellow', 'yellow-dark', 'orange', 'red', 'black'])}
-        tagName = PropTypes:String
-        style = PropTypes:String
-        href = PropTypes:String
+//        background = ${PropTypes.oneOf(['blue-dark', 'blue', 'blue-light', 'purple', 'purple-dark', 'green', 'green-dark', 'yellow', 'yellow-dark', 'orange', 'red', 'black'])}
+        background = ${PropTypes.string}
+        tagName = ${PropTypes.string}
+        style = ${PropTypes.string}
+        href = ${PropTypes.string}
         class = ${PropTypes.any}
     }
 
@@ -21,6 +22,9 @@ prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
     @private {
         class = ''
         attributes = Neos.Fusion:DataStructure
+        backgroundParts = ${Type.isString(props.background) ? String.split(props.background, '-to-') : []}
+        backgroundStart = ${private.backgroundParts[0]}
+        backgroundEnd = ${Array.length(private.backgroundParts) > 1 ? private.backgroundParts[1] : null}
     }
 
     renderer = Neos.Fusion:Tag {
@@ -34,8 +38,8 @@ prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
                 href={props.href}
                 class={Carbon.String.classNames(
                     'n-background',
-                    props.background && 'n-background--' + props.background,
-                    props.background == 'gradient' && 'bg-linear-to-r from-blue-dark to-blue',
+                    private.backgroundStart && 'n-background--' + private.backgroundStart,
+                    private.backgroundStart && private.backgroundEnd && 'bg-linear-to-r from-' + private.backgroundStart + ' to-' + private.backgroundEnd,
                     private.class,
                     props.class
                 )}

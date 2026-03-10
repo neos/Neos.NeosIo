@@ -19,6 +19,7 @@ prototype(Neos.NeosIo:CTABanner) < prototype(Neos.Neos:ContentComponent) {
             property = 'linkLabel'
             block = false
         }
+        linkVariant = ${q(node).property('style')}
 
         // Secondary Button
         secondaryLink = ${q(node).property('secondaryLink')}
