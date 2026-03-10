@@ -36,6 +36,7 @@ prototype(Neos.NeosIo:Button) < prototype(Neos.Neos:ContentComponent) {
 }
 
 // Map old style values to new ones.
+// TODO: Remove when all buttons have been migrated to the new styles.
 prototype(Neos.NeosIo:Button.Helpers.StyleMapping) < prototype(Neos.Fusion:Component) {
     style = ''
     @propTypes {
@@ -43,35 +44,14 @@ prototype(Neos.NeosIo:Button.Helpers.StyleMapping) < prototype(Neos.Fusion:Compo
         style = ${PropTypes.oneOf(['green', 'purple', 'yellow', 'transparent', 'link', 'btn--primary', 'btn--solidPrimary', 'btn--secondary', 'btn--solidSecondary', 'btn--bright', 'btn--solidBright'])}
     }
 
-    renderer = Neos.Fusion:Case {
-        btn--primary {
-            condition = ${props.style == 'btn--primary'}
-            renderer = 'green'
-        }
-        btn--solidPrimary {
-            condition = ${props.style == 'btn--solidPrimary'}
-            renderer = 'green'
-        }
-        btn--secondary {
-            condition = ${props.style == 'btn--secondary'}
-            renderer = 'purple'
-        }
-        btn--solidSecondary {
-            condition = ${props.style == 'btn--solidSecondary'}
-            renderer = 'purple'
-        }
-        btn--bright {
-            condition = ${props.style == 'btn--bright'}
-            renderer = 'yellow'
-        }
-        btn--solidBright {
-            condition = ${props.style == 'btn--solidBright'}
-            renderer = 'yellow'
-        }
-        // return the value as is if it's already one of the new style values
-        default {
-            condition = true
-            renderer = ${props.style}
-        }
+    renderer = Neos.Fusion:Match {
+        @subject = ${props.style}
+        btn--primary = 'green'
+        btn--solidPrimary = 'green'
+        btn--secondary = 'purple'
+        btn--solidSecondary = 'purple'
+        btn--bright = 'yellow'
+        btn--solidBright = 'yellow'
+        @default = ${props.style}
     }
 }
