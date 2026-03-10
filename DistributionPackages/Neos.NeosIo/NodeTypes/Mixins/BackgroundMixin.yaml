@@ -2,39 +2,16 @@
   abstract: true
   properties:
     background:
-      type: string
+      options:
+        preset: 'NeosIo.color.theme'
       ui:
         label: 'Background'
-        showInCreationDialog: true
-        reloadIfChanged: true
+    backgroundEnd:
+      options:
+        preset: 'NeosIo.color.theme'
+      ui:
+        label: 'Background End (Gradient)'
+        help:
+          message: 'Creates a gradient background'
         inspector:
-          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
-          group: appearance
-          editorOptions:
-            values:
-              gradient:
-                label: 'Gradient'
-              blue-dark:
-                label: 'Blue Dark'
-              blue:
-                label: 'Blue'
-              blue-light:
-                label: 'Blue Light'
-              purple:
-                label: 'Purple'
-              purple-dark:
-                label: 'Purple Dark'
-              green:
-                label: 'Green'
-              green-dark:
-                label: 'Green Dark'
-              yellow:
-                label: 'Yellow'
-              yellow-dark:
-                label: 'Yellow Dark'
-              orange:
-                label: 'Orange'
-              red:
-                label: 'Red'
-              black:
-                label: 'Black'
+          hidden: 'ClientEval: !node.properties.background'

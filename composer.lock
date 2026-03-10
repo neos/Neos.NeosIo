@@ -57,6 +57,52 @@
             "time": "2022-03-30T09:27:43+00:00"
         },
         {
+            "name": "beromir/neos-toggle-editor",
+            "version": "v1.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beromir/Beromir.ToggleEditor.git",
+                "reference": "0717487c49eb89703c624bd7eaea672ab328a289"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/beromir/Beromir.ToggleEditor/zipball/0717487c49eb89703c624bd7eaea672ab328a289",
+                "reference": "0717487c49eb89703c624bd7eaea672ab328a289",
+                "shasum": ""
+            },
+            "require": {
+                "neos/neos-ui": "^5.3 || ^7.0 || ^8.0 || ^9.0"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "neos": {
+                    "package-key": "Beromir.ToggleEditor"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Henrik Reißig",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A plugin for Neos CMS which provides a toggle editor.",
+            "keywords": [
+                "Neos",
+                "editor",
+                "flow",
+                "neoscms"
+            ],
+            "support": {
+                "issues": "https://github.com/beromir/Beromir.ToggleEditor/issues",
+                "source": "https://github.com/beromir/Beromir.ToggleEditor/tree/v1.6.1"
+            },
+            "time": "2026-01-18T12:33:30+00:00"
+        },
+        {
             "name": "brick/math",
             "version": "0.14.8",
             "source": {
@@ -10120,9 +10166,11 @@
                 "url": "./DistributionPackages/Neos.Presentation"
             },
             "require": {
+                "beromir/neos-toggle-editor": "^1.6",
                 "carbon/eel": "^2.21",
                 "neos/neos": "^9.1",
                 "packagefactory/atomicfusion-proptypes": "^2.2",
+                "shel/neos-colorpicker": "^1.7",
                 "sitegeist/kaleidoscope": "^7.1",
                 "sitegeist/monocle": "^7.11",
                 "sitegeist/monocle-proptypes": "^1.0"
@@ -13097,6 +13145,66 @@
                 "source": "https://github.com/Seldaek/signal-handler/tree/2.0.2"
             },
             "time": "2023-09-03T09:24:00+00:00"
+        },
+        {
+            "name": "shel/neos-colorpicker",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sebobo/Shel.Neos.ColorPicker.git",
+                "reference": "8f34de3fcbaf2c8aeb6e808c86339e0e27cb6c92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sebobo/Shel.Neos.ColorPicker/zipball/8f34de3fcbaf2c8aeb6e808c86339e0e27cb6c92",
+                "reference": "8f34de3fcbaf2c8aeb6e808c86339e0e27cb6c92",
+                "shasum": ""
+            },
+            "require": {
+                "neos/neos": "^8.3 || ^9.0",
+                "neos/neos-ui": "^8.3 || ^9.0"
+            },
+            "type": "neos-plugin",
+            "extra": {
+                "neos": {
+                    "package-key": "Shel.Neos.ColorPicker"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Helzle",
+                    "email": "sebastian@helzle.it",
+                    "homepage": "https://www.helzle.it",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A plugin for Neos CMS which provides a colorpicker editor",
+            "keywords": [
+                "Neos",
+                "colorpicker",
+                "editor",
+                "flow",
+                "neoscms"
+            ],
+            "support": {
+                "issues": "https://github.com/Sebobo/Shel.Neos.ColorPicker/issues",
+                "source": "https://github.com/Sebobo/Shel.Neos.ColorPicker/tree/1.7.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebobo",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/shelzle",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2025-03-27T09:57:27+00:00"
         },
         {
             "name": "shel/neos-commandbar",
