@@ -33,14 +33,13 @@
  *     h6 This is an sixth level heading
  */
 @mixin h1() {
-	margin-bottom: $basic-spacing+px;
-	font-size: $base-font-size*2px;
-	line-height: $base-line-height*2px;
+	margin-bottom: #{$basic-spacing+px};
+	font-size: #{$base-font-size * 2px};
 	font-weight: $thin;
+  line-height: 1.2;
 
 	@include mq('medium') {
-		font-size: $base-font-size*3px;
-		line-height: $base-line-height*3px;
+		font-size: #{$base-font-size * 3px};
 	}
 
 	& + h2,
@@ -54,8 +53,8 @@
 	& + h6,
 	& + .h6 {
 		// In case a header is a sub-heading align it to the heading before.
-		margin-top: -($half-spacing)+px;
-		margin-bottom: $basic-spacing+px;
+		margin-top: #{-($half-spacing)+px};
+		margin-bottom: #{$basic-spacing+px};
 	}
 
 	@extend %h;
@@ -63,48 +62,47 @@
 @mixin h2() {
 	margin-top: $half-spacing+px;
 	margin-bottom: $half-spacing+px;
-	font-size: $base-font-size*1.3px;
-	line-height: $base-line-height*1px;
+	font-size: #{$base-font-size * 1.3px};
 	font-weight: $regular;
+  line-height: 1.2;
 
 	@include mq('medium') {
-		font-size: $base-font-size*2px;
-		line-height: $base-line-height*2px;
+		font-size: #{$base-font-size*2px};
     font-weight: $regular;
 	}
 
 	@extend %h;
 }
 @mixin h3() {
-	margin-bottom: $half-spacing+px;
-	font-size: $base-font-size*1.3px;
-	line-height: $base-line-height*1px;
+	margin-bottom: #{$half-spacing+px};
+	font-size: #{$base-font-size * 1.3px};
+  line-height: 1.3;
 
 	@include mq('medium') {
-		font-size: $base-font-size*1.5px;
+		font-size: $base-font-size * 1.5px;
 	}
 
 	@extend %h;
 }
 @mixin h4() {
-	margin-bottom: $basic-spacing*0.25px;
-	margin-bottom: $basic-spacing*0.5px;
-	font-size: $base-font-size*1.25px;
-	line-height: $base-line-height*1px;
+	margin-bottom: #{$basic-spacing * 0.25px};
+	margin-bottom: #{$basic-spacing * 0.5px};
+	font-size: #{$base-font-size * 1.25px};
+  line-height: 1.3;
 
 	@extend %h;
 }
 @mixin h5() {
-	font-size: $base-font-size*1px;
+	font-size: #{$base-font-size*1px};
 	font-weight: $bold;
-	line-height: $base-line-height*1px;
+  line-height: 1.3;
 
 	@extend %h;
 }
 @mixin h6() {
-	font-size: $base-font-size*0.8px;
+	font-size: #{$base-font-size*0.8px};
 	font-weight: $bold;
-	line-height: $base-line-height*1px;
+  line-height: 1.3;
 
 	@extend %h;
 }
