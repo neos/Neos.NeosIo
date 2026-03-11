@@ -1,9 +1,4 @@
-type IconElement = HTMLElement & {originalX: number, originalY: number};
-
-/**
- * TODO: The calculations are not correct.
- *       We need to take the position of the container into account because the animation should be based on the mouse position relative to the container, not the entire viewport.
- */
+type IconElement = HTMLElement & {originalCenter: {x: number, y: number}};
 
 export function initStage() {
     // do not initialize the effect on devices that request reduced motion
@@ -12,24 +7,43 @@ export function initStage() {
     }
 
     document.querySelectorAll('[data-component="hero-stage-icon-box-container"]').forEach((container) => {
+        const containerRect = container.getBoundingClientRect();
         const icons = container.querySelectorAll<IconElement>('.square-icon');
 
         icons.forEach(icon => {
-            const rect = icon.getBoundingClientRect();
-            icon.originalX = rect.left + rect.width / 2;
-            icon.originalY = rect.top + rect.height / 2;
+            // calculate the original center of the icon relative to the container
+            const iconRect = icon.getBoundingClientRect();
+            icon.originalCenter = {
+                x: iconRect.x + iconRect.width / 2 - containerRect.x,
+                y: iconRect.y + iconRect.height / 2 - containerRect.y
+            };
+
             icon.style.transition = 'transform 0.3s ease-out';
         })
 
-        container.parentElement.addEventListener('mousemove', (event) => {
-            // TODO: event is possibly on a child element like the Headline, Subline or Image
-            //       So we need to get the rect of the container and compute the relative mouse position to that container
-            icons.forEach(icon => {
-                // move icon towards the mouse position with a slight offset depending on the distance
-                const offsetX = calcOffset(event.offsetX, icon.originalX);
-                const offsetY = calcOffset(event.offsetX, icon.originalY);
 
-                icon.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        container.parentElement.addEventListener('mousemove', (event) => {
+            const pointerPosition = {
+                x: Math.max(0, event.pageX - containerRect.x),
+                y: Math.max(0, event.pageY - containerRect.y),
+            };
+
+            icons.forEach(icon => {
+                const distanceVector = {
+                    x: pointerPosition.x - icon.originalCenter.x,
+                    y: pointerPosition.y - icon.originalCenter.y,
+                };
+
+                const distance = Math.sqrt(distanceVector.x * distanceVector.x + distanceVector.y * distanceVector.y);
+                // reduce the distance to create a more subtle effect, and to prevent icons from moving too much when the mouse is far away
+                const scaledDistance = distance / Math.sqrt(distance);
+
+                const translateVector = {
+                    x: distanceVector.x / scaledDistance,
+                    y: distanceVector.y / scaledDistance,
+                };
+
+                icon.style.transform = `translate(${translateVector.x}px, ${translateVector.y}px)`;
             });
         });
 
@@ -39,12 +53,4 @@ export function initStage() {
             });
         });
     });
-}
-
-function calcOffset(target: number, origin: number) {
-    const distance = target - origin;
-    const effectStrength = 0.2; // adjust this value to increase/decrease the overall effect
-
-    // reduce the offset based on the distance, so that icons further away move less
-    return  distance / Math.log(1 + Math.abs(distance) * effectStrength) * effectStrength;
 }
