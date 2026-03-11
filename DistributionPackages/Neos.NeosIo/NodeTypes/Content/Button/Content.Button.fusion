@@ -52,6 +52,6 @@ prototype(Neos.NeosIo:Button.Helpers.StyleMapping) < prototype(Neos.Fusion:Compo
         btn--solidSecondary = 'purple'
         btn--bright = 'yellow'
         btn--solidBright = 'yellow'
-        @default = ${props.style}
+        @default = ${props.style || 'green'}
     }
 }
