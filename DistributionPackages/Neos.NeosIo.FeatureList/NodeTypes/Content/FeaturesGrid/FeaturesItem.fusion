@@ -121,7 +121,7 @@ prototype(Neos.NeosIo.Features:FeaturesItem.Link) < prototype(Neos.Fusion:Compon
             tagName={!private.inBackend ? 'a' : 'div'}
             attributes.class={Carbon.String.classNames(
                 'display-cta-xl px-8 pb-8 flex gap-2 items-center',
-                !private.inBackend && props.link ? 'after:absolute after:inset-0 after:z-10 text-white!' : ''
+                !private.inBackend && props.link ? 'after:absolute after:inset-0 after:z-10' : ''
             )}
             attributes.href={props.link}
             attributes.href.@if={props.link && !private.inBackend}
@@ -145,7 +145,7 @@ prototype(Neos.NeosIo.Features:FeaturesItem.Title) < prototype(Neos.Fusion:Compo
             tagName="h3"
             content={props.title}
             display="title-lg"
-            class="p-8 n-headline text-white! m-0!"
+            class="p-8 n-headline m-0!"
         />
     `
 }
