@@ -42,7 +42,7 @@ prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
                     tagName={!private.inBackend ? 'a' : 'div'}
                     attributes.class={Carbon.String.classNames(
                         'display-cta-xl mt-0 flex gap-2 items-center',
-                        !private.inBackend && props.link ? 'after:absolute after:inset-0 after:z-10 text-white!' : ''
+                        !private.inBackend && props.link ? 'after:absolute after:inset-0 after:z-10' : ''
                     )}
                     attributes.href={props.link}
                     attributes.href.@if={props.link && !private.inBackend}
@@ -52,7 +52,7 @@ prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
                         tagName="h3"
                         content={props.title}
                         display="title-lg"
-                        class="n-headline text-white! m-0!"
+                        class="n-headline m-0!"
                     />
                 </Neos.Fusion:Tag>
                 <div class="text-white">
