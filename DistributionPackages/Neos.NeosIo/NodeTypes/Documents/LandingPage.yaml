@@ -7,6 +7,7 @@
   superTypes:
     'Neos.NodeTypes:Page': true
     'Neos.NeosIo:KeyVisualMixin': true
+    'Neos.NeosIo:Mixin.HeroStage': true
   ui:
     label: 'Landing page'
     icon: plane
@@ -15,3 +16,8 @@
         additional:
           label: Additional
           position: 20
+  childNodes:
+    keyvisual:
+      constraints:
+        nodeTypes:
+          'Neos.NeosIo:Constraints.KeyVisual.LandingPage': true
