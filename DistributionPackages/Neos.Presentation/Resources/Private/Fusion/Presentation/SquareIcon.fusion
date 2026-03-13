@@ -9,13 +9,7 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
     @propTypes {
         content = PropTypes:String
         color = ${PropTypes.oneOf(['white', 'black'])}
-        icon = ${PropTypes.oneOf([
-            'animatedArrow', 'animatedArrowLeft',
-            'neosAvatarPrimary', 'neosAvatarLight', 'neosAvatarDark', 'neosAvatarMonochrome', 'neosLogoPrimary', 'neosLogoLight', 'neosLogoDark', 'neosLogoMonochrome',
-            'arrow-right', 'briefcase', 'calculator', 'calendar', 'chevron-down', 'chevron-left', 'chevron-right', 'chevron-up', 'clock', 'cloud', 'desktop',
-            'development', 'document', 'eye', 'facebook', 'file', 'github', 'globe', 'headphones', 'heart', 'house', 'instagram', 'linkedin', 'mail-open',
-            'mail', 'mastodon', 'place', 'plus', 'quote', 'search', 'slack', 'smile', 'square', 'time', 'user', 'youtube', 'notfound'
-        ])}
+        icon = ${PropTypes.string}
         background = ${PropTypes.oneOf(['gradient', 'blue-dark', 'blue', 'blue-light', 'purple', 'purple-dark', 'green', 'green-dark', 'yellow', 'yellow-dark', 'orange', 'red', 'black'])}
         class = ${PropTypes.any}
     }
@@ -26,7 +20,7 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <Neos.Presentation:Background
             class={[
-                'absolute w-44 lg:w-56 lg:p-4 p-3 flex! flex-col! aspect-square! square-icon fade-in slide-up',
+                'absolute w-44 lg:w-56 lg:p-4 p-3 pointer-events-auto flex! flex-col! aspect-square! square-icon fade-in slide-up',
                 'text-' + props.color,
                 'nth-[1]:top-[25%] nth-[1]:left-[5%] nth-[1]:[animation-delay:200ms]',
                 'nth-[2]:top-[10%] nth-[2]:right-[10%] nth-[2]:[animation-delay:400ms]',

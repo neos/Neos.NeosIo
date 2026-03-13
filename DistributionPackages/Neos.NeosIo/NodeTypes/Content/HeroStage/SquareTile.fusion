@@ -1,0 +1,11 @@
+prototype(Neos.NeosIo:Content.SquareTile) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:SquareIcon {
+        content = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        color = ${node.properties.textColor}
+        icon = ${node.properties.icon}
+        background = ${node.properties.background}
+    }
+}

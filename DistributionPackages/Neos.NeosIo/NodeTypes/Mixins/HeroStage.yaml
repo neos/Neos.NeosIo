@@ -1,9 +1,9 @@
-'Neos.NeosIo:Content.HeroStage':
+'Neos.NeosIo:Mixin.HeroStage':
   abstract: true
   superTypes:
     'Neos.Neos:Content': true
   ui:
-    group: rebranding
+    group: special
   properties:
     headline:
       type: string
@@ -35,10 +35,10 @@
                 - name: 'Brand color'
                   element: 'span'
                   classes: ['color__neos-brand']
-    image:
+    backgroundImage:
       type: Neos\Media\Domain\Model\ImageInterface
       ui:
-        label: Image
+        label: 'Background image'
         reloadIfChanged: true
         inspector:
           group: content

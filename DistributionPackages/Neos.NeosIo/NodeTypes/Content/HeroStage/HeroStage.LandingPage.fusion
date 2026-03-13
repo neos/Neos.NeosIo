@@ -11,11 +11,10 @@ prototype(Neos.NeosIo:Content.HeroStage.LandingPage) < prototype(Neos.Neos:Conte
         }
 
         imageUri = Neos.Neos:ImageUri {
-            asset = ${q(node).property('image')}
+            asset = ${q(node).property('backgroundImage')}
+            @if.hasAsset = ${this.asset}
         }
 
-        icons = Neos.Neos:ContentCollection {
-            nodePath = 'icons'
-        }
+        tiles = Neos.Neos:ContentCollection
     }
 }

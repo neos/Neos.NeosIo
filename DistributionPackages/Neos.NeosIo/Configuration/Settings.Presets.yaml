@@ -117,7 +117,51 @@ Neos:
                         icon: align-right
 
             color:
-              background:
+              backgroundSolid:
+                type: string
+                ui:
+                  label: 'Background Color'
+                  reloadIfChanged: true
+                  inspector:
+                    group: appearance
+                    editor: Beromir.ToggleEditor/Editor
+                    editorOptions:
+                      layout: color
+                      values: &solidColors
+                        blue-dark:
+                          color: "#26224c"
+                          description: "Blue Dark"
+                        blue:
+                          color: "#0114c2"
+                          description: "Blue"
+                        blue-light:
+                          color: "#00cffd"
+                          description: "Blue Light"
+                        purple:
+                          color: "#8a3ffc"
+                          description: "Purple"
+                        purple-dark:
+                          color: "#602cb0"
+                          description: "Purple Dark"
+                        green:
+                          color: "#35ba34"
+                          description: "Green"
+                        green-dark:
+                          color: "#1d751d"
+                          description: "Green Dark"
+                        yellow:
+                          color: "#f1c21b"
+                          description: "Yellow"
+                        yellow-dark:
+                          color: "#b08c0e"
+                          description: "Yellow Dark"
+                        orange:
+                          color: "#ff832b"
+                          description: "Orange"
+                        red:
+                          color: "#fa4d56"
+                          description: "Red"
+              backgroundWithGradients:
                 type: string
                 ui:
                   label: 'Background Color'
@@ -128,6 +172,7 @@ Neos:
                     editorOptions:
                       layout: color
                       values:
+                        <<: *solidColors
                         blue-dark-to-blue:
                           color:
                             - "#26224c"
@@ -163,39 +208,6 @@ Neos:
                             - "#fa4d56"
                             - "#ff832b"
                           description: "Orange gradient"
-                        blue-dark:
-                          color: "#26224c"
-                          description: "Blue Dark"
-                        blue:
-                          color: "#0114c2"
-                          description: "Blue"
-                        blue-light:
-                          color: "#00cffd"
-                          description: "Blue Light"
-                        purple:
-                          color: "#8a3ffc"
-                          description: "Purple"
-                        purple-dark:
-                          color: "#602cb0"
-                          description: "Purple Dark"
-                        green:
-                          color: "#35ba34"
-                          description: "Green"
-                        green-dark:
-                          color: "#1d751d"
-                          description: "Green Dark"
-                        yellow:
-                          color: "#f1c21b"
-                          description: "Yellow"
-                        yellow-dark:
-                          color: "#b08c0e"
-                          description: "Yellow Dark"
-                        orange:
-                          color: "#ff832b"
-                          description: "Orange"
-                        red:
-                          color: "#fa4d56"
-                          description: "Red"
               theme:
                 type: string
                 ui:
