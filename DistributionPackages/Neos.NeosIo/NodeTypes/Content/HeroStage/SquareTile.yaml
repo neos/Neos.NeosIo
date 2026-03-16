@@ -1,0 +1,39 @@
+'Neos.NeosIo:Content.SquareTile':
+  final: true
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NeosIo:Constraint.HeroStage': true
+    'Neos.NeosIo:Mixin.Icon': true
+  ui:
+    label: 'Square Tile'
+    icon: square
+  properties:
+    title:
+      type: string
+      ui:
+        label: Text
+        reloadIfChanged: true
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Text...'
+        inspector:
+          group: content
+    textColor:
+      type: string
+      defaultValue: 'white'
+      ui:
+        label: Text color
+        reloadIfChanged: true
+        inspector:
+          group: appearance
+          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              'white':
+                label: 'white'
+              'black':
+                label: 'black'
+    background:
+      options:
+        preset: 'NeosIo.color.backgroundSolid'

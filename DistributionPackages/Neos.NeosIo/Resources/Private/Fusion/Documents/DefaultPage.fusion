@@ -2,6 +2,8 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
     header = Neos.Fusion:Join {
         siteHeader = Neos.NeosIo:Fragment.SiteHeader
         //rebrandSiteHeader = Neos.NeosIo:Fragment.RebrandSiteHeader
+
+
         keyVisualWrapper = Neos.NeosIo:KeyVisualWrapper {
             keyVisualVariant = ${q(documentNode).property('keyVisualVariant')}
             disruptor = Neos.NeosIo:Component.Disruptor
@@ -25,6 +27,7 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
                 }
             }
         }
+
         breadcrumb = Neos.NeosIo:Fragment.BreadcrumbMenu
     }
 

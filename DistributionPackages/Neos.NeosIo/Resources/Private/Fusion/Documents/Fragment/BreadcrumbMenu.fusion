@@ -1,6 +1,6 @@
 prototype(Neos.NeosIo:Fragment.BreadcrumbMenu) < prototype(Neos.Neos:BreadcrumbMenu) {
     renderHiddenInIndex = true
-    attributes.class = 'nav nav--breadcrumb print-hidden'
+    attributes.class = 'nav nav--breadcrumb print-hidden mx-auto max-w-[1400px] p-8 2xl:px-0'
     @process.wrap = afx`<nav aria-label="breadcrumb" role="navigation">{value}</nav>`
     @if.notOnHomepage = ${documentNode.aggregateId.value != site.aggregateId.value}
 }

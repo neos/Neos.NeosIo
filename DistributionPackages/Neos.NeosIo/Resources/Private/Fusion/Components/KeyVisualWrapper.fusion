@@ -19,12 +19,16 @@ prototype(Neos.NeosIo:KeyVisualWrapper) < prototype(Neos.Fusion:Component) {
 
     @private {
         classNames = Neos.Fusion:DataStructure {
-            default = ${"print-hidden keyVisual__wrapper keyVisual__wrapper--" + props.keyVisualSize}
+            default = ${"print-hidden keyVisual__wrapper"}
             default.@if.noContentArea = ${props.keyVisualVariant != 'contentOnly'}
+            size = ${"keyVisual__wrapper--" + props.keyVisualSize}
+            size.@if.notHidden = ${props.keyVisualVariant != 'hidden'}
             contentOnly = 'keyVisual__wrapper--contentOnly'
             contentOnly.@if.contentArea = ${props.keyVisualVariant == 'contentOnly'}
         }
     }
+
+    keyVisual.@if.notHidden = ${props.keyVisualVariant != 'hidden'}
 
     renderer = afx`
         <section class={private.classNames}>
