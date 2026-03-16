@@ -45,13 +45,13 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <section
-            class="xl:pt-24 n-stage relative! h-[100vh] flex! flex-col items-center justify-center text-white mb-[6rem] xl:mb-[10rem] max-w-[1400px] mx-auto"
+            class="xl:pt-24 n-stage relative! h-[100vh] flex! flex-col items-center justify-center text-white mb-[6rem] xl:mb-[10rem]"
         >
             <div
                 @if={props.tiles}
                 {...props.tilesAttributes}
                 data-component="hero-stage-icon-box-container"
-                class="absolute! size-full top-0 left-0 hidden pointer-events-none xl:block z-1"
+                class="absolute! size-full top-0 hidden pointer-events-none xl:block z-1 max-w-[1400px] mx-auto"
             >
                 {props.tiles}
             </div>
