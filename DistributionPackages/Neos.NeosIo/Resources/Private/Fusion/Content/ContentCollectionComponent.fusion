@@ -1,0 +1,20 @@
+##
+# This is a helper Fusion object which should be used for content components that are also content collections.
+# Make sure to set the `data-__neos-insertion-anchor` attribute in the renderer where the child nodes are rendered.
+#
+prototype(Neos.NeosIo:Content.ContentCollectionComponent) < prototype(Neos.Neos:ContentComponent) {
+    @cache {
+        mode = 'cached'
+
+        entryIdentifier {
+            collection = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
+
+        entryTags {
+            descendants = ${Neos.Caching.descendantOfTag(node)}
+            node = ${Neos.Caching.nodeTag(node)}
+        }
+    }
+
+    @exceptionHandler = 'Neos\\Neos\\Fusion\\ExceptionHandlers\\NodeWrappingHandler'
+}

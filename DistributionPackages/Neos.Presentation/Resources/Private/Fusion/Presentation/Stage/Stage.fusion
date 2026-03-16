@@ -35,16 +35,23 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
         subline = PropTypes:String
         imageUri = PropTypes:String
         tiles = PropTypes:String
+        tilesAttributes = ${PropTypes.dataStructure({})}
+        imageHeight = PropTypes:Int
+        imageWidth = PropTypes:Int
+        imageAlt = PropTypes:String
     }
+
+    tilesAttributes = Neos.Fusion:DataStructure
 
     renderer = afx`
         <section
-            class="xl:pt-24 n-stage relative! h-[100vh] flex! flex-col items-center justify-center text-white mb-[6rem] xl:mb-[10rem]"
+            class="xl:pt-24 n-stage relative! h-[100vh] flex! flex-col items-center justify-center text-white mb-[6rem] xl:mb-[10rem] max-w-[1400px] mx-auto"
         >
             <div
                 @if={props.tiles}
+                {...props.tilesAttributes}
                 data-component="hero-stage-icon-box-container"
-                class="absolute! size-full top-0 left-0 hidden pointer-events-none xl:block"
+                class="absolute! size-full top-0 left-0 hidden pointer-events-none xl:block z-1"
             >
                 {props.tiles}
             </div>
@@ -54,11 +61,11 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
                 <div class="max-w-3xl">{props.subline}</div>
             </div>
             <figure
-                class="absolute! xl:-bottom-[8rem] -bottom-[4rem] *:object-cover xl:w-[min(80vw,1400px)] xl:h-auto h-[50vh] right-[15%] xl:right-auto rounded-3xl aspect-[21/9] *:aspect-[21/9] overflow-hidden *:size-full"
+                class="absolute! xl:-bottom-[8rem] -bottom-[4rem] *:object-cover xl:w-[min(80vw,1200px)] xl:h-auto h-[50vh] right-[15%] xl:right-auto rounded-3xl aspect-[21/9] *:aspect-[21/9] overflow-hidden *:size-full"
                 style="box-shadow: 0 0 0 8px #161616;"
                 @if={props.imageUri}
             >
-                <img src={props.imageUri} alt="Stage Image" />
+                <img src={props.imageUri} alt={props.imageAlt || 'Stage image'} width={props.imageWidth} height={props.imageHeight} />
             </figure>
         </section>
     `

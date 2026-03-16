@@ -1,4 +1,6 @@
-prototype(Neos.NeosIo:Content.HeroStage.LandingPage) < prototype(Neos.Neos:ContentComponent) {
+prototype(Neos.NeosIo:Content.HeroStage.LandingPage) < prototype(Neos.NeosIo:Content.ContentCollectionComponent) {
+    backgroundImage = ${q(node).property('backgroundImage')}
+
     renderer = Neos.Presentation:Stage {
         headline = Neos.Neos:Editable {
             property = 'headline'
@@ -11,10 +13,21 @@ prototype(Neos.NeosIo:Content.HeroStage.LandingPage) < prototype(Neos.Neos:Conte
         }
 
         imageUri = Neos.Neos:ImageUri {
-            asset = ${q(node).property('backgroundImage')}
+            asset = ${props.backgroundImage}
             @if.hasAsset = ${this.asset}
         }
+        imageWidth = ${props.backgroundImage ? q(node).property('backgroundImage').width : null}
+        imageHeight = ${props.backgroundImage ? q(node).property('backgroundImage').height : null}
+        imageAlt = ${props.backgroundImage ? q(node).property('backgroundImage').title : null}
 
-        tiles = Neos.Neos:ContentCollection
+        tiles = Neos.Neos:ContentCollectionRenderer {
+            # We only support 3 tiles in the design, so we limit the items to 3.
+            items = ${q(node).children('[instanceof Neos.NeosIo:Content.SquareTile]').slice(0, 3)}
+        }
+
+        tilesAttributes {
+            data-__neos-insertion-anchor = true
+            data-__neos-insertion-anchor.@if.onlyRenderInBackend = ${renderingMode.isEdit}
+        }
     }
 }

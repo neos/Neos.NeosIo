@@ -4,7 +4,7 @@
 
   &--small {
     .keyVisual__contents {
-      min-height: MIN(250px, 25vw);
+      min-height: min(250px, 25vw);
     }
   }
 
@@ -27,6 +27,10 @@
       background-color: rgba(0, 0, 0, 0.5);
       background-blend-mode: darken;
     }
+  }
+
+  &--contentOnly {
+    height: auto;
   }
 
   .keyVisual {
