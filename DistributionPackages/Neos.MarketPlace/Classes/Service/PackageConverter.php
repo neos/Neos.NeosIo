@@ -280,16 +280,12 @@ class PackageConverter
             $packageNode->originDimensionSpacePoint,
             [
                 'downloadTotal' => $downloads->getTotal(),
-                'downloadMonthly' => $downloads->getMonthly(),
-                'downloadDaily' => $downloads->getDaily(),
             ]);
     }
 
     protected function updateGithubMetrics(Package $package, Node $packageNode): void
     {
-        if ($package->isAbandoned()) {
-            $this->resetGithubMetrics($packageNode);
-        } else {
+        if (!$package->isAbandoned()) {
             $repository = $package->getRepository();
             if (!str_contains($repository, 'github.com')) {
                 return;
@@ -328,7 +324,6 @@ class PackageConverter
                         LogEnvironment::fromMethodName(__METHOD__)
                     );
                     // todo special handling of not found repository ?
-                    $this->resetGithubMetrics($packageNode);
                     return;
                 }
                 $this->logger->warning(
@@ -337,33 +332,7 @@ class PackageConverter
                 );
                 return;
             }
-            $this->storage->updateNode(
-                $packageNode,
-                $packageNode->originDimensionSpacePoint,
-                [
-                    'githubStargazers' => (integer)Arrays::getValueByPath($meta, 'stargazers_count'),
-                    'githubWatchers' => (integer)Arrays::getValueByPath($meta, 'watchers_count'),
-                    'githubForks' => (integer)Arrays::getValueByPath($meta, 'forks_count'),
-                    'githubIssues' => (integer)Arrays::getValueByPath($meta, 'open_issues_count'),
-                    'githubAvatar' => trim((string)Arrays::getValueByPath($meta, 'organization.avatar_url'))
-                ]
-            );
         }
-    }
-
-    protected function resetGithubMetrics(Node $packageNode): void
-    {
-        $this->storage->updateNode(
-            $packageNode,
-            $packageNode->originDimensionSpacePoint,
-            [
-                'githubStargazers' => 0,
-                'githubWatchers' => 0,
-                'githubForks' => 0,
-                'githubIssues' => 0,
-                'githubAvatar' => null
-            ]
-        );
     }
 
     /**

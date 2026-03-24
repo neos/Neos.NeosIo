@@ -86,30 +86,6 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
                             'weight' => 1.2
                         ],
                         [
-                            'field_value_factor' => [
-                                'field' => 'downloadDaily',
-                                'factor' => 0.5,
-                                'modifier' => 'sqrt',
-                                'missing' => 1
-                            ]
-                        ],
-                        [
-                            'field_value_factor' => [
-                                'field' => 'githubStargazers',
-                                'factor' => 1,
-                                'modifier' => 'sqrt',
-                                'missing' => 1
-                            ]
-                        ],
-                        [
-                            'field_value_factor' => [
-                                'field' => 'githubForks',
-                                'factor' => 0.5,
-                                'modifier' => 'sqrt',
-                                'missing' => 1
-                            ]
-                        ],
-                        [
                             'gauss' => [
                                 'lastVersion.time' => [
                                     'scale' => '60d',
