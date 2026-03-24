@@ -132,29 +132,15 @@ class Storage
         if (array_key_exists($vendorName, $this->vendorCache)) {
             return $this->vendorCache[$vendorName];
         }
-        $vendorName = Slug::create($vendorName);
+        $vendorNodeAggregateId = self::vendorNodeAggregateId($vendorName);
 
-        // Find the vendor node by name
-        $node = $this->subGraph->findChildNodes(
-            $this->storageRootNodeAggregateId,
-            FindChildNodesFilter::create(
-                NodeTypeCriteria::createWithAllowedNodeTypeNames(
-                    NodeTypeNames::fromStringArray([MarketplaceNodeType::VENDOR->value]
-                    )),
-                propertyValue: PropertyValueEquals::create(
-                    PropertyName::fromString('title'),
-                    $vendorName,
-                    true
-                )
-            )
-        )->first();
-
-        if ($node) {
-            $this->vendorCache[$vendorName] = $node->aggregateId;
-            return $node->aggregateId;
+        // Find the vendor node by id
+        $vendorNode = $this->subGraph->findNodeById($vendorNodeAggregateId);
+        if ($vendorNode !== null) {
+            $this->vendorCache[$vendorName] = $vendorNode->aggregateId;
+            return $vendorNode->aggregateId;
         }
 
-        $vendorNodeAggregateId = NodeAggregateId::create();
         if (!$this->handleCommandWithRetry(
             CreateNodeAggregateWithNode::create(
                 $this->workspaceName,
@@ -163,7 +149,7 @@ class Storage
                 OriginDimensionSpacePoint::fromDimensionSpacePoint($this->subGraph->getDimensionSpacePoint()),
                 $this->storageRootNodeAggregateId,
                 initialPropertyValues: PropertyValuesToWrite::fromArray([
-                    'uriPathSegment' => $vendorName,
+                    'uriPathSegment' => Slug::create($vendorName),
                     'title' => $vendorName,
                 ]),
             )
@@ -172,6 +158,12 @@ class Storage
         }
         $this->vendorCache[$vendorName] = $vendorNodeAggregateId;
         return $vendorNodeAggregateId;
+    }
+
+    private static function vendorNodeAggregateId(string $vendorName): NodeAggregateId
+    {
+        $vendorNameSlug = Slug::create($vendorName);
+        return NodeAggregateId::fromString('vendor-' . $vendorNameSlug);
     }
 
     public function getVendorNodes(): Nodes
@@ -209,23 +201,15 @@ class Storage
 
     public function getPackageNode(
         Package         $package,
-        NodeAggregateId $vendorNodeAggregateId
     ): ?Node
     {
-        // Find the vendor node by name
-        return $this->subGraph->findChildNodes(
-            $vendorNodeAggregateId,
-            FindChildNodesFilter::create(
-                NodeTypeCriteria::createWithAllowedNodeTypeNames(
-                    NodeTypeNames::fromStringArray([MarketplaceNodeType::PACKAGE->value])
-                ),
-                propertyValue: PropertyValueEquals::create(
-                    PropertyName::fromString('title'),
-                    $package->getName(),
-                    false
-                )
-            )
-        )->first();
+        return $this->subGraph->findNodeById(self::packageNodeAggregateId($package));
+    }
+
+    public static function packageNodeAggregateId(Package $package): NodeAggregateId
+    {
+        $packageNameSlug = Slug::create($package->getName());
+        return NodeAggregateId::fromString('package-' . $packageNameSlug);
     }
 
     /**
@@ -233,12 +217,12 @@ class Storage
      */
     public function createPackageNode(Package $package, NodeAggregateId $vendorNodeAggregateId): ?Node
     {
-        $nodeAggregateId = NodeAggregateId::create();
+        $packageNodeAggregateId = self::packageNodeAggregateId($package);
         $workspaceName = WorkspaceName::forLive();
         $this->handleCommandWithRetry(
             CreateNodeAggregateWithNode::create(
                 $workspaceName,
-                $nodeAggregateId,
+                $packageNodeAggregateId,
                 NodeTypeName::fromString(MarketplaceNodeType::PACKAGE->value),
                 OriginDimensionSpacePoint::fromDimensionSpacePoint($this->subGraph->getDimensionSpacePoint()),
                 $vendorNodeAggregateId,
@@ -254,7 +238,7 @@ class Storage
                 ])
             )
         );
-        return $this->subGraph->findNodeById($nodeAggregateId);
+        return $this->subGraph->findNodeById($packageNodeAggregateId);
     }
 
     /**
@@ -330,13 +314,12 @@ class Storage
 
     public function createOrUpdateMaintainerNode(
         Maintainer $maintainer,
+        Package    $package,
         Node       $packageNode
     ): bool
     {
-        $maintainerNode = $this->getPackageMaintainerNode(
-            $packageNode->aggregateId,
-            $maintainer->getName()
-        );
+        $maintainerNodeAggregateId = self::maintainerNodeAggregateId($package, $maintainer);
+        $maintainerNode = $this->subGraph->findNodeById($maintainerNodeAggregateId);
         $properties = [
             'title' => $maintainer->getName(),
             'email' => $maintainer->getEmail(),
@@ -360,7 +343,6 @@ class Storage
             return false;
         }
 
-        $maintainerNodeAggregateId = NodeAggregateId::create();
         return $this->handleCommandWithRetry(
             CreateNodeAggregateWithNode::create(
                 $this->workspaceName,
@@ -371,6 +353,13 @@ class Storage
                 initialPropertyValues: PropertyValuesToWrite::fromArray($properties)
             )
         );
+    }
+
+    private static function maintainerNodeAggregateId(Package $package, Maintainer $maintainer): NodeAggregateId
+    {
+        $packageNameSlug = Slug::create($package->getName());
+        $maintainerNameSlug = Slug::create($maintainer->getName());
+        return NodeAggregateId::fromString('maintainer-' . $packageNameSlug . '-' . $maintainerNameSlug);
     }
 
     public function getPackageMaintainerNodes(

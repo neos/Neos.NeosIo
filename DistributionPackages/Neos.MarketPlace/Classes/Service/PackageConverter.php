@@ -165,7 +165,7 @@ class PackageConverter
             return false;
         }
 
-        $packageNode = $this->storage->getPackageNode($package, $vendorNodeAggregateId);
+        $packageNode = $this->storage->getPackageNode($package);
         if (!$packageNode) {
             $packageNode = $this->storage->createPackageNode(
                 $package,
@@ -473,6 +473,7 @@ class PackageConverter
         foreach ($package->getMaintainers() as $maintainer) {
             $this->storage->createOrUpdateMaintainerNode(
                 $maintainer,
+                $package,
                 $packageNode
             );
         }
