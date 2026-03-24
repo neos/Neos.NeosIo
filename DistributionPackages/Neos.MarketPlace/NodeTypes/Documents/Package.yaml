@@ -23,9 +23,6 @@
       constraints:
         nodeTypes:
           'Neos.MarketPlace:Version': true
-    readme:
-      position: 'after versions'
-      type: 'Neos.MarketPlace:Readme'
   properties:
     title:
       type: string
@@ -207,14 +204,6 @@
         inspector:
           group: metrics
         label: i18n
-    __readme:
-      search:
-        indexing: '${String.stripTags(q(node).find(''readme'').first().property(''readmeSource''))}'
-        fulltextExtractor: '${Indexing.extractHtmlTags(q(node).find(''readme'').first().property(''readmeSource''))}'
-    __maintainers:
-      search:
-        indexing: '${q(node).find(''maintainers'').first().property(''title'')}'
-        fulltextExtractor: '${Indexing.extractHtmlTags(q(node).find(''maintainers'').first().property(''title''))}'
     __packageKey:
       search:
         indexing: '${q(node).property(''title'')}'

@@ -551,14 +551,6 @@ class Storage
         );
     }
 
-    public function getReadmeNode(NodeAggregateId $packageNodeAggregateId): ?Node
-    {
-        return $this->subGraph->findNodeByPath(
-            NodePath::fromString('readme'),
-            $packageNodeAggregateId
-        );
-    }
-
     public function updateNodeReference(
         Node                      $node,
         OriginDimensionSpacePoint $originDimensionSpacePoint,
