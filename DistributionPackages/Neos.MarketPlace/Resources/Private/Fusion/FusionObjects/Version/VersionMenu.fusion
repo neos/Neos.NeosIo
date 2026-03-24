@@ -12,7 +12,7 @@ prototype(Neos.MarketPlace:VersionMenu) < prototype(Neos.Fusion:Component) {
                     <Neos.MarketPlace:VersionMenuItem />
                 </Neos.Fusion:Loop>
             </ul>
-            <details>
+            <details @if={Array.length(props.versions) > 5}>
                 <summary>
                     <strong>Toggle older versions</strong>
                 </summary>
