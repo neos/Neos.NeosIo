@@ -1,0 +1,16 @@
+prototype(Neos.MarketPlace:Maintainers) < prototype(Neos.Fusion:Component) {
+    maintainers = ${q(documentNode).property('maintainers')}
+    maintainers.@process.toArray = ${value ? String.split(value, ',') : []}
+
+    renderer = afx`
+        <header>
+            <h4>{I18n.translate('maintainers', 'Maintainers', [], 'Main', 'Neos.MarketPlace')}</h4>
+        </header>
+        <ul class="nav nav--stacked">
+            <Neos.Fusion:Loop items={props.maintainers}>
+                <li>{item}</li>
+            </Neos.Fusion:Loop>
+        </ul>
+    `
+    @if.hasMaintainers = ${this.maintainers}
+}

@@ -181,6 +181,11 @@ class PackageConverter
             (string)time(),
         );
 
+
+        $upstreamMaintainerNames = array_map(static function (Package\Maintainer $maintainer) {
+            return $maintainer->getName();
+        }, $package->getMaintainers());
+
         $updated = $this->storage->updateNode(
             $packageNode,
             $packageNode->originDimensionSpacePoint,
@@ -193,13 +198,13 @@ class PackageConverter
                 'type' => $package->getType(),
                 'repository' => $package->getRepository(),
                 'favers' => $package->getFavers(),
+                'maintainers' => implode(',', $upstreamMaintainerNames),
             ]
         );
         if (!$updated && !$this->forceUpdate) {
             return false;
         }
 
-        $this->createOrUpdateMaintainers($package, $packageNode);
         $this->createOrUpdateVersions($package, $packageNode);
 
         $this->updatePackageLastActivity(
@@ -374,33 +379,6 @@ class PackageConverter
         );
         if ($package->isAbandoned() && trim((string)$packageNode->getProperty('abandoned')) === '') {
             $this->emitPackageAbandoned($packageNode);
-        }
-    }
-
-    /**
-     * Synchronizes the maintainers of the package.
-     */
-    protected function createOrUpdateMaintainers(Package $package, Node $packageNode): void
-    {
-        $upstreamMaintainerNames = array_map(static function (Package\Maintainer $maintainer) {
-            return $maintainer->getName();
-        }, $package->getMaintainers());
-
-        $maintainerNodes = $this->storage->getPackageMaintainerNodes($packageNode->aggregateId);
-
-        // Remove all maintainers that are not in the upstream package
-        foreach ($maintainerNodes as $maintainerNode) {
-            if (!in_array($maintainerNode->getProperty('title'), $upstreamMaintainerNames, true)) {
-                $this->storage->removeNode($maintainerNode);
-            }
-        }
-
-        // Create or update all maintainers
-        foreach ($package->getMaintainers() as $maintainer) {
-            $this->storage->createOrUpdateMaintainerNode(
-                $maintainer,
-                $packageNode
-            );
         }
     }
 

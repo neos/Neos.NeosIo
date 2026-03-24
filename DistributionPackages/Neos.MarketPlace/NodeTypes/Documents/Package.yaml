@@ -11,14 +11,7 @@
         github:
           label: i18n
   childNodes:
-    maintainers:
-      position: 'start'
-      type: 'Neos.Neos:ContentCollection'
-      constraints:
-        nodeTypes:
-          'Neos.MarketPlace:Maintainer': true
     versions:
-      position: 'after maintainers'
       type: 'Neos.Neos:ContentCollection'
       constraints:
         nodeTypes:
@@ -204,6 +197,14 @@
         inspector:
           group: metrics
         label: i18n
+    maintainers:
+      type: string
+      ui:
+        label: Maintainers
+        inspector:
+          group: github
+          editorOptions:
+            readonly: true
     __packageKey:
       search:
         indexing: '${q(node).property(''title'')}'

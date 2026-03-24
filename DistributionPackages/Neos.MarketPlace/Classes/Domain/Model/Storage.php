@@ -328,72 +328,6 @@ class Storage
         );
     }
 
-    public function createOrUpdateMaintainerNode(
-        Maintainer $maintainer,
-        Node       $packageNode
-    ): bool
-    {
-        $maintainerNode = $this->getPackageMaintainerNode(
-            $packageNode->aggregateId,
-            $maintainer->getName()
-        );
-        $properties = [
-            'title' => $maintainer->getName(),
-            'email' => $maintainer->getEmail(),
-            'homepage' => $maintainer->getHomepage()
-        ];
-
-        if ($maintainerNode) {
-            $this->updateNode(
-                $maintainerNode,
-                $maintainerNode->originDimensionSpacePoint,
-                $properties
-            );
-            return true;
-        }
-
-        $maintainersNode = $this->subGraph->findNodeByPath(
-            NodeName::fromString('maintainers'),
-            $packageNode->aggregateId
-        );
-        if ($maintainersNode === null) {
-            return false;
-        }
-
-        $maintainerNodeAggregateId = NodeAggregateId::create();
-        return $this->handleCommandWithRetry(
-            CreateNodeAggregateWithNode::create(
-                $this->workspaceName,
-                $maintainerNodeAggregateId,
-                NodeTypeName::fromString(MarketplaceNodeType::MAINTAINER->value),
-                $maintainersNode->originDimensionSpacePoint,
-                $maintainersNode->aggregateId,
-                initialPropertyValues: PropertyValuesToWrite::fromArray($properties)
-            )
-        );
-    }
-
-    public function getPackageMaintainerNodes(
-        NodeAggregateId $packageNodeAggregateId
-    ): Nodes
-    {
-        $maintainersNode = $this->subGraph->findNodeByPath(
-            NodeName::fromString('maintainers'),
-            $packageNodeAggregateId
-        );
-        if ($maintainersNode === null) {
-            return Nodes::createEmpty();
-        }
-        return $this->subGraph->findChildNodes(
-            $maintainersNode->aggregateId,
-            FindChildNodesFilter::create(
-                NodeTypeCriteria::createWithAllowedNodeTypeNames(
-                    NodeTypeNames::fromStringArray([MarketplaceNodeType::MAINTAINER->value])
-                )
-            )
-        );
-    }
-
     public function getPackageVersionsNode(
         NodeAggregateId $packageNodeAggregateId
     ): ?Node
@@ -436,56 +370,6 @@ class Storage
                 )
             )
         )->first();
-    }
-
-    public function getPackageMaintainerNode(
-        NodeAggregateId $packageNodeAggregateId,
-        string          $maintainerName
-    ): ?Node
-    {
-        $maintainersNode = $this->subGraph->findNodeByPath(
-            NodeName::fromString('maintainers'),
-            $packageNodeAggregateId
-        );
-        if ($maintainersNode === null) {
-            return null;
-        }
-        return $this->subGraph->findChildNodes(
-            $maintainersNode->aggregateId,
-            FindChildNodesFilter::create(
-                NodeTypeCriteria::createWithAllowedNodeTypeNames(
-                    NodeTypeNames::fromStringArray([MarketplaceNodeType::MAINTAINER->value])
-                ),
-                propertyValue: PropertyValueEquals::create(
-                    PropertyName::fromString('title'),
-                    $maintainerName,
-                    true
-                )
-            )
-        )->first();
-    }
-
-    /**
-     * @param array<string, mixed> $properties
-     */
-    public function updateChildNode(
-        NodeAggregateId $parentNodeAggregateId,
-        NodeName        $childNodeName,
-        array           $properties,
-    ): bool
-    {
-        $childNode = $this->subGraph->findNodeByPath(
-            $childNodeName,
-            $parentNodeAggregateId
-        );
-        if ($childNode) {
-            return $this->updateNode(
-                $childNode,
-                $childNode->originDimensionSpacePoint,
-                $properties
-            );
-        }
-        return false;
     }
 
     /**
