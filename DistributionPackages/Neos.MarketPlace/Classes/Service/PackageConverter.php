@@ -292,6 +292,7 @@ class PackageConverter
             // todo make it a bit more clever
             $repository = str_replace('.git', '', $repository);
             preg_match('#(.*)://github.com/(.*)#', $repository, $matches);
+            /** @phpstan-ignore offsetAccess.notFound */
             [$organization, $repository] = explode('/', $matches[2]);
             if (!$this->client) {
                 $this->client = new Client();
