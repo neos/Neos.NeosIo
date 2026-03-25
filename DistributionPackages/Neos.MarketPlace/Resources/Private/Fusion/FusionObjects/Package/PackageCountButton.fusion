@@ -4,7 +4,7 @@ prototype(Neos.MarketPlace:PackageCountButton) < prototype(Neos.MarketPlace:Butt
 
     packageCount = ${q(this.vendor).find('[instanceof Neos.MarketPlace:Package]').count()}
 
-    content = ${this.packageCount > 1 ? 'The same vendor provides <span class="badge">' + this.packageCount + '</span> package(s).' : null}
+    content = ${this.packageCount > 1 ? 'The same vendor provides ' + this.packageCount + ' package(s).' : null}
 
     url = Neos.Neos:NodeUri {
         node = ${vendor}
