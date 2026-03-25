@@ -38,7 +38,6 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindReferencesFil
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\PropertyValueEquals;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
-use Neos\ContentRepository\Core\Projection\ContentGraph\NodePath;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\SharedModel\ContentRepository\ContentRepositoryId;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
@@ -54,7 +53,6 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Neos\Domain\Service\WorkspacePublishingService;
 use Neos\Neos\Domain\SubtreeTagging\NeosVisibilityConstraints;
 use Packagist\Api\Result\Package;
-use Packagist\Api\Result\Package\Maintainer;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -352,40 +350,16 @@ class Storage
         );
     }
 
-    public function getPackageVersionNode(
-        NodeAggregateId $versionsNodeAggregateId,
-        string          $version
-    ): ?Node
-    {
-        return $this->subGraph->findChildNodes(
-            $versionsNodeAggregateId,
-            FindChildNodesFilter::create(
-                NodeTypeCriteria::createWithAllowedNodeTypeNames(
-                    NodeTypeNames::fromStringArray([MarketplaceNodeType::VERSION->value])
-                ),
-                propertyValue: PropertyValueEquals::create(
-                    PropertyName::fromString('version'),
-                    $version,
-                    true
-                )
-            )
-        )->first();
-    }
-
     /**
      * @param array<string, mixed> $properties
      */
     public function createOrUpdateVersionNode(
         NodeAggregateId     $versionsNodeAggregateId,
-        string              $versionString,
+        ?Node               $versionNode,
         MarketplaceNodeType $nodeType,
         array               $properties,
     ): ?NodeAggregateId
     {
-        $versionNode = $this->getPackageVersionNode(
-            $versionsNodeAggregateId,
-            $versionString
-        );
         if ($versionNode) {
             $this->updateNode(
                 $versionNode,

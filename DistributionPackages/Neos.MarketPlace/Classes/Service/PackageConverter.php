@@ -366,8 +366,11 @@ class PackageConverter
         }
 
         $versionNodes = $this->storage->getPackageVersionNodes($versionsNode->aggregateId);
+        $versionNodesByVersion = [];
         foreach ($versionNodes as $versionNode) {
-            $versionSlug = Slug::create($versionNode->getProperty('version'));
+            $versionString = $versionNode->getProperty('version');
+            $versionSlug = Slug::create($versionString);
+            $versionNodesByVersion[$versionString] = $versionNode;
             if (!in_array($versionSlug, $upstreamVersions, true)) {
                 $this->storage->removeNode($versionNode);
             } else {
@@ -379,6 +382,7 @@ class PackageConverter
         }
 
         foreach ($package->getVersions() as $version) {
+            $versionNode = $versionNodesByVersion[$version->getVersion()] ?? null;
             $versionStability = VersionNumber::isVersionStable($version->getVersionNormalized());
             $stabilityLevel = VersionNumber::getStabilityLevel($version->getVersionNormalized());
             $versionNormalized = VersionNumber::toInteger($version->getVersionNormalized());
@@ -391,7 +395,7 @@ class PackageConverter
             try {
                 $this->storage->createOrUpdateVersionNode(
                     $versionsNode->aggregateId,
-                    $version->getVersion(),
+                    $versionNode,
                     $versionNodeType,
                     [
                         'version' => $version->getVersion(),
