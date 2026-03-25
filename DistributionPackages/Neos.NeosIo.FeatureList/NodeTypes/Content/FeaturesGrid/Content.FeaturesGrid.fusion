@@ -1,4 +1,6 @@
 prototype(Neos.NeosIo.Features:Grid) < prototype(Neos.Neos:ContentComponent) {
+    type = ${q(node).property('type')}
+
     renderer = Neos.NeosIo.Features:FeaturesGrid {
         headline = Neos.Neos:Editable {
             property = 'headline'
@@ -8,6 +10,7 @@ prototype(Neos.NeosIo.Features:Grid) < prototype(Neos.Neos:ContentComponent) {
             property = 'text'
             block = false
         }
+        textAlign = ${!props.type || props.type == 'variant-c' ? 'left' : 'right'}
 
         ctaLabel = Neos.Neos:Editable {
             property = 'ctaLabel'
@@ -20,7 +23,7 @@ prototype(Neos.NeosIo.Features:Grid) < prototype(Neos.Neos:ContentComponent) {
             attributes.class = Neos.Fusion:Case {
                 // Grid of 4 items (2 per row) with different widths, alternating between wide and narrow
                 variant-a {
-                    condition = ${q(node).property('type') == 'variant-a'}
+                    condition = ${props.type == 'variant-a'}
                     renderer = Neos.Fusion:Join {
                         @glue = ' '
                         baseGrid = 'flex flex-wrap md:grid md:grid-cols-11 md:grid-rows-12 gap-6'
@@ -32,7 +35,7 @@ prototype(Neos.NeosIo.Features:Grid) < prototype(Neos.Neos:ContentComponent) {
                 }
                 // Grid of 6 items (3 per row) with different widths, alternating between wide and narrow
                 variant-b {
-                    condition = ${q(node).property('type') == 'variant-b'}
+                    condition = ${props.type == 'variant-b'}
                     renderer = Neos.Fusion:Join {
                         @glue = ' '
                         baseGrid = 'flex flex-wrap md:grid md:grid-cols-8 md:grid-rows-12 gap-6'

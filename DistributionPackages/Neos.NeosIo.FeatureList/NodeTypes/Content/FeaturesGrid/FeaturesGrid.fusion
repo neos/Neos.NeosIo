@@ -1,6 +1,7 @@
 prototype(Neos.NeosIo.Features:FeaturesGrid) < prototype(Neos.Fusion:Component) {
     headline = ''
     text = ''
+    textAlign = 'right'
     ctaLabel = ''
     link = ''
     items = ''
@@ -9,6 +10,7 @@ prototype(Neos.NeosIo.Features:FeaturesGrid) < prototype(Neos.Fusion:Component) 
         @strict = true
         headline = ${PropTypes.string}
         text = ${PropTypes.string}
+        textAlign = ${PropTypes.string}
         ctaLabel = ${PropTypes.string}
         link = ${PropTypes.string}
         items = ${PropTypes.string}
@@ -31,7 +33,7 @@ prototype(Neos.NeosIo.Features:FeaturesGrid) < prototype(Neos.Fusion:Component) 
                 @if={props.text}
                 content={props.text}
                 display="lead"
-                class="text-black/75 mt-2 max-w-xl lg:ml-auto lg:max-w-1/3"
+                class={["text-black/75", "mt-2", "max-w-xl", props.textAlign == 'right' && "lg:ml-auto", "lg:max-w-1/3"]}
             />
             {props.items}
         </Neos.Presentation:Spacing>
