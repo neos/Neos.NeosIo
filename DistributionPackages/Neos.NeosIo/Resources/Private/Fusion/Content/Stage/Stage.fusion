@@ -6,6 +6,7 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:ContentComponent) {
     backgroundImageFixed = ${q(node).property('backgroundImageFixed')}
     alternativeText = ${q(node).property('alternativeText')}
     title = ${q(node).property('title')}
+    hideTitle = ${q(node).property('hideTitle')}
     isContentExtraPadded = ${q(node).property('isContentExtraPadded') || this.backgroundImage  != null}
     contentWidth = ${q(node).property('contentWidth')}
     padding = ${q(node).property('padding')}
@@ -18,7 +19,7 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:ContentComponent) {
     renderer = afx`
         <section class={['stage', props.backgroundColor ? 'stage--' + props.backgroundColor : 'stage--bright']}>
             <div class={['stage__contents', props.isContentTextInverted && 'u-invertText', props.isContentExtraPadded && 'stage__contents--extraPadding', props.padding && 'stage__contents--padding-' + props.padding, props.contentWidth && 'stage__contents--' + props.contentWidth]}>
-                <h2 @if={renderingMode.isEdit || props.title}>{props.editableTitle}</h2>
+                <h2 @if={!props.hideTitle && (renderingMode.isEdit || props.title)}>{props.editableTitle}</h2>
                 <Neos.Neos:ContentCollection />
             </div>
             <Neos.NeosIo:Stage.FixedBackgroundImage
