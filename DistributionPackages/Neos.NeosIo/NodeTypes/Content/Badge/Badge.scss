@@ -2,16 +2,17 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: flex-end;
   gap: $column-gutter;
 }
 
 .badge {
-  $badge-min-width: 140px;
-  $badge-max-width: 186px;
+  --badge-min-width: 140px;
+  --badge-max-width: 186px;
 
-  flex: 1 1 $badge-min-width;
+  flex: 1 1 var(--badge-min-width);
   margin: 1rem 0;
-  max-width: $badge-max-width;
+  max-width: var(--badge-max-width);
 
   p {
     margin-bottom: 0;
@@ -25,8 +26,5 @@
 }
 
 .badge--highlighted {
-  img {
-    transform-origin: bottom;
-    transform: scale(1.15);
-  }
+  max-width: calc(var(--badge-max-width) * 1.15);
 }
