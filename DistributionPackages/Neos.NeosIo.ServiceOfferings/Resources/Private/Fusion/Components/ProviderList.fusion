@@ -53,13 +53,15 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
                 badges = Neos.Fusion:Map {
                     items = ${q(serviceProvider).referenceNodes('badges').get() || []}
                     itemName = 'badge'
-                    itemRenderer = Neos.Neos:ImageUri {
-                        asset = ${q(badge).property('image')}
-                        attributes {
+                    itemRenderer = Neos.Fusion:DataStructure {
+                        uri = Neos.Neos:ImageUri {
+                            asset = ${q(badge).property('image')}
                             width = 120
                             height = 180
-                            alt = ${q(badge).property('description')}
                         }
+                        alt = ${Neos.Node.label(badge)}
+                        width = 120
+                        height = 180
                     }
                     @if.hasBadges = ${Array.length(q(serviceProvider).referenceNodes('badges').get())}
                 }
