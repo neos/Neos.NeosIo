@@ -1,1 +1,8 @@
-prototype(Neos.NeosConIo:Event) < prototype(Neos.NeosIo:DefaultPage)
+prototype(Neos.NeosConIo:Event) < prototype(Neos.NeosIo:DefaultPage) {
+    content = Neos.Fusion:Component {
+        parts = Neos.NeosConIo:TalkList {
+            talks = ${q(documentNode).backReferenceNodes('event').filter('[instanceof Neos.NeosConIo:Talk]').get()}
+            eventToFilter = null
+        }
+    }
+}
