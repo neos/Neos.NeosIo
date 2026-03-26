@@ -43,33 +43,11 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
             // Just show featured talk when defined in the backend
             featuredTalk.@if.featuredTalkIsSelected = ${featuredTalkNode}
 
-            moreTalks = Neos.Fusion:Loop {
-                // node is speaker here
-                items = ${q(node).backReferenceNodes("speakers").filter('[instanceof Neos.NeosConIo:Talk]').sort('talkDate', 'DESC')}
-
-                @process.wrapWithUl = ${value ? '<ul class="talkList">' + value + '</ul>' : ''}
-                itemName = "node"
-                itemRenderer = Neos.Fusion:Tag {
-                    tagName = 'li'
-                    attributes.class = 'talkList__item'
-                    content = Neos.Presentation:ContentTeaser {
-                        // node is the talk here
-                        title = ${q(node).property('title')}
-                        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
-                            asset = ${q(node).property('thumbnail')}
-                            // TODO responsive image size with different breakpoints
-                            width = 500
-                            quality = 80
-                        }
-                        link = Neos.Neos:NodeUri {
-                            node = ${node}
-                            absolute = true
-                        }
-                    }
-                }
-
-                itemRenderer.@if.talkHasCorrectSpeaker = true
-                itemRenderer.@if.talkIsNotFeatured = ${node.aggregateId.value != featuredTalkNode.aggregateId.value}
+            moreTalks = Neos.NeosConIo:TalkList {
+                talks = ${q(documentNode).backReferenceNodes("speakers").filter('[instanceof Neos.NeosConIo:Talk]').sort('talkDate', 'DESC')}
+                talks.@process.filterFeaturedTalk = ${Array.filter(value, item => item.aggregateId.value != featuredTalkNode.aggregateId.value)}
+                talks.@process.filterFeaturedTalk.@if.set = ${featuredTalkNode}
+                eventToFilter = null
             }
         }
     }

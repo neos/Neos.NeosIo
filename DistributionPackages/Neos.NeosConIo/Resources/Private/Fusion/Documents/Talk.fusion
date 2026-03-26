@@ -28,8 +28,8 @@ prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
 
             isTalkListVisible = ${!Array.isEmpty(q(node).referenceNodes('relatedTalks'))}
             talkList = Neos.NeosConIo:TalkList {
-                items = ${q(node).referenceNodes('relatedTalks')}
-                itemRenderer.@if.talkHasCorrectEvent = true
+                talks = ${q(node).referenceNodes('relatedTalks')}
+                eventToFilter = null
             }
         }
     }

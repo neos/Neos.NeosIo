@@ -1,29 +1,41 @@
-prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Loop) {
-    // API to the outside: "items" to render
-    items = ${q(site).find('[instanceof Neos.NeosConIo:Talk]')}
+prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Component) {
+    talks = ${q(site).find('[instanceof Neos.NeosConIo:Talk]')}
+    eventToFilter = ${q(node).property('eventToShowTalksFor')}
+    @context.eventToFilter = ${this.eventToFilter}
 
-    @context.eventToFilter = ${q(node).property('eventToShowTalksFor')}
-    @process.wrapWithUl = ${'<ul class="talkList">' + value + '</ul>'}
-    itemName = "node"
-    itemRenderer = Neos.Fusion:Tag {
-        tagName = 'li'
-        attributes.class = 'talkList__item'
-        content = Neos.Presentation:ContentTeaser {
-            // node is the talk here
-            title = ${q(node).property('title')}
-            image = ${q(node).property('thumbnail')}
-            link = Neos.Neos:NodeUri {
-                node = ${node}
-                absolute = true
-            }
-        }
-
-    }
-    // "node" is the current talk here
-    itemRenderer.@if.talkHasCorrectEvent = ${q(node).property('event').aggregateId.value == eventToFilter.aggregateId.value}
+    renderer = afx`
+        <ul class="talkList">
+            <Neos.Fusion:Loop items={props.talks} itemName="talk">
+                <li
+                    class="talkList__item"
+                    @if.talkHasCorrectEvent={!props.eventToFilter || q(talk).property('event').aggregateId.value == props.eventToFilter.aggregateId.value}
+                >
+                    <Neos.Presentation:ContentTeaser
+                        title={q(talk).property('title')}
+                    >
+                        <Sitegeist.Kaleidoscope:AssetImageSource
+                            asset={q(talk).property('thumbnail')}
+                            width={500}
+                            quality={80}
+                            @path="imageSource"
+                        />
+                        <Neos.Neos:NodeUri
+                            node={talk}
+                            absolute
+                            @path="link"
+                        />
+                    </Neos.Presentation:ContentTeaser>
+                </li>
+            </Neos.Fusion:Loop>
+        </ul>
+    `
 
     @cache {
         mode = 'cached'
+        entryIdentifier {
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+            event = ${eventToFilter ? Neos.Caching.entryIdentifierForNode(eventToFilter) : null}
+        }
         entryTags {
             # when a talk is changed, we need to rerender this page.
             1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', node)}
