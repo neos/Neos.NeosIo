@@ -1,7 +1,8 @@
 prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
     title = ''
     subTitle = ''
-    text = ''
+    content = ''
+    text = ${this.content}
     imageSource = null
     altText = ''
     link = ''
@@ -11,6 +12,7 @@ prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
         @strict = true
         title = ${PropTypes.string}
         text = ${PropTypes.string}
+        content = ${PropTypes.string}
         subTitle = ${PropTypes.string}
         imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
         altText = ${PropTypes.string}
