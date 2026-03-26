@@ -2,7 +2,7 @@
   superTypes:
     'Neos.Neos:Content': true
     'Neos.Neos:ContentCollection': true
-  label: "${q(node).property('version')}"
+  label: "${Neos.Node.labelForNode(node).properties('version')}"
   ui:
     label: 'Release Version'
     icon: calendar-week

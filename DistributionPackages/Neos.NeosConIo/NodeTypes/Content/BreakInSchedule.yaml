@@ -1,7 +1,7 @@
 'Neos.NeosConIo:BreakInSchedule':
   superTypes:
     'Neos.Neos:Content': true
-  label: "${(q(node).property('title') + ' (' + q(node).property('room.name') + ')') || node.nodeType.label}"
+  label: "${Neos.Node.labelForNode(node).properties('title')}"
   ui:
     label: 'Break in schedule'
     icon: 'mug-saucer'
