@@ -15,6 +15,13 @@ interface Provider {
     latitude: number;
     longitude: number;
     searchText: string;
-    badges?: string[];
+    badges?: Badge[];
     awards?: string[];
+}
+
+interface Badge {
+    alt: string;
+    uri: string;
+    width: number;
+    height: number;
 }
