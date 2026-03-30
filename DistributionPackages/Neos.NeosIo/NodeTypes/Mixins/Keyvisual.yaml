@@ -24,6 +24,7 @@
   properties:
     keyVisualVariant:
       type: string
+      scope: nodeAggregate
       ui:
         label: 'How to display the key visual contents'
         reloadIfChanged: true
@@ -43,6 +44,7 @@
                 icon: 'square'
     keyVisualImage:
       type: Neos\Media\Domain\Model\ImageInterface
+      scope: nodeAggregate
       ui:
         label: 'Image for the Keyvisual-Section'
         reloadIfChanged: true
@@ -51,6 +53,7 @@
           hidden: 'ClientEval: node.properties.keyVisualVariant != ""'
     keyVisualImageSmall:
       type: Neos\Media\Domain\Model\ImageInterface
+      scope: nodeAggregate
       ui:
         label: 'Mobile image for the Keyvisual-Section'
         reloadIfChanged: true
@@ -59,6 +62,7 @@
           position: 'after keyVisualImage'
           hidden: 'ClientEval: node.properties.keyVisualVariant != ""'
     isKeyVisualContentsInverted:
+      scope: nodeAggregate
       type: boolean
       ui:
         label: 'Invert the text-color for the Keyvisual contents'

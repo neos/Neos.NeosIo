@@ -15,6 +15,7 @@
   properties:
     type:
       type: string
+      scope: nodeAggregate
       validation:
         Neos.Neos/Validation/NotEmptyValidator: {  }
       ui:
@@ -34,6 +35,7 @@
                 label: Sprint
     startDate:
       type: DateTime
+      scope: nodeAggregate
       validation:
         Neos.Neos/Validation/NotEmptyValidator: {  }
       ui:
@@ -46,6 +48,7 @@
             format: d.m.Y H:i
     endDate:
       type: DateTime
+      scope: nodeAggregate
       ui:
         label: 'Event end date (optional)'
         showInCreationDialog: true

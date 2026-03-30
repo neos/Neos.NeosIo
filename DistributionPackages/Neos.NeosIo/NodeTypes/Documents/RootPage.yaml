@@ -30,6 +30,7 @@
           group: additional
     imprintLinkNode:
       type: reference
+      scope: nodeAggregate
       ui:
         label: 'Imprint Link Page'
         reloadIfChanged: true
@@ -41,18 +42,21 @@
               - 'Neos.Neos:Shortcut'
     showSmartAppBanner:
       type: boolean
+      scope: nodeAggregate
       ui:
         label: 'Show Smart App Banner'
         inspector:
           group: additional
     iOSAppId:
       type: string
+      scope: nodeAggregate
       ui:
         label: 'iOS App Id'
         inspector:
           group: additional
     blogFolder:
       type: reference
+      scope: nodeAggregate
       ui:
         label: 'Blog folder'
         inspector:
@@ -62,12 +66,14 @@
               - Neos.Neos:Document
     nlUser:
       type: string
+      scope: nodeAggregate
       ui:
         label: 'User ID'
         inspector:
           group: newsletter
     nlId:
       type: string
+      scope: nodeAggregate
       ui:
         label: 'Newsletter ID'
         inspector:
