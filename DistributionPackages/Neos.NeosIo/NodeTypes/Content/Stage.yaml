@@ -51,13 +51,15 @@
             placeholder: 'Stage title'
     hideTitle:
       type: boolean
+      scope: specializations
       ui:
-          reloadIfChanged: true
-          label: 'Hide title'
-          inspector:
-            group: content
+        reloadIfChanged: true
+        label: 'Hide title'
+        inspector:
+          group: content
     isContentTextInverted:
       type: boolean
+      scope: nodeAggregate
       ui:
         reloadIfChanged: true
         label: 'Invert Text-Color'
@@ -65,6 +67,7 @@
           group: content
     isContentExtraPadded:
       type: boolean
+      scope: nodeAggregate
       ui:
         reloadIfChanged: true
         label: 'Create more padding around the contents'
@@ -72,6 +75,7 @@
           group: content
     contentWidth:
       type: string
+      scope: nodeAggregate
       ui:
         reloadIfChanged: true
         label: 'Maximum content width'
@@ -88,6 +92,7 @@
                 label: 'Full-width (100%)'
     padding:
       type: string
+      scope: nodeAggregate
       ui:
         label: 'Padding'
         reloadIfChanged: true
@@ -104,6 +109,7 @@
     backgroundColor:
       type: string
       defaultValue: bright
+      scope: nodeAggregate
       ui:
         label: 'Background color'
         reloadIfChanged: true
@@ -150,6 +156,7 @@
                 label: Tertiary
     backgroundImage:
       type: Neos\Media\Domain\Model\ImageInterface
+      scope: nodeAggregate
       ui:
         reloadIfChanged: true
         label: 'Background image'
@@ -157,6 +164,7 @@
           group: background
     backgroundShadePercentage:
       type: string
+      scope: nodeAggregate
       ui:
         label: 'Background image shading'
         reloadIfChanged: true
@@ -177,6 +185,7 @@
                 label: 80%
     backgroundImageFixed:
       type: boolean
+      scope: nodeAggregate
       ui:
         reloadIfChanged: true
         label: 'Background image fixed?'
