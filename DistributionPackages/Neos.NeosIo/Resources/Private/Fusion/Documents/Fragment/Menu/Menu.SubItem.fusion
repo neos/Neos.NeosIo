@@ -1,0 +1,22 @@
+prototype(Neos.NeosIo:Fragment.Menu.SubItem) < prototype(Neos.Fusion:Component) {
+    item = null
+
+    @private {
+        appendSpacer = ${q(props.item.node).property('appendSeparatorInMenu')}
+    }
+
+    renderer = afx`
+        <li>
+            <Neos.Neos:NodeLink
+                node={props.item.node}
+                attributes.title={props.item.label}
+            >
+                {props.item.label}
+            </Neos.Neos:NodeLink>
+            <hr
+                @if={private.appendSpacer}
+                class="offCanvas__categorySeparator u-mb1/4 u-mt1/4"
+            />
+        </li>
+    `
+}

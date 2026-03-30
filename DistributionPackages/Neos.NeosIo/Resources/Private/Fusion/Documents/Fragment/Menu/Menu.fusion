@@ -1,21 +1,16 @@
-prototype(Neos.NeosIo:Fragment.Menu.Renderer) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosIo:Fragment.MenuItems.Renderer) < prototype(Neos.Fusion:Component) {
     items = Neos.Neos:MenuItems {
         entryLevel = 1
         maximumLevels = 2
         filter = 'Neos.Neos:Document,!Neos.NeosIo:Reference.ShowCase,!Neos.NeosIo:Post'
     }
 
-    renderer = afx`
-        <nav role="navigation" class="offCanvas print-hidden" id="offCanvas">
-            <div class="offCanvas__navWrapper">
-                <ul class="nav siteHeader__nav offCanvas__nav">
-                    <Neos.Fusion:Loop items={props.items}>
-                        <Neos.NeosIo:Fragment.Menu.Item item={item} />
-                    </Neos.Fusion:Loop>
-                </ul>
-            </div>
-        </nav>
-    `
+    renderer = Neos.Fusion:Loop {
+        items = ${props.items}
+        itemRenderer = Neos.NeosIo:Fragment.Menu.Item {
+            item = ${item}
+        }
+    }
 
     @cache {
         mode = 'cached'
@@ -28,62 +23,24 @@ prototype(Neos.NeosIo:Fragment.Menu.Renderer) < prototype(Neos.Fusion:Component)
         }
     }
 }
+navigationItems = Neos.NeosIo:Fragment.MenuItems.Renderer
 
-prototype(Neos.NeosIo:Fragment.Menu) < prototype(Neos.Fusion:Renderer) {
-    renderPath = '/navigation'
-}
-
-navigation = Neos.NeosIo:Fragment.Menu.Renderer
-
-prototype(Neos.NeosIo:Fragment.Menu.Item) < prototype(Neos.Fusion:Component) {
-    item = null
-
-    @private {
-        hasSubItems = ${!!props.item.subItems}
-    }
-
+##
+# Renders the menu with the language switch.
+# The menu items are rendered with a globally cached fragment to optimize performance.
+#
+prototype(Neos.NeosIo:Fragment.Menu) < prototype(Neos.Fusion:Component) {
     renderer = afx`
-        <li class="offCanvas__category">
-            <Neos.Neos:NodeLink
-                node={props.item.node}
-                attributes.title={props.item.label}
-                attributes.role="button"
-                attributes.role.@if={private.hasSubItems}
-                attributes.aria-haspopup="true"
-                attributes.aria-haspopup.@if={private.hasSubItems}
-                attributes.aria-expanded="false"
-                attributes.aria-expanded.@if={private.hasSubItems}
-            >
+        <nav role="navigation" class="offCanvas print-hidden" id="offCanvas">
+            <div class="offCanvas__navWrapper">
+                <ul class="nav siteHeader__nav offCanvas__nav">
+                    <Neos.Fusion:Renderer renderPath="/navigationItems" />
+                    <li>
                 {props.item.label}
-            </Neos.Neos:NodeLink>
-            <ul class="nav nav--stacked siteHeader__dropDownNav offCanvas__categoryList" @if={private.hasSubItems}>
-                <Neos.Fusion:Loop items={props.item.subItems} itemName="subItem">
-                    <Neos.NeosIo:Fragment.Menu.SubItem item={subItem} />
-                </Neos.Fusion:Loop>
-            </ul>
-        </li>
-    `
-}
-
-prototype(Neos.NeosIo:Fragment.Menu.SubItem) < prototype(Neos.Fusion:Component) {
-    item = null
-
-    @private {
-        appendSpacer = ${q(props.item.node).property('appendSeparatorInMenu')}
-    }
-
-    renderer = afx`
-        <li>
-            <Neos.Neos:NodeLink
-                node={props.item.node}
-                attributes.title={props.item.label}
-            >
-                {props.item.label}
-            </Neos.Neos:NodeLink>
-            <hr
-                @if={private.appendSpacer}
-                class="offCanvas__categorySeparator u-mb1/4 u-mt1/4"
-            />
-        </li>
+                        <Neos.NeosIo:Fragment.Menu.LanguageSwitch/>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     `
 }

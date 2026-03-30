@@ -1,0 +1,17 @@
+prototype(Neos.NeosIo:Fragment.Menu.LanguageSwitch) < prototype(Neos.Fusion:Component) {
+
+    @private {
+        currentLanguage = ${Neos.Dimension.currentValue(site, 'language')}
+        languages = ${Neos.Dimension.allDimensionValues(site, 'language')}
+        targetLanguageValue = ${private.currentLanguage.value == 'de' ? 'en' : 'de'}
+        targetLanguageLabel = ${private.languages.values[private.targetLanguageValue].configuration.label}
+    }
+
+    renderer = Neos.Neos:NodeLink {
+        node = ${q(documentNode).context({'dimensions': {'language': [private.targetLanguageValue]}}).get(0)}
+        content = ${private.targetLanguageLabel}
+        attributes {
+            title = ${I18n.translate('languageMenu.switch', 'Switch to ' + private.targetLanguageLabel, [], 'Main', 'Neos.NeosIo')}
+        }
+    }
+}
