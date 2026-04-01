@@ -12,4 +12,5 @@ prototype(Neos.MarketPlace:PackageMetrics) < prototype(Neos.Fusion:Component) {
             </span>
         </span>
     `
+    @if.notEmpty = ${this.favers || this.downloads}
 }
