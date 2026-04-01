@@ -421,6 +421,10 @@ class Storage
         Node $node
     ): bool
     {
+        $this->logger->debug(sprintf(
+            'Removing node %s',
+            $this->nodeLabelGenerator->getLabel($node),
+        ));
         return $this->handleCommandWithRetry(
             RemoveNodeAggregate::create(
                 $node->workspaceName,

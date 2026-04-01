@@ -243,6 +243,9 @@ class PackageConverter
 
         $lastActivities = [];
         foreach ($package->getVersions() as $version) {
+            if (!$this->versionShouldBeImported($version)) {
+                continue;
+            }
             $time = \DateTime::createFromFormat(Storage::DATE_FORMAT, $version->getTime());
             if ($time) {
                 $lastActivities[$time->getTimestamp()] = $time;
@@ -291,9 +294,15 @@ class PackageConverter
      */
     protected function createOrUpdateVersions(Package $package, Node $packageNode): bool
     {
-        $upstreamVersions = array_map(
-            static fn($version) => Slug::create($version),
-            array_keys($package->getVersions())
+        $upstreamVersions = array_reduce(
+            $package->getVersions(),
+            function(array $versions, Package\Version $version) {
+                if ($this->versionShouldBeImported($version)) {
+                    $versions[] = Slug::create($version->getVersion());
+                }
+                return $versions;
+            },
+            []
         );
 
         $versionsNode = $this->storage->getPackageVersionsNode($packageNode->aggregateId);
@@ -318,6 +327,9 @@ class PackageConverter
         }
 
         foreach ($package->getVersions() as $version) {
+            if (!$this->versionShouldBeImported($version)) {
+                continue;
+            }
             $versionNode = $versionNodesByVersion[$version->getVersion()] ?? null;
             $versionStability = VersionNumber::isVersionStable($version->getVersionNormalized());
             $stabilityLevel = VersionNumber::getStabilityLevel($version->getVersionNormalized());
@@ -396,7 +408,7 @@ class PackageConverter
             if (!$lastActivity instanceof \DateTimeInterface) {
                 continue;
             }
-            $versionStability = $this->storage->getStabilityLevel($version);
+            $versionStability = VersionNumber::getStabilityLevelAsInteger($version->getProperty('stabilityLevel'));
             if (!$lastActiveVersion
                 || $lastActiveVersionStability < $versionStability
                 || ($lastActiveVersionStability === $versionStability && $lastActivity > $lastActiveVersion->getProperty('time'))
@@ -463,6 +475,13 @@ class PackageConverter
             );
         }
         unset($packages);
+    }
+
+    protected function versionShouldBeImported(Package\Version $version): bool
+    {
+        return $version->getVersion() === 'dev-master'
+            || $version->getVersion() === 'dev-main'
+            || VersionNumber::isVersionStable($version->getVersionNormalized());
     }
 
     /**
