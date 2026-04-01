@@ -401,12 +401,18 @@ class PackageConverter
 
         /** @var Node|null $lastActiveVersion */
         $lastActiveVersion = null;
+        $lastActiveVersionStability = 0;
         foreach ($versions as $version) {
             $lastActivity = $version->getProperty('time');
             if (!$lastActivity instanceof \DateTimeInterface) {
                 continue;
             }
-            if (!$lastActiveVersion || $lastActivity > $lastActiveVersion->getProperty('time')) {
+            $versionStability = $this->storage->getStabilityLevel($version);
+            if (!$lastActiveVersion
+                || $lastActiveVersionStability < $versionStability
+                || ($lastActiveVersionStability === $versionStability && $lastActivity > $lastActiveVersion->getProperty('time'))
+            ) {
+                $lastActiveVersionStability = $versionStability;
                 $lastActiveVersion = $version;
             }
         }
@@ -486,21 +492,6 @@ class PackageConverter
     protected function arrayToJsonCaster(?array $value): ?string
     {
         return $value ? json_encode($value, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT) : null;
-    }
-
-    protected function getGithubClient(): ?Client
-    {
-        if (!$this->client) {
-            try {
-                $this->client = new Client();
-                $this->client->addCache($this->gitHubApiCachePool);
-                $this->client->authenticate($this->githubSettings['token'], null, AuthMethod::ACCESS_TOKEN);
-            } catch (\Exception $exception) {
-                $this->logger->error($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
-                return null;
-            }
-        }
-        return $this->client;
     }
 
     /**

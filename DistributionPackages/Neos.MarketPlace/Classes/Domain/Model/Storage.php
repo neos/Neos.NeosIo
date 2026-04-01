@@ -486,4 +486,16 @@ class Storage
         }
         return true;
     }
+
+    public function getStabilityLevel(Node $node): int
+    {
+        return match ($node->getProperty('stabilityLevel')) {
+            default => 0,
+            'dev' => 1,
+            'alpha' => 2,
+            'beta' => 3,
+            'rc' => 4,
+            'stable' => 5,
+        };
+    }
 }
