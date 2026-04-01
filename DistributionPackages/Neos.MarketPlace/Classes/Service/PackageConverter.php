@@ -16,13 +16,6 @@ namespace Neos\MarketPlace\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Indexer\NodeIndexer;
-use Github\Api\Markdown;
-use Github\Api\Repository\Contents;
-use Github\AuthMethod;
-use Github\Client;
-use Github\Exception\ApiLimitExceedException;
-use Github\Exception\ExceptionInterface as GithubException;
-use Github\Exception\RuntimeException;
 use Neos\Cache\Backend\SimpleFileBackend;
 use Neos\Cache\EnvironmentConfiguration;
 use Neos\Cache\Exception\InvalidBackendException;
@@ -37,9 +30,7 @@ use Neos\Flow\Log\Utility\LogEnvironment;
 use Neos\MarketPlace\Domain\Model\MarketplaceNodeType;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
-use Neos\MarketPlace\Utility\PackageVersion;
 use Neos\MarketPlace\Utility\VersionNumber;
-use Neos\Utility\Arrays;
 use Packagist\Api\Result\Package;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
@@ -70,8 +61,6 @@ class PackageConverter
      */
     #[Flow\Inject('Neos.MarketPlace:PackageSyncCache')]
     protected $packageSyncCache;
-
-    private ?Client $client = null;
 
     /**
      * @var array<string, array{lastActivity: \DateTimeInterface|null, lastSync: int|null}>
@@ -181,6 +170,11 @@ class PackageConverter
             (string)time(),
         );
 
+
+        $upstreamMaintainerNames = array_map(static function (Package\Maintainer $maintainer) {
+            return $maintainer->getName();
+        }, $package->getMaintainers());
+
         $updated = $this->storage->updateNode(
             $packageNode,
             $packageNode->originDimensionSpacePoint,
@@ -193,13 +187,13 @@ class PackageConverter
                 'type' => $package->getType(),
                 'repository' => $package->getRepository(),
                 'favers' => $package->getFavers(),
+                'maintainers' => implode(',', $upstreamMaintainerNames),
             ]
         );
         if (!$updated && !$this->forceUpdate) {
             return false;
         }
 
-        $this->createOrUpdateMaintainers($package, $packageNode);
         $this->createOrUpdateVersions($package, $packageNode);
 
         $this->updatePackageLastActivity(
@@ -213,7 +207,6 @@ class PackageConverter
         );
 
         $this->updateDownloadsCount($package, $packageNode);
-        $this->updateGithubMetrics($package, $packageNode);
         $this->updatePackageAbandonedState($package, $packageNode);
 
         try {
@@ -250,6 +243,9 @@ class PackageConverter
 
         $lastActivities = [];
         foreach ($package->getVersions() as $version) {
+            if (!$this->versionShouldBeImported($version)) {
+                continue;
+            }
             $time = \DateTime::createFromFormat(Storage::DATE_FORMAT, $version->getTime());
             if ($time) {
                 $lastActivities[$time->getTimestamp()] = $time;
@@ -275,165 +271,7 @@ class PackageConverter
             $packageNode->originDimensionSpacePoint,
             [
                 'downloadTotal' => $downloads->getTotal(),
-                'downloadMonthly' => $downloads->getMonthly(),
-                'downloadDaily' => $downloads->getDaily(),
             ]);
-    }
-
-    protected function updateGithubMetrics(Package $package, Node $packageNode): void
-    {
-        if ($package->isAbandoned()) {
-            $this->resetGithubMetrics($packageNode);
-        } else {
-            $repository = $package->getRepository();
-            if (!str_contains($repository, 'github.com')) {
-                return;
-            }
-            // todo make it a bit more clever
-            $repository = str_replace('.git', '', $repository);
-            preg_match('#(.*)://github.com/(.*)#', $repository, $matches);
-            /** @phpstan-ignore offsetAccess.notFound */
-            [$organization, $repository] = explode('/', $matches[2]);
-            if (!$this->client) {
-                $this->client = new Client();
-                $this->client->addCache($this->gitHubApiCachePool);
-                $this->client->authenticate($this->githubSettings['token'], null, AuthMethod::ACCESS_TOKEN);
-            }
-            try {
-                $meta = $this->client->repositories()->show($organization, $repository);
-                /** @phpstan-ignore function.alreadyNarrowedType */
-                if (!is_array($meta)) {
-                    $this->logger->warning(
-                        sprintf('no repository info returned for %s', $repository),
-                        LogEnvironment::fromMethodName(__METHOD__)
-                    );
-                    return;
-                }
-            } catch (ApiLimitExceedException $exception) {
-                // Skip the processing if we hit the API rate limit
-                $this->logger->warning(
-                    $exception->getMessage(),
-                    LogEnvironment::fromMethodName(__METHOD__)
-                );
-                return;
-            } catch (RuntimeException $exception) {
-                if ($exception->getMessage() === 'Not Found') {
-                    $this->logger->warning(
-                        sprintf('Repository %s not found.', $repository),
-                        LogEnvironment::fromMethodName(__METHOD__)
-                    );
-                    // todo special handling of not found repository ?
-                    $this->resetGithubMetrics($packageNode);
-                    return;
-                }
-                $this->logger->warning(
-                    $exception->getMessage(),
-                    LogEnvironment::fromMethodName(__METHOD__)
-                );
-                return;
-            }
-            $this->storage->updateNode(
-                $packageNode,
-                $packageNode->originDimensionSpacePoint,
-                [
-                    'githubStargazers' => (integer)Arrays::getValueByPath($meta, 'stargazers_count'),
-                    'githubWatchers' => (integer)Arrays::getValueByPath($meta, 'watchers_count'),
-                    'githubForks' => (integer)Arrays::getValueByPath($meta, 'forks_count'),
-                    'githubIssues' => (integer)Arrays::getValueByPath($meta, 'open_issues_count'),
-                    'githubAvatar' => trim((string)Arrays::getValueByPath($meta, 'organization.avatar_url'))
-                ]
-            );
-            $this->updateGithubReadme($organization, $repository, $packageNode);
-        }
-    }
-
-    /**
-     */
-    protected function updateGithubReadme(string $organization, string $repository, Node $packageNode): void
-    {
-        $client = $this->getGithubClient();
-
-        if (!$client) {
-            $this->logger->error('Github client not available', LogEnvironment::fromMethodName(__METHOD__));
-            return;
-        }
-
-        try {
-            $contents = new Contents($client);
-            $metadata = $contents->readme($organization, $repository);
-            /** @var Markdown $markdownApi */
-            $markdownApi = $client->api('markdown');
-            $markdownContent = file_get_contents($metadata['download_url']);
-            if (!$markdownContent) {
-                return;
-            }
-            $rendered = $markdownApi->render($markdownContent);
-        } catch (ApiLimitExceedException $exception) {
-            // Skip the processing if we hit the API rate limit
-            $this->logger->warning($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
-            return;
-        } catch (RuntimeException $exception) {
-            if ($exception->getMessage() === 'Not Found') {
-                return;
-            }
-            $this->logger->warning($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
-            return;
-        } catch (GithubException $exception) {
-            $this->logger->error($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
-            return;
-        }
-
-        $content = $this->postprocessGithubReadme($organization, $repository, $rendered);
-
-        $readmeNode = $this->storage->getReadmeNode($packageNode->aggregateId);
-        if (!$readmeNode) {
-            $this->logger->warning(
-                sprintf('No readme node found for package %s', $packageNode->getProperty('title')),
-                LogEnvironment::fromMethodName(__METHOD__)
-            );
-            return;
-        }
-        $this->storage->updateNode(
-            $readmeNode,
-            $readmeNode->originDimensionSpacePoint,
-            [
-                'readmeSource' => $content,
-            ]
-        );
-    }
-
-    protected function postprocessGithubReadme(
-        string $organization,
-        string $repository,
-        string $content
-    ): string
-    {
-        $content = trim($content);
-        $domain = 'https://raw.githubusercontent.com/' . $organization . '/' . $repository . '/master/';
-        $r = [
-            '#<svg aria-hidden="true" class="octicon octicon-link"[^>]*>.*?<\s*/\s*svg>#msi' => '',
-            '#<a[^>]*><\s*/\s*a>#msi' => '',
-            '#<article[^>]*>(.*)<\s*/\s*article>#msi' => '$1',
-            '#<div class="announce[^>]*>(.*)<\s*/\s*div>$#msi' => '$1',
-            '/href="(?!https?:\/\/)(?!data:)(?!#)/' => 'href="' . $domain,
-            '/src="(?!https?:\/\/)(?!data:)(?!#)/' => 'src="' . $domain
-        ];
-        return trim((string)preg_replace(array_keys($r), array_values($r), $content));
-    }
-
-    protected function resetGithubMetrics(Node $packageNode): void
-    {
-        $this->storage->updateNode(
-            $packageNode,
-            $packageNode->originDimensionSpacePoint,
-            [
-                'githubStargazers' => 0,
-                'githubWatchers' => 0,
-                'githubForks' => 0,
-                'githubIssues' => 0,
-                'githubAvatar' => null
-            ]
-        );
     }
 
     /**
@@ -453,39 +291,18 @@ class PackageConverter
     }
 
     /**
-     * Synchronizes the maintainers of the package.
-     */
-    protected function createOrUpdateMaintainers(Package $package, Node $packageNode): void
-    {
-        $upstreamMaintainerNames = array_map(static function (Package\Maintainer $maintainer) {
-            return $maintainer->getName();
-        }, $package->getMaintainers());
-
-        $maintainerNodes = $this->storage->getPackageMaintainerNodes($packageNode->aggregateId);
-
-        // Remove all maintainers that are not in the upstream package
-        foreach ($maintainerNodes as $maintainerNode) {
-            if (!in_array($maintainerNode->getProperty('title'), $upstreamMaintainerNames, true)) {
-                $this->storage->removeNode($maintainerNode);
-            }
-        }
-
-        // Create or update all maintainers
-        foreach ($package->getMaintainers() as $maintainer) {
-            $this->storage->createOrUpdateMaintainerNode(
-                $maintainer,
-                $packageNode
-            );
-        }
-    }
-
-    /**
      */
     protected function createOrUpdateVersions(Package $package, Node $packageNode): bool
     {
-        $upstreamVersions = array_map(
-            static fn($version) => Slug::create($version),
-            array_keys($package->getVersions())
+        $upstreamVersions = array_reduce(
+            $package->getVersions(),
+            function(array $versions, Package\Version $version) {
+                if ($this->versionShouldBeImported($version)) {
+                    $versions[] = Slug::create($version->getVersion());
+                }
+                return $versions;
+            },
+            []
         );
 
         $versionsNode = $this->storage->getPackageVersionsNode($packageNode->aggregateId);
@@ -494,8 +311,11 @@ class PackageConverter
         }
 
         $versionNodes = $this->storage->getPackageVersionNodes($versionsNode->aggregateId);
+        $versionNodesByVersion = [];
         foreach ($versionNodes as $versionNode) {
-            $versionSlug = Slug::create($versionNode->getProperty('version'));
+            $versionString = $versionNode->getProperty('version');
+            $versionSlug = Slug::create($versionString);
+            $versionNodesByVersion[$versionString] = $versionNode;
             if (!in_array($versionSlug, $upstreamVersions, true)) {
                 $this->storage->removeNode($versionNode);
             } else {
@@ -507,6 +327,10 @@ class PackageConverter
         }
 
         foreach ($package->getVersions() as $version) {
+            if (!$this->versionShouldBeImported($version)) {
+                continue;
+            }
+            $versionNode = $versionNodesByVersion[$version->getVersion()] ?? null;
             $versionStability = VersionNumber::isVersionStable($version->getVersionNormalized());
             $stabilityLevel = VersionNumber::getStabilityLevel($version->getVersionNormalized());
             $versionNormalized = VersionNumber::toInteger($version->getVersionNormalized());
@@ -519,7 +343,7 @@ class PackageConverter
             try {
                 $this->storage->createOrUpdateVersionNode(
                     $versionsNode->aggregateId,
-                    $version->getVersion(),
+                    $versionNode,
                     $versionNodeType,
                     [
                         'version' => $version->getVersion(),
@@ -576,29 +400,41 @@ class PackageConverter
             $versionsNode->aggregateId,
         );
 
-        $lastActiveVersionTime = null;
+        /** @var Node|null $lastActiveVersion */
+        $lastActiveVersion = null;
+        $lastActiveVersionStability = 0;
         foreach ($versions as $version) {
             $lastActivity = $version->getProperty('time');
             if (!$lastActivity instanceof \DateTimeInterface) {
                 continue;
             }
-            if (!$lastActiveVersionTime || $lastActivity > $lastActiveVersionTime) {
-                $lastActiveVersionTime = $lastActivity;
+            $versionStability = VersionNumber::getStabilityLevelAsInteger($version->getProperty('stabilityLevel'));
+            if (!$lastActiveVersion
+                || $lastActiveVersionStability < $versionStability
+                || ($lastActiveVersionStability === $versionStability && $lastActivity > $lastActiveVersion->getProperty('time'))
+            ) {
+                $lastActiveVersionStability = $versionStability;
+                $lastActiveVersion = $version;
             }
         }
-        $this->storage->updateNode(
-            $packageNode,
-            $originDimensionSpacePoint,
-            [
-                'lastActivity' => $lastActiveVersionTime,
-            ]
-        );
-        $this->storage->updateNodeReference(
-            $packageNode,
-            $originDimensionSpacePoint,
-            ReferenceName::fromString('lastVersion'),
-            PackageVersion::extractLastVersion($versions)?->aggregateId
-        );
+        if ($lastActiveVersion) {
+            if ($lastActiveVersion->getProperty('time') > $packageNode->getProperty('lastActivity')) {
+                $this->logger->debug('Updating last activity for package ' . $packageNode->getProperty('title'));
+                $this->storage->updateNode(
+                    $packageNode,
+                    $originDimensionSpacePoint,
+                    [
+                        'lastActivity' => $lastActiveVersion->getProperty('time'),
+                    ]
+                );
+            }
+            $this->storage->updateNodeReferenceIfChanged(
+                $packageNode,
+                $originDimensionSpacePoint,
+                ReferenceName::fromString('lastVersion'),
+                $lastActiveVersion->aggregateId
+            );
+        }
         unset($versions);
     }
 
@@ -628,14 +464,24 @@ class PackageConverter
                 $lastActivePackageTime = $lastActivity;
             }
         }
-        $this->storage->updateNode(
-            $vendorNode,
-            $originDimensionSpacePoint,
-            [
-                'lastActivity' => $lastActivePackageTime,
-            ]
-        );
+        if ($lastActivePackageTime && $lastActivePackageTime > $vendorNode->getProperty('lastActivity')) {
+            $this->logger->debug('Updating last activity for vendor ' . $vendorNode->getProperty('title'));
+            $this->storage->updateNode(
+                $vendorNode,
+                $originDimensionSpacePoint,
+                [
+                    'lastActivity' => $lastActivePackageTime,
+                ]
+            );
+        }
         unset($packages);
+    }
+
+    protected function versionShouldBeImported(Package\Version $version): bool
+    {
+        return $version->getVersion() === 'dev-master'
+            || $version->getVersion() === 'dev-main'
+            || VersionNumber::isVersionStable($version->getVersionNormalized());
     }
 
     /**
@@ -654,21 +500,6 @@ class PackageConverter
     protected function arrayToJsonCaster(?array $value): ?string
     {
         return $value ? json_encode($value, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT) : null;
-    }
-
-    protected function getGithubClient(): ?Client
-    {
-        if (!$this->client) {
-            try {
-                $this->client = new Client();
-                $this->client->addCache($this->gitHubApiCachePool);
-                $this->client->authenticate($this->githubSettings['token'], null, AuthMethod::ACCESS_TOKEN);
-            } catch (\Exception $exception) {
-                $this->logger->error($exception->getMessage(), LogEnvironment::fromMethodName(__METHOD__));
-                return null;
-            }
-        }
-        return $this->client;
     }
 
     /**

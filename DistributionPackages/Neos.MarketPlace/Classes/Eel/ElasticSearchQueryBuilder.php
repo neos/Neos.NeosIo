@@ -56,8 +56,7 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
                     'title^10',
                     '__title^10',
                     '__composerVendor^5',
-                    '__maintainers.name^5',
-                    '__maintainers.tag^8',
+                    'maintainers^5',
                     'description^2',
                     'lastVersion.keywords.name^10',
                     'lastVersion.keywords.tag^12',
@@ -85,30 +84,6 @@ class ElasticSearchQueryBuilder extends Eel\ElasticSearchQueryBuilder
                                 ],
                             ],
                             'weight' => 1.2
-                        ],
-                        [
-                            'field_value_factor' => [
-                                'field' => 'downloadDaily',
-                                'factor' => 0.5,
-                                'modifier' => 'sqrt',
-                                'missing' => 1
-                            ]
-                        ],
-                        [
-                            'field_value_factor' => [
-                                'field' => 'githubStargazers',
-                                'factor' => 1,
-                                'modifier' => 'sqrt',
-                                'missing' => 1
-                            ]
-                        ],
-                        [
-                            'field_value_factor' => [
-                                'field' => 'githubForks',
-                                'factor' => 0.5,
-                                'modifier' => 'sqrt',
-                                'missing' => 1
-                            ]
                         ],
                         [
                             'gauss' => [

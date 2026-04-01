@@ -5,6 +5,9 @@
     'Neos.Neos:Content': true
     'Neos.MarketPlace:Mixin.Source': true
     'Neos.MarketPlace:Mixin.Dist': true
+  search:
+    fulltext:
+      enable: true
   ui:
     label: i18n
     icon: file
@@ -22,6 +25,8 @@
         inspector:
           group: general
           position: 1
+          editorOptions:
+            readonly: true
     versionNormalized:
       type: integer
       search:
@@ -32,6 +37,8 @@
         inspector:
           group: general
           position: 2
+          editorOptions:
+            readonly: true
     stability:
       type: boolean
       search:
@@ -41,6 +48,8 @@
         label: i18n
         inspector:
           group: general
+          editorOptions:
+            readonly: true
     stabilityLevel:
       type: string
       search:
@@ -52,6 +61,7 @@
           group: general
           editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
+            readonly: true
             placeholder: i18n
             values:
               '':
@@ -68,16 +78,20 @@
                 label: i18n
     description:
       type: string
-      ui:
+      ui: &readonlyPropertyUiSettings
         label: i18n
         inspector:
           group: general
+          editorOptions:
+            readonly: true
     keywords:
       type: string
       ui:
         label: i18n
         inspector:
           group: general
+          editorOptions:
+            readonly: true
       search:
         indexing: '${MarketIndexing.trimExplode(q(node).property(''keywords''))}'
         elasticSearchMapping:
@@ -93,73 +107,37 @@
               search_analyzer: simple
     homepage:
       type: string
-      ui:
-        label: i18n
-        inspector:
-          group: general
+      ui: *readonlyPropertyUiSettings
     license:
       type: string
-      ui:
-        label: i18n
-        inspector:
-          group: general
+      ui: *readonlyPropertyUiSettings
     type:
       type: string
-      ui:
-        label: i18n
-        inspector:
-          group: general
+      ui: *readonlyPropertyUiSettings
     time:
       type: DateTime
-      ui:
-        label: i18n
-        inspector:
-          group: general
+      ui: *readonlyPropertyUiSettings
     abandoned:
       type: string
-      ui:
-        label: i18n
-        inspector:
-          group: general
+      ui: *readonlyPropertyUiSettings
     bin:
       type: string
-      ui:
-        label: i18n
-        inspector:
-          group: general
+      ui: *readonlyPropertyUiSettings
     provide:
       type: string
-      ui:
-        label: i18n
-        inspector:
-          group: null
+      ui: *readonlyPropertyUiSettings
     require:
       type: string
-      ui:
-        label: i18n
-        inspector:
-          group: null
+      ui: *readonlyPropertyUiSettings
     requireDev:
       type: string
-      ui:
-        label: i18n
-        inspector:
-          group: null
+      ui: *readonlyPropertyUiSettings
     suggest:
       type: string
-      ui:
-        label: i18n
-        inspector:
-          group: null
+      ui: *readonlyPropertyUiSettings
     conflict:
       type: string
-      ui:
-        label: i18n
-        inspector:
-          group: null
+      ui: *readonlyPropertyUiSettings
     replace:
       type: string
-      ui:
-        label: i18n
-        inspector:
-          group: null
+      ui: *readonlyPropertyUiSettings
