@@ -55,13 +55,13 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
                     props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
                 )}
                 yellow = ${Carbon.String.classNames(
-                    'px-8 py-4 text-black bg-yellow display-cta-lg hocus:text-white hocus:bg-yellow-dark no-underline!',
+                    'px-8 py-4 text-yellow-darkest bg-yellow display-cta-lg hocus:text-white hocus:bg-yellow-dark no-underline!',
                     private.isButton ? 'disabled:bg-neutral-40! disabled:text-black!' : 'aria-disabled:bg-neutral-40! aria-disabled:text-black!',
                     props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
                 )}
                 // fallback is always the default green button
                 @default = ${Carbon.String.classNames(
-                    'px-8 py-4 text-black bg-green display-cta-lg hocus:text-white hocus:bg-green-dark no-underline!',
+                    'px-8 py-4 text-green-darkest bg-green display-cta-lg hocus:text-white hocus:bg-green-dark no-underline!',
                     private.isButton ? 'disabled:bg-neutral-40! disabled:text-black!' : 'aria-disabled:bg-neutral-40! aria-disabled:text-black!',
                     props.fullWidth ? 'flex w-full justify-center text-center' : 'inline-flex'
                 )}
