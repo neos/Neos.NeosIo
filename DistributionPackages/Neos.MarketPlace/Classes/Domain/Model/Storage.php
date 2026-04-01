@@ -442,7 +442,7 @@ class Storage
             $node->aggregateId,
             FindReferencesFilter::create(referenceName: $referenceName)
         );
-        if ($existingReferences->getNodes()->first()?->aggregateId->equals($referenceAggregateId)) {
+        if ($referenceAggregateId && $existingReferences->getNodes()->first()?->aggregateId->equals($referenceAggregateId)) {
             return; // No change needed, the reference is up-to-date
         }
         $this->logger->debug(sprintf(

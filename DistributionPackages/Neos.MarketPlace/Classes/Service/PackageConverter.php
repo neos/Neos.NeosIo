@@ -16,13 +16,6 @@ namespace Neos\MarketPlace\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Indexer\NodeIndexer;
-use Github\Api\Markdown;
-use Github\Api\Repository\Contents;
-use Github\AuthMethod;
-use Github\Client;
-use Github\Exception\ApiLimitExceedException;
-use Github\Exception\ExceptionInterface as GithubException;
-use Github\Exception\RuntimeException;
 use Neos\Cache\Backend\SimpleFileBackend;
 use Neos\Cache\EnvironmentConfiguration;
 use Neos\Cache\Exception\InvalidBackendException;
@@ -37,9 +30,7 @@ use Neos\Flow\Log\Utility\LogEnvironment;
 use Neos\MarketPlace\Domain\Model\MarketplaceNodeType;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
-use Neos\MarketPlace\Utility\PackageVersion;
 use Neos\MarketPlace\Utility\VersionNumber;
-use Neos\Utility\Arrays;
 use Packagist\Api\Result\Package;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
@@ -70,8 +61,6 @@ class PackageConverter
      */
     #[Flow\Inject('Neos.MarketPlace:PackageSyncCache')]
     protected $packageSyncCache;
-
-    private ?Client $client = null;
 
     /**
      * @var array<string, array{lastActivity: \DateTimeInterface|null, lastSync: int|null}>
