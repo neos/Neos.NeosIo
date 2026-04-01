@@ -1,0 +1,63 @@
+prototype(Neos.Presentation:StageDefault) < prototype(Neos.Fusion:Component) {
+    @styleguide {
+        title = 'StageDefault'
+        description = 'Stage component for header of default pages'
+
+        props {
+            headline = 'Neos CMS Combining content and application'
+            subline = 'Neos CMS is an open source modern digital content creation and publishing system. Unlock your potential with a system your devs and publishers will love.'
+            imageUri = 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            tiles = Neos.Fusion:Join {
+                0 = Neos.Presentation:SquareIcon {
+                    content = 'Forever Open Source'
+                    color = 'black'
+                    icon = 'heart'
+                    background = 'blue-light'
+                }
+                1 = Neos.Presentation:SquareIcon {
+                    content = 'Planned Extensibility'
+                    color = 'white'
+                    icon = 'square'
+                    background = 'purple'
+                }
+                2 = Neos.Presentation:SquareIcon {
+                    content = 'One click publishing'
+                    color = 'black'
+                    icon = 'clock'
+                    background = 'yellow'
+                }
+            }
+        }
+    }
+
+    @propTypes {
+        title = PropTypes:String
+        headline = PropTypes:String
+        subline = PropTypes:String
+        imageUri = PropTypes:String
+        imageHeight = PropTypes:Int
+        imageWidth = PropTypes:Int
+        imageAlt = PropTypes:String
+    }
+
+    tilesAttributes = Neos.Fusion:DataStructure
+
+    renderer = afx`
+        <section
+            class="xl:pt-24 n-stage--default relative! h-[100vh] flex! flex-col items-center justify-center text-white mb-[6rem] xl:mb-[10rem]"
+        >
+            <div>
+                <h1>{props.title}</h1>
+                <h2 class="max-w-4xl display-headline-xl text-white!">{props.headline}</h2>
+                <div class="max-w-3xl">{props.subline}</div>
+            </div>
+            <figure
+                class="absolute! xl:-bottom-[8rem] -bottom-[4rem] *:object-cover xl:w-[min(80vw,1200px)] xl:h-auto h-[50vh] right-[15%] xl:right-auto rounded-3xl aspect-[21/9] *:aspect-[21/9] overflow-hidden *:size-full"
+                style="box-shadow: 0 0 0 8px #161616;"
+                @if={props.imageUri}
+            >
+                <img src={props.imageUri} alt={props.imageAlt || 'Stage image'} width={props.imageWidth} height={props.imageHeight} />
+            </figure>
+        </section>
+    `
+}
