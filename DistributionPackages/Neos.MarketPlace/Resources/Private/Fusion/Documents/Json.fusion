@@ -5,6 +5,7 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
 
     data = Neos.Fusion:Component {
         searchTerm = ${request.arguments.search}
+        onlyStable = ${request.arguments.stable}
 
         marketPlaceQuery = ${MarketPlaceSearch.query(documentNode)}
         marketPlaceQuery.@process {
@@ -15,6 +16,10 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
             fulltext {
                 expression = ${value.fulltext('*' + String.replace(this.searchTerm, '"', ''))}
                 @if.hasQuery = ${!String.isBlank(this.searchTerm)}
+            }
+            stable {
+                expression = ${value.exactMatch('lastVersion.stability', true)}
+                @if.onlyStable = ${this.onlyStable == 'true'}
             }
             abandoned {
                 expression = ${value.exclude('abandoned', '1')}
@@ -45,6 +50,7 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
                         format = 'html'
                     }
                     latestVersion = ${q(q(package).property('lastVersion')).property('version')}
+                    stable = ${q(q(package).property('lastVersion')).property('stability')}
                     downloads = ${q(package).property('downloadTotal')}
                     stars = ${q(package).property('favers') || 0}
                 }
