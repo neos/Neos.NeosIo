@@ -218,7 +218,6 @@ class PackageConverter
         );
 
         $this->updateDownloadsCount($package, $packageNode);
-        $this->updateGithubMetrics($package, $packageNode);
         $this->updatePackageAbandonedState($package, $packageNode);
 
         try {
@@ -281,58 +280,6 @@ class PackageConverter
             [
                 'downloadTotal' => $downloads->getTotal(),
             ]);
-    }
-
-    protected function updateGithubMetrics(Package $package, Node $packageNode): void
-    {
-        if (!$package->isAbandoned()) {
-            $repository = $package->getRepository();
-            if (!str_contains($repository, 'github.com')) {
-                return;
-            }
-            // todo make it a bit more clever
-            $repository = str_replace('.git', '', $repository);
-            preg_match('#(.*)://github.com/(.*)#', $repository, $matches);
-            /** @phpstan-ignore offsetAccess.notFound */
-            [$organization, $repository] = explode('/', $matches[2]);
-            if (!$this->client) {
-                $this->client = new Client();
-                $this->client->addCache($this->gitHubApiCachePool);
-                $this->client->authenticate($this->githubSettings['token'], null, AuthMethod::ACCESS_TOKEN);
-            }
-            try {
-                $meta = $this->client->repositories()->show($organization, $repository);
-                /** @phpstan-ignore function.alreadyNarrowedType */
-                if (!is_array($meta)) {
-                    $this->logger->warning(
-                        sprintf('no repository info returned for %s', $repository),
-                        LogEnvironment::fromMethodName(__METHOD__)
-                    );
-                    return;
-                }
-            } catch (ApiLimitExceedException $exception) {
-                // Skip the processing if we hit the API rate limit
-                $this->logger->warning(
-                    $exception->getMessage(),
-                    LogEnvironment::fromMethodName(__METHOD__)
-                );
-                return;
-            } catch (RuntimeException $exception) {
-                if ($exception->getMessage() === 'Not Found') {
-                    $this->logger->warning(
-                        sprintf('Repository %s not found.', $repository),
-                        LogEnvironment::fromMethodName(__METHOD__)
-                    );
-                    // todo special handling of not found repository ?
-                    return;
-                }
-                $this->logger->warning(
-                    $exception->getMessage(),
-                    LogEnvironment::fromMethodName(__METHOD__)
-                );
-                return;
-            }
-        }
     }
 
     /**
