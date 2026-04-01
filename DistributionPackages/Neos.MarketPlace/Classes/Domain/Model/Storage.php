@@ -50,6 +50,7 @@ use Neos\ContentRepository\Core\SharedModel\Workspace\WorkspaceName;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\EventStore\Exception\ConcurrencyException;
 use Neos\Flow\Annotations as Flow;
+use Neos\Neos\Domain\NodeLabel\NodeLabelGeneratorInterface;
 use Neos\Neos\Domain\Service\WorkspacePublishingService;
 use Neos\Neos\Domain\SubtreeTagging\NeosVisibilityConstraints;
 use Packagist\Api\Result\Package;
@@ -89,8 +90,9 @@ class Storage
     protected array $vendorCache = [];
 
     public function __construct(
-        protected ContentRepositoryRegistry  $contentRepositoryRegistry,
-        protected WorkspacePublishingService $workspacePublishingService,
+        protected ContentRepositoryRegistry   $contentRepositoryRegistry,
+        protected WorkspacePublishingService  $workspacePublishingService,
+        protected NodeLabelGeneratorInterface $nodeLabelGenerator
     )
     {
         $this->workspaceName = WorkspaceName::fromString('live');
@@ -134,7 +136,7 @@ class Storage
         );
 
         foreach ($nodes as $node) {
-            $this->vendorCache[$node->getProperty('title')->value] = $node->aggregateId;
+            $this->vendorCache[(string)$node->getProperty('title')] = $node->aggregateId;
         }
     }
 
@@ -429,7 +431,7 @@ class Storage
         );
     }
 
-    public function updateNodeReference(
+    public function updateNodeReferenceIfChanged(
         Node                      $node,
         OriginDimensionSpacePoint $originDimensionSpacePoint,
         ReferenceName             $referenceName,
@@ -440,9 +442,14 @@ class Storage
             $node->aggregateId,
             FindReferencesFilter::create(referenceName: $referenceName)
         );
-        if ($existingReferences->getNodes()->first()?->aggregateId === $referenceAggregateId) {
+        if ($existingReferences->getNodes()->first()?->aggregateId->equals($referenceAggregateId)) {
             return; // No change needed, the reference is up-to-date
         }
+        $this->logger->debug(sprintf(
+            'Updating %s reference for node %s',
+            $referenceName,
+            $this->nodeLabelGenerator->getLabel($node),
+        ));
         $references = NodeReferencesToWrite::create(
             NodeReferencesForName::fromTargets(
                 $referenceName,

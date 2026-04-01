@@ -399,29 +399,35 @@ class PackageConverter
             $versionsNode->aggregateId,
         );
 
-        $lastActiveVersionTime = null;
+        /** @var Node|null $lastActiveVersion */
+        $lastActiveVersion = null;
         foreach ($versions as $version) {
             $lastActivity = $version->getProperty('time');
             if (!$lastActivity instanceof \DateTimeInterface) {
                 continue;
             }
-            if (!$lastActiveVersionTime || $lastActivity > $lastActiveVersionTime) {
-                $lastActiveVersionTime = $lastActivity;
+            if (!$lastActiveVersion || $lastActivity > $lastActiveVersion->getProperty('time')) {
+                $lastActiveVersion = $version;
             }
         }
-        $this->storage->updateNode(
-            $packageNode,
-            $originDimensionSpacePoint,
-            [
-                'lastActivity' => $lastActiveVersionTime,
-            ]
-        );
-        $this->storage->updateNodeReference(
-            $packageNode,
-            $originDimensionSpacePoint,
-            ReferenceName::fromString('lastVersion'),
-            PackageVersion::extractLastVersion($versions)?->aggregateId
-        );
+        if ($lastActiveVersion) {
+            if ($lastActiveVersion->getProperty('time') > $packageNode->getProperty('lastActivity')) {
+                $this->logger->debug('Updating last activity for package ' . $packageNode->getProperty('title'));
+                $this->storage->updateNode(
+                    $packageNode,
+                    $originDimensionSpacePoint,
+                    [
+                        'lastActivity' => $lastActiveVersion->getProperty('time'),
+                    ]
+                );
+            }
+            $this->storage->updateNodeReferenceIfChanged(
+                $packageNode,
+                $originDimensionSpacePoint,
+                ReferenceName::fromString('lastVersion'),
+                $lastActiveVersion->aggregateId
+            );
+        }
         unset($versions);
     }
 
@@ -451,13 +457,16 @@ class PackageConverter
                 $lastActivePackageTime = $lastActivity;
             }
         }
-        $this->storage->updateNode(
-            $vendorNode,
-            $originDimensionSpacePoint,
-            [
-                'lastActivity' => $lastActivePackageTime,
-            ]
-        );
+        if ($lastActivePackageTime && $lastActivePackageTime > $vendorNode->getProperty('lastActivity')) {
+            $this->logger->debug('Updating last activity for vendor ' . $vendorNode->getProperty('title'));
+            $this->storage->updateNode(
+                $vendorNode,
+                $originDimensionSpacePoint,
+                [
+                    'lastActivity' => $lastActivePackageTime,
+                ]
+            );
+        }
         unset($packages);
     }
 
