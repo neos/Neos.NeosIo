@@ -118,6 +118,26 @@ class Storage
         $this->storageRootNodeAggregateId = NodeAggregateId::fromString($this->repositoryIdentifier);
     }
 
+    public function prefetchVendorNodeIds(): void
+    {
+        if (!$this->storageRootNodeAggregateId) {
+            return;
+        }
+
+        $nodes = $this->subGraph->findChildNodes(
+            $this->storageRootNodeAggregateId,
+            FindChildNodesFilter::create(
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::VENDOR->value]
+                    )),
+            )
+        );
+
+        foreach ($nodes as $node) {
+            $this->vendorCache[$node->getProperty('title')->value] = $node->aggregateId;
+        }
+    }
+
     /**
      * Returns the vendor node aggregate id for the given vendor name.
      * If the vendor node does not exist, it will be created.
@@ -210,7 +230,7 @@ class Storage
         NodeAggregateId $vendorNodeAggregateId
     ): ?Node
     {
-        // Find the vendor node by name
+        // Find the package node by name
         return $this->subGraph->findChildNodes(
             $vendorNodeAggregateId,
             FindChildNodesFilter::create(
