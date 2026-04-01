@@ -43,21 +43,42 @@ prototype(Neos.Presentation:StageDefault) < prototype(Neos.Fusion:Component) {
     tilesAttributes = Neos.Fusion:DataStructure
 
     renderer = afx`
-        <section
-            class="xl:pt-24 n-stage--default relative! h-[100vh] flex! flex-col items-center justify-center text-white mb-[6rem] xl:mb-[10rem]"
+        <Neos.Presentation:Background
+            tagName="section"
+            background="blue-dark-to-blue"
+            class="h-[100vh] grid md:grid-cols-[3fr_2fr] gap-8 p-8 md:p-16 md:gap-16 pt-24 md:pt-42 stage--default__clip-path"
         >
-            <div>
-                <h1>{props.title}</h1>
-                <h2 class="max-w-4xl display-headline-xl text-white!">{props.headline}</h2>
-                <div class="max-w-3xl">{props.subline}</div>
+            <div class="flex flex-col justify-center md:pr-16 md:pb-24">
+                <Neos.Presentation:Headline
+                    tagName="h1"
+                    content={props.title}
+                    display="title-sm"
+                    class="text-blue-light text-base md:text-lg font-normal"
+                />
+                <Neos.Presentation:Headline
+                    tagName="h2"
+                    content={props.headline}
+                    display="headline-xl"
+                />
+                <Neos.Presentation:Paragraph
+                    @if.hasContent={props.subline}
+                    content={props.subline}
+                    display="body-md"
+                />
             </div>
-            <figure
-                class="absolute! xl:-bottom-[8rem] -bottom-[4rem] *:object-cover xl:w-[min(80vw,1200px)] xl:h-auto h-[50vh] right-[15%] xl:right-auto rounded-3xl aspect-[21/9] *:aspect-[21/9] overflow-hidden *:size-full"
-                style="box-shadow: 0 0 0 8px #161616;"
-                @if={props.imageUri}
-            >
-                <img src={props.imageUri} alt={props.imageAlt || 'Stage image'} width={props.imageWidth} height={props.imageHeight} />
-            </figure>
-        </section>
+            <div class="relative h-full w-full pl-16 md:pl-0">
+                <figure
+                    class="absolute! rounded-3xl overflow-hidden"
+                    style="box-shadow: 0 0 0 8px #161616;"
+                >
+                    <img
+                        @if={props.imageUri}
+                        src={props.imageUri}
+                        alt={props.imageAlt || 'Stage image'}
+                        class="translate-[-2px] h-[50vh] md:h-[100vh] object-cover max-w-none!"
+                    />
+                </figure>
+            </div>
+        </Neos.Presentation:Background>
     `
 }
