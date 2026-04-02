@@ -59,11 +59,13 @@ prototype(Neos.Presentation:StageDefault) < prototype(Neos.Fusion:Component) {
                     tagName="h2"
                     content={props.headline}
                     display="headline-xl"
+                    class="text-6xl md:text-8xl lg:text-10xl"
                 />
                 <Neos.Presentation:Paragraph
                     @if.hasContent={props.subline}
                     content={props.subline}
                     display="body-md"
+                    class="text-base"
                 />
             </div>
             <div class="relative h-full w-full pl-16 md:pl-0">
