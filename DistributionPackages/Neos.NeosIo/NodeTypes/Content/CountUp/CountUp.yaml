@@ -7,7 +7,7 @@
   superTypes:
     'Neos.Neos:Content': true
     'Neos.NodeTypes:TextMixin': true
-    Neos.NeosIo:Constraints.Column: true
+    'Neos.NeosIo:Constraints.Column': true
   ui:
     label: 'Detail Counter'
     icon: signal
@@ -21,10 +21,10 @@
     prefix:
       type: string
       ui:
-        inlineEditable: true
-        inline:
-          editorOptions:
-            placeholder: prefix
+        label: 'Prefix'
+        reloadIfChanged: true
+        inspector:
+          group: content
     number:
       type: string
       scope: nodeAggregate
@@ -40,7 +40,7 @@
     suffix:
       type: string
       ui:
-        inlineEditable: true
-        inline:
-          editorOptions:
-            placeholder: suffix
+        label: 'Suffix'
+        reloadIfChanged: true
+        inspector:
+          group: content

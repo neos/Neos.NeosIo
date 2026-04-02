@@ -1,0 +1,9 @@
+prototype(Neos.NeosIo:Stats) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:Stats {
+        background = ${q(node).property('background')}
+        entries = Neos.Neos:ContentCollection {
+            @context.node = ${node}
+            attributes.class = "grid gap-8 grid-cols-1 items-center sm:auto-cols-fr sm:grid-flow-col "
+        }
+    }
+}
