@@ -26,6 +26,7 @@ const config = {
     colorField: 'color',
     startDateField: 'start',
     endDateField: 'end',
+    fontFamily: 'Bricolage Grotesque',
     valueScrollbar: {
         autoGridCount: true,
         color: '#555555'
