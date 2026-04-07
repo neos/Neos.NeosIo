@@ -8,8 +8,6 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
     packageTime = ${q(node).property('time')}
     description = ${String.stripTags(q(node).property('description') || '')}
 
-    readmeNode = ${q(node).children('readme').get(0)}
-
     renderer = afx`
         <article class="market-block">
             <header>
@@ -35,7 +33,6 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
                 <strong>{props.description}</strong>
             </p>
             <Neos.MarketPlace:VersionPreview />
-            <Neos.MarketPlace:Readme @context.node={props.readmeNode} />
             <Neos.MarketPlace:PackageCountButton vendor={props.vendor} />
         </article>
     `

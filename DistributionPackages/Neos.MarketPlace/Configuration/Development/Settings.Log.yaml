@@ -1,0 +1,10 @@
+Neos:
+  Flow:
+    log:
+      psr3:
+        Neos\Flow\Log\PsrLoggerFactory:
+          marketPlaceLogger:
+            default:
+              options:
+                logFileURL: '%FLOW_PATH_DATA%Logs/MarketPlace_Development.log'
+                severityThreshold: '%LOG_DEBUG%'

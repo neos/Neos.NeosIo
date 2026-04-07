@@ -11,29 +11,20 @@
         github:
           label: i18n
   childNodes:
-    maintainers:
-      position: 'start'
-      type: 'Neos.Neos:ContentCollection'
-      constraints:
-        nodeTypes:
-          'Neos.MarketPlace:Maintainer': true
     versions:
-      position: 'after maintainers'
       type: 'Neos.Neos:ContentCollection'
       constraints:
         nodeTypes:
           'Neos.MarketPlace:Version': true
-    readme:
-      position: 'after versions'
-      type: 'Neos.MarketPlace:Readme'
   properties:
     title:
       type: string
       ui:
-        reloadIfChanged: true
+        label: i18n
         inspector:
           group: document
-        label: i18n
+          editorOptions:
+            readonly: true
     __title:
       search:
         indexing: '${q(node).property(''title'')}'
@@ -43,9 +34,10 @@
     description:
       type: string
       ui:
-        reloadIfChanged: true
         inspector:
           group: document
+          editorOptions:
+            readonly: true
         label: i18n
     time:
       type: DateTime
@@ -55,30 +47,34 @@
           group: document
           editorOptions:
             format: 'd-m-Y H:i'
+            readonly: true
     type:
       type: string
       ui:
-        reloadIfChanged: true
+        label: i18n
         inspector:
           group: document
-        label: i18n
+          editorOptions:
+            readonly: true
     repository:
       type: string
       search:
         elasticSearchMapping:
           type: text
       ui:
-        reloadIfChanged: true
+        label: i18n
         inspector:
           group: document
-        label: i18n
+          editorOptions:
+            readonly: true
     abandoned:
       type: string
       ui:
-        reloadIfChanged: true
+        label: i18n
         inspector:
           group: document
-        label: i18n
+          editorOptions:
+            readonly: true
     lastActivity:
       type: DateTime
       ui:
@@ -86,6 +82,7 @@
         inspector:
           group: document
           editorOptions:
+            readonly: true
             format: 'd-m-Y H:i'
       search:
         indexing: '${Date.format(q(node).property(''lastActivity''), "Y-m-d\TH:i:sP")}'
@@ -109,6 +106,7 @@
         inspector:
           group: document
           editorOptions:
+            readonly: true
             nodeTypes:
               - 'Neos.MarketPlace:Version'
       search:
@@ -147,74 +145,27 @@
     downloadTotal:
       type: integer
       ui:
-        reloadIfChanged: true
+        label: i18n
         inspector:
           group: metrics
-        label: i18n
-    downloadMonthly:
-      type: integer
-      ui:
-        reloadIfChanged: true
-        inspector:
-          group: metrics
-        label: i18n
-    downloadDaily:
-      type: integer
-      ui:
-        reloadIfChanged: true
-        inspector:
-          group: metrics
-        label: i18n
+          editorOptions:
+            readonly: true
     favers:
       type: integer
       ui:
-        reloadIfChanged: true
+        label: i18n
         inspector:
           group: metrics
-        label: i18n
-    githubStargazers:
-      type: integer
-      ui:
-        reloadIfChanged: true
-        inspector:
-          group: metrics
-        label: i18n
-    githubWatchers:
-      type: integer
-      ui:
-        reloadIfChanged: true
-        inspector:
-          group: metrics
-        label: i18n
-    githubForks:
-      type: integer
-      ui:
-        reloadIfChanged: true
-        inspector:
-          group: metrics
-        label: i18n
-    githubIssues:
-      type: integer
-      ui:
-        reloadIfChanged: true
-        inspector:
-          group: metrics
-        label: i18n
-    githubAvatar:
+          editorOptions:
+            readonly: true
+    maintainers:
       type: string
       ui:
-        reloadIfChanged: true
+        label: Maintainers
         inspector:
-          group: metrics
-        label: i18n
-    __readme:
-      search:
-        indexing: '${String.stripTags(q(node).find(''readme'').first().property(''readmeSource''))}'
-        fulltextExtractor: '${Indexing.extractHtmlTags(q(node).find(''readme'').first().property(''readmeSource''))}'
-    __maintainers:
-      search:
-        indexing: '${q(node).find(''maintainers'').first().property(''title'')}'
-        fulltextExtractor: '${Indexing.extractHtmlTags(q(node).find(''maintainers'').first().property(''title''))}'
+          group: github
+          editorOptions:
+            readonly: true
     __packageKey:
       search:
         indexing: '${q(node).property(''title'')}'

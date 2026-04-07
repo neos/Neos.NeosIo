@@ -5,6 +5,10 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
 
     data = Neos.Fusion:Component {
         searchTerm = ${request.arguments.search}
+        onlyStable = ${request.arguments.stable}
+        from = ${request.arguments.from ? Date.create(request.arguments.from) : false}
+        to = ${request.arguments.to ? Date.create(request.arguments.to) : false}
+        limit = ${Type.isInteger(request.arguments.limit) ? request.arguments.limit : 50}
 
         marketPlaceQuery = ${MarketPlaceSearch.query(documentNode)}
         marketPlaceQuery.@process {
@@ -16,15 +20,27 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
                 expression = ${value.fulltext('*' + String.replace(this.searchTerm, '"', ''))}
                 @if.hasQuery = ${!String.isBlank(this.searchTerm)}
             }
+            from {
+                expression = ${value.greaterThanOrEqual('lastVersion.time', this.from)}
+                @if.hasFrom = ${this.from}
+            }
+            to {
+                expression = ${value.lessThanOrEqual('lastVersion.time', this.to)}
+                @if.hasTo = ${this.to}
+            }
+            stable {
+                expression = ${value.exactMatch('lastVersion.stability', true)}
+                @if.onlyStable = ${this.onlyStable == 'true'}
+            }
             abandoned {
                 expression = ${value.exclude('abandoned', '1')}
             }
             sort {
-                expression = ${value.sortDesc('lastActivity')}
+                expression = ${value.sortDesc('lastVersion.time')}
                 @if.noQuery = ${!this.hasSearchQuery}
             }
             limit {
-                expression = ${value.limit(20)}
+                expression = ${value.limit(this.limit > 0 ? this.limit : 9999)}
             }
             log {
                 expression = ${value.log('marketplace')}
@@ -45,6 +61,8 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
                         format = 'html'
                     }
                     latestVersion = ${q(q(package).property('lastVersion')).property('version')}
+                    lastActivity = ${Date.format(q(q(package).property('lastVersion')).property('time'), 'c')}
+                    stable = ${q(q(package).property('lastVersion')).property('stability')}
                     downloads = ${q(package).property('downloadTotal')}
                     stars = ${q(package).property('favers') || 0}
                 }
@@ -69,7 +87,7 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
 
         maximumLifetime = 3600
 
-        entryDiscriminator = ${request.arguments.search ? false : 'static'}
+        entryDiscriminator = ${(request.arguments.search || request.arguments.stable || request.arguments.from || request.arguments.to || request.arguments.limit >= 0) ? false : 'static'}
 
         entryTags {
             documentNode = ${Neos.Caching.nodeTag(documentNode)}

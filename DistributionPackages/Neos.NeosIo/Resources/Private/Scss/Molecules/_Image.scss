@@ -27,6 +27,84 @@
     &.image--style {
       padding: 1.5rem 2rem;
 
+      --step: 1.5rem;
+
+      @include mq("medium") {
+        --step: 2.25rem;
+      }
+
+      @include mq("large") {
+        --step: 3rem;
+      }
+
+      &-pixel-cutout--top-left img {
+        clip-path: polygon(
+          0 100%, /* bottom left corner */
+          0 calc(2 * var(--step)), /* top left corner with 2 steps down */
+          var(--step) calc(2 * var(--step)), /* 1 step right */
+          var(--step) var(--step), /* 1 step up */
+          calc(3 * var(--step)) var(--step), /* 2 steps right */
+          calc(3 * var(--step)) 0, /* 1 step up */
+          calc(4 * var(--step)) 0, /* 1 step right */
+          calc(4 * var(--step)) var(--step), /* 1 step down */
+          calc(5 * var(--step)) var(--step), /* 1 step right */
+          calc(5 * var(--step)) 0, /* 1 step up */
+          100% 0, /* top right corner */
+          100% 100% /* bottom right corner */
+        );
+      }
+
+      &-pixel-cutout--bottom-left img {
+        clip-path: polygon(
+          0 0, /* top left */
+          0 calc(100% - 2 * var(--step)), /* bottom left and 2 steps up */
+          var(--step) calc(100% - 2 * var(--step)), /* 1 step right */
+          var(--step) calc(100% - var(--step)), /* 1 step down */
+          calc(3 * var(--step)) calc(100% - var(--step)), /* 2 steps right */
+          calc(3 * var(--step)) 100%, /* 1 step down */
+          calc(4 * var(--step)) 100%, /* 1 step right */
+          calc(4 * var(--step)) calc(100% - var(--step)), /* 1 step up */
+          calc(5 * var(--step)) calc(100% - var(--step)), /* 1 step right */
+          calc(5 * var(--step)) 100%, /* 1 step down */
+          100% 100%, /* to bottom right corner */
+          100% 0 /* to top right corner */
+        );
+      }
+
+      &-pixel-cutout--bottom-right img {
+        clip-path: polygon(
+          0 0, /* top left */
+          100% 0, /* to top right corner */
+          100% calc(100% - 2 * var(--step)), /* bottom right and 2 steps up */
+          calc(100% - var(--step)) calc(100% - 2 * var(--step)), /* 1 step left */
+          calc(100% - var(--step)) calc(100% - var(--step)), /* 1 step down */
+          calc(100% - 3 * var(--step)) calc(100% - var(--step)), /* 2 steps left */
+          calc(100% - 3 * var(--step)) 100%, /* 1 step down */
+          calc(100% - 4 * var(--step)) 100%, /* 1 step left */
+          calc(100% - 4 * var(--step)) calc(100% - var(--step)), /* 1 step up */
+          calc(100% - 5 * var(--step)) calc(100% - var(--step)), /* 1 step left */
+          calc(100% - 5 * var(--step)) 100%, /* 1 step down */
+          0 100% /* to bottom left corner */
+        );
+      }
+
+      &-pixel-cutout--top-right img {
+        clip-path: polygon(
+          0 0, /* top left corner */
+          0 100%, /* bottom left corner */
+          100% 100%, /* bottom right corner */
+          100% calc(2 * var(--step)), /* top right corner - 2 steps down */
+          calc(100% - var(--step)) calc(2 * var(--step)), /* 1 step left */
+          calc(100% - var(--step)) var(--step), /* 1 step up */
+          calc(100% - 3 * var(--step)) var(--step), /* 2 steps left */
+          calc(100% - 3 * var(--step)) 0, /* 1 step up */
+          calc(100% - 4 * var(--step)) 0, /* 1 step left */
+          calc(100% - 4 * var(--step)) var(--step), /* 1 step down */
+          calc(100% - 5 * var(--step)) var(--step), /* 1 step left */
+          calc(100% - 5 * var(--step)) 0, /* 1 step up */
+        );
+      }
+
       &-thumbnail {
         text-align: center;
         padding: 0;

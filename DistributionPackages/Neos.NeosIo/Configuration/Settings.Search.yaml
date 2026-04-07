@@ -2,10 +2,13 @@ Neos:
   ContentRepository:
     Search:
       realtimeIndexing:
-        enabled: true
+        enabled: false
       indexAllWorkspaces: false
       elasticSearch:
         indexName: wwwneosio
+      defaultConfigurationPerNodeType:
+        '*':
+          indexed: false
 
 Flowpack:
   ElasticSearch:
