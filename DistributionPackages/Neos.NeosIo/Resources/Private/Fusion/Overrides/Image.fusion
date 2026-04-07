@@ -48,6 +48,8 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     }
 
     @private {
+        inEditMode = ${renderingMode.isEdit}
+
         className = Neos.Fusion:DataStructure {
             main = 'neos-nodetypes-image'
 
@@ -96,7 +98,7 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
                         loading={props.loading}
                         src={private.imageSrc}
                         data-lightbox={private.imageSrc}
-                        data-lightbox.@if={props.lightbox && !props.link}
+                        data-lightbox.@if={!private.inEditMode && props.lightbox && !props.link}
                     />
                 `
             }
