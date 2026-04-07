@@ -1,0 +1,16 @@
+prototype(Neos.NeosIo:LogoBar) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:LogoBar {
+        assets = Neos.Fusion:Map {
+            items = ${q(node).children()}
+            itemRenderer = Neos.Fusion:DataStructure {
+                src = Neos.Neos:ImageUri {
+                    asset = ${item.properties.image}
+                }
+                alternativeText = ${item.properties.alternativeText}
+                href = ${item.properties.link}
+                href.@process.convertUri = Neos.Neos:ConvertUris
+            }
+        }
+        grayscale = ${node.properties.grayscale}
+    }
+}
