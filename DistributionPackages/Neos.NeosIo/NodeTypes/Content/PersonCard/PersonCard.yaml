@@ -1,0 +1,47 @@
+'Neos.NeosIo:PersonCard':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NodeTypes:ImageMixin': true
+    'Neos.NeosIo:Mixin.Background': true
+  ui:
+    label: 'Person Card'
+    icon: 'user'
+    group: special
+  properties:
+    name:
+      type: string
+      ui:
+        label: 'Name'
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: "Enter name here…"
+    email:
+      type: string
+      ui:
+        label: 'Email'
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: "Enter email here…"
+    # TODO: should be provided by a mixin from Neos.Presentation package
+    pixelVariant:
+      type: string
+      defaultValue: 'random'
+      ui:
+        label: 'Pixel Variant'
+        reloadIfChanged: true
+        inspector:
+          group: content
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            allowEmpty: false
+            values:
+              'random':
+                label: 'Random (default)'
+              '1':
+                label: 'Variant 1'
+              '2':
+                label: 'Variant 2'
+              '3':
+                label: 'Variant 3'

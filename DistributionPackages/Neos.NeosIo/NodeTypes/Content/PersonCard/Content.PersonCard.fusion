@@ -1,0 +1,21 @@
+prototype(Neos.NeosIo:PersonCard) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:PersonCard {
+        name = Neos.Neos:Editable {
+            property = "name"
+            block = false
+        }
+
+        email = Neos.Neos:Editable {
+            property = "email"
+            block = false
+        }
+
+        background = ${node.properties.background}
+
+        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+            asset = ${node.properties.image}
+        }
+
+        pixelVariant = ${node.properties.pixelVariant}
+    }
+}

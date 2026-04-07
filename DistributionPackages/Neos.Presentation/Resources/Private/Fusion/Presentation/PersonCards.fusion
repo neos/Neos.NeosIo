@@ -66,7 +66,7 @@ prototype(Neos.Presentation:PersonCards) < prototype(Neos.Fusion:Component) {
                             <Neos.Presentation:Background.Pixel
                                 background={item.background}
                                 pixelPosition="top"
-                                pixelCycle={iterator.cycle}
+                                pixelVariant={String.toString((iterator.index % 3) + 1)}
                                 delayBreakpoint="sm"
                                 class="px-8 pb-8 flex-1 flex flex-col"
                             >
