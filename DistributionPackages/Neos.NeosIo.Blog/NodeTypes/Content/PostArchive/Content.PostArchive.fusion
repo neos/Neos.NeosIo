@@ -1,0 +1,30 @@
+prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Flowpack.Listable:PaginatedCollection {
+        blogFolder = ${q(site).referenceNodes('blogFolder').get(0)}
+        collection = ${this.blogFolder ? q(this.blogFolder).children('[instanceof Neos.NeosIo:Post]').get() : q(site).find('[instanceof Neos.NeosIo:Post]').get()}
+        itemsPerPage = 14
+        maximumNumberOfLinks = 10
+
+        prototype(Flowpack.Listable:Collection) {
+            listClass = 'list-none! p-0 m-0 grid gap-6 grid-cols-1 md:grid-cols-6 [&>li:nth-child(1)]:col-span-3! [&>li:nth-child(2)]:col-span-3!'
+            itemClass = 'col-span-2'
+
+            itemRenderer = Neos.Presentation:PostPreview {
+                datePublished = ${q(node).property('datePublished')}
+                title = ${q(node).property('title')}
+                imageUri = Neos.Neos:ImageUri {
+                    asset = ${q(node).property('keyVisualImage')}
+                    maximumWidth = 500
+                }
+                nodeUri = Neos.Neos:NodeUri {
+                    node = ${node}
+                }
+            }
+        }
+        prototype(Flowpack.Listable:Pagination) {
+            class = 'list-none! p-0 m-0 flex items-center justify-center gap-2 py-6!'
+            itemClass = '[&>a]:bg-green! [&>a]:hover:bg-green-dark! [&>a]:p-2 [&>a]:text-white [&>a]:hover:no-underline!'
+            currentItemClass = '[&>a]:bg-transparent! [&>a]:hover:bg-transparent! [&>a]:text-black!'
+        }
+    }
+}
