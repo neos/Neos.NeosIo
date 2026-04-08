@@ -32,7 +32,7 @@ prototype(Neos.Presentation:PostPreview) < prototype(Neos.Fusion:Component) {
                     background={private.backgroundColors[Math.randomInt(0, Array.length(private.backgroundColors) - 1)]}
                     class={Carbon.String.classNames(
                         'absolute inset-0',
-                        props.imageUri ? 'opacity-0 group-hover:opacity-100 transition-opacity' : private.clipPathClass
+                        private.clipPathClass
                     )}>
                 </Neos.Presentation:Background>
                 <img
