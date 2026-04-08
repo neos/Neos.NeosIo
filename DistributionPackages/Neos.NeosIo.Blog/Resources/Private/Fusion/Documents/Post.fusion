@@ -1,4 +1,5 @@
 prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
+    content.parts.main >
     content.parts.main = Neos.NeosIo:PostRenderer {
         @process.editable = Neos.Neos:ContentElementWrapping {
             @position = 'end 999999999'

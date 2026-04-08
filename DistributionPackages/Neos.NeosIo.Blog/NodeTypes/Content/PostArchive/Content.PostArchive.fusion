@@ -10,13 +10,20 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
             itemClass = 'col-span-3 md:col-span-2'
 
             itemRenderer = Neos.Presentation:PostPreview {
+                @context.thumbnail = ${q(node).property('keyVisualImage').resource ? Neos.Media.Image.createThumbnail(
+                    q(node).property('keyVisualImage'),
+                    null,
+                    null,
+                    1124
+                ) : null}
                 datePublished = ${q(node).property('datePublished')}
                 title = ${q(node).property('title')}
-                imageUri = Neos.Neos:ImageUri {
-                    asset = ${q(node).property('keyVisualImage')}
-                    maximumWidth = 500
-                    @if.hasAsset = ${this.asset}
+                imageUri = Neos.Fusion:ResourceUri {
+                    resource = ${thumbnail.resource}
+                    @if.set = ${thumbnail}
                 }
+                imageWidth = ${thumbnail.width}
+                imageHeight = ${thumbnail.height}
                 imageAlt = ${q(node).property('keyVisualAlternativeText') || q(node).property('keyVisualImage').caption || this.title}
                 nodeUri = Neos.Neos:NodeUri {
                     node = ${node}

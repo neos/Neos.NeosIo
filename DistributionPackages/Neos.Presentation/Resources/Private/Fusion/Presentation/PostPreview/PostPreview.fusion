@@ -3,6 +3,8 @@ prototype(Neos.Presentation:PostPreview) < prototype(Neos.Fusion:Component) {
     title = ''
     imageUri = ''
     imageAlt = ''
+    imageWidth = null
+    imageHeight = null
     nodeUri = ''
 
     @propTypes {
@@ -11,6 +13,8 @@ prototype(Neos.Presentation:PostPreview) < prototype(Neos.Fusion:Component) {
         title = ${PropTypes.string}
         imageUri = ${PropTypes.string}
         imageAlt = ${PropTypes.string}
+        imageWidth = ${PropTypes.integer}
+        imageHeight = ${PropTypes.integer}
         nodeUri = ${PropTypes.string}
     }
 
@@ -35,6 +39,8 @@ prototype(Neos.Presentation:PostPreview) < prototype(Neos.Fusion:Component) {
                     @if={props.imageUri}
                     src={props.imageUri}
                     alt={props.alt}
+                    width={props.imageWidth}
+                    height={props.imageHeight}
                     class={Carbon.String.classNames(
                         'w-full h-full object-cover',
                         private.clipPathClass
