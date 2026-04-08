@@ -1,0 +1,27 @@
+.stats-clip-path {
+  --step: 1.5rem;
+
+  @variant md  {
+    --step: 3rem;
+  }
+
+  clip-path: polygon(
+    0% 0%, /* top left */
+    100% 0%, /* top right */
+    100% calc(100% - 2 * var(--step)),
+    calc(0% + 10 * var(--step)) calc(100% - 2 * var(--step)),
+    calc(0% + 10 * var(--step)) calc(100% - var(--step)),
+    calc(0% + 8 * var(--step)) calc(100% - var(--step)),
+    calc(0% + 8 * var(--step)) calc(100% - 2 * var(--step)),
+    calc(0% + 4 * var(--step)) calc(100% - 2 * var(--step)),
+    calc(0% + 4 * var(--step)) calc(100% - var(--step)),
+    calc(0% + 5 * var(--step)) calc(100% - var(--step)),
+    calc(0% + 5 * var(--step)) 100%,
+    calc(0% + 4 * var(--step)) 100%,
+    calc(0% + 4 * var(--step)) calc(100% - var(--step)),
+    calc(0% + 2 * var(--step)) calc(100% - var(--step)),
+    calc(0% + 2 * var(--step)) 100%,
+    0% 100% /* bottom left */
+  );
+
+}
