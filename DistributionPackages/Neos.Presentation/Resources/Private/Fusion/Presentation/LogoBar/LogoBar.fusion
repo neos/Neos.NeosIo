@@ -32,7 +32,7 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <div
             @if={private.numberOfAssets}
-            class="flex justify-center overflow-x-clip"
+            class="flex justify-center overflow-x-clip hover:[&>ul]:[animation-play-state:paused]"
             x-data={AlpineJS.xData('LogoBar', private.duplications)}
         >
             <ul
@@ -41,15 +41,21 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
                 style={private.duplications ? 'animation-duration:' + private.numberOfAssets * 10 + 's;' : null}
             >
                 <Neos.Fusion:Loop items={private.assets}>
-                    <li class="mx-14">
+                    <li class="mx-14 list-none">
                         <Neos.Fusion:Tag
                             tagName={item.href ? 'a' : 'figure'}
                             attributes.href={item.href}
                             attributes.class.grayscale={props.grayscale ? 'grayscale' : null}
-                            attributes.class.grayscaleLink={props.grayscale && item.href ? 'transition-[filter] hocus:grayscale-0' : null}
+                            attributes.class.grayscaleLink={props.grayscale ? 'transition-[filter] hocus:grayscale-0' : null}
                             attributes.aria-label={item.href ? item.alternativeText : null}
                         >
-                            <img class="h-16 max-h-10 md:max-h-16 max-w-none w-auto" alt={item.alternativeText} src={item.src}/>
+                            <img
+                                class="h-16 max-h-10 md:max-h-16 max-w-none w-auto"
+                                alt={item.alternativeText}
+                                src={item.src}
+                                width={item.width}
+                                height={item.height}
+                            />
                         </Neos.Fusion:Tag>
                     </li>
                 </Neos.Fusion:Loop>

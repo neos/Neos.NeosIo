@@ -1,0 +1,26 @@
+prototype(Neos.NeosIo:LogoBar) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:LogoBar {
+        assets = Neos.Fusion:Map {
+            items = ${q(node).children()}
+            itemRenderer = Neos.Fusion:DataStructure {
+                @context.thumbnail = ${item.properties.image ? Neos.Media.Image.createThumbnail(
+                    item.properties.image,
+                    null,
+                    null,
+                    400,
+                    null,
+                    128
+                ) : null}
+                src = Neos.Fusion:ResourceUri {
+                    resource = ${thumbnail.resource}
+                }
+                alternativeText = ${item.properties.alternativeText}
+                width = ${thumbnail.width}
+                height = ${thumbnail.height}
+                href = ${item.properties.link}
+                href.@process.convertUri = Neos.Neos:ConvertUris
+            }
+        }
+        grayscale = ${node.properties.grayscale}
+    }
+}
