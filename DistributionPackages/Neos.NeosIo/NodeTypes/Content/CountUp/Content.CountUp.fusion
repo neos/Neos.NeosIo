@@ -9,6 +9,9 @@ prototype(Neos.NeosIo:CountUp) < prototype(Neos.Neos:ContentComponent) {
             }
             suffix = ${q(node).property('suffix')}
         }
-        title = ${q(node).property('text')}
+        title = Neos.Neos:Editable {
+            property = 'text'
+            block = false
+        }
     }
 }
