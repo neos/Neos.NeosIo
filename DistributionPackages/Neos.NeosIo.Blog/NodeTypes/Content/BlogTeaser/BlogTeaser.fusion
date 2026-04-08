@@ -19,7 +19,7 @@ prototype(Neos.NeosIo.Blog:Content.BlogTeaser) < prototype(Neos.Neos:ContentComp
         }
         title = ${q(private.blogPostToDisplay).property('title')}
         text = ${q(private.blogPostToDisplay).property('summary')}
-        altText = ${Neos.Node.label(private.blogPostToDisplay)}
+        altText = ${q(private.blogPostToDisplay).property('keyVisualAlternativeText') || q(private.blogPostToDisplay).property('keyVisualImage').caption || Neos.Node.label(private.blogPostToDisplay)}
         image = ${q(private.blogPostToDisplay).property('keyVisualImage')}
         link = Neos.Neos:NodeUri {
             node = ${private.blogPostToDisplay}

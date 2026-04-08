@@ -2,6 +2,7 @@ prototype(Neos.Presentation:PostPreview) < prototype(Neos.Fusion:Component) {
     datePublished = ''
     title = ''
     imageUri = ''
+    imageAlt = ''
     nodeUri = ''
 
     @propTypes {
@@ -9,6 +10,7 @@ prototype(Neos.Presentation:PostPreview) < prototype(Neos.Fusion:Component) {
         datePublished = ${PropTypes.instanceOf('\\DateTimeInterface')}
         title = ${PropTypes.string}
         imageUri = ${PropTypes.string}
+        imageAlt = ${PropTypes.string}
         nodeUri = ${PropTypes.string}
     }
 
@@ -29,7 +31,11 @@ prototype(Neos.Presentation:PostPreview) < prototype(Neos.Fusion:Component) {
                         props.imageUri ? 'opacity-0 group-hover:opacity-100 transition-opacity' : private.clipPathClass
                     )}>
                 </Neos.Presentation:Background>
-                <img @if={props.imageUri} src={props.imageUri} alt="" class={Carbon.String.classNames(
+                <img
+                    @if={props.imageUri}
+                    src={props.imageUri}
+                    alt={props.alt}
+                    class={Carbon.String.classNames(
                         'w-full h-full object-cover',
                         private.clipPathClass
                     )}

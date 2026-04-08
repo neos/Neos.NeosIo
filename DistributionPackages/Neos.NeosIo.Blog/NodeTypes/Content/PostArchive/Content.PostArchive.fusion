@@ -15,7 +15,9 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
                 imageUri = Neos.Neos:ImageUri {
                     asset = ${q(node).property('keyVisualImage')}
                     maximumWidth = 500
+                    @if.hasAsset = ${this.asset}
                 }
+                imageAlt = ${q(node).property('keyVisualAlternativeText') || q(node).property('keyVisualImage').caption || this.title}
                 nodeUri = Neos.Neos:NodeUri {
                     node = ${node}
                 }
