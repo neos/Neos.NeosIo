@@ -7,12 +7,9 @@ prototype(Neos.Presentation:PersonCard) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <div class="flex flex-col @container max-w-100">
-            <Neos.Presentation:Background
-                tagName="figure"
-                background={props.background}
-            >
-                <Sitegeist.Kaleidoscope:Image imageSource={props.imageSource} attributes.class="aspect-4/5 w-full object-cover p-1"/>
-            </Neos.Presentation:Background>
+            <figure>
+                <Sitegeist.Kaleidoscope:Image imageSource={props.imageSource} attributes.class="aspect-4/5 w-full object-cover"/>
+            </figure>
             <Neos.Presentation:Background.Pixel
                 background={props.background}
                 pixelPosition="top"
