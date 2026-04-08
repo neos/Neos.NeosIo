@@ -7,7 +7,7 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
 
         prototype(Flowpack.Listable:Collection) {
             listClass = 'list-none! p-0 m-0 grid gap-6 grid-cols-1 md:grid-cols-6 [&>li:nth-child(1)]:col-span-3! [&>li:nth-child(2)]:col-span-3!'
-            itemClass = 'col-span-2'
+            itemClass = 'col-span-3 md:col-span-2'
 
             itemRenderer = Neos.Presentation:PostPreview {
                 datePublished = ${q(node).property('datePublished')}
