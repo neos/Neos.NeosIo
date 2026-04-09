@@ -1,0 +1,19 @@
+# return sizes for the image srcset attribute. Based on the content width of the parent element and the size of the image in relation to it. This is used to calculate the image sizes attribute for responsive images.
+prototype(Neos.Presentation:Component.ImageSizes) < prototype(Neos.Fusion:Component) {
+    # size in percent, e.g. 0.5 for 50% of the content width
+    # default is 1 for 100% of the content width. Image is not placed inside a column or similar element that limits the width of the image.
+    size = 1
+    contentWidth = '1200px'
+
+    @propTypes {
+        @strict = true
+        size = ${PropTypes.float}
+        contentWidth = ${PropTypes.string}
+    }
+
+    renderer = ${[
+        '(min-width:768px) calc(' + props.contentWidth + ' * ' + props.size + ')',
+        '100vw'
+    ]}
+}
+

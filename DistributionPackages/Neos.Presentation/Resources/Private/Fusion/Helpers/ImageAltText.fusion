@@ -1,0 +1,21 @@
+prototype(Neos.NeosIo:Helpers.ImageAltText) < prototype(Neos.Fusion:Component) {
+    node = ${node}
+    image = null
+
+    @propTypes {
+        @strict = true
+        node = ${PropTypes.any}
+        image = ${PropTypes.any}
+    }
+
+    renderer = Neos.Fusion:Case {
+        altText {
+            condition = ${props.node.properties.alternativeText ? true : false}
+            renderer = ${props.node.properties.alternativeText}
+        }
+        title {
+            condition = ${props.image.properties.title ? true : false}
+            renderer = ${props.image.properties.title}
+        }
+    }
+}

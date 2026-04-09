@@ -3,8 +3,13 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
         assets = Neos.Fusion:Map {
             items = ${['flownative', 'sitegeist', 'sandstorm', 'queo', 'visol', 'helzle']}
             itemRenderer = Neos.Fusion:DataStructure {
-                src = ${StaticResource.uri('Neos.Presentation', 'Public/Assets/Styleguide/Logos/' + item + '.svg')}
-                alternativeText = ${'Logo from' + item}
+                image = Neos.Fusion:Tag {
+                    tagName = 'img'
+                    attributes.class = "h-16 max-h-10 md:max-h-16 max-w-none w-auto"
+                    attributes.alt = ${'Logo from ' + item}
+                    attributes.src = ${StaticResource.uri('Neos.Presentation', 'Public/Assets/Styleguide/Logos/' + item + '.svg')}
+                }
+                alternativeText = ${'Logo from ' + item}
                 href = ${'#' + item}
             }
         }
@@ -13,7 +18,7 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
     @propTypes {
         assets = PropTypes:Array {
             type = PropTypes:DataStructure {
-                src = PropTypes:String
+                image = PropTypes:String
                 alternativeText = PropTypes:String
             }
         }
@@ -24,7 +29,7 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
     grayscale = true
 
     @private {
-        assets = ${Type.isArray(props.assets) ? Array.filter(props.assets, item => !!item.src) : []}
+        assets = ${Type.isArray(props.assets) ? Array.filter(props.assets, item => !!item.image) : []}
         numberOfAssets = ${Array.length(private.assets)}
         duplications = ${private.numberOfAssets > 3 ? 3 : 0}
     }
@@ -49,13 +54,7 @@ prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
                             attributes.class.grayscaleLink={props.grayscale ? 'transition-[filter] hocus:grayscale-0' : null}
                             attributes.aria-label={item.href ? item.alternativeText : null}
                         >
-                            <img
-                                class="h-16 max-h-10 md:max-h-16 max-w-none w-auto"
-                                alt={item.alternativeText}
-                                src={item.src}
-                                width={item.width}
-                                height={item.height}
-                            />
+                            {item.image}
                         </Neos.Fusion:Tag>
                     </li>
                 </Neos.Fusion:Loop>

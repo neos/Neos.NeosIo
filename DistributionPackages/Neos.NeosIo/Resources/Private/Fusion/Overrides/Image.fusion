@@ -16,25 +16,12 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
     loading = 'lazy'
     lightbox = true
 
-    height = null
-    maximumHeight = null
-    maximumHeight.@process.override = ${q(node).property('customHeight') || value}
-    maximumHeight.@process.toInt = ${Type.isString(value) ? String.toInteger(value) : value}
-
-    width = null
-    // The maximum page width 1096 * 2
-    maximumWidth = 2192
-    maximumWidth.@process.override = ${String.toInteger(q(node).property('customWidth') || value)}
-    maximumWidth.@process.toInt = ${Type.isString(value) ? String.toInteger(value) : value}
-
-    allowCropping = false
-    allowUpScaling = false
-
     link = ${q(node).property("link")}
     link.@process.convertUris = Neos.Neos:ConvertUris {
         forceConversion = true
         absolute = true
     }
+    openInNewTab = ${q(node).property("openInNewTab")}
 
     caption = Neos.Neos:Editable {
         property = 'caption'
@@ -47,6 +34,10 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
         }
     }
 
+    maximumHeight = null
+    maximumHeight.@process.override = ${q(node).property('customHeight') || value}
+    maximumHeight.@process.toInt = ${Type.isString(value) ? String.toInteger(value) : value}
+
     @private {
         inEditMode = ${renderingMode.isEdit}
 
@@ -58,47 +49,25 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
         }
 
         figureClassName = Neos.Fusion:DataStructure {
+            main = ''
+
+            fullWidth = 'w-full'
+            fullWidth.@if.isSet = ${!q(node).property('customHeight')}
+
             addImageStyle = ${'image--style image--style-' + q(node).property('imageStyle')}
             addImageStyle.@if.isSet = ${!String.isBlank(q(node).property('imageStyle'))}
         }
 
-        thumbnail = ${props.image ? Neos.Media.Image.createThumbnail(
-            props.image,
-            null,
-            props.width,
-            props.maximumWidth,
-            props.height,
-            props.maximumHeight,
-            props.allowCropping,
-            props.allowUpScaling,
-            false
-        ) : null}
-
-        imageSrc = Neos.Fusion:ResourceUri {
-            resource = ${private.thumbnail.resource}
-            @if.set = ${this.resource}
-        }
-
-        lightboxSrc = Neos.Fusion:ResourceUri {
-            resource = ${props.image.resource}
-            @if.set = ${this.resource}
-        }
-
         image = Neos.Fusion:Case {
             image {
-                condition = ${private.imageSrc}
+                condition = ${props.image}
                 renderer = afx`
-                    <img
-                        title={props.title}
+                    <Neos.Presentation:Component.PictureTag
+                        asset={props.image}
                         alt={props.alternativeText}
-                        style={'max-height: ' + props.maximumHeight + 'px;'}
-                        style.@if={props.maximumHeight}
-                        width={private.thumbnail.width || props.width}
-                        height={private.thumbnail.height || props.height}
-                        loading={props.loading}
-                        src={private.imageSrc}
-                        data-lightbox={private.imageSrc}
-                        data-lightbox.@if={!private.inEditMode && props.lightbox && !props.link}
+                        loadEager={props.loading == 'eager'}
+                        lightbox={!private.inEditMode && props.lightbox && !props.link}
+                        maximumHeight={props.maximumHeight}
                     />
                 `
             }
@@ -115,22 +84,30 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
                 `
             }
         }
+
+        imageWithLink = Neos.Fusion:Case {
+            asLink {
+                condition = ${props.link && !private.inEditMode}
+                renderer = Neos.Fusion:Tag {
+                    tagName = 'a'
+                    attributes.href = ${props.link}
+                    attributes.target = ${props.openInNewTab ? '_blank' : false}
+                    attributes.rel = ${props.openInNewTab ? 'noopener' : false}
+                    attributes.title = ${props.title}
+                    content = ${private.image}
+                }
+            }
+            default {
+                condition = true
+                renderer = ${private.image}
+            }
+        }
     }
 
     renderer = afx`
         <div class={private.className}>
             <figure class={private.figureClassName}>
-                <a
-                    href={props.link}
-                    href.@if.live={!renderingMode.isEdit}
-                    target={props.openInNewTab && '_blank'}
-                    rel={props.openInNewTab && 'noopener'}
-                    title={props.title}
-                    @if.set={props.link}
-                >
-                    {private.image}
-                </a>
-                {!props.link ? private.image : ''}
+                {private.imageWithLink}
                 <figcaption @if.set={props.caption}>
                     {props.caption}
                 </figcaption>

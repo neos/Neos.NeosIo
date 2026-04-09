@@ -1,0 +1,108 @@
+// Main component for rendering images with a <picture> tag, supporting multiple formats and responsive images via srcset and sizes.
+prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Component) {
+    asset = null
+    alt = ''
+
+    // We load all images lazily by default, as the browser is really good at finding what is needed above the fold
+    loadEager = false
+
+    formats = ${['webp', 'jpg']}
+
+    // These values should match Settings.Media.yaml
+    srcSet = ${['200w', '400w', '600w', '800w', '1000w', '1200w', '1400w', '1600w']}
+
+    // Sizes is a bit tricky, because it depends on the context where the image is used. In most cases it will be used in a column and should adapt to the column width. But in some cases it might be used full width or in a smaller container. Thats why we allow to pass custom sizes as a prop but also add a default value that should work in most cases.
+    sizes = ${[]}
+    // Modern browsers will ignore the fallback if they support 'auto' so we can just add it to the beginning of the array.
+    // https://caniuse.com/wf-sizes-auto
+    sizes.@process.auto = ${Array.concat(['auto'], value)}
+
+    columnWidth = ''
+
+    // WHY no <picture> class?
+    // The <picture> element itself is essentially an invisible container — it has no visual representation of its own.
+    // It's just a wrapper that helps the browser decide which source to load. The actual rendered image is always the <img> element inside it.
+    //
+    // So when you style <picture>, you're styling a box that doesn't actually display anything. The <img> is what gets
+    // painted on screen — it's what has dimensions, aspect ratio, borders, border-radius, object-fit, etc. That's why
+    // all your styling needs to target <img>
+    imgClasses = null
+    lightbox = false
+
+    maximumHeight = null
+
+    @propTypes {
+        @strict = true
+        asset = ${PropTypes.instanceOf('Neos\Media\Domain\Model\Asset')}
+        alt = ${PropTypes.string}
+        loadEager = ${PropTypes.boolean}
+        srcSet = ${PropTypes.arrayOf(PropTypes.string)}
+        sizes = ${PropTypes.any}
+        formats = ${PropTypes.arrayOf(PropTypes.string)}
+        imgClasses = ${PropTypes.string}
+        lightbox = ${PropTypes.boolean}
+        columnWidth = ${PropTypes.any}
+        maximumHeight = ${PropTypes.integer}
+    }
+
+    @private {
+        inBackend = Neos.NeosIo:Helpers.InBackend
+
+        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+            asset = ${props.asset}
+            quality = 80
+            height = ${props.maximumHeight ? props.maximumHeight : null}
+        }
+        imageUri = Neos.NeosIo:Helpers.ResourceUri {
+            resource = ${props.asset.resource}
+        }
+        fileExtension = ${props.asset.resource.fileExtension}
+
+        // WHY: if null is passed through we always want the default class to be used and not
+        // null to remove the default class.
+        imgClassesOrDefault = ${props.imgClasses ? props.imgClasses : 'w-full'}
+    }
+
+    renderer = Neos.Fusion:Case {
+        @if.showImage = ${private.imageSource}
+        gifOrSvg {
+            // WORKAROUND for crashing animated gifs:
+            // It seems that if you throw a big animated gif to vips it needs a lot of resources and blocks
+            // the php process for a very long time with high cpu utilization.
+            // Thats why we do not touch gifs and just output them without any processing.
+            // Also added svgs cause they need no different sizes.
+            condition = ${private.fileExtension == 'gif' || private.fileExtension == 'svg'}
+            renderer = afx`
+                <img
+                    @if.showImage={private.imageUri}
+                    src={private.imageUri}
+                    alt={props.alt}
+                    loading={props.loadEager ? 'eager' : 'lazy'}
+                    class={private.imgClassesOrDefault}
+                    style={'height:' + props.maximumHeight + 'px; width: auto; object-fit: cover;'}
+                    style.@if.hasMaxHeight={props.maximumHeight}
+                />
+            `
+        }
+
+        default {
+            condition = true
+            renderer = afx`
+                <Sitegeist.Kaleidoscope:Picture
+                    @if.showImage={private.imageSource}
+                    imageSource={private.imageSource}
+                    alt={props.alt}
+                    srcset={props.srcSet}
+                    sizes={props.sizes}
+                    formats={props.formats}
+                    loading={props.loadEager ? 'eager' : 'lazy'}
+                    imgAttributes.class={private.imgClassesOrDefault}
+                    imgAttributes.data-lightbox={private.imageSource.src()}
+                    imgAttributes.data-lightbox.@if.lightbox={props.lightbox}
+                    imgAttributes.style={'height:' + props.maximumHeight + 'px; width: auto; object-fit: cover;'}
+                    imgAttributes.style.@if.hasMaxHeight={props.maximumHeight}
+                />
+            `
+        }
+    }
+}

@@ -13,13 +13,12 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
             block = false
         }
 
-        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+        image = Neos.Presentation:Component.PictureTag {
             asset = ${q(node).property('image')}
-            // TODO responsive image size with different breakpoints
-            width = 800
-            quality = 80
+            alt = ${q(node).property('alternativeText')}
+            imgClasses = "absolute object-cover w-full h-full"
+            // sizes for this image are handled from wrapping components like stage and/or column
         }
-        altText = ${q(node).property('alternativeText')}
 
         openInNewTab = ${q(node).property('openInNewTab')}
         link = ${q(node).property('link')}
