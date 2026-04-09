@@ -4,29 +4,10 @@ prototype(Neos.Presentation:StageDefault) < prototype(Neos.Fusion:Component) {
         description = 'Stage component for header of default pages'
 
         props {
+            title = "Why Neos CMS?"
             headline = 'Neos CMS Combining content and application'
             subline = 'Neos CMS is an open source modern digital content creation and publishing system. Unlock your potential with a system your devs and publishers will love.'
             imageUri = 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-            tiles = Neos.Fusion:Join {
-                0 = Neos.Presentation:SquareIcon {
-                    content = 'Forever Open Source'
-                    color = 'black'
-                    icon = 'heart'
-                    background = 'blue-light'
-                }
-                1 = Neos.Presentation:SquareIcon {
-                    content = 'Planned Extensibility'
-                    color = 'white'
-                    icon = 'square'
-                    background = 'purple'
-                }
-                2 = Neos.Presentation:SquareIcon {
-                    content = 'One click publishing'
-                    color = 'black'
-                    icon = 'clock'
-                    background = 'yellow'
-                }
-            }
         }
     }
 
@@ -34,21 +15,29 @@ prototype(Neos.Presentation:StageDefault) < prototype(Neos.Fusion:Component) {
         title = PropTypes:String
         headline = PropTypes:String
         subline = PropTypes:String
-        imageUri = PropTypes:String
+        imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
         imageHeight = PropTypes:Int
         imageWidth = PropTypes:Int
         imageAlt = PropTypes:String
+        screenBorder = PropTypes:Bool
     }
 
-    tilesAttributes = Neos.Fusion:DataStructure
+    title = ""
+    headline = ""
+    subline = ""
+    imageSource = null
+    imageHeight = ""
+    imageWidth = ""
+    imageAlt = ""
+    screenBorder = false
 
     renderer = afx`
         <Neos.Presentation:Background
             tagName="section"
             background="blue-dark-to-blue"
-            class="h-[100vh] grid md:grid-cols-[3fr_2fr] gap-8 p-8 md:p-16 md:gap-16 pt-24 md:pt-42 stage--default__clip-path"
+            class="overflow-hidden grid grid-rows-[1fr_1fr] md:grid-rows-none! md:grid-cols-[3fr_2fr] pt-24 md:pt-42 stage--default__clip-path n-stage-default"
         >
-            <div class="flex flex-col justify-center md:pr-16 md:pb-24">
+            <div class="p-6 pb-18 md:p-12 lg:p-24">
                 <Neos.Presentation:Headline
                     tagName="h1"
                     content={props.title}
@@ -68,16 +57,18 @@ prototype(Neos.Presentation:StageDefault) < prototype(Neos.Fusion:Component) {
                     class="text-base"
                 />
             </div>
-            <div class="relative h-full w-full pl-16 md:pl-0">
+            <div class="relative h-full w-full pl-18 md:pl-0">
                 <figure
-                    class="absolute! rounded-3xl overflow-hidden"
-                    style="box-shadow: 0 0 0 8px #161616;"
+                    class={"absolute! overflow-hidden" + (props.screenBorder ? " rounded-3xl" : "")}
+                    style={props.screenBorder ? "box-shadow: 0 0 0 8px #161616;" : ""}
                 >
-                    <img
-                        @if={props.imageUri}
-                        src={props.imageUri}
-                        alt={props.imageAlt || 'Stage image'}
-                        class="translate-[-2px] h-[50vh] md:h-[100vh] object-cover max-w-none!"
+                    <Sitegeist.Kaleidoscope:Image
+                        @if={props.imageSource}
+                        imageSource={props.imageSource}
+                        class="translate-[-2px] h-[100vh] w-auto object-cover max-w-none!"
+                        width={props.imageWidth}
+                        height={props.imageHeight}
+                        alt={props.imageAlt}
                     />
                 </figure>
             </div>

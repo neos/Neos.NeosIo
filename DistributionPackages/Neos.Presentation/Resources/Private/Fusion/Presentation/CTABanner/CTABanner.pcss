@@ -1,21 +1,16 @@
 .cta-banner-clip-path {
-  --step: 1.5rem;
-  @variant md  {
-    --step: 3rem;
-  }
-
   clip-path: polygon(
     0% 0%, /* top left */
     100% 0%, /* top right */
     100% 100%, /* bottom right */
-    calc(100% - var(--step)) 100%, /* 1 step left */
-    calc(100% - var(--step)) calc(100% - var(--step)), /* 1 step up */
-    calc(100% - 3 * var(--step)) calc(100% - var(--step)), /* 2 steps left */
-    calc(100% - 3 * var(--step)) 100%, /* 1 step down */
-    calc(100% - 4 * var(--step)) 100%, /* 1 step left */
-    calc(100% - 4 * var(--step)) calc(100% - var(--step)), /* 1 step up */
-    calc(100% - 3 * var(--step)) calc(100% - var(--step)), /* 1 step right */
-    calc(100% - 3 * var(--step)) calc(100% - 2 * var(--step)), /* 1 step up */
-    0% calc(100% - 2 * var(--step)) /* to left edge */
+    calc(100% - var(--pixel-effect-size)) 100%, /* 1 step left */
+    calc(100% - var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step up */
+    calc(100% - 3 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 2 steps left */
+    calc(100% - 3 * var(--pixel-effect-size)) 100%, /* 1 step down */
+    calc(100% - 4 * var(--pixel-effect-size)) 100%, /* 1 step left */
+    calc(100% - 4 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step up */
+    calc(100% - 3 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step right */
+    calc(100% - 3 * var(--pixel-effect-size)) calc(100% - 2 * var(--pixel-effect-size)), /* 1 step up */
+    0% calc(100% - 2 * var(--pixel-effect-size)) /* to left edge */
   );
 }

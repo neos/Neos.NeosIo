@@ -1,6 +1,4 @@
 prototype(Neos.NeosIo:Content.HeroStage.DefaultPage) < prototype(Neos.NeosIo:Content.ContentCollectionComponent) {
-    backgroundImage = ${q(node).property('backgroundImage')}
-
     renderer = Neos.Presentation:StageDefault {
         title = ${documentNode.properties.title}
 
@@ -14,12 +12,14 @@ prototype(Neos.NeosIo:Content.HeroStage.DefaultPage) < prototype(Neos.NeosIo:Con
             block = false
         }
 
-        imageUri = Neos.Neos:ImageUri {
-            asset = ${props.backgroundImage}
-            @if.hasAsset = ${this.asset}
+        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+            asset = ${node.properties.backgroundImage}
         }
-        imageWidth = ${props.backgroundImage ? q(node).property('backgroundImage').width : null}
-        imageHeight = ${props.backgroundImage ? q(node).property('backgroundImage').height : null}
-        imageAlt = ${props.backgroundImage ? q(node).property('backgroundImage').title : null}
+
+        imageWidth = ${node.properties.backgroundImage ? node.properties.backgroundImage.width : null}
+        imageHeight = ${node.properties.backgroundImage ? node.properties.backgroundImage.height : null}
+        imageAlt = ${node.properties.backgroundImage ? node.properties.backgroundImage.title : null}
+
+        screenBorder = ${node.properties.screenBorder}
     }
 }

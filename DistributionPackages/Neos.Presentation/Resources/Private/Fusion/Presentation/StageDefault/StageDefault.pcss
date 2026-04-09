@@ -1,24 +1,27 @@
 @layer components {
-  .stage--default__clip-path {
-    @variant md  {
-      --step: 3rem;
+  .n-stage-default {
+    padding-bottom: calc(var(--pixel-effect-size) * 2);
+  }
 
+  .stage--default__clip-path {
+    /* only shown md and upwards */
+    @variant md {
       clip-path: polygon(
         0 0, /* start top-left */
         0 100%, /* down 100% */
-        calc(2 * var(--step)) 100%, /* 2 steps right */
-        calc(2 * var(--step)) calc(100% - var(--step)), /* 1 step down */
-        calc(4 * var(--step)) calc(100% - var(--step)), /* 2 steps right */
-        calc(4 * var(--step)) calc(100% - 2 * var(--step)), /* 1 step down */
-        calc(5 * var(--step)) calc(100% - 2 * var(--step)), /* 1 step right */
-        calc(5 * var(--step)) calc(100% - var(--step)), /* 1 step up */
-        calc(6 * var(--step)) calc(100% - var(--step)), /* 1 step right */
-        calc(6 * var(--step)) 100%, /* step up */
-        calc(7 * var(--step)) 100%, /* 1 step right */
-        calc(7 * var(--step)) calc(100% - var(--step)), /* 1 step down */
-        calc(8 * var(--step)) calc(100% - var(--step)), /* 1 step right */
-        calc(8 * var(--step)) calc(100% - 2 * var(--step)), /* 1 step down */
-        100% calc(100% - 2 * var(--step)), /* to right edge */
+        calc(2 * var(--pixel-effect-size)) 100%, /* 2 steps right */
+        calc(2 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step down */
+        calc(4 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 2 steps right */
+        calc(4 * var(--pixel-effect-size)) calc(100% - 2 * var(--pixel-effect-size)), /* 1 step down */
+        calc(5 * var(--pixel-effect-size)) calc(100% - 2 * var(--pixel-effect-size)), /* 1 step right */
+        calc(5 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step up */
+        calc(6 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step right */
+        calc(6 * var(--pixel-effect-size)) 100%, /* step up */
+        calc(7 * var(--pixel-effect-size)) 100%, /* 1 step right */
+        calc(7 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step down */
+        calc(8 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step right */
+        calc(8 * var(--pixel-effect-size)) calc(100% - 2 * var(--pixel-effect-size)), /* 1 step down */
+        100% calc(100% - 2 * var(--pixel-effect-size)), /* to right edge */
         100% 0 /* end top-right */
       );
     }
