@@ -3,19 +3,26 @@ prototype(Neos.NeosIo:CrowdGroup) < prototype(Neos.Fusion:Component) {
     headerLevel = 'h3'
     group = null
 
+    @private {
+        cards = Neos.Fusion:Map {
+            items = ${props.group.members}
+            itemName = 'userName'
+            iteratorName = 'iterator'
+            itemRenderer = Neos.NeosIo:CrowdUserListItem {
+                userName = ${userName}
+                groupName = ${props.group.name}
+                index = ${iterator.index}
+            }
+        }
+    }
+
     renderer = afx`
         <div class="team-listing__group">
-            <header @if={props.group.neos_title}>
-                <Neos.Fusion:Tag tagName={props.headerLevel}>
-                    {props.group.neos_title}
-                </Neos.Fusion:Tag>
-            </header>
-            <p @if.set={props.group.neos_summary}>{props.group.neos_summary}</p>
-            <div class="team-listing__members" @if.set={props.group.members}>
-                <Neos.Fusion:Loop items={props.group.members} itemName="userName">
-                    <Neos.NeosIo:CrowdUserListItem userName={userName} groupName={props.group.name} />
-                </Neos.Fusion:Loop>
-            </div>
+            <Neos.Presentation:PersonCards
+                headline={props.group.neos_title}
+                label={props.group.neos_summary}
+                cards={private.cards}
+            />
         </div>
     `
 }

@@ -1,0 +1,38 @@
+'Neos.NeosIo:PersonCard':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NodeTypes:ImageMixin': true
+    'Neos.NeosIo:Mixin.Background': true
+    Neos.NeosIo:Constraints.Column: true
+  ui:
+    label: 'Person Card'
+    icon: 'user'
+    group: special
+  properties:
+    name:
+      type: string
+      ui:
+        label: 'Name'
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: "Enter name here…"
+    email:
+      type: string
+      ui:
+        label: 'Email'
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: "Enter email here…"
+    slack:
+      type: string
+      ui:
+        label: 'Slack'
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: "Enter slack name here…"
+    pixelVariant:
+      options:
+        preset: 'NeosIo.pixelVariant'
