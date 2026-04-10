@@ -1,0 +1,45 @@
+prototype(Neos.NeosIo:Content.BlogCarousel) < prototype(Neos.Neos:ContentComponent) {
+    maxItems = ${node.properties.maxItems}
+    autoplay = ${node.properties.autoplay}
+    tagFilter = ${node.references.filterTags}
+
+    @propTypes {
+        maxItems = PropTypes:Int
+        autoplay = PropTypes:Bool
+        filterTags = ${PropTypes.arrayOf(PropTypes.instanceOf('Neos.NeosIo.Blog:Document.Tag'))}
+    }
+
+    renderer = Neos.Presentation:Carousel {
+        autoplay = ${props.autoplay}
+        title = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        items = Neos.Fusion:Map {
+            items = ${q(site).find('[instanceof Neos.NeosIo:Post]').sort('datePublished', 'DESC').slice(0,props.maxItems).get()}
+            itemName='post'
+            itemRenderer = Neos.Presentation:PostPreview {
+                @context.thumbnail = ${q(post).property('keyVisualImage').resource ? Neos.Media.Image.createThumbnail(
+                q(post).property('keyVisualImage'),
+                null,
+                null,
+                1124
+                ) : null}
+                datePublished = ${q(post).property('datePublished')}
+                title = ${q(post).property('title')}
+                imageUri = Neos.Fusion:ResourceUri {
+                    resource = ${thumbnail.resource}
+                    @if.set = ${thumbnail}
+                }
+                imageWidth = ${thumbnail.width}
+                imageHeight = ${thumbnail.height}
+                imageAlt = ${q(post).property('keyVisualAlternativeText') || q(post).property('keyVisualImage').caption || this.title}
+                nodeUri = Neos.Neos:NodeUri {
+                    node = ${post}
+                }
+                background = ${q(q(post).referenceNodes('tags').get(0)).property('background')}
+                tags = ${q(post).referenceNodes('tags').get()}
+            }
+        }
+    }
+}
