@@ -10,6 +10,7 @@ prototype(Neos.Presentation:PersonCards) < prototype(Neos.Fusion:Component) {
                 imageSource = Sitegeist.Kaleidoscope:UriImageSource {
                     uri = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=5&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
                 }
+                imageAlt = 'Portrait of Karsten Dambekalns'
             }
             1 {
                 name = "Anke Häslich"
@@ -18,6 +19,7 @@ prototype(Neos.Presentation:PersonCards) < prototype(Neos.Fusion:Component) {
                 imageSource = Sitegeist.Kaleidoscope:UriImageSource {
                     uri = 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&crop=faces&fp-y=0.8&fp-z=2&w=1024&h=1024&q=80'
                 }
+                imageAlt = 'Portrait of Anke Häslich'
             }
             2 {
                 name = "Christian Müller"
@@ -26,6 +28,7 @@ prototype(Neos.Presentation:PersonCards) < prototype(Neos.Fusion:Component) {
                 imageSource = Sitegeist.Kaleidoscope:UriImageSource {
                     uri = 'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&crop=faces&fp-y=0.8&fp-z=2&w=1024&h=1024&q=80'
                 }
+                imageAlt = 'Portrait of Christian Müller'
             }
         }
     }
@@ -36,12 +39,16 @@ prototype(Neos.Presentation:PersonCards) < prototype(Neos.Fusion:Component) {
             type = PropTypes:DataStructure {
                 name = PropTypes:String
                 email = PropTypes:String
+                background = PropTypes:String
                 imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+                imageAlt = PropTypes:String
+                pixelVariant = PropTypes:String
             }
         }
     }
 
     headline = null
+    label = null
     cards = null
 
     @if.hasCards = ${Type.isArray(this.cards) && Array.length(this.cards)}
@@ -59,28 +66,14 @@ prototype(Neos.Presentation:PersonCards) < prototype(Neos.Fusion:Component) {
                     class="items-stretch text-white dynamic-grid-gap-6 dynamic-grid-max-cols-3 dynamic-grid-min-size-76"
                 >
                     <Neos.Fusion:Loop items={props.cards}>
-                        <li class="flex flex-col @container">
-                            <figure>
-                                <Sitegeist.Kaleidoscope:Image imageSource={item.imageSource} attributes.class="aspect-4/5 w-full object-cover"/>
-                            </figure>
-                            <Neos.Presentation:Background.Pixel
-                                background={item.background}
-                                pixelPosition="top"
-                                pixelVariant={String.toString((iterator.index % 3) + 1)}
-                                delayBreakpoint="sm"
-                                class="px-8 pb-8 flex-1 flex flex-col"
-                            >
-                                <Neos.Presentation:Headline content={item.name} tagName="h3" display="title-lg" class="flex-1 pt-8" />
-                                <a href={"mailto:" + item.email} class="group inline-flex items-center gap-2 mr-auto">
-                                    <span class="sr-only">{I18n.translate('Neos.Presentation:Main:email')}</span>
-                                    <Neos.Presentation:LayeredGrid inline={true} class="-translate-y-0.5" attributes.aria-hidden="true">
-                                        <Neos.Presentation:Icon icon="mail" class="w-5 visible self-end group-hocus:invisible"/>
-                                        <Neos.Presentation:Icon icon="mail-open" class="w-5 invisible self-end group-hocus:visible"/>
-                                    </Neos.Presentation:LayeredGrid>
-                                    {item.email}
-                                </a>
-                            </Neos.Presentation:Background.Pixel>
-                        </li>
+                        <Neos.Presentation:PersonCard
+                            name={item.name}
+                            email={item.email}
+                            background={item.background}
+                            imageSource={item.imageSource}
+                            imageAlt={item.imageAlt}
+                            pixelVariant={item.pixelVariant || String.toString((iterator.index % 3) + 1)}
+                        />
                     </Neos.Fusion:Loop>
                 </Neos.Presentation:DynamicGrid>
             </Neos.Presentation:Spacing>
