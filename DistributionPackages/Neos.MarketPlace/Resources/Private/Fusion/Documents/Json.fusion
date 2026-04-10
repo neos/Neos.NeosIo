@@ -52,19 +52,24 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
             results = Neos.Fusion:Map {
                 items = ${props.marketPlaceQuery.execute()}
                 itemName = 'package'
-                itemRenderer = Neos.Fusion:DataStructure {
-                    title = ${q(package).property('title')}
-                    description = ${q(package).property('description')}
-                    link = Neos.Neos:NodeUri {
-                        node = ${package}
-                        absolute = true
-                        format = 'html'
+                itemRenderer = Neos.Fusion:Component {
+                    lastVersion = ${q(package).referenceNodes('lastVersion').get(0)}
+
+                    renderer = Neos.Fusion:DataStructure {
+                        title = ${package.properties.title}
+                        description = ${package.properties.description}
+                        link = Neos.Neos:NodeUri {
+                            node = ${package}
+                            absolute = true
+                            format = 'html'
+                        }
+                        linkToRelease = ${package.properties.repository + '/releases/tag/' + props.lastVersion.properties.version}
+                        latestVersion = ${props.lastVersion.properties.version}
+                        lastActivity = ${Date.format(props.lastVersion.properties.time, 'c')}
+                        stable = ${props.lastVersion.properties.stability}
+                        downloads = ${package.properties.downloadTotal}
+                        stars = ${package.properties.favers || 0}
                     }
-                    latestVersion = ${q(q(package).property('lastVersion')).property('version')}
-                    lastActivity = ${Date.format(q(q(package).property('lastVersion')).property('time'), 'c')}
-                    stable = ${q(q(package).property('lastVersion')).property('stability')}
-                    downloads = ${q(package).property('downloadTotal')}
-                    stars = ${q(package).property('favers') || 0}
                 }
             }
             @process.json = ${Json.stringify(value)}
