@@ -1,17 +1,10 @@
 prototype(Neos.NeosIo:TeamListing) < prototype(Neos.Neos:ContentComponent) {
-    title = Neos.Neos:Editable {
-        property = 'title'
-    }
     teamListingFilter = ${q(node).property('teamListingFilter')}
     teamName = ${q(node).property('teamName')}
-    teamFilterOrNameSet = ${!String.isBlank(this.teamListingFilter) || !String.isBlank(this.teamName)}
-    headerLevel = ${q(node).property('headerLevel') || 'h3'}
     groups = ${q(site).crowdGroups().filter(!String.isBlank(this.teamName) ? '[name = ' + this.teamName + ']' : '[neos_group_type = ' + this.teamListingFilter + ']').get()}
 
     renderer = afx`
         <div class="vertical-feature-block">
-            {props.title}
-
             <Neos.Fusion:Loop items={props.groups} itemName="group">
                 <Neos.NeosIo:CrowdGroup
                     group={group}
@@ -19,9 +12,7 @@ prototype(Neos.NeosIo:TeamListing) < prototype(Neos.Neos:ContentComponent) {
                     headerLevel={props.headerLevel}
                 />
             </Neos.Fusion:Loop>
-
             <p @if.noGroups={!props.groups}>No groups found</p>
-            <div class="teamOverlay"></div>
         </div>
     `
 
