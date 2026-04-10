@@ -7,13 +7,15 @@ prototype(Neos.NeosIo:CrowdGroup) < prototype(Neos.Fusion:Component) {
         cards = Neos.Fusion:Map {
             items = ${props.group.members}
             itemName = 'userName'
+            iteratorName = 'iterator'
             itemRenderer = Neos.NeosIo:CrowdUserListItem {
                 userName = ${userName}
                 groupName = ${props.group.name}
+                index = ${iterator.index}
             }
         }
     }
-    
+
     renderer = afx`
         <div class="team-listing__group">
             <Neos.Presentation:PersonCards

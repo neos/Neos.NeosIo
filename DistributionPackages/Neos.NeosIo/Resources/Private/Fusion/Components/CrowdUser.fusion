@@ -4,6 +4,7 @@ prototype(Neos.NeosIo:CrowdUserListItem) < prototype(Neos.Fusion:Component) {
 
     groupName = ''
     userName = ''
+    index = 0
 
     @private {
         user = ${q(site).crowdUser(props.userName).get()}
@@ -14,14 +15,16 @@ prototype(Neos.NeosIo:CrowdUserListItem) < prototype(Neos.Fusion:Component) {
             'retro'
         )}
         # TODO: Read from configuration or define a more generic way to provide background colors
-        backgroundColors = ${['blue-dark', 'blue', 'blue-light', 'purple', 'purple-dark', 'green', 'green-dark', 'yellow', 'yellow-dark', 'orange', 'red', 'black']}
+        backgroundColors = Neos.Fusion:Memo {
+            value = ${Array.shuffle(['blue-dark', 'blue', 'blue-light', 'purple', 'purple-dark', 'green', 'yellow'], false)}
+        }
     }
 
     renderer = Neos.Fusion:DataStructure {
         name = ${private.user.display-name}
         email = ${private.user.additionalProperties['neos_email']}
         slack = ${private.user.name}
-        background = ${private.backgroundColors[Array.length(private.backgroundColors) % String.length(props.userName)]}
+        background = ${private.backgroundColors[props.index % Array.length(private.backgroundColors)]}
         imageSource = Sitegeist.Kaleidoscope:UriImageSource {
             uri = ${private.gravatarUri}
         }

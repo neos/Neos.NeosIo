@@ -35,9 +35,9 @@ prototype(Neos.Presentation:PersonCard) < prototype(Neos.Fusion:Component) {
                 pixelPosition="top"
                 pixelVariant={props.pixelVariant}
                 delayBreakpoint="sm"
-                class="px-8 pb-8 flex-1 flex flex-col"
+                class="px-8 pb-8 flex-1 flex flex-col gap-2"
             >
-                <Neos.Presentation:Headline content={props.name} tagName="h3" display="title-lg" class="flex-1 pt-8" />
+                <Neos.Presentation:Headline content={props.name} tagName="h3" display="title-lg" class="flex-1 pt-8 mb-0" />
                 <span class="group inline-flex items-center gap-2 mr-auto" @if={props.slack}>
                     <span class="sr-only">{I18n.translate('Neos.Presentation:Main:slack')}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="14" height="16">
