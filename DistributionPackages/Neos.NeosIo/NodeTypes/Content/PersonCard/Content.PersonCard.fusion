@@ -10,6 +10,11 @@ prototype(Neos.NeosIo:PersonCard) < prototype(Neos.Neos:ContentComponent) {
             block = false
         }
 
+        slack = Neos.Neos:Editable {
+            property = "slack"
+            block = false
+        }
+
         background = ${node.properties.background}
 
         imageSource = Sitegeist.Kaleidoscope:AssetImageSource {

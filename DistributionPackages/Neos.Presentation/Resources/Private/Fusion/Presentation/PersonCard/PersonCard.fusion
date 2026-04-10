@@ -2,6 +2,7 @@ prototype(Neos.Presentation:PersonCard) < prototype(Neos.Fusion:Component) {
     @propTypes {
         name = ${PropTypes.string.isRequired}
         email = ${PropTypes.string}
+        slack = ${PropTypes.string}
         background = ${PropTypes.string}
         imageSource = ${PropTypes.instanceOf('Sitegeist\Kaleidoscope\Domain\ImageSourceInterface')}
         imageAlt = ${PropTypes.string}
@@ -10,10 +11,15 @@ prototype(Neos.Presentation:PersonCard) < prototype(Neos.Fusion:Component) {
 
     name = ''
     email = ''
+    slack = ''
     background = ''
     imageSource = ''
     imageAlt = ''
     pixelVariant = 'random'
+
+    @private {
+        inBackend = ${renderingMode.isEdit}
+    }
 
     renderer = afx`
         <div class="flex flex-col @container max-w-100">
@@ -32,7 +38,14 @@ prototype(Neos.Presentation:PersonCard) < prototype(Neos.Fusion:Component) {
                 class="px-8 pb-8 flex-1 flex flex-col"
             >
                 <Neos.Presentation:Headline content={props.name} tagName="h3" display="title-lg" class="flex-1 pt-8" />
-                <a href={"mailto:" + props.email} class="group inline-flex items-center gap-2 mr-auto" @if={props.email}>
+                <span class="group inline-flex items-center gap-2 mr-auto" @if={props.slack}>
+                    <span class="sr-only">{I18n.translate('Neos.Presentation:Main:slack')}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="14" height="16">
+                        <path fill="currentColor" d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z" />
+                    </svg>
+                    {props.slack}
+                </span>
+                <a href={"mailto:" + props.email} href.@if={!private.inBackend} class="group inline-flex items-center gap-2 mr-auto" @if={props.email}>
                     <span class="sr-only">{I18n.translate('Neos.Presentation:Main:email')}</span>
                     <Neos.Presentation:LayeredGrid inline={true} class="-translate-y-0.5" attributes.aria-hidden="true">
                         <Neos.Presentation:Icon icon="mail" class="w-5 visible self-end group-hocus:invisible"/>

@@ -20,6 +20,7 @@ prototype(Neos.NeosIo:CrowdUserListItem) < prototype(Neos.Fusion:Component) {
     renderer = Neos.Fusion:DataStructure {
         name = ${private.user.display-name}
         email = ${private.user.additionalProperties['neos_email']}
+        slack = ${private.user.name}
         background = ${private.backgroundColors[Array.length(private.backgroundColors) % String.length(props.userName)]}
         imageSource = Sitegeist.Kaleidoscope:UriImageSource {
             uri = ${private.gravatarUri}
