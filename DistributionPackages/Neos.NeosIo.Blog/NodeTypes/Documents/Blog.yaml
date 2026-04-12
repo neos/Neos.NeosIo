@@ -6,9 +6,8 @@
     icon: newspaper
   constraints:
     nodeTypes:
-      '*': false
-      'Neos.NeosIo:Post': true
-      'Neos.NeosIo.Blog:Document.Tags': true
+      'Neos.Neos:Document': false
+      'Neos.NeosIo:Constraint.Blog.Document': true
   childNodes:
     main:
       type: 'Neos.Neos:ContentCollection'
