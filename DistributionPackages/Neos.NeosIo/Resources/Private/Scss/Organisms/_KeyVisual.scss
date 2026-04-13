@@ -94,6 +94,15 @@
     z-index: -1;
     transform: translateX(-50%) translateY(-50%);
   }
+  h1 {
+    @include text-headline-xl;
+  }
+  h2 {
+    @include text-headline-lg;
+  }
+  h3 {
+    @include text-headline-md;
+  }
 
   @include mq('small') {
     .u-brandLogo {
