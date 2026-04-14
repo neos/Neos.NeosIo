@@ -1,32 +1,18 @@
 prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
-    @styleguide.props {
-        assets = Neos.Fusion:Map {
-            items = ${['flownative', 'sitegeist', 'sandstorm', 'queo', 'visol', 'helzle']}
-            itemRenderer = Neos.Fusion:DataStructure {
-                image = Neos.Fusion:Tag {
-                    tagName = 'img'
-                    attributes.class = "h-16 max-h-10 md:max-h-16 max-w-none w-auto"
-                    attributes.alt = ${'Logo from ' + item}
-                    attributes.src = ${StaticResource.uri('Neos.Presentation', 'Public/Assets/Styleguide/Logos/' + item + '.svg')}
-                }
-                alternativeText = ${'Logo from ' + item}
-                href = ${'#' + item}
-            }
-        }
-    }
+    assets = null
+    grayscale = true
 
     @propTypes {
+        @strict = true
         assets = PropTypes:Array {
             type = PropTypes:DataStructure {
                 image = PropTypes:String
+                href = PropTypes:String
                 alternativeText = PropTypes:String
             }
         }
         grayscale = PropTypes:Bool
     }
-
-    assets = null
-    grayscale = true
 
     @private {
         assets = ${Type.isArray(props.assets) ? Array.filter(props.assets, item => !!item.image) : []}

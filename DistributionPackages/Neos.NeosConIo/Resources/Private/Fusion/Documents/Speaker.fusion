@@ -11,9 +11,10 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
                 property = "text"
             }
 
-            imageUri = Neos.Neos:ImageUri {
+            image = Neos.Presentation:Component.PictureTag {
                 asset = ${q(node).property('image')}
-                allowCropping = true
+                alt = ${"Picture of " + q(node).property('title')}
+                imgClasses = "speaker__image"
             }
 
             company = ${node.properties.company}
@@ -27,11 +28,10 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
 
             featuredTalk = Neos.Presentation:ContentTeaser {
                 title = ${q(featuredTalkNode).property('title')}
-                imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+                image = Neos.Presentation:Component.PictureTag {
                     asset = ${q(node).property('thumbnail')}
-                    // TODO responsive image size with different breakpoints
-                    width = 500
-                    quality = 80
+                    imgClasses = "absolute object-cover w-full h-full"
+                    alt = ""
                 }
                 text = ${String.cropAtWord(q(featuredTalkNode).property('text'), 200, '…')}
                 link = Neos.Neos:NodeUri {

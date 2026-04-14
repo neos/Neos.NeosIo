@@ -10,6 +10,7 @@ prototype(Neos.NeosIo:LogoBar) < prototype(Neos.Neos:ContentComponent) {
                     sizes = ${['(min-width: 768px) 400px', '25vw']}
                     maximumHeight = 100
                 }
+                alternativeText = ${item.properties.alternativeText}
                 href = ${item.properties.link}
                 href.@process.convertUri = Neos.Neos:ConvertUris
             }

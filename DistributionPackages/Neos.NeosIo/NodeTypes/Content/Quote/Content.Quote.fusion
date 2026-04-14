@@ -4,7 +4,8 @@ prototype(Neos.NeosIo:Quote) < prototype(Neos.Neos:ContentComponent) {
 
         image = Neos.Presentation:Component.PictureTag {
             asset = ${q(node).property('authorAvatar')}
-            alt = Neos.NeosIo:Helpers.ImageAltText
+            alt = ${q(node).property('alternativeText')}
+            alt = ${String.isBlank(value) ? q(node).property('image').label : value}
             alt.@process.authorNameFallback = ${q(node).property('author')}
             imgClasses = "object-cover h-full w-full"
             sizes = ${[

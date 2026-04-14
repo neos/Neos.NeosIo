@@ -20,13 +20,10 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseStudyTeaser) < prototype(Neos.Neos
         title = ${private.title}
         subTitle = 'Case Study'
         text = ${props.subTitle}
-        altText = ${private.altText}
-        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+        image = Neos.Presentation:Component.PictureTag {
             asset = ${private.image}
-            // TODO responsive image size with different breakpoints
-            width = 800
-            quality = 80
-            @if.hasAsset = ${this.asset}
+            imgClasses = "absolute object-cover w-full h-full"
+            alt = ${private.altText}
         }
         link = ${private.link}
     }

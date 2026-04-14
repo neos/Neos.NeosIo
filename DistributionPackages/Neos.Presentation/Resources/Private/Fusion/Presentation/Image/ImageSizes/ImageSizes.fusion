@@ -2,7 +2,9 @@
 prototype(Neos.Presentation:Component.ImageSizes) < prototype(Neos.Fusion:Component) {
     # size in percent, e.g. 0.5 for 50% of the content width
     # default is 1 for 100% of the content width. Image is not placed inside a column or similar element that limits the width of the image.
+    # Can be overriden from the outside, e.g. from the Column component.
     size = 1
+    # default content width is 1200px. Can be overriden from the outside, e.g. from the Stage component, to adapt to different content widths. This is used to calculate the image sizes attribute for responsive images.
     contentWidth = '1200px'
 
     @propTypes {
