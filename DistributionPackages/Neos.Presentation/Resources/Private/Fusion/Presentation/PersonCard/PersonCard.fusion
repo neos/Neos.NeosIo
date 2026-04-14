@@ -4,8 +4,7 @@ prototype(Neos.Presentation:PersonCard) < prototype(Neos.Fusion:Component) {
         email = ${PropTypes.string}
         slack = ${PropTypes.string}
         background = ${PropTypes.string}
-        imageSource = ${PropTypes.instanceOf('Sitegeist\Kaleidoscope\Domain\ImageSourceInterface')}
-        imageAlt = ${PropTypes.string}
+        image = ${PropTypes.string}
         pixelVariant = ${PropTypes.string}
     }
 
@@ -13,8 +12,7 @@ prototype(Neos.Presentation:PersonCard) < prototype(Neos.Fusion:Component) {
     email = ''
     slack = ''
     background = ''
-    imageSource = ''
-    imageAlt = ''
+    image = ''
     pixelVariant = 'random'
 
     @private {
@@ -24,11 +22,7 @@ prototype(Neos.Presentation:PersonCard) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <div class="flex flex-col @container max-w-100">
             <figure>
-                <Sitegeist.Kaleidoscope:Image
-                    imageSource={props.imageSource}
-                    alt={props.imageAlt}
-                    attributes.class="aspect-4/5 w-full object-cover"
-                />
+                {props.image}
             </figure>
             <Neos.Presentation:Background.Pixel
                 background={props.background}
