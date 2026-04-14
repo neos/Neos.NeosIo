@@ -10,18 +10,18 @@ prototype(Neos.Presentation:Carousel) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <div class="n-carousel swiper" data-autoplay={private.autoplay}>
             <div class="flex items-center justify-between mb-4 h-32">
-                <Neos.Presentation:Headline tagName="h3" display="headline-md">
+                <Neos.Presentation:Headline tagName="h3" display="headline-md" class="m-0">
                     {props.title}
                 </Neos.Presentation:Headline>
                 <div class="flex gap-4">
                     <Neos.Presentation:Button
                         variant="transparent"
-                        class="n-carousel-nav-button button-prev border-3 border-(--color-blue-light) p-4"
+                        class="n-carousel-nav-button button-prev border-3 border-(--color-blue-light) p-2 sm:p-4"
                         icon="chevron-left"
                     />
                     <Neos.Presentation:Button
                         variant="transparent"
-                        class="n-carousel-nav-button button-next border-3 border-(--color-blue-light) p-4"
+                        class="n-carousel-nav-button button-next border-3 border-(--color-blue-light) p-2 sm:p-4"
                         icon="chevron-right"
                     />
                 </div>
