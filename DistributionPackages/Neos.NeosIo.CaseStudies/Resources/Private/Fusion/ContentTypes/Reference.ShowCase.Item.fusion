@@ -8,28 +8,23 @@ prototype(Neos.NeosIo:Reference.ShowCaseItem) < prototype(Neos.Neos:ContentCompo
     projectVolume = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes
     projectType = ${q(q(node).property('projectType')).property('title')}
     maximumHeight = 261
-    maximumWidth = 561
 
     renderer = afx`
-      <h1>{title}</h1>
-      <Neos.Neos:ImageTag
-        asset={props.image}
-        title={props.title}
-        attributes.alt={props.alternativeText}
-        attributes.class="u-mb1/2"
-        attributes.style={'max-height: ' + props.maximumHeight + 'px;'}
-        attributes.style.@if.set={props.maximumHeight}
-        maximumHeight={props.maximumHeight}
-        maximumwidth={props.maximumWidth}
-        allowCropping={true}
-      />
-      <ul>
-        <li @if.hasLaunchDate={props.launchDate}><i class="fas fa-rocket"></i>{Date.format(props.launchDate, 'd.m.Y')}
-        </li>
-        <li @if.hasProjectVolume={props.projectVolume}>
-          <i class="fas fa-users"></i>{props.projectVolume}
-        </li>
-        <li @if.hasProjectType={props.projectType}><i class="fas fa-industry"></i> {props.projectType}</li>
-      </ul>
+        <h1>{title}</h1>
+        <Neos.Presentation:Component.PictureTag
+            asset={props.image}
+            alt={props.alternativeText}
+            imgClasses="u-mb1/2"
+            maximumHeight={props.maximumHeight}
+        />
+        <ul>
+            <li @if.hasLaunchDate={props.launchDate}><i
+                class="fas fa-rocket"></i>{Date.format(props.launchDate, 'd.m.Y')}
+            </li>
+            <li @if.hasProjectVolume={props.projectVolume}>
+                <i class="fas fa-users"></i>{props.projectVolume}
+            </li>
+            <li @if.hasProjectType={props.projectType}><i class="fas fa-industry"></i> {props.projectType}</li>
+        </ul>
     `
 }

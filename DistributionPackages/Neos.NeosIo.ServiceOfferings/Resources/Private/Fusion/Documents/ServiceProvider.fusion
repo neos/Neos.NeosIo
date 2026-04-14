@@ -76,13 +76,12 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
 
                     <h1 class="service-provider__title">{props.title}</h1>
 
-                    <Neos.Neos:ImageTag
-                        if.set={props.logo}
+                    <Neos.Presentation:Component.PictureTag
+                        @if={props.logo}
                         asset={props.logo}
-                        maximumWidth={300}
-                        maximumHeight={300}
-                        attributes.class={"service-provider__logo"}
-                        attributes.alt={"Logo: " + props.title}
+                        alt={"Logo: " + props.title}
+                        imgClasses="service-provider__logo"
+                        sizes={['300px']}
                     />
 
                     <p class="service-provider__description" @if.set={props.description}>{props.description}</p>

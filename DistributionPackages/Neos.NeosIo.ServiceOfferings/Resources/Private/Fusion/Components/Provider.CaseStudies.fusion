@@ -3,6 +3,14 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.CaseStudies) < prototy
 
     @if.hasCaseStudies = ${Type.isArray(this.caseStudies) && Array.length(this.caseStudies)}
 
+    # update the image sizes for all nested image components, so they can adapt their sizes accordingly
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            # The column width is 50% for the showcase items, so we set the size accordingly
+            size = ${1 / 2}
+        }
+    }
+
     renderer = afx`
         <section class="service-provider__casestudies">
             <h2>Casestudies</h2>
@@ -14,14 +22,10 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.CaseStudies) < prototy
                             attributes.class="imageTeaser imageTeaser--isLink"
                             attributes.title={q(caseStudy).property('title')}
                         >
-                            <Neos.Neos:ImageTag
+                            <Neos.Presentation:Component.PictureTag
                                 asset={q(caseStudy).property('keyVisualImage')}
-                                maximumHeight={450}
-                                maximumwidth={700}
-                                allowCropping={true}
-                                attributes.class="imageTeaser__image"
-                                attributes.alt={q(caseStudy).property('title')}
-                                attributes.style="max-height: 450px;"
+                                alt={q(caseStudy).property('title')}
+                                imgClasses="imageTeaser__image"
                             />
                             <span class="imageTeaser__contents u-invertText">
                                 <h3 class="imageTeaser__contents__heading">{q(caseStudy).property('title')}</h3>
