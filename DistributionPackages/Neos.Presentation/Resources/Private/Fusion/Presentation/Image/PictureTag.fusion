@@ -17,8 +17,6 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
     // https://caniuse.com/wf-sizes-auto
     sizes.@process.auto = ${Array.concat(['auto'], value)}
 
-    columnWidth = ''
-
     // WHY no <picture> class?
     // The <picture> element itself is essentially an invisible container — it has no visual representation of its own.
     // It's just a wrapper that helps the browser decide which source to load. The actual rendered image is always the <img> element inside it.
@@ -41,7 +39,6 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
         formats = ${PropTypes.arrayOf(PropTypes.string)}
         imgClasses = ${PropTypes.string}
         lightbox = ${PropTypes.boolean}
-        columnWidth = ${PropTypes.any}
         maximumHeight = ${PropTypes.integer}
     }
 

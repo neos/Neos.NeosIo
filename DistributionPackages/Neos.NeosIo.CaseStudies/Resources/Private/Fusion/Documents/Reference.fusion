@@ -1,9 +1,7 @@
 prototype(Neos.NeosIo:Reference) < prototype(Neos.NeosIo:DefaultPage) {
     content.parts {
         main >
-        referenceItem = Neos.NeosIo:Reference.List.Item {
-            @context.case = ${node}
-        }
+        referenceItem = Neos.NeosIo:Reference.List.Item
     }
 
     renderer.@cache {

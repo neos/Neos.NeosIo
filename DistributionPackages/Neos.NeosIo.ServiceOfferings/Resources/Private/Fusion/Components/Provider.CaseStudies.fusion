@@ -16,22 +16,10 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.CaseStudies) < prototy
             <h2>Casestudies</h2>
             <div class="references__list g">
                 <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
-                    <div class="references__item gi u-w1/1 u-wm1/2 u-wl1/2">
-                        <Neos.Neos:NodeLink
-                            node={caseStudy}
-                            attributes.class="imageTeaser imageTeaser--isLink"
-                            attributes.title={q(caseStudy).property('title')}
-                        >
-                            <Neos.Presentation:Component.PictureTag
-                                asset={q(caseStudy).property('keyVisualImage')}
-                                alt={q(caseStudy).property('title')}
-                                imgClasses="imageTeaser__image"
-                            />
-                            <span class="imageTeaser__contents u-invertText">
-                                <h3 class="imageTeaser__contents__heading">{q(caseStudy).property('title')}</h3>
-                            </span>
-                        </Neos.Neos:NodeLink>
-                    </div>
+                    <Neos.NeosIo:Reference.List.Item
+                        @context.node={caseStudy}
+                        linkToNode={true}
+                    />
                 </Neos.Fusion:Loop>
             </div>
         </section>
