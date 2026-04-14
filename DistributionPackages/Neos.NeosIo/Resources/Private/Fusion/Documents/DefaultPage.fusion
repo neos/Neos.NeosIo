@@ -9,7 +9,7 @@ prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
             disruptor = Neos.NeosIo:Component.Disruptor
             keyVisual = Neos.NeosIo:KeyVisual {
                 keyVisualImage = ${q(documentNode).property('keyVisualImage')}
-                keyVisualImageSmall = ${q(documentNode).property('keyVisualImageSmall')}
+                keyVisualAlternativeText = ${q(documentNode).property('keyVisualAlternativeText')}
                 isKeyVisualContentsInverted = ${q(documentNode).property('isKeyVisualContentsInverted')}
                 keyVisualVariant = ${q(documentNode).property('keyVisualVariant')}
                 content = Neos.Fusion:Case {

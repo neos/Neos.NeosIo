@@ -61,16 +61,6 @@
           group: keyVisual
           position: 'after keyVisualImage'
           hidden: 'ClientEval: !node.properties.keyVisualImage'
-    keyVisualImageSmall:
-      type: Neos\Media\Domain\Model\ImageInterface
-      scope: nodeAggregate
-      ui:
-        label: 'Mobile image for the key visual-Section'
-        reloadIfChanged: true
-        inspector:
-          group: 'keyVisual'
-          position: 'after keyVisualImage'
-          hidden: 'ClientEval: node.properties.keyVisualVariant != ""'
     isKeyVisualContentsInverted:
       scope: nodeAggregate
       type: boolean
