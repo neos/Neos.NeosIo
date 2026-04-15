@@ -1,0 +1,89 @@
+prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
+    title = ${q(node).property('title')}
+    alternativeText = ${q(node).property('title')}
+    launchDate = ${q(node).property('launchDate')}
+    projectVolume = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes {
+        volume = ${q(node).property('projectVolume')}
+    }
+    projectType = ${q(q(node).property('projectType')).property('title')}
+
+    @private {
+        url = ${q(node).property('url')}
+        url.@process.convertUris = Neos.Neos:ConvertUris {
+            absolute = true
+        }
+
+        image = Neos.Presentation:Component.PictureTag {
+            asset = ${q(node).property('image')}
+            alt = ${props.alternativeText}
+            imgClasses = "absolute w-full h-full object-cover"
+        }
+        thumbnail = Neos.Presentation:Component.PictureTag {
+            asset = ${q(node).property('image')}
+            alt = ${props.alternativeText}
+            imgClasses = "w-full h-full object-cover"
+        }
+        meta = Neos.NeosIo:Reference.List.Item.Meta {
+            launchDate = ${props.launchDate}
+            projectVolume = ${props.projectVolume}
+            projectType = ${props.projectType}
+        }
+        volumeCode = ${q(node).property('projectVolume') ? String.toInteger(q(node).property('projectVolume')) : 0}
+        launchTimestamp = ${q(node).property('launchDate') || q(node).property('datePublished') || q(node).property('_creationDateTime')}
+        launchTimestamp.@process.format = ${value ? String.toInteger(Date.format(value, 'U')) : 0}
+    }
+
+    renderer = afx`
+        <div class="references__item"
+            data-case-item=""
+            data-project-type={props.projectType || ''}
+            data-project-volume={private.volumeCode}
+            data-launch-date={private.launchTimestamp}
+            data-search-text={String.toLowerCase((props.title || '') + ' ' + (props.projectType || ''))}
+        >
+            <!-- Card view (grid mode) -->
+            <div x-show="view === 'grid'">
+                <Neos.Presentation:ContentTeaser
+                    title={props.title}
+                    link={private.url}
+                    openInNewTab={true}
+                    image={private.image}
+                    text={private.meta}
+                />
+            </div>
+
+            <!-- Row view (list mode) -->
+            <div x-show="view === 'list'" x-cloak class="flex items-center gap-4 py-3 min-w-0">
+                <div class="w-20 h-14 flex-shrink-0 overflow-hidden rounded bg-neutral-100">
+                    {private.thumbnail}
+                </div>
+                <a href={private.url} target="_blank"
+                   class="flex-1 font-semibold text-neutral-900 hover:underline truncate min-w-0">
+                    {props.title}
+                </a>
+                <span @if={props.projectType}
+                      class="w-48 text-sm text-neutral-500 truncate hidden md:flex items-center gap-1">
+                    <i class="fas fa-industry" aria-hidden="true"></i>{props.projectType}
+                </span>
+                <span @if={props.projectVolume}
+                      class="w-36 text-sm text-neutral-500 hidden lg:flex items-center gap-1">
+                    <i class="fas fa-users" aria-hidden="true"></i>{props.projectVolume}
+                </span>
+                <span @if={props.launchDate}
+                      class="w-28 text-sm text-neutral-500 hidden lg:flex items-center gap-1">
+                    <i class="fas fa-rocket" aria-hidden="true"></i>{Date.format(props.launchDate, 'd.m.Y')}
+                </span>
+            </div>
+        </div>
+    `
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
+        entryTags {
+            node = ${Neos.Caching.nodeTag(node)}
+        }
+    }
+}

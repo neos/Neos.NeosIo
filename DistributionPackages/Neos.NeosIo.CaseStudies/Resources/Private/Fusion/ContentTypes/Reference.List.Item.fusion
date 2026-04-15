@@ -42,15 +42,8 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
         launchTimestamp.@process.format = ${value ? String.toInteger(Date.format(value, 'U')) : 0}
     }
 
-    // TODO removed:  gi u-w1/1 u-wm1/2 u-wl1/2
     renderer = afx`
-        <div class="references__item"
-            data-case-item=""
-            data-project-type={props.projectType || ''}
-            data-project-volume={private.volumeCode}
-            data-launch-date={private.launchTimestamp}
-            data-search-text={String.toLowerCase((props.title || '') + ' ' + (props.projectType || ''))}
-        >
+        <div class="references__item gi u-w1/1 u-wm1/2 u-wl1/2">
             <Neos.Presentation:ContentTeaser
                 title={props.title}
                 link={private.url}

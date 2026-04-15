@@ -1,4 +1,4 @@
-prototype(Neos.Presentation:CaseListFilters) < prototype(Neos.Fusion:Component) {
+prototype(Neos.Presentation:CaseList.Filters) < prototype(Neos.Fusion:Component) {
     caseDataForFiltering = ${[]}
     translationData = Neos.Fusion:DataStructure {
         chooseProjectVolume = ${Translation.translate('caseListing.chooseProjectVolume', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
@@ -46,27 +46,29 @@ prototype(Neos.Presentation:CaseListFilters) < prototype(Neos.Fusion:Component) 
     }
 
     renderer = afx`
-        <header class="mb-4 border-b border-neutral-200 pb-4">
-            <div class="flex flex-row justify-between gap-4">
+        <header class="mb-4 mt-4 border-b border-neutral-200 pb-4">
+            <div class="flex flex-row justify-between gap-4 mb-4">
                 <div>
                     <strong>{props.translationData.numberOfEntriesShown}: <span x-text="visibleCount">{Array.length(props.caseDataForFiltering)}</span></strong>
                 </div>
-                <div class="cursor-pointer flex items-center gap-1" x-on:click="sort()">
+                <button type="button" class="flex items-center gap-1 hover:underline" x-on:click="sort()">
                     {props.translationData.sortBy.launchDate}
                     <i class="fas fa-arrow-up" x-show="sortDir === 'asc'" aria-hidden="true"></i>
                     <i class="fas fa-arrow-down" x-show="sortDir === 'desc'" aria-hidden="true"></i>
                     <span class="sr-only" x-text={"sortDir === 'asc' ? '" + props.translationData.sortBy.sortAsc + "' : '" + props.translationData.sortBy.sortDesc + "'"}></span>
-                </div>
+                </button>
             </div>
 
             <div class="flex flex-row gap-4 justify-between">
                 <div class="flex items-center gap-2">
-                    <span class="cursor-pointer" title={props.translationData.gridView} x-on:click="view = 'grid'" x-bind:class="{ 'opacity-50': view !== 'grid' }">
+                    <button type="button" class="p-1" x-on:click="view = 'grid'" x-bind:class="{ 'opacity-50': view !== 'grid' }" x-bind:aria-pressed="view === 'grid'">
                         <i class="fas fa-th-large" aria-hidden="true"></i>
-                    </span>
-                    <span class="cursor-pointer" title={props.translationData.tableView} x-on:click="view = 'list'" x-bind:class="{ 'opacity-50': view !== 'list' }">
+                        <span class="sr-only">{props.translationData.gridView}</span>
+                    </button>
+                    <button type="button" class="p-1" x-on:click="view = 'list'" x-bind:class="{ 'opacity-50': view !== 'list' }" x-bind:aria-pressed="view === 'list'">
                         <i class="fas fa-th-list" aria-hidden="true"></i>
-                    </span>
+                        <span class="sr-only">{props.translationData.tableView}</span>
+                    </button>
                 </div>
 
                 <div class="flex items-center gap-2">

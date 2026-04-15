@@ -1,4 +1,5 @@
 prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:ContentComponent) {
+    // TODO replace .find()
     cases = ${q(site).find('[instanceof Neos.NeosIo:Reference]').get()}
 
     renderer = Neos.Fusion:Component {
