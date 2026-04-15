@@ -30,17 +30,24 @@ prototype(Neos.NeosConIo:SpeakerList.Item) < prototype(Neos.Fusion:Component) {
         item = ${PropTypes.instanceOf('Neos.NeosConIo:Speaker')}
     }
 
+    # update the image sizes for all nested image components, so they can adapt their sizes accordingly
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            # The speaker list item takes 1/3 of the width on desktop, so we calculate the percentage accordingly. On smaller screens it will be full width, so we don't set a size for that.
+            size = ${4 / 12}
+        }
+    }
+
     @private {
         link = Neos.Neos:NodeUri {
             node = ${props.item}
             absolute = true
         }
 
-        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+        image = Neos.Presentation:Component.PictureTag {
             asset = ${props.item.properties.image}
-            // TODO responsive image size with different breakpoints
-            width = 500
-            quality = 80
+            imgClasses = "absolute object-cover w-full h-full"
+            alt = ""
         }
     }
 
@@ -48,7 +55,7 @@ prototype(Neos.NeosConIo:SpeakerList.Item) < prototype(Neos.Fusion:Component) {
         <li class="speaker__speakerList__item">
             <Neos.Presentation:ContentTeaser
                 title={props.item.properties.title}
-                imageSource={private.imageSource}
+                image={private.image}
                 text={String.stripTags(props.item.properties.company)}
                 link={private.link}
             />

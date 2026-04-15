@@ -1,53 +1,90 @@
 prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
-    title = ${q(case).property('title')}
-    alternativeText = ${q(case).property('title')}
-    image = ${q(case).property('image')}
-    url = ${q(case).property('url') ? q(case).property('url') : 'node://' + case.aggregateId}
-    url.@process.convertUris = Neos.Neos:ConvertUris {
-        absolute = true
-    }
-    datePublished = ${q(case).property('datePublished')}
-    launchDate = ${q(case).property('launchDate')}
+    title = ${q(node).property('title')}
+    alternativeText = ${q(node).property('title')}
+    linkToNode = false
+    launchDate = ${q(node).property('launchDate')}
     projectVolume = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes {
-        @context.node = ${case}
+        volume = ${q(node).property('projectVolume')}
     }
-    projectType = ${q(q(case).property('projectType')).property('title')}
-    featured = ${q(case).property('featured')}
+    projectType = ${q(q(node).property('projectType')).property('title')}
+    featured = ${q(node).property('featured')}
+
+    @private {
+        url = Neos.Fusion:Case {
+            linkToNode {
+                condition = ${props.linkToNode}
+                renderer = Neos.Neos:NodeUri {
+                    node = ${node}
+                    absolute = true
+                }
+            }
+            default {
+                condition = true
+                renderer = ${q(node).property('url')}
+                renderer.@process.convertUris = Neos.Neos:ConvertUris {
+                    absolute = true
+                }
+            }
+        }
+
+        image = Neos.Presentation:Component.PictureTag {
+            asset = ${q(node).property('image')}
+            alt = ${props.alternativeText}
+            imgClasses = "absolute w-full h-full object-cover"
+        }
+        meta = Neos.NeosIo:Reference.List.Item.Meta {
+            launchDate = ${props.launchDate}
+            projectVolume = ${props.projectVolume}
+            projectType = ${props.projectType}
+        }
+    }
 
     renderer = afx`
-      <div class="references__item gi u-w1/1 u-wm1/2 u-wl1/2">
-        <a href={props.url} target="_blank" rel="noopener" class="imageTeaser imageTeaser--isLink">
-          <Neos.Neos:ImageTag
-            asset={q(case).property('image')}
-            title={props.title}
-            attributes.alt={props.alternativeText}
-            attributes.class="imageTeaser__image"
-            maximumHeight={450}
-            maximumwidth={700}
-            allowCropping={true}
-          />
-          <div class="imageTeaser__contents u-invertText">
-            <h3 class="imageTeaser__contents__heading">{props.title}</h3>
-            <footer class="references__data">
-              <span @if.hasLaunchDate={props.launchDate}><i
-                class="fas fa-rocket"></i>{Date.format(props.launchDate, 'd.m.Y')}</span>
-              <span @if.hasProjectVolume={props.projectVolume}>
-                            <i class="fas fa-users"></i>{props.projectVolume}
-                        </span>
-              <span @if.hasProjectType={props.projectType}><i class="fas fa-industry"></i> {props.projectType}</span>
-            </footer>
-          </div>
-        </a>
-      </div>
+        <div class="references__item gi u-w1/1 u-wm1/2 u-wl1/2">
+            <Neos.Presentation:ContentTeaser
+                title={props.title}
+                link={private.url}
+                openInNewTab={props.linkToNode ? false : true}
+                image={private.image}
+                text={private.meta}
+            />
+        </div>
     `
 
     @cache {
         mode = 'cached'
         entryIdentifier {
-            node = ${Neos.Caching.entryIdentifierForNode(case)}
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
         }
         entryTags {
-            node = ${Neos.Caching.nodeTag(case)}
+            node = ${Neos.Caching.nodeTag(node)}
         }
     }
+}
+
+prototype(Neos.NeosIo:Reference.List.Item.Meta) < prototype(Neos.Fusion:Component) {
+    launchDate = null
+    projectVolume = ''
+    projectType = ''
+
+    @propTypes {
+        @strict=true
+        launchDate = ${PropTypes.instanceOf('\DateTimeInterface')}
+        projectVolume = ${PropTypes.string}
+        projectType = ${PropTypes.string}
+    }
+
+    renderer = afx`
+        <footer class="flex flex-wrap gap-2 text-sm">
+            <span @if={props.launchDate} class="flex items-center gap-1">
+                <i class="fas fa-rocket" aria-hidden="true"></i>{Date.format(props.launchDate, 'd.m.Y')}
+            </span>
+            <span @if={props.projectVolume} class="flex items-center gap-1">
+                <i class="fas fa-users" aria-hidden="true"></i>{props.projectVolume}
+            </span>
+            <span @if={props.projectType} class="flex items-center gap-1">
+                <i class="fas fa-industry" aria-hidden="true"></i>{props.projectType}
+            </span>
+        </footer>
+    `
 }

@@ -6,21 +6,14 @@ prototype(Neos.NeosIo:KeyVisual.AbstractRenderer) < prototype(Neos.Fusion:Compon
     content = ${props.content}
 
     // API to sub components
-    previewImageUri = ''
-    highQualityImageUri = ''
-    imageSrcSet = ''
+    picture = ''
 
     divClasses = ${"keyVisual__contents u-alignCenter " + (this.isKeyVisualContentsInverted ? "u-invertText" : "")}
-    previewImageStyleAttribute = ${"background-image: url('" + this.previewImageUri + "')"}
 
     renderer = afx`
         <section class="keyVisual">
-            <div class={props.divClasses}
-                data-component="ProgressiveImage"
-                data-isInline="true"
-                data-src={props.highQualityImageUri}
-                data-srcSet={props.imageSrcSet}
-                style={props.divStyle}>
+            {props.picture}
+            <div class={props.divClasses}>
                 {props.content}
             </div>
             <a

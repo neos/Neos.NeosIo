@@ -1,0 +1,31 @@
+prototype(Neos.Presentation:CountUp) < prototype(Neos.Fusion:Component) {
+    number = ''
+    title = ''
+
+    @propTypes {
+        @strict = true
+        number = ${PropTypes.string}
+        title = ${PropTypes.string}
+    }
+
+    @private {
+        inBackend = ${renderingMode.isEdit}
+    }
+
+    renderer = afx`
+        <div x-data={AlpineJS.xData('countUp', private.inBackend)} "x-intersect.once"="animate()">
+            <span @if={!private.inBackend} x-ref="number" class="display-headline-xl" data-value={props.number} x-text="display">
+                {props.number}
+            </span>
+            <span @if={private.inBackend} class="display-headline-xl">
+                {props.number}
+            </span>
+            <Neos.Presentation:Paragraph
+                display="body-lg"
+                class="text-blue-light mt-4"
+            >
+                {props.title}
+            </Neos.Presentation:Paragraph>
+        </div>
+    `
+}

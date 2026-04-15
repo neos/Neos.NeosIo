@@ -12,12 +12,10 @@ prototype(Neos.NeosIo.Features:ItemWithImage) < prototype(Neos.Neos:ContentCompo
         link = ${q(node).property('link')}
         link.@process.convertUris = Neos.Neos:ConvertUris
 
-        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+        image = Neos.Presentation:Component.PictureTag {
             asset = ${q(node).property('image')}
-            // TODO responsive image size with different breakpoints
-            width = 800
-            quality = 80
+            alt = ${q(node).property('alternativeText')}
+            imgClasses = "object-cover w-full h-full"
         }
-        altText = ${q(node).property('alternativeText')}
     }
 }
