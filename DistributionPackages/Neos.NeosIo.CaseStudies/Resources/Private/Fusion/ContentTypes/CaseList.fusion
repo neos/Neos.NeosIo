@@ -4,62 +4,23 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:Conten
     renderer = Neos.Fusion:Component {
         @apply.props = ${props}
 
-        translationData = Neos.Fusion:DataStructure {
-            chooseProjectVolume = ${Translation.translate('caseListing.chooseProjectVolume', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-            chooseIndustry = ${Translation.translate('caseListing.chooseIndustry', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-            search = ${Translation.translate('caseListing.search', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-            tableView = ${Translation.translate('caseListing.tableView', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-            gridView = ${Translation.translate('caseListing.gridView', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-            noCasesFound = ${Translation.translate('caseListing.noCasesFound', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-            numberOfEntriesShown = ${Translation.translate('caseListing.numberOfEntriesShown', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-            sortBy = Neos.Fusion:DataStructure {
-                featured = ${Translation.translate('caseListing.sortBy.featured', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-                launchDate = ${Translation.translate('caseListing.sortBy.launchDate', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-                datePublished = ${Translation.translate('caseListing.sortBy.datePublished', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-                projectVolume = ${Translation.translate('caseListing.sortBy.projectVolume', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-            }
-
-        }
-
-        casesData = Neos.Fusion:Map {
+        caseDataForFiltering = Neos.Fusion:Map {
             items = ${props.cases}
             itemName = 'case'
             itemRenderer = Neos.Fusion:DataStructure {
-                identifier = ${case.aggregateId}
-                title = ${q(case).property('title')}
-                url = ${q(case).property('url') ? q(case).property('url') : 'node://' + case.aggregateId}
-                url.@process.convertUris = Neos.Neos:ConvertUris {
-                    absolute = true
-                }
-                image = Neos.Neos:ImageUri {
-                    asset = ${q(case).property('image')}
-                    width = 662
-                    height = 312
-                    allowCropping = true
-                    async = true
-                    quality = 90
-                    @if.hasBannerImage = ${q(case).property('image')}
-                }
                 projectType = ${q(q(case).property('projectType')).property('title')}
-                searchText = ${String.toLowerCase(Array.join([this.title, this.url, this.projectType], ' '))}
-                launchDate = ${q(case).property('launchDate') || q(case).property('datePublished') || q(case).property('_creationDateTime')}
-                launchDate.@process.format = ${String.toInteger(Date.format(value, 'U'))}
-                launchDateFormatted = ${q(case).property('launchDate') || q(case).property('datePublished') || q(case).property('_creationDateTime')}
-                launchDateFormatted.@process.format = ${Date.format(value, 'd.m.Y')}
-                datePublished = ${q(case).property('datePublished') || q(case).property('_creationDateTime')}
-                datePublished.@process.format = ${String.toInteger(Date.format(value, 'U'))}
                 projectVolume = ${q(case).property('projectVolume') ? String.toInteger(q(case).property('projectVolume')) : 1}
-                featured = ${q(case).property('featured') || Neos.Node.isOfType(case, 'Neos.NeosIo:Reference.CaseStudy') || 0}
             }
         }
 
         renderer = afx`
-            <div class="cases__list" id="cases-listing">
-                <script type="application/json" name="cases-data">{Json.stringify(props.casesData)}</script>
-                <script type="application/json" name="translation-data">{Json.stringify(props.translationData)}</script>
-            </div>
+            <Neos.Presentation:CaseList
+                caseDataForFiltering={props.caseDataForFiltering}
+                cases={props.cases}
+            />
         `
     }
+
     @cache {
         mode = 'cached'
         entryIdentifier {

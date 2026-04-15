@@ -1,0 +1,94 @@
+prototype(Neos.Presentation:CaseListFilters) < prototype(Neos.Fusion:Component) {
+    caseDataForFiltering = ${[]}
+    translationData = Neos.Fusion:DataStructure {
+        chooseProjectVolume = ${Translation.translate('caseListing.chooseProjectVolume', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        chooseIndustry = ${Translation.translate('caseListing.chooseIndustry', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        search = ${Translation.translate('caseListing.search', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        tableView = ${Translation.translate('caseListing.tableView', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        gridView = ${Translation.translate('caseListing.gridView', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        numberOfEntriesShown = ${Translation.translate('caseListing.numberOfEntriesShown', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        sortBy = Neos.Fusion:DataStructure {
+            launchDate = ${Translation.translate('caseListing.sortBy.launchDate', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        }
+    }
+
+    @propTypes {
+        @strict = true
+        caseDataForFiltering = ${PropTypes.arrayOf(PropTypes.any)}
+        translationData = ${PropTypes.any}
+    }
+
+    @private {
+        allProjectTypes = Neos.Fusion:Map {
+            items = ${props.caseDataForFiltering}
+            itemName = 'case'
+            itemRenderer = ${case.projectType}
+        }
+        industries = ${Array.sort(Array.unique(Array.filter(private.allProjectTypes, type => !!type)))}
+        allProjectVolumes = Neos.Fusion:Map {
+            items = ${props.caseDataForFiltering}
+            itemName = 'case'
+            itemRenderer = ${case.projectVolume}
+        }
+        uniqueVolumes = ${Array.sort(Array.unique(Array.filter(private.allProjectVolumes, v => v && v != 1)))}
+        projectVolumes = Neos.Fusion:Map {
+            items = ${private.uniqueVolumes}
+            itemName = 'volume'
+            itemRenderer = Neos.Fusion:DataStructure {
+                value = ${volume}
+                label = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes {
+                    volume = ${volume}
+                }
+            }
+        }
+    }
+
+    renderer = afx`
+        <header class="mb-4 border-b border-neutral-200 pb-4">
+            <div class="flex flex-row justify-between gap-4">
+                <div>
+                    <strong>{props.translationData.numberOfEntriesShown}: <span x-text="visibleCount">{Array.length(props.caseDataForFiltering)}</span></strong>
+                </div>
+                <div class="cursor-pointer flex items-center gap-1" x-on:click="sort()">
+                    {props.translationData.sortBy.launchDate}
+                    <i class="fas fa-arrow-up" x-show="sortDir === 'asc'"></i>
+                    <i class="fas fa-arrow-down" x-show="sortDir === 'desc'"></i>
+                </div>
+            </div>
+
+            <div class="flex flex-row gap-4 justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="cursor-pointer" title={props.translationData.gridView} x-on:click="view = 'grid'" x-bind:class="{ 'opacity-50': view !== 'grid' }">
+                        <i class="fas fa-th-large"></i>
+                    </span>
+                    <span class="cursor-pointer" title={props.translationData.tableView} x-on:click="view = 'list'" x-bind:class="{ 'opacity-50': view !== 'list' }">
+                        <i class="fas fa-th-list"></i>
+                    </span>
+                </div>
+
+                <div class="flex items-center">
+                    <input type="text" id="cases-search" placeholder={props.translationData.search} class="border border-neutral-200 px-3 py-2 rounded w-full" x-model="search" "x-on:input.debounce.300ms"="filter()" />
+                    <label for="cases-search"><i class="fas fa-search"></i></label>
+                </div>
+
+                <div class="flex items-center">
+                    <select id="filter-industries" class="border border-neutral-200 px-3 py-2 rounded w-full" x-model="industry" x-on:change="filter()">
+                        <option value="">{props.translationData.chooseIndustry}</option>
+                        <Neos.Fusion:Loop items={private.industries} itemName="industry">
+                            <option value={industry}>{industry}</option>
+                        </Neos.Fusion:Loop>
+                    </select>
+                </div>
+
+                <div class="flex items-center">
+                    <select id="filter-volume" class="border border-neutral-200 px-3 py-2 rounded w-full" x-model="volume" x-on:change="filter()">
+                        <option value="">{props.translationData.chooseProjectVolume}</option>
+                        <Neos.Fusion:Loop items={private.projectVolumes} itemName="volumeOption">
+                            <option value={volumeOption.value}>{volumeOption.label}</option>
+                        </Neos.Fusion:Loop>
+                    </select>
+                </div>
+            </div>
+        </header>
+    `
+}
