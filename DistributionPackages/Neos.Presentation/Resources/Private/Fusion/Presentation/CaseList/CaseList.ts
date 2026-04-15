@@ -23,18 +23,18 @@ export default (): AlpineComponent<CaseListFilterComponent> => ({
 
     init() {
         this.visibleCount = (this.$refs.grid as HTMLElement)
-            .querySelectorAll('[data-project-type]').length
+            .querySelectorAll('[data-case-item]').length
     },
 
     filter() {
         const search = this.search.toLowerCase()
         let count = 0
         ;(this.$refs.grid as HTMLElement)
-            .querySelectorAll<HTMLElement>('[data-project-type]')
+            .querySelectorAll<HTMLElement>('[data-case-item]')
             .forEach(el => {
                 const matchSearch = !search || (el.dataset.searchText ?? '').includes(search)
-                const matchIndustry = !this.industry || el.dataset.projectType === this.industry
-                const matchVolume = !this.volume || el.dataset.projectVolume === this.volume
+                const matchIndustry = !this.industry || (!!el.dataset.projectType && el.dataset.projectType === this.industry)
+                const matchVolume = !this.volume || (!!el.dataset.projectVolume && el.dataset.projectVolume !== '0' && el.dataset.projectVolume === this.volume)
                 const visible = matchSearch && matchIndustry && matchVolume
                 el.hidden = !visible
                 if (visible) count++
