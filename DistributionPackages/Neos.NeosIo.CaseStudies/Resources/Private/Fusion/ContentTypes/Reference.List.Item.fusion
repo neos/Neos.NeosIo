@@ -37,18 +37,19 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
             projectVolume = ${props.projectVolume}
             projectType = ${props.projectType}
         }
+        volumeCode = ${q(node).property('projectVolume') ? String.toInteger(q(node).property('projectVolume')) : 0}
+        launchTimestamp = ${q(node).property('launchDate') || q(node).property('datePublished') || q(node).property('_creationDateTime')}
+        launchTimestamp.@process.format = ${value ? String.toInteger(Date.format(value, 'U')) : 0}
     }
 
     renderer = afx`
-        <div class="references__item gi u-w1/1 u-wm1/2 u-wl1/2">
-            <Neos.Presentation:ContentTeaser
-                title={props.title}
-                link={private.url}
-                openInNewTab={props.linkToNode ? false : true}
-                image={private.image}
-                text={private.meta}
-            />
-        </div>
+        <Neos.Presentation:ContentTeaser
+            title={props.title}
+            link={private.url}
+            openInNewTab={props.linkToNode ? false : true}
+            image={private.image}
+            text={private.meta}
+        />
     `
 
     @cache {
