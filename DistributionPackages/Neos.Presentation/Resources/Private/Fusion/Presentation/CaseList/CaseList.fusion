@@ -19,10 +19,11 @@ prototype(Neos.Presentation:CaseList) < prototype(Neos.Fusion:Component) {
             />
             <div
                 x-ref="grid"
-                x-bind:class="view === 'grid'
-                    ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
-                    : 'flex flex-col divide-y divide-neutral-200'"
-                class="mt-6"
+                x-bind:class="{
+                    'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6': view === 'grid',
+                    'flex flex-col divide-y divide-neutral-200': view === 'list'
+                }"
+                class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
                 <Neos.Fusion:Loop items={props.cases} itemName="caseStudy">
                     <Neos.Presentation:CaseList.Item @context.node={caseStudy} />

@@ -5,7 +5,7 @@ export type CaseListFilterComponent = {
     industry: string
     volume: string
     view: 'grid' | 'list'
-    sortDir: 'asc' | 'desc'
+    sortDir: 'asc' | 'desc' | null
     visibleCount: number
 
     init: () => void
@@ -18,7 +18,7 @@ export default (): AlpineComponent<CaseListFilterComponent> => ({
     industry: '',
     volume: '',
     view: 'grid',
-    sortDir: 'desc',
+    sortDir: null,
     visibleCount: 0,
 
     init() {
@@ -46,7 +46,7 @@ export default (): AlpineComponent<CaseListFilterComponent> => ({
     },
 
     sort() {
-        this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc'
+        this.sortDir = this.sortDir === 'desc' ? 'asc' : 'desc'
         const grid = this.$refs.grid as HTMLElement
         Array.from(grid.querySelectorAll<HTMLElement>('[data-launch-date]'))
             .sort((a, b) => {
