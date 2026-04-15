@@ -14,7 +14,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.ShowCases) < prototype
     renderer = afx`
         <section class="service-provider__showcases">
             <h2>Showcases</h2>
-            <div class="references__list g">
+            <div class="g">
                 <Neos.Fusion:Loop items={props.showCases} itemName="showCase">
                     <Neos.NeosIo:Reference.List.Item @context.node={showCase}/>
                 </Neos.Fusion:Loop>
