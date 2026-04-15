@@ -9,6 +9,8 @@ prototype(Neos.Presentation:CaseListFilters) < prototype(Neos.Fusion:Component) 
         numberOfEntriesShown = ${Translation.translate('caseListing.numberOfEntriesShown', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
         sortBy = Neos.Fusion:DataStructure {
             launchDate = ${Translation.translate('caseListing.sortBy.launchDate', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+            sortAsc = ${Translation.translate('caseListing.sortBy.sortAsc', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+            sortDesc = ${Translation.translate('caseListing.sortBy.sortDesc', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
         }
     }
 
@@ -51,24 +53,25 @@ prototype(Neos.Presentation:CaseListFilters) < prototype(Neos.Fusion:Component) 
                 </div>
                 <div class="cursor-pointer flex items-center gap-1" x-on:click="sort()">
                     {props.translationData.sortBy.launchDate}
-                    <i class="fas fa-arrow-up" x-show="sortDir === 'asc'"></i>
-                    <i class="fas fa-arrow-down" x-show="sortDir === 'desc'"></i>
+                    <i class="fas fa-arrow-up" x-show="sortDir === 'asc'" aria-hidden="true"></i>
+                    <i class="fas fa-arrow-down" x-show="sortDir === 'desc'" aria-hidden="true"></i>
+                    <span class="sr-only" x-text={"sortDir === 'asc' ? '" + props.translationData.sortBy.sortAsc + "' : '" + props.translationData.sortBy.sortDesc + "'"}></span>
                 </div>
             </div>
 
             <div class="flex flex-row gap-4 justify-between">
                 <div class="flex items-center gap-2">
                     <span class="cursor-pointer" title={props.translationData.gridView} x-on:click="view = 'grid'" x-bind:class="{ 'opacity-50': view !== 'grid' }">
-                        <i class="fas fa-th-large"></i>
+                        <i class="fas fa-th-large" aria-hidden="true"></i>
                     </span>
                     <span class="cursor-pointer" title={props.translationData.tableView} x-on:click="view = 'list'" x-bind:class="{ 'opacity-50': view !== 'list' }">
-                        <i class="fas fa-th-list"></i>
+                        <i class="fas fa-th-list" aria-hidden="true"></i>
                     </span>
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex items-center gap-2">
                     <input type="text" id="cases-search" placeholder={props.translationData.search} class="border border-neutral-200 px-3 py-2 rounded w-full" x-model="search" "x-on:input.debounce.300ms"="filter()" />
-                    <label for="cases-search"><i class="fas fa-search"></i></label>
+                    <label for="cases-search"><i class="fas fa-search" aria-hidden="true"></i><span class="sr-only">{props.translationData.search}</span></label>
                 </div>
 
                 <div class="flex items-center">
