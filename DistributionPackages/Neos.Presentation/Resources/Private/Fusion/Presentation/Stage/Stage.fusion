@@ -33,12 +33,10 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
     @propTypes {
         headline = PropTypes:String
         subline = PropTypes:String
+        image = PropTypes:String
         imageUri = PropTypes:String
         tiles = PropTypes:String
         tilesAttributes = ${PropTypes.dataStructure({})}
-        imageHeight = PropTypes:Int
-        imageWidth = PropTypes:Int
-        imageAlt = PropTypes:String
     }
 
     tilesAttributes = Neos.Fusion:DataStructure
@@ -63,9 +61,10 @@ prototype(Neos.Presentation:Stage) < prototype(Neos.Fusion:Component) {
             <figure
                 class="absolute! xl:-bottom-[8rem] -bottom-[4rem] *:object-cover xl:w-[min(80vw,1200px)] xl:h-auto h-[50vh] right-[15%] xl:right-auto rounded-3xl aspect-[21/9] *:aspect-[21/9] overflow-hidden *:size-full"
                 style="box-shadow: 0 0 0 8px #161616;"
-                @if={props.imageUri}
+                @if={props.image || props.imageUri}
             >
-                <img src={props.imageUri} alt={props.imageAlt || 'Stage image'} width={props.imageWidth} height={props.imageHeight} />
+                {props.image}
+                <img @if={!props.image && props.imageUri} src={props.imageUri} alt="Stage image" />
             </figure>
         </section>
     `

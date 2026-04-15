@@ -1,5 +1,20 @@
 prototype(Neos.NeosIo.Features:Grid) < prototype(Neos.Neos:ContentComponent) {
     type = ${q(node).property('type')}
+    @context.gridType = ${q(node).property('type')}
+
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            size = Neos.Fusion:Match {
+                @subject = ${gridType}
+                // Grid of 4 items (2 per row) with different widths, use wide size for image sizes
+                variant-a = ${5 / 11}
+                // Grid of 6 items (3 per row) with different widths, use wide size for image sizes
+                variant-b = ${3 / 8}
+                // Grid of 3 items per row with equal width
+                @default = ${1 / 3}
+            }
+        }
+    }
 
     renderer = Neos.NeosIo.Features:FeaturesGrid {
         headline = Neos.Neos:Editable {

@@ -64,15 +64,11 @@ prototype(Neos.NeosConIo:ScheduleSpeakerImages) < prototype(Neos.Fusion:Componen
     `
 }
 prototype(Neos.NeosConIo:ScheduleSpeakerImage) < prototype(Neos.Fusion:Component)  {
-    imageUri = Neos.Neos:ImageUri {
-        @if.hasAsset = ${this.asset}
+    renderer = Neos.Presentation:Component.PictureTag {
         asset = ${q(speaker).property('image')}
-        maximumWidth = 50
+        alt = ${speaker.properties.title}
+        imgClasses = "talk__speaker-image"
         maximumHeight = 50
-        allowCropping = true
+        sizes = ${['50px']}
     }
-
-    renderer = afx`
-        <img src={props.imageUri} height="50" width="50" class="talk__speaker-image" alt={speaker.properties.title} title={speaker.properties.title} @if.imageIsSet={props.imageUri} />
-    `
 }

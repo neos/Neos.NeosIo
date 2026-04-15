@@ -6,13 +6,13 @@ prototype(Neos.NeosIo:KeyVisual.StaticPlaceholderImageRenderer) < prototype(Neos
         localize = false
     }
 
-    previewImageUri = ${staticUrlPrefix + "-5w.jpg"}
-    highQualityImageUri = ${staticUrlPrefix + "-1500w.jpg"}
-    imageSrcSet = Neos.Fusion:Join {
-        ultraHighRes = ${staticUrlPrefix + "-1920w.jpg 1920w, "}
-        highRes = ${staticUrlPrefix + "-1280w.jpg 1280w, "}
-        mediumRes = ${staticUrlPrefix + "-658w.jpg 658w"}
-    }
-
-    keyVisualSize = ${props.keyVisualSize}
+    picture = afx`
+        <img
+            src={staticUrlPrefix + "-1500w.jpg"}
+            srcset={staticUrlPrefix + "-1920w.jpg 1920w, " + staticUrlPrefix + "-1280w.jpg 1280w"}
+            sizes="100vw"
+            alt=""
+            loading="eager"
+        />
+    `
 }

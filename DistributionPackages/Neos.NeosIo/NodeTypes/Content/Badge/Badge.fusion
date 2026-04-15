@@ -8,7 +8,7 @@ prototype(Neos.NeosIo:Component.Badge) < prototype(Neos.Fusion:Component) {
 
     @propTypes {
         @strict = true
-        image = ${PropTypes.instanceOf('Neos\Media\Domain\Model\ImageInterface')}
+        image = ${PropTypes.string}
         highlight = ${PropTypes.boolean}
         description = ${PropTypes.string}
         link = ${PropTypes.string}
@@ -27,13 +27,7 @@ prototype(Neos.NeosIo:Component.Badge) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <div class={private.class}>
-            <Neos.Neos:ImageTag
-                @if={props.image}
-                asset={props.image}
-                width="360"
-                attributes.class="badge__image"
-                attributes.alt={"Logo of " + props.linkText + " badge"}
-            />
+            {props.image}
             <img
                 @if={private.inBackend && !props.image}
                 class="badge__image"

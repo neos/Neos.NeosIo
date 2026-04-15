@@ -1,7 +1,7 @@
 prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
     title = ''
     text = ''
-    imageUri = ''
+    image = ''
     company = ''
     position = ''
     twitter = ''
@@ -14,7 +14,7 @@ prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
         @strict = true
         title = ${PropTypes.string}
         text = ${PropTypes.string}
-        imageUri = ${PropTypes.string}
+        image = ${PropTypes.string}
         company = ${PropTypes.string}
         position = ${PropTypes.string}
         twitter = ${PropTypes.string}
@@ -29,11 +29,7 @@ prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
             <h1>{props.title}</h1>
             <div class="speaker__details">
                 <div class="speaker__imageWrapper">
-                    <img
-                        src={props.imageUri}
-                        alt={"Picture of " + props.title}
-                        class="speaker__image"
-                    />
+                    {props.image}
                 </div>
                 <div class="speaker__description">
                     {props.text}

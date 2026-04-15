@@ -1,6 +1,6 @@
 prototype(Neos.Presentation:Quote) < prototype(Neos.Fusion:Component) {
     title = ''
-    authorAvatar = ''
+    image = ''
     alternativeText = ''
     quote = ''
     author = ''
@@ -9,7 +9,7 @@ prototype(Neos.Presentation:Quote) < prototype(Neos.Fusion:Component) {
     @propTypes {
         @strict = true
         title = ${PropTypes.string}
-        authorAvatar = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        image = ${PropTypes.string}
         alternativeText = ${PropTypes.string}
         quote = ${PropTypes.string}
         author = ${PropTypes.string}
@@ -23,14 +23,9 @@ prototype(Neos.Presentation:Quote) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <Neos.Presentation:Background background="blue-dark" tagName="blockquote" class="grid grid-cols-1 md:grid-cols-[300px_auto] lg:grid-cols-[400px_auto] quote-clip-path">
             <div>
-                <Sitegeist.Kaleidoscope:Image
-                    @if={props.authorAvatar}
-                    imageSource={props.authorAvatar}
-                    attributes.class="object-cover h-full w-full"
-                    attributes.alt={props.author}
-                />
+                {props.image}
                 <img
-                    @if={!props.authorAvatar && renderingMode.isEdit}
+                    @if={!props.image && renderingMode.isEdit}
                     src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
                     alt="Dummy image"
                     class="object-cover h-full w-full"

@@ -12,13 +12,13 @@ prototype(Neos.NeosIo:Content.HeroStage.LandingPage) < prototype(Neos.NeosIo:Con
             block = false
         }
 
-        imageUri = Neos.Neos:ImageUri {
+        image = Neos.Presentation:Component.PictureTag {
             asset = ${props.backgroundImage}
-            @if.hasAsset = ${this.asset}
+            alt = ${props.backgroundImage ? q(node).property('backgroundImage').title : ''}
+            imgClasses = "object-cover size-full"
+            loadEager = true
+            sizes = ${['(min-width: 1280px) 1200px', '80vw']}
         }
-        imageWidth = ${props.backgroundImage ? q(node).property('backgroundImage').width : null}
-        imageHeight = ${props.backgroundImage ? q(node).property('backgroundImage').height : null}
-        imageAlt = ${props.backgroundImage ? q(node).property('backgroundImage').title : null}
 
         tiles = Neos.Neos:ContentCollectionRenderer {
             # We only support 3 tiles in the design, so we limit the items to 3.
