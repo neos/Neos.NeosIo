@@ -1,10 +1,8 @@
 prototype(Neos.Presentation:PostPreview) < prototype(Neos.Fusion:Component) {
     datePublished = ''
     title = ''
-    imageUri = ''
+    image = null
     imageAlt = ''
-    imageWidth = null
-    imageHeight = null
     nodeUri = ''
     background = ''
     tags = ${[]}
@@ -13,10 +11,8 @@ prototype(Neos.Presentation:PostPreview) < prototype(Neos.Fusion:Component) {
         @strict = true
         datePublished = ${PropTypes.instanceOf('\\DateTimeInterface')}
         title = ${PropTypes.string}
-        imageUri = ${PropTypes.string}
+        image = ${PropTypes.instanceOf('Neos\\Media\\Domain\\Model\\Asset')}
         imageAlt = ${PropTypes.string}
-        imageWidth = ${PropTypes.integer}
-        imageHeight = ${PropTypes.integer}
         nodeUri = ${PropTypes.string}
         background = ${PropTypes.string}
         tags = ${PropTypes.arrayOf(PropTypes.instanceOf('Neos.NeosIo.Blog:Document.Tag'))}
@@ -52,15 +48,14 @@ prototype(Neos.Presentation:PostPreview) < prototype(Neos.Fusion:Component) {
                     )}>
                 </Neos.Presentation:Background>
                 <div
-                    @if={props.imageUri}
+                    @if={props.image}
                     class={Carbon.String.classNames('absolute inset-0 overflow-hidden', private.clipPathClass)}
                 >
-                    <img
-                        src={props.imageUri}
-                        alt={props.alt}
-                        width={props.imageWidth}
-                        height={props.imageHeight}
-                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    <Neos.Presentation:Component.PictureTag
+                        asset={props.image}
+                        alt={props.imageAlt}
+                        imgClasses="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loadEager={false}
                     />
                 </div>
             </div>

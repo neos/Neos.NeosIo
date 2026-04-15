@@ -1,4 +1,14 @@
 prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
+    # update the image sizes for all nested image components, so they can adapt their sizes accordingly
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            # Post archive items are displayed in a 3 column grid, so we set the size accordingly.
+            # The first two items span 2 columns, so we set the size to 1/3 to ensure that the images are large enough for the first two items,
+            # while still being optimized for the smaller size of the third item.
+            size = ${1 / 3}
+        }
+    }
+
     renderer = Neos.Fusion:Join {
         tagMenu = Neos.NeosIo.Blog:Component.TagMenu
 
@@ -24,20 +34,9 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
                 itemName = 'post'
 
                 itemRenderer = Neos.Presentation:PostPreview {
-                    @context.thumbnail = ${q(post).property('keyVisualImage').resource ? Neos.Media.Image.createThumbnail(
-                        q(post).property('keyVisualImage'),
-                        null,
-                        null,
-                        1124
-                    ) : null}
                     datePublished = ${q(post).property('datePublished')}
                     title = ${q(post).property('title')}
-                    imageUri = Neos.Fusion:ResourceUri {
-                        resource = ${thumbnail.resource}
-                        @if.set = ${thumbnail}
-                    }
-                    imageWidth = ${thumbnail.width}
-                    imageHeight = ${thumbnail.height}
+                    image = ${q(post).property('keyVisualImage')}
                     imageAlt = ${q(post).property('keyVisualAlternativeText') || q(post).property('keyVisualImage').caption || this.title}
                     nodeUri = Neos.Neos:NodeUri {
                         node = ${post}
