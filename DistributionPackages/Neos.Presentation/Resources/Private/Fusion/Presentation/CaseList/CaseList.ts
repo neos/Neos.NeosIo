@@ -22,8 +22,11 @@ export default (): AlpineComponent<CaseListFilterComponent> => ({
     visibleCount: 0,
 
     init() {
-        this.visibleCount = (this.$refs.grid as HTMLElement)
-            .querySelectorAll('[data-case-item]').length
+        const grid = this.$refs.grid as HTMLElement
+        Array.from(grid.querySelectorAll<HTMLElement>('[data-case-item]'))
+            .sort((a, b) => parseInt(b.dataset.featured ?? '0') - parseInt(a.dataset.featured ?? '0'))
+            .forEach(el => grid.appendChild(el))
+        this.visibleCount = grid.querySelectorAll('[data-case-item]').length
     },
 
     filter() {

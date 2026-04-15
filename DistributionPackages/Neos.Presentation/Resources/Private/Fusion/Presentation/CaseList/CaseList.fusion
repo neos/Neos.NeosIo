@@ -8,6 +8,10 @@ prototype(Neos.Presentation:CaseList) < prototype(Neos.Fusion:Component) {
         cases = ${PropTypes.arrayOf(PropTypes.any)}
     }
 
+    @private {
+        noCasesFound = ${Translation.translate('caseListing.noCasesFound', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+    }
+
     renderer = afx`
         <div class="w-full" x-data={AlpineJS.xData('caseListFilter')}>
             <Neos.Presentation:CaseList.Filters
@@ -24,6 +28,7 @@ prototype(Neos.Presentation:CaseList) < prototype(Neos.Fusion:Component) {
                     <Neos.Presentation:CaseList.Item @context.node={caseStudy} />
                 </Neos.Fusion:Loop>
             </div>
+            <p x-show="visibleCount === 0" class="mt-6 text-neutral-500">{private.noCasesFound}</p>
         </div>
     `
 }

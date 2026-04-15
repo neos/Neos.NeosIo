@@ -51,9 +51,9 @@ prototype(Neos.Presentation:CaseList.Filters) < prototype(Neos.Fusion:Component)
                 <div>
                     <strong>{props.translationData.numberOfEntriesShown}: <span x-text="visibleCount">{Array.length(props.caseDataForFiltering)}</span></strong>
                 </div>
-                <button type="button" class="flex items-center gap-1 hover:underline" x-on:click="sort()">
+                <button type="button" class="hidden md:flex items-center gap-1 hover:underline" x-on:click="sort()">
                     {props.translationData.sortBy.launchDate}
-                    <i class="fas fa-arrow-up" x-show="sortDir === 'asc'" aria-hidden="true"></i>
+                    <i class="fas fa-arrow-up" x-show="sortDir === 'asc'" x-cloak aria-hidden="true"></i>
                     <i class="fas fa-arrow-down" x-show="sortDir === 'desc'" aria-hidden="true"></i>
                     <span class="sr-only" x-text={"sortDir === 'asc' ? '" + props.translationData.sortBy.sortAsc + "' : '" + props.translationData.sortBy.sortDesc + "'"}></span>
                 </button>
@@ -76,7 +76,7 @@ prototype(Neos.Presentation:CaseList.Filters) < prototype(Neos.Fusion:Component)
                     <label for="cases-search"><i class="fas fa-search" aria-hidden="true"></i><span class="sr-only">{props.translationData.search}</span></label>
                 </div>
 
-                <div class="flex items-center">
+                <div class="hidden md:flex items-center">
                     <select id="filter-industries" class="border border-neutral-200 px-3 py-2 rounded w-full" x-model="industry" x-on:change="filter()">
                         <option value="">{props.translationData.chooseIndustry}</option>
                         <Neos.Fusion:Loop items={private.industries} itemName="industry">
@@ -85,7 +85,7 @@ prototype(Neos.Presentation:CaseList.Filters) < prototype(Neos.Fusion:Component)
                     </select>
                 </div>
 
-                <div class="flex items-center">
+                <div class="hidden md:flex items-center">
                     <select id="filter-volume" class="border border-neutral-200 px-3 py-2 rounded w-full" x-model="volume" x-on:change="filter()">
                         <option value="">{props.translationData.chooseProjectVolume}</option>
                         <Neos.Fusion:Loop items={private.projectVolumes} itemName="volumeOption">

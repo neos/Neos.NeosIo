@@ -6,8 +6,10 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
         volume = ${q(node).property('projectVolume')}
     }
     projectType = ${q(q(node).property('projectType')).property('title')}
+    featured = ${q(node).property('featured') || Neos.Node.isOfType(node, 'Neos.NeosIo:Reference.CaseStudy') || 0}
 
     @private {
+        featuredLabel = ${Translation.translate('caseListing.sortBy.featured', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
         url = ${q(node).property('url')}
         url.@process.convertUris = Neos.Neos:ConvertUris {
             absolute = true
@@ -36,13 +38,14 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <div class="references__item"
             data-case-item=""
+            data-featured={props.featured ? '1' : '0'}
             data-project-type={props.projectType || ''}
             data-project-volume={private.volumeCode}
             data-launch-date={private.launchTimestamp}
             data-search-text={String.toLowerCase((props.title || '') + ' ' + (props.projectType || ''))}
         >
             <!-- Card view (grid mode) -->
-            <div x-show="view === 'grid'">
+            <div x-show="view === 'grid'" class="relative">
                 <Neos.Presentation:ContentTeaser
                     title={props.title}
                     link={private.url}
@@ -50,28 +53,37 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
                     image={private.image}
                     text={private.meta}
                 />
+                <span @if={props.featured}
+                      class="absolute top-2 left-2 z-20 bg-blue-light text-white text-xs px-2 py-0.5">
+                    {private.featuredLabel}
+                </span>
             </div>
 
             <!-- Row view (list mode) -->
             <div x-show="view === 'list'" x-cloak class="flex items-center gap-4 py-3 min-w-0">
-                <div class="w-20 h-14 flex-shrink-0 overflow-hidden rounded bg-neutral-100">
+                <div class="w-20 h-14 flex-shrink-0 overflow-hidden bg-neutral-100">
                     {private.thumbnail}
                 </div>
-                <a href={private.url} target="_blank"
-                   class="flex-1 font-semibold text-neutral-900 hover:underline truncate min-w-0">
-                    {props.title}
-                </a>
-                <span @if={props.projectType}
-                      class="w-48 text-sm text-neutral-500 truncate hidden md:flex items-center gap-1">
-                    <i class="fas fa-industry" aria-hidden="true"></i>{props.projectType}
+                <div class="flex-1 flex items-center gap-2 min-w-0">
+                    <a href={private.url} target="_blank"
+                       class="font-semibold text-neutral-900 hover:underline truncate min-w-0">
+                        {props.title}
+                    </a>
+                    <span @if={props.featured}
+                          class="flex-shrink-0 bg-blue-light text-white text-xs px-2 py-0.5">
+                        {private.featuredLabel}
+                    </span>
+                </div>
+                <span class="w-40 min-w-0 text-sm text-neutral-500 hidden md:flex items-center gap-1">
+                    <i @if={props.projectType} class="fas fa-industry flex-shrink-0" aria-hidden="true"></i>
+                    <span class="truncate">{props.projectType}</span>
                 </span>
-                <span @if={props.projectVolume}
-                      class="w-36 text-sm text-neutral-500 hidden lg:flex items-center gap-1">
-                    <i class="fas fa-users" aria-hidden="true"></i>{props.projectVolume}
+                <span class="w-40 text-sm text-neutral-500 hidden lg:flex items-center gap-1">
+                    <i @if={props.projectVolume} class="fas fa-users" aria-hidden="true"></i>{props.projectVolume}
                 </span>
-                <span @if={props.launchDate}
-                      class="w-28 text-sm text-neutral-500 hidden lg:flex items-center gap-1">
-                    <i class="fas fa-rocket" aria-hidden="true"></i>{Date.format(props.launchDate, 'd.m.Y')}
+                <span class="w-40 text-sm text-neutral-500 hidden lg:flex items-center gap-1">
+                    <i @if={props.launchDate} class="fas fa-rocket" aria-hidden="true"></i>
+                    <Neos.Fusion:Value @if={props.launchDate} value={Date.format(props.launchDate, 'd.m.Y')} />
                 </span>
             </div>
         </div>
