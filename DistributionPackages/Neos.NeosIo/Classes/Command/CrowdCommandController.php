@@ -27,7 +27,7 @@ class CrowdCommandController extends CommandController
      * @var array{ additionalAttributes: array{ group: string[], user: string[] } }
      */
     #[Flow\InjectConfiguration('crowdApi', 'Neos.NeosIo')]
-    protected array $settings = [];
+    protected array $settings;
 
     #[Flow\Inject]
     protected Translator $translator;
