@@ -46,21 +46,21 @@
       type: Neos\Media\Domain\Model\ImageInterface
       scope: nodeAggregate
       ui:
-        label: 'Image for the Keyvisual-Section'
+        label: 'Image for the key visual-Section'
         reloadIfChanged: true
         inspector:
           group: 'keyVisual'
           hidden: 'ClientEval: node.properties.keyVisualVariant != ""'
-    keyVisualImageSmall:
-      type: Neos\Media\Domain\Model\ImageInterface
-      scope: nodeAggregate
+    keyVisualAlternativeText:
+      type: string
       ui:
-        label: 'Mobile image for the Keyvisual-Section'
-        reloadIfChanged: true
+        label: 'Alternative text for key visual image'
+        help:
+          message: 'Used in teasers and other places where pages are referenced.'
         inspector:
-          group: 'keyVisual'
+          group: keyVisual
           position: 'after keyVisualImage'
-          hidden: 'ClientEval: node.properties.keyVisualVariant != ""'
+          hidden: 'ClientEval: !node.properties.keyVisualImage'
     isKeyVisualContentsInverted:
       scope: nodeAggregate
       type: boolean

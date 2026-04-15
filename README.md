@@ -42,6 +42,8 @@ _Note: We require [nvm](https://github.com/creationix/nvm#install-script) as wel
 - To build css/js assets
   - Run `ddev yarn` inside root of the project to install dependencies
   - Run `ddev yarn build` to build the assets
+- To run php-stan
+  - Run `ddev exec ./bin/phpstan analyse -v` to run php-stan
 
 
 ## Building the assets

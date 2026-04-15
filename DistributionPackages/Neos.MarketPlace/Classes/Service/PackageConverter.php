@@ -170,7 +170,6 @@ class PackageConverter
             (string)time(),
         );
 
-
         $upstreamMaintainerNames = array_map(static function (Package\Maintainer $maintainer) {
             return $maintainer->getName();
         }, $package->getMaintainers());
@@ -188,8 +187,15 @@ class PackageConverter
                 'repository' => $package->getRepository(),
                 'favers' => $package->getFavers(),
                 'maintainers' => implode(',', $upstreamMaintainerNames),
+                'downloadTotal' => $this->getDownloadsCount($package),
+                'abandoned' => (string)$package->isAbandoned(),
             ]
         );
+
+        if ($package->isAbandoned() && trim((string)$packageNode->getProperty('abandoned')) === '') {
+            $this->emitPackageAbandoned($packageNode);
+        }
+
         if (!$updated && !$this->forceUpdate) {
             return false;
         }
@@ -205,9 +211,6 @@ class PackageConverter
             $vendorNodeAggregateId,
             $packageNode->originDimensionSpacePoint,
         );
-
-        $this->updateDownloadsCount($package, $packageNode);
-        $this->updatePackageAbandonedState($package, $packageNode);
 
         try {
             $this->nodeIndexer->indexNode($packageNode);
@@ -260,34 +263,13 @@ class PackageConverter
         );
     }
 
-    protected function updateDownloadsCount(Package $package, Node $packageNode): void
+    protected function getDownloadsCount(Package $package): int
     {
         $downloads = $package->getDownloads();
         if (!$downloads instanceof Package\Downloads) {
-            return;
+            return 0;
         }
-        $this->storage->updateNode(
-            $packageNode,
-            $packageNode->originDimensionSpacePoint,
-            [
-                'downloadTotal' => $downloads->getTotal(),
-            ]);
-    }
-
-    /**
-     */
-    protected function updatePackageAbandonedState(Package $package, Node $packageNode): void
-    {
-        $this->storage->updateNode(
-            $packageNode,
-            $packageNode->originDimensionSpacePoint,
-            [
-                'abandoned' => (string)$package->isAbandoned(),
-            ]
-        );
-        if ($package->isAbandoned() && trim((string)$packageNode->getProperty('abandoned')) === '') {
-            $this->emitPackageAbandoned($packageNode);
-        }
+        return $downloads->getTotal();
     }
 
     /**

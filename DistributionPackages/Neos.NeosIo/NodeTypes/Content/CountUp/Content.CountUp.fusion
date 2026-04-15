@@ -1,0 +1,17 @@
+prototype(Neos.NeosIo:CountUp) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:CountUp {
+        number = Neos.Fusion:Join {
+            @glue = ''
+            prefix = ${q(node).property('prefix')}
+            value = Neos.Neos:Editable {
+                property = 'number'
+                block = false
+            }
+            suffix = ${q(node).property('suffix')}
+        }
+        title = Neos.Neos:Editable {
+            property = 'text'
+            block = false
+        }
+    }
+}

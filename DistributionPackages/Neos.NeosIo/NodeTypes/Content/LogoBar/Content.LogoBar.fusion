@@ -1,0 +1,20 @@
+prototype(Neos.NeosIo:LogoBar) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.Presentation:LogoBar {
+        assets = Neos.Fusion:Map {
+            items = ${q(node).children()}
+            itemRenderer = Neos.Fusion:DataStructure {
+                image = Neos.Presentation:Component.PictureTag {
+                    asset = ${item.properties.image}
+                    alt = ${item.properties.alternativeText}
+                    imgClasses = "h-16 max-h-10 md:max-h-16 max-w-none w-auto"
+                    sizes = ${['(min-width: 768px) 400px', '25vw']}
+                    maximumHeight = 100
+                }
+                alternativeText = ${item.properties.alternativeText}
+                href = ${item.properties.link}
+                href.@process.convertUri = Neos.Neos:ConvertUris
+            }
+        }
+        grayscale = ${node.properties.grayscale}
+    }
+}

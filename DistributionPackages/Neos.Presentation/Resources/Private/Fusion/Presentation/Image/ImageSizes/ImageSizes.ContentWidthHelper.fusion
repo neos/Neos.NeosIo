@@ -1,0 +1,25 @@
+# return a content width for the image based on the content width of the parent element. This is used to calculate the image sizes attribute for responsive images.
+prototype(Neos.Presentation:Component.ImageSizes.ContentWidthHelper) < prototype(Neos.Fusion:Component) {
+    contentWidth = ''
+
+    @propTypes {
+        @strict = true
+        contentWidth = ${PropTypes.oneOf(['', 'wide', 'full'])}
+    }
+
+    renderer = Neos.Fusion:Case {
+        wide {
+            condition = ${props.contentWidth == 'wide'}
+            renderer = '1800px'
+        }
+        full {
+            condition = ${props.contentWidth == 'full'}
+            renderer = '100vw'
+        }
+        default {
+            condition = ${true}
+            renderer = '1200px'
+        }
+    }
+}
+

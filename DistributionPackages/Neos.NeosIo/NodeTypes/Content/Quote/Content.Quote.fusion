@@ -1,15 +1,18 @@
 prototype(Neos.NeosIo:Quote) < prototype(Neos.Neos:ContentComponent) {
     renderer = Neos.Presentation:Quote {
         title = ${q(node).property('author')}
-        authorAvatar = Sitegeist.Kaleidoscope:AssetImageSource {
+
+        image = Neos.Presentation:Component.PictureTag {
             asset = ${q(node).property('authorAvatar')}
-            // TODO image size
-            width = 500
-            quality = 80
+            alt = ${q(node).property('alternativeText')}
+            alt = ${String.isBlank(value) ? q(node).property('image').label : value}
+            alt.@process.authorNameFallback = ${q(node).property('author')}
+            imgClasses = "object-cover h-full w-full"
+            sizes = ${[
+                '(min-width:768px) 400px',
+                '100vw'
+            ]}
         }
-        alternativeText = ${q(node).property('alternativeText')}
-        alternativeText = ${String.isBlank(value) ? q(node).property('image').label : value}
-        alternativeText.@process.authorNameFallback = ${q(node).property('author')}
 
         quote = Neos.Neos:Editable {
             property = 'quote'

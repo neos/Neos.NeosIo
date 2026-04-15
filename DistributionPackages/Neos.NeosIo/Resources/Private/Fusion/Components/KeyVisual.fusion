@@ -4,7 +4,7 @@ prototype(Neos.NeosIo:KeyVisual) < prototype(Neos.Fusion:Component) {
 
     // API
     keyVisualImage = null
-    keyVisualImageSmall = null
+    keyVisualAlternativeText = ''
     isKeyVisualContentsInverted = false
     keyVisualVariant = false
     content = null
@@ -22,7 +22,10 @@ prototype(Neos.NeosIo:KeyVisual) < prototype(Neos.Fusion:Component) {
 
         keyVisualImageIsSet {
             condition = ${props.keyVisualImage}
-            renderer = Neos.NeosIo:KeyVisual.ImageRenderer
+            renderer = Neos.NeosIo:KeyVisual.ImageRenderer {
+                keyVisualImage = ${props.keyVisualImage}
+                keyVisualAlternativeText = ${props.keyVisualAlternativeText}
+            }
         }
 
         default {

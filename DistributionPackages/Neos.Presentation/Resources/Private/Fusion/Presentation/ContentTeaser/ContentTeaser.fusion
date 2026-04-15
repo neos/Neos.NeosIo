@@ -3,8 +3,7 @@ prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
     subTitle = ''
     content = ''
     text = ${this.content}
-    imageSource = null
-    altText = ''
+    image = ''
     link = ''
     openInNewTab = false
 
@@ -14,8 +13,7 @@ prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
         text = ${PropTypes.string}
         content = ${PropTypes.string}
         subTitle = ${PropTypes.string}
-        imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
-        altText = ${PropTypes.string}
+        image = ${PropTypes.string}
         link = ${PropTypes.string}
         openInNewTab = ${PropTypes.boolean}
     }
@@ -26,11 +24,7 @@ prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <div class="content-teaser relative">
-            <Sitegeist.Kaleidoscope:Image
-                imageSource={props.imageSource}
-                alt={props.altText}
-                attributes.class="absolute object-cover w-full h-full"
-            />
+            {props.image}
 
             <div class="relative p-8 bg-gradient-to-t from-blue-dark to-transparent min-h-[350px] flex flex-col gap-2 justify-end hover:to-blue-dark/50 transition-colors">
                 <Neos.Presentation:Paragraph
