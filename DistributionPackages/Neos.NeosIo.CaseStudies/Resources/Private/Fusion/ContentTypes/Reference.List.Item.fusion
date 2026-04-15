@@ -43,15 +43,13 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = afx`
-        <div class="gi u-w1/1 u-wm1/2 u-wl1/2">
-            <Neos.Presentation:ContentTeaser
-                title={props.title}
-                link={private.url}
-                openInNewTab={props.linkToNode ? false : true}
-                image={private.image}
-                text={private.meta}
-            />
-        </div>
+        <Neos.Presentation:ContentTeaser
+            title={props.title}
+            link={private.url}
+            openInNewTab={props.linkToNode ? false : true}
+            image={private.image}
+            text={private.meta}
+        />
     `
 
     @cache {
