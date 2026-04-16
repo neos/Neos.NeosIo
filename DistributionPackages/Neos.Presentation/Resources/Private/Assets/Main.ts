@@ -8,12 +8,14 @@ import { initStage } from '../Fusion/Presentation/Stage/Stage';
 
 import MobileMenu, { MobileMenuComponent } from '../Fusion/Presentation/Navigation/Mobile/MobileNavigation';
 import CaseListFilter, { CaseListFilterComponent } from '../Fusion/Presentation/CaseList/CaseList';
+import ProviderListFilter, { ProviderListFilterComponent } from '../Fusion/Presentation/ProviderList/ProviderList';
 
 // @ts-ignore: Set Alpine as a global variable
 window.Alpine = Alpine;
 
 Alpine.data('mobileMenu', MobileMenu as (value: any) => AlpineComponent<MobileMenuComponent>)
 Alpine.data('caseListFilter', CaseListFilter as () => AlpineComponent<CaseListFilterComponent>)
+Alpine.data('providerListFilter', ProviderListFilter as () => AlpineComponent<ProviderListFilterComponent>)
 
 initStage();
 Alpine.start();

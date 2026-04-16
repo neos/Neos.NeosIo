@@ -1,0 +1,43 @@
+prototype(Neos.Presentation:ProviderList) < prototype(Neos.Fusion:Component) {
+    serviceProviders = ${[]}
+    providerDataForFiltering = ${[]}
+
+    @propTypes {
+        @strict = true
+        serviceProviders = ${PropTypes.arrayOf(PropTypes.any)}
+        providerDataForFiltering = ${PropTypes.arrayOf(PropTypes.any)}
+    }
+
+    @private {
+        noProvidersFound = ${Translation.translate('serviceListing.noProvidersFound', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+    }
+
+    # update the image sizes for all nested image components, so they can adapt their sizes accordingly
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            # The case list items are displayed in a grid with 3 columns on large screens.
+            size = ${1 / 3}
+        }
+    }
+
+    renderer = afx`
+        <div class="w-full" x-data={AlpineJS.xData('providerListFilter')}>
+            <Neos.Presentation:ProviderList.Filters
+                providerDataForFiltering={props.providerDataForFiltering}
+            />
+            <div
+                x-ref="grid"
+                x-bind:class="{
+                    'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6': view === 'grid',
+                    'flex flex-col divide-y divide-neutral-200': view === 'table'
+                }"
+                class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+                <Neos.Fusion:Loop items={props.serviceProviders} itemName="serviceProvider">
+                    <Neos.Presentation:ProviderList.Item @context.node={serviceProvider} />
+                </Neos.Fusion:Loop>
+            </div>
+            <p x-cloak x-show="visibleCount === 0" class="mt-6 text-neutral-500">{private.noProvidersFound}</p>
+        </div>
+    `
+}

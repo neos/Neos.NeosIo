@@ -1,0 +1,112 @@
+prototype(Neos.Presentation:ProviderList.Item) < prototype(Neos.Fusion:Component) {
+    @private {
+        title = ${q(node).property('title') || ''}
+        city = ${q(node).property('city') || ''}
+        country = ${q(node).property('country') || ''}
+        size = ${q(node).property('size') || ''}
+        typesOfService = ${Array.sort(Array.map(q(node).referenceNodes('typesOfService').get() || [], serviceType => Neos.Node.label(serviceType)))}
+        typesOfServiceString = ${Array.join(private.typesOfService, '|')}
+        searchText = ${String.toLowerCase((private.title) + ' ' + (private.city) + ' ' + (private.country) + ' ' + Array.join(private.typesOfService, ' '))}
+
+        badgeNodes = ${q(node).referenceNodes('badges').get() || []}
+        awards = ${q(node).children('awards').children().get()}
+        hasBadges = ${(Array.length(q(node).referenceNodes('badges').get()) + Array.length(q(node).children('awards').children().get())) > 0 ? '1' : '0'}
+
+        logo = Neos.Presentation:Component.PictureTag {
+            asset = ${q(node).property('logo')}
+            alt = ${q(node).property('title') || ''}
+            imgClasses = "max-h-16 max-w-full object-contain"
+            @if.hasLogo = ${q(node).property('logo')}
+        }
+        logoTable = Neos.Presentation:Component.PictureTag {
+            asset = ${q(node).property('logo')}
+            alt = ${q(node).property('title') || ''}
+            imgClasses = "max-h-full max-w-full object-contain"
+            @if.hasLogo = ${q(node).property('logo')}
+        }
+        url = Neos.Neos:NodeUri {
+            node = ${node}
+        }
+    }
+
+    renderer = afx`
+        <div
+            data-provider-item=""
+            data-country={private.country}
+            data-size={private.size}
+            data-service-types={private.typesOfServiceString}
+            data-search-text={private.searchText}
+            data-name={String.toLowerCase(private.title)}
+        >
+            <!-- Card view (grid mode) -->
+            <div x-show="view === 'grid'" class="flex flex-col bg-white border border-neutral-200 overflow-hidden h-full">
+                <div class="flex items-center justify-center p-4 h-24 bg-neutral-50">
+                    {private.logo}
+                    <span @if={!q(node).property('logo')} class="text-white">{private.title}</span>
+                </div>
+                <div class="p-4 flex flex-col flex-1">
+                    <h3 class="font-semibold text-neutral-900">
+                        <a href={private.url} class="hover:underline">{private.title}</a>
+                    </h3>
+                    <p @if={Array.length(private.typesOfService)} class="text-sm text-neutral-500 mt-1">{Array.join(private.typesOfService, ', ')}</p>
+                    <div class="flex items-end justify-between gap-2 mt-auto pt-4">
+                        <div class="flex flex-col gap-2">
+                            <div @if={private.city || private.country} class="text-sm text-neutral-500 italic">
+                                {private.city}{private.city && private.country ? ', ' : ''}{private.country}
+                            </div>
+                            <div @if={private.size} class="text-sm text-neutral-500">
+                                <i class="fas fa-user-friends" aria-hidden="true"></i> {private.size}
+                            </div>
+                            <div @if={Array.length(private.awards)} class="flex flex-wrap gap-1">
+                                <Neos.Fusion:Loop items={private.awards} itemName="award">
+                                    <i class="fa fa-award" title={Neos.Node.label(q(award).property('award')) + ' (' + q(award).property('title') + ')'} aria-hidden="true"></i>
+                                </Neos.Fusion:Loop>
+                            </div>
+                        </div>
+                        <div @if={Array.length(private.badgeNodes)} class="flex flex-row gap-2 flex-shrink-0">
+                            <Neos.Fusion:Loop items={private.badgeNodes} itemName="badge">
+                                <Neos.Presentation:Component.PictureTag
+                                    asset={q(badge).property('image')}
+                                    alt={Neos.Node.label(badge)}
+                                    imgClasses="h-16 w-auto object-contain"
+                                />
+                            </Neos.Fusion:Loop>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row view (table mode) -->
+            <div x-show="view === 'table'" x-cloak class="flex items-center gap-4 py-3 min-w-0">
+                <div class="w-20 h-14 flex-shrink-0 overflow-hidden bg-neutral-100 flex items-center justify-center p-1">
+                    {private.logoTable}
+                </div>
+                <div class="flex-1 flex items-center gap-2 min-w-0">
+                    <a href={private.url} class="font-semibold text-neutral-900 hover:underline truncate min-w-0">{private.title}</a>
+                </div>
+                <span class="w-40 min-w-0 text-sm text-neutral-500 hidden md:flex items-center gap-1">
+                    <i @if={private.city || private.country} class="fas fa-map-marker-alt flex-shrink-0" aria-hidden="true"></i>
+                    <span class="truncate">{private.city}{private.city && private.country ? ', ' : ''}{private.country}</span>
+                </span>
+                <span class="w-24 text-sm text-neutral-500 hidden lg:flex items-center gap-1">
+                    <i @if={private.size} class="fas fa-user-friends" aria-hidden="true"></i> {private.size}
+                </span>
+                <span class="w-36 text-sm text-neutral-500 hidden lg:flex items-center gap-1">
+                    <Neos.Fusion:Loop items={private.awards} itemName="award">
+                        <i class="fa fa-award" title={Neos.Node.label(q(award).property('award')) + ' (' + q(award).property('title') + ')'} aria-hidden="true"></i>
+                    </Neos.Fusion:Loop>
+                </span>
+            </div>
+        </div>
+    `
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
+        entryTags {
+            node = ${Neos.Caching.nodeTag(node)}
+        }
+    }
+}
