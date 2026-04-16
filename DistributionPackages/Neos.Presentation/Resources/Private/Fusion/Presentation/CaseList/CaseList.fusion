@@ -12,6 +12,14 @@ prototype(Neos.Presentation:CaseList) < prototype(Neos.Fusion:Component) {
         noCasesFound = ${Translation.translate('caseListing.noCasesFound', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
     }
 
+    # update the image sizes for all nested image components, so they can adapt their sizes accordingly
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            # The case list items are displayed in a grid with 3 columns on large screens.
+            size = ${1 / 3}
+        }
+    }
+
     renderer = afx`
         <div class="w-full" x-data={AlpineJS.xData('caseListFilter')}>
             <Neos.Presentation:CaseList.Filters
