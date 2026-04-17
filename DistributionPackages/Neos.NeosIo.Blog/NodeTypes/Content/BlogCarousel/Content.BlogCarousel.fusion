@@ -1,0 +1,45 @@
+prototype(Neos.NeosIo:Content.BlogCarousel) < prototype(Neos.Neos:ContentComponent) {
+
+    renderer = Neos.Presentation:Carousel {
+        autoplay = ${node.properties.autoplay}
+        title = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        items = Neos.Fusion:Map {
+            items = ${Blog.getBlogPost(site, node.properties.maxItems, q(node).referenceNodes("filterTags").get())}
+            itemName='post'
+            itemRenderer = Neos.Presentation:PostPreview {
+                @context.thumbnail = ${q(post).property('keyVisualImage').resource ? Neos.Media.Image.createThumbnail(
+                q(post).property('keyVisualImage'),
+                null,
+                null,
+                500
+                ) : null}
+                datePublished = ${q(post).property('datePublished')}
+                title = ${q(post).property('title')}
+                imageUri = Neos.Fusion:ResourceUri {
+                    resource = ${thumbnail.resource}
+                    @if.set = ${thumbnail}
+                }
+                imageWidth = ${thumbnail.width}
+                imageHeight = ${thumbnail.height}
+                imageAlt = ${q(post).property('keyVisualAlternativeText') || q(post).property('keyVisualImage').caption || this.title}
+                nodeUri = Neos.Neos:NodeUri {
+                    node = ${post}
+                }
+                background = ${q(q(post).referenceNodes('tags').get(0)).property('background')}
+                tags = ${q(post).referenceNodes('tags').get()}
+            }
+        }
+    }
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier.node = ${Neos.Caching.entryIdentifierForNode(node)}
+        entryTags.node = ${Neos.Caching.nodeTag(node)}
+        entryTags.tags = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.Blog:Document.Tag', site)}
+        entryTags.tagsContainer = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.Blog:Document.Tags', site)}
+        entryTags.posts = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Post', site)}
+    }
+}
