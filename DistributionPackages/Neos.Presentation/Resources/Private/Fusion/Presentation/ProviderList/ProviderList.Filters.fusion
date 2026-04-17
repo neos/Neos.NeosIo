@@ -1,0 +1,107 @@
+prototype(Neos.Presentation:ProviderList.Filters) < prototype(Neos.Fusion:Component) {
+    providerDataForFiltering = ${[]}
+    translationData = Neos.Fusion:DataStructure {
+        search = ${Translation.translate('serviceListing.search', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+        chooseCountry = ${Translation.translate('serviceListing.chooseCountry', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+        chooseSize = ${Translation.translate('serviceListing.chooseSize', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+        chooseServiceType = ${Translation.translate('serviceListing.chooseServiceType', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+        tableView = ${Translation.translate('serviceListing.tableView', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+        gridView = ${Translation.translate('serviceListing.gridView', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+        providers = ${Translation.translate('serviceListing.providers', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+        name = ${Translation.translate('serviceListing.name', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+        sortAsc = ${Translation.translate('caseListing.sortBy.sortAsc', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        sortDesc = ${Translation.translate('caseListing.sortBy.sortDesc', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+    }
+
+    @propTypes {
+        @strict = true
+        providerDataForFiltering = ${PropTypes.arrayOf(PropTypes.any)}
+        translationData = ${PropTypes.any}
+    }
+
+    @private {
+        allCountries = Neos.Fusion:Map {
+            items = ${props.providerDataForFiltering}
+            itemName = 'provider'
+            itemRenderer = ${provider.country}
+        }
+        countries = ${Array.sort(Array.unique(Array.filter(private.allCountries, c => !!c)))}
+
+        allSizes = Neos.Fusion:Map {
+            items = ${props.providerDataForFiltering}
+            itemName = 'provider'
+            itemRenderer = ${provider.size}
+        }
+        sizeOrder = ${ ['100+', '51-100', '11-50', '2-10', '1'] }
+        sizes = ${Array.filter(private.sizeOrder, s => Array.length(Array.filter(private.allSizes, v => v == s)) > 0)}
+
+        allServiceTypeStrings = Neos.Fusion:Map {
+            items = ${props.providerDataForFiltering}
+            itemName = 'provider'
+            itemRenderer = ${Array.join(provider.typesOfService || [], '|')}
+        }
+        serviceTypes = ${Array.sort(Array.unique(Array.filter(String.split(Array.join(private.allServiceTypeStrings, '|'), '|'), t => !!t)))}
+    }
+
+    renderer = afx`
+        <header class="mb-4 mt-4 border-b border-neutral-200 pb-4">
+            <div class="flex flex-row justify-between gap-4 mb-4">
+                <div>
+                    <strong><span x-text="visibleCount">{Array.length(props.providerDataForFiltering)}</span> {props.translationData.providers}</strong>
+                </div>
+                <button type="button" class="hidden md:flex items-center gap-1 hover:underline" x-on:click="sort()">
+                    {props.translationData.name}
+                    <i class="fas fa-sort" x-show="sortDir === null" aria-hidden="true"></i>
+                    <i class="fas fa-sort-down" x-show="sortDir === 'asc'" x-cloak aria-hidden="true"></i>
+                    <i class="fas fa-sort-up" x-show="sortDir === 'desc'" x-cloak aria-hidden="true"></i>
+                    <span class="sr-only" x-cloak x-show="sortDir !== null" x-text={"sortDir === 'asc' ? '" + props.translationData.sortAsc + "' : '" + props.translationData.sortDesc + "'"}></span>
+                </button>
+            </div>
+
+            <div class="flex flex-row gap-4 justify-between flex-wrap">
+                <div class="flex items-center gap-2">
+                    <button type="button" class="p-1" x-on:click="view = 'grid'" x-bind:class="{ 'opacity-50': view !== 'grid' }" x-bind:aria-pressed="view === 'grid'">
+                        <i class="fas fa-th-large" aria-hidden="true"></i>
+                        <span class="sr-only">{props.translationData.gridView}</span>
+                    </button>
+                    <button type="button" class="p-1" x-on:click="view = 'table'" x-bind:class="{ 'opacity-50': view !== 'table' }" x-bind:aria-pressed="view === 'table'">
+                        <i class="fas fa-th-list" aria-hidden="true"></i>
+                        <span class="sr-only">{props.translationData.tableView}</span>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <input type="text" id="providers-search" placeholder={props.translationData.search} class="border border-neutral-200 px-3 py-2 rounded w-full" x-model="search" "x-on:input.debounce.300ms"="filter()" />
+                    <label for="providers-search"><i class="fas fa-search" aria-hidden="true"></i><span class="sr-only">{props.translationData.search}</span></label>
+                </div>
+
+                <div class="hidden md:flex items-center">
+                    <select id="filter-country" class="border border-neutral-200 px-3 py-2 rounded w-full" x-model="country" x-on:change="filter()">
+                        <option value="">{props.translationData.chooseCountry}</option>
+                        <Neos.Fusion:Loop items={private.countries} itemName="country">
+                            <option value={country}>{country}</option>
+                        </Neos.Fusion:Loop>
+                    </select>
+                </div>
+
+                <div class="hidden md:flex items-center">
+                    <select id="filter-size" class="border border-neutral-200 px-3 py-2 rounded w-full" x-model="size" x-on:change="filter()">
+                        <option value="">{props.translationData.chooseSize}</option>
+                        <Neos.Fusion:Loop items={private.sizes} itemName="size">
+                            <option value={size}>{size}</option>
+                        </Neos.Fusion:Loop>
+                    </select>
+                </div>
+
+                <div class="hidden md:flex items-center">
+                    <select id="filter-service-type" class="border border-neutral-200 px-3 py-2 rounded w-full" x-model="serviceType" x-on:change="filter()">
+                        <option value="">{props.translationData.chooseServiceType}</option>
+                        <Neos.Fusion:Loop items={private.serviceTypes} itemName="serviceType">
+                            <option value={serviceType}>{serviceType}</option>
+                        </Neos.Fusion:Loop>
+                    </select>
+                </div>
+            </div>
+        </header>
+    `
+}

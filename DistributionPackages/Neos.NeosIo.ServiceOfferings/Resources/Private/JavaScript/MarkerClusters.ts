@@ -1,3 +1,4 @@
+// @ts-ignore
 import L from 'leaflet';
 import 'leaflet.markercluster/src';
 
