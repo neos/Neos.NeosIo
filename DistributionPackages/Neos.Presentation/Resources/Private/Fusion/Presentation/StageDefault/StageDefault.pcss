@@ -1,11 +1,10 @@
 @layer components {
-  .n-stage-default {
-    padding-bottom: calc(var(--pixel-effect-size) * 2);
-  }
+  @variant md {
+    .n-stage-default {
+      padding-bottom: calc(var(--pixel-effect-size) * 2);
+    }
 
-  .stage--default__clip-path {
-    /* only shown md and upwards */
-    @variant md {
+    .stage--default__clip-path {
       clip-path: polygon(
         0 0, /* start top-left */
         0 100%, /* down 100% */

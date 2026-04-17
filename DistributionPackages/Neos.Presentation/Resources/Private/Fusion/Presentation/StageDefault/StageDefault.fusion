@@ -19,9 +19,9 @@ prototype(Neos.Presentation:StageDefault) < prototype(Neos.Fusion:Component) {
         <Neos.Presentation:Background
             tagName="section"
             background="blue-dark-to-blue"
-            class="overflow-hidden grid grid-rows-[1fr_1fr] md:grid-rows-none! md:grid-cols-[3fr_2fr] pt-24 md:pt-42 stage--default__clip-path n-stage-default"
+            class="overflow-hidden grid grid-rows-auto grid-cols-6 grid-flow-col md:grid-flow-row pt-24 md:pt-42 stage--default__clip-path n-stage-default"
         >
-            <div class="p-6 pb-18 md:p-12 lg:p-24">
+            <div class="col-span-full md:col-span-4 p-6 md:p-12 lg:p-24 mb-12 md:mb-0">
                 <Neos.Presentation:Headline
                     tagName="h1"
                     content={props.title}
@@ -41,10 +41,9 @@ prototype(Neos.Presentation:StageDefault) < prototype(Neos.Fusion:Component) {
                     class="text-base"
                 />
             </div>
-            <div class="relative h-full w-full pl-18 md:pl-0">
+            <div class="relative col-start-2 col-span-full md:col-span-2 h-full w-full">
                 <figure
-                    class={"absolute! overflow-hidden" + (props.screenBorder ? " rounded-3xl" : "")}
-                    style={props.screenBorder ? "box-shadow: 0 0 0 8px #161616;" : ""}
+                    class={"h-full w-full overflow-hidden" + (props.screenBorder ? " rounded-tl-3xl border-t-8 border-l-8 border-t-neutral-90 border-l-neutral-90" : "")}
                 >
                     {props.image}
                 </figure>

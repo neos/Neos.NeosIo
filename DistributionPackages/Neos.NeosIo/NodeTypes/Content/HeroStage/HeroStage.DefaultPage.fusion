@@ -15,8 +15,9 @@ prototype(Neos.NeosIo:Content.HeroStage.DefaultPage) < prototype(Neos.NeosIo:Con
         image = Neos.Presentation:Component.PictureTag {
             asset =  ${node.properties.backgroundImage}
             alt = ${node.properties.backgroundImage ? node.properties.backgroundImage.title : null}
-            imgClasses = "translate-[-2px] h-[100vh] w-auto object-cover max-w-none!"
-            sizes = ${['(max-width: 768px) 100vw', '(max-width: 1200px) 50vw', '33vw', 'auto']}
+            imgClasses = "h-full w-full object-cover max-w-none!"
+            loadEager = true
+            sizes = ${['(min-width: 786px) 33vw', '80vw']}
         }
 
         screenBorder = ${node.properties.screenBorder}
