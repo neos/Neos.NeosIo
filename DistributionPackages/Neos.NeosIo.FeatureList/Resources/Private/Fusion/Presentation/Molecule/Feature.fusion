@@ -1,52 +1,46 @@
 prototype(Neos.NeosIo.FeatureList:Molecule.Feature) < prototype(Neos.Fusion:Component) {
 
-	@styleguide {
-		props {
-			featureData = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-		}
-	}
+    @styleguide {
+        props {
+            featureData = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+        }
+    }
 
-	featureData = ${[]}
+    featureData = ${[]}
 
-	_neosAvatarUrl = Neos.Fusion:ResourceUri {
-		path = 'resource://Neos.NeosIo.FeatureList/Public/Images/NeosAvatars/neos_avatar_primary.svg'
-	}
-
-	renderer = afx`
-		<div class="feature">
-			<div class="feature__title">{props.featureData.title}</div>
-			<div class="feature__core">
-				<img src={props._neosAvatarUrl} @if.isCoreFeature={props.featureData.isCoreFeature} alt="" title="Neos Core Feature" />
-			</div>
-			<div class="feature__community">
-				<i class="fas fa-users" @if.isCommunityFeature={props.featureData.isCommunityFeature} title="Community Feature"></i>
-			</div>
-			<div class="feature__description">{props.featureData.description}</div>
-			<div class="feature__links" @if.has={props.featureData.links}>
-				<Neos.Fusion:Loop items={props.featureData.links} itemName="link" @children="itemRenderer" >
-					<a class="feature__links__item" href={link.uri} title={link.label}>{link.label} </a>
-				</Neos.Fusion:Loop>
-			</div>
-		</div>
-	`
+    renderer = afx`
+        <div class="feature flex flex-col gap-4 pt-6 pb-6">
+            <div class="flex flex-row gap-3 items-center">
+                <div title={props.featureData.isCoreFeature ? "Neos Core Feature" : props.featureData.isCommunityFeature ? "Community Feature" : ""}>
+                    <Neos.Presentation:Icon @if.isCoreFeature={props.featureData.isCoreFeature} icon="neosAvatarPrimary" sizeClass="h-5" />
+                    <i class="fas fa-users" @if.isCommunityFeature={props.featureData.isCommunityFeature} title="Community Feature"></i>
+                </div>
+                <div class="display-body-lg font-bold">{props.featureData.title}</div>
+            </div>
+            <div class="text-neutral-80">{props.featureData.description}</div>
+            <Neos.Presentation:Button
+                @if.has={props.featureData.link}
+                href={props.featureData.link}
+                variant="transparent"
+                icon="animatedArrow"
+                content={I18n.translate("feature.link.label", null, [], 'Main', 'Neos.NeosIo.FeatureList')}
+                ariaLabel={I18n.translate("feature.link.ariaLabel", null, [], 'Main', 'Neos.NeosIo.FeatureList')}
+            />
+        </div>
+    `
 }
 
 
 prototype(Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData) < prototype(Neos.Fusion:DataStructure) {
-	title = ${String.crop(
-		'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-		Math.randomInt(20,50)
-	)}
-	description = ${String.crop(
-		'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-		Math.randomInt(50, 300)
-	)}
-	isCoreFeature = ${Math.randomInt(0, 5) > 2}
-	isCommunityFeature = ${Math.randomInt(0, 5) > 2}
-	links = Neos.Fusion:DataStructure {
-		01 = ${{"label":"sitegeist/monocle", "uri": "https://www.neos.io/download-and-extend/packages/sitegeist/sitegeist-monocle.html" }}
-		02 = ${{"label":"flownative/anchorlinks", "uri": "https://www.neos.io/download-and-extend/packages/flownative/flownative-anchorlinks.html" }}
-		03 = ${{"label":"flownative/anchorlinks", "uri": "https://www.neos.io/download-and-extend/packages/flownative/flownative-anchorlinks.html" }}
-		@process.variousLength = ${Array.splice(value, 0, Math.randomInt(1,3))}
-	}
+    title = ${String.crop(
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        Math.randomInt(20,50)
+    )}
+    description = ${String.crop(
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        Math.randomInt(50, 300)
+    )}
+    isCoreFeature = ${Math.randomInt(0, 5) > 2}
+    isCommunityFeature = ${!this.isCoreFeature}
+    link = "https://www.neos.io/download-and-extend/packages/sitegeist/sitegeist-monocle.html"
 }

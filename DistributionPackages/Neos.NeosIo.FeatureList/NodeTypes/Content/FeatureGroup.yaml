@@ -2,6 +2,7 @@
 'Neos.NeosIo.FeatureList:FeatureGroup':
   superTypes:
     'Neos.Neos:Content': true
+    'Neos.NeosIo:Mixin.Icon': true
   ui:
     label: 'Feature Group'
     icon: tags
@@ -35,14 +36,10 @@
             placeholder: 'Feature Group Description'
       options:
         preset: NeosIo.text.free
-    image:
-      type: Neos\Media\Domain\Model\ImageInterface
+    icon:
       ui:
-        label: 'Feature Icon'
-        reloadIfChanged: true
         inspector:
           group: feature
-          position: 50
     features:
       type: references
       ui:

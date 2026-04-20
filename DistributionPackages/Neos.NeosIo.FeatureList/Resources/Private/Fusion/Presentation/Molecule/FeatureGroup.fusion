@@ -1,39 +1,50 @@
 prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) < prototype(Neos.Fusion:Component) {
 
-	@styleguide {
-		props {
-			featureGroupData = Neos.NeosIo.FeatureList:Molecule.FeatureGroup.ExampleData
-		}
-	}
+    @styleguide {
+        props {
+            featureGroupData = Neos.NeosIo.FeatureList:Molecule.FeatureGroup.ExampleData
+        }
+    }
 
-	featureGroupData = null
+    featureGroupData = null
 
-	renderer = afx`
-		<div class="featureGroup" @if.has={props.featureGroupData}>
-			<div class="featureGroup__header">
-				<div class="featureGroup__image" @if.has={props.featureGroupData.image}><img src={props.featureGroupData.image} alt={props.featureGroupData.title}  /></div>
-				<div class="featureGroup__title">{props.featureGroupData.title}</div>
-			</div>
-			<div class="featureGroup__description" @if.has={props.featureGroupData.description}>{props.featureGroupData.description}</div>
-			<div class="featureGroup__features">
-				<Neos.Fusion:Loop items={props.featureGroupData.features} itemName="feature" @children="itemRenderer" >
-					<Neos.NeosIo.FeatureList:Molecule.Feature featureData={feature} />
-				</Neos.Fusion:Loop>
-			</div>
-		</div>
-	`
+    renderer = afx`
+        <div class="featureGroup flex flex-col gap-16" @if.has={props.featureGroupData}>
+            <div class="flex flex-col gap-6">
+                <div class="featureGroup__header flex flex-col gap-2">
+                    <div class="featureGroup__icon" @if.has={props.featureGroupData.icon}>
+                        <Neos.Presentation:Icon icon={props.featureGroupData.icon} sizeClass="h-12" />
+                    </div>
+                    <div class="featureGroup__title display-headline-sm">{props.featureGroupData.title}</div>
+                </div>
+                <div class="display-body-lg text-neutral-80" @if.has={props.featureGroupData.description}>{props.featureGroupData.description}</div>
+            </div>
+            <div class="featureGroup__features">
+                <Neos.Fusion:Loop items={props.featureGroupData.features} itemName="feature" @children="itemRenderer" >
+                    <Neos.NeosIo.FeatureList:Molecule.Feature featureData={feature} />
+                </Neos.Fusion:Loop>
+            </div>
+        </div>
+    `
 }
 
 prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup.ExampleData) < prototype(Neos.Fusion:DataStructure) {
-	title = 'Feature Group Title'
-	description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-	image = Neos.Fusion:ResourceUri {
-		path = 'resource://Neos.Neos/Public/Images/dummy-image.svg'
-	}
-	features = Neos.Fusion:DataStructure {
-		01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-		02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-		03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-		04 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-	}
+    title = 'Feature Group Title'
+    description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
+    icon = 'desktop'
+    features = Neos.Fusion:DataStructure {
+        01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData {
+            isCoreFeature = ${true}
+            isCommunityFeature = ${false}
+        }
+        02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData {
+            isCoreFeature = ${false}
+            isCommunityFeature = ${true}
+        }
+        03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData {
+            isCoreFeature = ${true}
+            isCommunityFeature = ${false}
+            link = ${null}
+        }
+    }
 }
