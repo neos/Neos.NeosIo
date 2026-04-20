@@ -41,11 +41,6 @@ prototype(Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData) < prototype(Neos
         Math.randomInt(50, 300)
     )}
     isCoreFeature = ${Math.randomInt(0, 5) > 2}
-    isCommunityFeature = ${Math.randomInt(0, 5) > 2}
-    links = Neos.Fusion:DataStructure {
-        01 = ${{"label":"sitegeist/monocle", "uri": "https://www.neos.io/download-and-extend/packages/sitegeist/sitegeist-monocle.html" }}
-        02 = ${{"label":"flownative/anchorlinks", "uri": "https://www.neos.io/download-and-extend/packages/flownative/flownative-anchorlinks.html" }}
-        03 = ${{"label":"flownative/anchorlinks", "uri": "https://www.neos.io/download-and-extend/packages/flownative/flownative-anchorlinks.html" }}
-        @process.variousLength = ${Array.splice(value, 0, Math.randomInt(1,3))}
-    }
+    isCommunityFeature = ${!this.isCoreFeature}
+    link = "https://www.neos.io/download-and-extend/packages/sitegeist/sitegeist-monocle.html"
 }

@@ -31,13 +31,20 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) < prototype(Neos.Fusion
 prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup.ExampleData) < prototype(Neos.Fusion:DataStructure) {
     title = 'Feature Group Title'
     description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-    image = Neos.Fusion:ResourceUri {
-        path = 'resource://Neos.Neos/Public/Images/dummy-image.svg'
-    }
+    icon = 'desktop'
     features = Neos.Fusion:DataStructure {
-        01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-        02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-        03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
-        04 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData
+        01 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData {
+            isCoreFeature = ${true}
+            isCommunityFeature = ${false}
+        }
+        02 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData {
+            isCoreFeature = ${false}
+            isCommunityFeature = ${true}
+        }
+        03 = Neos.NeosIo.FeatureList:Molecule.Feature.ExampleData {
+            isCoreFeature = ${true}
+            isCommunityFeature = ${false}
+            link = ${null}
+        }
     }
 }
