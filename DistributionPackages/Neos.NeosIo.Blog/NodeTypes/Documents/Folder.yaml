@@ -1,4 +1,4 @@
-'Neos.NeosIo.Blog:Document.Tags':
+'Neos.NeosIo.Blog:Document.Folder':
   superTypes:
     'Neos.Neos:Shortcut': true
     'Neos.NeosIo:Constraint.Blog.Document': true
@@ -6,12 +6,12 @@
     'Yoast.YoastSeoForNeos:Mixin.SEO': false
     'Flowpack.Neos.Matomo:StatsTabMixin': false
   ui:
-    label: Tags
-    icon: tags
+    label: Folder
+    icon: folder
   constraints:
     nodeTypes:
       'Neos.Neos:Document': false
-      'Neos.NeosIo.Blog:Document.Tag': true
+      'Neos.NeosIo:Constraint.Folder.Document': true
   properties:
     targetMode:
       ui:
