@@ -8,4 +8,7 @@
   h3 {
     @include text-headline-md;
   }
+  &:has(+.neos-nodetypes-text ) {
+    margin-bottom: calc(var(--spacing) * 6);
+  }
 }
