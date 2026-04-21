@@ -19,7 +19,6 @@ prototype(Neos.NeosIo.Blog:Content.BlogTeaser) < prototype(Neos.Neos:ContentComp
         }
         title = ${q(private.blogPostToDisplay).property('title')}
         text = ${q(private.blogPostToDisplay).property('summary')}
-        altText = ${Neos.Node.label(private.blogPostToDisplay)}
         image = ${q(private.blogPostToDisplay).property('keyVisualImage')}
         link = Neos.Neos:NodeUri {
             node = ${private.blogPostToDisplay}
@@ -31,12 +30,27 @@ prototype(Neos.NeosIo.Blog:Content.BlogTeaser) < prototype(Neos.Neos:ContentComp
         title = ${private.title}
         subTitle = ${props.subTitle}
         text = ${private.text}
-        altText = ${private.altText}
-        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
+        image = Neos.Presentation:Component.PictureTag {
             asset = ${private.image}
-            // TODO responsive image size with different breakpoints
-            width = 800
-            quality = 80
+            imgClasses = "absolute object-cover w-full h-full"
+            alt = Neos.Fusion:Case {
+                hasAlternativeText {
+                    condition = ${q(private.blogPostToDisplay).property('keyVisualAlternativeText')}
+                    renderer = ${q(private.blogPostToDisplay).property('keyVisualAlternativeText')}
+                }
+                hasImageCaption {
+                    condition = ${q(private.blogPostToDisplay).property('keyVisualImage').caption}
+                    renderer = ${q(private.blogPostToDisplay).property('keyVisualImage').caption}
+                }
+                label {
+                    condition = ${private.blogPostToDisplay != null}
+                    renderer = ${Neos.Node.label(private.blogPostToDisplay)}
+                }
+                fallback {
+                    condition = true
+                    renderer = ''
+                }
+            }
         }
         link = ${private.link}
     }

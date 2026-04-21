@@ -8,6 +8,7 @@ import exclusiveDisclosure from './ExclusiveDisclosure';
 import focus from './Focus';
 import intersect from '@alpinejs/intersect';
 import randomChildren from './RandomChildren';
+import countUp from './CountUp';
 import tash from './Tash';
 import tooltip from './Tooltip';
 import typewriter from './Typewriter';
@@ -23,6 +24,7 @@ Alpine.plugin([
     focus,
     intersect,
     randomChildren,
+    countUp,
     tash,
     tooltip,
     typewriter,

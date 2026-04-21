@@ -3,12 +3,20 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.ShowCases) < prototype
 
     @if.hasShowCases = ${Type.isArray(this.showCases) && Array.length(this.showCases)}
 
+    # update the image sizes for all nested image components, so they can adapt their sizes accordingly
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            # The column width is 50% for the showcase items, so we set the size accordingly
+            size = ${1 / 2}
+        }
+    }
+
     renderer = afx`
-        <section class="service-provider__showcases">
+        <section>
             <h2>Showcases</h2>
-            <div class="references__list g">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <Neos.Fusion:Loop items={props.showCases} itemName="showCase">
-                    <Neos.NeosIo:Reference.List.Item @context.case={showCase}/>
+                    <Neos.NeosIo:Reference.List.Item @context.node={showCase}/>
                 </Neos.Fusion:Loop>
             </div>
         </section>

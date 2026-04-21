@@ -6,26 +6,10 @@ prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <ul class="talkList">
             <Neos.Fusion:Loop items={props.talks} itemName="talk">
-                <li
-                    class="talkList__item"
+                <Neos.NeosConIo:TalkList.Item
+                    talk={talk}
                     @if.talkHasCorrectEvent={!props.eventToFilter || q(talk).property('event').aggregateId.value == props.eventToFilter.aggregateId.value}
-                >
-                    <Neos.Presentation:ContentTeaser
-                        title={q(talk).property('title')}
-                    >
-                        <Sitegeist.Kaleidoscope:AssetImageSource
-                            asset={q(talk).property('thumbnail')}
-                            width={500}
-                            quality={80}
-                            @path="imageSource"
-                        />
-                        <Neos.Neos:NodeUri
-                            node={talk}
-                            absolute
-                            @path="link"
-                        />
-                    </Neos.Presentation:ContentTeaser>
-                </li>
+                />
             </Neos.Fusion:Loop>
         </ul>
     `
@@ -37,8 +21,45 @@ prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Component) {
             event = ${eventToFilter ? Neos.Caching.entryIdentifierForNode(eventToFilter) : null}
         }
         entryTags {
-            # when a talk is changed, we need to rerender this page.
             1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', node)}
         }
     }
+}
+
+prototype(Neos.NeosConIo:TalkList.Item) < prototype(Neos.Fusion:Component) {
+    talk = null
+
+    @propTypes {
+        @strict = true
+        talk = ${PropTypes.instanceOf('Neos.NeosConIo:Talk')}
+    }
+
+    // The talk list item takes 1/3 of the width on desktop, so we calculate the percentage accordingly.
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            size = ${4 / 12}
+        }
+    }
+
+    @private {
+        link = Neos.Neos:NodeUri {
+            node = ${props.talk}
+            absolute = true
+        }
+        image = Neos.Presentation:Component.PictureTag {
+            asset = ${props.talk.properties.thumbnail}
+            imgClasses = "absolute object-cover w-full h-full"
+            alt = ""
+        }
+    }
+
+    renderer = afx`
+        <li class="talkList__item">
+            <Neos.Presentation:ContentTeaser
+                title={props.talk.properties.title}
+                image={private.image}
+                link={private.link}
+            />
+        </li>
+    `
 }

@@ -16,16 +16,21 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:ContentComponent) {
         block = false
     }
 
+    @context.contentWidth = ${this.contentWidth}
+    // update the content width for all nested image components, so they can adapt their sizes accordingly
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            contentWidth = Neos.Presentation:Component.ImageSizes.ContentWidthHelper {
+                contentWidth = ${contentWidth}
+            }
+        }
+    }
+
     renderer = afx`
         <section class={['stage', props.backgroundColor ? 'stage--' + props.backgroundColor : 'stage--bright']}>
-            <div class={['stage__contents', props.isContentTextInverted && 'u-invertText', props.isContentExtraPadded && 'stage__contents--extraPadding', props.padding && 'stage__contents--padding-' + props.padding, props.contentWidth && 'stage__contents--' + props.contentWidth]}>
-                <h2 class="display-headline-lg" @if={!props.hideTitle && (renderingMode.isEdit || props.title)}>{props.editableTitle}</h2>
-                <Neos.Neos:ContentCollection />
-            </div>
             <Neos.NeosIo:Stage.FixedBackgroundImage
                 @if.fixed={props.backgroundImageFixed}
                 backgroundImage={props.backgroundImage}
-                altText={props.alternativeText}
                 backgroundShadePercentage={props.backgroundShadePercentage}
             />
             <Neos.NeosIo:Stage.BackgroundImage
@@ -34,6 +39,10 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:ContentComponent) {
                 altText={props.alternativeText}
                 backgroundShadePercentage={props.backgroundShadePercentage}
             />
+            <div class={['stage__contents', props.isContentTextInverted && 'u-invertText', props.isContentExtraPadded && 'stage__contents--extraPadding', props.padding && 'stage__contents--padding-' + props.padding, props.contentWidth && 'stage__contents--' + props.contentWidth]}>
+                <h2 class="display-headline-lg" @if={!props.hideTitle && (renderingMode.isEdit || props.title)}>{props.editableTitle}</h2>
+                <Neos.Neos:ContentCollection />
+            </div>
         </section>
     `
 }

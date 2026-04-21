@@ -3,31 +3,23 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.CaseStudies) < prototy
 
     @if.hasCaseStudies = ${Type.isArray(this.caseStudies) && Array.length(this.caseStudies)}
 
+    # update the image sizes for all nested image components, so they can adapt their sizes accordingly
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            # The column width is 50% for the showcase items, so we set the size accordingly
+            size = ${1 / 2}
+        }
+    }
+
     renderer = afx`
-        <section class="service-provider__casestudies">
+        <section>
             <h2>Casestudies</h2>
-            <div class="references__list g">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
-                    <div class="references__item gi u-w1/1 u-wm1/2 u-wl1/2">
-                        <Neos.Neos:NodeLink
-                            node={caseStudy}
-                            attributes.class="imageTeaser imageTeaser--isLink"
-                            attributes.title={q(caseStudy).property('title')}
-                        >
-                            <Neos.Neos:ImageTag
-                                asset={q(caseStudy).property('keyVisualImage')}
-                                maximumHeight={450}
-                                maximumwidth={700}
-                                allowCropping={true}
-                                attributes.class="imageTeaser__image"
-                                attributes.alt={q(caseStudy).property('title')}
-                                attributes.style="max-height: 450px;"
-                            />
-                            <span class="imageTeaser__contents u-invertText">
-                                <h3 class="imageTeaser__contents__heading">{q(caseStudy).property('title')}</h3>
-                            </span>
-                        </Neos.Neos:NodeLink>
-                    </div>
+                    <Neos.NeosIo:Reference.List.Item
+                        @context.node={caseStudy}
+                        linkToNode={true}
+                    />
                 </Neos.Fusion:Loop>
             </div>
         </section>

@@ -8,6 +8,6 @@ prototype(Neos.NodeTypes:TextWithImage) < prototype(Neos.NodeTypes:Image) {
     className.main = 'neos-nodetypes-textwithimage'
 
     renderer {
-        content.@process.appendText = ${value + props.text}
+        content.@process.appendText = ${value + '<div class="neos-nodetypes-textwithimage__text">' + props.text + '</div>'}
     }
 }

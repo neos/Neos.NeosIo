@@ -1,18 +1,12 @@
 // Renders a placeholder (default) keyVisualImage with source sets
 prototype(Neos.NeosIo:KeyVisual.StaticPlaceholderImageRenderer) < prototype(Neos.NeosIo:KeyVisual.AbstractRenderer) {
-    @context.staticUrlPrefix = Neos.Fusion:ResourceUri {
-        path = 'Images/DefaultSmallKeyvisual'
-        package = 'Neos.NeosIo'
-        localize = false
+    picture = Sitegeist.Kaleidoscope:Picture {
+        imageSource = Sitegeist.Kaleidoscope:ResourceImageSource {
+            path = 'Images/DefaultSmallKeyvisual-1500w.jpg'
+            package = 'Neos.NeosIo'
+        }
+        sizes = '100vw'
+        loading = 'eager'
+        imgAttributes.class = 'absolute inset-0 size-full object-cover object-center'
     }
-
-    previewImageUri = ${staticUrlPrefix + "-5w.jpg"}
-    highQualityImageUri = ${staticUrlPrefix + "-1500w.jpg"}
-    imageSrcSet = Neos.Fusion:Join {
-        ultraHighRes = ${staticUrlPrefix + "-1920w.jpg 1920w, "}
-        highRes = ${staticUrlPrefix + "-1280w.jpg 1280w, "}
-        mediumRes = ${staticUrlPrefix + "-658w.jpg 658w"}
-    }
-
-    keyVisualSize = ${props.keyVisualSize}
 }

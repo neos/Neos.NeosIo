@@ -1,11 +1,16 @@
 prototype(Neos.NeosIo:Content.ImageGrid) < prototype(Neos.Neos:ContentComponent) {
+    distributeEvenly = ${q(node).property('isDistributeEvenly')}
+    monochrome = ${q(node).property('isMonochrome')}
+
     renderer = Neos.Neos:ContentCollection {
         attributes.class {
             imageGrid = 'image-grid'
-            marqueeEffect = ${q(node).property('isDistributeEvenly') ? 'distribute-evenly': ''}
-            monochrome = ${q(node).property('isMonochrome') ? 'monochrome': ''}
+            marqueeEffect = ${props.distributeEvenly ? 'distribute-evenly': ''}
+            monochrome = ${props.monochrome ? 'monochrome': ''}
         }
         # Allow images are allowed so we skip the ContentCase for Neos.Neos:ContentCollection
-        content.itemRenderer = Neos.NodeTypes:Image
+        content.itemRenderer = Neos.NodeTypes:Image {
+            maximumHeight = ${props.distributeEvenly ? 50 : null}
+        }
     }
 }
