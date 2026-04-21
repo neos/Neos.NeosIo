@@ -22,32 +22,38 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = afx`
-        <article class="post">
-            <header>
-                <h1 class="u-alignCenter">
+        <div class="relative pb-10 lg:absolute lg:top-0 lg:left-0 lg:max-w-[calc((100vw-640px)*0.5-var(--spacing)*8)]">
+            <Neos.Presentation:Button
+                href={private.overviewUri}
+                content={I18n.translate('back.to.overview', 'Back to List', [], 'Main', 'Neos.NeosIo.Blog')}
+                variant={"transparent"}
+                icon={"animatedArrowLeft"}
+                class={' whitespace-normal! text-left max-w-full'}
+            />
+        </div>
+        <article class="post mx-auto lg:max-w-[640px]">
+            <header class="mb-16">
+                <h1 class="display-headline-sm mb-8">
                     <Neos.Neos:Editable property="title" block={false} />
                 </h1>
 
-                <div class="u-alignCenter">
+                <div class="display-lead">
                     <Neos.Neos:Editable property="summary" />
                 </div>
-                <p class="u-alignCenter u-microCopy">
-                    <time datetime={Date.format(props.datePublished, 'c')}>
+                <p class="flex flex-wrap justify-between gap-4 border-t border-neutral-30 mt-8 pt-8 md:flex-nowrap ">
+                    <span @if={props.author}>
+                        <span>{props.author}</span>
+                    </span>
+                    <time class="flex-[0_0_auto]" datetime={Date.format(props.datePublished, 'c')}>
                         {Date.formatCldrDate(props.datePublished)}
                     </time>
-                    <span @if={props.author}>
-                        &nbsp;– Written by <span>{props.author}</span>
-                    </span>
                 </p>
-                <hr />
             </header>
-
-            <main class="postBody">
+            <main>
                 {props.content}
             </main>
 
             <footer class="post__footer">
-                <hr />
                 <section class="u-mt1/1">
                     <div class="u-pt1/1" @if={props.relatedDocuments}>
                         <h3>Related</h3>
@@ -67,19 +73,12 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Component) {
                                 <li class="u-mb1/2" title={String.stripTags(post.properties.summary)}>
                                     <div class="h5">
                                         {Date.formatCldrDate(post.properties.datePublished)}
-                                        -
+                                        {" - "}
                                         <Neos.Neos:NodeLink node={post} />
                                     </div>
                                 </li>
                             </Neos.Fusion:Loop>
                         </ul>
-
-                        <div class="u-alignRight">
-                            <Neos.Presentation:Button
-                                href={private.overviewUri}
-                                content="Back to list"
-                            />
-                        </div>
                     </div>
                 </section>
             </footer>

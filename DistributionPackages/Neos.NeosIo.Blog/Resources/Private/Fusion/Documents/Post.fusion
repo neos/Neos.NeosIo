@@ -4,6 +4,16 @@ prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
             @position = 'end 999999999'
         }
     }
+    content.renderer = afx`
+        <div id="mainContent">
+            <main class="mx-auto max-w-[1400px] pt-10 px-6 pb-16 lg:pt-16 lg:pb-25 2xl:px-0" role="main">
+                <section class="relative">
+                    {props.parts}
+                </section>
+            </main>
+        </div>
+    `
+
 
     renderer.head {
         metaDescriptionTag.attributes.content = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 152, '...')}
