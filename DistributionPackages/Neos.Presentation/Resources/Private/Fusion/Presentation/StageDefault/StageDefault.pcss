@@ -1,0 +1,28 @@
+@layer components {
+  @variant md {
+    .n-stage-default {
+      padding-bottom: calc(var(--pixel-effect-size) * 2);
+    }
+
+    .stage--default__clip-path {
+      clip-path: polygon(
+        0 0, /* start top-left */
+        0 100%, /* down 100% */
+        calc(2 * var(--pixel-effect-size)) 100%, /* 2 steps right */
+        calc(2 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step down */
+        calc(4 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 2 steps right */
+        calc(4 * var(--pixel-effect-size)) calc(100% - 2 * var(--pixel-effect-size)), /* 1 step down */
+        calc(5 * var(--pixel-effect-size)) calc(100% - 2 * var(--pixel-effect-size)), /* 1 step right */
+        calc(5 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step up */
+        calc(6 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step right */
+        calc(6 * var(--pixel-effect-size)) 100%, /* step up */
+        calc(7 * var(--pixel-effect-size)) 100%, /* 1 step right */
+        calc(7 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step down */
+        calc(8 * var(--pixel-effect-size)) calc(100% - var(--pixel-effect-size)), /* 1 step right */
+        calc(8 * var(--pixel-effect-size)) calc(100% - 2 * var(--pixel-effect-size)), /* 1 step down */
+        100% calc(100% - 2 * var(--pixel-effect-size)), /* to right edge */
+        100% 0 /* end top-right */
+      );
+    }
+  }
+}

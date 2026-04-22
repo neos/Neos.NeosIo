@@ -1,0 +1,31 @@
+prototype(Neos.NeosIo:Reference.List.Item.Meta) < prototype(Neos.Fusion:Component) {
+    launchDate = null
+    projectVolume = ''
+    projectType = null
+    serviceProvider = null
+
+    @propTypes {
+        @strict = true
+        launchDate = ${PropTypes.instanceOf('\DateTimeInterface')}
+        projectVolume = ${PropTypes.string}
+        projectType = ${PropTypes.instanceOf('Neos.NeosIo:ReferenceType')}
+        serviceProvider = ${PropTypes.instanceOf('Neos.NeosIo.ServiceOfferings:Document.ServiceProvider')}
+    }
+
+    renderer = afx`
+        <footer class="flex flex-wrap gap-2 text-sm">
+            <span @if={props.launchDate} class="flex items-center gap-1">
+                <i class="fas fa-rocket" aria-hidden="true"></i>{Date.format(props.launchDate, 'd.m.Y')}
+            </span>
+            <span @if={props.projectVolume} class="flex items-center gap-1">
+                <i class="fas fa-users" aria-hidden="true"></i>{props.projectVolume}
+            </span>
+            <span @if={props.projectType} class="flex items-center gap-1">
+                <i class="fas fa-industry" aria-hidden="true"></i>{Neos.Node.label(props.projectType)}
+            </span>
+            <span @if={props.serviceProvider} class="flex items-center gap-1">
+                <i class="fas fa-address-card" aria-hidden="true"></i>{Neos.Node.label(props.serviceProvider)}
+            </span>
+        </footer>
+    `
+}

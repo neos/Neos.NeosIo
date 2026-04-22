@@ -49,8 +49,9 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
 
             # Lists
             typesOfService = ${q(node).referenceNodes('typesOfService').get()}
-            showCases = ${q(node).referenceNodes('showCases').get()}
-            caseStudies = ${q(node).referenceNodes('caseStudies').get()}
+            // TODO: Remove fallbacks after we migrated the references to the showcases and case studies
+            showCases = ${q(node).backReferenceNodes().filter('[instanceof Neos.NeosIo:Reference.ShowCase]').get() || q(node).referenceNodes('showCases').get()}
+            caseStudies = ${q(node).backReferenceNodes().filter('[instanceof Neos.NeosIo:Reference.CaseStudy]').get() || q(node).referenceNodes('caseStudies').get()}
             vendors = ${q(node).referenceNodes('vendors').get()}
             packages = ${q(node).referenceNodes('packages').get()}
             badges = ${q(node).referenceNodes('badges').get()}

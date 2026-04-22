@@ -29,6 +29,20 @@
         nodeTypes:
           '*': false
           'Neos.NeosIo.ServiceOfferings:Content.AwardReference': true
+  references:
+    typesOfService:
+      type: references
+      ui:
+        label: 'Choose types of service'
+        showInCreationDialog: true
+        reloadIfChanged: true
+        inspector:
+          group: properties
+          placeholder: 'Select services'
+          editorOptions:
+            multiple: true
+            nodeTypes:
+              - 'Neos.NeosIo.ServiceOfferings:Document.ServiceType'
   properties:
     logo:
       type: Neos\Media\Domain\Model\ImageInterface
@@ -76,19 +90,6 @@
         'Neos.Neos/Validation/StringLengthValidator':
           minimum: 1
           maximum: 500
-    typesOfService:
-      type: references
-      ui:
-        label: 'Choose types of service'
-        showInCreationDialog: true
-        reloadIfChanged: true
-        inspector:
-          group: properties
-          placeholder: 'Select services'
-          editorOptions:
-            multiple: true
-            nodeTypes:
-              - 'Neos.NeosIo.ServiceOfferings:Document.ServiceType'
     size:
       type: string
       ui:
