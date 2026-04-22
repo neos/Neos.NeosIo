@@ -2,8 +2,8 @@ prototype(Neos.NeosIo:LandingPage) < prototype(Neos.NeosIo:DefaultPage) {
     header.keyVisualWrapper {
         keyVisualSize = 'large'
         keyVisual {
-            // to use the "large" key visual, we need to append a CSS class to the outer container; and change the default-Image.
-            prototype(Neos.NeosIo:KeyVisual.StaticPlaceholderImageRenderer).@context.staticUrlPrefix.path = 'Images/DefaultKeyvisual'
+            // To use the "large" key visual, we need to change the default-Image.
+            prototype(Neos.NeosIo:KeyVisual.StaticPlaceholderImageRenderer).picture.imageSource.path = 'Images/DefaultKeyvisual.jpg'
         }
     }
 
