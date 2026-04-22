@@ -35,3 +35,20 @@ prototype(Neos.Form.FusionRenderer:FormNavigationButton) < prototype(Neos.Fusion
         </li>
     `
 }
+
+# Remove when https://github.com/neos/form-fusionrenderer/pull/24 is released and updated in this project
+prototype(Neos.Form:DatePicker) {
+    fieldContainer {
+        field {
+            attributes {
+                value.@process.format = ${Date.format(value, 'Y-m-d')}
+                value.@process.format.@if.isDateTime = ${Type.instance(elementValue, '\DateTimeInterface')}
+            }
+        }
+    }
+}
+
+prototype(Neos.Form.Builder:NodeBasedFormElement) {
+    # Use value from element instead of element aggregate id
+    element.properties.options.@process.overrideFromNode.itemRenderer.value = ${q(item).property('value')}
+}
