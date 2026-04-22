@@ -1,0 +1,25 @@
+root.editorialDocument {
+    @position = 'before default'
+    condition = ${q(documentNode).is('[instanceof Neos.NeosIo:Mixin.EditorialDocument]')}
+    renderer = Neos.Fusion:Case {
+        showContent {
+            condition = ${Security.hasAccess('Neos.Neos:Backend.GeneralAccess')}
+            position = 'start 9999'
+            renderer = Neos.Neos:RawContent.Document
+        }
+        // Show a 404 error page
+        default {
+            condition = true
+            position = 'end 9999'
+            renderer = Neos.Fusion:Renderer {
+                notfoundDocument = ${q(site).children('[uriPathSegment = "404"]').get(0)}
+                @context {
+                    site = ${site}
+                    node = ${this.notfoundDocument}
+                    documentNode = ${this.notfoundDocument}
+                }
+                renderPath = '/root'
+            }
+        }
+    }
+}
