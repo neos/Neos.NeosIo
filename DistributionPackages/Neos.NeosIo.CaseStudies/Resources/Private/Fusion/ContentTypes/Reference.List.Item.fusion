@@ -6,8 +6,9 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
     projectVolume = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes {
         volume = ${q(node).property('projectVolume')}
     }
-    projectType = ${q(q(node).property('projectType')).property('title')}
+    projectType = ${q(node).referenceNodes('projectType').get(0)}
     featured = ${q(node).property('featured')}
+    serviceProvider = ${q(node).referenceNodes('serviceProvider').get(0)}
 
     @private {
         url = Neos.Fusion:Case {
@@ -36,6 +37,7 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
             launchDate = ${props.launchDate}
             projectVolume = ${props.projectVolume}
             projectType = ${props.projectType}
+            serviceProvider = ${props.serviceProvider}
         }
         volumeCode = ${q(node).property('projectVolume') ? String.toInteger(q(node).property('projectVolume')) : 0}
         launchTimestamp = ${q(node).property('launchDate') || q(node).property('datePublished') || q(node).property('_creationDateTime')}
@@ -61,31 +63,4 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
             node = ${Neos.Caching.nodeTag(node)}
         }
     }
-}
-
-prototype(Neos.NeosIo:Reference.List.Item.Meta) < prototype(Neos.Fusion:Component) {
-    launchDate = null
-    projectVolume = ''
-    projectType = ''
-
-    @propTypes {
-        @strict=true
-        launchDate = ${PropTypes.instanceOf('\DateTimeInterface')}
-        projectVolume = ${PropTypes.string}
-        projectType = ${PropTypes.string}
-    }
-
-    renderer = afx`
-        <footer class="flex flex-wrap gap-2 text-sm">
-            <span @if={props.launchDate} class="flex items-center gap-1">
-                <i class="fas fa-rocket" aria-hidden="true"></i>{Date.format(props.launchDate, 'd.m.Y')}
-            </span>
-            <span @if={props.projectVolume} class="flex items-center gap-1">
-                <i class="fas fa-users" aria-hidden="true"></i>{props.projectVolume}
-            </span>
-            <span @if={props.projectType} class="flex items-center gap-1">
-                <i class="fas fa-industry" aria-hidden="true"></i>{props.projectType}
-            </span>
-        </footer>
-    `
 }
