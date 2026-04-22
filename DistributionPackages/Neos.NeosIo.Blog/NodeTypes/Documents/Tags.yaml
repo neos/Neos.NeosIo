@@ -1,0 +1,24 @@
+'Neos.NeosIo.Blog:Document.Tags':
+  superTypes:
+    'Neos.Neos:Shortcut': true
+    'Neos.NeosIo:Constraint.Blog.Document': true
+    'Neos.NeosIo:Mixin.EditorialDocument': true
+  ui:
+    label: Tags
+    icon: tags
+  constraints:
+    nodeTypes:
+      'Neos.Neos:Document': false
+      'Neos.NeosIo.Blog:Document.Tag': true
+  properties:
+    targetMode:
+      ui:
+        inspector:
+          editorOptions:
+            disabled: true
+    target:
+      ui:
+        inspector:
+          hidden: true
+          editorOptions:
+            disabled: true

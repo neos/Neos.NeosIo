@@ -2,6 +2,8 @@
   superTypes:
     'Neos.NodeTypes:Page': true
     'Neos.NeosIo:KeyVisualMixin': true
+    'Neos.NeosIo:Constraint.Blog.Document': true
+    'Neos.NeosIo:Constraint.Folder.Document': true
   ui:
     label: Post
     icon: newspaper-o
@@ -16,6 +18,9 @@
         image:
           position: 40
           collapsed: true
+  constraints:
+    nodeTypes:
+      'Neos.Neos:Document': false
   properties:
     datePublished:
       type: DateTime
@@ -118,3 +123,17 @@
           editorOptions:
             nodeTypes:
               - 'Neos.Neos:Document'
+  references:
+    tags:
+      constraints:
+        nodeTypes:
+          '*': false
+          Neos.NeosIo.Blog:Document.Tag: true
+      ui:
+        label: Tags
+        reloadIfChanged: true
+        inspector:
+          group: options
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo.Blog:Document.Tag'
