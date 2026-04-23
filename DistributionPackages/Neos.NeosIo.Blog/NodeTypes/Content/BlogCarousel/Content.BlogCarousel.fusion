@@ -28,7 +28,6 @@ prototype(Neos.NeosIo:Content.BlogCarousel) < prototype(Neos.Neos:ContentCompone
         entryIdentifier.node = ${Neos.Caching.entryIdentifierForNode(node)}
         entryTags.node = ${Neos.Caching.nodeTag(node)}
         entryTags.tags = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.Blog:Document.Tag', site)}
-        entryTags.tagsContainer = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.Blog:Document.Tags', site)}
         entryTags.posts = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Post', site)}
     }
 }
