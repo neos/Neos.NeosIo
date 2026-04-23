@@ -8,9 +8,10 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseStudyCarousel) < prototype(Neos.Ne
         }
         items = Neos.Fusion:Map {
             items = ${q(site).find('[instanceof Neos.NeosIo:Reference.CaseStudy]').sort('datePublished', 'DESC').slice(0, node.properties.maxItems).get()}
-            itemName = 'case'
             itemRenderer = Neos.NeosIo.CaseStudies:Content.CaseStudyTeaser {
-                caseStudy = ${case}
+                caseStudy = ${item}
+                # show the project type as subtitle instead of always "case study"
+                renderer.subTitle = ${q(item).referenceNodes('projectType').get(0).properties.title}
             }
         }
     }
