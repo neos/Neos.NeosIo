@@ -1,0 +1,26 @@
+prototype(Neos.NeosIo.CaseStudies:Content.CaseStudyCarousel) < prototype(Neos.Neos:ContentComponent) {
+
+    renderer = Neos.Presentation:Carousel {
+        autoplay = ${node.properties.autoplay}
+        title = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        items = Neos.Fusion:Map {
+            items = ${q(site).find('[instanceof Neos.NeosIo:Reference.CaseStudy]').sort('datePublished', 'DESC').slice(0, node.properties.maxItems).get()}
+            itemRenderer = Neos.NeosIo.CaseStudies:Content.CaseStudyTeaser {
+                caseStudy = ${item}
+                # show the project type as subtitle instead of always "case study"
+                renderer.subTitle = ${q(item).referenceNodes('projectType').get(0).properties.title || ''}
+            }
+        }
+    }
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier.node = ${Neos.Caching.entryIdentifierForNode(node)}
+        entryTags.node = ${Neos.Caching.nodeTag(node)}
+        entryTags.caseStudies = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Reference.CaseStudy', site)}
+        entryTags.referenceTypes = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:ReferenceType', site)}
+    }
+}
