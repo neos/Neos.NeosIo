@@ -3,12 +3,8 @@ prototype(Neos.Presentation:Carousel) < prototype(Neos.Fusion:Component) {
     title = ""
     autoplay = false
 
-    @private {
-        autoplay = ${props.autoplay ? 'true' : 'false'}
-    }
-
     renderer = afx`
-        <div class="n-carousel swiper" data-autoplay={private.autoplay}>
+        <div class="n-carousel swiper" data-autoplay={props.autoplay ? 'true' : 'false'}>
             <div class="flex items-center justify-between mb-4 h-32">
                 <div>
                     <Neos.Presentation:Headline tagName="h3" display="headline-md" class="m-0">

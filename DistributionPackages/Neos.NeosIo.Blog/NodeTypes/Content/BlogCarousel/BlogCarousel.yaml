@@ -10,7 +10,7 @@
     filterTags:
       ui:
         label: 'Filter by Tag(s)'
-        reloadIfChanged: true
+        reloadPageIfChanged: true
         inspector:
           group: content
           editorOptions:
@@ -30,6 +30,7 @@
       defaultValue: 10
       ui:
         label: 'Maximum number of items'
+        reloadPageIfChanged: true
         inspector:
           group: content
           editor: Neos.Neos/Inspector/Editors/RangeEditor
@@ -42,5 +43,6 @@
       defaultValue: false
       ui:
         label: 'Autoplay'
+        reloadPageIfChanged: true
         inspector:
           group: content

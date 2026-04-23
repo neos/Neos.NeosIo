@@ -7,7 +7,7 @@ prototype(Neos.NeosIo:Content.BlogCarousel) < prototype(Neos.Neos:ContentCompone
             block = false
         }
         items = Neos.Fusion:Map {
-            items = ${Blog.getBlogPost(site, node.properties.maxItems, q(node).referenceNodes("filterTags").get())}
+            items = ${Blog.getPosts(site, node.properties.maxItems, q(node).referenceNodes("filterTags").get())}
             itemName='post'
             itemRenderer = Neos.Presentation:PostPreview {
                 datePublished = ${q(post).property('datePublished')}
