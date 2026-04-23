@@ -10,20 +10,9 @@ prototype(Neos.NeosIo:Content.BlogCarousel) < prototype(Neos.Neos:ContentCompone
             items = ${Blog.getBlogPost(site, node.properties.maxItems, q(node).referenceNodes("filterTags").get())}
             itemName='post'
             itemRenderer = Neos.Presentation:PostPreview {
-                @context.thumbnail = ${q(post).property('keyVisualImage').resource ? Neos.Media.Image.createThumbnail(
-                q(post).property('keyVisualImage'),
-                null,
-                null,
-                500
-                ) : null}
                 datePublished = ${q(post).property('datePublished')}
                 title = ${q(post).property('title')}
-                imageUri = Neos.Fusion:ResourceUri {
-                    resource = ${thumbnail.resource}
-                    @if.set = ${thumbnail}
-                }
-                imageWidth = ${thumbnail.width}
-                imageHeight = ${thumbnail.height}
+                image = ${q(post).property('keyVisualImage')}
                 imageAlt = ${q(post).property('keyVisualAlternativeText') || q(post).property('keyVisualImage').caption || this.title}
                 nodeUri = Neos.Neos:NodeUri {
                     node = ${post}
