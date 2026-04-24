@@ -88,7 +88,7 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
                     alt={props.alt}
                     loading={props.loadEager ? 'eager' : 'lazy'}
                     class={private.imgClassesOrDefault}
-                    style={'height:' + props.maximumHeight + 'px; width: auto; object-fit: cover;'}
+                    style={'height:' + props.maximumHeight + 'px;'}
                     style.@if.hasMaxHeight={props.maximumHeight}
                 />
             `
