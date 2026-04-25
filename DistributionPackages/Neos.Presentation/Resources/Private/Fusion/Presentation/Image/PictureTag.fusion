@@ -69,7 +69,13 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
 
         // WHY: if null is passed through we always want the default class to be used and not
         // null to remove the default class.
-        imgClassesOrDefault = ${props.imgClasses ? props.imgClasses : 'w-full'}
+        imgClassNames = Neos.Fusion:DataStructure {
+            custom = ${props.imgClasses}
+            full-width = 'w-full'
+            full-width.@if.noCustomClasses = ${props.imgClasses}
+            width-auto = 'w-auto'
+            width-auto.@if.hasMaxHeight = ${props.maximumHeight}
+        }
     }
 
     renderer = Neos.Fusion:Case {
@@ -87,7 +93,7 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
                     src={private.imageUri}
                     alt={props.alt}
                     loading={props.loadEager ? 'eager' : 'lazy'}
-                    class={private.imgClassesOrDefault}
+                    class={private.imgClassNames}
                     style={'height:' + props.maximumHeight + 'px;'}
                     style.@if.hasMaxHeight={props.maximumHeight}
                 />
@@ -105,10 +111,10 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
                     sizes={props.sizes}
                     formats={props.formats}
                     loading={props.loadEager ? 'eager' : 'lazy'}
-                    imgAttributes.class={private.imgClassesOrDefault}
+                    imgAttributes.class={private.imgClassNames}
                     imgAttributes.data-lightbox={private.imageSource.src()}
                     imgAttributes.data-lightbox.@if.lightbox={props.lightbox}
-                    imgAttributes.style={'height:' + props.maximumHeight + 'px; width: auto; object-fit: cover;'}
+                    imgAttributes.style={'height:' + props.maximumHeight + 'px;'}
                     imgAttributes.style.@if.hasMaxHeight={props.maximumHeight}
                 />
             `
