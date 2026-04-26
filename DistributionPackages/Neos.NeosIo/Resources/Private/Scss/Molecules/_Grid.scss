@@ -63,9 +63,9 @@ $grid-gutter: $column-gutter / 2;
     flex-direction: column;
     grid-gap: #{$grid-gutter *2};
     >.neos-contentcollection {
-      display: flex;
-      flex-direction: column;
-      grid-gap: #{$grid-gutter};
+      > *:not(:last-child) {
+        margin-bottom: calc(var(--spacing) * 8);
+      }
     }
 
     &--more-link {

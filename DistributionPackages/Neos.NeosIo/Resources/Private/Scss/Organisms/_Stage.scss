@@ -163,9 +163,9 @@
   }
 
   > .neos-contentcollection {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    > *:not(:last-child) {
+      margin-bottom: calc(var(--spacing) * 8);
+    }
   }
 
   &.u-invertText {
