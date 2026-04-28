@@ -1,0 +1,18 @@
+prototype(Neos.NodeTypes:Headline) >
+prototype(Neos.NodeTypes:Headline) < prototype(Neos.Neos:ContentComponent) {
+    title = ${q(node).property('title')}
+
+    @private {
+        inEditMode = ${renderingMode.isEdit}
+
+        className = Neos.Fusion:DataStructure {
+            main = 'neos-nodetypes-headline mb-[var(--n-spacing--y-small)] last:mb-0'
+        }
+    }
+
+    renderer = afx`
+        <div class={private.className} @if={props.title || private.inEditMode}>
+            {props.title}
+        </div>
+    `
+}

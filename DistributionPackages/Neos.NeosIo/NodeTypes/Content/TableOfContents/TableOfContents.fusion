@@ -2,7 +2,7 @@ prototype(Neos.NeosIo:Content.TableOfContents) < prototype(Neos.Neos:ContentComp
     items = Neos.NeosIo:Fragment.TableOfContents.MenuItems
 
     renderer = afx`
-        <nav class="table-of-contents">
+        <nav class="table-of-contents mb-[var(--n-spacing--y-small)] last:mb-0">
             <Neos.NeosIo:Component.TableOfContents.MenuLevel items={props.items} />
         </nav>
     `

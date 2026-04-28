@@ -13,7 +13,7 @@ prototype(Neos.Presentation:CountUp) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = afx`
-        <div x-data={AlpineJS.xData('countUp', private.inBackend)} "x-intersect.once"="animate()">
+        <div x-data={AlpineJS.xData('countUp', private.inBackend)} "x-intersect.once"="animate()" class="mb-[var(--n-spacing--y-small)] last:mb-0">
             <span @if={!private.inBackend} x-ref="number" class="display-headline-xl" data-value={props.number} x-text="display">
                 {props.number}
             </span>

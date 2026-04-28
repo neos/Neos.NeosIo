@@ -2,7 +2,7 @@ prototype(Neos.NeosIo:Youtube) < prototype(Neos.Neos:ContentComponent) {
     video = ${q(node).property('video')}
 
     renderer = afx`
-      <div class="youtube">
+      <div class="youtube mb-[var(--n-spacing--y-small)] last:mb-0">
         <figure class="flexibleEmbed" @if={props.video}>
           <iframe
             class="flexibleEmbed__content"
