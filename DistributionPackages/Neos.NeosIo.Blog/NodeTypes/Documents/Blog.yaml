@@ -1,0 +1,17 @@
+'Neos.NeosIo.Blog:Document.Blog':
+  superTypes:
+    'Neos.NodeTypes:Page': true
+  ui:
+    label: Blog
+    icon: newspaper
+  constraints:
+    nodeTypes:
+      'Neos.Neos:Document': false
+      'Neos.NeosIo:Constraint.Blog.Document': true
+  childNodes:
+    main:
+      type: 'Neos.Neos:ContentCollection'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:SemanticSection': true

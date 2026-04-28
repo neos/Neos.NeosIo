@@ -44,6 +44,7 @@ prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
                     attributes.href={props.link}
                     attributes.href.@if={props.link && !private.inBackend}
                     attributes.target={props.openInNewTab ? '_blank' : null}
+                    attributes.title={String.stripTags(props.title)}
                 >
                     <Neos.Presentation:Headline
                         tagName="h3"

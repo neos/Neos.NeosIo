@@ -5,7 +5,8 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
     projectVolume = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes {
         volume = ${q(node).property('projectVolume')}
     }
-    projectType = ${q(q(node).property('projectType')).property('title')}
+    projectType = ${q(node).referenceNodes('projectType').get(0)}
+    serviceProvider = ${q(node).referenceNodes('serviceProvider').get(0)}
     featured = ${q(node).property('featured') || Neos.Node.isOfType(node, 'Neos.NeosIo:Reference.CaseStudy') || 0}
 
     @private {
@@ -29,20 +30,22 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
             launchDate = ${props.launchDate}
             projectVolume = ${props.projectVolume}
             projectType = ${props.projectType}
+            serviceProvider = ${props.serviceProvider}
         }
         volumeCode = ${q(node).property('projectVolume') ? String.toInteger(q(node).property('projectVolume')) : 0}
         launchTimestamp = ${q(node).property('launchDate') || q(node).property('datePublished') || q(node).property('_creationDateTime')}
         launchTimestamp.@process.format = ${value ? String.toInteger(Date.format(value, 'U')) : 0}
+        projectTypeName = ${props.projectType ? Neos.Node.label(props.projectType) : ''}
     }
 
     renderer = afx`
         <div
             data-case-item=""
             data-featured={props.featured ? '1' : '0'}
-            data-project-type={props.projectType || ''}
+            data-project-type={private.projectTypeName}
             data-project-volume={private.volumeCode}
             data-launch-date={private.launchTimestamp}
-            data-search-text={String.toLowerCase((props.title || '') + ' ' + (props.projectType || ''))}
+            data-search-text={String.toLowerCase((props.title || '') + ' ' + (private.projectTypeName))}
         >
             <!-- Card view (grid mode) -->
             <div x-show="view === 'grid'" class="relative">
@@ -75,8 +78,8 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
                     </span>
                 </div>
                 <span class="w-40 min-w-0 text-sm text-neutral-500 hidden md:flex items-center gap-1">
-                    <i @if={props.projectType} class="fas fa-industry flex-shrink-0" aria-hidden="true"></i>
-                    <span class="truncate">{props.projectType}</span>
+                    <i @if={private.projectTypeName} class="fas fa-industry flex-shrink-0" aria-hidden="true"></i>
+                    <span @if={private.projectTypeName} class="truncate">{private.projectTypeName}</span>
                 </span>
                 <span class="w-40 text-sm text-neutral-500 hidden lg:flex items-center gap-1">
                     <i @if={props.projectVolume} class="fas fa-users" aria-hidden="true"></i>{props.projectVolume}

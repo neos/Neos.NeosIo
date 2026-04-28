@@ -1,6 +1,7 @@
 // Main component for rendering images with a <picture> tag, supporting multiple formats and responsive images via srcset and sizes.
 prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Component) {
     asset = null
+    imageSource = null
     alt = ''
 
     // We load all images lazily by default, as the browser is really good at finding what is needed above the fold
@@ -32,6 +33,7 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
     @propTypes {
         @strict = true
         asset = ${PropTypes.instanceOf('Neos\Media\Domain\Model\Asset')}
+        imageSource = ${PropTypes.instanceOf('Sitegeist\Kaleidoscope\Domain\ImageSourceInterface')}
         alt = ${PropTypes.string}
         loadEager = ${PropTypes.boolean}
         srcSet = ${PropTypes.arrayOf(PropTypes.string)}
@@ -45,19 +47,35 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
     @private {
         inBackend = Neos.NeosIo:Helpers.InBackend
 
-        imageSource = Sitegeist.Kaleidoscope:AssetImageSource {
-            asset = ${props.asset}
-            quality = 80
-            height = ${props.maximumHeight ? props.maximumHeight : null}
+        imageSource = Neos.Fusion:Case {
+            customImageSource {
+                condition = ${props.imageSource}
+                renderer = ${props.imageSource}
+            }
+            default {
+                condition = true
+                renderer = Sitegeist.Kaleidoscope:AssetImageSource {
+                    asset = ${props.asset}
+                    quality = 80
+                    height = ${props.maximumHeight ? props.maximumHeight : null}
+                }
+            }
         }
         imageUri = Neos.NeosIo:Helpers.ResourceUri {
             resource = ${props.asset.resource}
+            @if.hasAsset = ${props.asset}
         }
-        fileExtension = ${props.asset.resource.fileExtension}
+        fileExtension = ${props.asset ? props.asset.resource.fileExtension : null}
 
         // WHY: if null is passed through we always want the default class to be used and not
         // null to remove the default class.
-        imgClassesOrDefault = ${props.imgClasses ? props.imgClasses : 'w-full'}
+        imgClassNames = Neos.Fusion:DataStructure {
+            custom = ${props.imgClasses}
+            full-width = 'w-full'
+            full-width.@if.noCustomClasses = ${props.imgClasses}
+            width-auto = 'w-auto'
+            width-auto.@if.hasMaxHeight = ${props.maximumHeight}
+        }
     }
 
     renderer = Neos.Fusion:Case {
@@ -75,8 +93,8 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
                     src={private.imageUri}
                     alt={props.alt}
                     loading={props.loadEager ? 'eager' : 'lazy'}
-                    class={private.imgClassesOrDefault}
-                    style={'height:' + props.maximumHeight + 'px; width: auto; object-fit: cover;'}
+                    class={private.imgClassNames}
+                    style={'height:' + props.maximumHeight + 'px;'}
                     style.@if.hasMaxHeight={props.maximumHeight}
                 />
             `
@@ -93,10 +111,10 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
                     sizes={props.sizes}
                     formats={props.formats}
                     loading={props.loadEager ? 'eager' : 'lazy'}
-                    imgAttributes.class={private.imgClassesOrDefault}
+                    imgAttributes.class={private.imgClassNames}
                     imgAttributes.data-lightbox={private.imageSource.src()}
                     imgAttributes.data-lightbox.@if.lightbox={props.lightbox}
-                    imgAttributes.style={'height:' + props.maximumHeight + 'px; width: auto; object-fit: cover;'}
+                    imgAttributes.style={'height:' + props.maximumHeight + 'px;'}
                     imgAttributes.style.@if.hasMaxHeight={props.maximumHeight}
                 />
             `

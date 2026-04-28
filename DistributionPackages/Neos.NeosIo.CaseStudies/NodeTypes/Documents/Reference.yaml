@@ -1,8 +1,4 @@
-
 'Neos.NeosIo:Reference':
-  superTypes:
-    'Neos.Neos:Document': true
-    'Neos.Seo:NoindexMixin': true
   abstract: true
   ui:
     label: Reference
@@ -11,14 +7,36 @@
       groups:
         case-studies:
           label: 'Case properties'
-          tab: 'case-studies'
           icon: globe
-          position: 1
-      tabs:
-        case-studies:
-          label: 'Case properties'
-          position: 'start'
-          icon: globe
+          position: 'after document'
+  references:
+    serviceProvider:
+      constraints:
+        maxItems: 1
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo.ServiceOfferings:Document.ServiceProvider': true
+      ui:
+        label: 'Choose service provider'
+        reloadIfChanged: true
+        inspector:
+          group: 'case-studies'
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo.ServiceOfferings:Document.ServiceProvider'
+    projectType:
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:ReferenceType': true
+      ui:
+        label: 'Choose project type'
+        reloadIfChanged: true
+        inspector:
+          group: 'case-studies'
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo:ReferenceType'
   properties:
     url:
       type: string
@@ -37,18 +55,6 @@
         inspector:
           group: 'case-studies'
           position: 20
-    projectType:
-      type: reference
-      ui:
-        label: 'Choose project type'
-        reloadIfChanged: true
-        inspector:
-          group: 'case-studies'
-          editorOptions:
-            nodeTypes:
-              - 'Neos.NeosIo:ReferenceType'
-      search:
-        fulltextExtractor: '${Indexing.extractInto(''h2'', value.properties.title)}'
     launchDate:
       type: DateTime
       ui:
