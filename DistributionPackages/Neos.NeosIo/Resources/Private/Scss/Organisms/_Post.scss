@@ -1,9 +1,11 @@
 article.post {
-.neos-contentcollection {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--spacing)*4);
-}
+  main {
+    > .neos-contentcollection {
+      display: flex;
+      flex-direction: column;
+      gap: calc(var(--spacing)*4);
+    }
+  }
 }
 .post__footer {
   .nav > li > a {
