@@ -42,10 +42,12 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
         inEditMode = ${renderingMode.isEdit}
 
         className = Neos.Fusion:DataStructure {
-            main = 'neos-nodetypes-image mb-[var(--n-spacing--y-small)] last:mb-0'
+            main = ${'neos-nodetypes-image'}
 
             alignment = ${'neos-alignment-' + q(node).property('alignment')}
             alignment.@if.isSet = ${q(node).property('alignment')}
+            spacing = 'mb-[var(--n-spacing--y-small)] last:mb-0'
+            spacing.@if.notInImageGrid = ${!q(node).parent('[instanceof Neos.NeosIo:Content.ImageGrid]')}
         }
 
         figureClassName = Neos.Fusion:DataStructure {
