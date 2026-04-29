@@ -47,7 +47,7 @@ prototype(Neos.NodeTypes:Image) < prototype(Neos.Neos:ContentComponent) {
             alignment = ${'neos-alignment-' + q(node).property('alignment')}
             alignment.@if.isSet = ${q(node).property('alignment')}
             spacing = 'mb-[var(--n-spacing--y-small)] last:mb-0'
-            spacing.@if.notInImageGrid = ${!q(node).parent('[instanceof Neos.NeosIo:Content.ImageGrid]')}
+            spacing.@if.notInImageGrid = ${!q(node).parent('[instanceof Neos.NeosIo:Content.ImageGrid]').get(0)}
         }
 
         figureClassName = Neos.Fusion:DataStructure {
