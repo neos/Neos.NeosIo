@@ -1,6 +1,8 @@
 prototype(Neos.NodeTypes:Text) >
 prototype(Neos.NodeTypes:Text) < prototype(Neos.Neos:ContentComponent) {
-    text = ${q(node).property('text')}
+    text = Neos.Neos:Editable {
+        property = 'text'
+    }
 
     @private {
         inEditMode = ${renderingMode.isEdit}

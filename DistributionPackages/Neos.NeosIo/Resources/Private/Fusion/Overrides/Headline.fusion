@@ -1,6 +1,8 @@
 prototype(Neos.NodeTypes:Headline) >
 prototype(Neos.NodeTypes:Headline) < prototype(Neos.Neos:ContentComponent) {
-    title = ${q(node).property('title')}
+    title = Neos.Neos:Editable {
+        property = 'title'
+    }
 
     @private {
         inEditMode = ${renderingMode.isEdit}
