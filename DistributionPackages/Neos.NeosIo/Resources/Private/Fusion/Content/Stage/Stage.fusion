@@ -40,7 +40,7 @@ prototype(Neos.NeosIo:Stage) < prototype(Neos.Neos:ContentComponent) {
                 backgroundShadePercentage={props.backgroundShadePercentage}
             />
             <div class={['stage__contents', props.isContentTextInverted && 'u-invertText', props.isContentExtraPadded && 'stage__contents--extraPadding', props.padding && 'stage__contents--padding-' + props.padding, props.contentWidth && 'stage__contents--' + props.contentWidth]}>
-                <h2 @if={!props.hideTitle && (renderingMode.isEdit || props.title)}>{props.editableTitle}</h2>
+                <h2 class="display-headline-lg" @if={!props.hideTitle && (renderingMode.isEdit || props.title)}>{props.editableTitle}</h2>
                 <Neos.Neos:ContentCollection />
             </div>
         </section>

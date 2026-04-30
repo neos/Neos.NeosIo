@@ -11,7 +11,6 @@
           position: 'after document'
   references:
     serviceProvider:
-      type: reference
       constraints:
         maxItems: 1
         nodeTypes:
@@ -25,10 +24,7 @@
           editorOptions:
             nodeTypes:
               - 'Neos.NeosIo.ServiceOfferings:Document.ServiceProvider'
-      search:
-        fulltextExtractor: '${Indexing.extractInto(''h2'', value.properties.title)}'
     projectType:
-      type: reference
       constraints:
         nodeTypes:
           '*': false
@@ -41,8 +37,6 @@
           editorOptions:
             nodeTypes:
               - 'Neos.NeosIo:ReferenceType'
-      search:
-        fulltextExtractor: '${Indexing.extractInto(''h2'', value.properties.title)}'
   properties:
     url:
       type: string

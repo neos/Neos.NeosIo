@@ -30,6 +30,7 @@ prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
                 <Neos.Presentation:Paragraph
                     display="tagname"
                     class="text-blue-light"
+                    @if={props.subTitle}
                 >
                     {props.subTitle}
                 </Neos.Presentation:Paragraph>
@@ -37,7 +38,7 @@ prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
                 <Neos.Fusion:Tag
                     tagName={!private.inBackend ? 'a' : 'div'}
                     attributes.class={Carbon.String.classNames(
-                        'display-cta-xl mt-0 flex gap-2 items-center',
+                        'mt-0 flex gap-2 items-center',
                         !private.inBackend && props.link ? 'after:absolute after:inset-0 after:z-10' : ''
                     )}
                     attributes.href={props.link}
@@ -49,10 +50,10 @@ prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
                         tagName="h3"
                         content={props.title}
                         display="title-lg"
-                        class="n-headline m-0!"
+                        class="n-headline text-white m-0!"
                     />
                 </Neos.Fusion:Tag>
-                <div class="text-white">
+                <div class="text-white" @if={props.text}>
                     {props.text}
                 </div>
             </div>
