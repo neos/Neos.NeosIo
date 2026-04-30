@@ -72,7 +72,7 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
         imgClassNames = Neos.Fusion:DataStructure {
             custom = ${props.imgClasses}
             full-width = 'w-full'
-            full-width.@if.noCustomClasses = ${props.imgClasses}
+            full-width.@if.noCustomClasses = ${!props.imgClasses}
             width-auto = 'w-auto'
             width-auto.@if.hasMaxHeight = ${props.maximumHeight}
         }
