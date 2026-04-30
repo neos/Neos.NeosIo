@@ -71,10 +71,15 @@ prototype(Neos.Presentation:PersonCards) < prototype(Neos.Fusion:Component) {
                             email={item.email}
                             slack={item.slack}
                             background={item.background}
-                            imageSource={item.imageSource}
-                            imageAlt={item.imageAlt}
                             pixelVariant={item.pixelVariant || String.toString((iterator.index % 3) + 1)}
-                        />
+                        >
+                            <Neos.Presentation:Component.PictureTag
+                              imageSource={item.imageSource}
+                              imgClasses="aspect-4/5 w-full object-cover"
+                              alt={item.imageAlt}
+                              @path="image"
+                            />
+                        </Neos.Presentation:PersonCard>
                     </Neos.Fusion:Loop>
                 </Neos.Presentation:DynamicGrid>
             </Neos.Presentation:Spacing>

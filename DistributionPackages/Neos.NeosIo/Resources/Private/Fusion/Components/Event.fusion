@@ -10,7 +10,7 @@ prototype(Neos.NeosIo:Component.Event) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <article class="event">
-            <h1>{props.name}</h1>
+            <h1 class="display-headline-sm mb-8">{props.name}</h1>
             <dl>
                 <dt>Type:</dt>
                 <dd>{String.firstLetterToUpperCase(props.type)}</dd>
@@ -25,8 +25,8 @@ prototype(Neos.NeosIo:Component.Event) < prototype(Neos.Fusion:Component) {
                 <dt @if.set={!String.isBlank(props.organizer)}>Organizer(s):</dt>
                 <dd @if.set={!String.isBlank(props.organizer)}>{props.organizer}</dd>
             </dl>
-            <h2 @if.set={!String.isBlank(props.description)}>Details:</h2>
-            <div @if.set={!String.isBlank(props.description)}>{props.description}</div>
+            <h2 class="display-title-lg mb-4" @if.set={!String.isBlank(props.description)}>Details:</h2>
+            <div class="neos-nodetypes-text" @if.set={!String.isBlank(props.description)}>{props.description}</div>
         </article>
     `
 }

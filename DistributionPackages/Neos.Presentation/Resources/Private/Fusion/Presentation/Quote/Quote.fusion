@@ -33,14 +33,23 @@ prototype(Neos.Presentation:Quote) < prototype(Neos.Fusion:Component) {
                 />
             </div>
 
-            <div class="flex flex-col items-start gap-4 p-6 md:p-12">
-                <Neos.Presentation:Icon icon="quote" class="h-16 md:h-20 text-blue-light" />
+            <div class="flex flex-col items-start p-6 md:p-12">
+                <Neos.Presentation:Icon icon="quote" class="h-16 md:h-20 text-blue-light mb-2 md:mb-6 last:mb-0" />
+                <blockquote
+                    class="max-w-xl display-title-md mb-6 md:mb-10 last:mb-0"
+                    @if={props.quote || private.inBackend}
+                >
+                    {'„' + props.quote + '“'}
+                </blockquote>
                 <Neos.Presentation:Paragraph
-                    content={'„' + props.quote + '“'}
-                    class="max-w-xl"
+                    content={props.author}
+                    class="display-title-lg mb-1 md:mb-2 last:mb-0"
                 />
-                <div class="text-lg mt-0">{props.author}</div>
-                <div class="text-sm" @if={props.position || private.inBackend}>{props.position}</div>
+                <Neos.Presentation:Paragraph
+                    content={props.position}
+                    class="display-lead font-normal"
+                    @if={props.position || private.inBackend}
+                />
             </div>
         </Neos.Presentation:Background>
     `

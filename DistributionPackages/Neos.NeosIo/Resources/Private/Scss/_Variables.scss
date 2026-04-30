@@ -28,7 +28,7 @@ $brand-colors: (
 ) !default;
 
 // The main brand font-family
-$brand-font-family: "Work Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$brand-font-family: "Bricolage Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 
 // If the CD makes use of rounded corners, use this variable for consistency.
 $brand-border-radius: 3px !default;
@@ -50,7 +50,8 @@ $serif-font-family: Georgia, "Times New Roman", Times, serif !default;
 $mono-font-family: Menlo, Monaco, Consolas, "Courier New", monospace !default;
 
 // The font-weights below are used to emphasize written words instead of numbers in your Sass.
-$bold: 500 !default;
+$bold: 600 !default;
+$medium: 500 !default;
 $regular: 400 !default;
 $light: 200 !default;
 $thin: 100 !default;
@@ -61,9 +62,9 @@ $base-font-size: 16 !default;
 $base-line-height: 26 !default;
 $base-font-family: $sans-font-family !default;
 $base-font-weight: $regular !default;
-$base-text-color: #656a71 !default;
+$base-text-color: #363636 !default;
 
-$headingsColor: #3b444f;
+$headingsColor: map-get($brand-colors, secondary);
 
 // Typographic spacings (in pixels), these default values will
 // output a basic vertical rythm based on your '$base-line-height'.

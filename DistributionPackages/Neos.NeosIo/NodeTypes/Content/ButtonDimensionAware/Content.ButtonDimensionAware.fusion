@@ -7,6 +7,7 @@ prototype(Neos.NeosIo:ButtonDimensionAware) < prototype(Neos.Neos:ContentCompone
             property = 'buttonLabel'
             block = false
         }
+        class = 'mb-[var(--n-spacing--y-small)] last:mb-0'
         alignment = ${q(node).property('alignment') || 'inline'}
         style = ${q(node).property('style')}
 

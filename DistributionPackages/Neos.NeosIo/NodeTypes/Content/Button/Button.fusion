@@ -49,10 +49,14 @@ prototype(Neos.NeosIo:Component.Button) < prototype(Neos.Fusion:Component) {
         link = ${PropTypes.string}
         openInNewTab = ${PropTypes.boolean}
         icon = ${PropTypes.string}
+        class = ${PropTypes.string}
     }
 
     @private {
         inBackend = ${renderingMode.isEdit}
+        style = Neos.NeosIo:Button.Helpers.StyleMapping {
+            style = ${props.style}
+        }
     }
 
     renderer = afx`
@@ -61,8 +65,9 @@ prototype(Neos.NeosIo:Component.Button) < prototype(Neos.Fusion:Component) {
                 href={props.link}
                 content={props.buttonLabel}
                 openInNewTab={props.openInNewTab}
-                variant={props.style}
+                variant={private.style}
                 icon={props.icon}
+                class={props.class}
             />
         </Neos.NeosIo:Component.ButtonWrapper>
     `

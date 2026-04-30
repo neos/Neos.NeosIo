@@ -3,12 +3,12 @@
   flex-direction: row;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  margin: 0 -1rem;
+  margin: 0 calc(var(--spacing)*-4);
   align-items: center;
 
   > * {
     flex: 0 1 200px;
-    margin: 1rem;
+    margin: calc(var(--spacing)*4);
   }
 
   &.monochrome img {
