@@ -92,19 +92,14 @@
     z-index: -1;
     transform: translateX(-50%) translateY(-50%);
   }
-
-  h1, .h1 {
-    font-size: 40px;
-    @include mq('medium') {
-      font-size: 60px;
-    }
+  h1 {
+    @include text-headline-xl;
   }
-
-  h1, h2, h3,
-  h4, h5, h6,
-  .h1, .h2, .h3,
-  .h4, .h5, .h6 {
-    font-weight: 400;
+  h2 {
+    @include text-headline-lg;
+  }
+  h3 {
+    @include text-headline-md;
   }
 
   @include mq('small') {
