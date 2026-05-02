@@ -6,7 +6,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Packages) < prototype(
 
     renderer = afx`
         <div class="service-provider__packages">
-            <h2>Neos packages</h2>
+            <h2 class="display-title-lg mb-4">{Translation.translate('serviceProvider.packages', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}</h2>
             <div @if.hasPackages={Type.isArray(props.packages) && Array.length(props.packages)}>
                 <ul>
                     <Neos.Fusion:Loop items={props.packages} itemName="package">
@@ -17,14 +17,14 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Packages) < prototype(
                                rel="noreferrer noopener">
                                 {q(package).property('title')}
                             </a> &nbsp;
-                            <i class="fas fa-download"></i> {q(package).property('downloadTotal')} &nbsp;
-                            <i class="fas fa-star"></i> {q(package).property('favers')}
+                            <i class="fas fa-download text-blue-dark"></i> {q(package).property('downloadTotal')} &nbsp;
+                            <i class="fas fa-star text-blue-dark"></i> {q(package).property('favers')}
                         </li>
                     </Neos.Fusion:Loop>
                 </ul>
             </div>
             <div @if.hasVendor={props.githubName}>
-                More on <a href={'http://github.com/' + props.githubName} target="_blank" rel="noopener noreferrer">Github</a>
+                {Translation.translate('serviceProvider.moreOn', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')} <a href={'http://github.com/' + props.githubName} target="_blank" rel="noopener noreferrer">Github</a>
                 &nbsp;<i class="fab fa-github"></i>
             </div>
         </div>

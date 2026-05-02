@@ -2,10 +2,6 @@
 @import 'Packages/Plugins/WebExcess.OpenStreetMap/Resources/Private/Assets/Main';
 
 .service-provider {
-  section + section {
-    margin-top: 3rem;
-  }
-
   &-collection {
     margin: 3rem 0 5rem;
   }
@@ -15,31 +11,10 @@
     max-height: 300px;
   }
 
-  &__address {
-    margin-bottom: 1rem;
-  }
-
-  &__contact {
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-  }
-
   &__map {
-    width: 500px;
-    max-width: 100%;
-    margin-top: 5rem;
-  }
-
-  &__details,
-  &__contributions {
-    clear: both;
-    display: flex;
-    flex-wrap: wrap;
-
-    > * {
-      flex: 1 1 300px;
+    .webexcess-openstreetmap {
+      border-color: var(--color-neutral-20);
+      margin: 0;
     }
   }
 
@@ -57,28 +32,13 @@
       height: auto;
     }
   }
-
   &__services {
     ul {
-      margin-top: .5rem;
-    }
-  }
-
-  &__sponsorships {
-    time {
-      color: lighten(#656a71, 20%);
+    //  margin-top: .5rem;
     }
   }
 
   &__awards {
-    ul {
-      padding: 0;
-    }
-
-    li {
-      list-style-type: none;
-    }
-
     .fa {
       color: #007fb2;
     }

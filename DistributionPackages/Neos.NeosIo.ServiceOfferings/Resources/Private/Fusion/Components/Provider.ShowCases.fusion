@@ -12,8 +12,8 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.ShowCases) < prototype
     }
 
     renderer = afx`
-        <section>
-            <h2>Showcases</h2>
+        <section class=" mt-8">
+            <h2 class="display-title-lg mb-4 relative">Showcases</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <Neos.Fusion:Loop items={props.showCases} itemName="showCase">
                     <Neos.NeosIo:Reference.List.Item @context.node={showCase}/>
