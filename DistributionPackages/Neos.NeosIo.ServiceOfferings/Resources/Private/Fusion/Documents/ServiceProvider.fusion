@@ -96,7 +96,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
 
                     <p class="service-provider__description" @if.set={props.description}>{props.description}</p>
 
-                    <section class={["service-provider__details flex flex-wrap -mx-4 gap-y-8 mt-12", props.showCases || props.caseStudies ? 'mb-18' : 'mb-12']}>
+                    <section class={["service-provider__details flex flex-wrap -mx-4 gap-y-8 mt-12 clear-both", props.showCases || props.caseStudies ? 'mb-18' : 'mb-12']}>
                         <div class="w-full md:w-1/2 px-4">
                             <Neos.NeosIo.ServiceOfferings:Component.Provider.Contact
                                 email={props.email} website={props.website} phone={props.phone}
