@@ -10,10 +10,12 @@ prototype(Neos.Presentation:CountUp) < prototype(Neos.Fusion:Component) {
 
     @private {
         inBackend = ${renderingMode.isEdit}
+        isStats = ${q(node).parent('[instanceof Neos.NeosIo:Stats]').get(0)}
+        spacing = 'mb-[var(--n-spacing--y-small)] last:mb-0'
     }
 
     renderer = afx`
-        <div x-data={AlpineJS.xData('countUp', private.inBackend)} "x-intersect.once"="animate()" class="mb-[var(--n-spacing--y-small)] last:mb-0">
+        <div x-data={AlpineJS.xData('countUp', private.inBackend)} "x-intersect.once"="animate()" class={private.isStats ? '' : private.spacing}>
             <span @if={!private.inBackend} x-ref="number" class="display-headline-xl" data-value={props.number} x-text="display">
                 {props.number}
             </span>
