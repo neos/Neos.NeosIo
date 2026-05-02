@@ -17,7 +17,6 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
             }
             street = Neos.Neos:Editable {
                 property = 'street'
-                block = false
             }
             zipcode = Neos.Neos:Editable {
                 property = 'zipcode'
@@ -29,7 +28,6 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
             }
             country = Neos.Neos:Editable {
                 property = 'country'
-                block = false
             }
             internalNotes = Neos.Neos:Editable {
                 property = 'internalNotes'
@@ -66,18 +64,29 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
             }
 
             awards = ${Array.map(q(node).children('awards').children().get(), a => Neos.Node.label(q(a).property('award')) + ' (' + q(a).property('title') + ')')}
-
+            backLink = Neos.Neos:NodeUri {
+                node= ${q(documentNode).parent().get(0)}
+            }
             renderer = afx`
-                <div class="service-provider">
-                    <Neos.Neos:NodeLink node={q(documentNode).parent().get(0)}>Back to the overview</Neos.Neos:NodeLink>
+                <div class="relative pb-10 xl:absolute xl:top-0 xl:left-0 xl:max-w-[calc((100vw-var(--container-4xl))*0.5-var(--spacing)*8)]">
+                    <Neos.Presentation:Button
+                        href={props.backLink}
+                        content={I18n.translate('back.to.overview', 'Back to List', [], 'Main', 'Neos.NeosIo')}
+                        variant={"transparent"}
+                        icon={"animatedArrowLeft"}
+                        class={' whitespace-normal! text-left max-w-full'}
+                    />
+
+                </div>
+                <div class="service-provider xl:mx-auto xl:max-w-4xl">
 
                     <div class="service-provider__internal-notes" @if.set={props.internalNotes}>
                         {props.internalNotes}
                     </div>
 
-                    <h1 class="service-provider__title">{props.title}</h1>
+                    <h1 class="service-provider__title display-headline-sm mb-8">{props.title}</h1>
 
-                    <div class="service-provider__logo md:float-right md:ml-8" @if.set={props.logo}>
+                    <div class="service-provider__logo md:float-right mb-8 md:mb-8 md:ml-8" @if.set={props.logo}>
                         <Neos.Presentation:Component.PictureTag
                             asset={props.logo}
                             alt={"Logo: " + props.title}
@@ -87,38 +96,44 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
 
                     <p class="service-provider__description" @if.set={props.description}>{props.description}</p>
 
-                    <section class="service-provider__details">
-                        <div>
+                    <section class={["service-provider__details flex flex-wrap -mx-4 gap-y-8 mt-12", props.showCases || props.caseStudies ? 'mb-18' : 'mb-12']}>
+                        <div class="w-full md:w-1/2 px-4">
                             <Neos.NeosIo.ServiceOfferings:Component.Provider.Contact
                                 email={props.email} website={props.website} phone={props.phone}
                                 street={props.street} city={props.city} zipcode={props.zipcode}
                                 country={props.country}
                             />
-
+                        </div>
+                        <div class="w-full md:w-1/2 px-4" @if.set={props.latitude && props.longitude}>
+                            <Neos.NeosIo.ServiceOfferings:Component.Provider.Map
+                                address={props.address} lat={props.latitude} lon={props.longitude}
+                            />
+                        </div>
+                        <div class="w-full md:w-1/2 px-4" @if.hasServicesorSize={props.typesOfService || props.size}>
                             <Neos.NeosIo.ServiceOfferings:Component.Provider.Services
                                 size={props.size}
                                 typesOfService={props.typesOfService}
                             />
-
-                            <Neos.NeosIo.ServiceOfferings:Component.Provider.Awards />
                          </div>
-
-                        <Neos.NeosIo.ServiceOfferings:Component.Provider.Map
-                            address={props.address} lat={props.latitude} lon={props.longitude}
-                        />
+                        <div class="w-full md:w-1/2 px-4" @if.hasBadges={props.badges}>
+                            <Neos.NeosIo.ServiceOfferings:Component.Provider.Donations
+                                badges={props.badges}
+                            />
+                        </div>
+                        <div class="w-full px-4" @if.hasAwards={props.awards}>
+                            <Neos.NeosIo.ServiceOfferings:Component.Provider.Awards />
+                        </div>
+                        <div class="w-full px-4">
+                            <Neos.NeosIo.ServiceOfferings:Component.Provider.Packages
+                                packages={props.allPackages} githubName={props.githubName}
+                            />
+                        </div>
                     </section>
-
-                    <section class="service-provider__contributions">
-                        <Neos.NeosIo.ServiceOfferings:Component.Provider.Packages
-                            packages={props.allPackages} githubName={props.githubName}
-                        />
-                        <Neos.NeosIo.ServiceOfferings:Component.Provider.Donations
-                            badges={props.badges}
-                        />
+                    <section class="relative before:content-[''] before:block before:absolute before:top-0 before:left-[50%] before:translate-x-[-50%] before:bottom-0 before:w-[100dvw] before:bg-neutral-10 pb-16 lg:pb-25" @if.hasCaseStudies={props.caseStudies || props.showCases}>
+                        <div class="cta-banner-clip-path bg-white relative h-20 w-[100dvw] left-[50%] translate-x-[-50%] mb-4"></div>
+                        <Neos.NeosIo.ServiceOfferings:Component.Provider.CaseStudies caseStudies={props.caseStudies} />
+                        <Neos.NeosIo.ServiceOfferings:Component.Provider.ShowCases showCases={props.showCases} />
                     </section>
-
-                    <Neos.NeosIo.ServiceOfferings:Component.Provider.CaseStudies caseStudies={props.caseStudies} />
-                    <Neos.NeosIo.ServiceOfferings:Component.Provider.ShowCases showCases={props.showCases} />
 
                     <Neos.Seo:StructuredData.RootObject
                         type="LocalBusiness"
@@ -158,6 +173,15 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
             `
         }
     }
+    content.renderer = afx`
+        <div id="mainContent">
+            <main class="mx-auto max-w-[1400px] pt-10 px-6 lg:pt-16 2xl:px-0" role="main">
+                <section class="relative">
+                    {props.parts}
+                </section>
+            </main>
+        </div>
+    `
 
     renderer.@cache {
         maximumLifetime = 86400

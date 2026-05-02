@@ -14,14 +14,16 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Services) < prototype(
 
     renderer = afx`
         <div class="service-provider__services">
-            <h2>Provided services</h2>
-            <span>
-                <i class={'fas fa-' + props.sizeIcons[props.size]}></i>&nbsp;
-                Number of employees: {props.size}
-            </span>
-            <ul>
+            <h2 class="display-title-lg mb-4">{Translation.translate('serviceProvider.services', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}</h2>
+            <p @if.set={props.size}>
+                <span class="flex gap-4">
+                    <i class={'mt-1 text-blue-dark fas fa-' + props.sizeIcons[props.size]}></i>
+                    {props.size} {Translation.translate('serviceProvider.employees', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
+                </span>
+            </p>
+            <ul class="p-0 list-none mt-4 mb-0" @if.hasServices={props.typesOfService}>
                 <Neos.Fusion:Loop items={props.typesOfService} itemName="service">
-                    <li>{Neos.Node.label(service)}</li>
+                    <li class="inline-block px-2 py-0.5 mb-2 mr-2 bg-neutral-10">{Neos.Node.label(service)}</li>
                 </Neos.Fusion:Loop>
             </ul>
         </div>
