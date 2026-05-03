@@ -88,12 +88,11 @@ prototype(Neos.NeosConIo:Schedule.Talk.Title) < prototype(Neos.Fusion:Component)
 
 prototype(Neos.NeosConIo:ScheduleSpeakerImages) < prototype(Neos.Fusion:Component)  {
     speakers = ${}
-    speakerCount = ${q(this.speakers).count()}
 
     renderer = afx`
         <div class="talk__speaker-images flex shrink-0 grow-0 flex-wrap w-25 min-h-12">
             <Neos.Fusion:Loop items={props.speakers} itemName="speaker" @children="itemRenderer">
-                <Neos.NeosConIo:ScheduleSpeakerImageWrapper speaker={speaker} iterator={iterator} speakerCount={props.speakerCount}/>
+                <Neos.NeosConIo:ScheduleSpeakerImageWrapper speaker={speaker} iterator={iterator}/>
             </Neos.Fusion:Loop>
             <div class="w-20 h-0.5 mt-6 bg-neutral-50" @if.noSpeaker={!props.speakers}></div>
         </div>
@@ -105,7 +104,6 @@ prototype(Neos.NeosConIo:ScheduleSpeakerImageWrapper) < prototype(Neos.Fusion:Co
         node = ${q(speaker).get(0)}
     }
     iterator = ${}
-    speakerCount = 0
 
     renderer = afx`
         <a href={props.speakerUri} class={
@@ -113,7 +111,7 @@ prototype(Neos.NeosConIo:ScheduleSpeakerImageWrapper) < prototype(Neos.Fusion:Co
         iterator.isEven ? '-left-4' : '',
         !iterator.isEven ? 'z-1' : '',
         iterator.index > 1 ? '-top-4' : '',
-        'transition-300 transition-transform hover:scale-[1.2] hover:z-' + props.speakerCount]}
+        'transition-300 transition-transform hover:scale-[1.2] hover:z-10' ]}
            title={q(speaker).property('title')}
            aria-label={q(speaker).property('title')}
         >
