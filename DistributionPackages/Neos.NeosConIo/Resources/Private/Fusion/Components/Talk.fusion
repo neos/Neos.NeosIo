@@ -29,8 +29,30 @@ prototype(Neos.NeosConIo:Component.Talk) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = afx`
-        <div class="talk">
-            <h1>{props.title}</h1>
+        <section class="mx-auto lg:max-w-4xl" data-component="Talk">
+            <div class="mb-8">
+                <h1 class={"display-headline-sm text-center border-b border-neutral-30 pb-6 mb-6 sm:text-left md:pb-8 md:mb-8"}>
+                    {props.title}
+                </h1>
+                <p class="display-lead flex gap-x-8 gap-y-2 flex-wrap md:flex-nowrap">
+                    <span class="talk__infos__item">
+                        {props.eventTitle}
+                    </span>
+                    <Neos.Fusion:Fragment @if.hasTalkDate={private.hasTalkDate}>
+                        <time class="flex gap-x-8 gap-y-2 flex-wrap md:flex-nowrap">
+                            <span class="talk__infos__item">
+                                <i class="fas fa-calendar"></i> {private.talkDate}
+                            </span>
+                            <span class="talk__infos__item">
+                                <i class="fas fa-clock"></i> {private.talkTime}
+                            </span>
+                        </time>
+                    </Neos.Fusion:Fragment>
+                    <span @if.hasRoom={props.roomName}>
+                         <i class="fas fa-map-marker-alt"></i> {props.roomName}
+                    </span>
+                </p>
+            </div>
             <div @if.hasVideo={props.video}
                  class="talk__video"
             >
@@ -39,29 +61,17 @@ prototype(Neos.NeosConIo:Component.Talk) < prototype(Neos.Fusion:Component) {
             <div class="talk__details">
                 {props.speakerList}
                 <div class="talk__description">
-                    {props.text}
-                    <ul class="talk__infos">
-                        <li class="talk__infos__item">{props.eventTitle}</li>
-                        <Neos.Fusion:Fragment @if.hasTalkDate={private.hasTalkDate}>
-                            <li class="talk__infos__item">
-                                <i class="fas fa-calendar"></i> {private.talkDate}
-                            </li>
-                            <li class="talk__infos__item">
-                                <i class="fas fa-clock"></i> {private.talkTime}
-                            </li>
-                        </Neos.Fusion:Fragment>
-                        <li @if.hasRoom={props.roomName}>
-                            {props.roomName}
-                        </li>
-                    </ul>
+                    <div class={"neos-nodetypes-text"} @if.hasText={props.text || renderingMode.isEdit}>
+                      {props.text}
+                    </div>
                 </div>
             </div>
             <div @if.isTalkListVisible={props.isTalkListVisible}
                  class="relatedTalks"
             >
-                <h2>Related Talks</h2>
+                <h2 class="display-title-lg">Related Talks</h2>
                 {props.talkList}
             </div>
-        </div>
+        </section>
     `
 }
