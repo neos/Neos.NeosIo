@@ -3,29 +3,7 @@ $roomHighlightColor: map-get($brand-colors, primary);
 $containerWidth: 680px;
 
 .schedule {
-  margin-left: auto;
-  margin-right: auto;
 
-  .conferenceDayTitle {
-    text-align: center;
-  }
-
-  .conferenceDaySubtitle {
-    text-align: center;
-  }
-
-  .talks {
-
-    margin-left: auto;
-    margin-right: auto;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-column-gap: calc(var(--spacing) * 16);
-  }
-
-  .talk__roomSmallDevice {
-    display: none;
-  }
 
   .talk {
     /** Two Room Variant */
@@ -50,29 +28,5 @@ $containerWidth: 680px;
       grid-column: 1 / 3;
     }
 
-    /** General Settings */
-    &--fullWidthBecauseNoRoom {
-      .talk__header {
-        min-height: 52px;
-      }
-    }
-
-    &.visible {
-      display: block;
-    }
-  }
-
-  @media only screen and (max-width: 1100px) {
-    .talks {
-      display: block;
-    }
-    .room-header {
-      display: none;
-    }
-    .talk__roomSmallDevice {
-      display: block;
-      font-size: 16px;
-      font-weight: 450 !important;
-    }
   }
 }
