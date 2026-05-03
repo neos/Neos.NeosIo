@@ -35,7 +35,9 @@ prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
                     {props.image}
                 </div>
                 <div class="grow-1">
-                    <h1 class={"display-headline-sm text-center border-b border-neutral-30 pb-6 mb-6 sm:text-left md:pb-8 md:mb-8"}>{props.title}</h1>
+                    <h1 class={"display-headline-sm text-center border-b border-neutral-30 pb-6 mb-6 sm:text-left md:pb-8 md:mb-8"}>
+                        {props.title}
+                    </h1>
                     <p class="display-lead flex gap-x-8 gap-y-2 flex-wrap md:flex-nowrap">
                         <span @if.hasCompany={props.company} class={private.iconWrapperClasses}>
                             <i class="fas fa-briefcase mt-1" aria-hidden="true"></i>
@@ -68,15 +70,11 @@ prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
                 </div>
             </div>
 
-            <div @if.hasFeaturedTalk={props.featuredTalk}
-                 class=""
-            >
+            <div @if.hasFeaturedTalk={props.featuredTalk} class="">
                 <h2 class="display-title-lg">Featured talk</h2>
                 {props.featuredTalk}
             </div>
-            <div @if.hasMoreTalks={props.moreTalks}
-                 class=""
-            >
+            <div @if.hasMoreTalks={props.moreTalks} class="">
                 <h2 class="display-title-lg">More talks</h2>
                 {props.moreTalks}
             </div>

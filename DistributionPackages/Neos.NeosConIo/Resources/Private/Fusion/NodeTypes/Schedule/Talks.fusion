@@ -107,7 +107,7 @@ prototype(Neos.NeosConIo:ScheduleSpeakerImageWrapper) < prototype(Neos.Fusion:Co
 
     renderer = afx`
         <a href={props.speakerUri} class={
-        ['block bg-neutral-20 rounded-full relative overflow-hidden w-12 h-12 gro-0 shrink-0 basis-auto border-2 border-white',
+        ['block bg-neutral-20 rounded-full relative overflow-hidden w-12 h-12 grow-0 shrink-0 basis-auto border-2 border-white',
         iterator.isEven ? '-left-4' : '',
         !iterator.isEven ? 'z-1' : '',
         iterator.index > 1 ? '-top-4' : '',

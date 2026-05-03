@@ -32,12 +32,12 @@ prototype(Neos.NeosConIo:Component.Talk) < prototype(Neos.Fusion:Component) {
         <section class="mx-auto lg:max-w-4xl" data-component="Talk">
             <div class="mb-8">
                 <h1 class={"display-headline-sm text-center border-b border-neutral-30 pb-6 mb-6 sm:text-left md:pb-8 md:mb-8"}>
+                    <span class="block display-lead mb-2">
+                        {props.eventTitle}
+                    </span>
                     {props.title}
                 </h1>
                 <p class="display-lead flex gap-x-8 gap-y-2 flex-wrap md:flex-nowrap">
-                    <span class="talk__infos__item">
-                        {props.eventTitle}
-                    </span>
                     <Neos.Fusion:Fragment @if.hasTalkDate={private.hasTalkDate}>
                         <time class="flex gap-x-8 gap-y-2 flex-wrap md:flex-nowrap">
                             <span class="talk__infos__item">
@@ -58,18 +58,18 @@ prototype(Neos.NeosConIo:Component.Talk) < prototype(Neos.Fusion:Component) {
             >
                 {props.video}
             </div>
-            <div class="talk__details">
-                {props.speakerList}
-                <div class="talk__description">
-                    <div class={"neos-nodetypes-text"} @if.hasText={props.text || renderingMode.isEdit}>
-                      {props.text}
-                    </div>
-                </div>
+            <div class={"neos-nodetypes-text"} @if.hasText={props.text || renderingMode.isEdit}>
+              {props.text}
             </div>
+            <div class="">
+                <h2 class="display-title-lg mb-4">Presented by</h2>
+                {props.speakerList}
+            </div>
+
             <div @if.isTalkListVisible={props.isTalkListVisible}
                  class="relatedTalks"
             >
-                <h2 class="display-title-lg">Related Talks</h2>
+                <h2 class="display-title-lg mb-4">Related Talks</h2>
                 {props.talkList}
             </div>
         </section>
