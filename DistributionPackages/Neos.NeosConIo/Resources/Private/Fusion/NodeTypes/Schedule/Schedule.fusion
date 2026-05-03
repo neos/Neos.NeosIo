@@ -30,11 +30,11 @@ prototype(Neos.NeosConIo:Schedule) < prototype(Neos.Neos:ContentComponent) {
     renderer = afx`
         <div class="schedule" data-component="Schedule">
             <Neos.Fusion:Loop items={props.days} itemName="day" @children="itemRenderer">
-                <h3 class="conferenceDayTitle">Conference Day {iterator.cycle}</h3>
-                <div class="conferenceDaySubtitle">
+                <h3 class="conferenceDayTitle display-headline-md mb-4">Conference Day {iterator.cycle}</h3>
+                <div class="conferenceDaySubtitle display-title-lg mb-12">
                     {Date.format(day, 'd M Y')}
                 </div>
-                <div class="talks">
+                <div class="talks mb-[var(--n-spacing--y)] last:mb-0">
                     <Neos.NeosConIo:Schedule.Talks day={day} />
                 </div>
             </Neos.Fusion:Loop>
