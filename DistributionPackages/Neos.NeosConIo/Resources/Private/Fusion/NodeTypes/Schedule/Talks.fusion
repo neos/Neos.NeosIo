@@ -14,7 +14,7 @@ prototype(Neos.NeosConIo:Schedule.Talks) < prototype(Neos.Fusion:Component) {
             </div>
         </Neos.Fusion:Loop>
         <Neos.Fusion:Loop items={props.talksAndBreaks} itemName="talk" @children="itemRenderer">
-            <Neos.NeosConIo:Schedule.Talk talk={talk} rooms={props.rooms} />
+            <Neos.NeosConIo:Schedule.Talk talk={talk} rooms={props.rooms}/>
         </Neos.Fusion:Loop>
     `
 }
@@ -28,11 +28,14 @@ prototype(Neos.NeosConIo:Schedule.Talk) < prototype(Neos.Fusion:Component) {
     speakers = ${q(this.talk).property('speakers')}
     isBreak = ${q(this.talk).is('[instanceof Neos.NeosConIo:BreakInSchedule]')}
     description = ${q(this.talk).property('text')}
+    prevRooms = ${this.room.aggregateId ? q(this.room).prevAll().count() : 0}
 
     renderer = afx`
         <div data-date={Date.format(q(props.talk).property('talkDate'), 'y-m-d')}
              data-room-id={props.room.aggregateId}
-             class={"flex flex-wrap border-b-2 border-neutral-20 px-4 gap-2 sm:gap-8 sm:flex-nowrap lg:border-b-white  talk " + (props.room.aggregateId ? 'talk--room' + q(props.room).prevAll().count() + ' talk--totalRooms' + Array.length(props.rooms) : 'talk--fullWidthBecauseNoRoom talk--totalRooms' + Array.length(props.rooms)) + (props.isBreak ? ' bg-neutral-05 py-2 lg:pt-3 lg:pb-4' : ' pt-3 pb-4')}>
+             class={["flex flex-wrap border-b-2 border-neutral-20 px-4 gap-2 sm:gap-8 sm:flex-nowrap lg:border-b-white",
+                  "col-start-" + (props.prevRooms + 1) + " col-end-" + (props.room && props.prevRooms == 0 ? props.prevRooms + 1 : Array.length(props.rooms) + 1),
+                   (props.isBreak ? ' bg-neutral-05 py-2 lg:pt-3 lg:pb-4' : ' pt-3 pb-4')]}>
             <div class={[props.room ? '' : 'pt-3', "basis-[100%] flex gap-4 shrink-0 grow-0 sm:gap-2 sm:flex-col sm:basis-[130px] lg:pt-3 lg:basis-auto"]}>
                 <time class={["talk__time flex gap-2 lg:gap-4 "]}>
                     <i class="fas fa-clock mt-1 color-purple-dark" aria-hidden="true"></i>
@@ -110,7 +113,7 @@ prototype(Neos.NeosConIo:ScheduleSpeakerImageWrapper) < prototype(Neos.Fusion:Co
         ['block bg-neutral-20 rounded-full relative overflow-hidden w-12 h-12 grow-0 shrink-0 basis-auto border-2 border-white',
         iterator.isEven ? '-left-4' : '',
         !iterator.isEven ? 'z-1' : '',
-        iterator.index > 1 ? '-top-4' : '',
+        iterator.index > 1 ? '-top-4 -mb-4' : '',
         'transition-300 transition-transform hover:scale-[1.2] hover:z-10' ]}
            title={q(speaker).property('title')}
            aria-label={q(speaker).property('title')}
