@@ -26,6 +26,7 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
             // node is the speaker here
             @context.featuredTalkNode = ${q(node).referenceNodes('featuredTalk').get(0)}
 
+            //@ToDoFE - update featured talk use TalkList or maybe highlight that one?
             featuredTalk = Neos.Presentation:ContentTeaser {
                 title = ${q(featuredTalkNode).property('title')}
                 image = Neos.Presentation:Component.PictureTag {
