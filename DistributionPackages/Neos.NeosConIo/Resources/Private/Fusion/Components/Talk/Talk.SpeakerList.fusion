@@ -1,10 +1,10 @@
-prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Neos:ContentComponent) {
+prototype(Neos.NeosConIo:Talk.SpeakerList) < prototype(Neos.Neos:ContentComponent) {
     items = ${q(node).referenceNodes('eventToShowSpeakersFor').backReferenceNodes("event").filter('[instanceof Neos.NeosConIo:Speaker]').sort('title', 'ASC')}
 
     renderer = afx`
-        <ul class="speaker__speakerList">
+        <ul class="flex list-none p-0 flex-wrap gap-x-12 gap-y-8 mb-[var(--n-spacing--y-small)] last:mb-0">
             <Neos.Fusion:Loop items={props.items} itemName="item">
-                <Neos.NeosConIo:SpeakerList.Item item={item} />
+                <Neos.NeosConIo:Talk.SpeakerList.Item item={item} />
             </Neos.Fusion:Loop>
         </ul>
     `
@@ -22,7 +22,7 @@ prototype(Neos.NeosConIo:SpeakerList) < prototype(Neos.Neos:ContentComponent) {
     }
 }
 
-prototype(Neos.NeosConIo:SpeakerList.Item) < prototype(Neos.Fusion:Component) {
+prototype(Neos.NeosConIo:Talk.SpeakerList.Item) < prototype(Neos.Fusion:Component) {
     item = ''
 
     @propTypes {
@@ -43,22 +43,29 @@ prototype(Neos.NeosConIo:SpeakerList.Item) < prototype(Neos.Fusion:Component) {
             node = ${props.item}
             absolute = true
         }
-
-        image = Neos.Presentation:Component.PictureTag {
-            asset = ${props.item.properties.image}
-            imgClasses = "absolute object-cover w-full h-full"
-            alt = ""
-        }
     }
 
     renderer = afx`
-        <li class="speaker__speakerList__item">
-            <Neos.Presentation:ContentTeaser
-                title={props.item.properties.title}
-                image={private.image}
-                text={String.stripTags(props.item.properties.company)}
-                link={private.link}
+        <li class="flex gap-4 ">
+            <Neos.Presentation:Component.PictureTag
+                asset={props.item.properties.image}
+                alt={speaker.properties.title}
+                imgClasses={'block bg-neutral-20 rounded-full overflow-hidden w-12 h-12 grow-0 shrink-0 basis-auto transition-300 transition-transform -mt-2'}
+                sizes={['100px']}
             />
+            <div>
+                <a href={private.link}
+                   class="display-lead block"
+                   title={speaker.properties.title}
+                   aria-label={speaker.properties.title}
+                >
+                    {props.item.properties.title}
+                </a>
+                <p>
+                    <span class="display-base">{String.stripTags(props.item.properties.company)}</span>
+                </p>
+            </div>
+
         </li>
     `
 }
