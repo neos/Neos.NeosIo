@@ -7,13 +7,33 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
     }
     projectType = ${q(node).referenceNodes('projectType').get(0)}
     serviceProvider = ${q(node).referenceNodes('serviceProvider').get(0)}
-    featured = ${q(node).property('featured') || Neos.Node.isOfType(node, 'Neos.NeosIo:Reference.CaseStudy') || 0}
+    // Only use the service provider in the list if they are an active supporter (i.e. have a badge)
+    // If we add other types of badges, we should filter them
+    numberOfProviderBadges = ${this.serviceProvider ? q(this.serviceProvider).references('badges').count() : 0}
+    isCasestudy = ${Neos.Node.isOfType(node, 'Neos.NeosIo:Reference.CaseStudy')}
+    featured = ${q(node).property('featured') || this.isCasestudy}
 
     @private {
-        featuredLabel = ${Translation.translate('caseListing.sortBy.featured', '', [], 'Main', 'Neos.NeosIo.CaseStudies')}
-        url = ${q(node).property('url')}
-        url.@process.convertUris = Neos.Neos:ConvertUris {
-            absolute = true
+        featuredLabel = ${Translation.translate('caseListing.sortBy.featured', 'Featured', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        caseStudyLabel = ${Translation.translate('caseListing.sortBy.caseStudy', 'Case Study', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        url = Neos.Fusion:Case {
+            isCaseStudy {
+                condition = ${props.isCasestudy}
+                renderer = Neos.Neos:NodeUri {
+                    node = ${node}
+                }
+            }
+            customUri {
+                condition = ${q(node).property('url')}
+                renderer = ${q(node).property('url')}
+                renderer.@process.convertUris = Neos.Neos:ConvertUris {
+                    absolute = true
+                }
+            }
+            default {
+                condition = true
+                renderer = ''
+            }
         }
 
         image = Neos.Presentation:Component.PictureTag {
@@ -30,7 +50,7 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
             launchDate = ${props.launchDate}
             projectVolume = ${props.projectVolume}
             projectType = ${props.projectType}
-            serviceProvider = ${props.serviceProvider}
+            serviceProvider = ${props.numberOfProviderBadges > 0 ? props.serviceProvider : null}
         }
         volumeCode = ${q(node).property('projectVolume') ? String.toInteger(q(node).property('projectVolume')) : 0}
         launchTimestamp = ${q(node).property('launchDate') || q(node).property('datePublished') || q(node).property('_creationDateTime')}
@@ -59,6 +79,10 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
                 <span @if={props.featured}
                       class="absolute top-2 left-2 z-20 bg-blue-light text-white text-xs px-2 py-0.5">
                     {private.featuredLabel}
+                </span>
+                <span @if={props.isCasestudy}
+                      class="absolute top-2 right-2 z-20 bg-yellow text-white text-xs px-2 py-0.5">
+                    {private.caseStudyLabel}
                 </span>
             </div>
 
