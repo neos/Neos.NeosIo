@@ -11,7 +11,6 @@ prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
     moreTalks = ''
     @private {
         iconWrapperClasses = 'flex gap-2'
-
     }
 
     @propTypes {
@@ -24,8 +23,8 @@ prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
         twitter = ${PropTypes.string}
         mastodon = ${PropTypes.string}
         github = ${PropTypes.string}
-        featuredTalk = ${PropTypes.string}
-        moreTalks = ${PropTypes.string}
+        featuredTalk = ${PropTypes.instanceOf('Neos.NeosConIo:Talk')}
+        moreTalks = ${PropTypes.arrayOf(PropTypes.instanceOf('Neos.NeosConIo:Talk'))}
     }
 
     renderer = afx`
@@ -54,7 +53,8 @@ prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
                 <div class="neos-nodetypes-text mb-[var(--n-spacing--y-small)] last:mb-0" @if.hasText={props.text}>
                     {props.text}
                 </div>
-                <ul class="list-none justify-starte p-0 flex gap-x-8 gap-y-2 flex-wrap mb-[var(--n-spacing--y-small)] last:mb-0 md:justify-end" @if.hasAnyContact={props.twitter || props.mastodon || props.github || renderingMode.isEdit}>
+                <ul class="list-none justify-starte p-0 flex gap-x-8 gap-y-2 flex-wrap mb-[var(--n-spacing--y-small)] last:mb-0 md:justify-end"
+                    @if.hasAnyContact={props.twitter || props.mastodon || props.github || renderingMode.isEdit}>
                     <li @if.hasTwitter={props.twitter} class={private.iconWrapperClasses}>
                         <i class="fab fa-twitter mt-1" aria-hidden="true"></i>
                         <a href={"https://twitter.com/" + props.twitter} target="_blank" rel="noreferrer noopener" title="Go to their twitter profile">{props.twitter}</a>
@@ -70,14 +70,18 @@ prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
                 </ul>
             </div>
 
-            <div @if.hasFeaturedTalk={props.featuredTalk} class="mb-[var(--n-spacing--y)] last:mb-0">
+            <section class="mb-[var(--n-spacing--y-small)] last:mb-0" @if.hasFeaturedTalk={props.featuredTalk}>
                 <h2 class="display-title-lg mb-8">Featured talk</h2>
-                {props.featuredTalk}
-            </div>
-            <div @if.hasMoreTalks={props.moreTalks} class="mb-[var(--n-spacing--y)] last:mb-0">
+                <Neos.NeosConIo:Component.Speaker.FeaturedTalk {...props.featuredTalk}/>
+            </section>
+
+            <section @if.hasMoreTalks={Array.length(props.moreTalks) > 0}>
                 <h2 class="display-title-lg mb-8">More talks</h2>
-                {props.moreTalks}
-            </div>
+                <Neos.NeosConIo:TalkList
+                  talks={props.moreTalks}
+                  eventToFilter={null}
+                />
+            </section>
         </section>
     `
 }
