@@ -80,12 +80,12 @@ class SyncNodeCommand implements TerminalCommandInterface
             return new CommandInvocationResult(false, 'No node is selected. Please focus a node first.');
         }
 
-        // Ensure the node is in the English (source) dimension
+        // Ensure the node is in a known language dimension
         $nodeDimension = $rootNode->dimensionSpacePoint->coordinates['language'] ?? null;
-        if ($nodeDimension !== 'en') {
+        if (!in_array($nodeDimension, ['en', 'de'], true)) {
             return new CommandInvocationResult(
                 false,
-                sprintf('The selected node is in dimension "%s". Please select a node in the English (en) dimension.', $nodeDimension ?? 'unknown')
+                sprintf('The selected node is in dimension "%s". Please select a node in the English (en) or German (de) dimension.', $nodeDimension ?? 'unknown')
             );
         }
 
@@ -120,10 +120,6 @@ class SyncNodeCommand implements TerminalCommandInterface
         $nodesToCheck = $this->collectAllNodes($rootNode, $enSubgraph, $nodeTypeManager);
 
         foreach ($nodesToCheck as $node) {
-            // Skip the root node itself — we only want to sync content children
-            if ($node->aggregateId->equals($rootNode->aggregateId)) {
-                continue;
-            }
 
             $deVariant = $deSubgraph->findNodeById($node->aggregateId);
 
