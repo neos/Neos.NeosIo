@@ -71,12 +71,12 @@ prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
             </div>
 
             <section class="mb-[var(--n-spacing--y-small)] last:mb-0" @if.hasFeaturedTalk={props.featuredTalk}>
-                <h2 class="display-title-lg mb-8">Featured talk</h2>
+                <h2 class="display-title-lg mb-8">{I18n.translate('Neos.NeosConIo:Main:speaker.featuredTalk')}</h2>
                 <Neos.NeosConIo:Component.Speaker.FeaturedTalk {...props.featuredTalk}/>
             </section>
 
             <section @if.hasMoreTalks={Array.length(props.moreTalks) > 0}>
-                <h2 class="display-title-lg mb-8">More talks</h2>
+                <h2 class="display-title-lg mb-6">{I18n.translate('Neos.NeosConIo:Main:speaker.moreTalks')}</h2>
                 <Neos.NeosConIo:TalkList
                   talks={props.moreTalks}
                   eventToFilter={null}

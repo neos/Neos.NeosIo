@@ -62,14 +62,14 @@ prototype(Neos.NeosConIo:Component.Talk) < prototype(Neos.Fusion:Component) {
               {props.text}
             </div>
             <div class="mb-[var(--n-spacing--y)] last:mb-0">
-                <h2 class="display-title-lg mb-8">Presented by</h2>
+                <h2 class="display-title-lg mb-8">{I18n.translate('Neos.NeosConIo:Main:talk.presentedBy')}</h2>
                 {props.speakerList}
             </div>
 
             <div @if.isTalkListVisible={props.isTalkListVisible}
                  class="relatedTalks"
             >
-                <h2 class="display-title-lg mb-8">Related Talks</h2>
+                <h2 class="display-title-lg mb-6">{I18n.translate('Neos.NeosConIo:Main:talk.relatedTalks')}</h2>
                 {props.talkList}
             </div>
         </div>

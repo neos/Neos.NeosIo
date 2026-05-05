@@ -11,7 +11,6 @@ prototype(Neos.NeosConIo:Component.Speaker.FeaturedTalk) < prototype(Neos.Fusion
         randomBgColor = ${props.background ? props.background : private.backgroundColors[Math.randomInt(0, Array.length(private.backgroundColors) - 1)]}
     }
 
-    //@ToDoFe - replace hardcoded text-bits with translations
     renderer = afx`
         <div class={["n-background n-background--" + private.randomBgColor,
         "p-4 md:p-8 pb-17 md:pb-34 cta-banner-clip-path"]}>
@@ -25,7 +24,7 @@ prototype(Neos.NeosConIo:Component.Speaker.FeaturedTalk) < prototype(Neos.Fusion
 
             <Neos.Presentation:Button
                 href={props.talkUri}
-                content={"View talk"}
+                content={I18n.translate('Neos.NeosConIo:Main:speaker.featuredTalk.viewTalk')}
                 variant={"transparent"}
                 icon={"animatedArrow"}
                 class={'text-[var(--n-fg)]! hocus:text-[var(--n-fg)]! no-underline! mt-6'}
