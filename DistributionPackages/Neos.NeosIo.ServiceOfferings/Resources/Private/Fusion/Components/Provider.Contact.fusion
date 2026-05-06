@@ -30,8 +30,15 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Contact) < prototype(N
                 <p @if.set={props.street || props.city} class="service-provider__address">
                     <span class="flex gap-4">
                         <i class={["fas fa-home", props.iconClasses]} aria-hidden="true"></i>
-                        {props.street}<br @if.set={props.street}/>
-                        {props.zipcode} {props.city}{props.country ? ' - ' + props.country : null}
+                        <span class="grow-1 block">
+                            <span @if.set={props.street} class={"block"}>{props.street}</span>
+                            <span @if.set={props.zipcode || props.city} class={"block"}>
+                              {props.zipcode} {props.city}
+                            </span>
+                            <span @if.set={props.country} class={"block"}>
+                                {props.country ? ' - ' + props.country : null}
+                            </span>
+                        </span>
                     </span>
                 </p>
             </address>
