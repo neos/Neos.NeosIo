@@ -9,6 +9,9 @@
     group: blog
   references:
     filterTags:
+      constraints:
+        nodeTypes:
+          'Neos.NeosIo.Blog:Document.Tag': true
       ui:
         label: 'Filter by Tag(s)'
         reloadPageIfChanged: true
@@ -28,7 +31,6 @@
             placeholder: 'Enter title here'
     maxItems:
       type: integer
-      defaultValue: 10
       ui:
         label: 'Maximum number of items'
         reloadPageIfChanged: true
@@ -41,7 +43,6 @@
             step: 1
     autoplay:
       type: boolean
-      defaultValue: false
       ui:
         label: 'Autoplay'
         reloadPageIfChanged: true
