@@ -36,7 +36,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Contact) < prototype(N
                               {props.zipcode} {props.city}
                             </span>
                             <span @if.set={props.country} class={"block"}>
-                                {props.country ? ' - ' + props.country : null}
+                                {props.country}
                             </span>
                         </span>
                     </span>
