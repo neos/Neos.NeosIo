@@ -4,20 +4,12 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Services) < prototype(
 
     @if.hasServices = ${Type.isArray(this.typesOfService) && Array.length(this.typesOfService)}
 
-    sizeIcons = Neos.Fusion:DataStructure {
-        '1' = 'user'
-        '2-10' = 'users'
-        '11-50' = 'building'
-        '51-100' = 'industry'
-        '100+' = 'city'
-    }
-
     renderer = afx`
         <div class="service-provider__services">
             <h2 class="display-title-lg mb-4">{Translation.translate('serviceProvider.services', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}</h2>
             <p @if.set={props.size}>
                 <span class="flex gap-4">
-                    <i class={'mt-1 text-blue-dark fas fa-' + props.sizeIcons[props.size]}></i>
+                    <i class={'mt-1 text-blue-dark fas fa-users'}></i>
                     {props.size} {Translation.translate('serviceProvider.employees', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}
                 </span>
             </p>
