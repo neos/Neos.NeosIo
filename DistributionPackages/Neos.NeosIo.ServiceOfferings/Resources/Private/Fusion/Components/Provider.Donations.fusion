@@ -4,7 +4,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Donations) < prototype
     renderer = afx`
         <div class="service-provider__donations">
             <div @if.set={Type.isArray(props.badges) && Array.length(props.badges)} class="service-provider__badges">
-                <h2>Sponsorship badges</h2>
+                <h2 class="display-title-lg mb-4">Sponsorship badges</h2>
                 <div class="service-provider__badge-wrap">
                     <Neos.Fusion:Loop items={props.badges} itemName="badge">
                         <Neos.Presentation:Component.PictureTag
