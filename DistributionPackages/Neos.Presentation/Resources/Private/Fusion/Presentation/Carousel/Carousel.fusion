@@ -1,4 +1,13 @@
 prototype(Neos.Presentation:Carousel) < prototype(Neos.Fusion:Component) {
+    // TODO: Add styleguide definition again
+
+    @propTypes {
+        @strict = true
+        items = ${PropTypes.arrayOf(PropTypes.string)}
+        title = PropTypes:String
+        autoplay = PropTypes:Bool
+    }
+
     items = ${[]}
     title = ""
     autoplay = false
