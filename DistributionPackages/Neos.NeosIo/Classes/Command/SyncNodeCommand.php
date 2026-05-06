@@ -7,17 +7,16 @@ use Neos\ContentRepository\Core\DimensionSpace\DimensionSpacePoint;
 use Neos\ContentRepository\Core\DimensionSpace\OriginDimensionSpacePoint;
 use Neos\ContentRepository\Core\Feature\NodeVariation\Command\CreateNodeVariant;
 use Neos\ContentRepository\Core\Feature\NodeVariation\Exception\DimensionSpacePointIsAlreadyOccupied;
-use Neos\ContentRepository\Core\NodeType\NodeTypeManager;
-use Neos\ContentRepository\Core\NodeType\NodeTypeName;
 use Neos\ContentRepository\Core\Projection\ContentGraph\ContentSubgraphInterface;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFilter;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindDescendantNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
-use Neos\ContentRepository\Core\SharedModel\ContentRepository\ContentRepositoryId;
+use Neos\ContentRepository\Core\Projection\ContentGraph\VisibilityConstraints;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\ObjectManagement\ObjectManagerInterface;
 use Neos\Neos\Domain\NodeLabel\NodeLabelGeneratorInterface;
-use Neos\Neos\Domain\SubtreeTagging\NeosVisibilityConstraints;
+use Neos\Neos\Ui\Domain\Model\Feedback\Operations\ReloadDocument;
 use Neos\Neos\Ui\Domain\Model\Feedback\Operations\UpdateWorkspaceInfo;
 use Shel\Neos\Terminal\Command\TerminalCommandInterface;
 use Shel\Neos\Terminal\Domain\CommandContext;
@@ -89,9 +88,7 @@ class SyncNodeCommand implements TerminalCommandInterface
             );
         }
 
-        $contentRepository = $this->contentRepositoryRegistry->get(
-            ContentRepositoryId::fromString('default')
-        );
+        $contentRepository = $this->contentRepositoryRegistry->get($rootNode->contentRepositoryId);
 
         $workspaceName = $rootNode->workspaceName;
         $contentGraph = $contentRepository->getContentGraph($workspaceName);
@@ -99,8 +96,8 @@ class SyncNodeCommand implements TerminalCommandInterface
         $enDimensionSpacePoint = DimensionSpacePoint::fromArray(['language' => 'en']);
         $deDimensionSpacePoint = DimensionSpacePoint::fromArray(['language' => 'de']);
 
-        $enSubgraph = $contentGraph->getSubgraph($enDimensionSpacePoint, NeosVisibilityConstraints::excludeRemoved());
-        $deSubgraph = $contentGraph->getSubgraph($deDimensionSpacePoint, NeosVisibilityConstraints::excludeRemoved());
+        $enSubgraph = $contentGraph->getSubgraph($enDimensionSpacePoint, VisibilityConstraints::createEmpty());
+        $deSubgraph = $contentGraph->getSubgraph($deDimensionSpacePoint, VisibilityConstraints::createEmpty());
 
         $enOrigin = OriginDimensionSpacePoint::fromDimensionSpacePoint($enDimensionSpacePoint);
         $deOrigin = OriginDimensionSpacePoint::fromDimensionSpacePoint($deDimensionSpacePoint);
@@ -114,10 +111,8 @@ class SyncNodeCommand implements TerminalCommandInterface
         $errorMessages = [];
         $isSyncMode = (bool)$input->getOption('sync');
 
-        $nodeTypeManager = $contentRepository->getNodeTypeManager();
-
         // Collect all nodes to check: the root node itself + all non-document descendants
-        $nodesToCheck = $this->collectAllNodes($rootNode, $enSubgraph, $nodeTypeManager);
+        $nodesToCheck = $this->collectAllNodes($rootNode, $enSubgraph);
 
         foreach ($nodesToCheck as $node) {
 
@@ -149,6 +144,7 @@ class SyncNodeCommand implements TerminalCommandInterface
             }
 
             try {
+                // TODO: We would prefer to only re-create hierarchyrelations here, but this is not possible yet.
                 $contentRepository->handle(
                     CreateNodeVariant::create(
                         $workspaceName,
@@ -169,7 +165,7 @@ class SyncNodeCommand implements TerminalCommandInterface
         // Check for DE-only nodes: descendants in DE that have no EN counterpart
         $deRootNode = $deSubgraph->findNodeById($rootNode->aggregateId);
         if ($deRootNode !== null) {
-            $deNodesToCheck = $this->collectAllNodes($deRootNode, $deSubgraph, $nodeTypeManager);
+            $deNodesToCheck = $this->collectAllNodes($deRootNode, $deSubgraph);
             foreach ($deNodesToCheck as $deNode) {
                 if ($deNode->aggregateId->equals($rootNode->aggregateId)) {
                     continue;
@@ -232,36 +228,52 @@ class SyncNodeCommand implements TerminalCommandInterface
         $success = empty($errorMessages);
 
         $uiFeedback = [];
-        if ($isSyncMode) {
-            $uiFeedback[] = new UpdateWorkspaceInfo(
+        if ($isSyncMode && $createdCount > 0) {
+            // Add feedbacks to reload the document and update the publishing dropdown
+            $updateWorkspaceInfo = new UpdateWorkspaceInfo(
                 $rootNode->contentRepositoryId,
                 $workspaceName,
             );
+            $reloadDocument = new ReloadDocument();
+            $reloadDocument->setNode($rootNode);
+            // TODO: Also trigger a reload of the content tree
+
+            $uiFeedback[] = $updateWorkspaceInfo;
+            $uiFeedback[] = $reloadDocument;
         }
 
         return new CommandInvocationResult($success, implode("\n", $lines), $uiFeedback);
     }
 
     /**
-     * Recursively collects the given node and all its descendant nodes from the EN subgraph,
-     * skipping any nodes of type Neos.Neos:Document (and their subtrees).
+     * Returns the given root node plus all Content/ContentCollection descendants,
+     * without crossing into child Document pages.
+     * Finds direct Content/ContentCollection children first, then descends into each.
      *
-     * @param list<Node> $carry
      * @return list<Node>
      */
-    private function collectAllNodes(Node $node, ContentSubgraphInterface $enSubgraph, NodeTypeManager $nodeTypeManager, array $carry = []): array
+    private function collectAllNodes(Node $rootNode, ContentSubgraphInterface $subgraph): array
     {
-        $carry[] = $node;
+        $nodes = [$rootNode];
 
-        $children = $enSubgraph->findChildNodes($node->aggregateId, FindChildNodesFilter::create());
-        foreach ($children as $child) {
-            $childNodeType = $nodeTypeManager->getNodeType($child->nodeTypeName);
-            if ($childNodeType?->isOfType(NodeTypeName::fromString('Neos.Neos:Document'))) {
-                continue;
+        $contentTypeFilter = 'Neos.Neos:Content,Neos.Neos:ContentCollection';
+
+        $directChildren = $subgraph->findChildNodes(
+            $rootNode->aggregateId,
+            FindChildNodesFilter::create(nodeTypes: $contentTypeFilter),
+        );
+
+        foreach ($directChildren as $child) {
+            $nodes[] = $child;
+            $descendants = $subgraph->findDescendantNodes(
+                $child->aggregateId,
+                FindDescendantNodesFilter::create(nodeTypes: $contentTypeFilter),
+            );
+            foreach ($descendants as $descendant) {
+                $nodes[] = $descendant;
             }
-            $carry = $this->collectAllNodes($child, $enSubgraph, $nodeTypeManager, $carry);
         }
 
-        return $carry;
+        return $nodes;
     }
 }
