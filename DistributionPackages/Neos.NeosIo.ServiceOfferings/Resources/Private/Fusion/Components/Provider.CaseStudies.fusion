@@ -13,7 +13,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.CaseStudies) < prototy
 
     renderer = afx`
         <section>
-            <h2>Casestudies</h2>
+            <h2 class="display-title-lg mb-4 relative">Casestudies</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <Neos.Fusion:Loop items={props.caseStudies} itemName="caseStudy">
                     <Neos.NeosIo:Reference.List.Item

@@ -1,44 +1,44 @@
 prototype(Neos.Presentation:Carousel) < prototype(Neos.Fusion:Component) {
-    @styleguide {
-        title = 'Carousel'
-        props {
-            headline = 'A nice looking carousel!'
-            cards = Neos.Fusion:Map {
-                items = ${['one', 'two', 'three', 'four']}
-                itemRenderer = Neos.Fusion:DataStructure {
-                    headline = ${'Card ' + item + ' headline'}
-                    text = ${'Card ' + item + ' text'}
-                    button {
-                        content = ${'Card ' + item + ' link'}
-                        href = '#'
-                    }
-                }
-            }
-        }
+    // TODO: Add styleguide definition again
+
+    @propTypes {
+        @strict = true
+        items = ${PropTypes.arrayOf(PropTypes.string)}
+        title = PropTypes:String
+        autoplay = PropTypes:Bool
     }
 
-    @private {
-        cards = Neos.Fusion:Map {
-            items = ${props.cards}
-            itemRenderer = afx`
-                <Neos.Presentation:Molecule.Carousel.Card {...item} />
-            `
-        }
-    }
-
-    options = Neos.Fusion:DataStructure {
-        perPage = 3
-        perMove = 1
-        gap = '1rem'
-        padding = '1rem'
-    }
+    items = ${[]}
+    title = ""
+    autoplay = false
 
     renderer = afx`
-        <div class="grid grid-cols-4 mt-8">
-            <div class="flex flex-col col-span-1 p-8 rounded-xl shadow-lg h-full">
-                <Neos.Presentation:Headline class="" content={props.headline} display="headline-lg"/>
+        <div class="n-carousel swiper" data-autoplay={props.autoplay ? 'true' : 'false'}>
+            <div class="flex items-center justify-between mb-4 h-32">
+                <div>
+                    <Neos.Presentation:Headline tagName="h3" display="headline-md" class="m-0">
+                        {props.title}
+                    </Neos.Presentation:Headline>
+                </div>
+                <div class="flex gap-4">
+                    <Neos.Presentation:Button
+                        variant="transparent"
+                        class="n-carousel-nav-button button-prev border-3 border-(--color-blue-light) p-2 sm:p-4"
+                        icon="chevron-left"
+                    />
+                    <Neos.Presentation:Button
+                        variant="transparent"
+                        class="n-carousel-nav-button button-next border-3 border-(--color-blue-light) p-2 sm:p-4"
+                        icon="chevron-right"
+                    />
+                </div>
             </div>
-            <Neos.Presentation:Slider trackClass="py-4 h-full" slideItemClass="flex flex-col justify-between items-start p-8 rounded-xl shadow-lg" class="col-span-3 h-full" {...props} items={private.cards} />
+
+            <div class="swiper-wrapper">
+                <Neos.Fusion:Loop items={props.items} itemName="item">
+                    <div class="swiper-slide">{item}</div>
+                </Neos.Fusion:Loop>
+            </div>
         </div>
     `
 }
