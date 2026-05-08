@@ -14,7 +14,7 @@ prototype(Neos.NeosConIo:SingleDaySchedule) < prototype(Neos.Neos:ContentCompone
         entryIdentifier {
             node = ${Neos.Caching.entryIdentifierForNode(node)}
         }
-        tags {
+        entryTags {
             1 = ${Neos.Caching.nodeTag(node)}
             2 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', node)}
             3 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event', node)}
