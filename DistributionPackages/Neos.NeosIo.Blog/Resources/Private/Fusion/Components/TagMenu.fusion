@@ -2,11 +2,11 @@ prototype(Neos.NeosIo.Blog:Component.TagMenu) < prototype(Neos.Fusion:Component)
     @private {
         blogNode = ${q(site).referenceNodes('blogFolder').get(0)}
         tagsContainer = ${private.blogNode ? q(private.blogNode).children('[instanceof Neos.NeosIo.Blog:Document.Tags]').get(0) : null}
-        tags = ${private.blogNode ? q(private.tagsContainer).children('[instanceof Neos.NeosIo.Blog:Document.Tag]').get() : []}
+        tags = ${private.tagsContainer ? q(private.tagsContainer).children('[instanceof Neos.NeosIo.Blog:Document.Tag]').get() : []}
     }
 
     renderer = afx`
-        <nav class="flex flex-wrap gap-4 mb-8" @if={private.tags}>
+        <nav class="flex flex-wrap gap-4 mb-8" @if.hasTags={private.tags}>
             <Neos.NeosIo.Blog:Component.TagMenu.Link
                 label={I18n.translate('Neos.NeosIo.Blog:Main:tagMenu.newest')}
                 node={private.blogNode}

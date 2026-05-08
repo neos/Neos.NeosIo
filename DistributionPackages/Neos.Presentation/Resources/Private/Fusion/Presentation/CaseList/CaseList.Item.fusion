@@ -13,6 +13,8 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
     isCasestudy = ${Neos.Node.isOfType(node, 'Neos.NeosIo:Reference.CaseStudy')}
     featured = ${q(node).property('featured') || this.isCasestudy}
 
+    // FIXME: This is a presentational component but contains lots of integration code
+
     @private {
         featuredLabel = ${Translation.translate('caseListing.sortBy.featured', 'Featured', [], 'Main', 'Neos.NeosIo.CaseStudies')}
         caseStudyLabel = ${Translation.translate('caseListing.sortBy.caseStudy', 'Case Study', [], 'Main', 'Neos.NeosIo.CaseStudies')}
@@ -40,6 +42,7 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
             asset = ${q(node).property('image')}
             alt = ${props.alternativeText}
             imgClasses = "absolute w-full h-full object-cover"
+            srcSet = ${['400w', '800w', '1200w']}
         }
         thumbnail = Neos.Presentation:Component.PictureTag {
             asset = ${q(node).property('image')}
@@ -115,14 +118,4 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
             </div>
         </div>
     `
-
-    @cache {
-        mode = 'cached'
-        entryIdentifier {
-            node = ${Neos.Caching.entryIdentifierForNode(node)}
-        }
-        entryTags {
-            node = ${Neos.Caching.nodeTag(node)}
-        }
-    }
 }

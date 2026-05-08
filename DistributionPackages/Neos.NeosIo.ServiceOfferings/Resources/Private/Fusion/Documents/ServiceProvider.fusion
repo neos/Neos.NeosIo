@@ -186,6 +186,8 @@ prototype(Neos.NeosIo.ServiceOfferings:Document.ServiceProvider) < prototype(Neo
     `
 
     renderer.@cache {
+        # Assumption: Because we render lots of references and backreferences it is quite complex to get caching right.
+        #             Not impossible, but for now we just invalidate the cache every 24 hours.
         maximumLifetime = 86400
     }
 }
