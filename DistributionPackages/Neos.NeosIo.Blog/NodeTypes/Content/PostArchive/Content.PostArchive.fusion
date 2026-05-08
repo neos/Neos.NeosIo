@@ -9,10 +9,6 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
         }
     }
 
-    @private {
-        blogFolder = ${q(site).referenceNodes('blogFolder').get(0)}
-    }
-
     renderer = Neos.Fusion:Join {
         tagMenu = Neos.NeosIo.Blog:Component.TagMenu
 
@@ -31,10 +27,6 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
                 }
             }
 
-            @process.debug = Neos.Fusion:Debug.Console {
-                value = ${blogFolder}
-            }
-
             collection = Neos.Fusion:Case {
                 filteredByTag {
                     condition = ${documentNode && q(documentNode).is('[instanceof Neos.NeosIo.Blog:Document.Tag]')}
@@ -42,7 +34,8 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
                 }
                 default {
                     condition = true
-                    renderer = ${private.blogFolder ? q(private.blogFolder).find('[instanceof Neos.NeosIo:Post]') : q(site).find('[instanceof Neos.NeosIo:Post]')}
+                    blogFolder = ${q(site).referenceNodes('blogFolder').get(0)}
+                    renderer = ${this.blogFolder ? q(this.blogFolder).find('[instanceof Neos.NeosIo:Post]') : q(site).find('[instanceof Neos.NeosIo:Post]')}
                 }
                 @process.sort = ${value.sort('datePublished', 'DESC')}
             }
