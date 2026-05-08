@@ -23,7 +23,17 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
             #
             # This seems to be a bug in the package! It default's to page 1 but doesn't compute the cache discriminator
             # the same way.
-            @cache.entryDiscriminator = ${request.arguments.currentPage || '1'}
+            @cache {
+                entryDiscriminator = ${request.arguments.currentPage || '1'}
+                entryTags {
+                    posts = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Post', site)}
+                    tags = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.Blog:Document.Tag', site)}
+                }
+            }
+
+            @process.debug = Neos.Fusion:Debug.Console {
+                value = ${blogFolder}
+            }
 
             collection = Neos.Fusion:Case {
                 filteredByTag {
@@ -76,7 +86,6 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
         }
         entryTags {
             node = ${Neos.Caching.nodeTag(node)}
-            posts = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Post', site)}
             tags = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.Blog:Document.Tag', site)}
         }
     }
