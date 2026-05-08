@@ -17,6 +17,14 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
         tagMenu = Neos.NeosIo.Blog:Component.TagMenu
 
         list = Flowpack.Listable:PaginatedCollection {
+            # Override the entryDiscriminator so /blog.html (no currentPage arg) caches the same entry as /blog~p1.html.
+            # Flowpack.Listable:PaginatedCollection uses ${request.arguments.currentPage}, which is null on the bare URL
+            # and — being falsy — disables caching for that segment per Neos dynamic-mode rules.
+            #
+            # This seems to be a bug in the package! It default's to page 1 but doesn't compute the cache discriminator
+            # the same way.
+            @cache.entryDiscriminator = ${request.arguments.currentPage || '1'}
+
             collection = Neos.Fusion:Case {
                 filteredByTag {
                     condition = ${documentNode && q(documentNode).is('[instanceof Neos.NeosIo.Blog:Document.Tag]')}
@@ -57,22 +65,19 @@ prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
         }
     }
 
+    # The inner Flowpack.Listable:PaginatedCollection already has its own dynamic @cache keyed by currentPage,
+    # so the outer cache here only needs to provide the tag-based invalidation for Post/Tag changes —
+    # the dynamic inner segment is re-evaluated per page even inside this cached entry.
     @cache {
-        mode = 'dynamic'
+        mode = 'cached'
         entryIdentifier {
             node = ${Neos.Caching.entryIdentifierForNode(node)}
             documentNode = ${Neos.Caching.entryIdentifierForNode(documentNode)}
         }
-        entryDiscriminator = ${request.arguments.currentPage || 'default'}
         entryTags {
             node = ${Neos.Caching.nodeTag(node)}
             posts = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Post', site)}
             tags = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.Blog:Document.Tag', site)}
-        }
-        context {
-            1 = 'node'
-            2 = 'documentNode'
-            3 = 'site'
         }
     }
 }
