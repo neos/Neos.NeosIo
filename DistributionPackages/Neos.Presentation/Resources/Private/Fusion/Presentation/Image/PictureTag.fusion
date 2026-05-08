@@ -7,7 +7,7 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
     // We load all images lazily by default, as the browser is really good at finding what is needed above the fold
     loadEager = false
 
-    formats = ${['webp', 'jpg']}
+    formats = ${['webp']}
 
     // This is the granularity of the generated srcset.
     // NOTE: Every image is rendered the first time the image is requested!
