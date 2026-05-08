@@ -23,6 +23,7 @@ prototype(Neos.NeosIo:Content.BlogCarousel) < prototype(Neos.Neos:ContentCompone
                 tags = ${q(post).referenceNodes('tags').get()}
             }
         }
+        bleedOff = ${false}
     }
 
     @cache {
