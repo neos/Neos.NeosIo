@@ -42,6 +42,7 @@ xml = Neos.Fusion:Http.Message {
             mode = 'cached'
             entryIdentifier {
                 identifier = 'postRss'
+                site = ${Neos.Caching.entryIdentifierForNode(site)}
             }
             entryTags {
                 node = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Post', node)}

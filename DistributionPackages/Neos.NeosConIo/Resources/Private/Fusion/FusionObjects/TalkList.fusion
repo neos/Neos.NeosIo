@@ -21,7 +21,9 @@ prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Component) {
             event = ${eventToFilter ? Neos.Caching.entryIdentifierForNode(eventToFilter) : null}
         }
         entryTags {
-            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', node)}
+            node = ${Neos.Caching.nodeTag(node)}
+            talks = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', node)}
+            events = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event', node)}
         }
     }
 }
