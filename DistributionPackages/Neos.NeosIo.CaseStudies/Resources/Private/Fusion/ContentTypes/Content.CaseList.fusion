@@ -1,6 +1,14 @@
 prototype(Neos.NeosIo.CaseStudies:Content.CaseList) < prototype(Neos.Neos:ContentComponent) {
-    // TODO replace .find()
-    cases = ${q(site).find('[instanceof Neos.NeosIo:Reference]').get()}
+    cases = Neos.Fusion:Case {
+        withFilter {
+            condition = ${q(node).referenceNodes('pagesWithCases').count() > 0}
+            renderer = ${q(node).referenceNodes('pagesWithCases').children('[instanceof Neos.NeosIo:Reference]').get()}
+        }
+        default {
+            condition = true
+            renderer = ${q(site).find('[instanceof Neos.NeosIo:Reference]').get()}
+        }
+    }
 
     renderer = Neos.Fusion:Component {
         @apply.props = ${props}

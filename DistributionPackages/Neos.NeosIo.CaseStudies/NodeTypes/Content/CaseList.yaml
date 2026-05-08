@@ -11,3 +11,16 @@
         properties:
           label: 'Reference list properties'
           position: 1
+  references:
+    pagesWithCases:
+      constraints:
+        nodeTypes:
+          'Neos.Neos:Document': true
+      ui:
+        label: 'Pages with cases'
+        reloadIfChanged: true
+        inspector:
+          group: properties
+          editorOptions:
+            nodeTypes:
+              - 'Neos.Neos:Document'
