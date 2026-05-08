@@ -9,7 +9,7 @@ prototype(Neos.NeosConIo:Schedule.Talks) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <Neos.Fusion:Loop items={props.rooms} itemName="room" @children="itemRenderer">
-            <div class={"room-header display-title-md hidden lg:block center pb-4 text-center border-b-2 border-blue-light talk talk--room " + q(room).prevAll().count() + " talk--totalRooms" + Array.length(props.rooms)}>
+            <div class={"room-header display-title-md hidden lg:block center pb-4 text-center border-b-2 border-blue-light talk talk--room" + q(room).prevAll().count() + " talk--totalRooms" + Array.length(props.rooms)}>
                 {q(room).property('name')}
             </div>
         </Neos.Fusion:Loop>
@@ -29,6 +29,8 @@ prototype(Neos.NeosConIo:Schedule.Talk) < prototype(Neos.Fusion:Component) {
     isBreak = ${q(this.talk).is('[instanceof Neos.NeosConIo:BreakInSchedule]')}
     description = ${q(this.talk).property('text')}
     prevRooms = ${this.room.aggregateId ? q(this.room).prevAll().count() : 0}
+    //making sure tailwind renders these classes because they are set dynamically
+    classes = ${Carbon.String.classNames("col-start-1", "col-start-2", "col-end-2", "col-end-3")}
 
     renderer = afx`
         <div data-date={Date.format(q(props.talk).property('talkDate'), 'y-m-d')}
@@ -51,12 +53,12 @@ prototype(Neos.NeosConIo:Schedule.Talk) < prototype(Neos.Fusion:Component) {
             <div class="flex gap-4 grow-1">
                 <Neos.NeosConIo:ScheduleSpeakerImages speakers={props.speakers} />
                 <details class="grow-1" @if.hasDescription={props.description}>
-                    <summary class={"flex pt-3 group"}>
+                    <summary class={"flex pt-3 group cursor-pointer"}>
                         <Neos.NeosConIo:Schedule.Talk.Title
                             title={q(props.talk).property('title')}
                             description={props.description}
                             isBreak={props.isBreak}
-                            groupClasses="group-hover:text-blue transition-colors duration-300"
+                            groupClasses="group-hocus:text-blue transition-colors duration-300"
                         />
                     </summary>
                     <div class="talk__description py-4 px-0 w-[calc(100%+var(--spacing)*28)] relative -left-[calc(var(--spacing)*28)]" @if.hasText={props.description}>
@@ -114,7 +116,7 @@ prototype(Neos.NeosConIo:ScheduleSpeakerImageWrapper) < prototype(Neos.Fusion:Co
         iterator.isEven ? '-left-4' : '',
         !iterator.isEven ? 'z-1' : '',
         iterator.index > 1 ? '-top-4 -mb-4' : '',
-        'transition-300 transition-transform hover:scale-[1.2] hover:z-10' ]}
+        'transition-300 transition-transform hocus:scale-[1.2] hocus:z-10' ]}
            title={q(speaker).property('title')}
            aria-label={q(speaker).property('title')}
         >
