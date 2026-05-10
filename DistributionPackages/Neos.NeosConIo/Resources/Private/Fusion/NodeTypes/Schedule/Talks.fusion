@@ -29,8 +29,12 @@ prototype(Neos.NeosConIo:Schedule.Talk) < prototype(Neos.Fusion:Component) {
     isBreak = ${q(this.talk).is('[instanceof Neos.NeosConIo:BreakInSchedule]')}
     description = ${q(this.talk).property('text')}
     prevRooms = ${this.room.aggregateId ? q(this.room).prevAll().count() : 0}
-    //making sure tailwind renders these classes because they are set dynamically
-    classes = ${Carbon.String.classNames("col-start-1", "col-start-2", "col-end-2", "col-end-3")}
+    speakerRows = ${Math.ceil(Array.length(q(this.speakers))/2)}
+    // making sure tailwind renders these classes because they are set dynamically
+    // grid classes for grid col-start & end
+    // min-height classes for talk title based on speaker image rows
+    classes = ${Carbon.String.classNames("col-start-1", "col-start-2", "col-end-2", "col-end-3",
+    "min-h-[calc(var(--spacing)*8*1)]", "min-h-[calc(var(--spacing)*8*2)]", "min-h-[calc(var(--spacing)*8*3)]", "min-h-[calc(var(--spacing)*8*4)]", "min-h-[calc(var(--spacing)*8*5)]", "min-h-[calc(var(--spacing)*8*6)]")}
 
     renderer = afx`
         <div data-date={Date.format(q(props.talk).property('talkDate'), 'y-m-d')}
@@ -53,9 +57,9 @@ prototype(Neos.NeosConIo:Schedule.Talk) < prototype(Neos.Fusion:Component) {
             <div class="flex gap-4 grow-1">
                 <Neos.NeosConIo:ScheduleSpeakerImages speakers={props.speakers} />
                 <details class="grow-1" @if.hasDescription={props.description}>
-                    <summary class={"flex pt-3 group cursor-pointer"}>
+                    <summary class={"flex pt-3 group cursor-pointer min-h-[calc(var(--spacing)*8*"+props.speakerRows+")]"}>
                         <Neos.NeosConIo:Schedule.Talk.Title
-                            title={q(props.talk).property('title')}
+                            title={props.speakerRows + ' ' + q(props.talk).property('title')}
                             description={props.description}
                             isBreak={props.isBreak}
                             groupClasses="group-hocus:text-blue transition-colors duration-300"
@@ -95,7 +99,7 @@ prototype(Neos.NeosConIo:ScheduleSpeakerImages) < prototype(Neos.Fusion:Componen
     speakers = ${}
 
     renderer = afx`
-        <div class="talk__speaker-images flex shrink-0 grow-0 flex-wrap w-25 min-h-12">
+        <div class="talk__speaker-images flex shrink-0 grow-0 flex-wrap w-25 min-h-12 content-start">
             <Neos.Fusion:Loop items={props.speakers} itemName="speaker" @children="itemRenderer">
                 <Neos.NeosConIo:ScheduleSpeakerImageWrapper speaker={speaker} iterator={iterator}/>
             </Neos.Fusion:Loop>
