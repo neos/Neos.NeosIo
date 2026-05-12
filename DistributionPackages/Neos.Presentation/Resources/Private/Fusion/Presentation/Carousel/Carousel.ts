@@ -2,7 +2,7 @@ import Swiper from 'swiper';
 import { Autoplay } from 'swiper/modules';
 
 export function initCarousels() {
-    document.querySelectorAll('.n-carousel.swiper').forEach((swiperElement) => {
+    document.querySelectorAll('.n-carousel .swiper').forEach((swiperElement) => {
         if (swiperElement instanceof HTMLElement) {
             const autoplayEnabled = swiperElement.dataset.autoplay === 'true';
             const swiper = new Swiper(swiperElement, {
