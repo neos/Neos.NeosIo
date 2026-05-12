@@ -1,8 +1,8 @@
 prototype(Neos.NeosIo:Fragment.RebrandMenu) < prototype(Neos.Fusion:Component) {
     items = Neos.Neos:MenuItems {
         entryLevel = 1
-        maximumLevels = 2
-        filter = 'Neos.Neos:Document,!Neos.NeosIo:Reference.ShowCase,!Neos.NeosIo:Post'
+        maximumLevels = 1
+        filter = 'Neos.Neos:Document'
         calculateItemStates = true
     }
 
@@ -16,4 +16,3 @@ prototype(Neos.NeosIo:Fragment.RebrandMenu) < prototype(Neos.Fusion:Component) {
       <Neos.Presentation:MobileNavigation items={props.items} languageItems={props.languageItems} />
     `
 }
-

@@ -42,7 +42,10 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                             </div>
                         </div>
                         <div class="itemblocker pointer-events-none group-hover/navitem:pointer-events-default group-hover/navitem:block"></div>
-                        <Neos.Presentation:DesktopNavigation.LevelSecond item={item} flyoutVariant="white" />
+                        <Neos.Presentation:DesktopNavigation.LevelSecond
+                            item={item}
+                            flyoutVariant="white"
+                        />
                     </li>
                 </Neos.Fusion:Loop>
             </ul>
