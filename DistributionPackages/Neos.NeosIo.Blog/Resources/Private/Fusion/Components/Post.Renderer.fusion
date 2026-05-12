@@ -18,7 +18,8 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Component) {
             node = ${q(documentNode).parent().get(0)}
             absolute = true
         }
-        latest = ${q(site).find('[instanceof Neos.NeosIo:Post]').remove(node).slice(0, 6).sort('datePublished', 'DESC').get()}
+        blogFolder = ${q(site).referenceNodes('blogFolder').get(0) || site}
+        latest = ${q(private.blogFolder).find('[instanceof Neos.NeosIo:Post]').remove(node).sort('datePublished', 'DESC').slice(0, 6).get()}
         latestPostCarousel = Neos.Presentation:Carousel {
             autoplay = ${false}
             title = ${I18n.translate('blog.detail.latest', 'Latest posts', [], 'Main', 'Neos.NeosIo.Blog')}
@@ -37,7 +38,7 @@ prototype(Neos.NeosIo:PostRenderer) < prototype(Neos.Fusion:Component) {
                     tags = ${q(post).referenceNodes('tags').get()}
                 }
             }
-            bleedOff = ${true}
+            bleedOff = true
         }
     }
 
