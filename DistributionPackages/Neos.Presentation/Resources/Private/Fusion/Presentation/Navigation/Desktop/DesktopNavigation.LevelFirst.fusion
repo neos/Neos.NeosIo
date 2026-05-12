@@ -13,10 +13,10 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                     <li class="group/navitem h-14" x-data="NavigationItem">
                         <div class="h-full flex items-center group-hover/navitem:z-10">
                             <div class="rounded-md group-hover/navitem:bg-white/10 flex items-center" x-bind:class="{ 'bg-white/10!': open }">
-                                <Neos.Neos:NodeLink
-                                    node={item.node}
-                                    attributes.title={I18n.translate('Neos.Presentation:Navigation:linkToPage') + item.label}
-                                    attributes.class={Carbon.String.classNames(
+                                <a
+                                    href={item.uri}
+                                    title={I18n.translate('Neos.Presentation:Navigation:linkToPage') + item.label}
+                                    class={Carbon.String.classNames(
                                         'inline-block py-1 px-4 display-lead whitespace-nowrap',
                                         {
                                             '!text-white': item.state.value == 'normal',
@@ -25,7 +25,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                                     )}
                                 >
                                     {item.label}
-                                </Neos.Neos:NodeLink>
+                                </a>
                                 <button
                                     @if={item.subItems}
                                     class="-ml-2 mr-2 group-hover/navitem:rotate-180 transition duration-500"

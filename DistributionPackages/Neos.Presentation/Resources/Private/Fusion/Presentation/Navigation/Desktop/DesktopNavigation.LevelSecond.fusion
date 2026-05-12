@@ -24,18 +24,18 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
                     <ul class="!list-none !m-0 !p-0 flex flex-col gap-y-2">
                         <Neos.Fusion:Loop items={props.item.subItems} itemName="item">
                             <li>
-                                <Neos.Neos:NodeLink
-                                    node={item.node}
-                                    attributes.title={I18n.translate('Neos.Presentation:Navigation:linkToPage') + item.label}
-                                    attributes.class={Carbon.String.classNames(
-                                    'inline-block py-1 px-4 display-lead whitespace-nowrap',
-                                    {
-                                        '!text-blue-light': item.state.value == 'current' || item.state.value == 'active'
-                                    }
-                                )}
+                                <a
+                                    href={item.uri}
+                                    title={I18n.translate('Neos.Presentation:Navigation:linkToPage') + item.label}
+                                    class={Carbon.String.classNames(
+                                        'inline-block py-1 px-4 display-lead whitespace-nowrap',
+                                        {
+                                            '!text-blue-light': item.state.value == 'current' || item.state.value == 'active'
+                                        }
+                                    )}
                                 >
                                     {item.label}
-                                </Neos.Neos:NodeLink>
+                                </a>
                             </li>
                         </Neos.Fusion:Loop>
                     </ul>
