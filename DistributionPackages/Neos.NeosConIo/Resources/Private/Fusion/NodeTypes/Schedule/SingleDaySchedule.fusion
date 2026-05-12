@@ -27,12 +27,10 @@ prototype(Neos.NeosConIo:SingleDaySchedule) < prototype(Neos.Neos:ContentCompone
     days = ${days}
 
     renderer = afx`
-        <div class="schedule" data-component="Schedule">
+        <div class="mx-auto" data-component="Schedule">
             <Neos.Fusion:Loop items={props.days} itemName="day" @children="itemRenderer">
-                <h3 class="conferenceDayTitle">{Date.format(day, 'd M Y')}</h3>
-                <div class="conferenceDaySubtitle">
+                <h3 class="text-center display-headline-md mb-12">{Date.format(day, 'd M Y')}</h3>
 
-                </div>
                 <div class="talks">
                     <Neos.NeosConIo:Schedule.Talks day={day} />
                 </div>

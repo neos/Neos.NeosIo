@@ -35,9 +35,13 @@ prototype(Neos.NeosIo:Fragment.SiteHeader) < prototype(Neos.Fusion:Component) {
                 <div class="hamburger__line"></div>
                 <div class="hamburger__line hamburger__line--bottom"></div>
             </a>
-            <a href="https://www.neoscon.io/tickets" target="_blank" class="siteHeader__buyTickets menuBuyTickets" @if.set={props.showBuyTickets}>
-                Buy Tickets
-            </a>
+            <Neos.Presentation:Button
+                href={"https://www.neoscon.io/tickets"}
+                content={"Buy Tickets"}
+                openInNewTab={true}
+                class="siteHeader__buyTickets menuBuyTickets px-4! py-2!"
+                variant="yellow"
+                @if.set={props.showBuyTickets}/>
             <Neos.NeosIo:Fragment.Menu/>
         </header>
     `
