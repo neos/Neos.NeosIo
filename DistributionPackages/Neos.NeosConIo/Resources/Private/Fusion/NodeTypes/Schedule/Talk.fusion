@@ -1,0 +1,73 @@
+prototype(Neos.NeosConIo:Schedule.Talk) < prototype(Neos.Fusion:Component) {
+
+    talk = ${null}
+    rooms = ${null}
+
+    room = ${q(this.talk).referenceNodes('room').get(0)}
+    speakers = ${q(this.talk).property('speakers')}
+    isBreak = ${q(this.talk).is('[instanceof Neos.NeosConIo:BreakInSchedule]')}
+    description = ${q(this.talk).property('text')}
+    prevRooms = ${this.room.aggregateId ? q(this.room).prevAll().count() : 0}
+    @context.speakerRows = ${Math.ceil(Array.length(q(this.speakers)) / 2)}
+    // making sure tailwind renders these classes because they are set dynamically
+    // grid classes for grid col-start & end
+    classes = ${Carbon.String.classNames("col-start-1", "col-start-2", "col-end-2", "col-end-3")}
+    // min-height classes for talk title based on speaker image rows
+    minHeightClass = Neos.Fusion:Match {
+        @subject = ${speakerRows}
+        @default = ''
+        1 = "min-h-[calc(var(--spacing)*8*1)]"
+        2 = "min-h-[calc(var(--spacing)*8*2)]"
+        3 = "min-h-[calc(var(--spacing)*8*3)]"
+        4 = "min-h-[calc(var(--spacing)*8*4)]"
+        5 = "min-h-[calc(var(--spacing)*8*5)]"
+        6 = "min-h-[calc(var(--spacing)*8*6)]"
+    }
+
+    renderer = afx`
+        <div data-date={Date.format(q(props.talk).property('talkDate'), 'y-m-d')}
+             data-room-id={props.room.aggregateId}
+             class={["flex flex-wrap border-b-2 border-neutral-20 px-4 gap-2 sm:gap-8 sm:flex-nowrap lg:border-b-white",
+                  "col-start-" + (props.prevRooms + 1) + " col-end-" + (props.room && props.prevRooms == 0 ? props.prevRooms + 1 : Array.length(props.rooms) + 1),
+                   (props.isBreak ? ' bg-neutral-05 py-2 lg:pt-3 lg:pb-4' : ' pt-3 pb-4')]}>
+            <div
+                class={[props.room ? '' : 'pt-3', "basis-[100%] flex gap-4 flex-none sm:gap-2 sm:flex-col sm:basis-[130px] lg:pt-3 lg:basis-auto"]}>
+                <time class={["talk__time flex gap-2 lg:gap-4 "]}>
+                    <i class="fas fa-clock mt-1 color-purple-dark" aria-hidden="true"></i>
+                    <span class="block min-w-10 text-right tabular-nums">
+                      {Date.format(Neos.NeosConIo.Date.timezone(q(props.talk).property('talkDate'), 'Europe/Berlin'), 'G:i')}
+                    </span>
+                </time>
+                <p class="flex gap-2 lg:hidden" @if.hasRoom={props.room}>
+                    <i class="fas fa-map-marker-alt mt-1 color-purple-dark" aria-hidden="true"></i>
+                    <span>{q(props.room).property('name')}</span>
+                </p>
+            </div>
+            <div class="flex gap-4 grow-1">
+                <Neos.NeosConIo:ScheduleSpeakerImages speakers={props.speakers} />
+                <details class="grow-1" @if.hasDescription={props.description}>
+                    <summary class={"block pt-3 group cursor-pointer "+props.minHeightClass}>
+                        <Neos.NeosConIo:Schedule.Talk.Title
+                            title={q(props.talk).property('title')}
+                            description={props.description}
+                            isBreak={props.isBreak}
+                            groupClasses="group-hocus:text-blue transition-colors duration-300"
+                        />
+                    </summary>
+                    <div
+                        class="talk__description py-4 px-0 w-[calc(100%+var(--spacing)*28)] relative -left-[calc(var(--spacing)*28)]"
+                        @if.hasText={props.description}>
+                        {props.description}
+                    </div>
+                </details>
+                <div class="grow-1 pt-3" @if.noDescription={!props.description}>
+                    <Neos.NeosConIo:Schedule.Talk.Title
+                        title={q(props.talk).property('title')}
+                        description={props.description}
+                        isBreak={props.isBreak }
+                    />
+                </div>
+            </div>
+        </div>
+    `
+}
