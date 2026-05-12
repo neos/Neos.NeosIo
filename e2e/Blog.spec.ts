@@ -21,7 +21,7 @@ test('Blog is accessible on /blog', async ({ page }) => {
 
 test('Individual blog posts are accessible', async ({ page }) => {
     // Check whether the blog is accessible at the /blog URL
-    const response = await page.request.get('/blog/neos-and-flow-9-0-release.html');
+    const response = await page.request.get('/blog/2025/neos-and-flow-9-0-release.html');
     expect(response.status()).toBe(200);
     expect(await response.text()).toContain('Neos and Flow 9.0 Release');
 });
