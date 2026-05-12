@@ -4,7 +4,7 @@ prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Component) {
     @context.eventToFilter = ${this.eventToFilter}
 
     renderer = afx`
-        <ul class="talkList">
+        <ul class="flex flex-col list-none p-0 m-0">
             <Neos.Fusion:Loop items={props.talks} itemName="talk">
                 <Neos.NeosConIo:TalkList.Item
                     talk={talk}
@@ -21,7 +21,9 @@ prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Component) {
             event = ${eventToFilter ? Neos.Caching.entryIdentifierForNode(eventToFilter) : null}
         }
         entryTags {
-            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', node)}
+            node = ${Neos.Caching.nodeTag(node)}
+            talks = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', node)}
+            events = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event', node)}
         }
     }
 }
@@ -34,32 +36,39 @@ prototype(Neos.NeosConIo:TalkList.Item) < prototype(Neos.Fusion:Component) {
         talk = ${PropTypes.instanceOf('Neos.NeosConIo:Talk')}
     }
 
-    // The talk list item takes 1/3 of the width on desktop, so we calculate the percentage accordingly.
-    prototype(Neos.Presentation:Component.PictureTag) {
-        sizes = Neos.Presentation:Component.ImageSizes {
-            size = ${4 / 12}
-        }
-    }
-
     @private {
         link = Neos.Neos:NodeUri {
             node = ${props.talk}
             absolute = true
         }
-        image = Neos.Presentation:Component.PictureTag {
-            asset = ${props.talk.properties.thumbnail}
-            imgClasses = "absolute object-cover w-full h-full"
-            alt = ""
-        }
+        speakers = ${q(props.talk).referenceNodes('speakers')}
+        video = ${props.talk.properties.video}
+        event = ${q(props.talk).referenceNodes('event').get(0)}
+        clipPathClass = ${'post-preview-clip-path-' + Math.randomInt(1, 2)}
+        backgroundColors = ${['purple', 'purple-dark', 'blue', 'blue-dark', 'blue-light', 'green', 'yellow', 'orange', 'red']}
+        randomBackground = ${private.backgroundColors[Math.randomInt(0, Array.length(private.backgroundColors) - 1)]}
     }
 
     renderer = afx`
-        <li class="talkList__item">
-            <Neos.Presentation:ContentTeaser
-                title={props.talk.properties.title}
-                image={private.image}
-                link={private.link}
-            />
+        <li class="w-full">
+            <div class="border-b-1 border-neutral-20 py-4 flex gap-4">
+                <div class="shrink-0 grow-0 basis-auto">
+                    <Neos.NeosConIo:ScheduleSpeakerImages speakers={private.speakers}/>
+                </div>
+                <div class="grow-1 flex gap-x-4 gap-y-2 flex-wrap">
+                    <div class="grow-1">
+                        <p>{private.event.properties.title}</p>
+                        <h3 class="display-title-md mb-2 last:mb-0">
+                            <a class="mt-0 flex gap-2 items-center" href={private.link}>
+                                {props.talk.properties.title}
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="shrink-0 grow-0 basis-auto flex items-center" @if.hasVideo={private.video}>
+                        <p class="display-body-md px-2 py-1 bg-neutral-20">{I18n.translate('Neos.NeosConIo:Main:talkList.videoAvailable')}</p>
+                    </div>
+                </div>
+            </div>
         </li>
     `
 }

@@ -32,6 +32,7 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
             asset = ${q(node).property('image')}
             alt = ${props.alternativeText}
             imgClasses = "absolute w-full h-full object-cover"
+            srcSet = ${['400w', '800w', '1200w']}
         }
         meta = Neos.NeosIo:Reference.List.Item.Meta {
             launchDate = ${props.launchDate}
@@ -61,6 +62,8 @@ prototype(Neos.NeosIo:Reference.List.Item) < prototype(Neos.Fusion:Component) {
         }
         entryTags {
             node = ${Neos.Caching.nodeTag(node)}
+            projectType = ${q(node).referenceNodes('projectType') ? Neos.Caching.nodeTag(q(node).referenceNodes('projectType').get(0)) : null}
+            serviceProvider = ${q(node).referenceNodes('serviceProvider') ? Neos.Caching.nodeTag(q(node).referenceNodes('serviceProvider').get(0)) : null}
         }
     }
 }

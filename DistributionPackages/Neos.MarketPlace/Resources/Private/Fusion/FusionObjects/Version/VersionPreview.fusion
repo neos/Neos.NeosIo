@@ -15,6 +15,9 @@ prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
 
     @cache {
         mode = 'dynamic'
+        entryIdentifier {
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
         entryDiscriminator = ${request.arguments.version ? false : 'latest'}
         context {
             site = 'site'
@@ -22,8 +25,8 @@ prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
             node = 'node'
         }
         entryTags {
-            1 = ${Neos.Caching.nodeTag(node)}
-            2 = ${Neos.Caching.descendantOfTag(node)}
+            node = ${Neos.Caching.nodeTag(node)}
+            descendants = ${Neos.Caching.descendantOfTag(node)}
         }
     }
 }

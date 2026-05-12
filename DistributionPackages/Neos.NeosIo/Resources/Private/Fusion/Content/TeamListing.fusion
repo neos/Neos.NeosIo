@@ -18,6 +18,8 @@ prototype(Neos.NeosIo:TeamListing) < prototype(Neos.Neos:ContentComponent) {
 
     @cache {
         mode = 'cached'
+        # external API. See CrowdGroupsOperation
+        maximumLifetime = 3600
         entryIdentifier {
             documentNode = ${Neos.Caching.entryIdentifierForNode(documentNode)}
             node = ${Neos.Caching.entryIdentifierForNode(node)}

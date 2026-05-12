@@ -15,7 +15,7 @@ prototype(Neos.NeosConIo:Schedule) < prototype(Neos.Neos:ContentComponent) {
         entryIdentifier {
             node = ${Neos.Caching.entryIdentifierForNode(node)}
         }
-        tags {
+        entryTags {
             1 = ${Neos.Caching.nodeTag(node)}
             2 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', node)}
             3 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event', node)}
@@ -28,13 +28,13 @@ prototype(Neos.NeosConIo:Schedule) < prototype(Neos.Neos:ContentComponent) {
     days = ${days}
 
     renderer = afx`
-        <div class="schedule" data-component="Schedule">
+        <div class="mx-auto" data-component="Schedule">
             <Neos.Fusion:Loop items={props.days} itemName="day" @children="itemRenderer">
-                <h3 class="conferenceDayTitle">Conference Day {iterator.cycle}</h3>
-                <div class="conferenceDaySubtitle">
+                <h3 class="text-center display-headline-md mb-2 lg:mb-4">Conference Day {iterator.cycle}</h3>
+                <div class="display-title-lg mb-8 lg:mb-12 text-center">
                     {Date.format(day, 'd M Y')}
                 </div>
-                <div class="talks">
+                <div class="talks mb-[var(--n-spacing--y)] grid-cols-2 gap-x-16 last:mb-0 lg:grid">
                     <Neos.NeosConIo:Schedule.Talks day={day} />
                 </div>
             </Neos.Fusion:Loop>

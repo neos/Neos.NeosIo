@@ -26,29 +26,11 @@ prototype(Neos.NeosConIo:Speaker) < prototype(Neos.NeosIo:DefaultPage) {
             // node is the speaker here
             @context.featuredTalkNode = ${q(node).referenceNodes('featuredTalk').get(0)}
 
-            featuredTalk = Neos.Presentation:ContentTeaser {
-                title = ${q(featuredTalkNode).property('title')}
-                image = Neos.Presentation:Component.PictureTag {
-                    asset = ${q(node).property('thumbnail')}
-                    imgClasses = "absolute object-cover w-full h-full"
-                    alt = ""
-                }
-                text = ${String.cropAtWord(q(featuredTalkNode).property('text'), 200, '…')}
-                link = Neos.Neos:NodeUri {
-                    node = ${featuredTalkNode}
-                    absolute = true
-                }
-            }
+            featuredTalk = ${featuredTalkNode}
 
-            // Just show featured talk when defined in the backend
-            featuredTalk.@if.featuredTalkIsSelected = ${featuredTalkNode}
-
-            moreTalks = Neos.NeosConIo:TalkList {
-                talks = ${q(documentNode).backReferenceNodes("speakers").filter('[instanceof Neos.NeosConIo:Talk]').sort('talkDate', 'DESC')}
-                talks.@process.filterFeaturedTalk = ${Array.filter(value, item => item.aggregateId.value != featuredTalkNode.aggregateId.value)}
-                talks.@process.filterFeaturedTalk.@if.set = ${featuredTalkNode}
-                eventToFilter = null
-            }
+            moreTalks = ${q(documentNode).backReferenceNodes("speakers").filter('[instanceof Neos.NeosConIo:Talk]').sort('talkDate', 'DESC')}
+            moreTalks.@process.filterFeaturedTalk = ${Array.filter(value, item => item.aggregateId.value != featuredTalkNode.aggregateId.value)}
+            moreTalks.@process.filterFeaturedTalk.@if.set = ${featuredTalkNode}
         }
     }
 }

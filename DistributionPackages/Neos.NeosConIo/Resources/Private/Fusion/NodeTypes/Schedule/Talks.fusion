@@ -9,7 +9,8 @@ prototype(Neos.NeosConIo:Schedule.Talks) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <Neos.Fusion:Loop items={props.rooms} itemName="room" @children="itemRenderer">
-            <div class={"room-header talk talk--room" + q(room).prevAll().count() + " talk--totalRooms" + Array.length(props.rooms)}>
+            <div
+                class={"room-header display-title-md hidden lg:block center pb-4 text-center border-b-2 border-blue-light talk talk--room" + q(room).prevAll().count() + " talk--totalRooms" + Array.length(props.rooms)}>
                 {q(room).property('name')}
             </div>
         </Neos.Fusion:Loop>
@@ -17,58 +18,4 @@ prototype(Neos.NeosConIo:Schedule.Talks) < prototype(Neos.Fusion:Component) {
             <Neos.NeosConIo:Schedule.Talk talk={talk} rooms={props.rooms} />
         </Neos.Fusion:Loop>
     `
-}
-
-prototype(Neos.NeosConIo:Schedule.Talk) < prototype(Neos.Fusion:Component) {
-
-    talk = ${null}
-    rooms = ${null}
-
-    room = ${q(this.talk).referenceNodes('room').get(0)}
-
-    renderer = afx`
-        <div data-date={Date.format(q(props.talk).property('talkDate'), 'y-m-d')}
-             data-room-id={props.room.aggregateId}
-             class={"talk " + (props.room.aggregateId ? 'talk--room' + q(props.room).prevAll().count() + ' talk--totalRooms' + Array.length(props.rooms) : 'talk--fullWidthBecauseNoRoom talk--totalRooms' + Array.length(props.rooms))}>
-            <header class="talk__header">
-                <div class="talk__time">
-                    <i class="fas fa-clock"></i>
-                    {Date.format(Neos.NeosConIo.Date.timezone(q(props.talk).property('talkDate'), 'Europe/Berlin'), 'G:i')}
-                </div>
-
-                <Neos.NeosConIo:ScheduleSpeakerImages talk={props.talk}/>
-                <h4 class="talk__title">
-                    {q(props.talk).property('title')}
-                    <div class="talk__roomSmallDevice">
-                        {q(props.room).property('name')}
-                    </div>
-                </h4>
-            </header>
-
-            <div class="talk__description">
-                {q(props.talk).property('text')}
-            </div>
-        </div>
-    `
-}
-
-prototype(Neos.NeosConIo:ScheduleSpeakerImages) < prototype(Neos.Fusion:Component)  {
-    speakers = ${q(talk).property('speakers')}
-
-    renderer = afx`
-        <div class="talk__speaker-images">
-            <Neos.Fusion:Loop items={props.speakers} itemName="speaker" @children="itemRenderer">
-                <Neos.NeosConIo:ScheduleSpeakerImage speaker={speaker} />
-            </Neos.Fusion:Loop>
-        </div>
-    `
-}
-prototype(Neos.NeosConIo:ScheduleSpeakerImage) < prototype(Neos.Fusion:Component)  {
-    renderer = Neos.Presentation:Component.PictureTag {
-        asset = ${q(speaker).property('image')}
-        alt = ${speaker.properties.title}
-        imgClasses = "talk__speaker-image"
-        maximumHeight = 50
-        sizes = ${['50px']}
-    }
 }

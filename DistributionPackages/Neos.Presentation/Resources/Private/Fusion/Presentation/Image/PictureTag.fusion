@@ -7,9 +7,11 @@ prototype(Neos.Presentation:Component.PictureTag) < prototype(Neos.Fusion:Compon
     // We load all images lazily by default, as the browser is really good at finding what is needed above the fold
     loadEager = false
 
-    formats = ${['webp', 'jpg']}
+    formats = ${['webp']}
 
-    // These values should match Settings.Media.yaml
+    // This is the granularity of the generated srcset.
+    // NOTE: Every image is rendered the first time the image is requested!
+    //       This is controlled by the Setting: Neos.Media.autoCreateThumbnailPresets (set to false)
     srcSet = ${['200w', '400w', '600w', '800w', '1000w', '1200w', '1400w', '1600w']}
 
     // Sizes is a bit tricky, because it depends on the context where the image is used. In most cases it will be used in a column and should adapt to the column width. But in some cases it might be used full width or in a smaller container. Thats why we allow to pass custom sizes as a prop but also add a default value that should work in most cases.

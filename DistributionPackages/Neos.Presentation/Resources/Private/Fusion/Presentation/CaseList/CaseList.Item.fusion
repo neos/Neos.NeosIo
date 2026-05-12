@@ -5,20 +5,25 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
     projectVolume = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes {
         volume = ${q(node).property('projectVolume')}
     }
-    projectType = ${q(node).referenceNodes('projectType').get(0)}
-    serviceProvider = ${q(node).referenceNodes('serviceProvider').get(0)}
+    isCaseStudy = ${Neos.Node.isOfType(node, 'Neos.NeosIo:Reference.CaseStudy')}
+    featured = ${q(node).property('featured') || this.isCaseStudy}
+
+    // Load all reference nodes with one query and then filter them, which is faster for the amount of items we render
+    referenceNodes = ${q(node).referenceNodes().get()}
+    projectType = ${q(this.referenceNodes).filter('[instanceof Neos.NeosIo:ReferenceType]').get(0)}
+    serviceProvider = ${q(this.referenceNodes).filter('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]').get(0)}
     // Only use the service provider in the list if they are an active supporter (i.e. have a badge)
     // If we add other types of badges, we should filter them
     numberOfProviderBadges = ${this.serviceProvider ? q(this.serviceProvider).references('badges').count() : 0}
-    isCasestudy = ${Neos.Node.isOfType(node, 'Neos.NeosIo:Reference.CaseStudy')}
-    featured = ${q(node).property('featured') || this.isCasestudy}
+
+    // FIXME: This is a presentational component but contains lots of integration code
 
     @private {
         featuredLabel = ${Translation.translate('caseListing.sortBy.featured', 'Featured', [], 'Main', 'Neos.NeosIo.CaseStudies')}
         caseStudyLabel = ${Translation.translate('caseListing.sortBy.caseStudy', 'Case Study', [], 'Main', 'Neos.NeosIo.CaseStudies')}
         url = Neos.Fusion:Case {
             isCaseStudy {
-                condition = ${props.isCasestudy}
+                condition = ${props.isCaseStudy}
                 renderer = Neos.Neos:NodeUri {
                     node = ${node}
                 }
@@ -40,6 +45,7 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
             asset = ${q(node).property('image')}
             alt = ${props.alternativeText}
             imgClasses = "absolute w-full h-full object-cover"
+            srcSet = ${['400w', '800w', '1200w']}
         }
         thumbnail = Neos.Presentation:Component.PictureTag {
             asset = ${q(node).property('image')}
@@ -80,7 +86,7 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
                       class="absolute top-2 left-2 z-20 bg-blue-light text-white text-xs px-2 py-0.5">
                     {private.featuredLabel}
                 </span>
-                <span @if={props.isCasestudy}
+                <span @if={props.isCaseStudy}
                       class="absolute top-2 right-2 z-20 bg-yellow text-white text-xs px-2 py-0.5">
                     {private.caseStudyLabel}
                 </span>
@@ -115,14 +121,4 @@ prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
             </div>
         </div>
     `
-
-    @cache {
-        mode = 'cached'
-        entryIdentifier {
-            node = ${Neos.Caching.entryIdentifierForNode(node)}
-        }
-        entryTags {
-            node = ${Neos.Caching.nodeTag(node)}
-        }
-    }
 }
