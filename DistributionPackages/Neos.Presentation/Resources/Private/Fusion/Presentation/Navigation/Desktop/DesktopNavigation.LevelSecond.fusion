@@ -39,6 +39,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
             filter = 'Neos.Neos:Document,!Neos.NeosIo:Reference.ShowCase,!Neos.NeosIo:Post'
             @if.defaultLayout = ${!private.menuLayout}
         }
+        teaserHeader = ${private.node.properties.teaserHeader}
         teaserLink = ${private.node.properties.teaserLink}
         teaserText = ${private.node.properties.teaserText}
         teaserImage = ${private.node.properties.teaserImage}
