@@ -1,13 +1,30 @@
 prototype(Neos.NeosIo.CaseStudies:Content.CaseStudyCarousel) < prototype(Neos.Neos:ContentComponent) {
 
+    autoplay = ${!!node.properties.autoplay}
+    maxItems = ${node.properties.maxItems > 0 ? node.properties.maxItems : 10}
+    caseStudyFolder = ${q(site).referenceNodes('caseStudyFolder').get(0)}
+
+    @private {
+        items = Neos.Fusion:Case {
+            fromFolder {
+                condition = ${props.caseStudyFolder}
+                renderer = ${q(props.caseStudyFolder).children('[instanceof Neos.NeosIo:Reference.CaseStudy]').sort('datePublished', 'DESC').slice(0, props.maxItems).get()}
+            }
+            default {
+                condition = true
+                renderer = ${q(site).find('[instanceof Neos.NeosIo:Reference.CaseStudy]').sort('datePublished', 'DESC').slice(0, props.maxItems).get()}
+            }
+        }
+    }
+
     renderer = Neos.Presentation:Carousel {
-        autoplay = ${node.properties.autoplay}
+        autoplay = ${props.autoplay}
         title = Neos.Neos:Editable {
             property = 'title'
             block = false
         }
         items = Neos.Fusion:Map {
-            items = ${q(site).find('[instanceof Neos.NeosIo:Reference.CaseStudy]').sort('datePublished', 'DESC').slice(0, node.properties.maxItems).get()}
+            items = ${private.items}
             itemRenderer = Neos.NeosIo.CaseStudies:Content.CaseStudyTeaser {
                 caseStudy = ${item}
                 # show the project type as subtitle instead of always "case study"
