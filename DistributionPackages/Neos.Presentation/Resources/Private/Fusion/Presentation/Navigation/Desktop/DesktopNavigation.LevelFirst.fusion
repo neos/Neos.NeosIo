@@ -4,6 +4,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
     @propTypes {
         @strict = true
         items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
+        flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
     }
 
     renderer = afx`
@@ -45,7 +46,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                         </div>
                         <Neos.Presentation:DesktopNavigation.LevelSecond
                             item={item}
-                            flyoutVariant="default"
+                            flyoutVariant={props.flyoutVariant}
                         />
                     </li>
                 </Neos.Fusion:Loop>

@@ -7,6 +7,7 @@ prototype(Neos.Presentation:DesktopNavigation) < prototype(Neos.Fusion:Component
         @strict = true
         items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
         languageItems = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\DimensionMenuItem') ) }
+        flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
     }
 //@toDofe - add demo link
     renderer = afx`
@@ -35,9 +36,10 @@ prototype(Neos.Presentation:DesktopNavigation) < prototype(Neos.Fusion:Component
 
                 </button>
                 <div class={[
-                  "hidden absolute top-[100%] left-0 flex-col w-full bg-blue-dark p-4 h-[calc(100dvh-100%)] overflow-y-auto",
+                  "hidden absolute top-[100%] left-0 flex-col w-full p-4 h-[calc(100dvh-100%)] overflow-y-auto",
+                  props.flyoutVariant == 'white' ? 'bg-white' : 'bg-blue-dark',
                   "xl:flex xl:static xl:top-auto xl:left-auto xl:flex-row xl:w-auto xl:bg-transparent xl:p-0 xl:h-auto xl:items-center xl:gap-x-6 xl:grow-1"]} x-bind:class="{'flex!': mobileMenuOpen}">
-                    <Neos.Presentation:DesktopNavigation.LevelFirst items={props.items} />
+                    <Neos.Presentation:DesktopNavigation.LevelFirst items={props.items} flyoutVariant={props.flyoutVariant}/>
 
                     <div class="flex w-full gap-x-6 p-4 items-center justify-between flex-row-reverse xl:flex-row xl:justify-normal xl:w-auto xl:ml-auto xl:p-0">
                         <Neos.Presentation:LanguageMenu languageItems={props.languageItems} />

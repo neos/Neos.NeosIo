@@ -49,7 +49,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
 
     // TODO: Add icon and teaser text to second level entries for the 1 and 2 column layouts
 
-    // @ToDo: rendering condition for teaser?
+    // @ToDo: rendering condition for teaser? header + img + link & text or maybe image optional?
     //@ToDo: make sure 2nd lvl + header height < VP height
 
     renderer = afx`
@@ -83,14 +83,14 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
                           header={private.column1Header}
                           headerColor={private.columHeaderColor}
                           items={private.column1Items}
-                          width={private.menuLayout == 'twoColumns' ? '1/3' : '2/3'}
+                          twoColumnLayout={private.menuLayout == 'twoColumns'}
                         />
                         <Neos.Presentation:DesktopNavigation.LevelSecond.Column
                           header={private.column2Header}
                           headerColor={private.columHeaderColor}
                           items={private.column2Items}
                           @if={private.menuLayout == 'twoColumns'}
-                          width={'1/3'}
+                          twoColumnLayout={private.menuLayout == 'twoColumns'}
                         />
                         <Neos.Presentation:DesktopNavigation.LevelSecond.Column
                           header={private.teaserHeader}
@@ -98,7 +98,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
                           link={private.teaserLink}
                           text={private.teaserText}
                           image={private.teaserImage}
-                          width="1/3"
+                          twoColumnLayout={private.menuLayout == 'twoColumns'}
                         />
                     </div>
                 </div>
