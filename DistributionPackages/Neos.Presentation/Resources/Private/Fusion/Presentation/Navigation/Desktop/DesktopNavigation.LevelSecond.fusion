@@ -53,7 +53,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
     //@ToDo: make sure 2nd lvl + header height < VP height
 
     renderer = afx`
-        <div @if={private.items || private.menuLayout} class="absolute z-999 hidden group-hover/navitem:block top-[calc(100%+var(--spacing)*8)] left-0 right-0" x-bind:class="{'!block': open}">
+        <div @if={private.items || private.menuLayout} class="absolute z-999 hidden top-[calc(100%+var(--spacing)*8)] left-0 right-0" x-bind:class="{'!block': open}">
             <Neos.Presentation:Background
                 class='flow-root fade-in slide-up'
                 background={private.isDefault ? 'blue-dark' : private.isWhite ? 'white' : null}
@@ -82,7 +82,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
                           header={private.column1Header}
                           headerColor={private.columHeaderColor}
                           items={private.column1Items}
-                          width={private.menuLayout == 'twoColumns' ? '1/3' : '1/2'}
+                          width={private.menuLayout == 'twoColumns' ? '1/3' : '2/3'}
                         />
                         <Neos.Presentation:DesktopNavigation.LevelSecond.Column
                           header={private.column2Header}

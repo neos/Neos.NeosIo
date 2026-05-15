@@ -8,13 +8,13 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
 
     renderer = afx`
         <nav>
-            <ul class="flex list-none p-0 m-0" @if={props.items}>
+            <ul class="flex list-none p-0 m-0 gap-1" @if={props.items}>
                 <Neos.Fusion:Loop items={props.items} itemName="item">
                     <li class="group/navitem" x-data="NavigationItem">
                         <div class="flex items-center group-hover/navitem:z-10">
                             <div class="group-hover/navitem:bg-white/10 flex items-center" x-bind:class="{ 'bg-white/10!': open }">
                                 <a
-                                    @if={!q(item).property('menuItemsColumn1') && !q(item).property('menuItemsColumn2')}
+                                    @if={!q(item.node).property('menuItemsColumn1') && !q(item.node).property('menuItemsColumn2')}
                                     href={item.uri}
                                     class={Carbon.String.classNames(
                                         'inline-block py-1 px-3 display-lead whitespace-nowrap hover:no-underline',
@@ -27,18 +27,19 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                                     {item.label}
                                 </a>
                                 <button
-                                    @if={item.properties.menuItemsColumn1 || item.properties.menuItemsColumn2}
-                                    class="-ml-2 mr-2 py-1 px-4 group-hover/navitem:rotate-180 transition duration-500"
-                                    x-bind:class="{'rotate-180': open}"
+                                    @if={q(item.node).property('menuItemsColumn1') || q(item.node).property('menuItemsColumn2')}
+                                    class="py-1 px-4 flex gap-2 items-center"
                                     x-on:click="open = !open"
                                     x-bind:aria-expanded="open"
                                     aria-haspopup="true"
                                     "x-on:click.outside"="open = false">
                                     <span>{item.label}</span>
-                                    <Neos.Presentation:Icon
-                                        icon="chevron-down"
-                                        class="h-6"
-                                    />
+                                    <span x-bind:class="{'rotate-180': open}" class="transition duration-500">
+                                        <Neos.Presentation:Icon
+                                            icon="chevron-down"
+                                            class="h-6"
+                                        />
+                                    </span>
                                 </button>
                             </div>
                         </div>
