@@ -1,0 +1,57 @@
+prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        @strict = true
+        items = ${PropTypes.arrayOf(PropTypes.instanceOf('Neos\Neos\Fusion\MenuItem'))}
+        header = ${PropTypes.string}
+        link = ${PropTypes.string || null}
+        text = ${PropTypes.string || null}
+        image = PropTypes:DataStructure {
+            imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        }
+        width = ${PropTypes.oneOf(['1/2','1/3', '2/3', 'full'])}
+        headerColor = ${PropTypes.string}
+    }
+
+    @private {
+        columnWidth = Neos.Fusion:Match {
+            @subject = ${props.width}
+            @default = 'w-1/3'
+            cases {
+                '1/3' = 'w-1/3'
+                '1/2' = 'w-1/2'
+                '2/3' = 'w-2/3'
+                'full' = 'w-full'
+            }
+        }
+        imageSrc = Sitegeist.Kaleidoscope:AssetImageSource {
+            @context.asset = ${props.image}
+        }
+    }
+
+    renderer = afx`
+        <div class={"flex gap-4 flex-col px-10 flex-none " + private.columnWidth}>
+            <p class={"display-title-md " + props.headerColor}>{props.header}</p>
+            <ul class="list-none m-0 p-0 flex flex-col gap-2" @if={props.items}>
+                <Neos.Fusion:Loop items={props.items} itemName="item" >
+                    <li class={Carbon.String.classNames("group relative py-3 px-4 hocus:bg-white/10")}>
+                        <a href={item.uri}
+                           class={Carbon.String.classNames(
+                                            'inline-block display-body-lg font-bold mb-1 last:mb-0 whitespace-nowrap after:content-[""] after:absolute after:top-0 after:left-0 after:w-full after:h-full hocus:no-underline',
+                                            {'!text-blue-light': item.state.value == 'current' || item.state.value == 'active'}
+                                        )}
+                        >
+                            {item.label}
+                        </a>
+                        <p class={"display-body-md"}>Here is a short description text. Maybe it should be a bit longer for testing reasons</p>
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
+            <figure @if={private.imageSrc} class="w-full aspect-3/2">
+              <Sitegeist.Kaleidoscope:Image imageSource={private.imageSrc} class={"w-full h-full object-cover"}/>
+            </figure>
+
+            <Neos.Presentation:Button @if={props.link} icon={"animatedArrow"} href={props.link} content={props.text} fullWidth={true}/>
+
+        </div>
+    `
+}

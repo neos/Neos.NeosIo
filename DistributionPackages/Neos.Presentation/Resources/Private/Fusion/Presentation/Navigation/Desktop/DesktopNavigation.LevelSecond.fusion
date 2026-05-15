@@ -41,28 +41,32 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
         }
         teaserHeader = ${private.node.properties.teaserHeader}
         teaserLink = ${private.node.properties.teaserLink}
+        teaserLink.@process.convert = Neos.Neos:ConvertUris
         teaserText = ${private.node.properties.teaserText}
         teaserImage = ${private.node.properties.teaserImage}
+        columHeaderColor = ${private.isDefault ? 'text-blue-light' : 'text-blue-dark'}
     }
 
     // TODO: Add icon and teaser text to second level entries for the 1 and 2 column layouts
-    // TODO: Add teaser block to column layouts
+
+    // @ToDo: rendering condition for teaser?
+    //@ToDo: make sure 2nd lvl + header height < VP height
 
     renderer = afx`
-        <div @if={private.items || private.menuLayout} class="absolute z-999 hidden group-hover/navitem:block top-full left-0 right-0 pt-spacing-y-small" x-bind:class="{'!block': open}">
+        <div @if={private.items || private.menuLayout} class="absolute z-999 hidden group-hover/navitem:block top-[calc(100%+var(--spacing)*8)] left-0 right-0" x-bind:class="{'!block': open}">
             <Neos.Presentation:Background
                 class='flow-root fade-in slide-up'
                 background={private.isDefault ? 'blue-dark' : private.isWhite ? 'white' : null}
             >
-                <Neos.Presentation:Spacing y x>
-                    <ul class="!list-none !m-0 !p-0 flex flex-col gap-y-2" @if={!private.menuLayout}>
+                <div class={"py-16 px-20"}>
+                    <ul class="list-none m-0 p-0 flex flex-col gap-y-2" @if={!private.menuLayout}>
                         <Neos.Fusion:Loop items={private.items} itemName="item">
                             <li>
                                 <a
                                     href={item.uri}
-                                    title={I18n.translate('Neos.Presentation:Navigation:linkToPage') + item.label}
+                                    title={item.label}
                                     class={Carbon.String.classNames(
-                                        'inline-block py-1 px-4 display-lead whitespace-nowrap',
+                                        'inline-block py-3 px-4 display-lead whitespace-nowrap',
                                         {
                                             '!text-blue-light': item.state.value == 'current' || item.state.value == 'active'
                                         }
@@ -73,51 +77,30 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
                             </li>
                         </Neos.Fusion:Loop>
                     </ul>
-                    <div class="flex flex-row" @if={private.menuLayout}>
-                        <div>
-                          <strong>{private.column1Header}</strong>
-                            <ul class="!list-none !m-0 !p-0 flex flex-col gap-y-2">
-                                <Neos.Fusion:Loop items={private.column1Items} itemName="item">
-                                    <li>
-                                        <a
-                                            href={item.uri}
-                                            title={I18n.translate('Neos.Presentation:Navigation:linkToPage') + item.label}
-                                            class={Carbon.String.classNames(
-                                            'inline-block py-1 px-4 display-lead whitespace-nowrap',
-                                            {
-                                                '!text-blue-light': item.state.value == 'current' || item.state.value == 'active'
-                                            }
-                                        )}
-                                        >
-                                            {item.label}
-                                        </a>
-                                    </li>
-                                </Neos.Fusion:Loop>
-                            </ul>
-                        </div>
-                        <div>
-                            <strong>{private.column2Header}</strong>
-                            <ul class="!list-none !m-0 !p-0 flex flex-col gap-y-2" @if={private.menuLayout == 'twoColumns'}>
-                                <Neos.Fusion:Loop items={private.column2Items} itemName="item">
-                                    <li>
-                                        <a
-                                            href={item.uri}
-                                            title={I18n.translate('Neos.Presentation:Navigation:linkToPage') + item.label}
-                                            class={Carbon.String.classNames(
-                                            'inline-block py-1 px-4 display-lead whitespace-nowrap',
-                                            {
-                                                '!text-blue-light': item.state.value == 'current' || item.state.value == 'active'
-                                            }
-                                        )}
-                                        >
-                                            {item.label}
-                                        </a>
-                                    </li>
-                                </Neos.Fusion:Loop>
-                            </ul>
-                        </div>
+                    <div class="flex flex-row -mx-10" @if={private.menuLayout}>
+                        <Neos.Presentation:DesktopNavigation.LevelSecond.Column
+                          header={private.column1Header}
+                          headerColor={private.columHeaderColor}
+                          items={private.column1Items}
+                          width={private.menuLayout == 'twoColumns' ? '1/3' : '1/2'}
+                        />
+                        <Neos.Presentation:DesktopNavigation.LevelSecond.Column
+                          header={private.column2Header}
+                          headerColor={private.columHeaderColor}
+                          items={private.column2Items}
+                          @if={private.menuLayout == 'twoColumns'}
+                          width={private.menuLayout == 'twoColumns' ? '1/3' : '1/2'}
+                        />
+                        <Neos.Presentation:DesktopNavigation.LevelSecond.Column
+                          header={private.teaserHeader}
+                          headerColor={private.columHeaderColor}
+                          link={private.teaserLink}
+                          text={private.teaserText}
+                          image={private.teaserImage}
+                          width="1/3"
+                        />
                     </div>
-                </Neos.Presentation:Spacing>
+                </div>
             </Neos.Presentation:Background>
         </div>
     `
