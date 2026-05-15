@@ -8,7 +8,7 @@ prototype(Neos.Presentation:DesktopNavigation) < prototype(Neos.Fusion:Component
         items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
         languageItems = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\DimensionMenuItem') ) }
     }
-//@toDofe - add demo link & translation
+//@toDofe - add demo link
     renderer = afx`
         <div class="z-navigation hidden xl:flex px-4 py-10 transition-[padding] duration-300"
              x-data="{ scrolled: false }"
@@ -22,7 +22,7 @@ prototype(Neos.Presentation:DesktopNavigation) < prototype(Neos.Fusion:Component
                 <div class="ml-auto">
                     <Neos.Presentation:LanguageMenu languageItems={props.languageItems} />
                 </div>
-                <Neos.Presentation:Button icon={"chevron-right"} content="Try Neos" class="px-4! py-2!"/>
+                <Neos.Presentation:Button icon={"chevron-right"} content={I18n.translate('Neos.Presentation:Navigation:demo')} class="px-4! py-2!"/>
             </div>
         </div>
     `
