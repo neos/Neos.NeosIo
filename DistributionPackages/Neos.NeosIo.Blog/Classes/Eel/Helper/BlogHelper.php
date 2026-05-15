@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Neos\NeosIo\Blog\Eel\Helper;
 
@@ -23,16 +24,16 @@ class BlogHelper implements ProtectedContextAwareInterface
     protected ContentRepositoryRegistry $contentRepositoryRegistry;
 
     /**
-     * @param Node $site
+     * @param Node $startingPoint
      * @param int $limit
      * @param array<Node> $filterTags
      * @param string $sortBy
      * @param string $sortDirection
      * @return Nodes The found blog posts
      */
-    public function getPosts(Node $site, int $limit, array $filterTags = [], string $sortBy = 'datePublished', string $sortDirection = 'DESC'): Nodes
+    public function getPosts(Node $startingPoint, int $limit, array $filterTags = [], string $sortBy = 'datePublished', string $sortDirection = 'DESC'): Nodes
     {
-        $subgraph = $this->contentRepositoryRegistry->subgraphForNode($site);
+        $subgraph = $this->contentRepositoryRegistry->subgraphForNode($startingPoint);
 
         $orderingDirection = strtoupper($sortDirection) === 'DESC'
             ? OrderingDirection::DESCENDING
@@ -50,7 +51,7 @@ class BlogHelper implements ProtectedContextAwareInterface
          * - >1 tags: Performance hit! Find posts via backreferences of each tag, then sort & limit in PHP (because filtering by referenc(s) is not possible (yet?))
          */
         return match (count($filterTags)) {
-            0 => $this->findAllPosts($subgraph, $site, $nodeTypeCriteria, $ordering, $limit),
+            0 => $this->findAllPosts($subgraph, $startingPoint, $nodeTypeCriteria, $ordering, $limit),
             1 => $this->findPostsByTag($subgraph, $filterTags[0], $nodeTypeCriteria, $ordering, $limit),
             default => $this->findPostsByMultipleTags($subgraph, $filterTags, $nodeTypeCriteria, $orderingDirection, $sortBy, $limit),
         };
@@ -58,13 +59,13 @@ class BlogHelper implements ProtectedContextAwareInterface
 
     private function findAllPosts(
         ContentSubgraphInterface $subgraph,
-        Node $site,
-        NodeTypeCriteria $nodeTypeCriteria,
-        Ordering $ordering,
-        int $limit,
+        Node                     $startingPoint,
+        NodeTypeCriteria         $nodeTypeCriteria,
+        Ordering                 $ordering,
+        int                      $limit,
     ): Nodes {
         return $subgraph->findDescendantNodes(
-            $site->aggregateId,
+            $startingPoint->aggregateId,
             FindDescendantNodesFilter::create(
                 nodeTypes: $nodeTypeCriteria,
                 ordering: $ordering,
