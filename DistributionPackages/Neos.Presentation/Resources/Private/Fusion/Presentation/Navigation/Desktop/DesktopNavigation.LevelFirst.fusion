@@ -17,7 +17,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                                     @if={!q(item).property('menuItemsColumn1') && !q(item).property('menuItemsColumn2')}
                                     href={item.uri}
                                     class={Carbon.String.classNames(
-                                        'inline-block py-1 px-4 display-lead whitespace-nowrap',
+                                        'inline-block py-1 px-3 display-lead whitespace-nowrap hover:no-underline',
                                         {
                                             'text-white': item.state.value == 'normal',
                                             'text-blue-light': item.state.value == 'current' || item.state.value == 'active'
@@ -27,7 +27,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                                     {item.label}
                                 </a>
                                 <button
-                                    @if={q(item).property('menuItemsColumn1') || q(item).property('menuItemsColumn2')}
+                                    @if={item.properties.menuItemsColumn1 || item.properties.menuItemsColumn2}
                                     class="-ml-2 mr-2 py-1 px-4 group-hover/navitem:rotate-180 transition duration-500"
                                     x-bind:class="{'rotate-180': open}"
                                     x-on:click="open = !open"

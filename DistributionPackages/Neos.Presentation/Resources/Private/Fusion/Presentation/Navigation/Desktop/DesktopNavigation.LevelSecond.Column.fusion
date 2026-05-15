@@ -27,22 +27,28 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Ne
             @context.asset = ${props.image}
         }
     }
+    //@ToDo - description --> add integration - should text be be cropped after certain character count?
 
     renderer = afx`
-        <div class={"flex gap-4 flex-col px-10 flex-none " + private.columnWidth}>
+        <div class={"flex gap-4 flex-col px-10 flex-none " + private.columnWidth} data-component="desktop-navigation-level-second-column">
             <p class={"display-title-md " + props.headerColor}>{props.header}</p>
             <ul class="list-none m-0 p-0 flex flex-col gap-2" @if={props.items}>
                 <Neos.Fusion:Loop items={props.items} itemName="item" >
-                    <li class={Carbon.String.classNames("group relative py-3 px-4 hocus:bg-white/10")}>
-                        <a href={item.uri}
-                           class={Carbon.String.classNames(
-                                            'inline-block display-body-lg font-bold mb-1 last:mb-0 whitespace-nowrap after:content-[""] after:absolute after:top-0 after:left-0 after:w-full after:h-full hocus:no-underline',
-                                            {'!text-blue-light': item.state.value == 'current' || item.state.value == 'active'}
-                                        )}
-                        >
-                            {item.label}
-                        </a>
-                        <p class={"display-body-md"}>Here is a short description text. Maybe it should be a bit longer for testing reasons</p>
+                    <li class={Carbon.String.classNames("group relative py-3 px-4 flex gap-4 items-center hocus:bg-white/10")}>
+                        <Neos.Presentation:Icon icon={item.icon} sizeClass="h-8 w-8 flex-none" @if={item.icon}/>
+                        <span>
+                            <a href={item.uri}
+                               class={Carbon.String.classNames(
+                                                'inline-block display-body-lg font-bold mb-1 last:mb-0 whitespace-nowrap after:content-[""] after:absolute after:top-0 after:left-0 after:w-full after:h-full hocus:no-underline',
+                                                {'!text-blue-light': item.state.value == 'current' || item.state.value == 'active'}
+                                            )}
+                            >
+                                {item.label}
+                            </a>
+                            <p class={"display-body-md"} @if={item.description}>
+                               {item.description}
+                            </p>
+                        </span>
                     </li>
                 </Neos.Fusion:Loop>
             </ul>
