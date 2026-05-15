@@ -1,7 +1,8 @@
 prototype(Neos.NeosIo:Fragment.RebrandSiteHeader) < prototype(Neos.Fusion:Component) {
     renderer = afx`
-        <header class="sticky top-0 z-50">
-            <Neos.Presentation:Background background="blue-dark-to-blue">
+        <header class="sticky top-0 z-1000"
+                x-data="{ scrolled: false, mobileMenuOpen: false }">
+            <Neos.Presentation:Background background="blue-dark-to-blue" class="relative xl:static">
                 <Neos.NeosIo:Fragment.RebrandMenu />
             </Neos.Presentation:Background>
         </header>

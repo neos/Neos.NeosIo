@@ -53,13 +53,13 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
     //@ToDo: make sure 2nd lvl + header height < VP height
 
     renderer = afx`
-        <div @if={private.items || private.menuLayout} class="absolute z-999 hidden top-[calc(100%+var(--spacing)*14)] left-0 right-0 transition-[top] duration-300"
+        <div @if={private.items || private.menuLayout} class=" z-999 hidden duration-300 xl:top-[calc(100%+var(--spacing)*14)] xl:absolute xl:left-0 xl:right-0 xl:transition-[top]"
              x-bind:class="{'!block': open, 'top-[calc(100%+var(--spacing)*8)]!' : scrolled}">
             <Neos.Presentation:Background
                 class='flow-root fade-in slide-up'
                 background={private.isDefault ? 'blue-dark' : private.isWhite ? 'white' : null}
             >
-                <div class={"py-16 px-20"}>
+                <div class={"py-4 px-4 xl:py-16 xl:px-20"}>
                     <ul class="list-none m-0 p-0 flex flex-col gap-y-2" @if={!private.menuLayout}>
                         <Neos.Fusion:Loop items={private.items} itemName="item">
                             <li>
@@ -78,7 +78,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
                             </li>
                         </Neos.Fusion:Loop>
                     </ul>
-                    <div class="flex flex-row -mx-10" @if={private.menuLayout}>
+                    <div class="flex flex-row flex-wrap gap-y-8 -mx-4 xl:gap-y-0 xl:-mx-10" @if={private.menuLayout}>
                         <Neos.Presentation:DesktopNavigation.LevelSecond.Column
                           header={private.column1Header}
                           headerColor={private.columHeaderColor}
