@@ -53,7 +53,8 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
     //@ToDo: make sure 2nd lvl + header height < VP height
 
     renderer = afx`
-        <div @if={private.items || private.menuLayout} class="absolute z-999 hidden top-[calc(100%+var(--spacing)*8)] left-0 right-0" x-bind:class="{'!block': open}">
+        <div @if={private.items || private.menuLayout} class="absolute z-999 hidden top-[calc(100%+var(--spacing)*14)] left-0 right-0 transition-[top] duration-300"
+             x-bind:class="{'!block': open, 'top-[calc(100%+var(--spacing)*8)]!' : scrolled}">
             <Neos.Presentation:Background
                 class='flow-root fade-in slide-up'
                 background={private.isDefault ? 'blue-dark' : private.isWhite ? 'white' : null}
