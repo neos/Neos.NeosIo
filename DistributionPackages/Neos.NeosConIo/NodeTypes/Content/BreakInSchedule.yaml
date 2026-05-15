@@ -17,6 +17,20 @@
         label: 'Title'
         inspector:
           group: 'breakSettings'
+    type:
+      type: string
+      ui:
+        label: 'Schedule type'
+        reloadIfChanged: true
+        inspector:
+          group: 'breakSettings'
+          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            allowEmpty: true
+            placeholder: 'Break (coffee, lunch, …)'
+            values:
+              SPECIAL:
+                label: 'Special (social event, …)'
     talkDate:
       type: DateTime
       ui:
