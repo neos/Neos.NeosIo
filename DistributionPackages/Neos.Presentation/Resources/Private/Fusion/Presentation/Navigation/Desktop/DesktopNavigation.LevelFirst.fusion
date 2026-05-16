@@ -11,7 +11,10 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
         <nav class="grow-1 xl:grow-0">
             <ul class="flex flex-col list-none p-0 m-0 xl:gap-1 xl:flex-row" @if={props.items}>
                 <Neos.Fusion:Loop items={props.items} itemName="item">
-                    <li class="group/navitem border-b-1 border-white/10 xl:border-0" x-data="NavigationItem">
+                    <li class={Carbon.String.classNames(
+                    (props.flyoutVariant == 'white' ? 'border-blue-dark/10' : 'border-white/10'),
+                    "group/navitem border-b-1 xl:border-0"
+                    )} x-data="NavigationItem">
                         <div class="flex items-center group-hover/navitem:z-10 w-full xl:w-auto">
                             <div class={[
                                 "flex items-center w-full xl:w-auto",
