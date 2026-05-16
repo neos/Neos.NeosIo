@@ -28,6 +28,8 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                                         'inline-block py-4 px-4 whitespace-nowrap font-medium hover:no-underline w-full text-lg xl:text-md xl:font-normal xl:text-white xl:w-auto xl:py-1',
                                         item.state.value == 'current' || item.state.value == 'active' ? 'underline underline-offset-8': ''
                                     )}
+                                    aria-current="page"
+                                    aria-current.@if={item.state.value == 'current'}
                                 >
                                     {item.label}
                                 </a>

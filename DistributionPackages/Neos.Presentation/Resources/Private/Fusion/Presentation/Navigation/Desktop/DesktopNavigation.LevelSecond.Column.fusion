@@ -18,7 +18,6 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Ne
         }
     }
     //@ToDo - description --> add integration - should text be be cropped after certain character count?
-    //@ToDoFe - link active/current detection not working
 
     renderer = afx`
         <div class={["flex gap-4 flex-col px-4 flex-none w-full flex-wrap",
@@ -34,8 +33,11 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Ne
                             <a href={item.uri}
                                class={Carbon.String.classNames(
                                                 'inline-block display-body-lg font-bold mb-1 last:mb-0 whitespace-nowrap after:content-[""] after:absolute after:top-0 after:left-0 after:w-full after:h-full hocus:no-underline',
-                                                (item.state.value == 'current' || item.state.value == 'active' ? '!underline underline-offset-6 decoration-2' : '')
+                                                (item.state.value == 'current' || item.state.value == 'active' ? '' : '')
                                             )}
+                               x-data="{isActive: window.location.pathname === new URL($el.href).pathname}"
+                               x-bind:class="{'!underline underline-offset-6 decoration-2': isActive }"
+                               x-bind:aria-current="isActive ? 'page' : null"
                             >
                                 {item.label}
                             </a>
