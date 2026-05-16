@@ -22,7 +22,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                                     href={item.uri}
                                     class={Carbon.String.classNames(
                                         props.flyoutVariant == 'white' ? 'text-blue-dark' : 'text-white',
-                                        'inline-block py-4 px-4 whitespace-nowrap font-medium hover:no-underline w-full display-title-md xl:display-lead xl:font-normal xl:text-white xl:w-auto xl:py-1',
+                                        'inline-block py-4 px-4 whitespace-nowrap font-medium hover:no-underline w-full text-lg xl:text-md xl:font-normal xl:text-white xl:w-auto xl:py-1',
                                         item.state.value == 'current' || item.state.value == 'active' ? 'underline underline-offset-8': ''
                                     )}
                                 >
@@ -38,7 +38,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                                     x-bind:aria-expanded="open"
                                     aria-haspopup="true"
                                     "x-on:click.outside"="open = false">
-                                    <span class="grow-1 text-left display-title-md xl:display-lead xl:grow-0">{item.label}</span>
+                                    <span class="grow-1 text-left text-lg xl:text-md xl:grow-0">{item.label}</span>
                                     <span x-bind:class="{'rotate-180': open}" class="transition duration-500">
                                         <Neos.Presentation:Icon
                                             icon="chevron-down"
