@@ -42,7 +42,7 @@ prototype(Neos.Presentation:DesktopNavigation) < prototype(Neos.Fusion:Component
                     <Neos.Presentation:DesktopNavigation.LevelFirst items={props.items} flyoutVariant={props.flyoutVariant}/>
 
                     <div class="flex w-full gap-x-6 p-4 items-center justify-between flex-row-reverse xl:flex-row xl:justify-normal xl:w-auto xl:ml-auto xl:p-0">
-                        <Neos.Presentation:LanguageMenu languageItems={props.languageItems} />
+                        <Neos.Presentation:LanguageMenu languageItems={props.languageItems} flyoutVariant={props.flyoutVariant}/>
                         <Neos.Presentation:Button icon={"chevron-right"} content={I18n.translate('Neos.Presentation:Navigation:demo')} class="px-4! py-2! xl:w-auto"/>
                     </div>
                 </div>

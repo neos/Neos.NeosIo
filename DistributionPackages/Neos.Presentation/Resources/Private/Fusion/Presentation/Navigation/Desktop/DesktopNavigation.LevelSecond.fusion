@@ -9,9 +9,6 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
     }
 
     @private {
-        isDefault = ${props.flyoutVariant == 'default'}
-        isWhite = ${props.flyoutVariant == 'white'}
-
         node = ${props.item.node}
         menuLayout = ${private.node.properties.menuLayout}
         column1Header = ${private.node.properties.column1Header}
@@ -44,7 +41,6 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
         teaserLink.@process.convert = Neos.Neos:ConvertUris
         teaserText = ${private.node.properties.teaserText}
         teaserImage = ${private.node.properties.teaserImage}
-        columHeaderColor = ${private.isDefault ? 'text-blue-light' : 'text-blue-dark'}
     }
 
     // TODO: Add icon and teaser text to second level entries for the 1 and 2 column layouts
@@ -57,7 +53,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
              x-bind:class="{'!block': open, 'top-[calc(100%+var(--spacing)*8)]!' : scrolled}">
             <Neos.Presentation:Background
                 class='flow-root fade-in slide-up'
-                background={private.isDefault ? 'blue-dark' : private.isWhite ? 'white' : null}
+                background={props.flyoutVariant == 'white' ? 'white' : 'blue-dark'}
             >
                 <div class={"py-4 px-4 xl:py-16 xl:px-20"}>
                     <ul class="list-none m-0 p-0 flex flex-col gap-y-2" @if={!private.menuLayout}>
@@ -81,24 +77,24 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
                     <div class="flex flex-row flex-wrap gap-y-8 -mx-4 xl:gap-y-0 xl:-mx-10" @if={private.menuLayout}>
                         <Neos.Presentation:DesktopNavigation.LevelSecond.Column
                           header={private.column1Header}
-                          headerColor={private.columHeaderColor}
                           items={private.column1Items}
                           twoColumnLayout={private.menuLayout == 'twoColumns'}
+                          flyoutVariant={props.flyoutVariant}
                         />
                         <Neos.Presentation:DesktopNavigation.LevelSecond.Column
                           header={private.column2Header}
-                          headerColor={private.columHeaderColor}
                           items={private.column2Items}
                           @if={private.menuLayout == 'twoColumns'}
                           twoColumnLayout={private.menuLayout == 'twoColumns'}
+                          flyoutVariant={props.flyoutVariant}
                         />
                         <Neos.Presentation:DesktopNavigation.LevelSecond.Column
                           header={private.teaserHeader}
-                          headerColor={private.columHeaderColor}
                           link={private.teaserLink}
                           text={private.teaserText}
                           image={private.teaserImage}
                           twoColumnLayout={private.menuLayout == 'twoColumns'}
+                          flyoutVariant={props.flyoutVariant}
                         />
                     </div>
                 </div>
