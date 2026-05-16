@@ -35,7 +35,7 @@ prototype(Neos.Presentation:LanguageMenu.Item) < prototype(Neos.Fusion:Component
                     'no-underline display-lead',
                     item.state.value == 'current' ? 'text-blue-light' : (props.flyoutVariant == 'white' ? 'text-blue-dark xl:text-white' : 'text-white'),
                     {
-                        '!underline underline-offset-8': item.state.value == 'current'
+                        '!underline underline-offset-8 decoration-2': item.state.value == 'current'
                     }
                 )}
                 node={item.node}
