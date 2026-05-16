@@ -46,11 +46,10 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
     // TODO: Add icon and teaser text to second level entries for the 1 and 2 column layouts
 
     // @ToDo: rendering condition for teaser? header + img + link & text or maybe image optional?
-    //@ToDo: make sure 2nd lvl + header height < VP height
 
     renderer = afx`
-        <div @if={private.items || private.menuLayout} class=" z-999 hidden duration-300 xl:top-[calc(100%+var(--spacing)*14)] xl:absolute xl:left-0 xl:right-0 xl:transition-[top]"
-             x-bind:class="{'!block': open, 'top-[calc(100%+var(--spacing)*8)]!' : scrolled}">
+        <div @if={private.items || private.menuLayout} class=" z-999 hidden duration-300 xl:top-[calc(100%+var(--spacing)*14)] xl:max-h-[calc(100dvh-100%-var(--spacing)*28)] xl:overflow-y-auto xl:absolute xl:left-0 xl:right-0 xl:transition-[top]"
+             x-bind:class="{'!block': open, 'top-[calc(100%+var(--spacing)*8)]!' : scrolled, 'xl:max-h-[calc(100dvh-100%-var(--spacing)*16)]!' : scrolled}">
             <Neos.Presentation:Background
                 class='flow-root fade-in slide-up'
                 background={props.flyoutVariant == 'white' ? 'white' : 'blue-dark'}
