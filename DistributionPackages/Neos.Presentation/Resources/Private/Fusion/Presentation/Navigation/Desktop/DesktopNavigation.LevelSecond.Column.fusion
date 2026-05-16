@@ -18,14 +18,14 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Ne
         }
     }
     //@ToDo - description --> add integration - should text be be cropped after certain character count?
-    //@ToDoFe - mark link items as active if current page
+    //@ToDoFe - link active/current detection not working
 
     renderer = afx`
         <div class={["flex gap-4 flex-col px-4 flex-none w-full flex-wrap",
          private.imageSrc ? 'md:w-1/3' : 'md:w-1/2',
          private.imageSrc && !props.twoColumnLayout ? 'xl:ml-auto' : '',
           "xl:px-10 xl:w-1/3"]} data-component="desktop-navigation-level-second-column">
-            <p class={"display-title-md " + (props.flyoutVariant == 'white' ? 'text-purple-dark' : 'text-blue-dark')}>{props.header}</p>
+            <p class={"display-title-md " + (props.flyoutVariant == 'white' ? 'text-purple-dark' : 'text-blue-light')}>{props.header}</p>
             <ul class="list-none m-0 p-0 flex flex-col gap-2" @if={props.items}>
                 <Neos.Fusion:Loop items={props.items} itemName="item" >
                     <li class={Carbon.String.classNames("group relative py-3 px-4 flex gap-4 items-center ", props.flyoutVariant == 'white' ? 'hocus:bg-blue-dark/10' : 'hocus:bg-white/10')}>
@@ -34,13 +34,12 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Ne
                             <a href={item.uri}
                                class={Carbon.String.classNames(
                                                 'inline-block display-body-lg font-bold mb-1 last:mb-0 whitespace-nowrap after:content-[""] after:absolute after:top-0 after:left-0 after:w-full after:h-full hocus:no-underline',
-                                                (item.state.value == 'current' || item.state.value == 'active' ? '!underline underline-offset-8' : '')
+                                                (item.state.value == 'current' || item.state.value == 'active' ? '!underline underline-offset-6 decoration-2' : '')
                                             )}
                             >
                                 {item.label}
                             </a>
-                            <p class={"display-body-md"} >
-                                Lorem Ipsum dolor sit Lorem Ipsum dolor sit Lorem Ipsum dolor sit Lorem Ipsum dolor sit Lorem Ipsum dolor sit
+                            <p class={"display-body-md"} @if={item.description}>
                                {item.description}
                             </p>
                         </span>
