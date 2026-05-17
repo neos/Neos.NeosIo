@@ -8,7 +8,6 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Ne
         image = PropTypes:DataStructure {
             imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
         }
-        twoColumnLayout = ${PropTypes.boolean}
         flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
     }
 
@@ -21,8 +20,8 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Ne
 
     renderer = afx`
         <div class={["flex gap-4 flex-col px-4 flex-none w-full flex-wrap",
-         private.imageSrc ? 'md:w-1/3' : 'md:w-1/2',
-         private.imageSrc && !props.twoColumnLayout ? 'xl:ml-auto' : '',
+         private.imageSrc ? 'max-w-[320px] md:w-1/3' : 'md:w-1/2',
+         private.imageSrc ? 'xl:max-w-full xl:ml-auto' : '',
           "xl:px-10 xl:w-1/3"]} data-component="desktop-navigation-level-second-column">
             <p class={"display-title-md " + (props.flyoutVariant == 'white' ? 'text-purple-dark' : 'text-blue-light')}>{props.header}</p>
             <ul class="list-none m-0 p-0 flex flex-col gap-2" @if={props.items}>

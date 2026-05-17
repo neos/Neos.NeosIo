@@ -2,10 +2,23 @@
   abstract: true
   ui:
     inspector:
-      groups:
-        navigationOptions:
-          label: 'Navigation Options'
+      tabs:
+        navigation:
+          label: 'Main Navigation Options'
           icon: 'sitemap'
+      groups:
+        navigationCol1:
+          label: 'Column 1'
+          icon: 'sitemap'
+          tab: navigation
+        navigationCol2:
+          label: 'Column 2'
+          icon: 'sitemap'
+          tab: navigation
+        navigationCol3:
+          label: 'Column 3'
+          icon: 'sitemap'
+          tab: navigation
   references:
     menuItemsColumn1:
       constraints:
@@ -13,12 +26,11 @@
           'Neos.Neos:Document': true
       scope: nodeAggregate
       ui:
-        label: 'Menu Items Column 1'
+        label: 'Menu Items'
         reloadPageIfChanged: true
         inspector:
-          group: navigationOptions
+          group: navigationCol1
           position: after column1Header
-          hidden: 'ClientEval: !node.properties.menuLayout'
           editorOptions: &menuItemsColumnOptions
             nodeTypes:
               - 'Neos.Neos:Document'
@@ -26,63 +38,61 @@
               - '!Neos.NeosIo.Blog:Document.Tag'
               - '!Neos.MarketPlace:Package'
               - '!Neos.NeosIo.ServiceOfferings:Document.ServiceProvider'
+              - '!Neos.NeosIo:Document.FirstLevelNavigationFolder'
     menuItemsColumn2:
       constraints:
         nodeTypes:
           'Neos.Neos:Document': true
       scope: nodeAggregate
       ui:
-        label: 'Menu Items Column 2'
+        label: 'Menu Items'
         reloadPageIfChanged: true
         inspector:
-          group: navigationOptions
+          group: navigationCol2
           position: after column2Header
-          hidden: 'ClientEval: node.properties.menuLayout != "twoColumns"'
           editorOptions: *menuItemsColumnOptions
-  properties:
-    menuLayout:
-      type: string
+    menuItemsColumn3:
+      constraints:
+        nodeTypes:
+          'Neos.Neos:Document': true
       scope: nodeAggregate
       ui:
-        label: 'Menu Layout'
-        help:
-          message: 'Defines the column layout of the main navigation. If no layout is selected, the columns will be rendered automatically based on the number of menu items.'
-        reloadIfChanged: true
+        label: 'Menu Items'
+        reloadPageIfChanged: true
         inspector:
-          group: navigationOptions
-          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
-          editorOptions:
-            allowEmpty: true
-            placeholder: 'Automatic column layout'
-            values:
-              oneColumn:
-                label: '1 Column + Teaser'
-              twoColumns:
-                label: '2 Columns + Teaser'
+          group: navigationCol3
+          hidden: 'ClientEval: node.properties.column3Teaser'
+          position: after column3Header
+          editorOptions: *menuItemsColumnOptions
+  properties:
     column1Header:
       type: string
       ui:
-        label: 'Column 1 Header'
+        label: 'Title'
         reloadIfChanged: true
         inspector:
-          group: navigationOptions
-          hidden: 'ClientEval: !node.properties.menuLayout'
+          group: navigationCol1
     column2Header:
       type: string
       ui:
-        label: 'Column 2 Header'
+        label: 'Title'
         reloadIfChanged: true
         inspector:
-          group: navigationOptions
-          hidden: 'ClientEval: node.properties.menuLayout != "twoColumns"'
-    teaserHeader:
+          group: navigationCol2
+    column3Header:
       type: string
       ui:
-        label: 'Teaser Header'
+        label: 'Title'
         reloadIfChanged: true
         inspector:
-          group: navigationOptions
-          hidden: 'ClientEval: !node.properties.menuLayout'
+          group: navigationCol3
+    column3Teaser:
+      type: boolean
+      ui:
+        label: 'Teaser Column'
+        reloadIfChanged: true
+        inspector:
+          group: navigationCol3
     teaserLink:
       type: string
       scope: nodeAggregate
@@ -90,8 +100,8 @@
         label: 'Teaser Link'
         reloadIfChanged: true
         inspector:
-          group: navigationOptions
-          hidden: 'ClientEval: !node.properties.menuLayout'
+          group: navigationCol3
+          hidden: 'ClientEval: !node.properties.column3Teaser'
           editor: Neos.Neos/Inspector/Editors/LinkEditor
     teaserText:
       type: string
@@ -99,8 +109,8 @@
         label: 'Teaser Text'
         reloadIfChanged: true
         inspector:
-          hidden: 'ClientEval: !node.properties.menuLayout'
-          group: navigationOptions
+          hidden: 'ClientEval: !node.properties.column3Teaser'
+          group: navigationCol3
     teaserImage:
       type: Neos\Media\Domain\Model\ImageInterface
       scope: nodeAggregate
@@ -108,6 +118,6 @@
         label: 'Teaser Image'
         reloadIfChanged: true
         inspector:
-          group: navigationOptions
-          hidden: 'ClientEval: !node.properties.menuLayout'
+          group: navigationCol3
+          hidden: 'ClientEval: !node.properties.column3Teaser'
           editor: Neos.Neos/Inspector/Editors/ImageEditor

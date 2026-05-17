@@ -10,14 +10,12 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
 
     @private {
         node = ${props.item.node}
-        menuLayout = ${private.node.properties.menuLayout}
         column1Header = ${private.node.properties.column1Header}
         column1Items = Neos.Neos:MenuItems {
             maximumLevels = 1
             itemCollection = ${q(private.node).referenceNodes('menuItemsColumn1').get()}
             // Disable item states as it costs too much performance, we should highlight the current page via JS
             calculateItemStates = false
-            @if.hasLayout = ${private.menuLayout}
         }
         column2Header = ${private.node.properties.column2Header}
         column2Items = Neos.Neos:MenuItems {
@@ -25,8 +23,20 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
             itemCollection = ${q(private.node).referenceNodes('menuItemsColumn2').get()}
             // Disable item states as it costs too much performance, we should highlight the current page via JS
             calculateItemStates = false
-            @if.hasLayout = ${private.menuLayout == 'twoColumns'}
         }
+        column3Header = ${private.node.properties.column3Header}
+        column3Items = Neos.Neos:MenuItems {
+            maximumLevels = 1
+            itemCollection = ${q(private.node).referenceNodes('menuItemsColumn3').get()}
+            // Disable item states as it costs too much performance, we should highlight the current page via JS
+            calculateItemStates = false
+            //@if.hasLayout = ${private.menuLayout == 'twoColumns'}
+        }
+        column3Teaser = ${private.node.properties.column3Teaser}
+        teaserLink = ${private.node.properties.teaserLink}
+        teaserLink.@process.convert = Neos.Neos:ConvertUris
+        teaserText = ${private.node.properties.teaserText}
+        teaserImage = ${private.node.properties.teaserImage}
         // We need to fetch the menu items for the second level here
         items = Neos.Neos:MenuItems {
             startingPoint = ${private.node}
@@ -34,28 +44,24 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
             // Disable item states as it costs too much performance, we should highlight the current page via JS
             calculateItemStates = false
             filter = 'Neos.Neos:Document,!Neos.NeosIo:Reference.ShowCase,!Neos.NeosIo:Post'
-            @if.defaultLayout = ${!private.menuLayout}
+            @if.defaultLayout = ${!private.column1Items && !private.column2Items && !private.column3Items}
         }
-        teaserHeader = ${private.node.properties.teaserHeader}
-        teaserLink = ${private.node.properties.teaserLink}
-        teaserLink.@process.convert = Neos.Neos:ConvertUris
-        teaserText = ${private.node.properties.teaserText}
-        teaserImage = ${private.node.properties.teaserImage}
     }
 
     // TODO: Add icon and teaser text to second level entries for the 1 and 2 column layouts
 
     // @ToDo: rendering condition for teaser? header + img + link & text or maybe image optional?
+    // Level 2 is rendered if there are any menu items in any of the columns - will not be rendered if there is only a teaser because that's not a real menu entry
 
     renderer = afx`
-        <div @if={private.items || private.menuLayout} class=" z-999 hidden duration-300 xl:top-[calc(100%+var(--spacing)*14)] xl:max-h-[calc(100dvh-100%-var(--spacing)*28)] xl:overflow-y-auto xl:absolute xl:left-0 xl:right-0 xl:transition-[top]"
+        <div class=" z-999 hidden duration-300 xl:top-[calc(100%+var(--spacing)*14)] xl:max-h-[calc(100dvh-100%-var(--spacing)*28)] xl:overflow-y-auto xl:absolute xl:left-0 xl:right-0 xl:transition-[top]"
              x-bind:class="{'!block': open, 'top-[calc(100%+var(--spacing)*8)]!' : scrolled, 'xl:max-h-[calc(100dvh-100%-var(--spacing)*16)]!' : scrolled}">
             <Neos.Presentation:Background
                 class='flow-root fade-in slide-up'
                 background={props.flyoutVariant == 'white' ? 'white' : 'blue-dark'}
             >
                 <div class={"py-4 px-4 xl:py-16 xl:px-20"}>
-                    <ul class="list-none m-0 p-0 flex flex-col gap-y-2" @if={!private.menuLayout}>
+                    <ul class="list-none m-0 p-0 flex flex-col gap-y-2" @if={private.items && !(private.column1Items || private.column2Items || private.column3Items)}>
                         <Neos.Fusion:Loop items={private.items} itemName="item">
                             <li>
                                 <a
@@ -73,27 +79,32 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
                             </li>
                         </Neos.Fusion:Loop>
                     </ul>
-                    <div class="flex flex-row flex-wrap gap-y-8 -mx-4 xl:gap-y-0 xl:-mx-10" @if={private.menuLayout}>
+                    <div class="flex flex-row flex-wrap gap-y-8 -mx-4 xl:gap-y-0 xl:-mx-10" @if={private.column1Items || private.column2Items || private.column3Items}>
                         <Neos.Presentation:DesktopNavigation.LevelSecond.Column
                           header={private.column1Header}
                           items={private.column1Items}
-                          twoColumnLayout={private.menuLayout == 'twoColumns'}
                           flyoutVariant={props.flyoutVariant}
+                          @if={private.column1Items}
                         />
                         <Neos.Presentation:DesktopNavigation.LevelSecond.Column
                           header={private.column2Header}
                           items={private.column2Items}
-                          @if={private.menuLayout == 'twoColumns'}
-                          twoColumnLayout={private.menuLayout == 'twoColumns'}
                           flyoutVariant={props.flyoutVariant}
+                          @if={private.column2Items}
                         />
                         <Neos.Presentation:DesktopNavigation.LevelSecond.Column
-                          header={private.teaserHeader}
+                          header={private.column3Header}
+                          items={private.column3Items}
+                          flyoutVariant={props.flyoutVariant}
+                          @if={!private.column3Teaser && private.column3Items}
+                        />
+                        <Neos.Presentation:DesktopNavigation.LevelSecond.Column
+                          header={private.column3Header}
                           link={private.teaserLink}
                           text={private.teaserText}
                           image={private.teaserImage}
-                          twoColumnLayout={private.menuLayout == 'twoColumns'}
                           flyoutVariant={props.flyoutVariant}
+                          @if={private.column3Teaser}
                         />
                     </div>
                 </div>

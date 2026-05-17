@@ -21,7 +21,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                                 props.flyoutVariant == 'white' ? 'group-hover/navitem:bg-blue-dark/10' : 'group-hover/navitem:bg-white/10']}
                                  x-bind:class="{ 'bg-white/10!': open }">
                                 <a
-                                    @if={!q(item.node).property('menuItemsColumn1') && !q(item.node).property('menuItemsColumn2')}
+                                    @if={!q(item.node).property('menuItemsColumn1') && !q(item.node).property('menuItemsColumn2') && !q(item.node).property('menuItemsColumn3')}
                                     href={item.uri}
                                     class={Carbon.String.classNames(
                                         props.flyoutVariant == 'white' ? 'text-blue-dark' : 'text-white',
@@ -34,7 +34,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                                     {item.label}
                                 </a>
                                 <button
-                                    @if={q(item.node).property('menuItemsColumn1') || q(item.node).property('menuItemsColumn2')}
+                                    @if={q(item.node).property('menuItemsColumn1') || q(item.node).property('menuItemsColumn2') || q(item.node).property('menuItemsColumn3')}
                                     class={Carbon.String.classNames(
                                       props.flyoutVariant == 'white' ? 'text-blue-dark' : 'text-white',
                                       "py-4 px-4 flex gap-2 items-center whitespace-nowrap w-full font-medium xl:font-normal xl:text-white xl:w-auto xl:py-1"
@@ -54,6 +54,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                             </div>
                         </div>
                         <Neos.Presentation:DesktopNavigation.LevelSecond
+                            @if={q(item.node).property('menuItemsColumn1') || q(item.node).property('menuItemsColumn2') || q(item.node).property('menuItemsColumn3')}
                             item={item}
                             flyoutVariant={props.flyoutVariant}
                         />
