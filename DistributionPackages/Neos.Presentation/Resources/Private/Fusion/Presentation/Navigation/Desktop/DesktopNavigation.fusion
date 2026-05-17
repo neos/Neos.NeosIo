@@ -7,20 +7,46 @@ prototype(Neos.Presentation:DesktopNavigation) < prototype(Neos.Fusion:Component
         @strict = true
         items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
         languageItems = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\DimensionMenuItem') ) }
+        flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
     }
-
+//@toDofe - add demo link
     renderer = afx`
-        <Neos.Presentation:Spacing size x={false} y="small" class="z-navigation hidden xl:flex px-4">
-            <div class="flex items-center justify-between gap-x-6 relative w-full">
+        <div class="z-navigation px-4 py-4 relative xl:py-10 xl:flex transition-[padding] duration-300"
+             x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 0 })"
+             x-bind:class="{ 'py-4!': scrolled }">
+            <div class="flex items-center justify-between gap-x-6 w-full xl:relative xl:max-w-[1900px] xl:mx-auto ">
                 <a href="/" class="inline-block" title={I18n.translate('Neos.Presentation:Navigation:linkToStartPage')}>
                     <Neos.Presentation:Icon ariaLabel="Neos Logo" icon="neosLogoDark" class="h-10 self-center shrink-0" />
                 </a>
-                <Neos.Presentation:DesktopNavigation.LevelFirst items={props.items} />
-                <div class="ml-auto">
-                    <Neos.Presentation:LanguageMenu languageItems={props.languageItems} />
+                <button
+                    x-on:click="mobileMenuOpen = !mobileMenuOpen"
+                    x-bind:aria-expanded="mobileMenuOpen"
+                    aria-haspopup="true"
+                    id="open-mobile-menu"
+                    class="p-2 xl:hidden"
+                    title={I18n.translate('Neos.Presentation:Navigation:openMenu')}
+                >
+                    <span class="sr-only">{I18n.translate('Neos.Presentation:Navigation:openMenu')}</span>
+
+                    <span class="flex flex-col gap-2 w-9">
+                        <span class="block h-0.5 bg-current transition-[opacity] duration-300 ease-in-out" x-bind:class="{'opacity-0': mobileMenuOpen, 'translate-y-1': mobileMenuOpen } "></span>
+                        <span class="block h-0.5 bg-current" ></span>
+                        <span class="block h-0.5 bg-current transition-[opacity] duration-300 ease-in-out" x-bind:class="{'opacity-0': mobileMenuOpen, '-translate-y-1': mobileMenuOpen } "></span>
+                    </span>
+
+                </button>
+                <div class={[
+                  "hidden absolute top-[100%] left-0 flex-col w-full p-4 h-[calc(100dvh-100%)] overflow-y-auto",
+                  props.flyoutVariant == 'white' ? 'bg-white' : 'bg-blue-dark',
+                  "xl:flex xl:static xl:top-auto xl:left-auto xl:flex-row xl:w-auto xl:bg-transparent xl:p-0 xl:h-auto xl:items-center xl:gap-x-6 xl:grow-1"]} x-bind:class="{'flex!': mobileMenuOpen}">
+                    <Neos.Presentation:DesktopNavigation.LevelFirst items={props.items} flyoutVariant={props.flyoutVariant}/>
+
+                    <div class="flex w-full gap-x-6 p-4 items-center justify-between flex-row-reverse xl:flex-row xl:justify-normal xl:w-auto xl:ml-auto xl:p-0">
+                        <Neos.Presentation:LanguageMenu languageItems={props.languageItems} flyoutVariant={props.flyoutVariant}/>
+                        <Neos.Presentation:Button icon={"chevron-right"} content={I18n.translate('Neos.Presentation:Navigation:demo')} class="px-4! py-2! xl:w-auto"/>
+                    </div>
                 </div>
-                <Neos.Presentation:Button icon={"chevron-right"} content="Try Neos" />
             </div>
-        </Neos.Presentation:Spacing>
+        </div>
     `
 }

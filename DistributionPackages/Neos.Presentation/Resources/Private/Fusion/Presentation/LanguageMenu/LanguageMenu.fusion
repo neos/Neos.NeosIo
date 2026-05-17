@@ -4,14 +4,15 @@ prototype(Neos.Presentation:LanguageMenu) < prototype(Neos.Fusion:Component) {
     @propTypes {
         @strict = true
         languageItems = ${PropTypes.any}
+        flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
     }
 
     renderer = afx`
         <div class="flex-nowrap lg:justify-end">
             <nav aria-label="Languages">
-                <ul class="h-full flex flex-row !p-0 !my-0 !list-none gap-4">
+                <ul class="h-full flex flex-row p-0 my-0 list-none gap-4">
                     <Neos.Fusion:Loop items={props.languageItems}>
-                        <Neos.Presentation:LanguageMenu.Item item={item} />
+                        <Neos.Presentation:LanguageMenu.Item item={item} flyoutVariant={props.flyoutVariant}/>
                     </Neos.Fusion:Loop>
                 </ul>
             </nav>
@@ -23,6 +24,7 @@ prototype(Neos.Presentation:LanguageMenu.Item) < prototype(Neos.Fusion:Component
     @propTypes {
         @strict = true
         item = ${PropTypes.any}
+        flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
     }
 
     renderer = afx`
@@ -31,7 +33,10 @@ prototype(Neos.Presentation:LanguageMenu.Item) < prototype(Neos.Fusion:Component
                 attributes.title={I18n.translate('MyVendor.AwesomeNeosProject:Base:linkToPage') + item.label}
                 attributes.class={Carbon.String.classNames(
                     'no-underline display-lead',
-                    item.state.value == 'current' ? '!text-blue-light' : '!text-white'
+                    item.state.value == 'current' ? 'text-blue-light' : (props.flyoutVariant == 'white' ? 'text-blue-dark xl:text-white' : 'text-white'),
+                    {
+                        '!underline underline-offset-8 decoration-2': item.state.value == 'current'
+                    }
                 )}
                 node={item.node}
             >

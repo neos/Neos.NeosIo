@@ -17,6 +17,7 @@
         reloadPageIfChanged: true
         inspector:
           group: navigationOptions
+          position: after column1Header
           hidden: 'ClientEval: !node.properties.menuLayout'
           editorOptions: &menuItemsColumnOptions
             nodeTypes:
@@ -35,6 +36,7 @@
         reloadPageIfChanged: true
         inspector:
           group: navigationOptions
+          position: after column2Header
           hidden: 'ClientEval: node.properties.menuLayout != "twoColumns"'
           editorOptions: *menuItemsColumnOptions
   properties:
@@ -73,6 +75,14 @@
         inspector:
           group: navigationOptions
           hidden: 'ClientEval: node.properties.menuLayout != "twoColumns"'
+    teaserHeader:
+      type: string
+      ui:
+        label: 'Teaser Header'
+        reloadIfChanged: true
+        inspector:
+          group: navigationOptions
+          hidden: 'ClientEval: !node.properties.menuLayout'
     teaserLink:
       type: string
       scope: nodeAggregate

@@ -10,9 +10,7 @@ prototype(Neos.NeosIo:Fragment.RebrandMenu) < prototype(Neos.Fusion:Component) {
         dimension = "language"
         calculateItemStates = true
     }
-
     renderer = afx`
-      <Neos.Presentation:DesktopNavigation items={props.items} languageItems={props.languageItems} />
-      <Neos.Presentation:MobileNavigation items={props.items} languageItems={props.languageItems} />
+      <Neos.Presentation:DesktopNavigation items={props.items} languageItems={props.languageItems} flyoutVariant={props.flyoutVariant}/>
     `
 }
