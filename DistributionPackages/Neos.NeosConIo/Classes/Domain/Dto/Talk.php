@@ -5,7 +5,6 @@ namespace Neos\NeosConIo\Domain\Dto;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
-use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateIds;
 
 final readonly class Talk implements \JsonSerializable
 {
@@ -31,6 +30,7 @@ final readonly class Talk implements \JsonSerializable
             'title' => $this->title,
             'description' => $this->description,
             'type' => $this->type,
+            'date' => $this->date->format('c'),
             'start' => $this->date->format('G:i'),
             'stage' => $this->stage,
             'speakerIds' => $this->speakers?->toNodeAggregateIds()->toStringArray() ?? [],

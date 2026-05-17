@@ -28,7 +28,7 @@ final readonly class Speakers implements \JsonSerializable
     }
 
     /**
-     * @return Speaker[]|\stdClass
+     * @return array<string, Speaker>|\stdClass
      */
     public function jsonSerialize(): array|\stdClass
     {

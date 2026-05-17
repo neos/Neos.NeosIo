@@ -27,7 +27,7 @@ final readonly class RelatedTalks implements \JsonSerializable
     }
 
     /**
-     * @return RelatedTalk[]|\stdClass
+     * @return array<string, RelatedTalk>|\stdClass
      */
     public function jsonSerialize(): array|\stdClass
     {

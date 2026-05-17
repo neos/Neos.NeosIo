@@ -17,7 +17,9 @@ use GuzzleHttp\Psr7\Uri;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindBackReferencesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindReferencesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAddress;
+use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateIds;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Eel\ProtectedContextAwareInterface;
 use Neos\Flow\Annotations as Flow;
@@ -67,10 +69,14 @@ class ScheduleHelper implements ProtectedContextAwareInterface
      * strings for all topics of one conference day, sorted chronologically within the day.
      *
      * @param Node[] $topics All topic nodes (Neos.NeosConIo:Talk + Neos.NeosConIo:BreakInSchedule)
-     * @return string[][] Array of days, with list of talk ids for that day sorted by their time
+     * @return array<string, string[]> Array of days, indexed by their date, with list of talk ids for that day sorted by their time
      */
     public function topicsPerDay(array $topics): array
     {
+        if (empty($topics)) {
+            return [];
+        }
+        /** @var array<string, non-empty-list<Node>> $days */
         $days = [];
         foreach ($topics as $topic) {
             $talkDate = $topic->properties['talkDate'] ?? null;
@@ -83,8 +89,9 @@ class ScheduleHelper implements ProtectedContextAwareInterface
 
         ksort($days);
 
-        return array_values(array_map(
+        return array_map(
             static function (array $dayTopics): array {
+                /** @var non-empty-list<Node> $dayTopics */
                 usort($dayTopics, static function (Node $a, Node $b): int {
                     $dateA = $a->properties['talkDate'] ?? null;
                     $dateB = $b->properties['talkDate'] ?? null;
@@ -93,13 +100,10 @@ class ScheduleHelper implements ProtectedContextAwareInterface
                     }
                     return $dateA <=> $dateB;
                 });
-                return array_map(
-                    static fn(Node $topic): string => $topic->aggregateId->value,
-                    $dayTopics
-                );
+                return NodeAggregateIds::fromNodes(Nodes::fromArray($dayTopics))->toStringArray();
             },
             $days
-        ));
+        );
     }
 
     /**
@@ -159,7 +163,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
                 $id,
                 $this->nodeLabelGenerator->getLabel($topic),
                 trim(strip_tags($rawText)),
-                $isTalk ? 'TALK' : $topic->properties['type'] ?? 'BREAK',
+                $isTalk ? 'TALK' : ($topic->properties['type'] ?? 'BREAK'),
                 $talkDate,
                 $stage,
                 $speakers,
