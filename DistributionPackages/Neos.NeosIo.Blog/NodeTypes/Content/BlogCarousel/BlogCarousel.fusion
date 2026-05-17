@@ -1,6 +1,7 @@
 prototype(Neos.NeosIo:Content.BlogCarousel) < prototype(Neos.Neos:ContentComponent) {
 
     maxItems = ${q(node).property('maxItems') || 10}
+    blogFolder = ${q(site).referenceNodes('blogFolder').get(0)}
 
     renderer = Neos.Presentation:Carousel {
         autoplay = ${!!node.properties.autoplay}
@@ -9,7 +10,7 @@ prototype(Neos.NeosIo:Content.BlogCarousel) < prototype(Neos.Neos:ContentCompone
             block = false
         }
         items = Neos.Fusion:Map {
-            items = ${Blog.getPosts(site, props.maxItems, q(node).referenceNodes('filterTags').get())}
+            items = ${Blog.getPosts(props.blogFolder, props.maxItems, q(node).referenceNodes('filterTags').get())}
             itemName = 'post'
             itemRenderer = Neos.Presentation:PostPreview {
                 datePublished = ${q(post).property('datePublished')}

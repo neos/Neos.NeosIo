@@ -1,0 +1,37 @@
+'Neos.NeosIo.CaseStudies:Content.CaseStudyCarousel':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NeosIo:Constraints.Main': true
+    'Neos.NeosIo:Constraints.Stage': true
+  ui:
+    label: 'Case Study Carousel'
+    icon: eye
+    group: special
+  properties:
+    title:
+      type: string
+      ui:
+        label: 'Title'
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Enter title here'
+    maxItems:
+      type: integer
+      ui:
+        label: 'Maximum number of items'
+        reloadIfChanged: true
+        inspector:
+          group: content
+          editor: Neos.Neos/Inspector/Editors/RangeEditor
+          editorOptions:
+            min: 1
+            max: 20
+            step: 1
+    autoplay:
+      type: boolean
+      ui:
+        label: 'Autoplay'
+        reloadIfChanged: true
+        inspector:
+          group: content
