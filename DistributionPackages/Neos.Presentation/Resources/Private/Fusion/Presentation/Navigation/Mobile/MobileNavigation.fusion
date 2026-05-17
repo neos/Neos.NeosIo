@@ -1,10 +1,14 @@
 prototype(Neos.Presentation:MobileNavigation) < prototype(Neos.Fusion:Component) {
     items = null
+    itemsColumn1 = null
+    itemsColumn2 = null
     languageItems = null
 
     @propTypes {
         @strict = true
         items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
+        itemsColumn1 = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
+        itemsColumn2 = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
         languageItems = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\DimensionMenuItem') ) }
     }
 

@@ -1,0 +1,124 @@
+'Neos.NeosIo:Mixin.MainNavigationOptions':
+  abstract: true
+  ui:
+    inspector:
+      tabs:
+        navigation:
+          label: 'Main Navigation Options'
+          icon: 'sitemap'
+          position: 'after default'
+      groups:
+        navigationCol1:
+          label: 'Column 1'
+          icon: 'sitemap'
+          tab: navigation
+        navigationCol2:
+          label: 'Column 2'
+          icon: 'sitemap'
+          tab: navigation
+        navigationCol3:
+          label: 'Column 3'
+          icon: 'sitemap'
+          tab: navigation
+  references:
+    menuItemsColumn1:
+      constraints:
+        nodeTypes:
+          'Neos.Neos:Document': true
+      scope: nodeAggregate
+      ui:
+        label: 'Menu Items'
+        reloadPageIfChanged: true
+        inspector:
+          group: navigationCol1
+          position: after column1Header
+          editorOptions: &menuItemsColumnOptions
+            nodeTypes:
+              - 'Neos.Neos:Document'
+              - '!Neos.NeosIo:Post'
+              - '!Neos.NeosIo.Blog:Document.Tag'
+              - '!Neos.MarketPlace:Package'
+              - '!Neos.NeosIo.ServiceOfferings:Document.ServiceProvider'
+              - '!Neos.NeosIo:Document.FirstLevelNavigationFolder'
+    menuItemsColumn2:
+      constraints:
+        nodeTypes:
+          'Neos.Neos:Document': true
+      scope: nodeAggregate
+      ui:
+        label: 'Menu Items'
+        reloadPageIfChanged: true
+        inspector:
+          group: navigationCol2
+          position: after column2Header
+          editorOptions: *menuItemsColumnOptions
+    menuItemsColumn3:
+      constraints:
+        nodeTypes:
+          'Neos.Neos:Document': true
+      scope: nodeAggregate
+      ui:
+        label: 'Menu Items'
+        reloadPageIfChanged: true
+        inspector:
+          group: navigationCol3
+          hidden: 'ClientEval: node.properties.column3Teaser'
+          position: after column3Header
+          editorOptions: *menuItemsColumnOptions
+  properties:
+    column1Header:
+      type: string
+      ui:
+        label: 'Title'
+        reloadIfChanged: true
+        inspector:
+          group: navigationCol1
+    column2Header:
+      type: string
+      ui:
+        label: 'Title'
+        reloadIfChanged: true
+        inspector:
+          group: navigationCol2
+    column3Header:
+      type: string
+      ui:
+        label: 'Title'
+        reloadIfChanged: true
+        inspector:
+          group: navigationCol3
+    column3Teaser:
+      type: boolean
+      ui:
+        label: 'Is Teaser Column'
+        reloadIfChanged: true
+        inspector:
+          group: navigationCol3
+    teaserLink:
+      type: string
+      scope: nodeAggregate
+      ui:
+        label: 'Teaser Link'
+        reloadIfChanged: true
+        inspector:
+          group: navigationCol3
+          hidden: 'ClientEval: !node.properties.column3Teaser'
+          editor: Neos.Neos/Inspector/Editors/LinkEditor
+    teaserText:
+      type: string
+      ui:
+        label: 'Teaser Text'
+        reloadIfChanged: true
+        inspector:
+          hidden: 'ClientEval: !node.properties.column3Teaser'
+          group: navigationCol3
+    teaserImage:
+      type: Neos\Media\Domain\Model\ImageInterface
+      scope: nodeAggregate
+      ui:
+        label: 'Teaser Image'
+        reloadIfChanged: true
+        inspector:
+          group: navigationCol3
+          hidden: 'ClientEval: !node.properties.column3Teaser'
+          editor: Neos.Neos/Inspector/Editors/ImageEditor

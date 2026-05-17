@@ -1,8 +1,13 @@
 prototype(Neos.NeosIo:Fragment.RebrandSiteHeader) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        @strict = true
+        flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
+    }
     renderer = afx`
-        <header>
-            <Neos.Presentation:Background background="blue-dark-to-blue">
-                <Neos.NeosIo:Fragment.RebrandMenu />
+        <header class="sticky top-0 z-1000"
+                x-data="{ scrolled: false, mobileMenuOpen: false }">
+            <Neos.Presentation:Background background="blue-dark-to-blue" class="relative xl:static">
+                <Neos.NeosIo:Fragment.RebrandMenu flyoutVariant={"white"}/>
             </Neos.Presentation:Background>
         </header>
     `

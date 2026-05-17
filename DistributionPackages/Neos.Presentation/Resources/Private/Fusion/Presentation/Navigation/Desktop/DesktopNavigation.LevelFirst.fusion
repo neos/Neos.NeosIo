@@ -4,45 +4,60 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
     @propTypes {
         @strict = true
         items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
+        flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
     }
 
     renderer = afx`
-        <nav>
-            <ul class="flex gap-5 !list-none !p-0 !m-0">
+        <nav class="grow-1 xl:grow-0">
+            <ul class="flex flex-col list-none p-0 m-0 xl:gap-1 xl:flex-row" @if={props.items}>
                 <Neos.Fusion:Loop items={props.items} itemName="item">
-                    <li class="group/navitem h-14" x-data="NavigationItem">
-                        <div class="h-full flex items-center group-hover/navitem:z-10">
-                            <div class="rounded-md group-hover/navitem:bg-white/10 flex items-center" x-bind:class="{ 'bg-white/10!': open }">
-                                <Neos.Neos:NodeLink
-                                    node={item.node}
-                                    attributes.title={I18n.translate('Neos.Presentation:Navigation:linkToPage') + item.label}
-                                    attributes.class={Carbon.String.classNames(
-                                        'inline-block py-1 px-4 display-lead whitespace-nowrap',
-                                        {
-                                            '!text-white': item.state.value == 'normal',
-                                            '!text-blue-light': item.state.value == 'current' || item.state.value == 'active'
-                                        }
+                    <li class={Carbon.String.classNames(
+                    (props.flyoutVariant == 'white' ? 'border-blue-dark/10' : 'border-white/10'),
+                    "group/navitem border-b-1 xl:border-0"
+                    )} x-data="NavigationItem">
+                        <div class="flex items-center group-hover/navitem:z-10 w-full xl:w-auto">
+                            <div class={[
+                                "flex items-center w-full xl:w-auto",
+                                props.flyoutVariant == 'white' ? 'group-hover/navitem:bg-blue-dark/10' : 'group-hover/navitem:bg-white/10']}
+                                 x-bind:class="{ 'bg-white/10!': open }">
+                                <a
+                                    @if={!q(item.node).property('menuItemsColumn1') && !q(item.node).property('menuItemsColumn2') && !q(item.node).property('menuItemsColumn3')}
+                                    href={item.uri}
+                                    class={Carbon.String.classNames(
+                                        props.flyoutVariant == 'white' ? 'text-blue-dark' : 'text-white',
+                                        'inline-block py-4 px-4 whitespace-nowrap font-medium hover:no-underline w-full text-lg xl:text-md xl:font-normal xl:text-white xl:w-auto xl:py-1',
+                                        item.state.value == 'current' || item.state.value == 'active' ? 'underline underline-offset-8': ''
                                     )}
+                                    aria-current="page"
+                                    aria-current.@if={item.state.value == 'current'}
                                 >
                                     {item.label}
-                                </Neos.Neos:NodeLink>
+                                </a>
                                 <button
-                                    @if={item.subItems}
-                                    class="-ml-2 mr-2 group-hover/navitem:rotate-180 transition duration-500"
-                                    x-bind:class="{'rotate-180': open}"
+                                    @if={q(item.node).property('menuItemsColumn1') || q(item.node).property('menuItemsColumn2') || q(item.node).property('menuItemsColumn3')}
+                                    class={Carbon.String.classNames(
+                                      props.flyoutVariant == 'white' ? 'text-blue-dark' : 'text-white',
+                                      "py-4 px-4 flex gap-2 items-center whitespace-nowrap w-full font-medium xl:font-normal xl:text-white xl:w-auto xl:py-1"
+                                      )}
                                     x-on:click="open = !open"
                                     x-bind:aria-expanded="open"
                                     aria-haspopup="true"
                                     "x-on:click.outside"="open = false">
-                                    <Neos.Presentation:Icon
-                                        icon="chevron-down"
-                                        class="h-6"
-                                    />
+                                    <span class="grow-1 text-left text-lg xl:text-md xl:grow-0">{item.label}</span>
+                                    <span x-bind:class="{'rotate-180': open}" class="transition duration-500">
+                                        <Neos.Presentation:Icon
+                                            icon="chevron-down"
+                                            class="h-6"
+                                        />
+                                    </span>
                                 </button>
                             </div>
                         </div>
-                        <div class="itemblocker pointer-events-none group-hover/navitem:pointer-events-default group-hover/navitem:block"></div>
-                        <Neos.Presentation:DesktopNavigation.LevelSecond item={item} flyoutVariant={'default'} />
+                        <Neos.Presentation:DesktopNavigation.LevelSecond
+                            @if={q(item.node).property('menuItemsColumn1') || q(item.node).property('menuItemsColumn2') || q(item.node).property('menuItemsColumn3')}
+                            item={item}
+                            flyoutVariant={props.flyoutVariant}
+                        />
                     </li>
                 </Neos.Fusion:Loop>
             </ul>

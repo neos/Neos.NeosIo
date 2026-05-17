@@ -1,0 +1,58 @@
+prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        @strict = true
+        items = ${PropTypes.arrayOf(PropTypes.instanceOf('Neos\Neos\Fusion\MenuItem'))}
+        header = ${PropTypes.string}
+        link = ${PropTypes.string || null}
+        text = ${PropTypes.string || null}
+        image = PropTypes:DataStructure {
+            imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+        }
+        flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
+    }
+
+    @private {
+        imageSrc = Sitegeist.Kaleidoscope:AssetImageSource {
+            @context.asset = ${props.image}
+        }
+    }
+    //@ToDo - description --> add integration - should text be be cropped after certain character count?
+
+    renderer = afx`
+        <div class={["flex gap-4 flex-col px-4 flex-none w-full flex-wrap",
+         private.imageSrc ? 'max-w-[320px] md:w-1/3' : 'md:w-1/2',
+         private.imageSrc ? 'xl:max-w-full xl:ml-auto' : '',
+          "xl:px-10 xl:w-1/3"]} data-component="desktop-navigation-level-second-column">
+            <p class={"display-title-md " + (props.flyoutVariant == 'white' ? 'text-purple-dark' : 'text-blue-light')}>{props.header}</p>
+            <ul class="list-none m-0 p-0 flex flex-col gap-2" @if={props.items}>
+                <Neos.Fusion:Loop items={props.items} itemName="item" >
+                    <li class={Carbon.String.classNames("group relative py-3 px-4 flex gap-4 items-center ", props.flyoutVariant == 'white' ? 'hocus:bg-blue-dark/10' : 'hocus:bg-white/10')}>
+                        <Neos.Presentation:Icon icon={item.icon} sizeClass="h-8 w-8 flex-none" @if={item.icon}/>
+                        <span>
+                            <a href={item.uri}
+                               class={Carbon.String.classNames(
+                                                'inline-block display-body-lg font-bold mb-1 last:mb-0 whitespace-nowrap after:content-[""] after:absolute after:top-0 after:left-0 after:w-full after:h-full hocus:no-underline',
+                                                (item.state.value == 'current' || item.state.value == 'active' ? '' : '')
+                                            )}
+                               x-data="{isActive: window.location.pathname === new URL($el.href).pathname}"
+                               x-bind:class="{'!underline underline-offset-6 decoration-2': isActive }"
+                               x-bind:aria-current="isActive ? 'page' : null"
+                            >
+                                {item.label}
+                            </a>
+                            <p class={"display-body-md"} @if={item.description}>
+                               {item.description}
+                            </p>
+                        </span>
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
+            <figure @if={private.imageSrc} class="w-full aspect-3/2">
+              <Sitegeist.Kaleidoscope:Image imageSource={private.imageSrc} class={"w-full h-full object-cover"}/>
+            </figure>
+
+            <Neos.Presentation:Button @if={props.link} icon={"animatedArrow"} href={props.link} content={props.text} fullWidth={true}/>
+
+        </div>
+    `
+}
