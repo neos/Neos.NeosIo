@@ -50,7 +50,6 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
 
     // TODO: Add icon and teaser text to second level entries for the 1 and 2 column layouts
 
-    // @ToDo: rendering condition for teaser? header + img + link & text or maybe image optional?
     // Level 2 is rendered if there are any menu items in any of the columns - will not be rendered if there is only a teaser because that's not a real menu entry
 
     renderer = afx`
@@ -104,7 +103,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
                           text={private.teaserText}
                           image={private.teaserImage}
                           flyoutVariant={props.flyoutVariant}
-                          @if={private.column3Teaser}
+                          @if={private.column3Teaser && private.column3Header && private.teaserLink && private.teaserText}
                         />
                     </div>
                 </div>
