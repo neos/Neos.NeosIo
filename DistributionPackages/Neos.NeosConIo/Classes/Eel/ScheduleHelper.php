@@ -13,6 +13,7 @@ namespace Neos\NeosConIo\Eel;
  * source code.
  */
 
+use GuzzleHttp\Psr7\Uri;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindBackReferencesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindReferencesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
@@ -29,6 +30,12 @@ use Neos\Media\Domain\Service\ThumbnailService;
 use Neos\Neos\Domain\NodeLabel\NodeLabelGeneratorInterface;
 use Neos\Neos\FrontendRouting\NodeUriBuilderFactory;
 use Neos\Neos\FrontendRouting\Options;
+use Neos\NeosConIo\Domain\Dto\RelatedTalk;
+use Neos\NeosConIo\Domain\Dto\RelatedTalks;
+use Neos\NeosConIo\Domain\Dto\Speaker;
+use Neos\NeosConIo\Domain\Dto\Speakers;
+use Neos\NeosConIo\Domain\Dto\Talk;
+use Neos\NeosConIo\Domain\Dto\Talks;
 
 /**
  * Eel helper providing schedule-related data transformations for the NeosCon JSON API endpoint.
@@ -60,7 +67,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
      * strings for all topics of one conference day, sorted chronologically within the day.
      *
      * @param Node[] $topics All topic nodes (Neos.NeosConIo:Talk + Neos.NeosConIo:BreakInSchedule)
-     * @return array<int, array<int, string>>
+     * @return string[][] Array of days, with list of talk ids for that day sorted by their time
      */
     public function topicsPerDay(array $topics): array
     {
@@ -96,34 +103,17 @@ class ScheduleHelper implements ProtectedContextAwareInterface
     }
 
     /**
-     * Indexes an array of nodes into an associative array keyed by their aggregateId value.
-     * Duplicate nodes (same aggregateId) are deduplicated, last write wins.
-     *
-     * @param Node[] $nodes
-     * @return array<string, Node>
-     */
-    public function indexById(array $nodes): array
-    {
-        $result = [];
-        foreach ($nodes as $node) {
-            $result[$node->aggregateId->value] = $node;
-        }
-        return $result;
-    }
-
-    /**
      * Builds the complete topicsById dictionary for the JSON response.
      *
      * Room names and speaker IDs are resolved directly via the ContentRepository subgraph,
      * mirroring the approach used in groupSpeakerTalksByEvent.
      *
      * @param null|Node[] $topics All topic nodes (Talks + Breaks)
-     * @return array<string, array<string, mixed>>
      */
-    public function buildTopicsById(?array $topics): array
+    public function buildTopicsById(?array $topics): Talks
     {
         if (!$topics) {
-            return [];
+            return Talks::empty();
         }
         $firstTopic = $topics[0];
         $nodeTypeManager = $this->contentRepositoryRegistry->get($firstTopic->contentRepositoryId)->getNodeTypeManager();
@@ -135,7 +125,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
 
         $result = [];
         foreach ($topics as $topic) {
-            $id = $topic->aggregateId->value;
+            $id = $topic->aggregateId;
             $topicNodeType = $nodeTypeManager->getNodeType($topic->nodeTypeName);
             if (!$topicNodeType) {
                 continue;
@@ -143,9 +133,12 @@ class ScheduleHelper implements ProtectedContextAwareInterface
             $isTalk = $topicNodeType->isOfType($talkNodeType->name);
             $talkDate = $topic->properties['talkDate'] ?? null;
             $rawText = $topic->properties['text'] ?? '';
-
             $stage = '';
-            $speakerIds = [];
+            $speakers = null;
+
+            if (!$talkDate instanceof \DateTimeInterface) {
+                continue;
+            }
 
             if ($isTalk) {
                 // Resolve the single room reference → stage name
@@ -156,27 +149,23 @@ class ScheduleHelper implements ProtectedContextAwareInterface
                 $stage = $roomNode?->properties['name'] ?? '';
 
                 // Resolve all speaker references → list of aggregateId strings
-                $speakerIds = $subgraph->findReferences(
+                $speakers = $subgraph->findReferences(
                     $topic->aggregateId,
                     FindReferencesFilter::create(referenceName: 'speakers')
-                )->getNodes()->map(static fn(Node $node) => $node->aggregateId->value);
+                )->getNodes();
             }
 
-            $result[$id] = [
-                'id'          => $id,
-                'title'       => $this->nodeLabelGenerator->getLabel($topic),
-                'description' => $isTalk ? strip_tags($rawText) : $rawText,
-                'type'        => $isTalk
-                                    ? 'TALK'
-                                    : $topic->properties['type'] ?? 'BREAK',
-                'start'       => $talkDate instanceof \DateTimeInterface
-                                    ? $talkDate->format('G:i')
-                                    : '',
-                'stage'       => $stage,
-                'speakerIds'  => $speakerIds,
-            ];
+            $result[$id->value] = new Talk(
+                $id,
+                $this->nodeLabelGenerator->getLabel($topic),
+                trim(strip_tags($rawText)),
+                $isTalk ? 'TALK' : $topic->properties['type'] ?? 'BREAK',
+                $talkDate,
+                $stage,
+                $speakers,
+            );
         }
-        return $result;
+        return Talks::fromArray($result);
     }
 
     /**
@@ -186,11 +175,10 @@ class ScheduleHelper implements ProtectedContextAwareInterface
      * Neos.Neos:ImageUri call it replaces). Speaker topics are resolved by delegating
      * to groupSpeakerTalksByEvent internally.
      *
-     * @param Node[]        $speakers       All speaker nodes for this event
-     * @param ActionRequest $actionRequest  Needed for absolute talk URI generation
-     * @return array<string, array<string, mixed>>
+     * @param Node[] $speakers All speaker nodes for this event
+     * @param ActionRequest $actionRequest Needed for absolute talk URI generation
      */
-    public function buildSpeakersById(array $speakers, ActionRequest $actionRequest): array
+    public function buildSpeakersById(array $speakers, ActionRequest $actionRequest): Speakers
     {
         $thumbnailConfiguration = new ThumbnailConfiguration(
             null,
@@ -200,7 +188,12 @@ class ScheduleHelper implements ProtectedContextAwareInterface
         );
         $result = [];
         foreach ($speakers as $speaker) {
-            $id = $speaker->aggregateId->value;
+            $id = $speaker->aggregateId;
+            $name = trim($speaker->properties['title'] ?? '');
+
+            if (!$name) {
+                continue;
+            }
 
             // Generate a 600×600 thumbnail URI, falling back to '' when no image is set
             $avatarUri = '';
@@ -214,33 +207,29 @@ class ScheduleHelper implements ProtectedContextAwareInterface
                 }
             }
 
-            $result[$id] = [
-                'id'      => $id,
-                'name'    => $speaker->properties['title'] ?? '',
-                'avatar'  => $avatarUri,
-                'facts'   => [
-                    'company'  => $speaker->properties['company'] ?? '',
-                    'role'     => $speaker->properties['position'] ?? '',
-                    'twitter'  => $speaker->properties['twitter'] ?? '',
-                    'github'   => $speaker->properties['github'] ?? '',
-                    'mastodon' => $speaker->properties['mastodon'] ?? '',
-                ],
-                'summary' => strip_tags($speaker->properties['text'] ?? ''),
-                'topics'  => $this->groupSpeakerTalksByEvent($speaker, $actionRequest),
-            ];
+            $result[$id->value] = new Speaker(
+                $id,
+                $name,
+                trim(strip_tags($speaker->properties['text'] ?? '')),
+                $avatarUri ? new Uri($avatarUri) : null,
+                $this->groupSpeakerTalksByEvent($speaker, $actionRequest),
+                $speaker->properties['company'] ?? '',
+                $speaker->properties['position'] ?? '',
+                $speaker->properties['twitter'] ?? '',
+                $speaker->properties['github'] ?? '',
+                $speaker->properties['mastodon'] ?? '',
+            );
         }
-        return $result;
+        return Speakers::fromArray($result);
     }
 
     /**
      * Groups a speaker's talks by talk id with the talks title, event, url and video flag.
-     *
-     * @return array<string, array<string, mixed>>
      */
-    public function groupSpeakerTalksByEvent(?Node $speaker, ActionRequest $actionRequest): array
+    public function groupSpeakerTalksByEvent(?Node $speaker, ActionRequest $actionRequest): RelatedTalks
     {
         if (!$speaker) {
-            return [];
+            return RelatedTalks::empty(); // Return empty object for null speaker to avoid JSON serialization as empty array
         }
 
         $uriBuilder = $this->nodeUriBuilderFactory->forActionRequest($actionRequest);
@@ -269,15 +258,15 @@ class ScheduleHelper implements ProtectedContextAwareInterface
                 $talkUri = null; // Fallback to null if URI generation fails
             }
 
-            $result[$talk->aggregateId->value] = [
-                'id' => $talk->aggregateId->value,
-                'title' => $this->nodeLabelGenerator->getLabel($talk),
-                'event' => $this->nodeLabelGenerator->getLabel($event),
-                'url' => (string)$talkUri,
-                'hasVideo' => (bool)($talk->properties['video'] ?? false),
-            ];
+            $result[$talk->aggregateId->value] = new RelatedTalk(
+                $talk->aggregateId,
+                $this->nodeLabelGenerator->getLabel($talk),
+                $this->nodeLabelGenerator->getLabel($event),
+                $talkUri,
+                (bool)($talk->properties['video'] ?? false),
+            );
         }
-        return $result;
+        return RelatedTalks::fromArray($result);
     }
 
     public function allowsCallOfMethod($methodName): bool
