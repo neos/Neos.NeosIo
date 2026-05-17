@@ -66,9 +66,6 @@ class ScheduleHelper implements ProtectedContextAwareInterface
     {
         $days = [];
         foreach ($topics as $topic) {
-            if (!$topic instanceof Node) {
-                continue;
-            }
             $talkDate = $topic->properties['talkDate'] ?? null;
             if (!$talkDate instanceof \DateTimeInterface) {
                 continue;
@@ -89,10 +86,10 @@ class ScheduleHelper implements ProtectedContextAwareInterface
                     }
                     return $dateA <=> $dateB;
                 });
-                return array_values(array_map(
+                return array_map(
                     static fn(Node $topic): string => $topic->aggregateId->value,
                     $dayTopics
-                ));
+                );
             },
             $days
         ));
@@ -109,9 +106,6 @@ class ScheduleHelper implements ProtectedContextAwareInterface
     {
         $result = [];
         foreach ($nodes as $node) {
-            if (!$node instanceof Node) {
-                continue;
-            }
             $result[$node->aggregateId->value] = $node;
         }
         return $result;
@@ -123,25 +117,30 @@ class ScheduleHelper implements ProtectedContextAwareInterface
      * Room names and speaker IDs are resolved directly via the ContentRepository subgraph,
      * mirroring the approach used in groupSpeakerTalksByEvent.
      *
-     * @param Node[] $topics All topic nodes (Talks + Breaks)
+     * @param null|Node[] $topics All topic nodes (Talks + Breaks)
      * @return array<string, array<string, mixed>>
      */
-    public function buildTopicsById(array $topics): array
+    public function buildTopicsById(?array $topics): array
     {
-        $topics = array_filter($topics);
         if (!$topics) {
             return [];
         }
-
         $firstTopic = $topics[0];
         $nodeTypeManager = $this->contentRepositoryRegistry->get($firstTopic->contentRepositoryId)->getNodeTypeManager();
         $talkNodeType = $nodeTypeManager->getNodeType('Neos.NeosConIo:Talk');
+        if (!$talkNodeType) {
+            throw new \RuntimeException('No Neos.NeosConIo:TalkNodeType found', 1779004415);
+        }
         $subgraph = $this->contentRepositoryRegistry->subgraphForNode($firstTopic);
 
         $result = [];
         foreach ($topics as $topic) {
             $id = $topic->aggregateId->value;
-            $isTalk = $nodeTypeManager->getNodeType($topic->nodeTypeName)->isOfType($talkNodeType->name);
+            $topicNodeType = $nodeTypeManager->getNodeType($topic->nodeTypeName);
+            if (!$topicNodeType) {
+                continue;
+            }
+            $isTalk = $topicNodeType->isOfType($talkNodeType->name);
             $talkDate = $topic->properties['talkDate'] ?? null;
             $rawText = $topic->properties['text'] ?? '';
 
@@ -157,7 +156,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
                 $stage = $roomNode?->properties['name'] ?? '';
 
                 // Resolve all speaker references → list of aggregateId strings
-                $speakerIds[] = $subgraph->findReferences(
+                $speakerIds = $subgraph->findReferences(
                     $topic->aggregateId,
                     FindReferencesFilter::create(referenceName: 'speakers')
                 )->getNodes()->map(static fn(Node $node) => $node->aggregateId->value);
@@ -201,10 +200,6 @@ class ScheduleHelper implements ProtectedContextAwareInterface
         );
         $result = [];
         foreach ($speakers as $speaker) {
-            if (!$speaker instanceof Node) {
-                continue;
-            }
-
             $id = $speaker->aggregateId->value;
 
             // Generate a 600×600 thumbnail URI, falling back to '' when no image is set
@@ -238,13 +233,9 @@ class ScheduleHelper implements ProtectedContextAwareInterface
     }
 
     /**
-     * Groups a speaker's talks by the title of the event they belong to.
+     * Groups a speaker's talks by talk id with the talks title, event, url and video flag.
      *
-     * Returns an associative array whose keys are event titles and whose values are
-     * sequential arrays of talk aggregateId strings, e.g.:
-     *   ['Neos Conference 2026' => ['uuid-a', 'uuid-b'], 'Neos Conference 2025' => ['uuid-c']]
-     *
-     * @return array<string, array<int, string>>
+     * @return array<string, array<string, mixed>>
      */
     public function groupSpeakerTalksByEvent(?Node $speaker, ActionRequest $actionRequest): array
     {
@@ -282,7 +273,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
                 'id' => $talk->aggregateId->value,
                 'title' => $this->nodeLabelGenerator->getLabel($talk),
                 'event' => $this->nodeLabelGenerator->getLabel($event),
-                'url' => $talkUri,
+                'url' => (string)$talkUri,
                 'hasVideo' => (bool)($talk->properties['video'] ?? false),
             ];
         }
