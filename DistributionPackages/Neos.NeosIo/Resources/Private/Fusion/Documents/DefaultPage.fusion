@@ -1,6 +1,6 @@
 prototype(Neos.NeosIo:DefaultPage) < prototype(Neos.Fusion:Component) {
     header = Neos.Fusion:Join {
-        rebrandSiteHeader = Neos.NeosIo:Fragment.RebrandSiteHeader
+        siteHeader = Neos.NeosIo:Fragment.SiteHeader
 
         keyVisualWrapper = Neos.NeosIo:KeyVisualWrapper {
             keyVisualVariant = ${q(documentNode).property('keyVisualVariant')}

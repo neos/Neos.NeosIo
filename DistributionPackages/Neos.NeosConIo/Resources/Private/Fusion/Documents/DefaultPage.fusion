@@ -2,18 +2,11 @@ prototype(Neos.NeosIo:Fragment.PageStyles) {
     neosConIo = Neos.Fusion:Component {
         @position = 'after main'
         renderer = afx`
-            <link rel="stylesheet" @children="attributes.href">
-                <Neos.Fusion:ResourceUri path="resource://Neos.NeosConIo/Public/Styles/Main.css"/>
-            </link>
+            <link rel="stylesheet" href={StaticResource.uri('Neos.NeosConIo', 'Public/Styles/Main.css')} />
         `
     }
 }
 
 prototype(Neos.NeosIo:Fragment.Menu) {
     @cache.entryIdentifier.documentNode = ${Neos.Caching.entryIdentifierForNode(documentNode)}
-}
-
-prototype(Neos.NeosIo:Fragment.SiteHeader) {
-    showBuyTickets = true
-    className.@process.addShaded = ${value + ' siteHeader--shaded'}
 }
