@@ -3,8 +3,8 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Ne
         @strict = true
         items = ${PropTypes.arrayOf(PropTypes.instanceOf('Neos\Neos\Fusion\MenuItem'))}
         header = ${PropTypes.string}
-        link = ${PropTypes.string || null}
-        text = ${PropTypes.string || null}
+        link = ${PropTypes.string}
+        text = ${PropTypes.string}
         image = PropTypes:DataStructure {
             imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
         }
@@ -13,7 +13,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Ne
 
     @private {
         imageSrc = Sitegeist.Kaleidoscope:AssetImageSource {
-            @context.asset = ${props.image}
+            asset = ${props.image}
         }
     }
     //@ToDo - description --> add integration - should text be be cropped after certain character count?
@@ -27,7 +27,11 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Ne
             <ul class="list-none m-0 p-0 flex flex-col gap-2" @if={props.items}>
                 <Neos.Fusion:Loop items={props.items} itemName="item" >
                     <li class={Carbon.String.classNames("group relative py-3 px-4 flex gap-4 items-center ", props.flyoutVariant == 'white' ? 'hocus:bg-blue-dark/10' : 'hocus:bg-white/10')}>
-                        <Neos.Presentation:Icon icon={item.icon} sizeClass="h-8 w-8 flex-none" @if={item.icon}/>
+                        <Neos.Presentation:Icon
+                            icon={item.node.properties.menuItemIcon}
+                            sizeClass="h-8 w-8 flex-none"
+                            @if={item.node.properties.menuItemIcon}
+                        />
                         <span>
                             <a href={item.uri}
                                class={Carbon.String.classNames(
@@ -40,19 +44,23 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond.Column) < prototype(Ne
                             >
                                 {item.label}
                             </a>
-                            <p class={"display-body-md"} @if={item.description}>
-                               {item.description}
+                            <p class="display-body-md" @if={item.node.properties.menuItemDescription}>
+                               {item.node.properties.menuItemDescription}
                             </p>
                         </span>
                     </li>
                 </Neos.Fusion:Loop>
             </ul>
             <figure @if={private.imageSrc} class="w-full aspect-3/2">
-              <Sitegeist.Kaleidoscope:Image imageSource={private.imageSrc} class={"w-full h-full object-cover"}/>
+              <Sitegeist.Kaleidoscope:Image imageSource={private.imageSrc} class="w-full h-full object-cover"/>
             </figure>
-
-            <Neos.Presentation:Button @if={props.link} icon={"animatedArrow"} href={props.link} content={props.text} fullWidth={true}/>
-
+            <Neos.Presentation:Button
+                @if={props.link}
+                icon="animatedArrow"
+                href={props.link}
+                content={props.text}
+                fullWidth
+            />
         </div>
     `
 }
