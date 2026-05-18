@@ -53,13 +53,13 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
     // Level 2 is rendered if there are any menu items in any of the columns - will not be rendered if there is only a teaser because that's not a real menu entry
 
     renderer = afx`
-        <div class=" z-999 hidden duration-300 xl:top-[calc(100%+var(--spacing)*14)] xl:max-h-[calc(100dvh-100%-var(--spacing)*28)] xl:overflow-y-auto xl:absolute xl:left-0 xl:right-0 xl:transition-[top]"
+        <div class=" z-999 hidden duration-300 xl:shadow-md xl:top-[calc(100%+var(--spacing)*14)] xl:max-h-[calc(100dvh-100%-var(--spacing)*28)] xl:overflow-y-auto xl:absolute xl:left-0 xl:right-0 xl:transition-[top]"
              x-bind:class="{'!block': open, 'top-[calc(100%+var(--spacing)*8)]!' : scrolled, 'xl:max-h-[calc(100dvh-100%-var(--spacing)*16)]!' : scrolled}">
             <Neos.Presentation:Background
                 class='flow-root fade-in slide-up'
                 background={props.flyoutVariant == 'white' ? 'white' : 'blue-dark'}
             >
-                <div class={"py-4 px-4 xl:py-16 xl:px-20"}>
+                <div class={"py-4 px-4 -mx-4 xl:py-16 xl:px-20"}>
                     <ul class="list-none m-0 p-0 flex flex-col gap-y-2" @if={private.items && !(private.column1Items || private.column2Items || private.column3Items)}>
                         <Neos.Fusion:Loop items={private.items} itemName="item">
                             <li>
