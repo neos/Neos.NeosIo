@@ -1,12 +1,27 @@
 prototype(Neos.NeosIo:Fragment.Menu) < prototype(Neos.Fusion:Component) {
     flyoutVariant = 'white'
+    firstLevelMenuItems = ${q(site).referenceNodes('firstLevelMenuItems')}
 
     renderer = Neos.Presentation:DesktopNavigation {
-        items = Neos.Neos:MenuItems {
-            entryLevel = 1
-            maximumLevels = 1
-            filter = 'Neos.Neos:Document'
-            calculateItemStates = true
+        items = Neos.Fusion:Case {
+            hasConfiguredFirstLevelMenuItems {
+                condition = ${props.firstLevelMenuItems.count() > 0}
+                renderer = Neos.Neos:MenuItems {
+                    itemCollection = ${props.firstLevelMenuItems.get()}
+                    maximumLevels = 1
+                    filter = 'Neos.Neos:Document'
+                    calculateItemStates = true
+                }
+            }
+            default {
+                condition = true
+                renderer = Neos.Neos:MenuItems {
+                    entryLevel = 1
+                    maximumLevels = 1
+                    filter = 'Neos.Neos:Document'
+                    calculateItemStates = true
+                }
+            }
         }
         languageItems = Neos.Neos:DimensionsMenuItems {
             dimension = 'language'
