@@ -59,7 +59,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelSecond) < prototype(Neos.Fusi
                 class='flow-root fade-in slide-up'
                 background={props.flyoutVariant == 'white' ? 'white' : 'blue-dark'}
             >
-                <div class={"py-4 px-4 -mx-4 xl:py-16 xl:px-20"}>
+                <div class={"py-4 px-4 max-xl:-mx-4 xl:py-16 xl:px-20"}>
                     <ul class="list-none m-0 p-0 flex flex-col gap-y-2" @if={private.items && !(private.column1Items || private.column2Items || private.column3Items)}>
                         <Neos.Fusion:Loop items={private.items} itemName="item">
                             <li>
