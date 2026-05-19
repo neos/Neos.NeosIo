@@ -7,6 +7,22 @@
     label: 'Case Study Carousel'
     icon: eye
     group: special
+  references:
+    items:
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:Reference.CaseStudy': true
+      ui:
+        label: 'Case studies'
+        help:
+          message: 'Add case studies to be shown in the carousel. If none are selected, the carousel will automatically show the latest case studies.'
+        reloadIfChanged: true
+        inspector:
+          group: default
+          editorOptions:
+            nodeTypes:
+              - 'Neos.NeosIo:Reference.CaseStudy'
   properties:
     title:
       type: string

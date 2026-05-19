@@ -3,9 +3,14 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseStudyCarousel) < prototype(Neos.Ne
     autoplay = ${!!node.properties.autoplay}
     maxItems = ${node.properties.maxItems > 0 ? node.properties.maxItems : 10}
     caseStudyFolder = ${q(site).referenceNodes('caseStudyFolder').get(0)}
+    selectedItems = ${q(node).referenceNodes('items').get()}
 
     @private {
         items = Neos.Fusion:Case {
+            fromSelection {
+                condition = ${props.selectedItems}
+                renderer = ${props.selectedItems}
+            }
             fromFolder {
                 condition = ${props.caseStudyFolder}
                 renderer = ${q(props.caseStudyFolder).children('[instanceof Neos.NeosIo:Reference.CaseStudy]').sort('datePublished', 'DESC').slice(0, props.maxItems).get()}
@@ -25,10 +30,21 @@ prototype(Neos.NeosIo.CaseStudies:Content.CaseStudyCarousel) < prototype(Neos.Ne
         }
         items = Neos.Fusion:Map {
             items = ${private.items}
-            itemRenderer = Neos.NeosIo.CaseStudies:Content.CaseStudyTeaser {
-                caseStudy = ${item}
-                # show the project type as subtitle instead of always "case study"
-                renderer.subTitle = ${q(item).referenceNodes('projectType').get(0).properties.title || ''}
+            itemRenderer = Neos.Presentation:ContentTeaser {
+                title = ${item.properties.title}
+                subTitle = ${q(item).referenceNodes('projectType').get(0).properties.title || ''}
+                text = ${item.properties.subTitle}
+                image = Neos.Presentation:Component.PictureTag {
+                    asset = ${item.properties.image}
+                    imgClasses = "absolute object-cover w-full h-full"
+                    alt = ${Neos.Node.label(item)}
+                    @if.hasImage = ${this.asset}
+                }
+                link = Neos.Neos:NodeUri {
+                    node = ${item}
+                    absolute = true
+                    @if.hasNode = ${item}
+                }
             }
         }
     }
