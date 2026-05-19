@@ -2,14 +2,18 @@ prototype(Neos.Presentation:DesktopNavigation) < prototype(Neos.Fusion:Component
 
     items = null
     languageItems = null
+    ctaText = ''
+    ctaLink = ''
 
     @propTypes {
         @strict = true
         items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
         languageItems = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\DimensionMenuItem') ) }
         flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
+        ctaText = ${PropTypes.string}
+        ctaLink = ${PropTypes.string}
     }
-//@toDofe - add demo link
+
     renderer = afx`
         <div class="z-navigation px-4 py-4 relative xl:py-10 xl:flex transition-[padding] duration-300"
              x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 0 })"
@@ -43,7 +47,7 @@ prototype(Neos.Presentation:DesktopNavigation) < prototype(Neos.Fusion:Component
 
                     <div class="flex w-full gap-x-6 p-4 items-center justify-between flex-row-reverse xl:flex-row xl:justify-normal xl:w-auto xl:ml-auto xl:p-0">
                         <Neos.Presentation:LanguageMenu languageItems={props.languageItems} flyoutVariant={props.flyoutVariant}/>
-                        <Neos.Presentation:Button icon={"chevron-right"} content={I18n.translate('Neos.Presentation:Navigation:demo')} class="px-4! py-2! xl:w-auto"/>
+                        <Neos.Presentation:Button href={props.ctaLink} icon={"chevron-right"} content={props.ctaText} @if.hasCta={props.ctaLink && props.ctaText} class="px-4! py-2! xl:w-auto"/>
                     </div>
                 </div>
             </div>

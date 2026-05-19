@@ -1,6 +1,8 @@
 prototype(Neos.NeosIo:Fragment.Menu) < prototype(Neos.Fusion:Component) {
     flyoutVariant = 'white'
     firstLevelMenuItems = ${q(site).referenceNodes('firstLevelMenuItems')}
+    ctaLink = ${q(site).property('ctaLink')}
+    ctaText = ${q(site).property('ctaText')}
 
     renderer = Neos.Presentation:DesktopNavigation {
         items = Neos.Fusion:Case {
@@ -28,5 +30,9 @@ prototype(Neos.NeosIo:Fragment.Menu) < prototype(Neos.Fusion:Component) {
             calculateItemStates = true
         }
         flyoutVariant = ${props.flyoutVariant}
+
+        ctaLink = ${props.ctaLink}
+        ctaLink.@process.convert = Neos.Neos:ConvertUris
+        ctaText = ${props.ctaText}
     }
 }

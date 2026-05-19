@@ -28,6 +28,10 @@
           label: 'Navigation'
           icon: 'sitemap'
           tab: navigation
+        cta:
+          label: 'CTA'
+          icon: 'bullseye'
+          tab: navigation
   constraints:
     nodeTypes:
       'Neos.NodeTypes:Page': true
@@ -103,6 +107,22 @@
         label: 'Newsletter ID'
         inspector:
           group: newsletter
+    ctaLink:
+      type: string
+      scope: nodeAggregate
+      ui:
+        label: 'CTA Link'
+        reloadIfChanged: true
+        inspector:
+          group: cta
+          editor: Neos.Neos/Inspector/Editors/LinkEditor
+    ctaText:
+      type: string
+      ui:
+        label: 'CTA Text'
+        reloadIfChanged: true
+        inspector:
+          group: cta
   references:
     footerContentContainer:
       constraints:
