@@ -41,8 +41,7 @@ prototype(Neos.Presentation:DesktopNavigation.LevelFirst) < prototype(Neos.Fusio
                                       )}
                                     x-on:click="open = !open"
                                     x-bind:aria-expanded="open"
-                                    aria-haspopup="true"
-                                    "x-on:click.outside"="open = false">
+                                    aria-haspopup="true">
                                     <span class="grow-1 text-left text-lg xl:text-md xl:grow-0">{item.label}</span>
                                     <span x-bind:class="{'rotate-180': open}" class="transition duration-500">
                                         <Neos.Presentation:Icon
