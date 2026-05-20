@@ -1,48 +1,14 @@
-// TODO remove when new menu is used
 prototype(Neos.NeosIo:Fragment.SiteHeader) < prototype(Neos.Fusion:Component) {
-    className = 'siteHeader'
-    siteTitle = ${q(site).property('title')}
-    toggleScrollClass = true
-    logo = null
-    logoLink = Neos.Neos:NodeUri {
-        node = ${site}
+    @propTypes {
+        @strict = true
+        flyoutVariant = ${PropTypes.oneOf(['default', 'white'])}
     }
-    showBuyTickets = false
-
     renderer = afx`
-        <header
-            class={props.className}
-            role="banner"
-            data-component="ScrollClassToggler" data-component.@if.set={props.toggleScrollClass}
-            data-scrollClasses='{"200":{"className": "siteHeader--hidden","removeOnScrollDecrease": true}, "350":{"className": "siteHeader--shaded"}}' data-scrollClasses.@if.set={props.toggleScrollClass}>
-            <a href={props.logoLink} title={props.siteTitle} class="u-linkReset">
-                <Neos.NeosIo:Component.BrandLogo size="small" additionalClassName="siteHeader__brandLogo" @if.noLogo={!props.logo}/>
-                <Neos.Fusion:Tag
-                    tagName="img" title={props.siteTitle} alt={props.siteTitle} @children="content"
-                    class="u-brandLogo u-brandLogo--bright u-brandLogo--small siteHeader__brandLogo event-logo"
-                    @if.hasLogo={props.logo}>
-                    <Neos.Neos:ImageUri asset={props.logo} allowUpScaling="false"/>
-                </Neos.Fusion:Tag>
-            </a>
-            <a class="hamburger siteHeader__navToggler print-hidden"
-               href="#siteNav"
-               data-component="ClassToggler"
-               data-activeClass="hamburger--active"
-               data-documentActiveClass="html--scrollDisabled"
-               data-targetSelector="#offCanvas"
-               data-targetActiveClass="offCanvas--visible">
-                <div class="hamburger__line hamburger__line--top"></div>
-                <div class="hamburger__line"></div>
-                <div class="hamburger__line hamburger__line--bottom"></div>
-            </a>
-            <Neos.Presentation:Button
-                href={"https://www.neoscon.io/tickets"}
-                content={"Buy Tickets"}
-                openInNewTab={true}
-                class="siteHeader__buyTickets menuBuyTickets px-4! py-2!"
-                variant="yellow"
-                @if.set={props.showBuyTickets}/>
-            <Neos.NeosIo:Fragment.Menu/>
+        <header class="sticky top-0 z-1000"
+                x-data="{ scrolled: false, mobileMenuOpen: false }">
+            <Neos.Presentation:Background background="blue-dark-to-blue" class="relative xl:static">
+                <Neos.NeosIo:Fragment.Menu flyoutVariant="white"/>
+            </Neos.Presentation:Background>
         </header>
     `
 }

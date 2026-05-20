@@ -1,7 +1,6 @@
 .ticket-sales-disruptor {
   width: 100%;
-  padding-top: $header-height--medium;
-  padding-bottom: 60px;
+  padding-block: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,7 +17,7 @@
   }
 
   @include max-screen(992px) {
-    padding-bottom: 20px;
+    padding-block: 20px;
   }
 }
 
@@ -141,12 +140,12 @@
 .ticket-sales-disruptor__fixed {
   display: none;
   position: fixed;
-  top: 0;
+  top: $header-height--fixed;
   left: 0;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: $header-height--fixed;
+  padding-block: calc(var(--spacing)*4);
 
   background-color: #{brand('primary')};
   z-index: z('disruptor');

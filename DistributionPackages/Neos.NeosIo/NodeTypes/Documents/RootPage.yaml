@@ -8,15 +8,30 @@
     'Neos.NeosIo:LandingPage': true
     'Neos.Neos:Site': true
     'Neos.NeosIo:Mixin.Disruptor': true
+    'Neos.NeosIo:Mixin.MenuItemOptions': false
+    'Neos.NeosIo:Mixin.MainNavigationOptions': true
   ui:
     label: 'Root Page'
     icon: home
     inspector:
       groups:
+        additional:
+          label: Additional
+          collapsed: true
+          icon: 'cogs'
         newsletter:
           label: 'Mailchimp Settings'
           icon: icon-mailchimp
           position: 'after additional'
+          collapsed: true
+        navigation:
+          label: 'Navigation'
+          icon: 'sitemap'
+          tab: navigation
+        cta:
+          label: 'CTA'
+          icon: 'bullseye'
+          tab: navigation
   constraints:
     nodeTypes:
       'Neos.NodeTypes:Page': true
@@ -24,6 +39,7 @@
       'Neos.NeosIo.Blog:Document.Tags': false
       'Neos.NeosIo.Blog:Document.Tag': false
       'Neos.NeosIo:Post': false
+      'Neos.NeosIo:Document.FirstLevelNavigationFolder': true
   properties:
     titlePostfix:
       type: string
@@ -91,6 +107,22 @@
         label: 'Newsletter ID'
         inspector:
           group: newsletter
+    ctaLink:
+      type: string
+      scope: nodeAggregate
+      ui:
+        label: 'CTA Link'
+        reloadIfChanged: true
+        inspector:
+          group: cta
+          editor: Neos.Neos/Inspector/Editors/LinkEditor
+    ctaText:
+      type: string
+      ui:
+        label: 'CTA Text'
+        reloadIfChanged: true
+        inspector:
+          group: cta
   references:
     footerContentContainer:
       constraints:
@@ -105,3 +137,20 @@
           editorOptions:
             nodeTypes:
               - Neos.NeosIo:FooterContainer
+    firstLevelMenuItems:
+      constraints:
+        nodeTypes:
+          'Neos.Neos:Document': true
+      scope: nodeAggregate
+      ui:
+        label: 'First Level Menu Items'
+        reloadPageIfChanged: true
+        inspector:
+          group: navigation
+          editorOptions:
+            nodeTypes:
+              - 'Neos.Neos:Document'
+              - '!Neos.NeosIo:Post'
+              - '!Neos.NeosIo.Blog:Document.Tag'
+              - '!Neos.MarketPlace:Package'
+              - '!Neos.NeosIo.ServiceOfferings:Document.ServiceProvider'
