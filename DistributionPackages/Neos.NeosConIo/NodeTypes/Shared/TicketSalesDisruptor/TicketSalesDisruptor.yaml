@@ -83,6 +83,7 @@
     sold:
       type: integer
       defaultValue: 0
+      scope: nodeAggregate
       ui:
         label: 'Amount of tickets sold'
         reloadIfChanged: true
@@ -92,6 +93,7 @@
     goal:
       type: integer
       defaultValue: 50
+      scope: nodeAggregate
       ui:
         label: 'Goal number of tickets'
         reloadIfChanged: true
@@ -101,6 +103,7 @@
     stretchGoal:
       type: integer
       defaultValue: 80
+      scope: nodeAggregate
       ui:
         label: 'Stretch Goal number of tickets'
         reloadIfChanged: true
