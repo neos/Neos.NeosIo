@@ -89,6 +89,7 @@ prototype(Neos.NeosConIo:Component.TicketSalesDisruptor.Inner) < prototype(Neos.
     @private {
         percentageSold = ${props.stretchGoal > 0 ? props.sold / props.stretchGoal * 100 : 66}
         goalPercentage = ${props.goal > 0 && props.stretchGoal > 0 ? props.goal / props.stretchGoal * 100 : private.percentageSold}
+        i18n = ${I18n.id('').package('Neos.NeosConIo').source('Main')}
     }
 
     renderer = afx`
@@ -102,7 +103,7 @@ prototype(Neos.NeosConIo:Component.TicketSalesDisruptor.Inner) < prototype(Neos.
                 <div class="ticket-sales-disruptor__sales-bar">
                     <div class="ticket-sales-disruptor__sales-bar__sold" style={"width:"+ private.percentageSold  +"%"}>
                         <div class="ticket-sales-disruptor__sales-bar__bar"></div>
-                        <span @if={props.sold}>sold {props.sold}</span>
+                        <span @if={props.sold}>{private.i18n.id('ticketSalesDisruptor.sold').value('sold').arguments([props.sold]).translate()}</span>
                     </div>
                     <div
                         class="ticket-sales-disruptor__sales-bar__minimum-goal"
@@ -113,7 +114,7 @@ prototype(Neos.NeosConIo:Component.TicketSalesDisruptor.Inner) < prototype(Neos.
                         class="ticket-sales-disruptor__sales-bar__goal"
                         @if={props.stretchGoal > 0 && props.goal > 0}
                     >
-                        goal {props.stretchGoal}
+                        {private.i18n.id('ticketSalesDisruptor.goal').value('goal').arguments([props.stretchGoal]).translate()}
                     </div>
                 </div>
                 <div class="ticket-sales-disruptor__minimum-goal">
