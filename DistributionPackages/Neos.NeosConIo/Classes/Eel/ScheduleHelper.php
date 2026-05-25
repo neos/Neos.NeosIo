@@ -162,7 +162,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
             $result[$id->value] = new Talk(
                 $id,
                 html_entity_decode($this->nodeLabelGenerator->getLabel($topic), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
-                trim(html_entity_decode(strip_tags($rawText))),
+                trim(html_entity_decode(strip_tags($rawText), ENT_QUOTES | ENT_HTML5, 'UTF-8')),
                 $isTalk ? 'TALK' : ($topic->properties['type'] ?? 'BREAK'),
                 $talkDate,
                 $stage,
@@ -214,7 +214,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
             $result[$id->value] = new Speaker(
                 $id,
                 $name,
-                trim(html_entity_decode(strip_tags($speaker->properties['text'] ?? ''))),
+                trim(html_entity_decode(strip_tags($speaker->properties['text'] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8')),
                 $avatarUri ? new Uri($avatarUri) : null,
                 $this->groupSpeakerTalksByEvent($speaker, $actionRequest),
                 $speaker->properties['company'] ?? '',
