@@ -161,8 +161,8 @@ class ScheduleHelper implements ProtectedContextAwareInterface
 
             $result[$id->value] = new Talk(
                 $id,
-                $this->nodeLabelGenerator->getLabel($topic),
-                trim(strip_tags($rawText)),
+                html_entity_decode($this->nodeLabelGenerator->getLabel($topic), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+                trim(html_entity_decode(strip_tags($rawText))),
                 $isTalk ? 'TALK' : ($topic->properties['type'] ?? 'BREAK'),
                 $talkDate,
                 $stage,
@@ -193,7 +193,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
         $result = [];
         foreach ($speakers as $speaker) {
             $id = $speaker->aggregateId;
-            $name = trim($speaker->properties['title'] ?? '');
+            $name = trim(html_entity_decode($speaker->properties['title'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'));
 
             if (!$name) {
                 continue;
@@ -214,7 +214,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
             $result[$id->value] = new Speaker(
                 $id,
                 $name,
-                trim(strip_tags($speaker->properties['text'] ?? '')),
+                trim(html_entity_decode(strip_tags($speaker->properties['text'] ?? ''))),
                 $avatarUri ? new Uri($avatarUri) : null,
                 $this->groupSpeakerTalksByEvent($speaker, $actionRequest),
                 $speaker->properties['company'] ?? '',
@@ -264,8 +264,8 @@ class ScheduleHelper implements ProtectedContextAwareInterface
 
             $result[$talk->aggregateId->value] = new RelatedTalk(
                 $talk->aggregateId,
-                $this->nodeLabelGenerator->getLabel($talk),
-                $this->nodeLabelGenerator->getLabel($event),
+                html_entity_decode($this->nodeLabelGenerator->getLabel($talk), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+                html_entity_decode($this->nodeLabelGenerator->getLabel($event), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
                 $talkUri,
                 (bool)($talk->properties['video'] ?? false),
             );
