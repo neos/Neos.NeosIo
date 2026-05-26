@@ -162,7 +162,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
             $result[$id->value] = new Talk(
                 $id,
                 $this->htmlDecodeAndTrim($this->nodeLabelGenerator->getLabel($topic)),
-                $this->htmlDecodeAndTrim(strip_tags($rawText  ?? '')),
+                $this->htmlDecodeAndTrim(strip_tags($rawText)),
                 $isTalk ? 'TALK' : ($topic->properties['type'] ?? 'BREAK'),
                 $talkDate,
                 $stage,
