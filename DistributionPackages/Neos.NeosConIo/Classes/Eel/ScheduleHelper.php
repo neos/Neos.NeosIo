@@ -161,7 +161,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
 
             $result[$id->value] = new Talk(
                 $id,
-                $this->htmlDecodeAndTrim($this->nodeLabelGenerator->getLabel($topic) ?? ''),
+                $this->htmlDecodeAndTrim($this->nodeLabelGenerator->getLabel($topic)),
                 $this->htmlDecodeAndTrim(strip_tags($rawText  ?? '')),
                 $isTalk ? 'TALK' : ($topic->properties['type'] ?? 'BREAK'),
                 $talkDate,
@@ -193,7 +193,7 @@ class ScheduleHelper implements ProtectedContextAwareInterface
         $result = [];
         foreach ($speakers as $speaker) {
             $id = $speaker->aggregateId;
-            $name = $this->htmlDecodeAndTrim($speaker->properties['title'] ?? '');
+            $name = $this->htmlDecodeAndTrim($speaker->properties['title']);
 
             if (!$name) {
                 continue;
@@ -264,8 +264,8 @@ class ScheduleHelper implements ProtectedContextAwareInterface
 
             $result[$talk->aggregateId->value] = new RelatedTalk(
                 $talk->aggregateId,
-                $this->htmlDecodeAndTrim($this->nodeLabelGenerator->getLabel($talk) ?? ''),
-                $this->htmlDecodeAndTrim($this->nodeLabelGenerator->getLabel($event) ?? ''),
+                $this->htmlDecodeAndTrim($this->nodeLabelGenerator->getLabel($talk)),
+                $this->htmlDecodeAndTrim($this->nodeLabelGenerator->getLabel($event)),
                 $talkUri,
                 (bool)($talk->properties['video'] ?? false),
             );
@@ -278,8 +278,8 @@ class ScheduleHelper implements ProtectedContextAwareInterface
         return true;
     }
 
-    private function htmlDecodeAndTrim(string $text): string
+    private function htmlDecodeAndTrim(?string $text): string
     {
-        return trim(html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+        return trim(html_entity_decode($text ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'));
     }
 }
