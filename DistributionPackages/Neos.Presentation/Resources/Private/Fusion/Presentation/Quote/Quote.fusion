@@ -21,7 +21,11 @@ prototype(Neos.Presentation:Quote) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = afx`
-        <Neos.Presentation:Background background="blue-dark" tagName="blockquote" class="grid grid-cols-1 md:grid-cols-[300px_auto] lg:grid-cols-[400px_auto] quote-clip-path">
+        <Neos.Presentation:Background
+            background="blue-dark"
+            tagName="blockquote"
+            class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(min(25rem,100%),1fr))] quote quote-clip-path"
+        >
             <div>
                 {props.image}
                 <img
