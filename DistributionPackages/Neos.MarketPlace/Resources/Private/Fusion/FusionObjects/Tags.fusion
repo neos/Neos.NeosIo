@@ -9,6 +9,6 @@ prototype(Neos.MarketPlace:Tags) < prototype(Neos.Fusion:Tag) {
             content = ${'#' + String.toLowerCase(keyword)}
         }
     }
-
-    attributes.class = 'market-tagline'
+    attributes.data-component = 'marketPlace.Tags'
+    attributes.class = 'm-0 p-0 flex gap-x-2 gap-y-0.5 flex-wrap list-none'
 }
