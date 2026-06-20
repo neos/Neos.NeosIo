@@ -27,6 +27,12 @@
 
         "shel/nodetypes-analyzer": "^2.0",
 
+        "neos/flow-development-collection": "9.2.x-dev as 9.2",
+        "neos/neos-development-collection": "dev-92-beta-test-branch as 9.2",
+
+        "neos/neos-ui": "9.2.x-dev as 9.2",
+        "neos/neos-ui-compiled": "9.2.x-dev as 9.2",
+
         "cweagans/composer-patches": "^1.7",
         "flownative/redis-backend": "dev-main"
     },
@@ -36,8 +42,8 @@
         "shel/nodetypes-analyzer": "^2.1",
         "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^9.5",
-        "neos/buildessentials": "^9.0",
-        "neos/behat": "^9.0"
+        "neos/buildessentials": "9.2.x-dev as 9.2",
+        "neos/behat": "9.2.x-dev as 9.2"
     },
     "extra": {
         "patches-file": "DistributionPackages/Neos.NeosIo/composer.patches.json"
@@ -63,9 +69,10 @@
         "prune-domains": "@php ./flow domain:delete --hostname '*' ; exit 0",
         "prime-localbeach": [
             "@prune-domains",
-            "@php ./flow domain:add --site-node-name neosio --hostname neosio.localbeach.net",
-            "@php ./flow domain:add --site-node-name flowneosio --hostname flowio.localbeach.net",
-            "@php ./flow domain:add --site-node-name neosconio --hostname neoscon.localbeach.net"
+            "@php ./flow domain:add --site-node-name neosio --hostname neosio.local",
+            "@php ./flow domain:add --site-node-name flowneosio --hostname flowio.local",
+            "@php ./flow domain:add --site-node-name barcamp --hostname barcamp.neosio.local",
+            "@php ./flow domain:add --site-node-name neosconio --hostname neoscon.local"
         ],
         "lint:phpstan": "./bin/phpstan analyse -v"
     },
