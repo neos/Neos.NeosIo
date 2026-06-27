@@ -3,10 +3,9 @@ prototype(Neos.MarketPlace:Maintainers) < prototype(Neos.Fusion:Component) {
     maintainers.@process.toArray = ${value ? String.split(value, ',') : []}
 
     renderer = afx`
-        <header>
-            <h4>{I18n.translate('maintainers', 'Maintainers', [], 'Main', 'Neos.MarketPlace')}</h4>
-        </header>
-        <ul class="nav nav--stacked">
+        <h2 class="display-title-md mb-4">{I18n.translate('maintainers', 'Maintainers', [], 'Main', 'Neos.MarketPlace')}</h2>
+
+        <ul class="list-none p-0 m-0">
             <Neos.Fusion:Loop items={props.maintainers}>
                 <li>{item}</li>
             </Neos.Fusion:Loop>
