@@ -3,11 +3,11 @@ prototype(Neos.MarketPlace:PackageMetrics) < prototype(Neos.Fusion:Component) {
     downloads = ${q(node).property('downloadTotal')}
 
     renderer = afx`
-        <span class="metrics">
-            <span class="metrics__item" @if={props.favers}>
+        <span class=" flex flex-wrap gap-8">
+            <span class="display-lead flex gap-2 items-center" @if={props.favers}>
                 <i class="fas fa-star"></i> {props.favers}
             </span>
-            <span class="metrics__item" @if={props.downloads}>
+            <span class="display-lead flex gap-2 items-center" @if={props.downloads}>
                 <i class="fas fa-download"></i> {props.downloads}
             </span>
         </span>
