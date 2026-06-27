@@ -32,8 +32,8 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
             <p @if={props.description}>
                 <strong>{props.description}</strong>
             </p>
-            <Neos.MarketPlace:VersionPreview />
-            <Neos.MarketPlace:PackageCountButton vendor={props.vendor} />
+            <Neos.MarketPlace:VersionPreview versionNode={props.versionNode}/>
+            <Neos.MarketPlace:VendorPackages vendor={props.vendor} />
         </article>
     `
 }

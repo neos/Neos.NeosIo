@@ -1,0 +1,38 @@
+prototype(Neos.MarketPlace:VendorPackages) < prototype(Neos.Fusion:Component) {
+    vendor = null
+    @context.vendor = ${this.vendor}
+    vendorPackages =  ${q(this.vendor).find('[instanceof Neos.MarketPlace:Package]')}
+
+    packageCount = ${this.vendorPackages.count()}
+
+    //@ToDoMine - translation
+    content = ${this.packageCount > 1 ? 'The same vendor provides ' + this.packageCount + ' package(s).' : null}
+
+    renderer = afx`
+        <section class="block" @if={props.packageCount > 1}>
+            <details >
+                <summary class="flex gap-4 pointer">
+                    <h2 class="display-title-md grow-1">{props.content}</h2>
+                    <i class="fas fa-chevron-down text-md transition-transform duration-300 group-open:rotate-180" aria-hidden="true"></i>
+                </summary>
+                <ul>
+                    <Neos.Fusion:Loop items={props.vendorPackages} itemName="node">
+                       <Neos.MarketPlace:VendorSearchResult />
+                    </Neos.Fusion:Loop>
+                </ul>
+            </details>
+        </section>
+    `
+
+    @cache {
+        mode = 'cached'
+
+        entryIdentifier {
+            vendor = ${Neos.Caching.entryIdentifierForNode(vendor)}
+        }
+
+        entryTags {
+            vendorNode = ${Neos.Caching.nodeTag(vendor)}
+        }
+    }
+}
