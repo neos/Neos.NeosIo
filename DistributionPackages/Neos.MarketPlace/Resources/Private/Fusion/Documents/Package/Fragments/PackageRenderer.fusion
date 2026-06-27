@@ -8,6 +8,11 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
     packageTime = ${q(node).property('time')}
     description = ${String.stripTags(q(node).property('description') || '')}
 
+    version = ${MarketPlace.Package.sanitiseVersionArgument(request.arguments.version)}
+    findByVersionQuery = ${q(node).children('versions').children('[instanceof Neos.MarketPlace:Version][version = "' + this.version + '"]').get(0)}
+    findLastVersionQuery = ${q(q(node).property('lastVersion')).get(0)}
+    versionNode = ${this.version ? this.findByVersionQuery : this.findLastVersionQuery}
+
     renderer = afx`
         <article class="market-block">
             <header>
@@ -20,11 +25,9 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
                 </p>
                 <hr />
             </Neos.Fusion:Fragment>
-            <div class="package__meta">
-                <Neos.MarketPlace:PackageLastActivity />
-                <Neos.MarketPlace:PackageMetrics
-                    attributes.class.@process.pullRight={Array.push(value, 'pull-right')}
-                />
+            <div class="flex flex-wrap gap-8 place-content-between">
+                <Neos.MarketPlace:PackagePublished versionNode={props.versionNode}/>
+                <Neos.MarketPlace:PackageMetrics />
             </div>
             <code class="market-code">
                 <i class="fas fa-download"></i> composer require {props.packageName}
@@ -36,4 +39,20 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
             <Neos.MarketPlace:VendorPackages vendor={props.vendor} />
         </article>
     `
+    @cache {
+        mode = 'dynamic'
+        entryIdentifier {
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
+        entryDiscriminator = ${request.arguments.version ? false : 'latest'}
+        context {
+            site = 'site'
+            documentNode = 'documentNode'
+            node = 'node'
+        }
+        entryTags {
+            node = ${Neos.Caching.nodeTag(node)}
+            descendants = ${Neos.Caching.descendantOfTag(node)}
+        }
+    }
 }

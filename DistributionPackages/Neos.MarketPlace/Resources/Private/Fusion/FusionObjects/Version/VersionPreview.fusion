@@ -1,11 +1,7 @@
 prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
-    version = ${MarketPlace.Package.sanitiseVersionArgument(request.arguments.version)}
-    findByVersionQuery = ${q(node).children('versions').children('[instanceof Neos.MarketPlace:Version][version = "' + this.version + '"]').get(0)}
-    findLastVersionQuery = ${q(q(node).property('lastVersion')).get(0)}
-    versionNode = ${this.version ? this.findByVersionQuery : this.findLastVersionQuery}
 
     renderer = afx`
-      <section class="block block--versions">
+      <section class="block block--versions" >
           <Neos.MarketPlace:Version @context.node={props.versionNode} @if.hasNode={props.versionNode} />
           <span @if={!props.versionNode} class="error">
             {I18n.translate('versions.versionNotFound', 'No released version found', [], 'Main', 'Neos.MarketPlace')}
@@ -13,20 +9,4 @@ prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
       </section>
     `
 
-    @cache {
-        mode = 'dynamic'
-        entryIdentifier {
-            node = ${Neos.Caching.entryIdentifierForNode(node)}
-        }
-        entryDiscriminator = ${request.arguments.version ? false : 'latest'}
-        context {
-            site = 'site'
-            documentNode = 'documentNode'
-            node = 'node'
-        }
-        entryTags {
-            node = ${Neos.Caching.nodeTag(node)}
-            descendants = ${Neos.Caching.descendantOfTag(node)}
-        }
-    }
 }
