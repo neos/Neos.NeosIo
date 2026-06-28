@@ -1,5 +1,5 @@
 prototype(Neos.MarketPlace:PackagePublished) < prototype(Neos.Fusion:Component) {
-    time = ${q(node).property('time')}
+    time = ${q(props.versionNode).property('time')}
     version = ${q(props.versionNode).property('version')}
 
     renderer = afx`
