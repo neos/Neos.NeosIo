@@ -4,10 +4,14 @@ prototype(Neos.MarketPlace:VendorRenderer) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <article class="market-block">
-            <h1>{props.title}</h1>
-            <Neos.Fusion:Loop items={props.packages} itemName="node">
-                <Neos.MarketPlace:PackageSearchResult />
-            </Neos.Fusion:Loop>
+            <h1 class="display-headline-sm mb-8">{props.title}</h1>
+            <ul class="py-4 list-none px-0 m-0">
+                <Neos.Fusion:Loop items={props.packages} itemName="node">
+                    <li>
+                        <Neos.MarketPlace:PackageSearchResult />
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
         </article>
     `
 }
