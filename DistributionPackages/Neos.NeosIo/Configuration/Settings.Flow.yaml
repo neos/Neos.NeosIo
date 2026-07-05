@@ -5,3 +5,8 @@ Neos:
     mvc:
       routes:
         'Neos.NeosIo': {}
+
+    reflection:
+      ignoredTags:
+        # Hotfix for https://github.com/flownative/flow-google-cloudstorage/issues/57
+        'type': true
