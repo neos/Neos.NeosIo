@@ -5,7 +5,7 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
 
     data = Neos.Fusion:Component {
         searchTerm = ${request.arguments.search}
-        onlyStable = ${request.arguments.stable}
+        onlyStable = ${request.arguments.stable != 'false' && request.arguments.stable != '0'}
         from = ${request.arguments.from ? Date.create(request.arguments.from) : null}
         to = ${request.arguments.to ? Date.create(request.arguments.to) : null}
         limit = ${Type.isInteger(request.arguments.limit) ? request.arguments.limit : 50}
@@ -48,36 +48,12 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
             }
         }
 
-        renderer = Neos.Fusion:DataStructure {
-            results = Neos.Fusion:Map {
-                items = ${MarketPlace.Package.getFlatPackageVersions(
-                    props.marketPlaceQuery.execute().toArray(),
-                    props.from,
-                    props.to,
-                    props.onlyStable,
-                    props.limit
-                )}
-                itemName = 'version'
-                itemRenderer = Neos.Fusion:Component {
-                    renderer = Neos.Fusion:DataStructure {
-                        title = ${version.title}
-                        description = ${version.description}
-                        link = Neos.Neos:NodeUri {
-                            node = ${version.packageNode}
-                            absolute = true
-                            format = 'html'
-                        }
-                        linkToRelease = ${(version.repository ? version.repository : '') + '/releases/tag/' + version.version}
-                        version = ${version.version}
-                        lastActivity = ${Date.format(version.time, 'c')}
-                        stable = ${version.stability}
-                        stabilityLevel = ${version.stabilityLevel}
-                        downloads = ${version.downloadTotal}
-                        stars = ${version.favers || 0}
-                    }
-                }
-            }
-            @process.json = ${Json.stringify(value)}
+        renderer = Neos.MarketPlace:Package.JsonFeed {
+            packageNodes = ${props.marketPlaceQuery.execute().toArray()}
+            from = ${props.from}
+            to = ${props.to}
+            onlyStable = ${props.onlyStable}
+            limit = ${props.limit}
         }
     }
 
