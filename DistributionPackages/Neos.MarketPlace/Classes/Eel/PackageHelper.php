@@ -22,7 +22,9 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\Ordering\Ordering
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\Pagination\Pagination;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\Projection\ContentGraph\NodePath;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\ContentRepository\Core\SharedModel\ContentRepository\ContentRepositoryId;
+use Neos\ContentRepository\Core\NodeType\NodeTypeNames;
 use Neos\ContentRepository\Core\SharedModel\Node\PropertyName;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Eel\ProtectedContextAwareInterface;
@@ -136,6 +138,92 @@ class PackageHelper implements ProtectedContextAwareInterface
         // Sort by time DESC
         usort($filteredReleasedVersions, static fn ($a, $b) => $b['time'] <=> $a['time']);
         return $filteredReleasedVersions;
+    }
+
+    /**
+     * Collects all versions from a list of package nodes, flattens them into individual entries,
+     * applies per-version filtering and sorting.
+     *
+     * Each entry contains both package-level and version-level data.
+     *
+     * @param Node[] $packageNodes Array of Package nodes
+     * @return array{ packageNode: Node, title: string, description: ?string, repository: ?string, version: ?string, time: \DateTimeInterface, stability: ?bool, stabilityLevel: ?string, downloadTotal: ?int, favers: ?int}[]
+     */
+    public function getFlatPackageVersions(
+        array $packageNodes,
+        ?\DateTimeInterface $from = null,
+        ?\DateTimeInterface $to = null,
+        ?string $onlyStable = null,
+        int $limit = 50
+    ): array {
+        $flatVersions = [];
+
+        foreach ($packageNodes as $packageNode) {
+            $subgraph = $this->contentRepository->getContentSubgraph(
+                $packageNode->workspaceName,
+                $packageNode->dimensionSpacePoint
+            );
+
+            $versionsNode = $subgraph->findNodeByPath(
+                NodePath::fromString('versions'),
+                $packageNode->aggregateId
+            );
+            if (!$versionsNode) {
+                continue;
+            }
+
+            $versionNodes = $subgraph->findChildNodes(
+                $versionsNode->aggregateId,
+                FindChildNodesFilter::create(
+                    nodeTypes: NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                        NodeTypeNames::fromStringArray([
+                            'Neos.MarketPlace:ReleasedVersion',
+                            'Neos.MarketPlace:PrereleasedVersion',
+                        ])
+                    ),
+                    ordering: Ordering::byProperty(
+                        PropertyName::fromString('time'),
+                        OrderingDirection::DESCENDING
+                    ),
+                )
+            );
+
+            foreach ($versionNodes as $versionNode) {
+                $versionTime = $versionNode->getProperty('time');
+                if (!$versionTime instanceof \DateTimeInterface) {
+                    continue;
+                }
+
+                if ($from !== null && $versionTime < $from) {
+                    continue;
+                }
+                if ($to !== null && $versionTime > $to) {
+                    continue;
+                }
+                if ($onlyStable === 'true' && $versionNode->getProperty('stability') !== true) {
+                    continue;
+                }
+
+                $flatVersions[] = [
+                    'packageNode' => $packageNode,
+                    'title' => $packageNode->getProperty('title'),
+                    'description' => $packageNode->getProperty('description'),
+                    'repository' => $packageNode->getProperty('repository'),
+                    'version' => $versionNode->getProperty('version'),
+                    'time' => $versionTime,
+                    'stability' => $versionNode->getProperty('stability'),
+                    'stabilityLevel' => $versionNode->getProperty('stabilityLevel'),
+                    'downloadTotal' => $packageNode->getProperty('downloadTotal') ?? 0,
+                    'favers' => $packageNode->getProperty('favers') ?? 0,
+                ];
+            }
+        }
+
+        usort($flatVersions, static function (array $a, array $b): int {
+            return $b['time'] <=> $a['time'];
+        });
+
+        return array_slice($flatVersions, 0, $limit);
     }
 
     public function allowsCallOfMethod($methodName): bool

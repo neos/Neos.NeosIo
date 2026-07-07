@@ -6,8 +6,8 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
     data = Neos.Fusion:Component {
         searchTerm = ${request.arguments.search}
         onlyStable = ${request.arguments.stable}
-        from = ${request.arguments.from ? Date.create(request.arguments.from) : false}
-        to = ${request.arguments.to ? Date.create(request.arguments.to) : false}
+        from = ${request.arguments.from ? Date.create(request.arguments.from) : null}
+        to = ${request.arguments.to ? Date.create(request.arguments.to) : null}
         limit = ${Type.isInteger(request.arguments.limit) ? request.arguments.limit : 50}
 
         marketPlaceQuery = ${MarketPlaceSearch.query(documentNode)}
@@ -50,25 +50,30 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
 
         renderer = Neos.Fusion:DataStructure {
             results = Neos.Fusion:Map {
-                items = ${props.marketPlaceQuery.execute()}
-                itemName = 'package'
+                items = ${MarketPlace.Package.getFlatPackageVersions(
+                    props.marketPlaceQuery.execute().toArray(),
+                    props.from,
+                    props.to,
+                    props.onlyStable,
+                    props.limit
+                )}
+                itemName = 'version'
                 itemRenderer = Neos.Fusion:Component {
-                    lastVersion = ${q(package).referenceNodes('lastVersion').get(0)}
-
                     renderer = Neos.Fusion:DataStructure {
-                        title = ${package.properties.title}
-                        description = ${package.properties.description}
+                        title = ${version.title}
+                        description = ${version.description}
                         link = Neos.Neos:NodeUri {
-                            node = ${package}
+                            node = ${version.packageNode}
                             absolute = true
                             format = 'html'
                         }
-                        linkToRelease = ${package.properties.repository + '/releases/tag/' + props.lastVersion.properties.version}
-                        latestVersion = ${props.lastVersion.properties.version}
-                        lastActivity = ${Date.format(props.lastVersion.properties.time, 'c')}
-                        stable = ${props.lastVersion.properties.stability}
-                        downloads = ${package.properties.downloadTotal}
-                        stars = ${package.properties.favers || 0}
+                        linkToRelease = ${(version.repository ? version.repository : '') + '/releases/tag/' + version.version}
+                        version = ${version.version}
+                        lastActivity = ${Date.format(version.time, 'c')}
+                        stable = ${version.stability}
+                        stabilityLevel = ${version.stabilityLevel}
+                        downloads = ${version.downloadTotal}
+                        stars = ${version.favers || 0}
                     }
                 }
             }
