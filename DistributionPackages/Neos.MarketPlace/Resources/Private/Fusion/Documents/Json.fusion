@@ -4,10 +4,10 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
     }
 
     data = Neos.Fusion:Component {
-        searchTerm = ${request.arguments.search}
+        searchTerm = ${MarketPlace.Input.sanitize(request.arguments.search)}
         onlyStable = ${request.arguments.stable != 'false' && request.arguments.stable != '0'}
-        from = ${request.arguments.from ? Date.create(request.arguments.from) : null}
-        to = ${request.arguments.to ? Date.create(request.arguments.to) : null}
+        from = ${request.arguments.from ? MarketPlace.Input.parseDate(request.arguments.from, 'Y-m-d') : null}
+        to = ${request.arguments.to ? MarketPlace.Input.parseDate(request.arguments.to, 'Y-m-d') : null}
         limit = ${Type.isInteger(request.arguments.limit) ? request.arguments.limit : 50}
 
         marketPlaceQuery = ${MarketPlaceSearch.query(documentNode)}
