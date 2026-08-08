@@ -27,10 +27,10 @@ prototype(Neos.MarketPlace:PackageSearchResult) < prototype(Neos.MarketPlace:Doc
             </div>
             <footer class="flex flex gap-2 flex-col justify-items-start display-body-md text-neutral-50">
                 <div class="flex flex-wrap gap-x-4 gap-y-2">
-                    <p>{props.lastVersionLabel}</p>
-                    <span aria-hidden="true">•</span>
+                    <p @if.hasVersion={props.lastVersionLabel}>{props.lastVersionLabel}</p>
+                    <span aria-hidden="true" @if.hasVersion={props.lastVersionLabel} class="last-child:hidden">•</span>
                     <Neos.MarketPlace:PackageLastActivity />
-                    <span aria-hidden="true">•</span>
+                    <span aria-hidden="true" @if.hasLastActivity={q(node).property('lastActivity')} class="last-child:hidden">•</span>
                     <Neos.MarketPlace:PackageMetrics />
                 </div>
             </footer>
