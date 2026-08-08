@@ -4,39 +4,35 @@ prototype(Neos.MarketPlace:PackageSearchResult) < prototype(Neos.MarketPlace:Doc
     lastVersionTime = ${q(this.lastVersion).property('time')}
     description = ${String.isBlank(q(this.lastVersion).property('description')) ? q(node).property('description') : q(this.lastVersion).property('description')}
     favers = ${q(node).property('favers')}
-    //@ToDoMine - favers not working
 
     renderer >
     renderer = afx`
-        <article class="py-4 border-b-1 border-neutral-20 flex flex-col gap-2">
+
+        <article class="py-6 border-b-1 border-neutral-20 flex flex-col gap-2">
             <header>
                 <h4 class="display-title-md flex gap-4 items-end">
                     <Neos.Neos:NodeLink node={props.node}>
                       {String.stripTags(props.title)}
                     </Neos.Neos:NodeLink>
-                    <small>{props.lastVersionLabel}</small>
                 </h4>
             </header>
-            <p @if={props.description}>
-                {String.stripTags(props.description)}
-            </p>
-            <footer class="flex flex gap-2 flex-col justify-items-start diyplay-body-md">
-                <div class="flex flex-wrap gap-x-4 gap-y-2">
-                    <Neos.MarketPlace:PackageLastActivity />
-                    <Neos.MarketPlace:PackageMetrics
-                        faversOnly={true}
-                        @if.hasFavers={props.favers}
-                    />
-                    <div class="grow-1 flex md:justify-end">
-                        <Neos.MarketPlace:PackageMetrics
-                            downloadsOnly={true}
-                        />
-                    </div>
-                </div>
+            <div class="flex flex-col gap-2" @if.hasDescriptionOrTags={props.description || q(props.lastVersion).property('keywords')}>
+                <p @if.hasDescription={props.description}>
+                    {String.stripTags(props.description)}
+                </p>
                 <Neos.MarketPlace:Tags
                     data={q(props.lastVersion).property('keywords')}
                     @if.hasKeywords={q(props.lastVersion).property('keywords')}
                 />
+            </div>
+            <footer class="flex flex gap-2 flex-col justify-items-start display-body-md text-neutral-50">
+                <div class="flex flex-wrap gap-x-4 gap-y-2">
+                    <p>{props.lastVersionLabel}</p>
+                    <span aria-hidden="true">•</span>
+                    <Neos.MarketPlace:PackageLastActivity />
+                    <span aria-hidden="true">•</span>
+                    <Neos.MarketPlace:PackageMetrics />
+                </div>
             </footer>
         </article>
     `

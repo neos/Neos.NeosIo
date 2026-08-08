@@ -5,10 +5,11 @@ prototype(Neos.MarketPlace:PackageMetrics) < prototype(Neos.Fusion:Component) {
     faversOnly = false
 
     renderer = afx`
-        <p class=" flex flex-wrap gap-8">
+        <p class=" flex flex-wrap gap-4">
             <span class="flex gap-2 items-center" @if={props.favers && !props.downloadsOnly}>
                 <i class="fas fa-star"></i> <span>{props.favers}</span>
             </span>
+            <span aria-hidden="true" @if.hasBoth={props.favers && props.downloads}>•</span>
             <span class="flex gap-2 items-center" @if={props.downloads && !props.faversOnly}>
                 <i class="fas fa-download"></i> <span>{props.downloads}</span>
             </span>
