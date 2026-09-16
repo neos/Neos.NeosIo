@@ -5,38 +5,28 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
     isAbandoned = ${this.abandoned ? true : false}
 
     packageName = ${String.stripTags(q(node).property('title'))}
-    packageTime = ${q(node).property('time')}
     description = ${String.stripTags(q(node).property('description') || '')}
 
     version = ${MarketPlace.Package.sanitiseVersionArgument(request.arguments.version)}
     findByVersionQuery = ${q(node).children('versions').children('[instanceof Neos.MarketPlace:Version][version = "' + this.version + '"]').get(0)}
     findLastVersionQuery = ${q(q(node).property('lastVersion')).get(0)}
     versionNode = ${this.version ? this.findByVersionQuery : this.findLastVersionQuery}
-
+//@todoMine - styling "abandoned"
     renderer = afx`
-        <article class="market-block">
-            <header>
-                <h1>{props.packageName}</h1>
+        <article class="flex flex-col grow-1" data-component={"package-renderer"}>
+            <header class="mb-16">
+                <h1 class="display-headline-sm border-b border-neutral-30 pb-8">{props.packageName}</h1>
+                <div class="flex flex-wrap gap-8 place-content-between display-lead pt-8 text-neutral-50">
+                    <Neos.MarketPlace:PackagePublished versionNode={props.versionNode}/>
+                    <Neos.MarketPlace:PackageMetrics/>
+                </div>
             </header>
-            <Neos.Fusion:Fragment @if={props.isAbandoned}>
-                <p>
-                    This package is abandoned and no longer maintained.
-                    The author suggests using the <strong>{props.abandoned}</strong> package instead.
-                </p>
-                <hr />
-            </Neos.Fusion:Fragment>
-            <div class="flex flex-wrap gap-8 place-content-between">
-                <Neos.MarketPlace:PackagePublished versionNode={props.versionNode}/>
-                <Neos.MarketPlace:PackageMetrics />
-            </div>
-            <code class="market-code">
-                <i class="fas fa-download"></i> composer require {props.packageName}
-            </code>
-            <p @if={props.description}>
-                <strong>{props.description}</strong>
-            </p>
-            <Neos.MarketPlace:VersionPreview versionNode={props.versionNode}/>
-            <Neos.MarketPlace:VendorPackages vendor={props.vendor} />
+
+            <Neos.MarketPlace:VersionPreview versionNode={props.versionNode}
+                                             title={q(node).property('title')}
+                                             isLatest={props.versionNode == props.findLastVersionQuery}
+                                             latestVersion={props.findLastVersionQuery}/>
+            <Neos.MarketPlace:PackageCountButton vendor={props.vendor} />
         </article>
     `
     @cache {
