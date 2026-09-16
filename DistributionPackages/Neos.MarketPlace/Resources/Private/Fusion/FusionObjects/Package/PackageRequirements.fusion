@@ -3,12 +3,19 @@ prototype(Neos.MarketPlace:PackageRequirements) < prototype(Neos.Fusion:Componen
     items = ${Json.parse(q(node).property(this.property))}
 
     renderer = afx`
-      <ul>
-          <Neos.Fusion:Loop items={props.items} itemKey="package" itemName="version">
-              <Neos.MarketPlace:PackageRequirementsItem package={package} version={version} />
-          </Neos.Fusion:Loop>
-      </ul>
+      <table>
+          <thead class="border-b-2 border-neutral-40">
+              <tr>
+                <th class="px-2 py-1">Package</th>
+                <th class="px-2 py-1">Minimum Version</th>
+              </tr>
+          </thead>
+          <tbody>
+              <Neos.Fusion:Loop items={props.items} itemKey="package" itemName="version">
+                  <Neos.MarketPlace:PackageRequirementsItem package={package} version={version} />
+              </Neos.Fusion:Loop>
+          </tbody>
+      </table>
     `
-
     @if.hasItems = ${this.items}
 }
