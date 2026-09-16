@@ -3,13 +3,13 @@ prototype(Neos.MarketPlace:PackagePublished) < prototype(Neos.Fusion:Component) 
     version = ${q(props.versionNode).property('version')}
 
     renderer = afx`
-        <p class="display-lead" @if={props.time || props.version}>
+        <p class="display-lead flex gap-x-4" @if={props.time || props.version}>
             <span @if.hasVersion={props.version} class="font-bold">
-              v
+                 <span class="sr-only">{I18n.translate('version', 'Version', [], 'Main', 'Neos.MarketPlace')}</span>
               {props.version}
             </span>
-            <Neos.Fusion:Fragment @if.hasBoth={props.time && props.version}> • </Neos.Fusion:Fragment>
-            {I18n.translate('package.published', 'Last activity', [], 'Main', 'Neos.MarketPlace')} {Date.format(props.time, 'd.m.Y')}
+            <span aria-hidden="true" @if.hasBoth={props.time && props.version}>•</span>
+            {I18n.translate('package.published', 'Last activity', [], 'Main', 'Neos.MarketPlace')} {Date.format(props.time, 'd M Y')}
         </p>
     `
 
