@@ -2,7 +2,11 @@ prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
       <section class="block block--versions" >
-          <Neos.MarketPlace:Version @context.node={props.versionNode} @if.hasNode={props.versionNode} />
+          <Neos.MarketPlace:Version @context.node={props.versionNode} @if.hasNode={props.versionNode}
+                                    title={props.title}
+                                    isLatest={props.isLatest}
+                                    latestVersion={props.latestVersion}
+          />
           <span @if={!props.versionNode} class="error">
             {I18n.translate('versions.versionNotFound', 'No released version found', [], 'Main', 'Neos.MarketPlace')}
           </span>
