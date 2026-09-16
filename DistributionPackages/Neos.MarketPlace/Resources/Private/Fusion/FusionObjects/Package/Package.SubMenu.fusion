@@ -3,9 +3,20 @@ prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Component) {
     @context.releasedVersionQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:ReleasedVersion]')}
     @context.prereleasedVersionQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:PrereleasedVersion]')}
     @context.developmentVersionsQuery = ${q(this.versions).filter('[instanceof Neos.MarketPlace:DevelopmentVersion]')}
+    latestRelease = ${q(releasedVersionQuery).get(0)}
+    license = ${q(this.latestRelease).property('license')}
+    latestReleaseDate = ${q(this.latestRelease).property('time')}
+    latestReleaseVersion = ${q(this.latestRelease).property('version')}
+    releaseDataClasses = "flex w-1/2 px-1 mb-2 flex-col gap-0.5"
+    latestReleaseLink = Neos.Neos:NodeUri {
+        node = ${documentNode}
+        arguments {
+            version = ${q(this.latestRelease).property('version')}
+        }
+    }
 
     releasedVersionMenu = Neos.MarketPlace:VersionMenu {
-        title = ${I18n.translate('versions.stableVersions', 'Stable versions', [], 'Main', 'Neos.MarketPlace')}
+        title = ${I18n.translate('versions.latestVersion', 'Stable versions', [], 'Main', 'Neos.MarketPlace')}
         versions = ${releasedVersionQuery}
         @if.hasVersions = ${releasedVersionQuery.count() > 0}
     }
@@ -22,13 +33,48 @@ prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Component) {
         @if.hasVersions = ${developmentVersionsQuery.count() > 0}
     }
 
+    h2Classes = "display-title-sm font-bold mb-2"
+    h3Classes = "display-title-sm"
+
+    //@ToDoMine - make sure development version is rendered again, compactMenu inherits from Menu and needs handling for only one & more versions
+    //@ToDoMine - tag infront of version in header for dev, prereleased versions etc? is there a default view?
+
     renderer = afx`
-      <Neos.MarketPlace:PackageSourceButton />
-      <section class="market-nav">
-        <Neos.MarketPlace:Maintainers />
+      <section data-component="Package.SubMenu.Source">
+        <h2 class={props.h2Classes}>{I18n.translate('repository', 'Repository', [], 'Main', 'Neos.MarketPlace')}</h2>
+          <div class="flex gap-2">
+            <i class="fas fa-code-branch text-md" aria-hidden="true"></i>
+            <a href={q(node).property('repository')} @if={q(node).property('repository')} class="break-all" target="_blank" rel="noopener noreferrer">
+                {q(node).property('repository')}
+            </a>
+          </div>
+      </section>
+      <section data-component="Package.SubMenu.Release" @if={props.latestRelease}>
+          <h2 class={props.h2Classes}>{I18n.translate('versions.latestVersion', 'Latest release', [], 'Main', 'Neos.MarketPlace')}</h2>
+          <div class="flex flex-wrap -mx-1 -mb-2">
+              <div class={props.releaseDataClasses} @if.hasVersion={props.latestReleaseVersion}>
+                  <h3 class={props.h3Classes}>{I18n.translate('version', 'Version', [], 'Main', 'Neos.MarketPlace')}</h3>
+                  <a href={props.latestReleaseLink}>
+                     {props.latestReleaseVersion}
+                  </a>
+              </div>
+              <div class={props.releaseDataClasses}>
+                  <h3 class={props.h3Classes}>{I18n.translate('date', 'Date', [], 'Main', 'Neos.MarketPlace')}</h3>
+                  <p>{Date.format(props.latestReleaseDate, 'd M Y')}</p>
+              </div>
+              <div class={props.releaseDataClasses}>
+                  <h3 class={props.h3Classes}>{I18n.translate('license', 'License', [], 'Main', 'Neos.MarketPlace')}</h3>
+                  <p>{props.license}</p>
+              </div>
+          </div>
+      </section>
+
+      <section>
+          <Neos.MarketPlace:Maintainers h2Classes={props.h2Classes}/>
       </section>
       {props.releasedVersionMenu}
       {props.prereleasedVersionMenu}
       {props.developmentVersionMenu}
+
     `
 }
