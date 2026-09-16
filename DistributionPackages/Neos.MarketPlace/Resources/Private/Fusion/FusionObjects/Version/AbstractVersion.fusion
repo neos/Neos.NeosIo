@@ -65,7 +65,7 @@ prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Fusion:Component) {
                 <h2>{props.version}</h2>
             </header>
             <Neos.Fusion:Fragment @if={props.abandoned}>
-                <p>This version is abandoned and no longer maintained. The author suggests using the
+                <p class="bg-yellow-light border-1 border-yellow-dark text-yellow-darkest p-6 mb-8">This version is abandoned and no longer maintained. The author suggests using the
                     <strong>{props.abandoned}</strong> package instead.</p>
                 <hr />
             </Neos.Fusion:Fragment>
