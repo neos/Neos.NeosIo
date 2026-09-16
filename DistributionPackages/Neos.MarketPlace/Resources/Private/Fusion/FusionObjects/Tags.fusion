@@ -6,9 +6,12 @@ prototype(Neos.MarketPlace:Tags) < prototype(Neos.Fusion:Tag) {
         itemName = 'keyword'
         itemRenderer = Neos.Fusion:Tag {
             tagName = 'li'
-            content = ${'#' + String.toLowerCase(keyword)}
+            content = ${String.toLowerCase(keyword)}
+            attributes.class = 'px-2 py-1 bg-neutral-10 display-body-sm'
         }
     }
     attributes.data-component = 'marketPlace.Tags'
-    attributes.class = 'm-0 p-0 flex gap-x-2 gap-y-0.5 flex-wrap list-none'
+    attributes.class = 'm-0 p-0 flex gap-2 flex-wrap list-none'
+    attributes.aria-label = 'Keywords'
+    //@ToDoMine link to search for tag? --> ?search=String.toLowerCase(keyword)
 }
