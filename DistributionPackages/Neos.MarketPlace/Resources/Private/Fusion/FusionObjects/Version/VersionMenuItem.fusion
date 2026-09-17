@@ -9,12 +9,12 @@ prototype(Neos.MarketPlace:VersionMenuItem) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = afx`
-        <li class="version-nav__item">
-          <a href={props.versionLink} class="version-nav__link">
-            <span class="version-nav__version">
+        <li>
+          <a href={props.versionLink} class="flex gap-4 place-content-between">
+            <span >
               {props.version}
             </span>
-            <span class="version-nav__time" @if={props.time}>
+            <span @if={props.time}>
               {Date.format(props.time, 'd M Y')}
             </span>
           </a>

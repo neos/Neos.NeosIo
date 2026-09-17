@@ -1,27 +1,20 @@
 prototype(Neos.MarketPlace:VersionMenu) < prototype(Neos.Fusion:Component) {
-    title = ${I18n.translate('versions.releasedVersions', 'Released versions', [], 'Main', 'Neos.MarketPlace')}
     versions = Neos.MarketPlace:VersionsQuery
 
+    //@ToDoMine - stability tag?
     renderer = afx`
-        <nav class="version-nav__container">
-            <header>
-                <h4>{props.title}</h4>
-            </header>
-            <ul class="version-nav">
-                <Neos.Fusion:Loop items={Array.slice(props.versions, 0, 5)} itemName="node">
-                    <Neos.MarketPlace:VersionMenuItem />
-                </Neos.Fusion:Loop>
-            </ul>
-            <details @if={Array.length(props.versions) > 5}>
-                <summary>
-                    <strong>Toggle older versions</strong>
+        <section class="" data-component="VersionMenu">
+            <details class="group" @if={Array.length(props.versions) > 1}>
+                <summary class="flex gap-4 pointer">
+                    <h2 class="display-title-sm font-bold grow-1">{I18n.translate('versionHistory', 'Version history', [], 'Main', 'Neos.MarketPlace')}</h2>
+                    <i class="fas fa-chevron-down text-md transition-transform duration-300 group-open:rotate-180" aria-hidden="true"></i>
                 </summary>
-                <ul class="version-nav">
-                    <Neos.Fusion:Loop items={Array.slice(props.versions, 5)} itemName="node">
+                <ul class="list-none px-0 pt-4 m-0">
+                    <Neos.Fusion:Loop items={Array.slice(props.versions, 1)} itemName="node">
                         <Neos.MarketPlace:VersionMenuItem />
                     </Neos.Fusion:Loop>
                 </ul>
             </details>
-        </nav>
+        </section>
     `
 }
