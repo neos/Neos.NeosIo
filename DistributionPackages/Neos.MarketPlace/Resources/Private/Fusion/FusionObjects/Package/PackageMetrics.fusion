@@ -7,11 +7,11 @@ prototype(Neos.MarketPlace:PackageMetrics) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <p class=" flex flex-wrap gap-4">
             <span class="flex gap-2 items-center" @if={props.favers && !props.downloadsOnly}>
-                <i class="fas fa-star"></i> <span>{props.favers}</span>
+                <i class="fas fa-star" aria-hidden="true"></i> <span>{props.favers}</span> <span class="sr-only"> {I18n.translate('favers', 'favored', [], 'Main', 'Neos.MarketPlace')}</span>
             </span>
             <span aria-hidden="true" @if.hasBoth={props.favers && props.downloads}>•</span>
             <span class="flex gap-2 items-center" @if={props.downloads && !props.faversOnly}>
-                <i class="fas fa-download"></i> <span>{props.downloads}</span>
+                <i class="fas fa-download" aria-hidden="true"></i> <span>{props.downloads}</span> <span class="sr-only"> {I18n.translate('downloads', 'downloads', [], 'Main', 'Neos.MarketPlace')}</span>
             </span>
         </p>
     `
