@@ -1,9 +1,10 @@
 prototype(Neos.MarketPlace:Maintainers) < prototype(Neos.Fusion:Component) {
     maintainers = ${q(documentNode).property('maintainers')}
     maintainers.@process.toArray = ${value ? String.split(value, ',') : []}
+    h32Classes = ''
 
     renderer = afx`
-        <h2 class="display-title-md mb-4">{I18n.translate('maintainers', 'Maintainers', [], 'Main', 'Neos.MarketPlace')}</h2>
+        <h2 class={props.h2Classes}>{I18n.translate('maintainers', 'Maintainers', [], 'Main', 'Neos.MarketPlace')}</h2>
 
         <ul class="list-none p-0 m-0">
             <Neos.Fusion:Loop items={props.maintainers}>
