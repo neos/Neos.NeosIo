@@ -13,16 +13,16 @@ prototype(Neos.MarketPlace:Package) < prototype(Neos.MarketPlace:DefaultPage) {
         renderer = afx`
             <div class="stage stage--bright" id="mainContent">
                 <div class="stage__contents">
-                    <main role="main" class="g">
-                        <header>
+                    <main role="main" >
+                        <header class="mb-20">
                             <Neos.MarketPlace:Search showResult={false} />
                         </header>
-                        <section class="gi u-w1/1 u-wm8/12 u-wl9/12">
+                        <section class="flex-col flex gap-18 md:flex-row">
                             <Neos.MarketPlace:PackageRenderer />
+                            <aside class="w-full md:w-[300px] flex-none flex flex-col gap-8">
+                                <Neos.MarketPlace:Package.SubMenu />
+                            </aside>
                         </section>
-                        <aside class="gi u-w1/1 u-wm4/12 u-wl3/12">
-                            <Neos.MarketPlace:Package.SubMenu />
-                        </aside>
                     </main>
                 </div>
             </div>
