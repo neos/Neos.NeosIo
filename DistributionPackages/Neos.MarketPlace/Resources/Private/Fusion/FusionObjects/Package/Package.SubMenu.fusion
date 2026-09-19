@@ -21,13 +21,13 @@ prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Component) {
         @if.hasVersions = ${releasedVersionQuery.count() > 0}
     }
 
-    prereleasedVersionMenu = Neos.MarketPlace:VersionCompactMenu {
+    prereleasedVersionMenu = Neos.MarketPlace:VersionMenu {
         title = ${I18n.translate('versions.prereleaseVersions', 'Prerelease versions', [], 'Main', 'Neos.MarketPlace')}
         versions = ${prereleasedVersionQuery}
         @if.hasVersions = ${prereleasedVersionQuery.count() > 0}
     }
 
-    developmentVersionMenu = Neos.MarketPlace:VersionCompactMenu {
+    developmentVersionMenu = Neos.MarketPlace:VersionMenu {
         title = ${I18n.translate('versions.developmentVersions', 'Development versions', [], 'Main', 'Neos.MarketPlace')}
         versions = ${developmentVersionsQuery}
         @if.hasVersions = ${developmentVersionsQuery.count() > 0}

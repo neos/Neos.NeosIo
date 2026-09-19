@@ -1,20 +1,41 @@
 prototype(Neos.MarketPlace:VersionMenu) < prototype(Neos.Fusion:Component) {
-    versions = Neos.MarketPlace:VersionsQuery
+    title = ${props.title}
+    versions = ${props.versions}
+    @context.ctitle = ${this.title}
+    @context.cVersions = Neos.MarketPlace:VersionsQuery
+    //@context.versions = ${props.versions}
+    @context.versionCount = ${Array.length(this.versions) || 0}
+    versionInfo = Neos.Fusion:Case {
+        moreThanOne {
+            condition = ${versionCount > 1}
+            renderer = afx`
+                <details class="group" @if={versionCount > 1}>
+                    <summary class="flex gap-4 pointer">
+                        <h2 class="display-title-sm font-bold grow-1">{ctitle}</h2>
+                        <i class="fas fa-chevron-down text-md transition-transform duration-300 group-open:rotate-180" aria-hidden="true"></i>
+                    </summary>
+                    <ul class="list-none px-0 pt-4 m-0">
+                        <Neos.Fusion:Loop items={Array.slice(cVersions, 1)} itemName="node">
+                            <Neos.MarketPlace:VersionMenuItem />
+                        </Neos.Fusion:Loop>
+                    </ul>
+                </details>
+            `
+        }
+        singleVersion {
+            condition = ${versionCount == 1}
+            renderer = afx`
+                    <h2 class="display-title-sm font-bold mb-4">{ctitle}</h2>
+                    <Neos.MarketPlace:VersionMenuItem @context.node={cVersions[0]} listItem={false}/>
+            `
+        }
+
+    }
 
     //@ToDoMine - stability tag?
     renderer = afx`
-        <section class="" data-component="VersionMenu">
-            <details class="group" @if={Array.length(props.versions) > 1}>
-                <summary class="flex gap-4 pointer">
-                    <h2 class="display-title-sm font-bold grow-1">{I18n.translate('versionHistory', 'Version history', [], 'Main', 'Neos.MarketPlace')}</h2>
-                    <i class="fas fa-chevron-down text-md transition-transform duration-300 group-open:rotate-180" aria-hidden="true"></i>
-                </summary>
-                <ul class="list-none px-0 pt-4 m-0">
-                    <Neos.Fusion:Loop items={Array.slice(props.versions, 1)} itemName="node">
-                        <Neos.MarketPlace:VersionMenuItem />
-                    </Neos.Fusion:Loop>
-                </ul>
-            </details>
+        <section data-component="Package.VersionMenu">
+            {props.versionInfo}
         </section>
     `
 }
