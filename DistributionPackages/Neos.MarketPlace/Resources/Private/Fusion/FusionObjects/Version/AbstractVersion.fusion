@@ -60,10 +60,10 @@ prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Fusion:Component) {
     abandoned = ${q(documentNode).property('abandoned')}
     colClasses = 'w-full md:w-1/2 p-4'
     h2Classes = 'display-title-md mb-2'
-    warningClasses = 'bg-yellow-light border-1 border-yellow text-yellow-darkest p-4 mb-8'
+    warningClasses = 'bg-yellow-light border-1 border-yellow text-yellow-darkest p-4'
 
     renderer = afx`
-        <div class="version">
+        <div class="version flex flex-col gap-8">
             <Neos.Fusion:Fragment @if={props.abandoned}>
                 <p class={props.warningClasses}>{String.replace(I18n.translate('version.abandonedWarning', 'This version is abandoned and no longer maintained. The author suggests using the #package# package instead.', [], 'Main', 'Neos.MarketPlace'), '#package#', '<strong>' + props.abandoned + '</strong>')}</p>
             </Neos.Fusion:Fragment>
@@ -72,21 +72,24 @@ prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Fusion:Component) {
             </Neos.Fusion:Fragment>
 
             <Neos.Fusion:Fragment @if={props.description}>
-              <h2 class={props.h2Classes}>{I18n.translate('Neos.MarketPlace:Main:description')}</h2>
-              <p class="mb-8">{props.description}</p>
+                <div>
+                  <h2 class={props.h2Classes}>{I18n.translate('Neos.MarketPlace:Main:description')}</h2>
+                  <p>{props.description}</p>
+                </div>
             </Neos.Fusion:Fragment>
 
-
-            <h2 class="display-title-md mb-4">{I18n.translate('Neos.MarketPlace:Main:installation')}</h2>
-            <div class="py-2 px-4 mb-8 inline-flex bg-neutral-10 self-start gap-2">
-                <i class="fas fa-terminal" aria-hidden="true"></i>
-                <code>
-                    composer require {String.stripTags(props.title)}{props.isLatest ? '' : ':'+ props.version}
-                </code>
+            <div>
+                <h2 class="display-title-md mb-4">{I18n.translate('Neos.MarketPlace:Main:installation')}</h2>
+                <div class="py-2 px-4 inline-flex bg-neutral-10 self-start gap-2">
+                    <i class="fas fa-terminal" aria-hidden="true"></i>
+                    <code>
+                        composer require {String.stripTags(props.title)}{props.isLatest ? '' : ':'+ props.version}
+                    </code>
+                </div>
             </div>
 
             <div class="flex flex-col gap-4">
-                <dl class="flex -mx-4 mb-0 flex-wrap">
+                <dl class="flex -mx-4 -mb-4 flex-wrap">
                     <Neos.Fusion:Fragment @if={props.homepage}>
                         <div class={props.colClasses}>
                             <dt class={props.h2Classes}>{I18n.translate('version.homepage', 'Homepage', [], 'Main', 'Neos.MarketPlace')}</dt>
@@ -110,38 +113,52 @@ prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Fusion:Component) {
                         </div>
                     </Neos.Fusion:Fragment>
                 </dl>
-                <dl >
+                <dl class="flex -mx-4 -mb-4 flex-wrap">
                     <Neos.Fusion:Fragment @if={props.require}>
-                        <dt class={props.h2Classes}>{I18n.translate('version.requirements', 'Requirements', [], 'Main', 'Neos.MarketPlace')}</dt>
-                        <dd>{props.require}</dd>
+                        <div class={'w-full p-4'}>
+                            <dt class={props.h2Classes}>{I18n.translate('version.requirements', 'Requirements', [], 'Main', 'Neos.MarketPlace')}</dt>
+                            <dd>{props.require}</dd>
+                        </div>
                     </Neos.Fusion:Fragment>
                     <Neos.Fusion:Fragment @if={props.requireDev}>
-                        <dt class={props.h2Classes}>{I18n.translate('version.requirementsDev', 'Requirements (dev)', [], 'Main', 'Neos.MarketPlace')}</dt>
-                        <dd>{props.requireDev}</dd>
+                        <div class={props.colClasses}>
+                            <dt class={props.h2Classes}>{I18n.translate('version.requirementsDev', 'Requirements (dev)', [], 'Main', 'Neos.MarketPlace')}</dt>
+                            <dd>{props.requireDev}</dd>
+                        </div>
                     </Neos.Fusion:Fragment>
                     <Neos.Fusion:Fragment @if={props.suggest}>
-                        <dt class={props.h2Classes}>{I18n.translate('version.suggest', 'Suggest', [], 'Main', 'Neos.MarketPlace')}</dt>
-                        <dd>{props.suggest}</dd>
+                        <div class={props.colClasses}>
+                            <dt class={props.h2Classes}>{I18n.translate('version.suggest', 'Suggest', [], 'Main', 'Neos.MarketPlace')}</dt>
+                            <dd>{props.suggest}</dd>
+                        </div>
                     </Neos.Fusion:Fragment>
                     <Neos.Fusion:Fragment @if={props.provide}>
-                        <dt class={props.h2Classes}>{I18n.translate('version.provides', 'Provides', [], 'Main', 'Neos.MarketPlace')}</dt>
-                        <dd>{props.provide}</dd>
+                        <div class={props.colClasses}>
+                            <dt class={props.h2Classes}>{I18n.translate('version.provides', 'Provides', [], 'Main', 'Neos.MarketPlace')}</dt>
+                            <dd>{props.provide}</dd>
+                        </div>
                     </Neos.Fusion:Fragment>
                     <Neos.Fusion:Fragment @if={props.conflict}>
-                        <dt class={props.h2Classes}>{I18n.translate('version.conflicts', 'Conflicts', [], 'Main', 'Neos.MarketPlace')}</dt>
-                        <dd>{props.conflict}</dd>
+                        <div class={props.colClasses}>
+                            <dt class={props.h2Classes}>{I18n.translate('version.conflicts', 'Conflicts', [], 'Main', 'Neos.MarketPlace')}</dt>
+                            <dd>{props.conflict}</dd>
+                        </div>
                     </Neos.Fusion:Fragment>
                     <Neos.Fusion:Fragment @if={props.replace}>
-                        <dt class={props.h2Classes}>{I18n.translate('version.replaces', 'Replaces', [], 'Main', 'Neos.MarketPlace')}</dt>
-                        <dd>{props.replace}</dd>
+                        <div class={props.colClasses}>
+                            <dt class={props.h2Classes}>{I18n.translate('version.replaces', 'Replaces', [], 'Main', 'Neos.MarketPlace')}</dt>
+                            <dd>{props.replace}</dd>
+                        </div>
                     </Neos.Fusion:Fragment>
                     <Neos.Fusion:Fragment @if={props.bin}>
-                        <dt class={props.h2Classes}>{I18n.translate('version.bin', 'Bin', [], 'Main', 'Neos.MarketPlace')}</dt>
-                        <dd>{props.bin}</dd>
+                        <div class={props.colClasses}>
+                            <dt class={props.h2Classes}>{I18n.translate('version.bin', 'Bin', [], 'Main', 'Neos.MarketPlace')}</dt>
+                            <dd>{props.bin}</dd>
+                        </div>
                     </Neos.Fusion:Fragment>
                 </dl>
             </div>
-            <div class="flex gap-4 flex-col">
+            <div class="flex flex-col gap-4">
                 <div @if.hasKeywords={props.hasKeywords} class="flex gap-2">
                   {props.keywords}
                 </div>

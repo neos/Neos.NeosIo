@@ -1,7 +1,7 @@
 prototype(Neos.MarketPlace:VersionPreview) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
-      <section class="block block--versions" >
+      <section class="block block--versions mb-16 last-child:mb-0" >
           <Neos.MarketPlace:Version @context.node={props.versionNode} @if.hasNode={props.versionNode}
                                     title={props.title}
                                     isLatest={props.isLatest}
