@@ -11,9 +11,9 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
     findByVersionQuery = ${q(node).children('versions').children('[instanceof Neos.MarketPlace:Version][version = "' + this.version + '"]').get(0)}
     findLastVersionQuery = ${q(q(node).property('lastVersion')).get(0)}
     versionNode = ${this.version ? this.findByVersionQuery : this.findLastVersionQuery}
-//@todoMine - styling "abandoned"
+
     renderer = afx`
-        <article class="flex flex-col grow-1 mb-20" data-component={"package-renderer"}>
+        <article class="flex flex-col grow-1 md:mb-20" data-component={"package-renderer"}>
             <header class="mb-16">
                 <h1 class="display-headline-sm border-b border-neutral-30 pb-8">{props.packageName}</h1>
                 <div class="flex flex-wrap gap-8 place-content-between display-lead pt-8 text-neutral-50">

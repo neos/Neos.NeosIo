@@ -47,7 +47,7 @@ prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Component) {
           <div class="flex gap-2">
             <i class="fas fa-code-branch text-md" aria-hidden="true"></i>
             <a href={q(node).property('repository')} @if={q(node).property('repository')} class="break-all" target="_blank" rel="noopener noreferrer">
-                {q(node).property('repository')}
+                {String.replace(q(node).property('repository'), 'https://', '')}
             </a>
           </div>
       </section>
