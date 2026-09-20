@@ -1,7 +1,8 @@
 prototype(Neos.MarketPlace:PackageRequirements) < prototype(Neos.Fusion:Component) {
     property = ''
     items = ${Json.parse(q(node).property(this.property))}
-
+    //@ToDoMine - second column label might need to differe depending on displayed requirements
+    //https://neosio.localbeach.net/download-and-extend/packages/neosidekick/neosidekick-ai-assistant.html
     renderer = afx`
       <table>
           <thead class="border-b-2 border-neutral-40">
