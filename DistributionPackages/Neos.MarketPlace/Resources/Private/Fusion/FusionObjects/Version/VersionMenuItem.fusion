@@ -10,14 +10,14 @@ prototype(Neos.MarketPlace:VersionMenuItem) < prototype(Neos.Fusion:Component) {
     listItem = true
 
     renderer = afx`
-          <a href={props.versionLink} class="flex gap-4 place-content-between">
-            <span >
+          <span class="flex gap-4 place-content-between">
+            <a href={props.versionLink}>
               {props.version}
-            </span>
+            </a>
             <span @if={props.time}>
               {Date.format(props.time, 'd M Y')}
             </span>
-          </a>
+          </span>
     `
     @process.wrap = afx`<li>{value}</li>`
     @process.wrap.@if.listItem = ${props.listItem}
