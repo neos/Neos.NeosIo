@@ -1,15 +1,16 @@
 prototype(Neos.MarketPlace:VersionMenu) < prototype(Neos.Fusion:Component) {
     title = ${props.title}
     versions = ${props.versions}
+    versionCount = ${props.versionCount}
     @context.ctitle = ${this.title}
-    @context.cVersions = Neos.MarketPlace:VersionsQuery
-    //@context.versions = ${props.versions}
-    @context.versionCount = ${Array.length(this.versions) || 0}
+    @context.cVersions = ${this.versions}
+    @context.cVersionCount = ${this.versionCount || 0}
+
     versionInfo = Neos.Fusion:Case {
         moreThanOne {
-            condition = ${versionCount > 1}
+            condition = ${cVersionCount > 1}
             renderer = afx`
-                <details class="group" @if={versionCount > 1}>
+                <details class="group" @if={cVersionCount > 1}>
                     <summary class="flex gap-4 pointer">
                         <h2 class="display-title-sm font-bold grow-1">{ctitle}</h2>
                         <i class="fas fa-chevron-down text-md transition-transform duration-300 group-open:rotate-180" aria-hidden="true"></i>
@@ -23,7 +24,7 @@ prototype(Neos.MarketPlace:VersionMenu) < prototype(Neos.Fusion:Component) {
             `
         }
         singleVersion {
-            condition = ${versionCount == 1}
+            condition = ${cVersionCount == 1}
             renderer = afx`
                     <h2 class="display-title-sm font-bold mb-4">{ctitle}</h2>
                     <Neos.MarketPlace:VersionMenuItem @context.node={cVersions[0]} listItem={false}/>

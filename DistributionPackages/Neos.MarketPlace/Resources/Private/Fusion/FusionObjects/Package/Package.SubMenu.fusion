@@ -14,29 +14,31 @@ prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Component) {
             version = ${q(this.latestRelease).property('version')}
         }
     }
-
+//@todoMine- update translation
     releasedVersionMenu = Neos.MarketPlace:VersionMenu {
         title = ${I18n.translate('versions.latestVersion', 'Stable versions', [], 'Main', 'Neos.MarketPlace')}
-        versions = ${releasedVersionQuery}
+        versions = ${releasedVersionQuery.get()}
+        versionCount = ${releasedVersionQuery.count()}
         @if.hasVersions = ${releasedVersionQuery.count() > 0}
     }
 
     prereleasedVersionMenu = Neos.MarketPlace:VersionMenu {
         title = ${I18n.translate('versions.prereleaseVersions', 'Prerelease versions', [], 'Main', 'Neos.MarketPlace')}
-        versions = ${prereleasedVersionQuery}
+        versions = ${prereleasedVersionQuery.get()}
+        versionCount = ${prereleasedVersionQuery.count()}
         @if.hasVersions = ${prereleasedVersionQuery.count() > 0}
     }
 
     developmentVersionMenu = Neos.MarketPlace:VersionMenu {
         title = ${I18n.translate('versions.developmentVersions', 'Development versions', [], 'Main', 'Neos.MarketPlace')}
-        versions = ${developmentVersionsQuery}
+        versions = ${developmentVersionsQuery.get()}
+        versionCount = ${developmentVersionsQuery.count()}
         @if.hasVersions = ${developmentVersionsQuery.count() > 0}
     }
 
     h2Classes = "display-title-sm font-bold mb-2"
     h3Classes = "display-title-sm"
 
-    //@ToDoMine - make sure development version is rendered again, compactMenu inherits from Menu and needs handling for only one & more versions
     //@ToDoMine - tag infront of version in header for dev, prereleased versions etc? is there a default view?
 
     renderer = afx`
