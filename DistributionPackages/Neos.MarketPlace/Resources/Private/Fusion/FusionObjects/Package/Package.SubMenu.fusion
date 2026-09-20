@@ -14,9 +14,9 @@ prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Component) {
             version = ${q(this.latestRelease).property('version')}
         }
     }
-//@todoMine- update translation
+
     releasedVersionMenu = Neos.MarketPlace:VersionMenu {
-        title = ${I18n.translate('versions.latestVersion', 'Stable versions', [], 'Main', 'Neos.MarketPlace')}
+        title = ${I18n.translate('versions.stableVersions', 'Stable versions', [], 'Main', 'Neos.MarketPlace')}
         versions = ${releasedVersionQuery.get()}
         versionCount = ${releasedVersionQuery.count()}
         @if.hasVersions = ${releasedVersionQuery.count() > 0}
