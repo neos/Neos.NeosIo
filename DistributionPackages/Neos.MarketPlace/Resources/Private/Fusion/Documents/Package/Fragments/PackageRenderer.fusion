@@ -25,8 +25,9 @@ prototype(Neos.MarketPlace:PackageRenderer) < prototype(Neos.Fusion:Component) {
             <Neos.MarketPlace:VersionPreview versionNode={props.versionNode}
                                              title={q(node).property('title')}
                                              isLatest={props.versionNode == props.findLastVersionQuery}
-                                             latestVersion={props.findLastVersionQuery}/>
-            <Neos.MarketPlace:PackageCountButton vendor={props.vendor} />
+                                             latestVersion={props.findLastVersionQuery}
+                                             vendor={props.vendor}
+            />
         </article>
     `
     @cache {

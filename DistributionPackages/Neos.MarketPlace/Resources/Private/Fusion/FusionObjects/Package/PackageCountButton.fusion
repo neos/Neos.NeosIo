@@ -12,7 +12,7 @@ prototype(Neos.MarketPlace:PackageCountButton) < prototype(Neos.Fusion:Component
     }
 
     renderer = afx`
-        <section class="block" @if={props.packageCount > 1}>
+        <section class="mt-12" data-component="Package.CountButton" @if={props.packageCount > 1}>
             <Neos.Presentation:Button
                 href={props.url}
                 content={props.content}

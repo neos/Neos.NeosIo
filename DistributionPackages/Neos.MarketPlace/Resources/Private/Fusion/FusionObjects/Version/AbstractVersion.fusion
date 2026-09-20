@@ -158,11 +158,12 @@ prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Fusion:Component) {
                     </Neos.Fusion:Fragment>
                 </dl>
             </div>
-            <div class="flex flex-col gap-4">
-                <div @if.hasKeywords={props.hasKeywords} class="flex gap-2">
+            <div class="flex flex-col gap-4" @if.hasKeywords={props.hasKeywords} >
+                <div class="flex gap-2">
                   {props.keywords}
                 </div>
             </div>
+            <Neos.MarketPlace:PackageCountButton vendor={props.vendor} />
         </div>
     `
 }
