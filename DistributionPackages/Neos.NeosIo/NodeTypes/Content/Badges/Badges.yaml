@@ -1,0 +1,38 @@
+###########################################
+# Displays an overview of badges depending
+# on the selected type
+###########################################
+
+'Neos.NeosIo:Badges':
+  superTypes:
+    'Neos.Neos:Content': true
+
+  constraints:
+    nodeTypes:
+      '*': false
+
+  ui:
+    label: Badges
+    icon: 'award'
+
+    inspector:
+      groups:
+        type:
+          label: Badgetype
+  properties:
+    badgeType:
+      type: string
+      ui:
+        label: 'Badgetype'
+        reloadIfChanged: true
+        showInCreationDialog: true
+        inspector:
+          group: type
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            allowEmpty: false
+            values:
+              Badge:
+                label: 'Longtime Supporter'
+              BadgeTeamMemberEmployer:
+                label: 'Active Team Member Employer'

@@ -1,59 +1,7 @@
 'Neos.NeosIo:Badge':
   label: "${Neos.Node.labelForNode(node).properties('title', 'linkText', 'description')}"
   superTypes:
-    'Neos.Neos:Content': true
+    'Neos.NeosIo:BadgeMixin': true
     'Neos.NeosIo:Mixin.InternalTitle': true
   ui:
-    label: Badge
-    icon: credit-card
-    inlineEditable: true
-    inspector:
-      groups:
-        properties:
-          label: 'Badge properties'
-          icon: gears
-  properties:
-    highlight:
-      type: boolean
-      ui:
-        label: Highlight
-        reloadIfChanged: true
-        inspector:
-          group: properties
-    link:
-      type: string
-      ui:
-        label: URL
-        reloadIfChanged: true
-        inspector:
-          group: properties
-          editor: Neos.Neos/Inspector/Editors/LinkEditor
-    image:
-      type: Neos\Media\Domain\Model\ImageInterface
-      ui:
-        label: 'Badge image'
-        reloadIfChanged: true
-        inspector:
-          group: properties
-    description:
-      type: string
-      ui:
-        inlineEditable: true
-        inline:
-          editorOptions:
-            autoparagraph: false
-            formatting:
-              strong: true
-              em: true
-              sub: true
-              sup: true
-              underline: true
-            placeholder: 'Enter the description for this badge'
-    linkText:
-      type: string
-      ui:
-        inlineEditable: true
-        inline:
-          editorOptions:
-            autoparagraph: false
-            placeholder: 'Enter the label for the link'
+    label: Longtime Supporter
