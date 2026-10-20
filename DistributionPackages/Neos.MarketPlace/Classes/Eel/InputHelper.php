@@ -60,6 +60,22 @@ final class InputHelper implements ProtectedContextAwareInterface
         return $date;
     }
 
+    /**
+     * Parses an integer from the given value and falls back to the default
+     * if the value is not a numeric string
+     */
+    public function parseInt(mixed $value, int $default = 0): int
+    {
+        if (is_int($value)) {
+            return $value;
+        }
+        if (is_string($value) && preg_match('/^\s*-?\d+\s*$/', $value)) {
+            return (int)$value;
+        }
+
+        return $default;
+    }
+
     public function allowsCallOfMethod($methodName): bool
     {
         return true;
