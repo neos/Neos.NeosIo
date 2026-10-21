@@ -124,8 +124,12 @@ class PackageJsonFeedImplementation extends AbstractFusionObject
                         PropertyName::fromString('time'),
                         OrderingDirection::DESCENDING
                     ),
+                    # Prevent fetching too many old versions
+                    pagination: ['limit' => 25],
                 )
             );
+
+            $packageUri = (string)$this->getPackageNodeUri($packageNode);
 
             foreach ($versionNodes as $versionNode) {
                 $versionTime = $versionNode->getProperty('time');
@@ -151,7 +155,7 @@ class PackageJsonFeedImplementation extends AbstractFusionObject
                     packageNode: $packageNode,
                     title: $packageNode->getProperty('title'),
                     description: $packageNode->getProperty('description'),
-                    link: (string)$this->getPackageNodeUri($packageNode),
+                    link: $packageUri,
                     linkToRelease: is_string($repository) && !empty($repository) ? $repository . '/releases/tag/' . $version : '',
                     version: $version,
                     lastActivity: $versionTime,
