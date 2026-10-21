@@ -73,7 +73,7 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
 
         maximumLifetime = 3600
 
-        entryDiscriminator = ${(request.arguments.search || request.arguments.stable || request.arguments.from || request.arguments.to || request.arguments.limit >= 0) ? false : 'static'}
+        entryDiscriminator = ${(request.arguments.search || request.arguments.stable || request.arguments.from || request.arguments.to || (request.arguments.limit != null && request.arguments.limit >= 0)) ? false : 'static'}
 
         entryTags {
             documentNode = ${Neos.Caching.nodeTag(documentNode)}
