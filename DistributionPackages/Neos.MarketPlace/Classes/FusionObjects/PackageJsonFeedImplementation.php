@@ -20,6 +20,11 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFil
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\Ordering\Ordering;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\Ordering\OrderingDirection;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\AndCriteria;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\PropertyValueCriteriaInterface;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\PropertyValueEquals;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\PropertyValueGreaterThanOrEqual;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\PropertyValueLessThanOrEqual;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\Projection\ContentGraph\NodePath;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAddress;
@@ -92,6 +97,7 @@ class PackageJsonFeedImplementation extends AbstractFusionObject
     {
         $flatVersions = [];
         $contentRepository = null;
+        $versionCriteria = $this->buildVersionFilterCriteria($from, $to, $onlyStable);
 
         foreach ($packageNodes as $packageNode) {
             if (!$contentRepository) {
@@ -120,6 +126,7 @@ class PackageJsonFeedImplementation extends AbstractFusionObject
                             'Neos.MarketPlace:DevelopmentVersion',
                         ])
                     ),
+                    propertyValue: $versionCriteria,
                     ordering: Ordering::byProperty(
                         PropertyName::fromString('time'),
                         OrderingDirection::DESCENDING
@@ -137,17 +144,6 @@ class PackageJsonFeedImplementation extends AbstractFusionObject
                     continue;
                 }
 
-                if ($from !== null && $versionTime < $from) {
-                    continue;
-                }
-                if ($to !== null && $versionTime > $to) {
-                    continue;
-                }
-                $stable = $versionNode->getProperty('stability') ?? false;
-                if ($onlyStable && !$stable) {
-                    continue;
-                }
-
                 $repository = $packageNode->getProperty('repository');
                 $version = $versionNode->getProperty('version');
 
@@ -159,7 +155,7 @@ class PackageJsonFeedImplementation extends AbstractFusionObject
                     linkToRelease: is_string($repository) && !empty($repository) ? $repository . '/releases/tag/' . $version : '',
                     version: $version,
                     lastActivity: $versionTime,
-                    stability: $stable,
+                    stability: $versionNode->getProperty('stability') ?? false,
                     stabilityLevel: $versionNode->getProperty('stabilityLevel'),
                     downloads: $packageNode->getProperty('downloadTotal') ?? 0,
                     stars: $packageNode->getProperty('favers') ?? 0,
@@ -172,6 +168,48 @@ class PackageJsonFeedImplementation extends AbstractFusionObject
         });
 
         return new VersionFeedResult(...array_slice($flatVersions, 0, $limit));
+    }
+
+    /**
+     * Builds property value criteria for the version child nodes, so that the
+     * from/to/stability filters are applied by the content repository query
+     * instead of being checked per version node in PHP.
+     *
+     * Comparison criteria only accept scalar values, so dates are formatted as
+     * UTC ISO-8601 strings, matching how datetime properties are serialized
+     * in the node projection.
+     */
+    private function buildVersionFilterCriteria(
+        ?\DateTimeInterface $from,
+        ?\DateTimeInterface $to,
+        bool                $onlyStable
+    ): ?PropertyValueCriteriaInterface
+    {
+        $criteria = null;
+        if ($from !== null) {
+            $criteria = PropertyValueGreaterThanOrEqual::create(
+                PropertyName::fromString('time'),
+                $this->formatUtcDateTime($from)
+            );
+        }
+        if ($to !== null) {
+            $toCriteria = PropertyValueLessThanOrEqual::create(
+                PropertyName::fromString('time'),
+                $this->formatUtcDateTime($to)
+            );
+            $criteria = $criteria === null ? $toCriteria : AndCriteria::create($criteria, $toCriteria);
+        }
+        if ($onlyStable) {
+            $stabilityCriteria = PropertyValueEquals::create(PropertyName::fromString('stability'), true, true);
+            $criteria = $criteria === null ? $stabilityCriteria : AndCriteria::create($criteria, $stabilityCriteria);
+        }
+
+        return $criteria;
+    }
+
+    private function formatUtcDateTime(\DateTimeInterface $date): string
+    {
+        return (new \DateTimeImmutable('@' . $date->getTimestamp()))->format(\DateTimeInterface::ATOM);
     }
 
     protected function getPackageNodeUri(Node $packageNode): UriInterface|null
