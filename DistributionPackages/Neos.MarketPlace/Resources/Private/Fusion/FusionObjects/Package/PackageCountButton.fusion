@@ -2,7 +2,7 @@ prototype(Neos.MarketPlace:PackageCountButton) < prototype(Neos.MarketPlace:Butt
     vendor = null
     @context.vendor = ${this.vendor}
 
-    packageCount = ${q(this.vendor).find('[instanceof Neos.MarketPlace:Package]').count()}
+    packageCount = ${q(this.vendor).children('[instanceof Neos.MarketPlace:Package]').count()}
 
     content = ${this.packageCount > 1 ? 'The same vendor provides ' + this.packageCount + ' package(s).' : null}
 
