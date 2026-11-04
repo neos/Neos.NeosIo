@@ -1,6 +1,6 @@
 prototype(Neos.NeosIo:Badges) < prototype(Neos.Neos:ContentComponent) {
     badgeType = ${q(node).property('badgeType')}
-    allBadgesOfType = ${q(site).find('[instanceof Neos.NeosIo:' + this.badgeType + ']').sort('level', 'ASC')}
+    allBadgesOfType = ${q(q(site).property('badgeDefinitionPage')).find('[instanceof Neos.NeosIo:' + this.badgeType + ']').sort('level', 'ASC')}
 
     renderer = afx`
         <div class="badges" @if.notEmpty={Array.length(props.allBadgesOfType) > 0}>

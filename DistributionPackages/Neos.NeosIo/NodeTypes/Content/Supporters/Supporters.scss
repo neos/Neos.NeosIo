@@ -9,13 +9,17 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: var(--supporter-spacing);
+    margin-inline: calc(-1 * var(--supporter-spacing));
+    margin-bottom: calc(-1 * var(--supporter-spacing));
     padding: 0;
   }
 
   &-item {
     display: block;
-    flex: 0 1 120px;
+    margin: var(--supporter-spacing) 0;
+    width: var(--supporters-item-width);
+    padding-inline: var(--supporter-spacing) ;
+    min-width: 120px;
 
     a {
       display: block;
