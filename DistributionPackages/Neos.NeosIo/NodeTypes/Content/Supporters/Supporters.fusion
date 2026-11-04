@@ -16,12 +16,17 @@ prototype(Neos.NeosIo:Supporters) < prototype(Neos.Neos:ContentComponent) {
     }
 
     renderer = afx`
-        <div class="supporters" @if.notEmpty={Array.length(private.serviceProvidersWithBadge) > 0}>
-            <ul class="supporters-list" style={"--supporters-item-width: " + props.itemWidthPerLevel[props.badgeLevel]} style.@if.hasWidthValue={props.itemWidthPerLevel[props.badgeLevel]}>
+        <div
+            class="supporters [--supporter-spacing:--spacing(4)] lg:[--supporter-spacing:--spacing(5.5)] [--supporters-item-width:25%] [.supporters+&]:mt-7.5"
+            @if.notEmpty={Array.length(private.serviceProvidersWithBadge) > 0}
+            data-component={'Supporters'}
+        >
+            <ul class="flex flex-wrap justify-center -mx-(--supporter-spacing) -mb-(--supporter-spacing) p-0" style={"--supporters-item-width: " + props.itemWidthPerLevel[props.badgeLevel]} style.@if.hasWidthValue={props.itemWidthPerLevel[props.badgeLevel]}>
                 <Neos.Fusion:Loop items={private.serviceProvidersWithBadge} itemName="serviceProvider">
-                    <li class="supporters-item" @if.notHidden={Neos.Node.isDisabled(serviceProvider) == false}>
+                    <li class="flex items-center my-(--supporter-spacing) px-(--supporter-spacing) w-1/2 md:w-(--supporters-item-width) min-w-30" @if.notHidden={Neos.Node.isDisabled(serviceProvider) == false}>
                         <Neos.Fusion:Tag
                             tagName={q(serviceProvider).property('website') ? 'a' : 'div'}
+                            attributes.class="block w-full hover:*:grayscale"
                             attributes.title={Neos.Node.label(serviceProvider)}
                             attributes.href={q(serviceProvider).property('website')}
                             attributes.target="_blank"
@@ -31,6 +36,7 @@ prototype(Neos.NeosIo:Supporters) < prototype(Neos.Neos:ContentComponent) {
                         >
                             <Neos.Neos:ImageTag
                                 asset={q(serviceProvider).property('logo')}
+                                attributes.class="w-full h-auto aspect-2/1 object-contain object-center"
                                 attributes.alt={"Logo of " + Neos.Node.label(serviceProvider)}
                             />
                         </Neos.Fusion:Tag>
