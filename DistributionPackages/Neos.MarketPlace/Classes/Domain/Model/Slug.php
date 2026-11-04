@@ -24,8 +24,15 @@ use Neos\Flow\Annotations as Flow;
 #[Flow\Proxy(false)]
 class Slug
 {
+    /**
+     * The slugify instance is expensive to create as it activates all language rulesets,
+     * therefore it is shared for all slugs of the current process.
+     */
+    private static ?Slugify $slugify = null;
+
     public static function create(string $string): string
     {
-        return (new Slugify())->slugify($string);
+        self::$slugify ??= new Slugify();
+        return self::$slugify->slugify($string);
     }
 }
