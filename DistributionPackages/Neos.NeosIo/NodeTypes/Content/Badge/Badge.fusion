@@ -19,24 +19,22 @@ prototype(Neos.NeosIo:Component.Badge) < prototype(Neos.Fusion:Component) {
     @private {
         inBackend = ${renderingMode.isEdit}
         class = Neos.Fusion:DataStructure {
-            main = 'badge neos-neosio-badge'
-            highlight = ${'badge--highlighted'}
-            highlight.@if.set = ${props.highlight}
+            main = 'flex-1 basis-35 '
+            maxWidth = ${props.highlight ? 'max-w-[calc(--spacing(46.5)*1.15)] min-w-[calc(--spacing(32)*1.15)]' : 'max-w-46.5 min-w-32'}
         }
     }
 
     renderer = afx`
-        <div class={private.class}>
+        <div class={private.class} data-component={'Badge'} >
             {props.image}
             <img
                 @if={private.inBackend && !props.image}
-                class="badge__image"
                 src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
                 title="Dummy image"
                 alt="Dummy image"
             />
 
-            <div @if.set={!String.isBlank(props.description)} class="badge__description">
+            <div @if.set={!String.isBlank(props.description)} class="my-2 text-[90%] text-center">
                 {props.description}
             </div>
 
