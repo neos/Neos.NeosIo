@@ -1,5 +1,5 @@
 'Neos.NeosIo:BadgeMixin':
-  label: "${Neos.Node.labelForNode(node).properties('name')}"
+  label: "${Neos.Node.labelForNode(node).properties('name', 'linkText', 'description')}"
   abstract: true
   superTypes:
     'Neos.Neos:Content': true
