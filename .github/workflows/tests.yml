@@ -52,3 +52,6 @@ jobs:
 
       - name: PHPStan
         run: bin/phpstan analyse DistributionPackages/ --memory-limit=4G
+
+      - name: Neos.MarketPlace unit tests
+        run: bin/phpunit -c DistributionPackages/Neos.MarketPlace/Tests/phpunit.xml
