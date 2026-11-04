@@ -6,13 +6,8 @@ prototype(Neos.NeosIo:Badges) < prototype(Neos.Neos:ContentComponent) {
         <div class="badges" @if.notEmpty={Array.length(props.allBadgesOfType) > 0}>
             <div class="badge-grid g">
                 <Neos.Fusion:Loop items={props.allBadgesOfType} itemName="badge">
-                    <Neos.NeosIo:Component.Badge
-                        image={q(badge).property('image')}
-                        highlight={q(badge).property('highlight')}
-                        description={q(badge).property('description')}
-                        link={q(badge).property('link')}
-                        linkText={q(badge).property('linkText')}
-                        openInNewTab
+                    <Neos.NeosIo:Badge
+                        @context.node={badge}
                     />
                 </Neos.Fusion:Loop>
             </div>
