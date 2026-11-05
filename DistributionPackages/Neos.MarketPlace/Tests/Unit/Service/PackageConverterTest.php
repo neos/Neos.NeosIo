@@ -20,6 +20,7 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
 use Neos\MarketPlace\Domain\Model\NodeUpdateResult;
 use Neos\MarketPlace\Domain\Model\PackageSyncResult;
+use Neos\MarketPlace\Domain\Model\PackageSyncState;
 use Neos\MarketPlace\Domain\Model\Storage;
 use Neos\MarketPlace\Service\PackageConverter;
 use Neos\MarketPlace\Tests\Unit\Support\NodeBuilder;
@@ -64,6 +65,104 @@ class PackageConverterTest extends TestCase
             PackageSyncResult::NotRequired,
             $this->packageConverter->convert($this->buildPackage())
         );
+    }
+
+    public function testPackageWithADevVersionIsNotImportedIfTheStableReleaseDidNotChange(): void
+    {
+        // The stored activity is the one of the last stable release, the dev branch is newer
+        $this->givenPackageState(
+            'neos/neos',
+            new \DateTimeImmutable('2026-04-01T19:42:26+00:00'),
+            time(),
+            'abc'
+        );
+
+        $this->storage->expects(self::never())->method('getPackageNode');
+        $this->storage->expects(self::never())->method('updateNode');
+
+        self::assertSame(
+            PackageSyncResult::NotRequired,
+            $this->packageConverter->convert($this->buildPackageWithDevVersion())
+        );
+    }
+
+    public function testUnchangedVersionsAreNotLoadedFromTheDatabaseAgain(): void
+    {
+        $this->givenPackageNode($this->buildPackageNode());
+        $this->givenVersionNodes([$this->buildVersionNode('1.0.0')]);
+        $this->givenPackageUpdateResult(NodeUpdateResult::success());
+        $this->givenVersionUpdateResult(NodeUpdateResult::success());
+
+        $storedState = null;
+        $this->packageSyncCache->method('set')->willReturnCallback(
+            static function (string $key, string $value) use (&$storedState): void {
+                $storedState = $value;
+            }
+        );
+
+        $this->packageConverter->convert($this->buildPackage());
+        self::assertIsString($storedState);
+
+        // The second run knows that the versions did not change, but the package is due for a re-check
+        $this->givenPackageState(
+            'neos/neos',
+            new \DateTimeImmutable('2026-04-01T19:42:26+00:00'),
+            time() - 90000,
+            PackageSyncState::fromCacheValue($storedState)?->versionsHash
+        );
+
+        $this->storage->expects(self::never())->method('getPackageVersionsNode');
+        $this->storage->expects(self::never())->method('getPackageVersionNodes');
+        $this->storage->expects(self::never())->method('createOrUpdateVersionNode');
+
+        self::assertSame(
+            PackageSyncResult::Unchanged,
+            $this->packageConverter->convert($this->buildPackage())
+        );
+    }
+
+    public function testTheSyncStateIsStoredWithAnExplicitLifetime(): void
+    {
+        $this->givenPackageNode($this->buildPackageNode());
+        $this->givenVersionNodes([$this->buildVersionNode('1.0.0')]);
+        $this->givenPackageUpdateResult(NodeUpdateResult::success());
+        $this->givenVersionUpdateResult(NodeUpdateResult::success());
+
+        $this->packageSyncCache->expects(self::once())
+            ->method('set')
+            ->with('neos-neos', self::isType('string'), [], self::greaterThan(86400));
+
+        $this->packageConverter->convert($this->buildPackage());
+    }
+
+    public function testVersionsAreSyncedIfTheStateIsOlderThanThePackageNode(): void
+    {
+        $this->givenPackageNode($this->buildPackageNode(new \DateTimeImmutable('now', new \DateTimeZone('UTC'))));
+        $this->givenVersionNodes([$this->buildVersionNode('1.0.0')]);
+        $this->givenPackageUpdateResult(NodeUpdateResult::success());
+        $this->givenVersionUpdateResult(NodeUpdateResult::success());
+
+        $storedState = null;
+        $this->packageSyncCache->method('set')->willReturnCallback(
+            static function (string $key, string $value) use (&$storedState): void {
+                $storedState = $value;
+            }
+        );
+        $this->packageConverter->convert($this->buildPackage());
+        self::assertIsString($storedState);
+
+        // The package node was created after the last sync, so the versions must be synced again
+        $this->givenPackageState(
+            'neos/neos',
+            new \DateTimeImmutable('2026-04-01T19:42:26+00:00'),
+            time() - 90000,
+            PackageSyncState::fromCacheValue($storedState)?->versionsHash
+        );
+
+        $this->storage->expects(self::once())->method('getPackageVersionsNode');
+        $this->storage->expects(self::once())->method('createOrUpdateVersionNode')->willReturn(NodeUpdateResult::success());
+
+        $this->packageConverter->convert($this->buildPackage());
     }
 
     public function testPackageWithoutAnyChangeIsNotReIndexed(): void
@@ -266,12 +365,16 @@ class PackageConverterTest extends TestCase
         self::assertCount(1, $updatedProperties);
     }
 
-    private function givenPackageState(string $packageName, \DateTimeInterface $lastActivity, int $lastSync): void
-    {
+    private function givenPackageState(
+        string $packageName,
+        \DateTimeInterface $lastActivity,
+        int $lastSync,
+        ?string $versionsHash = null
+    ): void {
         $this->setInjectedProperty($this->packageConverter, 'packagesState', [
             $packageName => [
                 'lastActivity' => $lastActivity,
-                'lastSync' => $lastSync,
+                'state' => new PackageSyncState($lastSync, $versionsHash)
             ]
         ]);
     }
@@ -310,12 +413,18 @@ class PackageConverterTest extends TestCase
         $this->storage->method('createOrUpdateVersionNode')->willReturn($result);
     }
 
-    private function buildPackageNode(): Node
+    private function buildPackageNode(?\DateTimeImmutable $created = null): Node
     {
-        return NodeBuilder::createNode([
-            'title' => ['type' => 'string', 'value' => 'neos/neos'],
-            'lastActivity' => ['type' => 'DateTime', 'value' => '2026-04-01T19:42:26+00:00'],
-        ], 'Neos.MarketPlace:Package', NodeAggregateId::fromString(self::PACKAGE_AGGREGATE_ID), 'neos-neos');
+        return NodeBuilder::createNode(
+            [
+                'title' => ['type' => 'string', 'value' => 'neos/neos'],
+                'lastActivity' => ['type' => 'DateTime', 'value' => '2026-04-01T19:42:26+00:00'],
+            ],
+            'Neos.MarketPlace:Package',
+            NodeAggregateId::fromString(self::PACKAGE_AGGREGATE_ID),
+            'neos-neos',
+            $created
+        );
     }
 
     private function buildVersionNode(string $version): Node
@@ -368,6 +477,32 @@ class PackageConverterTest extends TestCase
             'replace' => [],
         ]);
         return $version;
+    }
+
+    /**
+     * A package with a stable release and a newer dev branch.
+     */
+    private function buildPackageWithDevVersion(): Package
+    {
+        $devVersion = new Version();
+        $devVersion->fromArray([
+            'version' => 'dev-master',
+            'versionNormalized' => 'dev-master',
+            'description' => 'Development branch',
+            'type' => 'neos-package',
+            'time' => '2026-11-05T19:42:26+00:00',
+            'keywords' => [],
+            'licenses' => ['MIT'],
+            'require' => ['php' => '^8.4'],
+            'requireDev' => [],
+            'provide' => [],
+            'bin' => [],
+            'suggest' => [],
+            'conflict' => [],
+            'replace' => [],
+        ]);
+
+        return $this->buildPackage([$this->buildVersion(), $devVersion]);
     }
 
     private function setInjectedProperty(object $object, string $propertyName, mixed $value): void

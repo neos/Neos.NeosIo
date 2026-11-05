@@ -169,6 +169,18 @@ class MarketPlaceCommandController extends CommandController
         $this->outputLine('Updating search index');
         $this->importer->updateIndex();
 
+        $statistics = $this->importer->getStatistics();
+        $this->outputLine(
+            '%d package(s) checked, %d skipped, %d changed, %d version sync(s), %d version sync(s) skipped',
+            [
+                $statistics['packagesChecked'],
+                $statistics['packagesSkipped'],
+                $statistics['packagesChanged'],
+                $statistics['versionSyncs'],
+                $statistics['versionSyncsSkipped']
+            ]
+        );
+
         if ($hasError) {
             $this->outputLine();
             $this->outputLine('Check your log, we have some trouble to sync some pages ...');

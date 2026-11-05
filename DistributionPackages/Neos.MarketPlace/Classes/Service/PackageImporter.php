@@ -82,6 +82,14 @@ class PackageImporter
         $this->packageConverter->updateVendors();
     }
 
+    /**
+     * @return array{packagesChecked: int, packagesSkipped: int, packagesChanged: int, versionSyncs: int, versionSyncsSkipped: int}
+     */
+    public function getStatistics(): array
+    {
+        return $this->packageConverter->getStatistics();
+    }
+
     public function updateIndex(): void
     {
         $this->packageConverter->updateIndex();

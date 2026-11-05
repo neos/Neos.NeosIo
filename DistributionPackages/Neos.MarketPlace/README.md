@@ -56,6 +56,18 @@ Or run it for a sinlge package:
 
     flow marketplace:sync --package ttree/jobbutler
 
+The sync only writes to the content repository if something actually changed. The state of the last sync is
+kept in the `NeosMarketPlace_PackageSyncCache` (Redis in production) and contains the timestamp of the last
+sync as well as a hash of the imported versions. Packages whose versions did not change are not read from
+the content repository at all.
+
+> **Note:** The cache entries must not expire on their own. If they do, every package is treated as new and
+> the whole marketplace is re-imported on every sync run.
+
+At the end of a sync run a summary is printed:
+
+    1217 package(s) checked, 1198 skipped, 19 changed, 19 version sync(s), 1198 version sync(s) skipped
+
 ## Development
 
 If you want to test the sync functionality make sure to have ElasticSearch running on your machine or use the localbeach

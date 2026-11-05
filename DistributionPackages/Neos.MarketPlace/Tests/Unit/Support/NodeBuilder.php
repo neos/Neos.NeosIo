@@ -42,10 +42,11 @@ final class NodeBuilder
         array $properties = [],
         string $nodeTypeName = 'Neos.MarketPlace:Package',
         ?NodeAggregateId $aggregateId = null,
-        string $nodeName = 'package'
+        string $nodeName = 'package',
+        ?\DateTimeImmutable $created = null
     ): Node {
         $dimensionSpacePoint = DimensionSpacePoint::fromArray(['language' => 'en']);
-        $now = new \DateTimeImmutable('2026-04-01 12:00:00', new \DateTimeZone('UTC'));
+        $now = $created ?? new \DateTimeImmutable('2026-04-01 12:00:00', new \DateTimeZone('UTC'));
 
         return Node::create(
             ContentRepositoryId::fromString('default'),
