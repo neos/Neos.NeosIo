@@ -15,6 +15,7 @@ namespace Neos\MarketPlace\Domain\Model;
 
 use Neos\MarketPlace\Domain\Repository\PackageRepository;
 use Neos\Flow\Annotations as Flow;
+use Packagist\Api\Result\Package;
 
 /**
  * Packages
@@ -41,44 +42,50 @@ class Packages
     /**
      * @var array<string, bool>
      */
-    #[Flow\InjectConfiguration('packageBlackList')]
-    protected array $packageBlackList;
+    #[Flow\InjectConfiguration('packageIgnoreList')]
+    protected array $packageIgnoreList;
 
     /**
-     * @var string[]
+     * @var array<string, bool>
      */
     protected array $processedPackages = [];
+
+    /**
+     * @var string[]|null
+     */
+    protected ?array $ignoredPackages = null;
 
     public function packages(): \Generator
     {
         $vendors = array_keys(array_filter($this->vendors));
         foreach ($vendors as $vendor) {
-            $packages = $this->packageRepository->findByVendor($vendor);
-            foreach ($packages as $packageKey) {
-                if ($this->isPackageBlacklisted($packageKey) || in_array($packageKey, $this->processedPackages, true)) {
-                    continue;
-                }
-                yield $this->packageRepository->findByPackageKey($packageKey);
-                $this->processedPackages[] = $packageKey;
-            }
+            yield from $this->packagesForKeys($this->packageRepository->findByVendor($vendor));
         }
 
         $packageTypes = array_keys(array_filter($this->packageTypes));
         foreach ($packageTypes as $type) {
-            $packages = $this->packageRepository->findByPackageType($type);
-            foreach ($packages as $packageKey) {
-                if ($this->isPackageBlacklisted($packageKey) || in_array($packageKey, $this->processedPackages, true)) {
-                    continue;
-                }
-                yield $this->packageRepository->findByPackageKey($packageKey);
-                $this->processedPackages[] = $packageKey;
-            }
+            yield from $this->packagesForKeys($this->packageRepository->findByPackageType($type));
         }
     }
 
-    protected function isPackageBlacklisted(string $packageKey): bool
+    /**
+     * @param string[] $packageKeys
+     * @return \Generator<int, Package>
+     */
+    protected function packagesForKeys(array $packageKeys): \Generator
     {
-        $blacklist = array_keys(array_filter($this->packageBlackList));
-        return in_array($packageKey, $blacklist, true);
+        foreach ($packageKeys as $packageKey) {
+            if (isset($this->processedPackages[$packageKey]) || $this->isPackageIgnored($packageKey)) {
+                continue;
+            }
+            $this->processedPackages[$packageKey] = true;
+            yield $this->packageRepository->findByPackageKey($packageKey);
+        }
+    }
+
+    protected function isPackageIgnored(string $packageKey): bool
+    {
+        $this->ignoredPackages ??= array_keys(array_filter($this->packageIgnoreList));
+        return in_array($packageKey, $this->ignoredPackages, true);
     }
 }

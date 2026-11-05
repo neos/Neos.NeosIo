@@ -13,12 +13,9 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
-use Neos\ContentRepository\Core\Feature\NodeRemoval\Command\RemoveNodeAggregate;
-use Neos\ContentRepository\Core\Feature\Security\Exception\AccessDenied;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
-use Neos\ContentRepository\Core\SharedModel\Node\NodeVariantSelectionStrategy;
-use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
+use Neos\MarketPlace\Domain\Model\PackageSyncResult;
 use Neos\MarketPlace\Domain\Model\Storage;
 use Packagist\Api\Result\Package;
 use Psr\Log\LoggerInterface;
@@ -37,15 +34,20 @@ class PackageImporter
     protected array $processedPackages = [];
 
     /**
+     * @var array<string, bool> Packages that were seen during the sync but not imported,
+     *                           for example because they are abandoned or the import failed
+     */
+    protected array $skippedPackages = [];
+
+    /**
      * @var LoggerInterface
      */
     #[Flow\Inject('Neos.MarketPlace:Logger')]
     protected $logger;
 
     public function __construct(
-        protected PackageConverter          $packageConverter,
-        protected ContentRepositoryRegistry $contentRepositoryRegistry,
-        protected Storage                   $storage)
+        protected PackageConverter $packageConverter,
+        protected Storage          $storage)
     {
     }
 
@@ -55,11 +57,29 @@ class PackageImporter
         $this->packageConverter->setForceUpdate($forceUpdates);
     }
 
-    public function process(Package $package): bool
+    public function process(Package $package): PackageSyncResult
     {
-        $processed = $this->packageConverter->convert($package);
+        $result = $this->packageConverter->convert($package);
         $this->processedPackages[$package->getName()] = true;
-        return $processed;
+        return $result;
+    }
+
+    /**
+     * Marks a package as seen during the sync without importing it.
+     *
+     * This makes sure that the package is not removed by the cleanup, even though it was not imported.
+     */
+    public function skip(Package $package): void
+    {
+        $this->skippedPackages[$package->getName()] = true;
+    }
+
+    /**
+     * Updates the vendors that were touched during the sync.
+     */
+    public function updateVendors(): void
+    {
+        $this->packageConverter->updateVendors();
     }
 
     public function updateIndex(): void
@@ -74,23 +94,15 @@ class PackageImporter
     {
         $count = 0;
         $packageNodes = $this->storage->getPackageNodes();
-        $upstreamPackages = $this->getProcessedPackages();
+        $upstreamPackages = $this->getKnownPackages();
         foreach ($packageNodes as $packageNode) {
             if (in_array($packageNode->getProperty('title'), $upstreamPackages, true)) {
                 continue;
             }
 
-            try {
-                $this->contentRepositoryRegistry->get($packageNode->contentRepositoryId)
-                    ->handle(
-                        RemoveNodeAggregate::create(
-                            $packageNode->workspaceName,
-                            $packageNode->aggregateId,
-                            $packageNode->dimensionSpacePoint, NodeVariantSelectionStrategy::STRATEGY_ALL_VARIANTS
-                        )
-                    );
-            } catch (AccessDenied $e) {
-                $this->logger->error('Access denied while trying to remove package node: ' . $e->getMessage());
+            if (!$this->storage->removeNode($packageNode)) {
+                $this->logger->error('Could not remove package node ' . $packageNode->aggregateId->value);
+                continue;
             }
 
             if ($callback !== null) {
@@ -115,17 +127,9 @@ class PackageImporter
                 continue;
             }
 
-            try {
-                $this->contentRepositoryRegistry->get($vendorNode->contentRepositoryId)
-                    ->handle(
-                        RemoveNodeAggregate::create(
-                            $vendorNode->workspaceName,
-                            $vendorNode->aggregateId,
-                            $vendorNode->dimensionSpacePoint, NodeVariantSelectionStrategy::STRATEGY_ALL_VARIANTS
-                        )
-                    );
-            } catch (AccessDenied $e) {
-                $this->logger->error('Access denied while trying to remove vendor node: ' . $e->getMessage());
+            if (!$this->storage->removeNode($vendorNode)) {
+                $this->logger->error('Could not remove vendor node ' . $vendorNode->aggregateId->value);
+                continue;
             }
 
             if ($callback !== null) {
@@ -142,7 +146,23 @@ class PackageImporter
      */
     public function getProcessedPackages(): array
     {
-        return array_keys(array_filter($this->processedPackages));
+        return array_keys($this->processedPackages);
+    }
+
+    /**
+     * @return string[] List of packages that were seen during the sync but not imported
+     */
+    public function getSkippedPackages(): array
+    {
+        return array_keys($this->skippedPackages);
+    }
+
+    /**
+     * @return string[] List of all packages that are known to still exist upstream
+     */
+    public function getKnownPackages(): array
+    {
+        return array_merge($this->getProcessedPackages(), $this->getSkippedPackages());
     }
 
     public function getProcessedPackagesCount(): int

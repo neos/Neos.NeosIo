@@ -53,6 +53,7 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Neos\Domain\NodeLabel\NodeLabelGeneratorInterface;
 use Neos\Neos\Domain\Service\WorkspacePublishingService;
 use Neos\Neos\Domain\SubtreeTagging\NeosVisibilityConstraints;
+use Neos\MarketPlace\Utility\PropertyDiff;
 use Packagist\Api\Result\Package;
 use Psr\Log\LoggerInterface;
 
@@ -348,43 +349,36 @@ class Storage
     }
 
     /**
+     * Writes the given properties to the node, skipping all properties that already have the expected value.
+     *
      * @param array<string, mixed> $properties
      */
     public function updateNode(
         Node                      $node,
         OriginDimensionSpacePoint $originDimensionSpacePoint,
         array                     $properties
-    ): bool
+    ): NodeUpdateResult
     {
         // Skip properties that are already set to the same value
-        $serializedNodeProperties = $node->properties->serialized();
-        foreach ($properties as $propertyName => $propertyValue) {
-            if (!$serializedNodeProperties->propertyExists($propertyName)) {
-                if ($propertyValue === null) {
-                    // If the property does not exist and the value is null, we can skip it
-                    unset($properties[$propertyName]);
-                }
-                continue;
-            }
-            if ($propertyValue instanceof \DateTimeInterface) {
-                $propertyValue = $propertyValue->format(\DateTimeInterface::ATOM);
-            }
-            if ($serializedNodeProperties->getProperty($propertyName)?->value === $propertyValue) {
-                unset($properties[$propertyName]);
-            }
-        }
-        if (empty($properties)) {
+        $propertiesToWrite = PropertyDiff::changedProperties(
+            $node->properties->serialized(),
+            $properties
+        );
+        if ($propertiesToWrite === []) {
             // No properties to update
-            return true;
+            return NodeUpdateResult::success();
         }
-        return $this->handleCommandWithRetry(
+        if (!$this->handleCommandWithRetry(
             SetNodeProperties::create(
                 $this->workspaceName,
                 $node->aggregateId,
                 $originDimensionSpacePoint,
-                PropertyValuesToWrite::fromArray($properties),
+                PropertyValuesToWrite::fromArray($propertiesToWrite),
             )
-        );
+        )) {
+            return NodeUpdateResult::failure();
+        }
+        return NodeUpdateResult::success(array_keys($propertiesToWrite));
     }
 
     public function getPackageVersionsNode(
@@ -402,7 +396,7 @@ class Storage
     ): Nodes
     {
         return $this->subGraph->findChildNodes(
-            $versionsNodeAggregateId,
+                $versionsNodeAggregateId,
             FindChildNodesFilter::create(
                 NodeTypeCriteria::createWithAllowedNodeTypeNames(
                     NodeTypeNames::fromStringArray([MarketplaceNodeType::VERSION->value])
@@ -419,26 +413,32 @@ class Storage
         ?Node               $versionNode,
         MarketplaceNodeType $nodeType,
         array               $properties,
-    ): ?NodeAggregateId
+    ): NodeUpdateResult
     {
         if ($versionNode) {
-            $this->updateNode(
+            $updateResult = $this->updateNode(
                 $versionNode,
                 $versionNode->originDimensionSpacePoint,
                 $properties
             );
+            if (!$updateResult->successful) {
+                return $updateResult;
+            }
             $newNodeTypeName = NodeTypeName::fromString($nodeType->value);
             if ($versionNode->nodeTypeName !== $newNodeTypeName) {
-                $this->handleCommandWithRetry(
+                if (!$this->handleCommandWithRetry(
                     ChangeNodeAggregateType::create(
                         $this->workspaceName,
                         $versionNode->aggregateId,
                         $newNodeTypeName,
                         NodeAggregateTypeChangeChildConstraintConflictResolutionStrategy::STRATEGY_PROMISED_CASCADE
                     )
-                );
+                )) {
+                    return NodeUpdateResult::failure();
+                }
+                return NodeUpdateResult::structuralChange();
             }
-            return $versionNode->aggregateId;
+            return $updateResult;
         }
         $versionNodeAggregateId = NodeAggregateId::create();
         if (!$this->handleCommandWithRetry(
@@ -451,9 +451,9 @@ class Storage
                 initialPropertyValues: PropertyValuesToWrite::fromArray($properties),
             )
         )) {
-            return null;
+            return NodeUpdateResult::failure();
         }
-        return $versionNodeAggregateId;
+        return NodeUpdateResult::structuralChange();
     }
 
     public function removeNode(

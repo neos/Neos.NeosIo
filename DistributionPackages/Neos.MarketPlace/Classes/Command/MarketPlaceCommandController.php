@@ -24,6 +24,7 @@ use Neos\Flow\Log\ThrowableStorageInterface;
 use Neos\Flow\Log\Utility\LogEnvironment;
 use Neos\Flow\Persistence\Doctrine\PersistenceManager;
 use Neos\MarketPlace\Domain\Model\LogAction;
+use Neos\MarketPlace\Domain\Model\PackageSyncResult;
 use Neos\MarketPlace\Domain\Model\Packages;
 use Neos\MarketPlace\Domain\Model\Storage;
 use Neos\MarketPlace\Service\PackageImporter;
@@ -106,12 +107,14 @@ class MarketPlaceCommandController extends CommandController
 
                 if ($packagistPackage->isAbandoned()) {
                     $this->outputFormatted('<info>Skipping <b>%s</b> (abandoned)</info>', [$packagistPackage->getName()], 2);
+                    // Make sure the package is not removed by the cleanup, even though it is not imported
+                    $this->importer->skip($packagistPackage);
                     continue;
                 }
 
                 try {
                     $result = $this->processPackage($packagistPackage, $count);
-                    if (!$result && $limit > 0 && $dontCountSkippedPackages) {
+                    if ($result->isSkipped() && $limit > 0 && $dontCountSkippedPackages) {
                         $limit++;
                     }
                     $this->logger->info(sprintf('action=%s package=%s duration=%f', LogAction::SINGLE_PACKAGE_SYNC_FINISHED->value, $packagistPackage->getName(), $elapsedTime($timer)), LogEnvironment::fromMethodName(__METHOD__));
@@ -120,6 +123,8 @@ class MarketPlaceCommandController extends CommandController
                     $logMessage = $this->throwableStorage->logThrowable($exception);
                     $this->logger->error($logMessage, LogEnvironment::fromMethodName(__METHOD__));
                     $hasError = true;
+                    // Make sure the package is not removed by the cleanup, even though the import failed
+                    $this->importer->skip($packagistPackage);
                 }
 
                 if ($limit > 0 && $count === $limit) {
@@ -159,6 +164,8 @@ class MarketPlaceCommandController extends CommandController
                 $this->outputLine('Package "%s" imported with success', [$package]);
             }
         }
+        $this->outputLine('Updating vendors');
+        $this->importer->updateVendors();
         $this->outputLine('Updating search index');
         $this->importer->updateIndex();
 
@@ -172,14 +179,16 @@ class MarketPlaceCommandController extends CommandController
         $this->outputLine('Duration: %f seconds', [$elapsedTime()]);
     }
 
-    private function processPackage(Package $package, int &$count): bool
+    private function processPackage(Package $package, int &$count): PackageSyncResult
     {
         $count++;
         $this->outputFormatted('%d/ <b>%s</b> (%d versions)', [$count, $package->getName(), count($package->getVersions())], 2);
 
         $result = $this->importer->process($package);
-        if (!$result) {
+        if ($result === PackageSyncResult::NotRequired) {
             $this->outputFormatted('<i>Skipped package</i>', [], 4);
+        } elseif ($result === PackageSyncResult::Unchanged) {
+            $this->outputFormatted('<i>Package is up to date</i>', [], 4);
         }
         if ($count % 10 === 0) {
             $this->outputFormatted('<b>Flush persistence</b>', [], 2);

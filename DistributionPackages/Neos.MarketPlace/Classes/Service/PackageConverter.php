@@ -13,14 +13,9 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
-use Doctrine\ORM\EntityManagerInterface;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Indexer\NodeIndexer;
-use Neos\Cache\Backend\SimpleFileBackend;
-use Neos\Cache\EnvironmentConfiguration;
-use Neos\Cache\Exception\InvalidBackendException;
 use Neos\Cache\Frontend\StringFrontend;
-use Neos\Cache\Psr\Cache\CacheFactory;
 use Neos\ContentRepository\Core\DimensionSpace\OriginDimensionSpacePoint;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
@@ -28,11 +23,11 @@ use Neos\ContentRepository\Core\SharedModel\Node\ReferenceName;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Log\Utility\LogEnvironment;
 use Neos\MarketPlace\Domain\Model\MarketplaceNodeType;
+use Neos\MarketPlace\Domain\Model\PackageSyncResult;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
 use Neos\MarketPlace\Utility\VersionNumber;
 use Packagist\Api\Result\Package;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -43,12 +38,11 @@ use Psr\Log\LoggerInterface;
 #[Flow\Scope('singleton')]
 class PackageConverter
 {
-
     /**
-     * @var array{ cacheDirectory: string, token: string }
+     * Properties of a package node that are not part of the search index.
+     * Changing those does not require a re-index of the package.
      */
-    #[Flow\InjectConfiguration('github')]
-    protected array $githubSettings;
+    private const NON_INDEXED_PROPERTIES = ['favers', 'downloadTotal'];
 
     /**
      * @var LoggerInterface
@@ -70,12 +64,11 @@ class PackageConverter
     protected bool $forceUpdate = false;
 
     /**
-     * @var EntityManagerInterface
+     * Aggregate ids of the vendor nodes that were touched during this sync run.
+     *
+     * @var array<string, NodeAggregateId>
      */
-    #[Flow\Inject]
-    protected $entityManager;
-
-    protected CacheItemPoolInterface $gitHubApiCachePool;
+    private array $touchedVendors = [];
 
     public function __construct(
         protected Storage     $storage,
@@ -101,22 +94,8 @@ class PackageConverter
         $this->nodeIndexer->flush();
     }
 
-    /**
-     * @throws InvalidBackendException
-     */
     protected function initializeObject(): void
     {
-        $environmentConfiguration = new EnvironmentConfiguration('GitHubApi', FLOW_PATH_DATA);
-        $cacheFactory = new CacheFactory(
-            $environmentConfiguration
-        );
-
-        // Create a PSR-6 compatible cache
-        $this->gitHubApiCachePool = $cacheFactory->create(
-            'GitHubApiCache',
-            SimpleFileBackend::class
-        );
-
         $this->fetchPackagesState();
     }
 
@@ -125,11 +104,10 @@ class PackageConverter
      */
     protected function fetchPackagesState(): void
     {
-        $packageNodes = $this->storage->getPackageNodes();
+        $packageNodes = $this->storage->prefetchPackageNodes();
 
         $this->packagesState = [];
-        foreach ($packageNodes as $packageNode) {
-            $packageName = $packageNode->getProperty('title');
+        foreach ($packageNodes as $packageName => $packageNode) {
             $this->packagesState[$packageName] = [
                 'lastActivity' => $packageNode->getProperty('lastActivity'),
                 'lastSync' => (int)($this->packageSyncCache->get(Slug::create($packageName)) ?: 0),
@@ -141,17 +119,17 @@ class PackageConverter
     /**
      * Synchronizes the package with the given data.
      */
-    public function convert(Package $package): bool
+    public function convert(Package $package): PackageSyncResult
     {
         $vendorName = explode('/', $package->getName())[0];
 
         $vendorNodeAggregateId = $this->storage->getOrCreateVendorNode($vendorName);
         if (!$vendorNodeAggregateId) {
-            return false;
+            return PackageSyncResult::NotRequired;
         }
 
         if (!$this->forceUpdate && !$this->packageRequiresUpdate($package)) {
-            return false;
+            return PackageSyncResult::NotRequired;
         }
 
         $packageNode = $this->storage->getPackageNode($package, $vendorNodeAggregateId);
@@ -161,20 +139,15 @@ class PackageConverter
                 $vendorNodeAggregateId
             );
             if (!$packageNode) {
-                return false;
+                return PackageSyncResult::NotRequired;
             }
         }
-
-        $this->packageSyncCache->set(
-            Slug::create($package->getName()),
-            (string)time(),
-        );
 
         $upstreamMaintainerNames = array_map(static function (Package\Maintainer $maintainer) {
             return $maintainer->getName();
         }, $package->getMaintainers());
 
-        $updated = $this->storage->updateNode(
+        $packageUpdateResult = $this->storage->updateNode(
             $packageNode,
             $packageNode->originDimensionSpacePoint,
             [
@@ -192,36 +165,48 @@ class PackageConverter
             ]
         );
 
+        if (!$packageUpdateResult->successful) {
+            return PackageSyncResult::NotRequired;
+        }
+
         if ($package->isAbandoned() && trim((string)$packageNode->getProperty('abandoned')) === '') {
             $this->emitPackageAbandoned($packageNode);
         }
 
-        if (!$updated && !$this->forceUpdate) {
-            return false;
+        $versionSync = $this->createOrUpdateVersions($package, $packageNode);
+        if (!$versionSync['successful']) {
+            return PackageSyncResult::NotRequired;
         }
 
-        $this->createOrUpdateVersions($package, $packageNode);
-
-        $this->updatePackageLastActivity(
+        $lastActivityChanged = $this->updatePackageLastActivity(
             $packageNode,
             $packageNode->originDimensionSpacePoint,
+            $versionSync,
         );
-        // TODO: Update vendors once at the end of the package sync to reduce the number of updates
-        $this->updateVendorLastActivity(
-            $vendorNodeAggregateId,
-            $packageNode->originDimensionSpacePoint,
-        );
+        $this->markVendorAsTouched($vendorNodeAggregateId);
 
-        try {
-            $this->nodeIndexer->indexNode($packageNode);
-        } catch (Exception $e) {
-            $this->logger->error(
-                'Error while indexing package node: ' . $e->getMessage(),
-                LogEnvironment::fromMethodName(__METHOD__)
-            );
+        $changed = $packageUpdateResult->hasChanged() || $versionSync['changed'] || $lastActivityChanged;
+
+        // The metrics are not part of the search index, therefore there is no need to update it
+        // if only those changed. The same applies if neither the package nor its versions changed.
+        if ($packageUpdateResult->hasChangedOtherThan(self::NON_INDEXED_PROPERTIES) || $versionSync['changed']) {
+            try {
+                $this->nodeIndexer->indexNode($packageNode);
+            } catch (Exception $e) {
+                $this->logger->error(
+                    'Error while indexing package node: ' . $e->getMessage(),
+                    LogEnvironment::fromMethodName(__METHOD__)
+                );
+            }
         }
 
-        return true;
+        // Only mark the package as synced if the import did not fail
+        $this->packageSyncCache->set(
+            Slug::create($package->getName()),
+            (string)time(),
+        );
+
+        return $changed ? PackageSyncResult::Changed : PackageSyncResult::Unchanged;
     }
 
     /**
@@ -244,18 +229,17 @@ class PackageConverter
             return true;
         }
 
-        $lastActivities = [];
+        $lastActivity = null;
         foreach ($package->getVersions() as $version) {
             if (!$this->versionShouldBeImported($version)) {
                 continue;
             }
             $time = \DateTime::createFromFormat(Storage::DATE_FORMAT, $version->getTime());
-            if ($time) {
-                $lastActivities[$time->getTimestamp()] = $time;
+            if ($time && ($lastActivity === null || $time > $lastActivity)) {
+                $lastActivity = $time;
             }
         }
-        krsort($lastActivities);
-        $lastActivity = reset($lastActivities) ?: new \DateTime();
+        $lastActivity ??= new \DateTime();
 
         return (
             $lastActivity > $lastRecordedActivity
@@ -273,46 +257,43 @@ class PackageConverter
     }
 
     /**
+     * Creates, updates and removes the version nodes of the given package.
+     *
+     * @return array{versionsNode: Node, versionNodes: Node[], changed: bool, successful: bool} The versions node, the
+     *                                                                  version nodes as they were before the update,
+     *                                                                  whether any of them was created, updated or
+     *                                                                  removed and whether the update was successful
      */
-    protected function createOrUpdateVersions(Package $package, Node $packageNode): bool
+    protected function createOrUpdateVersions(Package $package, Node $packageNode): array
     {
-        $upstreamVersions = array_reduce(
-            $package->getVersions(),
-            function(array $versions, Package\Version $version) {
-                if ($this->versionShouldBeImported($version)) {
-                    $versions[] = Slug::create($version->getVersion());
-                }
-                return $versions;
-            },
-            []
-        );
+        $upstreamVersions = [];
+        foreach ($package->getVersions() as $version) {
+            if ($this->versionShouldBeImported($version)) {
+                $upstreamVersions[$version->getVersion()] = $version;
+            }
+        }
 
         $versionsNode = $this->storage->getPackageVersionsNode($packageNode->aggregateId);
         if (!$versionsNode) {
-            return false;
+            return ['versionsNode' => $packageNode, 'versionNodes' => [], 'changed' => false, 'successful' => false];
         }
 
+        $changed = false;
         $versionNodes = $this->storage->getPackageVersionNodes($versionsNode->aggregateId);
         $versionNodesByVersion = [];
         foreach ($versionNodes as $versionNode) {
-            $versionString = $versionNode->getProperty('version');
-            $versionSlug = Slug::create($versionString);
+            $versionString = (string)$versionNode->getProperty('version');
             $versionNodesByVersion[$versionString] = $versionNode;
-            if (!in_array($versionSlug, $upstreamVersions, true)) {
-                $this->storage->removeNode($versionNode);
-            } else {
-                // Remove the version from the upstream versions to avoid duplicates
-                $upstreamVersions = array_filter($upstreamVersions, static function ($slug) use ($versionSlug) {
-                    return $slug !== $versionSlug;
-                });
+            if (!array_key_exists($versionString, $upstreamVersions)) {
+                // The version is not available upstream anymore
+                if ($this->storage->removeNode($versionNode)) {
+                    $changed = true;
+                }
             }
         }
 
-        foreach ($package->getVersions() as $version) {
-            if (!$this->versionShouldBeImported($version)) {
-                continue;
-            }
-            $versionNode = $versionNodesByVersion[$version->getVersion()] ?? null;
+        foreach ($upstreamVersions as $versionString => $version) {
+            $versionNode = $versionNodesByVersion[$versionString] ?? null;
             $versionStability = VersionNumber::isVersionStable($version->getVersionNormalized());
             $stabilityLevel = VersionNumber::getStabilityLevel($version->getVersionNormalized());
             $versionNormalized = VersionNumber::toInteger($version->getVersionNormalized());
@@ -323,7 +304,7 @@ class PackageConverter
             };
 
             try {
-                $this->storage->createOrUpdateVersionNode(
+                $result = $this->storage->createOrUpdateVersionNode(
                     $versionsNode->aggregateId,
                     $versionNode,
                     $versionNodeType,
@@ -361,26 +342,42 @@ class PackageConverter
                 );
                 continue;
             }
+            if ($result->hasChanged()) {
+                $changed = true;
+            }
+            if (!$result->successful) {
+                return [
+                    'versionsNode' => $versionsNode,
+                    'versionNodes' => iterator_to_array($versionNodes),
+                    'changed' => $changed,
+                    'successful' => false
+                ];
+            }
         }
-        unset($versionNodes);
-        return true;
+        return [
+            'versionsNode' => $versionsNode,
+            'versionNodes' => iterator_to_array($versionNodes),
+            'changed' => $changed,
+            'successful' => true
+        ];
     }
 
     /**
      * Iterates over all versions of the package and updates the last activity of the package node.
+     *
+     * @param array{versionsNode: Node, versionNodes: Node[], changed: bool, successful: bool} $versionSync
+     * @return bool True if the last activity of the package node was changed
      */
     protected function updatePackageLastActivity(
         Node                      $packageNode,
-        OriginDimensionSpacePoint $originDimensionSpacePoint
-    ): void
+        OriginDimensionSpacePoint $originDimensionSpacePoint,
+        array                     $versionSync
+    ): bool
     {
-        $versionsNode = $this->storage->getPackageVersionsNode($packageNode->aggregateId);
-        if (!$versionsNode) {
-            return;
-        }
-        $versions = $this->storage->getPackageVersionNodes(
-            $versionsNode->aggregateId,
-        );
+        // The version nodes only have to be reloaded if they might have changed
+        $versions = $versionSync['changed']
+            ? iterator_to_array($this->storage->getPackageVersionNodes($versionSync['versionsNode']->aggregateId))
+            : $versionSync['versionNodes'];
 
         /** @var Node|null $lastActiveVersion */
         $lastActiveVersion = null;
@@ -399,17 +396,31 @@ class PackageConverter
                 $lastActiveVersion = $version;
             }
         }
-        if ($lastActiveVersion) {
-            if ($lastActiveVersion->getProperty('time') > $packageNode->getProperty('lastActivity')) {
-                $this->logger->debug('Updating last activity for package ' . $packageNode->getProperty('title'));
-                $this->storage->updateNode(
-                    $packageNode,
-                    $originDimensionSpacePoint,
-                    [
-                        'lastActivity' => $lastActiveVersion->getProperty('time'),
-                    ]
-                );
+        if (!$lastActiveVersion) {
+            return false;
+        }
+
+        $changed = false;
+        $currentLastActivity = $packageNode->getProperty('lastActivity');
+        if (!$currentLastActivity instanceof \DateTimeInterface
+            || $lastActiveVersion->getProperty('time') > $currentLastActivity
+        ) {
+            $this->logger->debug('Updating last activity for package ' . $packageNode->getProperty('title'));
+            $result = $this->storage->updateNode(
+                $packageNode,
+                $originDimensionSpacePoint,
+                [
+                    'lastActivity' => $lastActiveVersion->getProperty('time'),
+                ]
+            );
+            if (!$result->successful) {
+                return false;
             }
+            $changed = $result->hasChanged();
+        }
+
+        // The reference can only point to another version if the versions changed
+        if ($versionSync['changed']) {
             $this->storage->updateNodeReferenceIfChanged(
                 $packageNode,
                 $originDimensionSpacePoint,
@@ -417,16 +428,33 @@ class PackageConverter
                 $lastActiveVersion->aggregateId
             );
         }
-        unset($versions);
+        return $changed;
+    }
+
+    /**
+     * Remembers that the given vendor was touched, so its last activity can be updated
+     * once at the end of the sync instead of after every single package.
+     */
+    protected function markVendorAsTouched(NodeAggregateId $vendorNodeAggregateId): void
+    {
+        $this->touchedVendors[$vendorNodeAggregateId->value] = $vendorNodeAggregateId;
+    }
+
+    /**
+     * Updates the last activity of all vendors that were touched during this sync run.
+     */
+    public function updateVendors(): void
+    {
+        foreach ($this->touchedVendors as $vendorNodeAggregateId) {
+            $this->updateVendorLastActivity($vendorNodeAggregateId);
+        }
+        $this->touchedVendors = [];
     }
 
     /**
      * Iterates over all packages of the vendor and updates the last activity of the vendor node.
      */
-    protected function updateVendorLastActivity(
-        NodeAggregateId           $vendorNodeAggregateId,
-        OriginDimensionSpacePoint $originDimensionSpacePoint
-    ): void
+    protected function updateVendorLastActivity(NodeAggregateId $vendorNodeAggregateId): void
     {
         $packages = $this->storage->getPackageNodes($vendorNodeAggregateId);
         $vendorNode = $this->storage->getNodeByAggregateId($vendorNodeAggregateId);
@@ -446,16 +474,21 @@ class PackageConverter
                 $lastActivePackageTime = $lastActivity;
             }
         }
-        if ($lastActivePackageTime && $lastActivePackageTime > $vendorNode->getProperty('lastActivity')) {
-            $this->logger->debug('Updating last activity for vendor ' . $vendorNode->getProperty('title'));
-            $this->storage->updateNode(
-                $vendorNode,
-                $originDimensionSpacePoint,
-                [
-                    'lastActivity' => $lastActivePackageTime,
-                ]
-            );
+        if ($lastActivePackageTime === null) {
+            return;
         }
+        $currentLastActivity = $vendorNode->getProperty('lastActivity');
+        if ($currentLastActivity instanceof \DateTimeInterface && $lastActivePackageTime <= $currentLastActivity) {
+            return;
+        }
+        $this->logger->debug('Updating last activity for vendor ' . $vendorNode->getProperty('title'));
+        $this->storage->updateNode(
+            $vendorNode,
+            $vendorNode->originDimensionSpacePoint,
+            [
+                'lastActivity' => $lastActivePackageTime,
+            ]
+        );
         unset($packages);
     }
 
@@ -481,7 +514,12 @@ class PackageConverter
      */
     protected function arrayToJsonCaster(?array $value): ?string
     {
-        return $value ? json_encode($value, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT) : null;
+        if (!$value) {
+            return null;
+        }
+        // Sort the keys to make sure the result is stable, even if the upstream data is reordered
+        ksort($value);
+        return json_encode($value, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
     }
 
     /**

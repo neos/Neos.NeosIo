@@ -71,6 +71,12 @@ Neos:
       token: <my-token>
 ```
 
+### Unit tests
+
+The unit tests of the marketplace importer run without a database or ElasticSearch:
+
+    bin/phpunit -c DistributionPackages/Neos.MarketPlace/Tests/phpunit.xml
+
 ## License
 
 The MIT License (MIT). Please see [LICENSE](LICENSE.txt) for more information.
