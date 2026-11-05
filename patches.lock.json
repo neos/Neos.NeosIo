@@ -1,0 +1,27 @@
+{
+    "_hash": "ff405be4bf5fa517d097eecff69b8e382c3f00c15e5ce8c95c532001694a0ce2",
+    "patches": {
+        "neos/contentgraph-doctrinedbaladapter": [
+            {
+                "package": "neos/contentgraph-doctrinedbaladapter",
+                "description": "Fast node & references cleanup during ContentStreamWasRemoved",
+                "url": "DistributionPackages/Neos.NeosIo/patches/ContentStreamWasRemoved_PR_6019.patch",
+                "sha256": "48dedcb59a90b9e5ee8530d02a362db3a79554f1d01c973992acf1800b359e88",
+                "depth": 2,
+                "extra": {
+                    "provenance": "patches-file:DistributionPackages/Neos.NeosIo/composer.patches.json"
+                }
+            },
+            {
+                "package": "neos/contentgraph-doctrinedbaladapter",
+                "description": "Hard-node-removal must only remove edge if it was created in the current write layer",
+                "url": "DistributionPackages/Neos.NeosIo/patches/NodeAggregateWasRemoved_PR_6028.patch",
+                "sha256": "1234b5b2dc235aa0f60ab54f527583c94b1356994c8505b645e80c1a2b34620a",
+                "depth": 2,
+                "extra": {
+                    "provenance": "patches-file:DistributionPackages/Neos.NeosIo/composer.patches.json"
+                }
+            }
+        ]
+    }
+}

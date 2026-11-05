@@ -1,4 +1,18 @@
 {
     "patches": {
+        "neos/contentgraph-doctrinedbaladapter": [
+            {
+                "description": "Fast node & references cleanup during ContentStreamWasRemoved",
+                "depth": 2,
+                "issue": "https://github.com/neos/neos-development-collection/pull/6019",
+                "url": "DistributionPackages/Neos.NeosIo/patches/ContentStreamWasRemoved_PR_6019.patch"
+            },
+            {
+                "description": "Hard-node-removal must only remove edge if it was created in the current write layer",
+                "depth": 2,
+                "issue": "https://github.com/neos/neos-development-collection/pull/6028",
+                "url": "DistributionPackages/Neos.NeosIo/patches/NodeAggregateWasRemoved_PR_6028.patch"
+            }
+        ]
     }
 }
