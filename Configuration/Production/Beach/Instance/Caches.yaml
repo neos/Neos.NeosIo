@@ -68,3 +68,6 @@ NeosMarketPlace_PackageSyncCache:
     password: '%env:BEACH_REDIS_PASSWORD%'
     port: '6379'
     database: 9
+    # The sync state must not expire on its own, otherwise every package is treated as new
+    # and the whole marketplace is re-imported on every sync run.
+    defaultLifetime: 0

@@ -3,4 +3,7 @@ NeosMarketPlace_PackageSyncCache:
   frontend: Neos\Cache\Frontend\StringFrontend
   persistent: true
   backendOptions:
-    defaultLifetime: 3600
+    # The sync state must not expire on its own: if it does, every package is treated as
+    # new and the whole marketplace is re-imported on every sync run.
+    # The lifetime is set explicitly when the state is written.
+    defaultLifetime: 0
