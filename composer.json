@@ -27,7 +27,7 @@
 
         "shel/nodetypes-analyzer": "^2.0",
 
-        "cweagans/composer-patches": "^1.7",
+        "cweagans/composer-patches": "^2.0",
         "flownative/redis-backend": "dev-main",
 
         "neos/neos": "~9.2.0",
@@ -44,7 +44,9 @@
         "neos/behat": "~9.2.0"
     },
     "extra": {
-        "patches-file": "DistributionPackages/Neos.NeosIo/composer.patches.json"
+        "composer-patches": {
+            "patches-file": "DistributionPackages/Neos.NeosIo/composer.patches.json"
+        }
     },
     "repositories": [
         {
