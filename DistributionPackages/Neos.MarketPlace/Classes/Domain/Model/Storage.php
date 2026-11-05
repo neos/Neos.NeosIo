@@ -89,6 +89,13 @@ class Storage
      */
     protected array $vendorCache = [];
 
+    /**
+     * Prefetched package nodes indexed by their package name (the "title" property).
+     *
+     * @var array<string, Node>
+     */
+    protected array $packageNodeCache = [];
+
     public function __construct(
         protected ContentRepositoryRegistry   $contentRepositoryRegistry,
         protected WorkspacePublishingService  $workspacePublishingService,
@@ -227,13 +234,35 @@ class Storage
         );
     }
 
+    /**
+     * Loads all package nodes at once and keeps them in memory, indexed by their package name.
+     *
+     * Looking up a single package node by its "title" property requires an unindexable JSON search,
+     * therefore it is way faster to load all package nodes only once.
+     *
+     * @return Node[] The prefetched package nodes indexed by package name
+     */
+    public function prefetchPackageNodes(): array
+    {
+        $this->packageNodeCache = [];
+        foreach ($this->getPackageNodes() as $packageNode) {
+            $this->packageNodeCache[(string)$packageNode->getProperty('title')] = $packageNode;
+        }
+        return $this->packageNodeCache;
+    }
+
     public function getPackageNode(
         Package         $package,
         NodeAggregateId $vendorNodeAggregateId
     ): ?Node
     {
+        $packageName = $package->getName();
+        if (isset($this->packageNodeCache[$packageName])) {
+            return $this->packageNodeCache[$packageName];
+        }
+
         // Find the package node by name
-        return $this->subGraph->findChildNodes(
+        $node = $this->subGraph->findChildNodes(
             $vendorNodeAggregateId,
             FindChildNodesFilter::create(
                 NodeTypeCriteria::createWithAllowedNodeTypeNames(
@@ -241,11 +270,17 @@ class Storage
                 ),
                 propertyValue: PropertyValueEquals::create(
                     PropertyName::fromString('title'),
-                    $package->getName(),
+                    $packageName,
                     false
                 )
             )
         )->first();
+
+        if ($node) {
+            $this->packageNodeCache[$packageName] = $node;
+        }
+
+        return $node;
     }
 
     /**
@@ -274,7 +309,11 @@ class Storage
                 ])
             )
         );
-        return $this->subGraph->findNodeById($nodeAggregateId);
+        $node = $this->subGraph->findNodeById($nodeAggregateId);
+        if ($node) {
+            $this->packageNodeCache[$package->getName()] = $node;
+        }
+        return $node;
     }
 
     /**
@@ -425,7 +464,7 @@ class Storage
             'Removing node %s',
             $this->nodeLabelGenerator->getLabel($node),
         ));
-        return $this->handleCommandWithRetry(
+        $removed = $this->handleCommandWithRetry(
             RemoveNodeAggregate::create(
                 $node->workspaceName,
                 $node->aggregateId,
@@ -433,6 +472,10 @@ class Storage
                 NodeVariantSelectionStrategy::STRATEGY_ALL_VARIANTS
             )
         );
+        if ($removed) {
+            unset($this->packageNodeCache[(string)$node->getProperty('title')]);
+        }
+        return $removed;
     }
 
     public function updateNodeReferenceIfChanged(
