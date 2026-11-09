@@ -1,14 +1,13 @@
 prototype(Neos.MarketPlace:PackageRequirements) < prototype(Neos.Fusion:Component) {
     property = ''
     items = ${Json.parse(q(node).property(this.property))}
-    //@ToDoMine - second column label might need to differe depending on displayed requirements
-    //https://neosio.localbeach.net/download-and-extend/packages/neosidekick/neosidekick-ai-assistant.html
+
     renderer = afx`
       <table>
           <thead class="border-b-2 border-neutral-40">
               <tr>
                 <th class="px-2 py-1">{I18n.translate('Neos.MarketPlace:Main:package')}</th>
-                <th class="px-2 py-1">{I18n.translate('Neos.MarketPlace:Main:version')}</th>
+                <th class="px-2 py-1">{I18n.translate((props.property == 'suggest') ? 'Neos.MarketPlace:Main:comment' : 'Neos.MarketPlace:Main:version')}</th>
               </tr>
           </thead>
           <tbody>
