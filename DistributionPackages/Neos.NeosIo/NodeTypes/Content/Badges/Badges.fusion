@@ -5,13 +5,7 @@ prototype(Neos.NeosIo:Badges) < prototype(Neos.Neos:ContentComponent) {
 
     renderer = afx`
         <div @if.notEmpty={Array.length(props.allBadgesOfType) > 0} data-component={'Badges'}>
-            <div class="flex flex-wrap justify-between items-end gap-7.5 -mx-3.75">
-                <Neos.Fusion:Loop items={props.allBadgesOfType} itemName="badge">
-                    <Neos.NeosIo:Badge
-                        @context.node={badge}
-                    />
-                </Neos.Fusion:Loop>
-            </div>
+            <Neos.NeosIo:BadgeGrid items={props.allBadgesOfType}/>
         </div>
     `
     @cache {

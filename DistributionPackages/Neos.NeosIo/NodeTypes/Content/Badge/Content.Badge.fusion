@@ -4,6 +4,7 @@ prototype(Neos.NeosIo:Badge) < prototype(Neos.Neos:ContentComponent) {
             asset = ${q(node).property('image')}
             alt = ${'Logo of ' + q(node).property('linkText') + ' badge'}
             sizes = ${['(min-width: 768px) 360px', '100vw']}
+            imgClasses = 'max-h-[100%]'
         }
         highlight = ${q(node).property('highlight')}
         description = Neos.Neos:Editable {

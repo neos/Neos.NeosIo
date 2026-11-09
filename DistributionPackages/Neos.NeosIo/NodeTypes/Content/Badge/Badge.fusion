@@ -19,24 +19,31 @@ prototype(Neos.NeosIo:Component.Badge) < prototype(Neos.Fusion:Component) {
     @private {
         inBackend = ${renderingMode.isEdit}
         class = Neos.Fusion:DataStructure {
-            main = 'flex-1 basis-35 '
-            maxWidth = ${props.highlight ? 'max-w-[calc(--spacing(46.5)*1.15)] min-w-[calc(--spacing(32)*1.15)]' : 'max-w-46.5 min-w-32'}
+            main = 'px-2 lg:px-4'
+            //badge is currently square, so item width = imgHeight + item padding * 2
+            width = ${props.highlight ? 'max-w-34 md:max-w-44 lg:max-w-58' : 'max-w-38 lg:max-w-50'}
+        }
+        imgClass = Neos.Fusion:DataStructure {
+            general = ${'h-30 md:h-40 lg:h-50 flex justify-center'}
+            pt = ${props.highlight ? '' : 'pt-4 lg:pt-6'}
         }
     }
 
     renderer = afx`
         <div class={private.class} data-component={'Badge'} >
-            {props.image}
-            <img
-                @if={private.inBackend && !props.image}
-                src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
-                title="Dummy image"
-                alt="Dummy image"
-            />
-
-            <div @if.set={!String.isBlank(props.description)} class="my-2 text-[90%] text-center">
-                {props.description}
+            <div class={private.imgClass}>
+                {props.image}
+                <img
+                    @if={private.inBackend && !props.image}
+                    src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
+                    title="Dummy image"
+                    alt="Dummy image"
+                />
             </div>
+
+            <p @if.set={!String.isBlank(props.description)} class="my-2 display-body-sm text-center">
+                {props.description}
+            </p>
 
             <Neos.Presentation:Button
                 href={props.link}
