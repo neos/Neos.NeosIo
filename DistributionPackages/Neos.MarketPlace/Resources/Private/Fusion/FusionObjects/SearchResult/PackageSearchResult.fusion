@@ -11,7 +11,7 @@ prototype(Neos.MarketPlace:PackageSearchResult) < prototype(Neos.MarketPlace:Doc
         <article class="py-6 border-b-1 border-neutral-20 flex flex-col gap-2">
             <header>
                 <h4 class="display-title-md flex gap-4 items-end">
-                    <Neos.Neos:NodeLink node={props.node}>
+                    <Neos.Neos:NodeLink node={props.node} attributes.class={'max-w-full wrap-break-word'}>
                       {String.stripTags(props.title)}
                     </Neos.Neos:NodeLink>
                 </h4>
