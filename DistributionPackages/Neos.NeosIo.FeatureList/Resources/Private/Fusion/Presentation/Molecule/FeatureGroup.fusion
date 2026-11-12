@@ -9,21 +9,21 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) < prototype(Neos.Fusion
     featureGroupData = null
 
     renderer = afx`
-        <div class="featureGroup flex flex-col gap-16" @if.has={props.featureGroupData}>
+        <div class="list-none flex flex-col gap-16 mb-16 md:mb-32 last:mb-0" @if.has={props.featureGroupData} data-component="feature-group">
             <div class="flex flex-col gap-6">
-                <div class="featureGroup__header flex flex-col gap-2">
-                    <div class="featureGroup__icon" @if.has={props.featureGroupData.icon}>
-                        <Neos.Presentation:Icon icon={props.featureGroupData.icon} sizeClass="h-12" />
+                <div class="flex flex-col gap-2 md:max-w-880px">
+                    <div @if.has={props.featureGroupData.icon}>
+                        <Neos.Presentation:Icon icon={props.featureGroupData.icon} sizeClass="h-12" class={"text-blue-light"}/>
                     </div>
-                    <div class="featureGroup__title display-headline-sm">{props.featureGroupData.title}</div>
+                    <h2 class="display-headline-sm text-dark-blue">{props.featureGroupData.title}</h2>
                 </div>
                 <div class="display-body-lg text-neutral-80" @if.has={props.featureGroupData.description}>{props.featureGroupData.description}</div>
             </div>
-            <div class="featureGroup__features">
+            <ul class="p-0" @if.hasFeatures={props.featureGroupData.features}>
                 <Neos.Fusion:Loop items={props.featureGroupData.features} itemName="feature" @children="itemRenderer" >
                     <Neos.NeosIo.FeatureList:Molecule.Feature featureData={feature} />
                 </Neos.Fusion:Loop>
-            </div>
+            </ul>
         </div>
     `
 }

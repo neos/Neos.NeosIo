@@ -7,26 +7,28 @@ prototype(Neos.NeosIo.FeatureList:Molecule.Feature) < prototype(Neos.Fusion:Comp
     }
 
     featureData = ${[]}
+    title=${props.featureData.isCoreFeature ? "Neos Core Feature" : props.featureData.isCommunityFeature ? "Community Feature" : "Feature"}
 
     renderer = afx`
-        <div class="feature flex flex-col gap-4 pt-6 pb-6">
-            <div class="flex flex-row gap-3 items-center">
-                <div title={props.featureData.isCoreFeature ? "Neos Core Feature" : props.featureData.isCommunityFeature ? "Community Feature" : ""}>
-                    <Neos.Presentation:Icon @if.isCoreFeature={props.featureData.isCoreFeature} icon="neosAvatarPrimary" sizeClass="h-5" />
-                    <i class="fas fa-users" @if.isCommunityFeature={props.featureData.isCommunityFeature} title="Community Feature"></i>
-                </div>
-                <div class="display-body-lg font-bold">{props.featureData.title}</div>
-            </div>
-            <div class="text-neutral-80">{props.featureData.description}</div>
+        <li class="flex flex-col gap-4 md:gap-8 lg:gap-12 py-6 border-b-1 border-neutral-30 first:border-t-1 md:flex-row" data-component="feature">
+            <h3 class="flex flex-row gap-3 items-start md:w-68 flex-none">
+                <span class="flex flex-none gap-2 md:flex-col" aria-label={props.tile} title={props.title}>
+                    <Neos.Presentation:Icon @if.isCoreFeature={props.featureData.isCoreFeature} icon="neosAvatarPrimary" sizeClass="h-5"/>
+                    <i class="fas fa-users h-5 text-blue-dark first:mt-1" @if.isCommunityFeature={props.featureData.isCommunityFeature} aria-hidden="true"></i>
+                </span>
+                <span class="display-body-lg font-bold text-neutral-80">{props.featureData.title}</span>
+            </h3>
+            <div class="text-neutral-80 grow-1">{props.featureData.description}</div>
             <Neos.Presentation:Button
                 @if.has={props.featureData.link}
                 href={props.featureData.link}
                 variant="transparent"
                 icon="animatedArrow"
+                class="w-full md:w-auto md:flex-none"
                 content={I18n.translate("feature.link.label", null, [], 'Main', 'Neos.NeosIo.FeatureList')}
                 ariaLabel={I18n.translate("feature.link.ariaLabel", null, [], 'Main', 'Neos.NeosIo.FeatureList')}
             />
-        </div>
+        </li>
     `
 }
 
