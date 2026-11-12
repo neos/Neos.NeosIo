@@ -26,6 +26,8 @@ prototype(Neos.NeosIo.FeatureList:FeatureList) < prototype(Neos.Neos:ContentComp
                     description = Neos.Neos:Editable {
                         property = 'description'
                         node = ${feature}
+                        # Legacy descriptions are stored without paragraph markup
+                        @process.wrapInParagraph = ${renderingMode.isEdit || String.isBlank(value) || String.startsWith(String.trim(value), '<p') ? value : '<p>' + value + '</p>'}
                     }
                     isCoreFeature = ${feature.properties.isCoreFeature}
                     isCommunityFeature = ${feature.properties.isCommunityFeature}
