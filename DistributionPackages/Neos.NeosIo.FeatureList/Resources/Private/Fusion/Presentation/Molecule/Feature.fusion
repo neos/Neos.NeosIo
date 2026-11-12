@@ -8,6 +8,7 @@ prototype(Neos.NeosIo.FeatureList:Molecule.Feature) < prototype(Neos.Fusion:Comp
 
     featureData = ${[]}
     title=${props.featureData.isCoreFeature ? "Neos Core Feature" : props.featureData.isCommunityFeature ? "Community Feature" : "Feature"}
+    //@ToDO - discussion in issue https://github.com/neos/Neos.NeosIo/issues/743 whether to have one optional link per feature or keep assigned packages (like we had before)
 
     renderer = afx`
         <li class="flex flex-col gap-4 md:gap-8 lg:gap-12 py-6 border-b-1 border-neutral-30 first:border-t-1 md:flex-row" data-component="feature">
