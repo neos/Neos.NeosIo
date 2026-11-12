@@ -17,7 +17,7 @@ prototype(Neos.NeosIo:VideoEmbed) < prototype(Neos.Neos:ContentComponent) {
             }
         }
         renderer = afx`
-             <video @if.set={props.sources && String.indexOf(props.sources, 'video/mp4') != -1} class="videoEmbed" autoplay muted loop="true" playsinline="true">
+             <video @if.set={props.sources && String.indexOf(props.sources, 'video/mp4') != -1} class="videoEmbed mb-[var(--n-spacing--y-small)] last:mb-0" autoplay muted loop="true" playsinline="true">
                 {props.sources}
             </video>
             <p @if.set={!props.sources}>Please add some videos in the inspector. At least one <code>.mp4</code> is required.</p>

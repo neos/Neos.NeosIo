@@ -65,12 +65,12 @@
 
     @media (width >= theme(--breakpoint-md)) {
       --font-size: var(--font-size-tablet, var(--font-size-mobile));
-      --line-height-mobile: var(--line-height-tablet, var(--line-height-mobile));
+      --line-height: var(--line-height-tablet, var(--line-height-mobile));
     }
 
     @media (width >= theme(--breakpoint-lg)) {
       --font-size: var(--font-size-desktop, var(--font-size-tablet, var(--font-size-mobile)));
-      --line-height-mobile: var(--line-height-desktop, var(--line-height-tablet, var(--line-height-mobile)));
+      --line-height: var(--line-height-desktop, var(--line-height-tablet, var(--line-height-mobile)));
     }
   }
 
@@ -129,15 +129,17 @@
   .display-title-sm {
     --font-size-mobile: var(--text-base);
     --line-height-mobile: var(--text-base--line-height);
-    --font-size-desktop: var(--text-lg);
-    --line-height-desktop: var(--text-lg--line-height);
+    --font-size-desktop: var(--text-md);
+    --line-height-desktop: var(--text-md--line-height);
   }
 
   .display-lead {
     --font-size-mobile: var(--text-base);
     --line-height-mobile: var(--text-base--line-height);
-    --font-size-tablet: var(--text-lg);
-    --line-height-tablet: var(--text-lg--line-height);
+    --font-size-tablet: var(--text-md);
+    --line-height-tablet: var(--text-md--line-height);
+    --font-size-desktop: var(--text-md);
+    --line-height-desktop: var(--text-md--line-height);
   }
 
   .display-body-lg {

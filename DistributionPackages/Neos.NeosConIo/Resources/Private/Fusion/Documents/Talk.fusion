@@ -15,7 +15,7 @@ prototype(Neos.NeosConIo:Talk) < prototype(Neos.NeosIo:DefaultPage) {
                 video = ${node.properties.video}
             }
 
-            speakerList = Neos.NeosConIo:SpeakerList {
+            speakerList = Neos.NeosConIo:Talk.SpeakerList {
                 @if.hasSpeakers = ${!Array.isEmpty(q(node).referenceNodes('speakers'))}
                 items = ${q(node).referenceNodes('speakers')}
             }

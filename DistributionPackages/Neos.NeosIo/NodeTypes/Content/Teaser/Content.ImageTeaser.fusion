@@ -15,8 +15,9 @@ prototype(Neos.NeosIo:ImageTeaser) < prototype(Neos.Neos:ContentComponent) {
 
         image = Neos.Presentation:Component.PictureTag {
             asset = ${q(node).property('image')}
-            alt = ${q(node).property('alternativeText')}
+            alt = ${q(node).property('alternativeText') || this.asset.caption || this.asset.title}
             imgClasses = "absolute object-cover w-full h-full"
+            @if.hasAsset = ${this.asset}
             // sizes for this image are handled from wrapping components like stage and/or column
         }
 

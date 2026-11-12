@@ -26,3 +26,12 @@ Flow_Persistence_Doctrine:
   backendOptions:
     defaultLifetime: 0
     dataSourceName: 'sqlite:%FLOW_PATH_TEMPORARY%Cache/Data/Flow_Persistence_Doctrine.sqlite'
+
+##
+# Remembers the deployment the content cache was last flushed for
+#
+NeosNeosIo_DeploymentMarker:
+  frontend: Neos\Cache\Frontend\StringFrontend
+  backend: Neos\Cache\Backend\FileBackend
+  backendOptions:
+    defaultLifetime: 0

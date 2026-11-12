@@ -1,0 +1,20 @@
+prototype(Neos.NodeTypes:Text) >
+prototype(Neos.NodeTypes:Text) < prototype(Neos.Neos:ContentComponent) {
+    text = Neos.Neos:Editable {
+        property = 'text'
+    }
+
+    @private {
+        inEditMode = ${renderingMode.isEdit}
+
+        className = Neos.Fusion:DataStructure {
+            main = 'neos-nodetypes-text mb-[var(--n-spacing--y-small)] last:mb-0'
+        }
+    }
+
+    renderer = afx`
+        <div class={private.className} @if={props.text || private.inEditMode}>
+            {props.text}
+        </div>
+    `
+}

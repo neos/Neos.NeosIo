@@ -4,11 +4,11 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
     }
 
     data = Neos.Fusion:Component {
-        searchTerm = ${request.arguments.search}
-        onlyStable = ${request.arguments.stable}
-        from = ${request.arguments.from ? Date.create(request.arguments.from) : false}
-        to = ${request.arguments.to ? Date.create(request.arguments.to) : false}
-        limit = ${Type.isInteger(request.arguments.limit) ? request.arguments.limit : 50}
+        searchTerm = ${MarketPlace.Input.sanitize(request.arguments.search)}
+        onlyStable = ${request.arguments.stable != 'false' && request.arguments.stable != '0'}
+        from = ${request.arguments.from ? MarketPlace.Input.parseDate(request.arguments.from, 'Y-m-d') : null}
+        to = ${request.arguments.to ? MarketPlace.Input.parseDate(request.arguments.to, 'Y-m-d') : null}
+        limit = ${MarketPlace.Input.parseInt(request.arguments.limit, 50)}
 
         marketPlaceQuery = ${MarketPlaceSearch.query(documentNode)}
         marketPlaceQuery.@process {
@@ -48,31 +48,12 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
             }
         }
 
-        renderer = Neos.Fusion:DataStructure {
-            results = Neos.Fusion:Map {
-                items = ${props.marketPlaceQuery.execute()}
-                itemName = 'package'
-                itemRenderer = Neos.Fusion:Component {
-                    lastVersion = ${q(package).referenceNodes('lastVersion').get(0)}
-
-                    renderer = Neos.Fusion:DataStructure {
-                        title = ${package.properties.title}
-                        description = ${package.properties.description}
-                        link = Neos.Neos:NodeUri {
-                            node = ${package}
-                            absolute = true
-                            format = 'html'
-                        }
-                        linkToRelease = ${package.properties.repository + '/releases/tag/' + props.lastVersion.properties.version}
-                        latestVersion = ${props.lastVersion.properties.version}
-                        lastActivity = ${Date.format(props.lastVersion.properties.time, 'c')}
-                        stable = ${props.lastVersion.properties.stability}
-                        downloads = ${package.properties.downloadTotal}
-                        stars = ${package.properties.favers || 0}
-                    }
-                }
-            }
-            @process.json = ${Json.stringify(value)}
+        renderer = Neos.MarketPlace:Package.JsonFeed {
+            packageNodes = ${props.marketPlaceQuery.execute().toArray()}
+            from = ${props.from}
+            to = ${props.to}
+            onlyStable = ${props.onlyStable}
+            limit = ${props.limit}
         }
     }
 
@@ -92,7 +73,7 @@ prototype(Neos.MarketPlace:JsonFeed) < prototype(Neos.Fusion:Http.Message) {
 
         maximumLifetime = 3600
 
-        entryDiscriminator = ${(request.arguments.search || request.arguments.stable || request.arguments.from || request.arguments.to || request.arguments.limit >= 0) ? false : 'static'}
+        entryDiscriminator = ${(request.arguments.search || request.arguments.stable || request.arguments.from || request.arguments.to || (request.arguments.limit != null && request.arguments.limit >= 0)) ? false : 'static'}
 
         entryTags {
             documentNode = ${Neos.Caching.nodeTag(documentNode)}

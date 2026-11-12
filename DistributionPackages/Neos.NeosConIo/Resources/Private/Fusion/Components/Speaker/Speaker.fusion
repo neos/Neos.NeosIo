@@ -1,0 +1,87 @@
+prototype(Neos.NeosConIo:Component.Speaker) < prototype(Neos.Fusion:Component) {
+    title = ''
+    text = ''
+    image = ''
+    company = ''
+    position = ''
+    twitter = ''
+    mastodon = ''
+    github = ''
+    featuredTalk = ''
+    moreTalks = ''
+    @private {
+        iconWrapperClasses = 'flex gap-2'
+    }
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+        text = ${PropTypes.string}
+        image = ${PropTypes.string}
+        company = ${PropTypes.string}
+        position = ${PropTypes.string}
+        twitter = ${PropTypes.string}
+        mastodon = ${PropTypes.string}
+        github = ${PropTypes.string}
+        featuredTalk = ${PropTypes.instanceOf('Neos.NeosConIo:Talk')}
+        moreTalks = ${PropTypes.arrayOf(PropTypes.instanceOf('Neos.NeosConIo:Talk'))}
+    }
+
+    renderer = afx`
+        <section class="mx-auto max-w-full lg:max-w-4xl" data-component="Speaker">
+            <div class="flex gap-4 mb-8 items-start flex-wrap sm:gap-8 sm:flex-nowrap sm:items-center">
+                <div class="rounded-full bg-neutral-10 overflow-hidden mx-auto w-40 h-40 md:mx-0 md:w-48 md:h-48 shrink-0 grow-0 basis-auto">
+                    {props.image}
+                </div>
+                <div class="grow-1">
+                    <h1 class={"display-headline-sm text-center border-b border-neutral-30 pb-6 mb-6 sm:text-left md:pb-8 md:mb-8"}>
+                        {props.title}
+                    </h1>
+                    <p class="display-lead flex gap-x-8 gap-y-2 flex-wrap md:flex-nowrap">
+                        <span @if.hasCompany={props.company} class={private.iconWrapperClasses}>
+                            <i class="fas fa-briefcase text-blue-dark mt-1" aria-hidden="true"></i>
+                            <span>{props.company}</span>
+                        </span>
+                        <span @if.hasPosition={props.position} class={private.iconWrapperClasses}>
+                            <i class="fas fa-users text-blue-dark  mt-1" aria-hidden="true"></i>
+                            <span>{props.position}</span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="pl-0 sm:pl-48 md:pl-56 mb-[var(--n-spacing--y)] last:mb-0">
+                <div class="neos-nodetypes-text mb-[var(--n-spacing--y-small)] last:mb-0" @if.hasText={props.text}>
+                    {props.text}
+                </div>
+                <ul class="list-none justify-starte p-0 flex gap-x-8 gap-y-2 flex-wrap mb-[var(--n-spacing--y-small)] last:mb-0 md:justify-end"
+                    @if.hasAnyContact={props.twitter || props.mastodon || props.github || renderingMode.isEdit}>
+                    <li @if.hasTwitter={props.twitter} class={private.iconWrapperClasses}>
+                        <i class="fab fa-twitter mt-1" aria-hidden="true"></i>
+                        <a href={"https://twitter.com/" + props.twitter} target="_blank" rel="noreferrer noopener" title="Go to their twitter profile">{props.twitter}</a>
+                    </li>
+                    <li @if.hasMastodon={props.mastodon} class={private.iconWrapperClasses}>
+                        <i class="fab fa-mastodon mt-1" aria-hidden="true"></i>
+                        <a href={props.mastodon} target="_blank" rel="noreferrer noopener" title="Go to their mastodon profile">{props.mastodon}</a>
+                    </li>
+                    <li @if.hasGithub={props.github} class={private.iconWrapperClasses}>
+                        <i class="fab fa-github mt-1" aria-hidden="true"></i>
+                        <a href={"https://github.com/" + props.github} target="_blank" rel="noreferrer noopener" title="Go to github profile">{props.github}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <section class="mb-[var(--n-spacing--y-small)] last:mb-0" @if.hasFeaturedTalk={props.featuredTalk}>
+                <h2 class="display-title-lg mb-8">{I18n.translate('Neos.NeosConIo:Main:speaker.featuredTalk')}</h2>
+                <Neos.NeosConIo:Component.Speaker.FeaturedTalk {...props.featuredTalk}/>
+            </section>
+
+            <section @if.hasMoreTalks={Array.length(props.moreTalks) > 0}>
+                <h2 class="display-title-lg mb-6">{I18n.translate('Neos.NeosConIo:Main:speaker.moreTalks')}</h2>
+                <Neos.NeosConIo:TalkList
+                  talks={props.moreTalks}
+                  eventToFilter={null}
+                />
+            </section>
+        </section>
+    `
+}

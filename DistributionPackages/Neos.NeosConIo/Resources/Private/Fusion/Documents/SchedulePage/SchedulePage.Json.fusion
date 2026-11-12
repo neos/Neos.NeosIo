@@ -1,0 +1,82 @@
+/**
+ * Renders the NeosCon schedule as a JSON API response.
+ *
+ * The output structure mirrors the neos-con-app.json used by the mobile app:
+ *   - topicsPerDay   – array of arrays of topic aggregateId strings, one inner array per day
+ *   - topicsById     – dict of all topics (Talks + Breaks) keyed by aggregateId
+ *   - speakersById   – dict of all speakers keyed by aggregateId
+ *   - votingEnd      – last talk start time (from the SchedulePage property)
+ *   - surveyLink     – post-con survey URL (from the SchedulePage property)
+ *
+ * Access: <schedule-page-url>.json
+ */
+prototype(Neos.NeosConIo:Component.Schedule.Json) < prototype(Neos.Fusion:Component) {
+    eventNode = ${q(documentNode).referenceNodes('event').get(0)}
+    votingEnd = ${documentNode.properties.votingEnd}
+    surveyLink = ${documentNode.properties.surveyLink}
+
+    @private {
+        // All Talks and Breaks for the referenced Event, combined into a single list
+        allTalks = ${props.eventNode ? q(props.eventNode).backReferenceNodes('event').filter('[instanceof Neos.NeosConIo:Talk]').get() : []}
+        allBreaks = ${props.eventNode ? q(props.eventNode).find('[instanceof Neos.NeosConIo:BreakInSchedule]').get() : []}
+        allTopics = ${Array.concat(private.allTalks, private.allBreaks)}
+
+        // All Speakers linked to this Event via the Speaker.event back-reference
+        allSpeakers = ${props.eventNode ? q(props.eventNode).backReferenceNodes('event').filter('[instanceof Neos.NeosConIo:Speaker]').get() : []}
+    }
+
+    renderer = Neos.Fusion:Http.Message {
+        httpResponseHead {
+            headers.Content-Type = 'application/json'
+        }
+
+        data = Neos.Fusion:DataStructure {
+            // Timestamp of when the schedule data was last updated, used for client-side caching.
+            lastUpdated = ${Date.now().timestamp}
+
+            // [ [dayOneId, dayOneId2, …], [dayTwoId, …] ]
+            topicsPerDay = ${Neos.NeosConIo.Schedule.topicsPerDay(private.allTopics)}
+
+            // { "<aggregateId>": { id, title, description, type, start, stage, speakerIds } }
+            topicsById = ${Neos.NeosConIo.Schedule.buildTopicsById(private.allTopics)}
+
+            // { "<aggregateId>": { id, name, avatar, facts, summary, topics } }
+            // Avatar thumbnails, facts and talk topics are all resolved in PHP.
+            speakersById = ${Neos.NeosConIo.Schedule.buildSpeakersById(private.allSpeakers, request)}
+
+            votingEnd = ${props.votingEnd}
+            surveyLink = ${props.surveyLink}
+            surveyLink.@process.convertUris = Neos.Neos:ConvertUris {
+                absolute = true
+            }
+
+            @process.json = ${Json.stringify(value)}
+        }
+    }
+
+    @cache {
+        mode = 'cached'
+        maximumLifetime = 3600
+        entryIdentifier {
+            documentNode = ${Neos.Caching.entryIdentifierForNode(documentNode)}
+            format = 'json'
+        }
+        entryTags {
+            documentNode = ${Neos.Caching.nodeTag(documentNode)}
+            events = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event', site)}
+            talks = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', site)}
+            speakers = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Speaker', site)}
+            breaks = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:BreakInSchedule', site)}
+            rooms = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Room', site)}
+        }
+    }
+}
+
+// ── Route into the Neos root rendering pipeline ──────────────────────────────
+root {
+    neosConScheduleJson {
+        @position = 'before format'
+        condition = ${request.format == 'json' && q(documentNode).is('[instanceof Neos.NeosConIo:Document.SchedulePage]')}
+        renderer = Neos.NeosConIo:Component.Schedule.Json
+    }
+}

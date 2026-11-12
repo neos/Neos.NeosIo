@@ -23,5 +23,6 @@ prototype(Neos.NeosIo:PersonCard) < prototype(Neos.Neos:ContentComponent) {
         }
 
         pixelVariant = ${node.properties.pixelVariant}
+        animate = ${node.properties.image ? true : false}
     }
 }

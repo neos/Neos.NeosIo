@@ -1,0 +1,77 @@
+prototype(Neos.NeosConIo:Component.Talk) < prototype(Neos.Fusion:Component) {
+    title = ''
+    text = ''
+    video = ''
+    speakerList = ''
+    eventTitle = ''
+    talkDate = null
+    roomName = ''
+    isTalkListVisible = false
+    talkList = ''
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+        text = ${PropTypes.string}
+        video = ${PropTypes.string}
+        speakerList = ${PropTypes.string}
+        eventTitle = ${PropTypes.string}
+        talkDate = ${PropTypes.instanceOf('\DateTimeInterface')}
+        roomName = ${PropTypes.string}
+        isTalkListVisible = ${PropTypes.boolean}
+        talkList = ${PropTypes.string}
+    }
+
+    @private {
+        hasTalkDate = ${props.talkDate}
+        talkDate = ${Date.format(Neos.NeosConIo.Date.timezone(props.talkDate, 'Europe/Berlin'), 'd.m.Y')}
+        talkTime = ${Date.format(Neos.NeosConIo.Date.timezone(props.talkDate, 'Europe/Berlin'), 'G:i')}
+    }
+
+    renderer = afx`
+        <div class="mx-auto max-w-full lg:max-w-4xl" data-component="Talk">
+            <div class="mb-[var(--n-spacing--y-small)] last:mb-0">
+                <h1 class={"display-headline-sm border-b border-neutral-30 pb-6 mb-6 md:pb-8 md:mb-8"}>
+                    <span class="block display-lead mb-2">
+                        {props.eventTitle}
+                    </span>
+                    {props.title}
+                </h1>
+                <p class="display-lead flex gap-x-8 gap-y-2 flex-wrap ">
+                    <Neos.Fusion:Fragment @if.hasTalkDate={private.hasTalkDate}>
+                        <time class="flex gap-x-8 gap-y-2 flex-wrap ">
+                            <span class="talk__infos__item">
+                                <i class="fas fa-calendar"></i> {private.talkDate}
+                            </span>
+                            <span class="talk__infos__item">
+                                <i class="fas fa-clock"></i> {private.talkTime}
+                            </span>
+                        </time>
+                    </Neos.Fusion:Fragment>
+                    <span @if.hasRoom={props.roomName}>
+                         <i class="fas fa-map-marker-alt"></i> {props.roomName}
+                    </span>
+                </p>
+            </div>
+            <div @if.hasVideo={props.video.length > 0 || renderingMode.isEdit}
+                 class="mb-[var(--n-spacing--y-small)] last:mb-0"
+            >
+                {props.video}
+            </div>
+            <div class={"neos-nodetypes-text mb-[var(--n-spacing--y-small)] last:mb-0"} @if.hasText={props.text || renderingMode.isEdit}>
+              {props.text}
+            </div>
+            <div class="mb-[var(--n-spacing--y)] last:mb-0">
+                <h2 class="display-title-lg mb-8">{I18n.translate('Neos.NeosConIo:Main:talk.presentedBy')}</h2>
+                {props.speakerList}
+            </div>
+
+            <div @if.isTalkListVisible={props.isTalkListVisible}
+                 class="relatedTalks"
+            >
+                <h2 class="display-title-lg mb-6">{I18n.translate('Neos.NeosConIo:Main:talk.relatedTalks')}</h2>
+                {props.talkList}
+            </div>
+        </div>
+    `
+}

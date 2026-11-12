@@ -2,6 +2,7 @@
   final: true
   superTypes:
     'Neos.Neos:Shortcut': true
+    'Neos.NeosIo:Mixin.MenuItemOptions': false
     'Yoast.YoastSeoForNeos:Mixin.SEO': false
     'Yoast.YoastSeoForNeos:Mixin.Analysis': false
     'Flowpack.Neos.Matomo:StatsTabMixin': false
@@ -11,7 +12,6 @@
     group: serviceOfferings
   constraints:
     nodeTypes:
-      '*': false
       'Neos.Neos:Document': false
       'Neos.MarketPlace:RepositoryStorage': false
   properties:

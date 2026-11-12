@@ -1,0 +1,59 @@
+prototype(Neos.NeosIo.CaseStudies:Content.CaseStudyCarousel) < prototype(Neos.Neos:ContentComponent) {
+
+    autoplay = ${!!node.properties.autoplay}
+    maxItems = ${node.properties.maxItems > 0 ? node.properties.maxItems : 10}
+    caseStudyFolder = ${q(site).referenceNodes('caseStudyFolder').get(0)}
+    selectedItems = ${q(node).referenceNodes('items').get()}
+
+    @private {
+        items = Neos.Fusion:Case {
+            fromSelection {
+                condition = ${props.selectedItems}
+                renderer = ${props.selectedItems}
+            }
+            fromFolder {
+                condition = ${props.caseStudyFolder}
+                renderer = ${q(props.caseStudyFolder).children('[instanceof Neos.NeosIo:Reference.CaseStudy]').sort('datePublished', 'DESC').slice(0, props.maxItems).get()}
+            }
+            default {
+                condition = true
+                renderer = ${q(site).find('[instanceof Neos.NeosIo:Reference.CaseStudy]').sort('datePublished', 'DESC').slice(0, props.maxItems).get()}
+            }
+        }
+    }
+
+    renderer = Neos.Presentation:Carousel {
+        autoplay = ${props.autoplay}
+        title = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        items = Neos.Fusion:Map {
+            items = ${private.items}
+            itemRenderer = Neos.Presentation:ContentTeaser {
+                title = ${item.properties.title}
+                subTitle = ${q(item).referenceNodes('projectType').get(0).properties.title || ''}
+                text = ${item.properties.subTitle}
+                image = Neos.Presentation:Component.PictureTag {
+                    asset = ${item.properties.image}
+                    imgClasses = "absolute object-cover w-full h-full"
+                    alt = ${Neos.Node.label(item)}
+                    @if.hasImage = ${this.asset}
+                }
+                link = Neos.Neos:NodeUri {
+                    node = ${item}
+                    absolute = true
+                    @if.hasNode = ${item}
+                }
+            }
+        }
+    }
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier.node = ${Neos.Caching.entryIdentifierForNode(node)}
+        entryTags.node = ${Neos.Caching.nodeTag(node)}
+        entryTags.caseStudies = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Reference.CaseStudy', site)}
+        entryTags.referenceTypes = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:ReferenceType', site)}
+    }
+}

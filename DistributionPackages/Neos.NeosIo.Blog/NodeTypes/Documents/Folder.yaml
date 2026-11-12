@@ -1,0 +1,27 @@
+'Neos.NeosIo.Blog:Document.Folder':
+  superTypes:
+    'Neos.Neos:Shortcut': true
+    'Neos.NeosIo:Constraint.Blog.Document': true
+    'Neos.NeosIo:Mixin.EditorialDocument': true
+    'Neos.NeosIo:Mixin.MenuItemOptions': false
+  ui:
+    label: Folder
+    icon: folder
+    group: blog
+  constraints:
+    nodeTypes:
+      'Neos.Neos:Document': false
+      'Neos.NeosIo:Constraint.Folder.Document': true
+      'Neos.MarketPlace:RepositoryStorage': false
+  properties:
+    targetMode:
+      ui:
+        inspector:
+          editorOptions:
+            disabled: true
+    target:
+      ui:
+        inspector:
+          hidden: true
+          editorOptions:
+            disabled: true

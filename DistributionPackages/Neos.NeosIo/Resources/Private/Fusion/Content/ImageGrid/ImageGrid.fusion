@@ -4,7 +4,7 @@ prototype(Neos.NeosIo:Content.ImageGrid) < prototype(Neos.Neos:ContentComponent)
 
     renderer = Neos.Neos:ContentCollection {
         attributes.class {
-            imageGrid = 'image-grid'
+            imageGrid = 'image-grid mb-[var(--n-spacing--y-small)] last:mb-0'
             marqueeEffect = ${props.distributeEvenly ? 'distribute-evenly': ''}
             monochrome = ${props.monochrome ? 'monochrome': ''}
         }

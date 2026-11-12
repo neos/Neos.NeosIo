@@ -1,6 +1,7 @@
 'Neos.NeosIo.ServiceOfferings:Document.ServiceProviderCollection':
+  final: true
   superTypes:
-    'Neos.Neos:Document': true
+    'Neos.NodeTypes:Page': true
   ui:
     label: 'Service Provider Collection'
     icon: 'address-card'
@@ -13,7 +14,5 @@
       'Neos.NeosIo.ServiceOfferings:Document.ServiceType': true
       'Neos.NeosIo.ServiceOfferings:Document.Award': true
   childNodes:
-    main:
-      type: 'Neos.Neos:ContentCollection'
     bottom:
       type: 'Neos.Neos:ContentCollection'

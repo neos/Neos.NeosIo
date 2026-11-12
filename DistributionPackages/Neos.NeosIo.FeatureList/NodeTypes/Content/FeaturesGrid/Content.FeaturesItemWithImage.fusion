@@ -14,7 +14,7 @@ prototype(Neos.NeosIo.Features:ItemWithImage) < prototype(Neos.Neos:ContentCompo
 
         image = Neos.Presentation:Component.PictureTag {
             asset = ${q(node).property('image')}
-            alt = ${q(node).property('alternativeText')}
+            alt = ${q(node).property('alternativeText') || this.asset.caption || this.asset.title}
             imgClasses = "object-cover w-full h-full"
         }
     }

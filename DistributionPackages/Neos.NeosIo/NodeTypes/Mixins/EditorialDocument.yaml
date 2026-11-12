@@ -1,0 +1,34 @@
+##
+# This is a mixin to be used in document types that should not appear in the frontend, but only in the backend.
+# It can be used for documentation or other backend-only content like tags.
+#
+'Neos.NeosIo:Mixin.EditorialDocument':
+  abstract: true
+  superTypes:
+    'Neos.Neos:Document': true
+    'Neos.Seo:TitleTagMixin': false
+    'Neos.Seo:SeoMetaTagsMixin': false
+    'Neos.Seo:TwitterCardMixin': false
+    'Neos.Seo:CanonicalLinkMixin': false
+    'Neos.Seo:OpenGraphMixin': false
+    'Neos.Seo:XmlSitemapMixin': false
+    'Neos.Seo:NoindexMixin': true
+    'Neos.Neos:Hidable': false
+    'Yoast.YoastSeoForNeos:Mixin.SEO': false
+    'Yoast.YoastSeoForNeos:Mixin.Analysis': false
+    'Flowpack.Neos.Matomo:StatsTabMixin': false
+  ui:
+    label: 'Editorial Document'
+    help:
+      message: 'A page that is only visible in the backend. Can be used for documentation or other backend-only content.'
+  search:
+    fulltext:
+      isRoot: false
+      enable: false
+  properties:
+    hiddenInMenu:
+      defaultValue: true
+    appendSeparatorInMenu:
+      ui:
+        inspector:
+          hidden: true

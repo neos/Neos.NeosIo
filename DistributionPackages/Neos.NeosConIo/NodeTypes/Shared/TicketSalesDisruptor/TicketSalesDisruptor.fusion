@@ -86,25 +86,40 @@ prototype(Neos.NeosConIo:Component.TicketSalesDisruptor.Inner) < prototype(Neos.
         stretchGoal = ${PropTypes.integer}
     }
 
+    @private {
+        percentageSold = ${props.stretchGoal > 0 ? props.sold / props.stretchGoal * 100 : 66}
+        goalPercentage = ${props.goal > 0 && props.stretchGoal > 0 ? props.goal / props.stretchGoal * 100 : private.percentageSold}
+        i18n = ${I18n.id('').package('Neos.NeosConIo').source('Main')}
+    }
+
     renderer = afx`
         <div class="ticket-sales-disruptor__inner">
             <div class="ticket-sales-disruptor__text">
-                <h2>{props.title}</h2>
+                <h2 class={"display-lead"}>{props.title}</h2>
                 <p>{props.text}</p>
             </div>
             <div class="ticket-sales-disruptor__sales">
                 <strong>{props.salesBarTitle}</strong>
                 <div class="ticket-sales-disruptor__sales-bar">
-                    <div class="ticket-sales-disruptor__sales-bar__sold" style={"width:"+ props.sold / props.stretchGoal * 100  +"%"}>
+                    <div class="ticket-sales-disruptor__sales-bar__sold" style={"width:"+ private.percentageSold  +"%"}>
                         <div class="ticket-sales-disruptor__sales-bar__bar"></div>
-                        <span @if={props.sold}>sold {props.sold}</span>
+                        <span @if={props.sold}>{private.i18n.id('ticketSalesDisruptor.sold').value('sold').arguments([props.sold]).translate()}</span>
                     </div>
-                    <div class="ticket-sales-disruptor__sales-bar__minimum-goal" style={"width:"+ props.goal / props.stretchGoal * 100  +"%"}></div>
-                    <div class="ticket-sales-disruptor__sales-bar__goal">goal {props.stretchGoal}</div>
+                    <div
+                        class="ticket-sales-disruptor__sales-bar__minimum-goal"
+                        style={"width:"+ private.goalPercentage  +"%"}
+                        @if={props.stretchGoal > 0}
+                    ></div>
+                    <div
+                        class="ticket-sales-disruptor__sales-bar__goal"
+                        @if={props.stretchGoal > 0 && props.goal > 0}
+                    >
+                        {private.i18n.id('ticketSalesDisruptor.goal').value('goal').arguments([props.stretchGoal]).translate()}
+                    </div>
                 </div>
-                <div class="ticket-sales-disruptor__minimum-goal" >
-                    <span style={"right:" +  (100 - (props.goal / props.stretchGoal * 100))  + "%"}>
-                        minimum {props.goal}
+                <div class="ticket-sales-disruptor__minimum-goal">
+                    <span style={"right:" +  (100 - (private.goalPercentage))  + "%"}>
+                        {props.goal > 0 ? 'minimum ' + props.goal : ''}
                         <i class="fas fa-star" aria-hidden="true"></i>
                     </span>
                 </div>

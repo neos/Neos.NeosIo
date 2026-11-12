@@ -16,8 +16,19 @@ prototype(Neos.Presentation:Template.Default) < prototype(Neos.Fusion:Component)
                     }
                 }
             }
-            nav = Neos.Presentation:Monocle.Preview.Props {
-                prototypeName = 'Neos.Presentation:Navigation'
+            nav = Neos.Fusion:Join {
+                desktop = Sitegeist.Monocle:Preview.Prototype {
+                    prototypeName = 'Neos.Presentation:DesktopNavigation'
+                    props {
+                        // TODO: Define menuitems for preview
+                    }
+                }
+                mobile = Sitegeist.Monocle:Preview.Prototype {
+                    prototypeName = 'Neos.Presentation:MobileNavigation'
+                    props {
+                        // TODO: Define menuitems for preview
+                    }
+                }
             }
             content = Neos.Fusion:Join {
                 logobar = Sitegeist.Monocle:Preview.Prototype {
@@ -49,8 +60,12 @@ prototype(Neos.Presentation:Template.Default) < prototype(Neos.Fusion:Component)
     }
 
     renderer = afx`
+        <header>
+            <Neos.Presentation:Background background="blue-dark-to-blue">
+                {props.nav}
+            </Neos.Presentation:Background>
+        </header>
         <Neos.Presentation:Stage {...props.stage}>
-            <Neos.Presentation:Navigation @path="navSlot" {...props.nav} />
         </Neos.Presentation:Stage>
         {props.content}
     `

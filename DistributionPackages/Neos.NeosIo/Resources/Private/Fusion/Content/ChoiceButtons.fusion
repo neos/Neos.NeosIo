@@ -2,7 +2,7 @@ prototype(Neos.NeosIo:ChoiceButtons) < prototype(Neos.Neos:ContentComponent) {
     buttons = ${q(node).children()}
 
     renderer = afx`
-        <div class="flex gap-4 items-center flex-col sm:flex-row justify-center flex-wrap">
+        <div class="flex gap-4 items-center flex-col sm:flex-row justify-center flex-wrap mb-[var(--n-spacing--y-small)] last:mb-0">
             <Neos.NeosIo:Button @context.node={props.buttons.get(0)} @if={props.buttons.get(0)} />
             <span>{Translation.translate('choiceButton.or', '', [], 'Main', 'Neos.NeosIo')}</span>
             <Neos.NeosIo:Button @context.node={props.buttons.get(1)} @if={props.buttons.get(1)} />

@@ -1,0 +1,34 @@
+prototype(Neos.NeosConIo:Component.Speaker.FeaturedTalk) < prototype(Neos.Fusion:Component) {
+    title = ${q(featuredTalkNode).property('title')}
+    croppedText = ${String.cropAtWord(String.stripTags(q(featuredTalkNode).property('text')), 200, '…')}
+    event = ${q(featuredTalkNode).referenceNodes('event').get(0)}
+    talkUri = Neos.Neos:NodeUri {
+        node = ${featuredTalkNode}
+        absolute = true
+    }
+    @private {
+        backgroundColors = ${['purple', 'blue', 'green', 'yellow', 'orange', 'red']}
+        randomBgColor = ${props.background ? props.background : private.backgroundColors[Math.randomInt(0, Array.length(private.backgroundColors) - 1)]}
+    }
+
+    renderer = afx`
+        <div class={["n-background n-background--" + private.randomBgColor,
+        "p-4 md:p-8 pb-17 md:pb-34 cta-banner-clip-path"]}>
+            <h3 class="display-title-lg mb-4 last:mb-0">
+                <span class="display-lead block mb-1">{props.event.properties.title}</span>
+                <span class={"block"}>{props.title}</span>
+            </h3>
+            <p @if.hasText={props.croppedText}>
+                {props.croppedText}
+            </p>
+
+            <Neos.Presentation:Button
+                href={props.talkUri}
+                content={I18n.translate('Neos.NeosConIo:Main:speaker.featuredTalk.viewTalk')}
+                variant={"transparent"}
+                icon={"animatedArrow"}
+                class={'text-[var(--n-fg)]! hocus:text-[var(--n-fg)]! no-underline! mt-6'}
+            />
+        </div>
+    `
+}

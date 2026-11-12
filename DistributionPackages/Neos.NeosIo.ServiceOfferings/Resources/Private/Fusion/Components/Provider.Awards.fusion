@@ -1,6 +1,7 @@
 prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Awards) < prototype(Neos.Fusion:Component) {
     awards = Neos.Neos:ContentCollection {
         tagName = 'ul'
+        attributes.class = 'p-0 list-none m-0'
         nodePath = 'awards'
     }
 
@@ -8,7 +9,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Awards) < prototype(Ne
 
     renderer = afx`
         <div class="service-provider__awards">
-            <h2>Awards</h2>
+            <h2 class={"display-title-lg mb-4"}>{Translation.translate('serviceProvider.awards', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}</h2>
             {props.awards}
         </div>
     `

@@ -51,9 +51,4 @@ jobs:
           version: 2
 
       - name: PHPStan
-        uses: php-actions/phpstan@v3
-        with:
-          php_version: ${{ env.PHP_VERSION }}
-          version: 2.1.44
-          command: analyse
-          path: 'DistributionPackages/'
+        run: bin/phpstan analyse DistributionPackages/ --memory-limit=4G

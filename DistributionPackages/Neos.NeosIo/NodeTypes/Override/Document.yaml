@@ -3,10 +3,16 @@
     fulltext:
       # Disable general search on documents until we actually have a search
       isRoot: false
+  ui:
+    inspector:
+      groups:
+        document:
+          position: start
   constraints:
     nodeTypes:
       'Neos.NeosIo:RootPage': false
       'Neos.NeosIo:FooterContainer': false
+      'Neos.NeosIo:Document.FirstLevelNavigationFolder': false
   properties:
     neos_fulltext_parts:
       search:

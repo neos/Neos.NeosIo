@@ -1,0 +1,30 @@
+'Neos.NeosIo:Mixin.MenuItemOptions':
+  abstract: true
+  superTypes:
+    'Neos.NeosIo:Mixin.MainNavigationOptions': true
+  ui:
+    inspector:
+      groups:
+        navigation:
+          label: 'Menu item options'
+          icon: 'sitemap'
+          tab: navigation
+  properties:
+    menuItemIcon:
+      options:
+        preset: 'NeosIo.icon'
+      ui:
+        label: 'Menu Item Icon'
+        help:
+          message: 'This icon will be shown in the main navigation left of the menu item title.'
+        inspector:
+          group: navigation
+    menuItemDescription:
+      type: string
+      ui:
+        label: 'Menu Item Description Text'
+        reloadPageIfChanged: true
+        help:
+          message: 'This text will be shown in the main navigation below the menu item title. Keep it short.'
+        inspector:
+          group: navigation

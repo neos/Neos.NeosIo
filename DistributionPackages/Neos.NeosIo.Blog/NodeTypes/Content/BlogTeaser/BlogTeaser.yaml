@@ -10,7 +10,7 @@
   ui:
     label: 'Blog teaser'
     icon: newspaper
-    group: special
+    group: blog
   properties:
     subTitle:
       type: string
@@ -21,6 +21,11 @@
             placeholder: 'Enter text here…'
   references:
     blogPost:
+      constraints:
+        maxItems: 1
+        nodeTypes:
+          '*': false
+          Neos.NeosIo:Post: true
       ui:
         label: 'Blog post'
         reloadIfChanged: true

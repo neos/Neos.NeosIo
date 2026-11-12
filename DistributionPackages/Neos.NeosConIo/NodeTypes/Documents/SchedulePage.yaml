@@ -1,0 +1,43 @@
+'Neos.NeosConIo:Document.SchedulePage':
+  superTypes:
+    'Neos.NodeTypes:Page': true
+    'Neos.NeosConIo:Mixin.EventRelated': true
+  ui:
+    label: 'Schedule Overview'
+    icon: 'calendar-days'
+    group: neoscon
+    inspector:
+      groups:
+        scheduleSettings:
+          label: 'Schedule Settings'
+          icon: 'calendar-days'
+  references:
+    event:
+      constraints:
+        nodeTypes:
+          'Neos.NeosConIo:Event': true
+        maxItems: 1
+      ui:
+        label: 'Current event'
+        reloadIfChanged: true
+        inspector:
+          group: 'scheduleSettings'
+          editorOptions:
+            nodeTypes: ['Neos.NeosConIo:Event']
+  properties:
+    # TODO: Use Time type or validation for time format
+    votingEnd:
+      type: string
+      ui:
+        label: 'Voting End Time (e.g. 15:45)'
+        inspector:
+          group: 'scheduleSettings'
+          editorOptions:
+            placeholder: '15:45'
+    surveyLink:
+      type: string
+      ui:
+        label: 'Post-Con Survey Link'
+        inspector:
+          group: 'scheduleSettings'
+          editor: Neos.Neos/Inspector/Editors/LinkEditor

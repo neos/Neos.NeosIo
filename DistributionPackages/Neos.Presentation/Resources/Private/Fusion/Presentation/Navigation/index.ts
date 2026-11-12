@@ -11,5 +11,8 @@ Alpine.data('NavigationItem', () => ({
                 this.open = false;
             }
         },
+        ['x-on:click.outside']() {
+            this.open = false;
+        },
     },
 }));

@@ -1,0 +1,75 @@
+prototype(Neos.NeosConIo:Schedule.Talk) < prototype(Neos.Fusion:Component) {
+
+    talk = ${null}
+    rooms = ${null}
+
+    @private {
+        room = ${q(props.talk).referenceNodes('room').get(0)}
+        speakers = ${q(props.talk).property('speakers')}
+        isBreak = ${q(props.talk).is('[instanceof Neos.NeosConIo:BreakInSchedule]')}
+        description = ${q(props.talk).property('text')}
+        prevRooms = ${private.room.aggregateId ? q(private.room).prevAll().count() : 0}
+        speakerRows = ${Math.ceil(Array.length(q(private.speakers)) / 2)}
+        // making sure tailwind renders these classes because they are set dynamically
+        // grid classes for grid col-start & end
+        classes = ${Carbon.String.classNames("col-start-1", "col-start-2", "col-end-2", "col-end-3")}
+        // min-height classes for talk title based on speaker image rows
+        minHeightClass = Neos.Fusion:Match {
+            @subject = ${private.speakerRows}
+            @default = ''
+            1 = "min-h-[calc(var(--spacing)*8*1)]"
+            2 = "min-h-[calc(var(--spacing)*8*2)]"
+            3 = "min-h-[calc(var(--spacing)*8*3)]"
+            4 = "min-h-[calc(var(--spacing)*8*4)]"
+            5 = "min-h-[calc(var(--spacing)*8*5)]"
+            6 = "min-h-[calc(var(--spacing)*8*6)]"
+        }
+    }
+
+    renderer = afx`
+        <div data-date={Date.format(q(props.talk).property('talkDate'), 'y-m-d')}
+             data-room-id={private.room.aggregateId}
+             class={["flex flex-wrap border-b-2 border-neutral-20 px-4 gap-2 sm:gap-8 sm:flex-nowrap lg:border-b-white",
+                  "col-start-" + (private.prevRooms + 1) + " col-end-" + (private.room && private.prevRooms == 0 ? private.prevRooms + 1 : Array.length(props.rooms) + 1),
+                   (private.isBreak ? ' bg-neutral-05 py-2 lg:pt-3 lg:pb-4' : ' pt-3 pb-4')]}>
+            <div
+                class={[private.room ? '' : 'pt-3', "basis-[100%] flex gap-4 flex-none sm:gap-2 sm:flex-col sm:basis-[130px] lg:pt-3 lg:basis-auto"]}>
+                <time class={["talk__time flex gap-2 lg:gap-4 "]}>
+                    <i class="fas fa-clock mt-1 color-purple-dark" aria-hidden="true"></i>
+                    <span class="block min-w-10 text-right tabular-nums">
+                      {Date.format(Neos.NeosConIo.Date.timezone(q(props.talk).property('talkDate'), 'Europe/Berlin'), 'G:i')}
+                    </span>
+                </time>
+                <p class="flex gap-2 lg:hidden" @if.hasRoom={private.room}>
+                    <i class="fas fa-map-marker-alt mt-1 color-purple-dark" aria-hidden="true"></i>
+                    <span>{q(private.room).property('name')}</span>
+                </p>
+            </div>
+            <div class="flex gap-4 grow-1">
+                <Neos.NeosConIo:ScheduleSpeakerImages speakers={private.speakers} />
+                <details class="grow-1" @if.hasDescription={private.description}>
+                    <summary class={"block pt-3 group cursor-pointer " + private.minHeightClass}>
+                        <Neos.NeosConIo:Schedule.Talk.Title
+                            title={q(props.talk).property('title')}
+                            description={private.description}
+                            isBreak={private.isBreak}
+                            groupClasses="group-hocus:text-blue transition-colors duration-300"
+                        />
+                    </summary>
+                    <div
+                        class="talk__description py-4 px-0 w-[calc(100%+var(--spacing)*28)] relative -left-[calc(var(--spacing)*28)]"
+                        @if.hasText={private.description}>
+                        {private.description}
+                    </div>
+                </details>
+                <div class="grow-1 pt-3" @if.noDescription={!private.description}>
+                    <Neos.NeosConIo:Schedule.Talk.Title
+                        title={q(props.talk).property('title')}
+                        description={private.description}
+                        isBreak={private.isBreak }
+                    />
+                </div>
+            </div>
+        </div>
+    `
+}

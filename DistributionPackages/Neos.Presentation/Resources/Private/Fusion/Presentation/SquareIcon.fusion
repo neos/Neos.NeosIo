@@ -30,7 +30,7 @@ prototype(Neos.Presentation:SquareIcon) < prototype(Neos.Fusion:Component) {
             background={props.background}
         >
             <Neos.Presentation:Icon icon={props.icon} sizeClass="h-8 lg:h-12 mr-auto" />
-            <span @if={props.content} class="block mt-auto wrap-break-word hyphens-auto text-lg lg:text-2xl font-medium text-left!">{props.content}</span>
+            <p @if={props.content} class="block mt-auto wrap-break-word hyphens-auto display-title-md font-medium text-left!">{props.content}</p>
         </Neos.Presentation:Background>
     `
 }
