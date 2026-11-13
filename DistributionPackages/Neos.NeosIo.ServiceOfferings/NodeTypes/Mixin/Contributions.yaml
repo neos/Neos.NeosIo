@@ -12,7 +12,7 @@
       ui:
         label: 'Deprecated: Show cases'
         help:
-          message: 'This property is deprecated, assign the '
+          message: 'This property is deprecated. Assign the vendor to the showcase instead.'
         reloadIfChanged: true
         showInCreationDialog: true
         inspector:
@@ -70,5 +70,7 @@
         inspector:
           group: contributions
           editorOptions:
+            threshold: 0
             nodeTypes:
               - 'Neos.NeosIo:Badge'
+              - 'Neos.NeosIo:BadgeTeamMemberEmployer'

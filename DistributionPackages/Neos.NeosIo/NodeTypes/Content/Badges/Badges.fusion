@@ -1,0 +1,22 @@
+prototype(Neos.NeosIo:Badges) < prototype(Neos.Neos:ContentComponent) {
+    badgeType = ${q(node).property('badgeType')}
+    badgeDefinitionPage = ${q(site).property('badgeDefinitionPage')}
+    allBadgesOfType = ${this.badgeDefinitionPage ? q(this.badgeDefinitionPage).find('[instanceof Neos.NeosIo:' + this.badgeType + ']').sort('level', 'ASC') :[]}
+
+    renderer = afx`
+        <div @if.notEmpty={Array.length(props.allBadgesOfType) > 0} data-component={'Badges'}>
+            <Neos.NeosIo:BadgeGrid items={props.allBadgesOfType}/>
+        </div>
+    `
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            name = 'badges'
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
+        entryTags {
+            documentNode = ${Neos.Caching.nodeTag(documentNode)}
+            badges = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:' + badgeType, node)}
+        }
+    }
+}
