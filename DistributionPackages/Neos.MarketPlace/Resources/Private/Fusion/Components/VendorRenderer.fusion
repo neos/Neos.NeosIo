@@ -3,11 +3,15 @@ prototype(Neos.MarketPlace:VendorRenderer) < prototype(Neos.Fusion:Component) {
     packages = ${q(node).children('[instanceof Neos.MarketPlace:Package]')}
 
     renderer = afx`
-        <article class="market-block">
-            <h1>{props.title}</h1>
-            <Neos.Fusion:Loop items={props.packages} itemName="node">
-                <Neos.MarketPlace:PackageSearchResult />
-            </Neos.Fusion:Loop>
+        <article>
+            <h2 class="display-headline-sm mb-8">{I18n.translate('Neos.MarketPlace:Main:packages.by')} {props.title}</h2>
+            <ul class="py-4 list-none px-0 m-0">
+                <Neos.Fusion:Loop items={props.packages} itemName="node">
+                    <li>
+                        <Neos.MarketPlace:PackageSearchResult />
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
         </article>
     `
 }

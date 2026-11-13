@@ -36,6 +36,7 @@ services:
     depends_on:
       - webserver
       - redis
+      - elasticsearch
     security_opt:
       - no-new-privileges
     volumes:
@@ -79,3 +80,25 @@ services:
       interval: 1s
       timeout: 5s
       retries: 120
+
+  elasticsearch:
+    image: ${BEACH_ELASTICSEARCH_IMAGE:-elasticsearch}:${BEACH_ELASTICSEARCH_IMAGE_VERSION:-7.17.7}
+    container_name: ${BEACH_PROJECT_NAME:?Please specify a Beach project name as BEACH_PROJECT_NAME}_elasticsearch
+    networks:
+      - local_beach
+    volumes:
+      - ./.LocalBeach/elasticsearch/data:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    environment:
+      - cluster.name=${BEACH_PROJECT_NAME}
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail -s localhost:9200 >/dev/null || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 30

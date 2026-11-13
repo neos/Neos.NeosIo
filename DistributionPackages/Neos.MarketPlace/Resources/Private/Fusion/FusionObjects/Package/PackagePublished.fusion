@@ -1,0 +1,17 @@
+prototype(Neos.MarketPlace:PackagePublished) < prototype(Neos.Fusion:Component) {
+    time = ${q(props.versionNode).property('time')}
+    version = ${q(props.versionNode).property('version')}
+
+    renderer = afx`
+        <p class="display-lead flex gap-x-4" @if={props.time || props.version}>
+            <span @if.hasVersion={props.version} class="font-bold">
+                 <span class="sr-only">{I18n.translate('version', 'Version', [], 'Main', 'Neos.MarketPlace')}</span>
+              {props.version}
+            </span>
+            <span aria-hidden="true" @if.hasBoth={props.time && props.version}>•</span>
+            {I18n.translate('package.published', 'Last activity', [], 'Main', 'Neos.MarketPlace')} {Date.format(props.time, 'd M Y')}
+        </p>
+    `
+
+    @if.visible = ${this.time}
+}

@@ -3,8 +3,9 @@ prototype(Neos.MarketPlace:PackageRequirementsItem) < prototype(Neos.Fusion:Comp
     version = ${version}
 
     renderer = afx`
-      <li>
-        {props.package}: {props.version}
-      </li>
+    <tr class="border-b-1 border-neutral-20">
+        <td class="px-2 py-1">{props.package}</td>
+        <td class="px-2 py-1">{props.version}</td>
+    </tr>
     `
 }
