@@ -1,10 +1,1 @@
-prototype(Neos.MarketPlace:DefaultPage) < prototype(Neos.NeosIo:DefaultPage) {
-    prototype(Neos.NeosIo:Fragment.PageStyles) {
-        neosMarketPlace = Neos.Fusion:Component {
-            @position = 'after main'
-            renderer = afx`
-                <link rel="stylesheet" href={StaticResource.uri('Neos.MarketPlace', 'Public/Styles/Main.css')} />
-            `
-        }
-    }
-}
+prototype(Neos.MarketPlace:DefaultPage) < prototype(Neos.NeosIo:DefaultPage)

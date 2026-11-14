@@ -62,7 +62,7 @@ prototype(Neos.MarketPlace:AbstractVersion) < prototype(Neos.Fusion:Component) {
     warningClasses = 'bg-yellow-light border-1 border-yellow text-yellow-darkest p-4'
 
     renderer = afx`
-        <div class="version flex flex-col gap-8">
+        <div class="flex flex-col gap-8" data-component="abstract-version">
             <Neos.Fusion:Fragment @if={props.abandoned}>
                 <p class={props.warningClasses}>{String.replace(I18n.translate('version.abandonedWarning', 'This version is abandoned and no longer maintained. The author suggests using the #package# package instead.', [], 'Main', 'Neos.MarketPlace'), '#package#', '<strong>' + props.abandoned + '</strong>')}</p>
             </Neos.Fusion:Fragment>
