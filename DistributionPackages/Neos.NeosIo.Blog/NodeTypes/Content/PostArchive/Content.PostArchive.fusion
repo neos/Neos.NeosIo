@@ -1,0 +1,85 @@
+prototype(Neos.NeosIo:PostArchive) < prototype(Neos.Neos:ContentComponent) {
+    # update the image sizes for all nested image components, so they can adapt their sizes accordingly
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            # Post archive items are displayed in a 3 column grid, so we set the size accordingly.
+            # The first two items span 2 columns, so we set the size to 1/3 to ensure that the images are large enough for the first two items,
+            # while still being optimized for the smaller size of the third item.
+            size = ${1 / 3}
+        }
+    }
+
+    renderer = Neos.Fusion:Join {
+        tagMenu = Neos.NeosIo.Blog:Component.TagMenu
+
+        list = Flowpack.Listable:PaginatedCollection {
+            # Override the entryDiscriminator so /blog.html (no currentPage arg) caches the same entry as /blog~p1.html.
+            # Flowpack.Listable:PaginatedCollection uses ${request.arguments.currentPage}, which is null on the bare URL
+            # and — being falsy — disables caching for that segment per Neos dynamic-mode rules.
+            #
+            # This seems to be a bug in the package! It default's to page 1 but doesn't compute the cache discriminator
+            # the same way.
+            @cache {
+                entryDiscriminator = ${request.arguments.currentPage || '1'}
+                entryTags {
+                    posts = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Post', site)}
+                    tags = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.Blog:Document.Tag', site)}
+                }
+            }
+
+            collection = Neos.Fusion:Case {
+                filteredByTag {
+                    condition = ${documentNode && q(documentNode).is('[instanceof Neos.NeosIo.Blog:Document.Tag]')}
+                    renderer = ${q(documentNode).backReferenceNodes('tags').filter('[instanceof Neos.NeosIo:Post]')}
+                }
+                default {
+                    condition = true
+                    blogFolder = ${q(site).referenceNodes('blogFolder').get(0)}
+                    renderer = ${this.blogFolder ? q(this.blogFolder).find('[instanceof Neos.NeosIo:Post]') : q(site).find('[instanceof Neos.NeosIo:Post]')}
+                }
+                @process.sort = ${value.sort('datePublished', 'DESC')}
+            }
+
+            itemsPerPage = 14
+            maximumNumberOfLinks = 10
+
+            prototype(Flowpack.Listable:Collection) {
+                listClass = 'list-none! p-0 m-0 grid gap-6 grid-cols-1 md:grid-cols-6 [&>li:nth-child(1)]:col-span-3! [&>li:nth-child(2)]:col-span-3!'
+                itemClass = 'col-span-3 md:col-span-2'
+                itemName = 'post'
+
+                itemRenderer = Neos.Presentation:PostPreview {
+                    datePublished = ${q(post).property('datePublished')}
+                    title = ${q(post).property('title')}
+                    image = ${q(post).property('keyVisualImage')}
+                    imageAlt = ${q(post).property('keyVisualAlternativeText') || q(post).property('keyVisualImage').caption || this.title}
+                    nodeUri = Neos.Neos:NodeUri {
+                        node = ${post}
+                    }
+                    background = ${q(q(post).referenceNodes('tags').get(0)).property('background')}
+                    tags = ${q(post).referenceNodes('tags').get()}
+                }
+            }
+            prototype(Flowpack.Listable:Pagination) {
+                class = 'list-none! p-0 m-0 flex items-center justify-center gap-2 py-6!'
+                itemClass = '[&>a]:bg-green! [&>a]:hover:bg-green-dark! [&>a]:p-2 [&>a]:text-white [&>a]:hover:no-underline!'
+                currentItemClass = '[&>a]:bg-transparent! [&>a]:hover:bg-transparent! [&>a]:text-black!'
+            }
+        }
+    }
+
+    # The inner Flowpack.Listable:PaginatedCollection already has its own dynamic @cache keyed by currentPage,
+    # so the outer cache here only needs to provide the tag-based invalidation for Post/Tag changes —
+    # the dynamic inner segment is re-evaluated per page even inside this cached entry.
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+            documentNode = ${Neos.Caching.entryIdentifierForNode(documentNode)}
+        }
+        entryTags {
+            node = ${Neos.Caching.nodeTag(node)}
+            tags = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.Blog:Document.Tag', site)}
+        }
+    }
+}

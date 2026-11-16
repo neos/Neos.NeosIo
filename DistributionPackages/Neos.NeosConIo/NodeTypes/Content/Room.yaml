@@ -1,10 +1,10 @@
 'Neos.NeosConIo:Room':
   superTypes:
     'Neos.Neos:Content': true
-  label: "${q(node).property('name') || node.nodeType.label}"
+  label: "${Neos.Node.labelForNode(node).properties('name')}"
   ui:
     label: 'room'
-    icon: 'room'
+    icon: 'person-shelter'
     group: neoscon
     inspector:
       groups:

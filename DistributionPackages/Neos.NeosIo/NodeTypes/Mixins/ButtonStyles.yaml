@@ -2,45 +2,35 @@
   abstract: true
   properties:
     alignment:
-      type: string
+      options:
+        preset: 'NeosIo.alignment'
       ui:
         label: 'Button Alignment'
-        reloadIfChanged: true
-        inspector:
-          group: appearance
-          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
-          editorOptions:
-            allowEmpty: true
-            placeholder: Inline
-            values:
-              Left:
-                label: Left
-              Center:
-                label: Center
-              Right:
-                label: Right
     style:
       type: string
-      defaultValue: btn--primary
+      scope: nodeAggregate
       ui:
-        label: 'Color of the Button'
+        label: 'Style of the Button'
         reloadIfChanged: true
         inspector:
-          editor: Content/Inspector/Editors/SelectBoxEditor
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           group: appearance
           editorOptions:
             allowEmpty: true
-            placeholder: Choose a color
+            placeholder: 'Choose a style'
             values:
-              btn--primary:
-                label: Primary
-              btn--solidPrimary:
-                label: 'Primary (Solid)'
-              btn--secondary:
-                label: Secondary
-              btn--solidSecondary:
-                label: 'Secondary (Solid)'
-              btn--bright:
-                label: Bright
-              btn--solidBright:
-                label: 'Bright (Solid)'
+              green:
+                label: 'Solid green Button'
+                icon: resource://Neos.Presentation/Assets/ValueIcons/color-green.svg
+              purple:
+                label: 'Solid purple Button'
+                icon: resource://Neos.Presentation/Assets/ValueIcons/color-purple.svg
+              yellow:
+                label: 'Solid yellow Button'
+                icon: resource://Neos.Presentation/Assets/ValueIcons/color-yellow.svg
+              transparent:
+                label: 'Transparent with underline'
+                icon: resource://Neos.Presentation/Assets/ValueIcons/color-transparent.svg
+              link:
+                label: 'Link'
+                icon: resource://Neos.Presentation/Assets/ValueIcons/color-link.svg

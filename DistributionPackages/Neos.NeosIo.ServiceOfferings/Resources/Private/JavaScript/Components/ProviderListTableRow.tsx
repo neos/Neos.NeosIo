@@ -31,7 +31,7 @@ export default function ProviderListEntry({provider}: { provider: Provider }) {
             {provider.badges && (
                 <div className="service-providers__grid-cell service-providers__list-entry__badge">
                     {provider.badges.map((item) =>
-                        <img src={item} alt="" class="service-providers__badge"/>
+                        <img src={item.uri} alt={item.alt} width={item.width} height={item.height} class="service-providers__badge"/>
                     )}
                 </div>
             )}

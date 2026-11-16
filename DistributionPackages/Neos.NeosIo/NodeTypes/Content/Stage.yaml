@@ -7,9 +7,12 @@
   superTypes:
     'Neos.Neos:Content': true
     'Neos.Neos:ContentCollection': true
+    'Neos.NeosIo:Constraints.Main': true
+    'Neos.NeosIo:Mixin.InternalTitle': true
   constraints:
     nodeTypes:
       '*': false
+      'Neos.NeosIo:Constraints.Stage': true
       # Temporary workaround for the Neos UI to be able to keep existing non-flattened content
       'Neos.Neos:ContentCollection': true
       'Neos.NodeTypes.ColumnLayouts:TwoColumn': true
@@ -28,13 +31,13 @@
       'Neos.NeosIo:Quote': true
       'Neos.NeosIo:SemanticSection': true
       'Neos.NeosIo:Youtube': true
-      'Neos.NeosIo:FundingBadges': true
       'Neos.NeosIo:BadgeGrid': true
       'Neos.NeosIo:Content.ImageGrid': true
-      'Neos.NeosIo:ImageTeaser': true
+      'Neos.NeosIo:Mixin.Teaser': true
       'Neos.NeosIo.FeatureList:FeatureList': true
       'Neos.NeosIo.CaseStudies:Content.CaseList': true
       'Neos.NeosIo:PostArchive': true
+      'Neos.NeosIo:PersonCard': true
   ui:
     label: Stage
     icon: tasks
@@ -47,8 +50,17 @@
         inline:
           editorOptions:
             placeholder: 'Stage title'
+    hideTitle:
+      type: boolean
+      scope: specializations
+      ui:
+        reloadIfChanged: true
+        label: 'Hide title'
+        inspector:
+          group: content
     isContentTextInverted:
       type: boolean
+      scope: nodeAggregate
       ui:
         reloadIfChanged: true
         label: 'Invert Text-Color'
@@ -56,6 +68,7 @@
           group: content
     isContentExtraPadded:
       type: boolean
+      scope: nodeAggregate
       ui:
         reloadIfChanged: true
         label: 'Create more padding around the contents'
@@ -63,6 +76,7 @@
           group: content
     contentWidth:
       type: string
+      scope: nodeAggregate
       ui:
         reloadIfChanged: true
         label: 'Maximum content width'
@@ -79,6 +93,7 @@
                 label: 'Full-width (100%)'
     padding:
       type: string
+      scope: nodeAggregate
       ui:
         label: 'Padding'
         reloadIfChanged: true
@@ -91,9 +106,11 @@
             values:
               none:
                 label: None
+    # TODO: Use Neos.NeosIo:Mixin.Background here and migrate old values
     backgroundColor:
       type: string
       defaultValue: bright
+      scope: nodeAggregate
       ui:
         label: 'Background color'
         reloadIfChanged: true
@@ -140,6 +157,7 @@
                 label: Tertiary
     backgroundImage:
       type: Neos\Media\Domain\Model\ImageInterface
+      scope: nodeAggregate
       ui:
         reloadIfChanged: true
         label: 'Background image'
@@ -147,6 +165,7 @@
           group: background
     backgroundShadePercentage:
       type: string
+      scope: nodeAggregate
       ui:
         label: 'Background image shading'
         reloadIfChanged: true
@@ -167,6 +186,7 @@
                 label: 80%
     backgroundImageFixed:
       type: boolean
+      scope: nodeAggregate
       ui:
         reloadIfChanged: true
         label: 'Background image fixed?'

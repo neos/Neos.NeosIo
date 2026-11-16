@@ -1,0 +1,21 @@
+prototype(Neos.NeosIo:Helpers.ResourceUri) < prototype(Neos.Fusion:Component) {
+    resource = null
+
+    @propTypes {
+        @strict = true
+        resource = ${PropTypes.any}
+    }
+
+    renderer = Neos.Fusion:Case {
+        noResourceSet {
+            condition = ${!props.resource}
+            renderer = ''
+        }
+        default {
+            condition = true
+            renderer = Neos.Fusion:ResourceUri {
+                resource = ${props.resource}
+            }
+        }
+    }
+}

@@ -9,9 +9,9 @@ prototype(Neos.NeosIo:Component.Event.List) < prototype(Neos.Fusion:Component) {
             <p @if.hasNoEntries={props.alwaysShowNoEntriesNotice || (Array.isEmpty(props.events) && !String.isBlank(props.noEntriesNotice))}>{props.noEntriesNotice}</p>
             <ul @if.hasEntries={props.events}>
                 <Neos.Fusion:Loop items={props.eventsByMonth} itemKey="month" itemName="eventsOfThisMonth">
-                    <li>
-                        <h3>{month}</h3>
-                        <ul>
+                    <li class="mb-12">
+                        <h2 class="display-title-lg mb-4">{month}</h2>
+                        <ul class="border-t-1 border-neutral-30">
                             <Neos.Fusion:Loop items={eventsOfThisMonth} itemName="event">
                                 <Neos.NeosIo:Component.Event.List.Item {...event}/>
                             </Neos.Fusion:Loop>

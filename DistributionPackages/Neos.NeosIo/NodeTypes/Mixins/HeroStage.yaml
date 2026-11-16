@@ -1,0 +1,54 @@
+'Neos.NeosIo:Mixin.HeroStage':
+  abstract: true
+  ui:
+    group: special
+  properties:
+    headline:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Headline...'
+            formatting:
+              strong: true
+              styleDefinitions:
+                - name: 'Brand color'
+                  element: 'span'
+                  classes: ['color__neos-brand']
+    subline:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Subline...'
+            formatting:
+              strong: true
+              em: true
+              underline: true
+              styleDefinitions:
+                - name: 'Brand color'
+                  element: 'span'
+                  classes: ['color__neos-brand']
+    backgroundImage:
+      type: Neos\Media\Domain\Model\ImageInterface
+      scope: nodeAggregate
+      ui:
+        label: 'Background image'
+        reloadIfChanged: true
+        inspector:
+          group: content
+          editorOptions:
+            features:
+              crop: true
+    screenBorder:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: 'Show Device-Screen border'
+        reloadIfChanged: true
+        inspector:
+          group: content

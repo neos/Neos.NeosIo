@@ -28,7 +28,7 @@ $brand-colors: (
 ) !default;
 
 // The main brand font-family
-$brand-font-family: "Work Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$brand-font-family: "Bricolage Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 
 // If the CD makes use of rounded corners, use this variable for consistency.
 $brand-border-radius: 3px !default;
@@ -50,7 +50,8 @@ $serif-font-family: Georgia, "Times New Roman", Times, serif !default;
 $mono-font-family: Menlo, Monaco, Consolas, "Courier New", monospace !default;
 
 // The font-weights below are used to emphasize written words instead of numbers in your Sass.
-$bold: 500 !default;
+$bold: 600 !default;
+$medium: 500 !default;
 $regular: 400 !default;
 $light: 200 !default;
 $thin: 100 !default;
@@ -61,9 +62,9 @@ $base-font-size: 16 !default;
 $base-line-height: 26 !default;
 $base-font-family: $sans-font-family !default;
 $base-font-weight: $regular !default;
-$base-text-color: #656a71 !default;
+$base-text-color: #363636 !default;
 
-$headingsColor: #3b444f;
+$headingsColor: map-get($brand-colors, secondary);
 
 // Typographic spacings (in pixels), these default values will
 // output a basic vertical rythm based on your '$base-line-height'.
@@ -85,7 +86,7 @@ $layout-small-width: 750px;
 $centered-layout: true !default;
 
 // Inner spacing for all grid-items.
-$column-gutter: 26px !default;
+$column-gutter: 30px !default;
 
 // The background which will be set on the <body> element.
 $body-background: #fff !default;
@@ -94,10 +95,16 @@ $body-background: #fff !default;
 // the .siteContent container or it's background.
 $content-background: #fff !default;
 
+$header-height: 60px !default;
+$header-height--medium: 80px !default;
+$header-height--fixed: 72px !default;
+
+
 // Z-Index Masterlist, describe your z-index'es here, and use the z() function in your Sass files.
 // F.e: z-index: z('myElement');
 $zIndexes: (
-  siteHeader: 1000
+  siteHeader: 1000,
+	disruptor: 250
 ) !default;
 
 // =============================================================================
@@ -142,6 +149,8 @@ $link-color: map-get($brand-colors, primary) !default;
 
 // Default color for all buttons.
 $btn-color: map-get($brand-colors, primary) !default;
+$btn-vertical-padding: 14px;
+$btn-horizontal-padding: 40px;
 
 // Mood and action colors used on buttons, alerts and other actions.
 $color-info: map-get($brand-colors, primary) !default;

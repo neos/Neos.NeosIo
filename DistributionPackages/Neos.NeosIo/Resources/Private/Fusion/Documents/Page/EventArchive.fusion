@@ -7,7 +7,7 @@ prototype(Neos.NeosIo:EventArchive) < prototype(Neos.NeosIo:DefaultPage) {
 
     content.parts {
         main >
-        headline = ${'<h1>Event Archive (' + q(node).property('title') + ')</h1>'}
+        headline = ${'<h1 class="display-headline-xl mb-8">Event Archive (' + q(node).property('title') + ')</h1>'}
         eventList = Neos.NeosIo:Component.Event.List {
             noEntriesNotice = 'There are no archived events yet for this year'
             events = Neos.Fusion:Map {

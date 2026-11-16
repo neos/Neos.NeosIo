@@ -1,11 +1,29 @@
 'Neos.Neos:Document':
+  search:
+    fulltext:
+      # Disable general search on documents until we actually have a search
+      isRoot: false
+  ui:
+    inspector:
+      groups:
+        document:
+          position: start
   constraints:
     nodeTypes:
       'Neos.NeosIo:RootPage': false
       'Neos.NeosIo:FooterContainer': false
+      'Neos.NeosIo:Document.FirstLevelNavigationFolder': false
   properties:
     neos_fulltext_parts:
       search:
         elasticSearchMapping:
           type: flattened
           enabled: null
+    appendSeparatorInMenu:
+      type: boolean
+      scope: nodeAggregate
+      ui:
+        reloadIfChanged: true
+        label: 'Append separator in menu'
+        inspector:
+          group: default

@@ -1,0 +1,25 @@
+prototype(Neos.NeosIo:Content.HeroStage.DefaultPage) < prototype(Neos.NeosIo:Content.ContentCollectionComponent) {
+    renderer = Neos.Presentation:StageDefault {
+        title = ${documentNode.properties.title}
+
+        headline = Neos.Neos:Editable {
+            property = 'headline'
+            block = false
+        }
+
+        subline = Neos.Neos:Editable {
+            property = 'subline'
+            block = false
+        }
+
+        image = Neos.Presentation:Component.PictureTag {
+            asset =  ${node.properties.backgroundImage}
+            alt = ${node.properties.backgroundImage ? node.properties.backgroundImage.title : null}
+            imgClasses = "h-full w-full object-cover max-w-none!"
+            loadEager = true
+            sizes = ${['(min-width: 786px) 33vw', '80vw']}
+        }
+
+        screenBorder = ${node.properties.screenBorder}
+    }
+}

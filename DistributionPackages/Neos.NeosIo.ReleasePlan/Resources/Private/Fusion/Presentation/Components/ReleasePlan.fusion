@@ -3,7 +3,7 @@ prototype(Neos.NeosIo.ReleasePlan:Presentation.Content.ReleasePlan) < prototype(
     amChartsScript = null
 
     renderer = afx`
-        <div data-component="AmChart" class="amChart" @if.data={props.releasePlanData}>
+        <div data-component="AmChart" class="amChart mb-[var(--n-spacing--y-small)] last:mb-0" @if.data={props.releasePlanData}>
             <div class="u-alignCenter">
                 <div class="spinner">
                     <i class="spinner__dot"></i>

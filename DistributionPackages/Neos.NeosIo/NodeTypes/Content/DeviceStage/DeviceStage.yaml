@@ -1,0 +1,33 @@
+###########################################
+# Mixin which is responsible for all options
+# regarding the document keyvisual.
+###########################################
+
+'Neos.NeosIo:DeviceStage':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NeosIo:Constraints.Main': true
+    'Neos.NeosIo:Mixin.InternalTitle': true
+  childNodes:
+    contents:
+      type: 'Neos.Neos:ContentCollection'
+      label: 'Contents'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NodeTypes:Headline': true
+          'Neos.NodeTypes:Text': true
+          'Neos.NeosIo:Button': true
+    devicecontents:
+      type: 'Neos.Neos:ContentCollection'
+      label: 'Device Contents'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NodeTypes:Image': true
+          'Neos.NeosIo:Youtube': true
+  ui:
+    label: 'Stage (with device media)'
+    icon: desktop
+    group: structure
+    inlineEditable: true

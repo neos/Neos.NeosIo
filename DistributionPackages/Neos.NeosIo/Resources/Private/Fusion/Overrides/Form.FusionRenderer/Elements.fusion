@@ -14,10 +14,41 @@ prototype(Neos.Form:ImageUpload) {
     fieldContainer.field.attributes.class = 'textInput'
 }
 
-prototype(Neos.Form.FusionRenderer:FormNavigationButton) {
-    @context.label = ${this.label}
+prototype(Neos.Form.FusionRenderer:FormNavigationButton) >
+prototype(Neos.Form.FusionRenderer:FormNavigationButton) < prototype(Neos.Fusion:Component) {
+    tagName = 'button'
+    content = ${this.label}
+    class = null
+    fieldName = null
+    fieldValue = null
+    containerClass = null
 
-    content = afx`
-        <div class="btn__content">{label}</div>
+    renderer = afx`
+        <li class={props.containerClass}>
+            <Neos.Presentation:Button
+                content={props.content}
+                class={props.class}
+                type="submit"
+                attributes.name={'--' + formRuntime.identifier + '[__currentPage]'}
+                attributes.value={props.fieldValue}
+            />
+        </li>
     `
+}
+
+# Remove when https://github.com/neos/form-fusionrenderer/pull/24 is released and updated in this project
+prototype(Neos.Form:DatePicker) {
+    fieldContainer {
+        field {
+            attributes {
+                value.@process.format = ${Date.format(value, 'Y-m-d')}
+                value.@process.format.@if.isDateTime = ${Type.instance(elementValue, '\DateTimeInterface')}
+            }
+        }
+    }
+}
+
+prototype(Neos.Form.Builder:NodeBasedFormElement) {
+    # Use value from element instead of element aggregate id
+    element.properties.options.@process.overrideFromNode.itemRenderer.value = ${q(item).property('value')}
 }

@@ -1,0 +1,53 @@
+prototype(Neos.Presentation:StageDefault) < prototype(Neos.Fusion:Component) {
+    title = ""
+    headline = ""
+    subline = ""
+    image = ""
+    screenBorder = false
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+        headline = ${PropTypes.string}
+        subline = ${PropTypes.string}
+        image = ${PropTypes.string}
+        screenBorder = ${PropTypes.boolean}
+    }
+
+
+    renderer = afx`
+        <Neos.Presentation:Background
+            tagName="section"
+            background="blue-dark-to-blue"
+            class="overflow-hidden grid grid-rows-auto grid-cols-6 grid-flow-col md:grid-flow-row pt-24 md:pt-42 stage--default__clip-path n-stage-default"
+        >
+            <div class="col-span-full md:col-span-4 p-6 md:p-12 lg:p-24 mb-12 md:mb-0">
+                <Neos.Presentation:Headline
+                    tagName="h1"
+                    content={props.title}
+                    display="title-sm"
+                    class="text-blue-light text-base md:text-lg font-normal"
+                />
+                <Neos.Presentation:Headline
+                    tagName="h2"
+                    content={props.headline}
+                    display="headline-xl"
+                    class="text-6xl md:text-8xl lg:text-10xl"
+                />
+                <Neos.Presentation:Paragraph
+                    @if.hasContent={props.subline}
+                    content={props.subline}
+                    display="body-md"
+                    class="text-base"
+                />
+            </div>
+            <div class="relative col-start-2 col-span-full md:col-span-2 h-full w-full">
+                <figure
+                    class={"h-full w-full overflow-hidden" + (props.screenBorder ? " rounded-tl-3xl border-t-8 border-l-8 border-t-neutral-90 border-l-neutral-90" : "")}
+                >
+                    {props.image}
+                </figure>
+            </div>
+        </Neos.Presentation:Background>
+    `
+}

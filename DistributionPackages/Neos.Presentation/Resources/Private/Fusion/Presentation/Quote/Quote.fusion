@@ -1,0 +1,60 @@
+prototype(Neos.Presentation:Quote) < prototype(Neos.Fusion:Component) {
+    title = ''
+    image = ''
+    alternativeText = ''
+    quote = ''
+    author = ''
+    position = ''
+
+    @propTypes {
+        @strict = true
+        title = ${PropTypes.string}
+        image = ${PropTypes.string}
+        alternativeText = ${PropTypes.string}
+        quote = ${PropTypes.string}
+        author = ${PropTypes.string}
+        position = ${PropTypes.string}
+    }
+
+    @private {
+        inBackend = ${renderingMode.isEdit}
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Background
+            background="blue-dark"
+            tagName="blockquote"
+            class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(min(25rem,100%),1fr))] quote quote-clip-path"
+        >
+            <div>
+                {props.image}
+                <img
+                    @if={!props.image && renderingMode.isEdit}
+                    src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
+                    alt="Dummy image"
+                    class="object-cover h-full w-full"
+                    loading="lazy"
+                />
+            </div>
+
+            <div class="flex flex-col items-start p-6 md:p-12">
+                <Neos.Presentation:Icon icon="quote" class="h-16 md:h-20 text-blue-light mb-2 md:mb-6 last:mb-0" />
+                <blockquote
+                    class="max-w-xl display-title-md mb-6 md:mb-10 last:mb-0"
+                    @if={props.quote || private.inBackend}
+                >
+                    {'„' + props.quote + '“'}
+                </blockquote>
+                <Neos.Presentation:Paragraph
+                    content={props.author}
+                    class="display-title-lg mb-1 md:mb-2 last:mb-0"
+                />
+                <Neos.Presentation:Paragraph
+                    content={props.position}
+                    class="display-lead font-normal"
+                    @if={props.position || private.inBackend}
+                />
+            </div>
+        </Neos.Presentation:Background>
+    `
+}

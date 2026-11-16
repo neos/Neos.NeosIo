@@ -40,6 +40,18 @@ class VersionNumber
         };
     }
 
+    public static function getStabilityLevelAsInteger(string $stabilityLevel): int
+    {
+        return match ($stabilityLevel) {
+            default => 0,
+            'dev' => 1,
+            'alpha' => 2,
+            'beta' => 3,
+            'rc' => 4,
+            'stable' => 5,
+        };
+    }
+
     public static function toInteger(string $versionNormalized): int
     {
         $versionNormalizedParts = explode('-', $versionNormalized);

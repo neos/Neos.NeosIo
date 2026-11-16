@@ -53,13 +53,15 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
                 badges = Neos.Fusion:Map {
                     items = ${q(serviceProvider).referenceNodes('badges').get() || []}
                     itemName = 'badge'
-                    itemRenderer = Neos.Neos:ImageUri {
-                        asset = ${q(badge).property('image')}
-                        attributes {
+                    itemRenderer = Neos.Fusion:DataStructure {
+                        uri = Neos.Neos:ImageUri {
+                            asset = ${q(badge).property('image')}
                             width = 120
                             height = 180
-                            alt = ${q(badge).property('description')}
                         }
+                        alt = ${Neos.Node.label(badge)}
+                        width = 120
+                        height = 180
                     }
                     @if.hasBadges = ${Array.length(q(serviceProvider).referenceNodes('badges').get())}
                 }
@@ -68,7 +70,7 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.ProviderList) < prototype(Neos.
         }
 
         renderer = afx`
-            <h2 class="headline">{I18n.id('serviceListing.headline').value('serviceListing.headline').package('Neos.NeosIo.ServiceOfferings').source('Main')}</h2>
+            <h2 class="display-title-lg mb-4">{I18n.id('serviceListing.headline').value('serviceListing.headline').package('Neos.NeosIo.ServiceOfferings').source('Main')}</h2>
             <div class="service-providers__list" id="service-providers-listing"
                  data-provider-data={Json.stringify(props.serviceProvidersData)}
                  data-translation-data={Json.stringify(props.translationData)}

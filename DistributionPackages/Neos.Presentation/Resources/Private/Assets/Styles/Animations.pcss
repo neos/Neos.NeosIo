@@ -1,0 +1,76 @@
+@layer base {
+  @media (prefers-reduced-motion: no-preference) {
+    :root {
+      --anim-opacity: none;
+      --anim-transform: none;
+      --anim-clip: none;
+      --delay: 0s;
+      --duration: 0.5s;
+    }
+
+    body.neos-backend {
+      --delay: 0s;
+      --duration: 0s;
+    }
+
+    .intersect-start:not(.intersected),
+    .intersect-start:not(.intersected) > * {
+      animation-play-state: paused !important;
+    }
+
+    :where(.fade-in, .slide-up) {
+      animation: var(--anim-opacity), var(--anim-transform);
+    }
+
+    body:not(.neos-backend) .fade-in {
+      --anim-opacity: fade-in var(--duration) var(--delay) ease backwards;
+    }
+    body:not(.neos-backend) .slide-up {
+      --anim-transform: slide-up var(--duration) var(--delay) ease backwards;
+    }
+  }
+}
+
+@theme {
+  --animate-infinite-scroll: infinite-scroll 20s linear infinite;
+
+  @keyframes infinite-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+@utility animation-pause {
+  animation-play-state: paused;
+}
+
+@utility animation-play {
+  animation-play-state: running;
+}
+
+@utility animation-state-finish {
+  animation-play-state: paused;
+  animation-direction: reverse;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

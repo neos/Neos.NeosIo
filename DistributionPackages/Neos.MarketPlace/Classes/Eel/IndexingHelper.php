@@ -115,25 +115,6 @@ class IndexingHelper extends Eel\IndexingHelper
     }
 
     /**
-     * @return array{name: string, email: string, homepage: string}[]
-     */
-    public function extractMaintainers(Node $packageNode): array
-    {
-        $data = [];
-        $maintainerNodes = $this->storage->getPackageMaintainerNodes($packageNode->aggregateId);
-        foreach ($maintainerNodes as $maintainerNode) {
-            /** @var Node $maintainerNode */
-            $data[] = [
-                'name' => $maintainerNode->getProperty('title'),
-                'email' => $maintainerNode->getProperty('email'),
-                'homepage' => $maintainerNode->getProperty('homepage')
-            ];
-        }
-
-        return $data;
-    }
-
-    /**
      * @return string[]
      */
     public function trimExplode(?string $value): array

@@ -38,7 +38,6 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindReferencesFil
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\PropertyValueEquals;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
-use Neos\ContentRepository\Core\Projection\ContentGraph\NodePath;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\SharedModel\ContentRepository\ContentRepositoryId;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeAggregateId;
@@ -51,10 +50,10 @@ use Neos\ContentRepository\Core\SharedModel\Workspace\WorkspaceName;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\EventStore\Exception\ConcurrencyException;
 use Neos\Flow\Annotations as Flow;
+use Neos\Neos\Domain\NodeLabel\NodeLabelGeneratorInterface;
 use Neos\Neos\Domain\Service\WorkspacePublishingService;
 use Neos\Neos\Domain\SubtreeTagging\NeosVisibilityConstraints;
 use Packagist\Api\Result\Package;
-use Packagist\Api\Result\Package\Maintainer;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -91,8 +90,9 @@ class Storage
     protected array $vendorCache = [];
 
     public function __construct(
-        protected ContentRepositoryRegistry  $contentRepositoryRegistry,
-        protected WorkspacePublishingService $workspacePublishingService,
+        protected ContentRepositoryRegistry   $contentRepositoryRegistry,
+        protected WorkspacePublishingService  $workspacePublishingService,
+        protected NodeLabelGeneratorInterface $nodeLabelGenerator
     )
     {
         $this->workspaceName = WorkspaceName::fromString('live');
@@ -118,6 +118,26 @@ class Storage
             NeosVisibilityConstraints::excludeRemoved()
         );
         $this->storageRootNodeAggregateId = NodeAggregateId::fromString($this->repositoryIdentifier);
+    }
+
+    public function prefetchVendorNodeIds(): void
+    {
+        if (!$this->storageRootNodeAggregateId) {
+            return;
+        }
+
+        $nodes = $this->subGraph->findChildNodes(
+            $this->storageRootNodeAggregateId,
+            FindChildNodesFilter::create(
+                NodeTypeCriteria::createWithAllowedNodeTypeNames(
+                    NodeTypeNames::fromStringArray([MarketplaceNodeType::VENDOR->value]
+                    )),
+            )
+        );
+
+        foreach ($nodes as $node) {
+            $this->vendorCache[(string)$node->getProperty('title')] = $node->aggregateId;
+        }
     }
 
     /**
@@ -212,7 +232,7 @@ class Storage
         NodeAggregateId $vendorNodeAggregateId
     ): ?Node
     {
-        // Find the vendor node by name
+        // Find the package node by name
         return $this->subGraph->findChildNodes(
             $vendorNodeAggregateId,
             FindChildNodesFilter::create(
@@ -328,72 +348,6 @@ class Storage
         );
     }
 
-    public function createOrUpdateMaintainerNode(
-        Maintainer $maintainer,
-        Node       $packageNode
-    ): bool
-    {
-        $maintainerNode = $this->getPackageMaintainerNode(
-            $packageNode->aggregateId,
-            $maintainer->getName()
-        );
-        $properties = [
-            'title' => $maintainer->getName(),
-            'email' => $maintainer->getEmail(),
-            'homepage' => $maintainer->getHomepage()
-        ];
-
-        if ($maintainerNode) {
-            $this->updateNode(
-                $maintainerNode,
-                $maintainerNode->originDimensionSpacePoint,
-                $properties
-            );
-            return true;
-        }
-
-        $maintainersNode = $this->subGraph->findNodeByPath(
-            NodeName::fromString('maintainers'),
-            $packageNode->aggregateId
-        );
-        if ($maintainersNode === null) {
-            return false;
-        }
-
-        $maintainerNodeAggregateId = NodeAggregateId::create();
-        return $this->handleCommandWithRetry(
-            CreateNodeAggregateWithNode::create(
-                $this->workspaceName,
-                $maintainerNodeAggregateId,
-                NodeTypeName::fromString(MarketplaceNodeType::MAINTAINER->value),
-                $maintainersNode->originDimensionSpacePoint,
-                $maintainersNode->aggregateId,
-                initialPropertyValues: PropertyValuesToWrite::fromArray($properties)
-            )
-        );
-    }
-
-    public function getPackageMaintainerNodes(
-        NodeAggregateId $packageNodeAggregateId
-    ): Nodes
-    {
-        $maintainersNode = $this->subGraph->findNodeByPath(
-            NodeName::fromString('maintainers'),
-            $packageNodeAggregateId
-        );
-        if ($maintainersNode === null) {
-            return Nodes::createEmpty();
-        }
-        return $this->subGraph->findChildNodes(
-            $maintainersNode->aggregateId,
-            FindChildNodesFilter::create(
-                NodeTypeCriteria::createWithAllowedNodeTypeNames(
-                    NodeTypeNames::fromStringArray([MarketplaceNodeType::MAINTAINER->value])
-                )
-            )
-        );
-    }
-
     public function getPackageVersionsNode(
         NodeAggregateId $packageNodeAggregateId
     ): ?Node
@@ -418,90 +372,16 @@ class Storage
         );
     }
 
-    public function getPackageVersionNode(
-        NodeAggregateId $versionsNodeAggregateId,
-        string          $version
-    ): ?Node
-    {
-        return $this->subGraph->findChildNodes(
-            $versionsNodeAggregateId,
-            FindChildNodesFilter::create(
-                NodeTypeCriteria::createWithAllowedNodeTypeNames(
-                    NodeTypeNames::fromStringArray([MarketplaceNodeType::VERSION->value])
-                ),
-                propertyValue: PropertyValueEquals::create(
-                    PropertyName::fromString('version'),
-                    $version,
-                    true
-                )
-            )
-        )->first();
-    }
-
-    public function getPackageMaintainerNode(
-        NodeAggregateId $packageNodeAggregateId,
-        string          $maintainerName
-    ): ?Node
-    {
-        $maintainersNode = $this->subGraph->findNodeByPath(
-            NodeName::fromString('maintainers'),
-            $packageNodeAggregateId
-        );
-        if ($maintainersNode === null) {
-            return null;
-        }
-        return $this->subGraph->findChildNodes(
-            $maintainersNode->aggregateId,
-            FindChildNodesFilter::create(
-                NodeTypeCriteria::createWithAllowedNodeTypeNames(
-                    NodeTypeNames::fromStringArray([MarketplaceNodeType::MAINTAINER->value])
-                ),
-                propertyValue: PropertyValueEquals::create(
-                    PropertyName::fromString('title'),
-                    $maintainerName,
-                    true
-                )
-            )
-        )->first();
-    }
-
-    /**
-     * @param array<string, mixed> $properties
-     */
-    public function updateChildNode(
-        NodeAggregateId $parentNodeAggregateId,
-        NodeName        $childNodeName,
-        array           $properties,
-    ): bool
-    {
-        $childNode = $this->subGraph->findNodeByPath(
-            $childNodeName,
-            $parentNodeAggregateId
-        );
-        if ($childNode) {
-            return $this->updateNode(
-                $childNode,
-                $childNode->originDimensionSpacePoint,
-                $properties
-            );
-        }
-        return false;
-    }
-
     /**
      * @param array<string, mixed> $properties
      */
     public function createOrUpdateVersionNode(
         NodeAggregateId     $versionsNodeAggregateId,
-        string              $versionString,
+        ?Node               $versionNode,
         MarketplaceNodeType $nodeType,
         array               $properties,
     ): ?NodeAggregateId
     {
-        $versionNode = $this->getPackageVersionNode(
-            $versionsNodeAggregateId,
-            $versionString
-        );
         if ($versionNode) {
             $this->updateNode(
                 $versionNode,
@@ -541,6 +421,10 @@ class Storage
         Node $node
     ): bool
     {
+        $this->logger->debug(sprintf(
+            'Removing node %s',
+            $this->nodeLabelGenerator->getLabel($node),
+        ));
         return $this->handleCommandWithRetry(
             RemoveNodeAggregate::create(
                 $node->workspaceName,
@@ -551,15 +435,7 @@ class Storage
         );
     }
 
-    public function getReadmeNode(NodeAggregateId $packageNodeAggregateId): ?Node
-    {
-        return $this->subGraph->findNodeByPath(
-            NodePath::fromString('readme'),
-            $packageNodeAggregateId
-        );
-    }
-
-    public function updateNodeReference(
+    public function updateNodeReferenceIfChanged(
         Node                      $node,
         OriginDimensionSpacePoint $originDimensionSpacePoint,
         ReferenceName             $referenceName,
@@ -570,9 +446,14 @@ class Storage
             $node->aggregateId,
             FindReferencesFilter::create(referenceName: $referenceName)
         );
-        if ($existingReferences->getNodes()->first()?->aggregateId === $referenceAggregateId) {
+        if ($referenceAggregateId && $existingReferences->getNodes()->first()?->aggregateId->equals($referenceAggregateId)) {
             return; // No change needed, the reference is up-to-date
         }
+        $this->logger->debug(sprintf(
+            'Updating %s reference for node %s',
+            $referenceName,
+            $this->nodeLabelGenerator->getLabel($node),
+        ));
         $references = NodeReferencesToWrite::create(
             NodeReferencesForName::fromTargets(
                 $referenceName,

@@ -6,23 +6,11 @@
 'Neos.NeosIo:LandingPage':
   superTypes:
     'Neos.NodeTypes:Page': true
-    'Neos.NeosIo:KeyVisualMixin': true
-  childNodes:
-    main:
-      type: 'Neos.Neos:ContentCollection'
-      constraints:
-        nodeTypes:
-          '*': false
-          'Neos.NeosIo:Stage': true
-          'Neos.NeosIo:DeviceStage': true
-          'Neos.NeosIo:SemanticSection': true
-          'Neos.NodeTypes.ContentReferences:ContentReferences': true
-          'GoE.Neos:Content.Library': true
   ui:
     label: 'Landing page'
     icon: plane
-    inspector:
-      groups:
-        additional:
-          label: Additional
-          position: 20
+  childNodes:
+    keyvisual:
+      constraints:
+        nodeTypes:
+          'Neos.NeosIo:Constraints.KeyVisual.LandingPage': true

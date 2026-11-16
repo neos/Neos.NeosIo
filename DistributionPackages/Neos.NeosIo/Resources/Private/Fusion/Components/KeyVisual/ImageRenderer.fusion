@@ -1,47 +1,13 @@
-// Renders a keyVisualImage with source sets
+// Renders a keyVisualImage using a picture tag
 prototype(Neos.NeosIo:KeyVisual.ImageRenderer) < prototype(Neos.NeosIo:KeyVisual.AbstractRenderer) {
-    // "props.keyVisualImage" on the right side here is set inside Neos.NeosIo:KeyVisual (as this fusion object here is the renderer inside Neos.NeosIo:KeyVisual)
-    keyVisualImage = ${props.keyVisualImage}
-    keyVisualImageSmall = ${props.keyVisualImageSmall}
+    keyVisualImage = null
+    keyVisualAlternativeText = ''
 
-    previewImageUri = Neos.Neos:ImageUri {
+    picture = Neos.Presentation:Component.PictureTag {
         asset = ${props.keyVisualImage}
-        maximumWidth = 5
-        maximumHeight = 5
-    }
-
-    highQualityImageUri = Neos.Neos:ImageUri {
-        asset = ${props.keyVisualImage}
-        maximumWidth = 1500
-        maximumHeight = 1500
-    }
-
-    imageSrcSet = Neos.Fusion:Join {
-        @glue = ', '
-        ultraHighRes = Neos.Neos:ImageUri {
-            asset = ${props.keyVisualImage}
-            maximumWidth = 1920
-            maximumHeight = 1600
-
-            @process.addSrcSet = ${value + " 1920w"}
-        }
-
-        highRes = Neos.Neos:ImageUri {
-            asset = ${props.keyVisualImage}
-            maximumWidth = 1280
-            maximumHeight = 1000
-
-            @process.addSrcSet = ${value + " 1280w"}
-        }
-
-        mediumRes = Neos.Neos:ImageUri {
-            asset = ${props.keyVisualImageSmall}
-            maximumWidth = 658
-            maximumHeight = 658
-            allowCropping = true
-
-            @process.addSrcSet = ${value + " 658w"}
-            @if.hasSmallImage = ${props.keyVisualImageSmall}
-        }
+        alt = ${props.keyVisualAlternativeText}
+        imgClasses = "absolute inset-0 size-full object-cover object-center"
+        sizes = ${['100vw']}
+        loadEager = true
     }
 }

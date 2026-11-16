@@ -1,0 +1,18 @@
+prototype(Neos.Presentation:MobileNavigation.LevelSecond) < prototype(Neos.Fusion:Component) {
+    items = null
+
+    @propTypes {
+        @strict = true
+        items = ${PropTypes.arrayOf( PropTypes.instanceOf('\\Neos\\Neos\\Fusion\\MenuItem') ) }
+    }
+
+    renderer = afx`
+        <ul class="!m-0 !p-0 !list-none">
+            <Neos.Fusion:Loop items={props.items} itemName="item">
+                <li class="w-full border-b border-neutral-30 py-4">
+                    <Neos.Presentation:MobileNavigation.Link item={props.item} />
+                </li>
+            </Neos.Fusion:Loop>
+        </ul>
+    `
+}

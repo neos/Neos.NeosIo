@@ -1,13 +1,93 @@
 /**
  * Typographic elements
  */
+@mixin text-headline-xl() {
+  font-size: var(--text-6xl);
+  line-height: var(--text-10xl--line-height);
+  @include mq('medium') {
+    font-size: var(--text-8xl);
+  }
+  @include mq('large') {
+    font-size: var(--text-10xl);
+  }
+}
+@mixin text-headline-lg() {
+  font-size: var(--text-5xl);
+  line-height: var(--text-9xl--line-height);
+
+  @include mq('medium') {
+    font-size: var(--text-7xl);
+  }
+  @include mq('large') {
+    font-size: var(--text-9xl);
+  }
+}
+@mixin text-headline-md() {
+  font-size: var(--text-4xl);
+  line-height: var(--text-8xl--line-height);
+
+  @include mq('medium') {
+    font-size: var(--text-6xl);
+  }
+  @include mq('large') {
+    font-size: var(--text-8xl);
+  }
+}
+@mixin text-headline-sm() {
+  font-size: var(--text-3xl);
+  line-height: var(--text-7xl--line-height);
+  @include mq('medium') {
+    font-size: var(--text-4xl);
+  }
+  @include mq('large') {
+    font-size: var(--text-7xl);
+  }
+}
+@mixin text-title-lg() {
+  font-size: var(--text-2xl);
+  line-height: var(--text-4xl--line-height);
+  @include mq('medium') {
+    font-size: var(--text-3xl);
+  }
+  @include mq('large') {
+    font-size: var(--text-4xl);
+  }
+}
+@mixin text-title-md() {
+  font-size: var(--text-lg);
+  line-height: var(--text-xl--line-height);
+  @include mq('medium') {
+    font-size: var(--text-xl);
+  }
+  @include mq('large') {
+    font-size: var(--text-xl);
+  }
+}
+@mixin text-title-sm() {
+  font-size: var(--text-base);
+  line-height: var(--text-md--line-height);
+  @include mq('medium') {
+    font-size: var(--text-base);
+  }
+  @include mq('large') {
+    font-size: var(--text-md);
+  }
+}
+@mixin text-body-lg() {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+}
+@mixin text-body-md() {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+}
+@mixin text-body-sm() {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+}
 
 p {
   margin: 0;
-
-  & + * {
-    margin-top: rs($basic-spacing);
-  }
 }
 
 b,

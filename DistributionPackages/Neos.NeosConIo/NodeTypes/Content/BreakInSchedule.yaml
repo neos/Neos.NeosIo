@@ -1,10 +1,10 @@
 'Neos.NeosConIo:BreakInSchedule':
   superTypes:
     'Neos.Neos:Content': true
-  label: "${(q(node).property('title') + ' (' + q(node).property('room.name') + ')') || node.nodeType.label}"
+  label: "${Neos.Node.labelForNode(node).properties('title')}"
   ui:
     label: 'Break in schedule'
-    icon: 'room'
+    icon: 'mug-saucer'
     group: neoscon
     inspector:
       groups:
@@ -17,6 +17,20 @@
         label: 'Title'
         inspector:
           group: 'breakSettings'
+    type:
+      type: string
+      ui:
+        label: 'Schedule type'
+        reloadIfChanged: true
+        inspector:
+          group: 'breakSettings'
+          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            allowEmpty: true
+            placeholder: 'Break (coffee, lunch, …)'
+            values:
+              SPECIAL:
+                label: 'Special (social event, …)'
     talkDate:
       type: DateTime
       ui:

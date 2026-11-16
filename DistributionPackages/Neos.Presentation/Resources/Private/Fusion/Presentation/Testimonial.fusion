@@ -1,0 +1,52 @@
+prototype(Neos.Presentation:Testimonial) < prototype(Neos.Fusion:Component) {
+    @styleguide {
+        title = 'Testimonial'
+        props {
+            paragraph = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+            isQuote = true
+            textLeft = false
+            name = 'Karsten Dambekalns'
+            position = 'Creative Code Engineer'
+            button {
+                content = 'Read more testimonials'
+                href = '#'
+            }
+            image.imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                uri = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=5&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            }
+        }
+    }
+
+    @propTypes {
+        text = PropTypes:String
+        isQuote = PropTypes:Bool
+        textLeft = PropTypes:Bool
+        name = PropTypes:String
+        position = PropTypes:String
+    }
+
+    textLeft = null
+    image = null
+    isQuote = null
+    paragraph = null
+    button = null
+    name = null
+    position = null
+
+    renderer = afx`
+        <Neos.Presentation:Spacing size x y>
+            <div class={["flex justify-center items-center lg:gap-32", props.textLeft ? "flex-col-reverse lg:flex-row-reverse" : "flex-col lg:flex-row"]}>
+                <Sitegeist.Kaleidoscope:Image {...props.image} attributes.class="aspect-square rounded-full object-cover w-full max-w-3/4 md:max-w-1/2 lg:max-w-3/10" />
+                <div class="flex flex-col gap-y-1 mt-2 lg:w-1/2">
+                    <Neos.Presentation:Icon icon="quote-left" class="w-10 text-green" @if={props.isQuote} />
+                    <Neos.Presentation:Paragraph content={props.paragraph} class={["text-lg", props.isQuote ? 'italic' : 'font-bold']} />
+                    <div>
+                        <Neos.Presentation:Paragraph content={props.name} class="mt-2 text-green-dark" />
+                        <Neos.Presentation:Paragraph content={props.position} />
+                    </div>
+                    <Neos.Presentation:Button icon="animatedArrow" {...props.button} class="mt-6 self-start" />
+                </div>
+            </div>
+        </Neos.Presentation:Spacing>
+    `
+}

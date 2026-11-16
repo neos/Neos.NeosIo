@@ -8,22 +8,40 @@ root = true
 charset = utf-8
 end_of_line = lf
 insert_final_newline = true
-trim_trailing-whitespace = true
+trim_trailing_whitespace = true
 indent_style = space
 indent_size = 4
 
 # Exceptions
-[{*.{yaml,yml,sh,jscsrc,scss},package.json,.*rc}]
+[{*.{yaml,yml,sh,jscsrc},package.json,.*rc}]
 indent_size = 2
 
-[*.{json,scss}]
+# All kind of CSS files
+[*.{scss,sass,css,pcss,styl,less}]
+max_line_length = 300
+indent_size = 2
+
+# All kind of JS files
+[*.{js,jsx,mjs,mjsx,ts,tsx,mts,mtsx,vue}]
+max_line_length = 120
+
+[*.json]
 max_line_length = 1000
 
+# Site export from flow
 [Sites.xml]
 indent_size = 1
 
+# Template files
+[*.{htm,html}]
+max_line_length = 200
+indent_size = 2
+
+# Markdown uses trailing whitespace for line breaks
 [*.{note,md,edit,read}]
-trim_trailing-whitespace = false
+max_line_length = 200
+trim_trailing_whitespace = false
+indent_size = 2
 
 [Makefile]
 indent_style = tab

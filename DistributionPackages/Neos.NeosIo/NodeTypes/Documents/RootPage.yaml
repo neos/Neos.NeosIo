@@ -7,13 +7,39 @@
   superTypes:
     'Neos.NeosIo:LandingPage': true
     'Neos.Neos:Site': true
+    'Neos.NeosIo:Mixin.Disruptor': true
+    'Neos.NeosIo:Mixin.MenuItemOptions': false
+    'Neos.NeosIo:Mixin.MainNavigationOptions': true
   ui:
     label: 'Root Page'
     icon: home
+    inspector:
+      groups:
+        additional:
+          label: Additional
+          collapsed: true
+          icon: 'cogs'
+        newsletter:
+          label: 'Mailchimp Settings'
+          icon: icon-mailchimp
+          position: 'after additional'
+          collapsed: true
+        navigation:
+          label: 'Navigation'
+          icon: 'sitemap'
+          tab: navigation
+        cta:
+          label: 'CTA'
+          icon: 'bullseye'
+          tab: navigation
   constraints:
     nodeTypes:
       'Neos.NodeTypes:Page': true
       'Neos.NeosIo:FooterContainer': true
+      'Neos.NeosIo.Blog:Document.Tags': false
+      'Neos.NeosIo.Blog:Document.Tag': false
+      'Neos.NeosIo:Post': false
+      'Neos.NeosIo:Document.FirstLevelNavigationFolder': true
   properties:
     titlePostfix:
       type: string
@@ -23,6 +49,7 @@
           group: additional
     imprintLinkNode:
       type: reference
+      scope: nodeAggregate
       ui:
         label: 'Imprint Link Page'
         reloadIfChanged: true
@@ -34,27 +61,21 @@
               - 'Neos.Neos:Shortcut'
     showSmartAppBanner:
       type: boolean
+      scope: nodeAggregate
       ui:
         label: 'Show Smart App Banner'
         inspector:
           group: additional
     iOSAppId:
       type: string
+      scope: nodeAggregate
       ui:
         label: 'iOS App Id'
         inspector:
           group: additional
-    footerContentContainer:
-      type: reference
-      ui:
-        label: 'Footer content container'
-        inspector:
-          group: additional
-          editorOptions:
-            nodeTypes:
-              - Neos.NeosIo:FooterContainer
     blogFolder:
       type: reference
+      scope: nodeAggregate
       ui:
         label: 'Blog folder'
         inspector:
@@ -62,3 +83,74 @@
           editorOptions:
             nodeTypes:
               - Neos.Neos:Document
+    caseStudyFolder:
+      type: reference
+      scope: nodeAggregate
+      ui:
+        label: 'Case Study folder'
+        inspector:
+          group: additional
+          editorOptions:
+            nodeTypes:
+              - Neos.Neos:Document
+    nlUser:
+      type: string
+      scope: nodeAggregate
+      ui:
+        label: 'User ID'
+        inspector:
+          group: newsletter
+    nlId:
+      type: string
+      scope: nodeAggregate
+      ui:
+        label: 'Newsletter ID'
+        inspector:
+          group: newsletter
+    ctaLink:
+      type: string
+      scope: nodeAggregate
+      ui:
+        label: 'CTA Link'
+        reloadIfChanged: true
+        inspector:
+          group: cta
+          editor: Neos.Neos/Inspector/Editors/LinkEditor
+    ctaText:
+      type: string
+      ui:
+        label: 'CTA Text'
+        reloadIfChanged: true
+        inspector:
+          group: cta
+  references:
+    footerContentContainer:
+      constraints:
+        maxItems: 1
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:FooterContainer': true
+      ui:
+        label: 'Footer content container'
+        inspector:
+          group: additional
+          editorOptions:
+            nodeTypes:
+              - Neos.NeosIo:FooterContainer
+    firstLevelMenuItems:
+      constraints:
+        nodeTypes:
+          'Neos.Neos:Document': true
+      scope: nodeAggregate
+      ui:
+        label: 'First Level Menu Items'
+        reloadPageIfChanged: true
+        inspector:
+          group: navigation
+          editorOptions:
+            nodeTypes:
+              - 'Neos.Neos:Document'
+              - '!Neos.NeosIo:Post'
+              - '!Neos.NeosIo.Blog:Document.Tag'
+              - '!Neos.MarketPlace:Package'
+              - '!Neos.NeosIo.ServiceOfferings:Document.ServiceProvider'

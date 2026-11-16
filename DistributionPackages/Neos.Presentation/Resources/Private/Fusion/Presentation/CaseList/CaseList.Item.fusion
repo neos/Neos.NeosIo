@@ -1,0 +1,124 @@
+prototype(Neos.Presentation:CaseList.Item) < prototype(Neos.Fusion:Component) {
+    title = ${q(node).property('title')}
+    alternativeText = ${q(node).property('title')}
+    launchDate = ${q(node).property('launchDate')}
+    projectVolume = Neos.NeosIo.CaseStudies:Helper.ProjectVolumes {
+        volume = ${q(node).property('projectVolume')}
+    }
+    isCaseStudy = ${Neos.Node.isOfType(node, 'Neos.NeosIo:Reference.CaseStudy')}
+    featured = ${q(node).property('featured') || this.isCaseStudy}
+
+    // Load all reference nodes with one query and then filter them, which is faster for the amount of items we render
+    referenceNodes = ${q(node).referenceNodes().get()}
+    projectType = ${q(this.referenceNodes).filter('[instanceof Neos.NeosIo:ReferenceType]').get(0)}
+    serviceProvider = ${q(this.referenceNodes).filter('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]').get(0)}
+    // Only use the service provider in the list if they are an active supporter (i.e. have a badge)
+    // If we add other types of badges, we should filter them
+    numberOfProviderBadges = ${this.serviceProvider ? q(this.serviceProvider).references('badges').count() : 0}
+
+    // FIXME: This is a presentational component but contains lots of integration code
+
+    @private {
+        featuredLabel = ${Translation.translate('caseListing.sortBy.featured', 'Featured', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        caseStudyLabel = ${Translation.translate('caseListing.sortBy.caseStudy', 'Case Study', [], 'Main', 'Neos.NeosIo.CaseStudies')}
+        url = Neos.Fusion:Case {
+            isCaseStudy {
+                condition = ${props.isCaseStudy}
+                renderer = Neos.Neos:NodeUri {
+                    node = ${node}
+                }
+            }
+            customUri {
+                condition = ${q(node).property('url')}
+                renderer = ${q(node).property('url')}
+                renderer.@process.convertUris = Neos.Neos:ConvertUris {
+                    absolute = true
+                }
+            }
+            default {
+                condition = true
+                renderer = ''
+            }
+        }
+
+        image = Neos.Presentation:Component.PictureTag {
+            asset = ${q(node).property('image')}
+            alt = ${props.alternativeText}
+            imgClasses = "absolute w-full h-full object-cover"
+            srcSet = ${['400w', '800w', '1200w']}
+        }
+        thumbnail = Neos.Presentation:Component.PictureTag {
+            asset = ${q(node).property('image')}
+            alt = ${props.alternativeText}
+            imgClasses = "w-full h-full object-cover"
+        }
+        meta = Neos.NeosIo:Reference.List.Item.Meta {
+            launchDate = ${props.launchDate}
+            projectVolume = ${props.projectVolume}
+            projectType = ${props.projectType}
+            serviceProvider = ${props.numberOfProviderBadges > 0 ? props.serviceProvider : null}
+        }
+        volumeCode = ${q(node).property('projectVolume') ? String.toInteger(q(node).property('projectVolume')) : 0}
+        launchTimestamp = ${q(node).property('launchDate') || q(node).property('datePublished') || q(node).property('_creationDateTime')}
+        launchTimestamp.@process.format = ${value ? String.toInteger(Date.format(value, 'U')) : 0}
+        projectTypeName = ${props.projectType ? Neos.Node.label(props.projectType) : ''}
+    }
+
+    renderer = afx`
+        <div
+            data-case-item=""
+            data-featured={props.featured ? '1' : '0'}
+            data-project-type={private.projectTypeName}
+            data-project-volume={private.volumeCode}
+            data-launch-date={private.launchTimestamp}
+            data-search-text={String.toLowerCase((props.title || '') + ' ' + (private.projectTypeName))}
+        >
+            <!-- Card view (grid mode) -->
+            <div x-show="view === 'grid'" class="relative">
+                <Neos.Presentation:ContentTeaser
+                    title={props.title}
+                    link={private.url}
+                    openInNewTab={true}
+                    image={private.image}
+                    text={private.meta}
+                />
+                <span @if={props.featured}
+                      class="absolute top-2 left-2 z-20 bg-blue-light text-white text-xs px-2 py-0.5">
+                    {private.featuredLabel}
+                </span>
+                <span @if={props.isCaseStudy}
+                      class="absolute top-2 right-2 z-20 bg-yellow text-white text-xs px-2 py-0.5">
+                    {private.caseStudyLabel}
+                </span>
+            </div>
+
+            <!-- Row view (list mode) -->
+            <div x-show="view === 'list'" x-cloak class="flex items-center gap-4 py-3 min-w-0">
+                <div class="w-20 h-14 flex-shrink-0 overflow-hidden bg-neutral-100">
+                    {private.thumbnail}
+                </div>
+                <div class="flex-1 flex items-center gap-2 min-w-0">
+                    <a href={private.url} target="_blank"
+                       class="font-semibold text-neutral-900 hover:underline truncate min-w-0">
+                        {props.title}
+                    </a>
+                    <span @if={props.featured}
+                          class="flex-shrink-0 bg-blue-light text-white text-xs px-2 py-0.5">
+                        {private.featuredLabel}
+                    </span>
+                </div>
+                <span class="w-40 min-w-0 text-sm text-neutral-500 hidden md:flex items-center gap-1">
+                    <i @if={private.projectTypeName} class="fas fa-industry flex-shrink-0" aria-hidden="true"></i>
+                    <span @if={private.projectTypeName} class="truncate">{private.projectTypeName}</span>
+                </span>
+                <span class="w-40 text-sm text-neutral-500 hidden lg:flex items-center gap-1">
+                    <i @if={props.projectVolume} class="fas fa-users" aria-hidden="true"></i>{props.projectVolume}
+                </span>
+                <span class="w-40 text-sm text-neutral-500 hidden lg:flex items-center gap-1">
+                    <i @if={props.launchDate} class="fas fa-rocket" aria-hidden="true"></i>
+                    <Neos.Fusion:Value @if={props.launchDate} value={Date.format(props.launchDate, 'd.m.Y')} />
+                </span>
+            </div>
+        </div>
+    `
+}

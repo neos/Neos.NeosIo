@@ -1,0 +1,50 @@
+prototype(Neos.Presentation:LogoBar) < prototype(Neos.Fusion:Component) {
+    assets = null
+    grayscale = true
+
+    @propTypes {
+        @strict = true
+        assets = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                image = PropTypes:String
+                href = PropTypes:String
+                alternativeText = PropTypes:String
+            }
+        }
+        grayscale = PropTypes:Bool
+    }
+
+    @private {
+        assets = ${Type.isArray(props.assets) ? Array.filter(props.assets, item => !!item.image) : []}
+        numberOfAssets = ${Array.length(private.assets)}
+        duplications = ${private.numberOfAssets > 3 ? 3 : 0}
+    }
+
+    renderer = afx`
+        <div
+            @if={private.numberOfAssets}
+            class="flex justify-center overflow-x-clip hover:[&>ul]:[animation-play-state:paused]"
+            x-data={AlpineJS.xData('LogoBar', private.duplications)}
+        >
+            <ul
+                x-random-children
+                class={['flex items-center', private.duplications ? 'animate-infinite-scroll' : null]}
+                style={private.duplications ? 'animation-duration:' + private.numberOfAssets * 10 + 's;' : null}
+            >
+                <Neos.Fusion:Loop items={private.assets}>
+                    <li class="mx-14 list-none">
+                        <Neos.Fusion:Tag
+                            tagName={item.href ? 'a' : 'figure'}
+                            attributes.href={item.href}
+                            attributes.class.grayscale={props.grayscale ? 'grayscale' : null}
+                            attributes.class.grayscaleLink={props.grayscale ? 'transition-[filter] hocus:grayscale-0' : null}
+                            attributes.aria-label={item.href ? item.alternativeText : null}
+                        >
+                            {item.image}
+                        </Neos.Fusion:Tag>
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
+        </div>
+    `
+}

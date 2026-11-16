@@ -1,0 +1,21 @@
+'Neos.NeosIo:LogoBar':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.Neos:ContentCollection': true
+  ui:
+    label: 'Logo Bar'
+    icon: ellipsis
+    group: special
+  constraints:
+    nodeTypes:
+      '*': false
+      Neos.NodeTypes:Image: true
+  properties:
+    grayscale:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: 'Grayscale'
+        reloadIfChanged: true
+        inspector:
+          group: content

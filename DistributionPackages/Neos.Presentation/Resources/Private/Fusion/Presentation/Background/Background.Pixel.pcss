@@ -1,0 +1,289 @@
+/* https://unused-css.com/tools/clip-path-generator */
+
+/* Make sure classes are generated */
+@source inline("n-background--pixel-{top,bottom}");
+@source inline("n-background--pixel-{top,bottom}{1..3}");
+@source inline("{sm,md,lg,xl}:n-background--pixel-delay");
+
+@utility n-background--pixel-delay {
+  animation-delay: var(--delay);
+}
+
+@layer components {
+  .n-background--pixel {
+    --frac: calc(100cqw / 7);
+
+    --point-0-1: 0 var(--frac);
+    --point-0-2: 0 calc(var(--frac) * 2);
+    --point-0-3: 0 calc(var(--frac) * 3);
+    --point-0-4: 0 calc(var(--frac) * 4);
+    --point-1-0: var(--frac) 0;
+    --point-1-1: var(--frac) var(--frac);
+    --point-1-2: var(--frac) calc(var(--frac) * 2);
+    --point-1-3: var(--frac) calc(var(--frac) * 3);
+    --point-1-4: var(--frac) calc(var(--frac) * 4);
+    --point-2-1: calc(var(--frac) * 2) var(--frac);
+    --point-2-2: calc(var(--frac) * 2) calc(var(--frac) * 2);
+    --point-2-3: calc(var(--frac) * 2) calc(var(--frac) * 3);
+    --point-2-4: calc(var(--frac) * 2) calc(var(--frac) * 4);
+    --point-3-1: calc(var(--frac) * 3) var(--frac);
+    --point-3-2: calc(var(--frac) * 3) calc(var(--frac) * 2);
+    --point-3-3: calc(var(--frac) * 3) calc(var(--frac) * 3);
+    --point-3-4: calc(var(--frac) * 3) calc(var(--frac) * 4);
+    --point-4-3: calc(var(--frac) * 4) calc(var(--frac) * 3);
+    --point-4-4: calc(var(--frac) * 4) calc(var(--frac) * 4);
+    --point-5-1: calc(var(--frac) * 5) var(--frac);
+    --point-5-2: calc(var(--frac) * 5) calc(var(--frac) * 2);
+    --point-5-3: calc(var(--frac) * 5) calc(var(--frac) * 3);
+    --point-5-4: calc(var(--frac) * 5) calc(var(--frac) * 4);
+    --point-6-1: calc(var(--frac) * 6) var(--frac);
+    --point-6-2: calc(var(--frac) * 6) calc(var(--frac) * 2);
+    --point-6-3: calc(var(--frac) * 6) calc(var(--frac) * 3);
+    --point-6-4: calc(var(--frac) * 6) calc(var(--frac) * 4);
+    --point-full-1: 100% var(--frac);
+    --point-full-2: 100% calc(var(--frac) * 2);
+    --point-full-3: 100% calc(var(--frac) * 3);
+    --point-full-4: 100% calc(var(--frac) * 4);
+  }
+
+  .n-background--pixel-top {
+    margin-top: calc(var(--frac) * -4 - 2px);
+    padding-top: calc(var(--frac) * 4);
+
+    --points-bottom: 100% 100%, 0 100%;
+
+    --bottom-none: polygon(evenodd, var(--point-0-4), var(--point-full-4), var(--points-bottom));
+    --bottom-left: polygon(evenodd, var(--point-0-3), var(--point-1-3), var(--point-1-4), var(--point-full-4), var(--points-bottom));
+    --bottom-left-right: polygon(evenodd, var(--point-0-3), var(--point-1-3), var(--point-1-4), var(--point-6-4), var(--point-6-3), var(--point-full-3), var(--points-bottom));
+  }
+
+  .n-background--pixel-top1 {
+    --delay: 0.5s;
+
+    animation: 0.7s step-start 0.5s 1 normal both pixel-top1;
+  }
+
+  .n-background--pixel-top2 {
+    --delay: 0.75s;
+
+    animation: 0.7s step-start 0.5s 1 normal both pixel-top2;
+  }
+
+  .n-background--pixel-top3 {
+    --delay: 1s;
+
+    animation: 0.7s step-start 0.5s 1 normal both pixel-top3;
+  }
+
+  @keyframes pixel-top1 {
+    0% {
+      clip-path: var(--bottom-none);
+    }
+    8% {
+      clip-path: var(--bottom-left);
+    }
+    15% {
+      clip-path: var(--bottom-left-right);
+    }
+    23% {
+      clip-path: polygon(evenodd, var(--point-0-3), var(--point-2-3), var(--point-2-4), var(--point-6-4), var(--point-6-3), var(--point-full-3), var(--points-bottom));
+    }
+    31% {
+      clip-path: polygon(evenodd, var(--point-0-2), var(--point-1-2), var(--point-1-3), var(--point-2-3), var(--point-2-4), var(--point-6-4), var(--point-6-3), var(--point-full-3), var(--points-bottom));
+    }
+    38% {
+      clip-path: polygon(evenodd, var(--point-0-2), var(--point-1-2), var(--point-1-3), var(--point-2-3), var(--point-2-4), var(--point-5-4), var(--point-5-3), var(--point-full-3), var(--points-bottom));
+    }
+    46% {
+      clip-path: polygon(evenodd, var(--point-0-2), var(--point-1-2), var(--point-1-3), var(--point-2-3), var(--point-2-4), var(--point-5-4), var(--point-5-3), var(--point-6-3), var(--point-6-2), var(--point-full-2), var(--points-bottom));
+    }
+    54% {
+      clip-path: polygon(evenodd, var(--point-0-2), var(--point-1-2), var(--point-1-3), var(--point-2-3), var(--point-2-4), var(--point-4-4), var(--point-4-3), var(--point-6-3), var(--point-6-2), var(--point-full-2), var(--points-bottom));
+    }
+    62% {
+      clip-path: polygon(evenodd, var(--point-0-2), var(--point-1-2), var(--point-1-3), var(--point-2-3), var(--point-2-4), var(--point-4-4), var(--point-4-3), var(--point-5-3), var(--point-5-2), var(--point-full-2), var(--points-bottom));
+    }
+    69% {
+      clip-path: polygon(evenodd, var(--point-0-2), var(--point-1-2), var(--point-1-3), var(--point-2-3), var(--point-2-4), var(--point-4-4), var(--point-4-3), var(--point-5-3), var(--point-5-1), var(--point-6-1), var(--point-6-2), var(--point-full-2), var(--points-bottom));
+    }
+    77% {
+      clip-path: polygon(evenodd, var(--point-0-2), var(--point-2-2), var(--point-2-4), var(--point-4-4), var(--point-4-3), var(--point-5-3), var(--point-5-1), var(--point-6-1), var(--point-6-2), var(--point-full-2), var(--points-bottom));
+    }
+    85% {
+      clip-path: polygon(evenodd, var(--point-0-2), var(--point-2-2), var(--point-2-4), var(--point-3-4), var(--point-3-3), var(--point-5-3), var(--point-5-1), var(--point-6-1), var(--point-6-2), var(--point-full-2), var(--points-bottom));
+    }
+    92% {
+      clip-path: polygon(evenodd, var(--point-0-2), var(--point-3-2), var(--point-3-4), var(--point-2-4), var(--point-2-3), var(--point-5-3), var(--point-5-1), var(--point-6-1), var(--point-6-2), var(--point-full-2), var(--points-bottom));
+    }
+    100% {
+      clip-path: polygon(evenodd, var(--point-0-2), var(--point-2-2), var(--point-2-1), var(--point-3-1), var(--point-3-4), var(--point-2-4), var(--point-2-3), var(--point-5-3), var(--point-5-1), var(--point-6-1), var(--point-6-2), var(--point-full-2), var(--points-bottom));
+    }
+  }
+
+  @keyframes pixel-top2 {
+    0% {
+      clip-path: var(--bottom-none);
+    }
+    13% {
+      clip-path: var(--bottom-left);
+    }
+    25% {
+      clip-path: var(--bottom-left-right);
+    }
+    38% {
+      clip-path: polygon(evenodd, var(--point-0-3), var(--point-2-3), var(--point-2-2), var(--point-1-2), var(--point-1-4), var(--point-6-4), var(--point-6-3), var(--point-full-3), var(--points-bottom));
+    }
+    50% {
+      clip-path: polygon(evenodd, var(--point-0-3), var(--point-2-3), var(--point-2-2), var(--point-1-2), var(--point-1-4), var(--point-5-4), var(--point-5-3), var(--point-full-3), var(--points-bottom));
+    }
+    63% {
+      clip-path: polygon(evenodd, var(--point-0-3), var(--point-2-3), var(--point-2-2), var(--point-1-2), var(--point-1-4), var(--point-3-4), var(--point-3-3), var(--point-4-3), var(--point-4-4), var(--point-5-4), var(--point-5-3), var(--point-full-3), var(--points-bottom));
+    }
+    75% {
+      clip-path: polygon(evenodd, var(--point-0-3), var(--point-2-3), var(--point-2-1), var(--point-1-1), var(--point-1-4), var(--point-3-4), var(--point-3-3), var(--point-4-3), var(--point-4-4), var(--point-5-4), var(--point-5-3), var(--point-full-3), var(--points-bottom));
+    }
+    88% {
+      clip-path: polygon(evenodd, var(--point-0-3), var(--point-2-3), var(--point-2-1), var(--point-1-1), var(--point-1-4), var(--point-2-4), var(--point-2-3), var(--point-4-3), var(--point-4-4), var(--point-5-4), var(--point-5-3), var(--point-full-3), var(--points-bottom));
+    }
+    100% {
+      clip-path: polygon(
+        evenodd,
+        0 0,
+        var(--point-1-0),
+        var(--point-1-1),
+        var(--point-0-1),
+        var(--point-0-3),
+        var(--point-1-3),
+        var(--point-1-1),
+        var(--point-2-1),
+        var(--point-2-3),
+        var(--point-1-3),
+        var(--point-1-4),
+        var(--point-2-4),
+        var(--point-2-3),
+        var(--point-4-3),
+        var(--point-4-4),
+        var(--point-5-4),
+        var(--point-5-3),
+        var(--point-full-3),
+        var(--points-bottom)
+      );
+    }
+  }
+
+  @keyframes pixel-top3 {
+    0% {
+      clip-path: var(--bottom-none);
+    }
+    10% {
+      clip-path: polygon(evenodd, var(--point-0-4), var(--point-6-4), var(--point-6-3), var(--point-full-3), var(--points-bottom));
+    }
+    20% {
+      clip-path: polygon(evenodd, var(--point-0-4), var(--point-1-4), var(--point-1-3), var(--point-2-3), var(--point-2-4), var(--point-6-4), var(--point-6-3), var(--point-full-3), var(--points-bottom));
+    }
+    30% {
+      clip-path: polygon(evenodd, var(--point-0-4), var(--point-1-4), var(--point-1-3), var(--point-2-3), var(--point-2-4), var(--point-5-4), var(--point-5-3), var(--point-full-3), var(--points-bottom));
+    }
+    40% {
+      clip-path: polygon(evenodd, var(--point-0-4), var(--point-1-4), var(--point-1-3), var(--point-3-3), var(--point-3-4), var(--point-5-4), var(--point-5-3), var(--point-full-3), var(--points-bottom));
+    }
+    50% {
+      clip-path: polygon(evenodd, var(--point-0-4), var(--point-1-4), var(--point-1-3), var(--point-3-3), var(--point-3-4), var(--point-5-4), var(--point-5-2), var(--point-6-2), var(--point-6-3), var(--point-full-3), var(--points-bottom));
+    }
+    60% {
+      clip-path: polygon(evenodd, var(--point-0-4), var(--point-1-4), var(--point-1-2), var(--point-2-2), var(--point-2-3), var(--point-3-3), var(--point-3-4), var(--point-5-4), var(--point-5-2), var(--point-6-2), var(--point-6-3), var(--point-full-3), var(--points-bottom));
+    }
+    70% {
+      clip-path: polygon(
+        evenodd,
+        var(--point-0-4),
+        var(--point-1-4),
+        var(--point-1-2),
+        var(--point-2-2),
+        var(--point-2-3),
+        var(--point-3-3),
+        var(--point-3-4),
+        var(--point-5-4),
+        var(--point-5-2),
+        var(--point-6-2),
+        var(--point-6-1),
+        var(--point-full-1),
+        var(--point-full-2),
+        var(--point-6-2),
+        var(--point-6-3),
+        var(--point-full-3),
+        var(--points-bottom)
+      );
+    }
+    80% {
+      clip-path: polygon(
+        evenodd,
+        var(--point-0-4),
+        var(--point-1-4),
+        var(--point-1-2),
+        var(--point-2-2),
+        var(--point-2-3),
+        var(--point-4-3),
+        var(--point-4-4),
+        var(--point-5-4),
+        var(--point-5-2),
+        var(--point-6-2),
+        var(--point-6-1),
+        var(--point-full-1),
+        var(--point-full-2),
+        var(--point-6-2),
+        var(--point-6-3),
+        var(--point-full-3),
+        var(--points-bottom)
+      );
+    }
+    90% {
+      clip-path: polygon(
+        evenodd,
+        var(--point-0-2),
+        var(--point-2-2),
+        var(--point-2-3),
+        var(--point-0-3),
+        var(--point-0-4),
+        var(--point-1-4),
+        var(--point-1-3),
+        var(--point-4-3),
+        var(--point-4-4),
+        var(--point-5-4),
+        var(--point-5-2),
+        var(--point-6-2),
+        var(--point-6-1),
+        var(--point-full-1),
+        var(--point-full-2),
+        var(--point-6-2),
+        var(--point-6-3),
+        var(--point-full-3),
+        var(--points-bottom)
+      );
+    }
+    100% {
+      clip-path: polygon(
+        evenodd,
+        var(--point-0-2),
+        var(--point-2-2),
+        var(--point-2-3),
+        var(--point-0-3),
+        var(--point-0-4),
+        var(--point-1-4),
+        var(--point-1-3),
+        var(--point-4-3),
+        var(--point-4-4),
+        var(--point-5-4),
+        var(--point-5-2),
+        var(--point-6-2),
+        var(--point-6-1),
+        var(--point-full-1),
+        var(--point-full-2),
+        var(--point-6-2),
+        var(--point-6-3),
+        var(--point-full-3),
+        var(--points-bottom)
+      );
+    }
+  }
+}

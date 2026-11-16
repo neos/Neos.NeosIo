@@ -83,20 +83,8 @@ class PackageHelper implements ProtectedContextAwareInterface
                 );
 
                 // Collect authors
-                $maintainers = $subgraph->findNodeByPath(
-                    NodePath::fromString('maintainers'),
-                    $packageNode->aggregateId
-                );
-                $authorNames = $maintainers ? $subgraph->findChildNodes(
-                    $maintainers->aggregateId,
-                    FindChildNodesFilter::create(
-                        'Neos.MarketPlace:Maintainer',
-                        ordering: Ordering::byProperty(
-                            PropertyName::fromString('title'),
-                            OrderingDirection::ASCENDING
-                        )
-                    )
-                )->map(static fn (Node $author) => $author->getProperty('title')) : [];
+                $maintainers = $packageNode->getProperty('maintainers');
+                $authorNames = explode(',', $maintainers);
 
                 // Collect versions
                 $versionsNode = $subgraph->findNodeByPath(

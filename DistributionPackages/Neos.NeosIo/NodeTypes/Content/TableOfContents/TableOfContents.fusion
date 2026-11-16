@@ -1,8 +1,15 @@
 prototype(Neos.NeosIo:Content.TableOfContents) < prototype(Neos.Neos:ContentComponent) {
     items = Neos.NeosIo:Fragment.TableOfContents.MenuItems
+    headline = Neos.Neos:Editable {
+        property = 'headline'
+        block = false
+    }
 
     renderer = afx`
-        <nav class="table-of-contents">
+        <nav class="table-of-contents mb-[var(--n-spacing--y-small)] last:mb-0">
+            <strong class="n-headline block mb-1" @if={props.headline}>
+                {props.headline}
+            </strong>
             <Neos.NeosIo:Component.TableOfContents.MenuLevel items={props.items} />
         </nav>
     `

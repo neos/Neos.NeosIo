@@ -1,0 +1,9 @@
+prototype(Neos.NeosIo:Icon) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.NeosIo:Component.Icon {
+        alignment = ${q(node).property('alignment') || 'inline'}
+        icon = ${q(node).property('icon')}
+        color = ${q(node).property('color')}
+        size = ${q(node).property('size')}
+        isPadded = ${q(node).property('isPadded')}
+    }
+}

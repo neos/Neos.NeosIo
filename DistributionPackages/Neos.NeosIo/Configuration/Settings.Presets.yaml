@@ -4,7 +4,7 @@ Neos:
       presets:
         properties:
           NeosIo:
-            'text.plain':
+            plainText:
               type: string
               ui:
                 inlineEditable: true
@@ -12,9 +12,10 @@ Neos:
                   editorOptions:
                     placeholder: '(( text plain ))'
                     autoparagraph: false
-                    formatting: { 'removeFormat': true }
+                    formatting:
+                      removeFormat: true
 
-            'text.block':
+            textBlock:
               type: string
               ui:
                 inlineEditable: true
@@ -54,7 +55,7 @@ Neos:
                       ul: false
                       a: true
 
-            'text.free':
+            freeText:
               type: string
               ui:
                 inlineEditable: true
@@ -93,3 +94,331 @@ Neos:
                       ol: true
                       ul: true
                       a: true
+
+            alignment:
+              type: string
+              scope: nodeAggregate
+              ui:
+                label: 'Alignment'
+                reloadIfChanged: true
+                inspector:
+                  group: appearance
+                  editor: Beromir.ToggleEditor/Editor
+                  editorOptions:
+                    values:
+                      Left:
+                        description: Left
+                        icon: align-left
+                      Center:
+                        description: Center
+                        icon: align-center
+                      Right:
+                        description: Right
+                        icon: align-right
+
+            colorBackgroundSolid:
+              type: string
+              scope: nodeAggregate
+              ui:
+                label: 'Background Color'
+                reloadIfChanged: true
+                inspector:
+                  group: appearance
+                  editor: Beromir.ToggleEditor/Editor
+                  editorOptions:
+                    layout: color
+                    values: &solidColors
+                      blue-dark:
+                        color: "#26224c"
+                        description: "Blue Dark"
+                      blue:
+                        color: "#0114c2"
+                        description: "Blue"
+                      blue-light:
+                        color: "#00cffd"
+                        description: "Blue Light"
+                      purple:
+                        color: "#8a3ffc"
+                        description: "Purple"
+                      purple-dark:
+                        color: "#602cb0"
+                        description: "Purple Dark"
+                      green:
+                        color: "#35ba34"
+                        description: "Green"
+                      green-dark:
+                        color: "#1d751d"
+                        description: "Green Dark"
+                      yellow:
+                        color: "#f1c21b"
+                        description: "Yellow"
+                      yellow-dark:
+                        color: "#b08c0e"
+                        description: "Yellow Dark"
+                      orange:
+                        color: "#ff832b"
+                        description: "Orange"
+                      red:
+                        color: "#fa4d56"
+                        description: "Red"
+            colorBackgroundWithGradients:
+              type: string
+              scope: nodeAggregate
+              ui:
+                label: 'Background Color'
+                reloadIfChanged: true
+                inspector:
+                  group: appearance
+                  editor: Beromir.ToggleEditor/Editor
+                  editorOptions:
+                    layout: color
+                    values:
+                      <<: *solidColors
+                      blue-dark-to-blue:
+                        color:
+                          - "#26224c"
+                          - "#0114c2"
+                        description: "Blue gradient"
+                      blue-dark-to-blue-light:
+                        color:
+                          - "#26224c"
+                          - "#00cffd"
+                        description: "Dark to light Blue gradient"
+                      blue-to-blue-light:
+                        color:
+                          - "#0114c2"
+                          - "#00cffd"
+                        description: "Light blue gradient"
+                      purple-dark-to-purple:
+                        color:
+                          - "#602cb0"
+                          - "#8a3ffc"
+                        description: "Purple gradient"
+                      green-dark-to-green:
+                        color:
+                          - "#1d751d"
+                          - "#35ba34"
+                        description: "Green gradient"
+                      yellow-dark-to-yellow:
+                        color:
+                          - "#b08c0e"
+                          - "#f1c21b"
+                        description: "Yellow gradient"
+                      red-to-orange:
+                        color:
+                          - "#fa4d56"
+                          - "#ff832b"
+                        description: "Orange gradient"
+            colorTheme:
+              type: string
+              scope: nodeAggregate
+              ui:
+                label: 'Color'
+                showInCreationDialog: true
+                reloadIfChanged: true
+                inspector:
+                  editor: 'Shel.Neos.ColorPicker/ColorPickerEditor'
+                  group: appearance
+                  editorOptions:
+                    mode: 'preset'
+                    presetColors:
+                      - value: blue-dark
+                        title: 'Blue Dark'
+                        color: '#26224c'
+                      - value: blue
+                        title: 'Blue'
+                        color: '#0114c2'
+                      - value: blue-light
+                        title: 'Blue Light'
+                        color: '#00cffd'
+                      - value: purple
+                        title: 'Purple'
+                        color: '#8a3ffc'
+                      - value: purple-dark
+                        title: 'Purple Dark'
+                        color: '#602cb0'
+                      - value: green
+                        title: 'Green'
+                        color: '#35ba34'
+                      - value: green-dark
+                        title: 'Green Dark'
+                        color: '#1d751d'
+                      - value: yellow
+                        title: 'Yellow'
+                        color: '#f1c21b'
+                      - value: yellow-dark
+                        title: 'Yellow Dark'
+                        color: '#b08c0e'
+                      - value: orange
+                        title: 'Orange'
+                        color: '#ff832b'
+                      - value: red
+                        title: 'Red'
+                        color: '#fa4d56'
+                      - value: black
+                        title: 'Black'
+                        color: '#000000'
+
+            pixelVariant:
+              type: string
+              defaultValue: 'random'
+              scope: nodeAggregate
+              ui:
+                label: 'Pixel Variant'
+                reloadIfChanged: true
+                inspector:
+                  group: content
+                  editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+                  editorOptions:
+                    allowEmpty: false
+                    values:
+                      'random':
+                        label: 'Random (default)'
+                      '1':
+                        label: 'Variant 1'
+                      '2':
+                        label: 'Variant 2'
+                      '3':
+                        label: 'Variant 3'
+
+            icon:
+              type: string
+              scope: nodeAggregate
+              ui:
+                label: 'Icon'
+                reloadIfChanged: true
+                inspector:
+                  editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+                  editorOptions:
+                    placeholder: 'Select an icon'
+                    allowEmpty: true
+                    values:
+                      'arrow-right':
+                        label: 'Arrow Right'
+                        icon: resource://Neos.Presentation/Assets/Icons/arrow-right.svg
+                      'animatedArrow':
+                        label: 'Animated Arrow Right'
+                        icon: resource://Neos.Presentation/Assets/Icons/arrow-right.svg
+                      'animatedArrowLeft':
+                        label: 'Animated Arrow Left'
+                        icon: resource://Neos.Presentation/Assets/Icons/arrow-right.svg
+                      'neosAvatarMonochrome':
+                        label: 'Neos Avatar'
+                        icon: resource://Neos.Presentation/Assets/Icons/neosAvatarMonochrome.svg
+                      'neosLogoMonochrome':
+                        label: 'Neos Logo'
+                        icon: resource://Neos.Presentation/Assets/Icons/neosLogoMonochrome.svg
+                      'briefcase':
+                        label: 'Briefcase'
+                        icon: resource://Neos.Presentation/Assets/Icons/briefcase.svg
+                      'calculator':
+                        label: 'Calculator'
+                        icon: resource://Neos.Presentation/Assets/Icons/calculator.svg
+                      'calendar':
+                        label: 'Calendar'
+                        icon: resource://Neos.Presentation/Assets/Icons/calendar.svg
+                      'chevron-down':
+                        label: 'Chevron Down'
+                        icon: resource://Neos.Presentation/Assets/Icons/chevron-down.svg
+                      'chevron-left':
+                        label: 'Chevron Left'
+                        icon: resource://Neos.Presentation/Assets/Icons/chevron-left.svg
+                      'chevron-right':
+                        label: 'Chevron Right'
+                        icon: resource://Neos.Presentation/Assets/Icons/chevron-right.svg
+                      'chevron-up':
+                        label: 'Chevron Up'
+                        icon: resource://Neos.Presentation/Assets/Icons/chevron-up.svg
+                      'clock':
+                        label: 'Clock'
+                        icon: resource://Neos.Presentation/Assets/Icons/clock.svg
+                      'cloud':
+                        label: 'Cloud'
+                        icon: resource://Neos.Presentation/Assets/Icons/cloud.svg
+                      'cursor':
+                        label: 'Cursor'
+                        icon: resource://Neos.Presentation/Assets/Icons/cursor.svg
+                      'desktop':
+                        label: 'Desktop'
+                        icon: resource://Neos.Presentation/Assets/Icons/desktop.svg
+                      'development':
+                        label: 'Development'
+                        icon: resource://Neos.Presentation/Assets/Icons/development.svg
+                      'document':
+                        label: 'Document'
+                        icon: resource://Neos.Presentation/Assets/Icons/document.svg
+                      'eye':
+                        label: 'Eye'
+                        icon: resource://Neos.Presentation/Assets/Icons/eye.svg
+                      'facebook':
+                        label: 'Facebook'
+                        icon: resource://Neos.Presentation/Assets/Icons/facebook.svg
+                      'file':
+                        label: 'File'
+                        icon: resource://Neos.Presentation/Assets/Icons/file.svg
+                      'github':
+                        label: 'GitHub'
+                        icon: resource://Neos.Presentation/Assets/Icons/github.svg
+                      'globe':
+                        label: 'Globe'
+                        icon: resource://Neos.Presentation/Assets/Icons/globe.svg
+                      'headphones':
+                        label: 'Headphones'
+                        icon: resource://Neos.Presentation/Assets/Icons/headphones.svg
+                      'heart':
+                        label: 'Heart'
+                        icon: resource://Neos.Presentation/Assets/Icons/heart.svg
+                      'house':
+                        label: 'House'
+                        icon: resource://Neos.Presentation/Assets/Icons/house.svg
+                      'instagram':
+                        label: 'Instagram'
+                        icon: resource://Neos.Presentation/Assets/Icons/instagram.svg
+                      'linkedin':
+                        label: 'LinkedIn'
+                        icon: resource://Neos.Presentation/Assets/Icons/linkedin.svg
+                      'mail-open':
+                        label: 'Mail Open'
+                        icon: resource://Neos.Presentation/Assets/Icons/mail-open.svg
+                      'mail':
+                        label: 'Mail'
+                        icon: resource://Neos.Presentation/Assets/Icons/mail.svg
+                      'mastodon':
+                        label: 'Mastodon'
+                        icon: resource://Neos.Presentation/Assets/Icons/mastodon.svg
+                      'place':
+                        label: 'Place'
+                        icon: resource://Neos.Presentation/Assets/Icons/place.svg
+                      'quote-left':
+                        label: 'Quote Left'
+                        icon: resource://Neos.Presentation/Assets/Icons/quote-left.svg
+                      'plus':
+                        label: 'Plus'
+                        icon: resource://Neos.Presentation/Assets/Icons/plus.svg
+                      'quote':
+                        label: 'Quote'
+                        icon: resource://Neos.Presentation/Assets/Icons/quote.svg
+                      'search':
+                        label: 'Search'
+                        icon: resource://Neos.Presentation/Assets/Icons/search.svg
+                      'slack':
+                        label: 'Slack'
+                        icon: resource://Neos.Presentation/Assets/Icons/slack.svg
+                      'smile':
+                        label: 'Smile'
+                        icon: resource://Neos.Presentation/Assets/Icons/smile.svg
+                      'square':
+                        label: 'Square'
+                        icon: resource://Neos.Presentation/Assets/Icons/square.svg
+                      'time':
+                        label: 'Time'
+                        icon: resource://Neos.Presentation/Assets/Icons/time.svg
+                      'user':
+                        label: 'User'
+                        icon: resource://Neos.Presentation/Assets/Icons/user.svg
+                      'youtube':
+                        label: 'YouTube'
+                        icon: resource://Neos.Presentation/Assets/Icons/youtube.svg
+                      'notfound':
+                        label: 'Not Found'
+                        icon: resource://Neos.Presentation/Assets/Icons/notfound.svg

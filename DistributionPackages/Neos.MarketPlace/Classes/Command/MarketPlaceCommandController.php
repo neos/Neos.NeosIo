@@ -25,6 +25,7 @@ use Neos\Flow\Log\Utility\LogEnvironment;
 use Neos\Flow\Persistence\Doctrine\PersistenceManager;
 use Neos\MarketPlace\Domain\Model\LogAction;
 use Neos\MarketPlace\Domain\Model\Packages;
+use Neos\MarketPlace\Domain\Model\Storage;
 use Neos\MarketPlace\Service\PackageImporter;
 use Neos\Neos\Domain\NodeLabel\NodeLabelGeneratorInterface;
 use Packagist\Api\Client;
@@ -38,6 +39,9 @@ class MarketPlaceCommandController extends CommandController
 {
     #[Flow\Inject]
     protected PackageImporter $importer;
+
+    #[Flow\Inject]
+    protected Storage $storage;
 
     /**
      * @var LoggerInterface
@@ -65,6 +69,7 @@ class MarketPlaceCommandController extends CommandController
      *
      * @param string $package Sync only the given package
      * @param boolean $force Force sync even if the package is not update on packagist
+     * @throws \ReflectionException
      */
     public function syncCommand(string $package = '', bool $force = false, int $limit = 0, bool $dontCountSkippedPackages = true): void
     {
@@ -77,7 +82,7 @@ class MarketPlaceCommandController extends CommandController
         );
 
         /** @var SubscriptionEngine $subscriptionEngine */
-        $subscriptionEngine = (new \ReflectionClass($contentRepositoryMaintainer))->getProperty('subscriptionEngine')->getValue($contentRepositoryMaintainer);
+        $subscriptionEngine = new \ReflectionClass($contentRepositoryMaintainer)->getProperty('subscriptionEngine')->getValue($contentRepositoryMaintainer);
         $subscriptionEngine->catchUpActive();
 
         $hasError = false;
@@ -93,6 +98,7 @@ class MarketPlaceCommandController extends CommandController
 
         if ($package === '') {
             $this->logger->info(sprintf('action=%s', LogAction::FULL_SYNC_STARTED->value), LogEnvironment::fromMethodName(__METHOD__));
+            $this->storage->prefetchVendorNodeIds();
             $packages = new Packages();
             foreach ($packages->packages() as $packagistPackage) {
                 $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED->value, $packagistPackage->getName()), LogEnvironment::fromMethodName(__METHOD__));
@@ -131,8 +137,6 @@ class MarketPlaceCommandController extends CommandController
             $this->outputLine();
             $this->outputLine('%d package(s) synced with success', [$this->importer->getProcessedPackagesCount()]);
 
-            $this->outputLine('Updating search index');
-            $this->importer->updateIndex();
         } else {
             $this->logger->info(sprintf('action=%s package=%s', LogAction::SINGLE_PACKAGE_SYNC_STARTED->value, $package), LogEnvironment::fromMethodName(__METHOD__));
             $client = new Client();
@@ -154,9 +158,9 @@ class MarketPlaceCommandController extends CommandController
             } else {
                 $this->outputLine('Package "%s" imported with success', [$package]);
             }
-            $this->outputLine('Updating search index');
-            $this->importer->updateIndex();
         }
+        $this->outputLine('Updating search index');
+        $this->importer->updateIndex();
 
         if ($hasError) {
             $this->outputLine();

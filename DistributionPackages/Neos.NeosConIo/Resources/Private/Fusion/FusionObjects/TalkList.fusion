@@ -1,35 +1,74 @@
-prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Loop) {
-    // API to the outside: "items" to render
-    items = ${q(site).find('[instanceof Neos.NeosConIo:Talk]')}
+prototype(Neos.NeosConIo:TalkList) < prototype(Neos.Fusion:Component) {
+    talks = ${q(site).find('[instanceof Neos.NeosConIo:Talk]')}
+    eventToFilter = ${q(node).property('eventToShowTalksFor')}
+    @context.eventToFilter = ${this.eventToFilter}
 
-    @context.eventToFilter = ${q(node).property('eventToShowTalksFor')}
-    @process.wrapWithUl = ${'<ul class="talkList">' + value + '</ul>'}
-    itemName = "node"
-    itemRenderer = Neos.Fusion:Tag {
-        tagName = 'li'
-        attributes.class = 'talkList__item'
-        content = Neos.NeosIo:ImageTeaser {
-            // node is the talk here
-            title = ${q(node).property('title')}
-            image = ${q(node).property('thumbnail')}
-            fallbackImageUrl = ${(q(node).property('video') && !q(node).property('thumbnail')) ? "https://img.youtube.com/vi/" + q(node).property('video') + "/maxresdefault.jpg" : null}
-            text = ''
-            className = 'imageTeaser--relatedTalk'
-            link = Neos.Neos:NodeUri {
-                node = ${node}
-                absolute = true
-            }
-        }
-
-    }
-    // "node" is the current talk here
-    itemRenderer.@if.talkHasCorrectEvent = ${q(node).property('event').aggregateId.value == eventToFilter.aggregateId.value}
+    renderer = afx`
+        <ul class="flex flex-col list-none p-0 m-0">
+            <Neos.Fusion:Loop items={props.talks} itemName="talk">
+                <Neos.NeosConIo:TalkList.Item
+                    talk={talk}
+                    @if.talkHasCorrectEvent={!props.eventToFilter || q(talk).property('event').aggregateId.value == props.eventToFilter.aggregateId.value}
+                />
+            </Neos.Fusion:Loop>
+        </ul>
+    `
 
     @cache {
         mode = 'cached'
+        entryIdentifier {
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+            event = ${eventToFilter ? Neos.Caching.entryIdentifierForNode(eventToFilter) : null}
+        }
         entryTags {
-            # when a talk is changed, we need to rerender this page.
-            1 = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', node)}
+            node = ${Neos.Caching.nodeTag(node)}
+            talks = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Talk', node)}
+            events = ${Neos.Caching.nodeTypeTag('Neos.NeosConIo:Event', node)}
         }
     }
+}
+
+prototype(Neos.NeosConIo:TalkList.Item) < prototype(Neos.Fusion:Component) {
+    talk = null
+
+    @propTypes {
+        @strict = true
+        talk = ${PropTypes.instanceOf('Neos.NeosConIo:Talk')}
+    }
+
+    @private {
+        link = Neos.Neos:NodeUri {
+            node = ${props.talk}
+            absolute = true
+        }
+        speakers = ${q(props.talk).referenceNodes('speakers')}
+        video = ${props.talk.properties.video}
+        event = ${q(props.talk).referenceNodes('event').get(0)}
+        clipPathClass = ${'post-preview-clip-path-' + Math.randomInt(1, 2)}
+        backgroundColors = ${['purple', 'purple-dark', 'blue', 'blue-dark', 'blue-light', 'green', 'yellow', 'orange', 'red']}
+        randomBackground = ${private.backgroundColors[Math.randomInt(0, Array.length(private.backgroundColors) - 1)]}
+    }
+
+    renderer = afx`
+        <li class="w-full">
+            <div class="border-b-1 border-neutral-20 py-4 flex gap-4">
+                <div class="shrink-0 grow-0 basis-auto">
+                    <Neos.NeosConIo:ScheduleSpeakerImages speakers={private.speakers}/>
+                </div>
+                <div class="grow-1 flex gap-x-4 gap-y-2 flex-wrap">
+                    <div class="grow-1">
+                        <p>{private.event.properties.title}</p>
+                        <h3 class="display-title-md mb-2 last:mb-0">
+                            <a class="mt-0 flex gap-2 items-center" href={private.link}>
+                                {props.talk.properties.title}
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="shrink-0 grow-0 basis-auto flex items-center" @if.hasVideo={private.video}>
+                        <p class="display-body-md px-2 py-1 bg-neutral-20">{I18n.translate('Neos.NeosConIo:Main:talkList.videoAvailable')}</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+    `
 }

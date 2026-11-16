@@ -1,0 +1,88 @@
+prototype(Neos.Presentation:PersonCards) < prototype(Neos.Fusion:Component) {
+    @styleguide.props {
+        label = 'People behind Neos CMS'
+        headline = 'Open Source, Open Minds'
+        cards = Neos.Fusion:DataStructure {
+            0 {
+                name = "Karsten Dambekalns"
+                email = "karsten@neos.io"
+                background = "blue-dark-to-blue"
+                imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    uri = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=5&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                }
+                imageAlt = 'Portrait of Karsten Dambekalns'
+            }
+            1 {
+                name = "Anke Häslich"
+                email = "anke@neos.io"
+                background = "purple"
+                imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    uri = 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&crop=faces&fp-y=0.8&fp-z=2&w=1024&h=1024&q=80'
+                }
+                imageAlt = 'Portrait of Anke Häslich'
+            }
+            2 {
+                name = "Christian Müller"
+                email = "christian@neos.io"
+                background = "green"
+                imageSource = Sitegeist.Kaleidoscope:UriImageSource {
+                    uri = 'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&crop=faces&fp-y=0.8&fp-z=2&w=1024&h=1024&q=80'
+                }
+                imageAlt = 'Portrait of Christian Müller'
+            }
+        }
+    }
+
+    @propTypes {
+        headline = PropTypes:String
+        cards = PropTypes:Array {
+            type = PropTypes:DataStructure {
+                name = PropTypes:String
+                email = PropTypes:String
+                background = PropTypes:String
+                imageSource = ${PropTypes.instanceOf('\\Sitegeist\\Kaleidoscope\\Domain\\ImageSourceInterface')}
+                imageAlt = PropTypes:String
+                pixelVariant = PropTypes:String
+            }
+        }
+    }
+
+    headline = null
+    label = null
+    cards = null
+
+    @if.hasCards = ${Type.isArray(this.cards) && Array.length(this.cards)}
+
+    renderer = afx`
+        <Neos.Presentation:Spacing size x y>
+            <Neos.Presentation:Spacing y="small" @if={props.headline} tagName="h2" class="display-headline-lg text-center">
+                <small @if={props.label} class="block display-cta-sm">{props.label}</small>
+                {props.headline}
+            </Neos.Presentation:Spacing>
+            <Neos.Presentation:Spacing y="small">
+                <Neos.Presentation:DynamicGrid
+                    tagName="div"
+                    attributes.role="list"
+                    class="items-stretch text-white dynamic-grid-gap-6 dynamic-grid-max-cols-3 dynamic-grid-min-size-76"
+                >
+                    <Neos.Fusion:Loop items={props.cards}>
+                        <Neos.Presentation:PersonCard
+                            name={item.name}
+                            email={item.email}
+                            slack={item.slack}
+                            background={item.background}
+                            pixelVariant={item.pixelVariant || String.toString((iterator.index % 3) + 1)}
+                        >
+                            <Neos.Presentation:Component.PictureTag
+                              imageSource={item.imageSource}
+                              imgClasses="aspect-4/5 w-full object-cover"
+                              alt={item.imageAlt}
+                              @path="image"
+                            />
+                        </Neos.Presentation:PersonCard>
+                    </Neos.Fusion:Loop>
+                </Neos.Presentation:DynamicGrid>
+            </Neos.Presentation:Spacing>
+        </Neos.Presentation:Spacing>
+    `
+}

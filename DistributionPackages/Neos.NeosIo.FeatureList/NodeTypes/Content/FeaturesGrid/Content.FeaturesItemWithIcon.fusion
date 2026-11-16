@@ -1,0 +1,17 @@
+prototype(Neos.NeosIo.Features:ItemWithIcon) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.NeosIo.Features:FeaturesItemWithIcon {
+        background = ${q(node).property('background')}
+        title = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        linkLabel = Neos.Neos:Editable {
+            property = 'linkLabel'
+            block = false
+        }
+        link = ${q(node).property('link')}
+        link.@process.convertUris = Neos.Neos:ConvertUris
+
+        icon = ${q(node).property('icon')}
+    }
+}

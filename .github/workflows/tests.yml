@@ -8,7 +8,7 @@ on:
 
 env:
   YARN_ENABLE_IMMUTABLE_INSTALLS: false
-  PHP_VERSION: 8.3
+  PHP_VERSION: 8.4
 
 jobs:
   lint:
@@ -51,9 +51,4 @@ jobs:
           version: 2
 
       - name: PHPStan
-        uses: php-actions/phpstan@v3
-        with:
-          php_version: ${{ env.PHP_VERSION }}
-          version: 2.1.17
-          command: analyse
-          path: 'DistributionPackages/'
+        run: bin/phpstan analyse DistributionPackages/ --memory-limit=4G

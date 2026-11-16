@@ -1,0 +1,15 @@
+prototype(Neos.Presentation:Stats) < prototype(Neos.Fusion:Component) {
+    background = ''
+    entries = ''
+
+    @propTypes {
+        background = ${PropTypes.string}
+        entries = ${PropTypes.string}
+    }
+
+    renderer = afx`
+        <Neos.Presentation:Background background={props.background} class="stats-clip-path p-4 md:p-8 pb-17 md:pb-34">
+            {props.entries}
+        </Neos.Presentation:Background>
+    `
+}

@@ -1,0 +1,73 @@
+###########################################
+# Mixin which is responsible for all options
+# regarding the document keyvisual.
+###########################################
+
+'Neos.NeosIo:KeyVisualMixin':
+  abstract: true
+  childNodes:
+    'keyvisual':
+      type: 'Neos.Neos:ContentCollection'
+      position: 'start'
+      label: 'Key visual'
+      constraints:
+        nodeTypes:
+          '*': false
+          'Neos.NeosIo:Constraints.KeyVisual': true
+  ui:
+    inspector:
+      groups:
+        'keyVisual':
+          label: 'Keyvisual'
+          position: 10
+          collapsed: true
+          icon: picture
+  properties:
+    keyVisualVariant:
+      type: string
+      scope: nodeAggregate
+      ui:
+        label: 'How to display the key visual contents'
+        reloadIfChanged: true
+        inspector:
+          group: 'keyVisual'
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            allowEmpty: true
+            placeholder: 'Large image and text overlay'
+            placeholderIcon: 'picture'
+            values:
+              hidden:
+                label: 'Hidden'
+                icon: 'eye-slash'
+              contentOnly:
+                label: 'Content only'
+                icon: 'square'
+    keyVisualImage:
+      type: Neos\Media\Domain\Model\ImageInterface
+      scope: nodeAggregate
+      ui:
+        label: 'Image for the key visual-Section'
+        reloadIfChanged: true
+        inspector:
+          group: 'keyVisual'
+          hidden: 'ClientEval: node.properties.keyVisualVariant != ""'
+    keyVisualAlternativeText:
+      type: string
+      ui:
+        label: 'Alternative text for key visual image'
+        help:
+          message: 'Used in teasers and other places where pages are referenced.'
+        inspector:
+          group: keyVisual
+          position: 'after keyVisualImage'
+          hidden: 'ClientEval: !node.properties.keyVisualImage'
+    isKeyVisualContentsInverted:
+      scope: nodeAggregate
+      type: boolean
+      ui:
+        label: 'Invert the text-color for the Keyvisual contents'
+        reloadIfChanged: true
+        inspector:
+          group: 'keyVisual'
+          hidden: 'ClientEval: node.properties.keyVisualVariant != ""'

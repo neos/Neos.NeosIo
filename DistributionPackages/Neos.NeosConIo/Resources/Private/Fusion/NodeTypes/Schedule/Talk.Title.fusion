@@ -1,0 +1,15 @@
+prototype(Neos.NeosConIo:Schedule.Talk.Title) < prototype(Neos.Fusion:Component) {
+
+    title = ""
+    description = ""
+    isBreak = false
+    groupClasses = ""
+
+    renderer = afx`
+        <h4 class={Carbon.String.classNames("display-title-sm normal flex lg:!block", (props.isBreak ? "bold text-neutral-80" : ""), props.groupClasses || "")}>
+            <span class={Carbon.String.classNames("grow-1")}>{props.title}</span>
+            <i class={Carbon.String.classNames("flex-none fas fa-circle-info text-blue-dark ml-2 mt-1 lg:mt-0", props.groupClasses)}
+               aria-hidden="true" @if.hasDescription={props.description}></i>
+        </h4>
+    `
+}

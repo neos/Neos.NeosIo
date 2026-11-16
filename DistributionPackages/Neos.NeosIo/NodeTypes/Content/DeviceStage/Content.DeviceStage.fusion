@@ -1,0 +1,11 @@
+prototype(Neos.NeosIo:DeviceStage) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.NeosIo:Component.DeviceStage {
+        contents = Neos.Neos:ContentCollection {
+            nodePath = 'contents'
+        }
+
+        deviceContents = Neos.Neos:ContentCollection {
+            nodePath = 'deviceContents'
+        }
+    }
+}

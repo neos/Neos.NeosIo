@@ -4,10 +4,9 @@ prototype(Neos.NeosIo:DocumentationPage) < prototype(Neos.NeosIo:DefaultPage) {
     }
     content {
         secondaryMenu = Neos.NeosIo:DocumentationPageSubMenu
-        languages = Neos.Neos:DimensionsMenu {
-            templatePath = 'resource://Neos.NeosIo/Private/Templates/FusionObjects/DocumentationPageDimensionsMenu.html'
-            attributes.class = 'nav nav--language-switcher'
-        }
+
+        languages = Neos.NeosIo:Fragment.LanguageMenu
+
         breadcrumb = Neos.NeosIo:Fragment.BreadcrumbMenu {
             attributes.class = 'nav nav--breadcrumb-ingrid'
         }

@@ -1,0 +1,47 @@
+###########################################
+# Displays an quote with an avatar of the
+# given author.
+###########################################
+
+'Neos.NeosIo:Quote':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NeosIo:Constraints.SemanticSection': true
+  ui:
+    label: Quote
+    icon: quote-left
+    inlineEditable: true
+    group: special
+    inspector:
+      groups:
+        author:
+          label: Author
+  properties:
+    quote:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Something the author said…'
+    author:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Name of the author…'
+    position:
+      type: string
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            placeholder: 'Position of the author'
+    authorAvatar:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: 'Author avatar'
+        reloadIfChanged: true
+        inspector:
+          group: author

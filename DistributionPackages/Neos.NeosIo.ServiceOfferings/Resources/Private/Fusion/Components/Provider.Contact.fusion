@@ -6,29 +6,41 @@ prototype(Neos.NeosIo.ServiceOfferings:Component.Provider.Contact) < prototype(N
     city = ''
     zipcode = ''
     country = ''
+    iconClasses = 'mt-1 text-blue-dark'
 
     renderer = afx`
         <div class="service-provider__contact">
-            <h2>Contact</h2>
+            <h2 class="display-title-lg mb-4">{Translation.translate('serviceProvider.contact', '', [], 'Main', 'Neos.NeosIo.ServiceOfferings')}</h2>
 
-            <ul>
-                <li @if.set={props.email}>
-                    <i class="fas fa-envelope-square"></i>&nbsp;
-                    <a href={'mailto:' + props.email}>Email</a>
-                </li>
-                <li @if.set={props.website}>
-                    <i class="fas fa-home"></i>&nbsp;
-                    <a href={props.website} target="_blank" rel="noopener">Website</a>
-                </li>
-                <li @if.set={props.phone}>
-                    <i class="fas fa-phone"></i>&nbsp;
-                    <a href={'tel:' + props.phone}>{props.phone}</a>
-                </li>
-            </ul>
-
-            <address @if.set={props.street || props.city} class="service-provider__address">
-                {props.street}<br @if.set={props.street}/>
-                {props.zipcode} {props.city}{props.country ? ' - ' + props.country : null}
+            <address class="not-italic">
+                <p>
+                    <span class="flex gap-4" @if.set={props.email}>
+                        <i class={["fas fa-envelope", props.iconClasses]} aria-hidden="true"></i>
+                        <a href={'mailto:' + props.email}>Email</a>
+                    </span>
+                    <span class="flex gap-4" @if.set={props.website}>
+                        <i class={["fas fa-globe", props.iconClasses]} aria-hidden="true"></i>
+                        <a href={props.website} target="_blank" rel="noopener">Website</a>
+                    </span>
+                    <span class="flex gap-4" @if.set={props.phone}>
+                        <i class={["fas fa-phone", props.iconClasses]} aria-hidden="true"></i>
+                        <a href={'tel:' + props.phone}>{props.phone}</a>
+                    </span>
+                </p>
+                <p @if.set={props.street || props.city} class="service-provider__address">
+                    <span class="flex gap-4">
+                        <i class={["fas fa-home", props.iconClasses]} aria-hidden="true"></i>
+                        <span class="grow-1 block">
+                            <span @if.set={props.street} class={"block"}>{props.street}</span>
+                            <span @if.set={props.zipcode || props.city} class={"block"}>
+                              {props.zipcode} {props.city}
+                            </span>
+                            <span @if.set={props.country} class={"block"}>
+                                {props.country}
+                            </span>
+                        </span>
+                    </span>
+                </p>
             </address>
         </div>
     `

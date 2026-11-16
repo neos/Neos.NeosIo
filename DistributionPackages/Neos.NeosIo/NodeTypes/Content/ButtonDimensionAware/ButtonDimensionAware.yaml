@@ -1,0 +1,86 @@
+###########################################
+# A dimension-aware button that can link to
+# any node in any configured dimension.
+###########################################
+
+'Neos.NeosIo:ButtonDimensionAware':
+  superTypes:
+    'Neos.Neos:Content': true
+    'Neos.NeosIo:Constraints.SemanticSection': true
+    'Neos.NeosIo:Constraints.Main': true
+  ui:
+    label: 'Dimension-Aware Button'
+    icon: link
+    inlineEditable: true
+  properties:
+    buttonLabel:
+      type: string
+      defaultValue: 'Button label'
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            autoparagraph: false
+    linkedNode:
+      type: reference
+      ui:
+        label: 'Linked Node'
+        inspector:
+          group: content
+          position: 10
+    language:
+      type: string
+      ui:
+        label: 'Language Dimension'
+        reloadIfChanged: true
+        inspector:
+          group: content
+          position: 20
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              '':
+                label: 'None (Same as current)'
+              'en':
+                label: 'en (English)'
+              'de':
+                label: 'de (German)'
+
+    openInNewTab:
+      type: boolean
+      defaultValue: false
+      scope: nodeAggregate
+      ui:
+        label: 'Open in new Tab'
+        inspector:
+          group: content
+          position: 30
+    alignment:
+      options:
+        preset: 'NeosIo.alignment'
+      ui:
+        label: 'Button Alignment'
+    style:
+      type: string
+      defaultValue: btn--primary
+      scope: nodeAggregate
+      ui:
+        label: 'Color of the Button'
+        reloadIfChanged: true
+        inspector:
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          group: appearance
+          editorOptions:
+            values:
+              btn--primary:
+                label: Primary
+              btn--solidPrimary:
+                label: 'Primary (Solid)'
+              btn--secondary:
+                label: Secondary
+              btn--solidSecondary:
+                label: 'Secondary (Solid)'
+              btn--bright:
+                label: Bright
+              btn--solidBright:
+                label: 'Bright (Solid)'

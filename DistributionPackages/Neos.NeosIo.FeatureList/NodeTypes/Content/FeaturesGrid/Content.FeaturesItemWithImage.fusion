@@ -1,0 +1,21 @@
+prototype(Neos.NeosIo.Features:ItemWithImage) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.NeosIo.Features:FeaturesItemWithImage {
+        background = ${q(node).property('background')}
+        title = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        linkLabel = Neos.Neos:Editable {
+            property = 'linkLabel'
+            block = false
+        }
+        link = ${q(node).property('link')}
+        link.@process.convertUris = Neos.Neos:ConvertUris
+
+        image = Neos.Presentation:Component.PictureTag {
+            asset = ${q(node).property('image')}
+            alt = ${q(node).property('alternativeText') || this.asset.caption || this.asset.title}
+            imgClasses = "object-cover w-full h-full"
+        }
+    }
+}

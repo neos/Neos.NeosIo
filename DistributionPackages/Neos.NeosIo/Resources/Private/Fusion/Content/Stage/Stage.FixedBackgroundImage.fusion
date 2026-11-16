@@ -1,10 +1,32 @@
-prototype(Neos.NeosIo:Stage.FixedBackgroundImage) < prototype(Neos.NeosIo:Stage.BackgroundImage) {
-    renderer {
-        tagName = 'div'
-        attributes {
-            class.stage__bg--fixed = 'stage__bg--fixed'
-            data-isInline = 'true'
-            src = ''
+prototype(Neos.NeosIo:Stage.FixedBackgroundImage) < prototype(Neos.Fusion:Component) {
+    backgroundImage = null
+    backgroundShadePercentage = ''
+
+    @propTypes {
+        @strict = true
+        backgroundImage = ${PropTypes.instanceOf('Neos\Media\Domain\Model\Asset')}
+        backgroundShadePercentage = ${PropTypes.anyOf(PropTypes.string, PropTypes.integer)}
+    }
+
+    @private {
+        wrapperClasses = ${Carbon.String.classNames(
+            'stage__bg',
+            'stage__bg--fixed',
+            props.backgroundShadePercentage && 'stage__bg--shade-' + props.backgroundShadePercentage
+        )}
+        imageUri = Neos.Neos:ImageUri {
+            asset = ${props.backgroundImage}
+            maximumWidth = 1600
+            quality = 80
         }
     }
+
+    renderer = afx`
+        <div
+            class={private.wrapperClasses}
+            style={'background-image: url(' + private.imageUri + ')'}
+        ></div>
+    `
+
+    @if.hasBackgroundImage = ${this.backgroundImage}
 }

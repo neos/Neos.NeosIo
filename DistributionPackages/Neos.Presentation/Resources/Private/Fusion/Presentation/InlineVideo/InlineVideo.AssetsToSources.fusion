@@ -1,0 +1,14 @@
+prototype(Neos.Presentation:InlineVideo.AssetsToSources) < prototype(Neos.Fusion:Component) {
+    assets = ${[]}
+
+    renderer = Neos.Fusion:Map {
+        items = ${props.assets}
+        itemRenderer = Neos.Fusion:DataStructure {
+            src = Neos.Fusion:ResourceUri {
+                resource = ${item.resource}
+            }
+            type = ${item.resource.fileextension}
+        }
+    }
+
+}

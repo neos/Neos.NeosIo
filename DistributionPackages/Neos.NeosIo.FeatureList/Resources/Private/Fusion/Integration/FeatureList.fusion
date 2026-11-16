@@ -1,70 +1,70 @@
 prototype(Neos.NeosIo.FeatureList:FeatureList) < prototype(Neos.Neos:ContentComponent) {
 
-	featureGroups = Neos.Fusion:Map {
+    featureGroups = Neos.Fusion:Map {
         items = ${q(node).children('[instanceof Neos.NeosIo.FeatureList:FeatureGroup]')}
-		itemName = 'featureGroup'
-		itemRenderer = Neos.Fusion:DataStructure {
-			__node = ${featureGroup}
-			title = Neos.Neos:Editable {
-				property = 'title'
-				node = ${featureGroup}
-			}
-			description = Neos.Neos:Editable {
-				property = 'description'
-				node = ${featureGroup}
-			}
-			image = Neos.Neos:ImageUri {
-				@if.has = ${q(featureGroup).property('image')}
-				asset = ${q(featureGroup).property('image')}
-				maximumWidth = 60
-			}
-			features = Neos.Fusion:Map {
+        itemName = 'featureGroup'
+        itemRenderer = Neos.Fusion:DataStructure {
+            __node = ${featureGroup}
+            title = Neos.Neos:Editable {
+                property = 'title'
+                node = ${featureGroup}
+            }
+            description = Neos.Neos:Editable {
+                property = 'description'
+                node = ${featureGroup}
+            }
+            image = Neos.Neos:ImageUri {
+                @if.has = ${q(featureGroup).property('image')}
+                asset = ${q(featureGroup).property('image')}
+                maximumWidth = 60
+            }
+            features = Neos.Fusion:Map {
                 items = ${q(featureGroup).children('[instanceof Neos.NeosIo.FeatureList:Feature]').add(q(featureGroup).property('features'))}
-				itemName = 'feature'
-				itemRenderer = Neos.Fusion:DataStructure {
-					__node = ${feature}
-					title = Neos.Neos:Editable {
-						property = 'title'
-						node = ${feature}
-					}
-					description = Neos.Neos:Editable {
-						property = 'description'
-						node = ${feature}
-					}
-					isCoreFeature = ${q(feature).property('isCoreFeature')}
-					isCommunityFeature = ${q(feature).property('isCommunityFeature')}
-					links = Neos.Fusion:Map {
+                itemName = 'feature'
+                itemRenderer = Neos.Fusion:DataStructure {
+                    __node = ${feature}
+                    title = Neos.Neos:Editable {
+                        property = 'title'
+                        node = ${feature}
+                    }
+                    description = Neos.Neos:Editable {
+                        property = 'description'
+                        node = ${feature}
+                    }
+                    isCoreFeature = ${q(feature).property('isCoreFeature')}
+                    isCommunityFeature = ${q(feature).property('isCommunityFeature')}
+                    links = Neos.Fusion:Map {
                         items = ${q(feature).property('relatedPackages')}
-						itemName = 'relatedPackage'
-						itemRenderer = Neos.Fusion:DataStructure {
-							label = ${q(relatedPackage).property('title')}
-							uri = Neos.Neos:NodeUri {
-								node = ${relatedPackage}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                        itemName = 'relatedPackage'
+                        itemRenderer = Neos.Fusion:DataStructure {
+                            label = ${q(relatedPackage).property('title')}
+                            uri = Neos.Neos:NodeUri {
+                                node = ${relatedPackage}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	renderer = Neos.NeosIo.FeatureList:Molecule.FeatureList {
+    renderer = Neos.NeosIo.FeatureList:Molecule.FeatureList {
 
-		featureGroups = ${props.featureGroups}
+        featureGroups = ${props.featureGroups}
 
-		prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) {
-			@process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
-				@if.has = ${featureGroup.__node}
-				node = ${featureGroup.__node}
-			}
-		}
+        prototype(Neos.NeosIo.FeatureList:Molecule.FeatureGroup) {
+            @process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
+                @if.has = ${featureGroup.__node}
+                node = ${featureGroup.__node}
+            }
+        }
 
-		prototype(Neos.NeosIo.FeatureList:Molecule.Feature) {
-			@process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
-				@if.has = ${feature.__node}
-				node = ${feature.__node}
-			}
-		}
+        prototype(Neos.NeosIo.FeatureList:Molecule.Feature) {
+            @process.contentElementWrapping = Neos.Neos:ContentElementWrapping {
+                @if.has = ${feature.__node}
+                node = ${feature.__node}
+            }
+        }
 
-	}
+    }
 }

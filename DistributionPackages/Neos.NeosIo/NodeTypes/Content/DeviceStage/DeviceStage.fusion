@@ -1,0 +1,27 @@
+prototype(Neos.NeosIo:Component.DeviceStage) < prototype(Neos.Fusion:Component) {
+    contents = ''
+    deviceContents = ''
+
+    @propTypes {
+        @strict = true
+        contents = ${PropTypes.string}
+        deviceContents = ${PropTypes.string}
+    }
+
+    @private {
+        backgroundImage = Neos.Fusion:ResourceUri {
+            path = 'resource://Neos.NeosIo/Public/Images/LaptopFrame.png'
+        }
+    }
+
+    renderer = afx`
+        <section class="deviceStage">
+            <div class="deviceStage__contents">
+                {props.contents}
+            </div>
+            <div class="deviceStage__device" style={"background-image: url(" + private.backgroundImage + ")"}>
+                {props.deviceContents}
+            </div>
+        </section>
+    `
+}

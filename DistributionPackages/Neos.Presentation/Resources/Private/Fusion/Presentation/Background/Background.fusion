@@ -1,0 +1,49 @@
+prototype(Neos.Presentation:Background) < prototype(Neos.Fusion:Component) {
+    @styleguide.props {
+        background = 'gradient'
+        content = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda atque cumque, dignissimos ea eos error in iure laboriosam libero mollitia nam nemo omnis, perferendis quisquam recusandae reiciendis repudiandae unde ut!'
+    }
+
+    @propTypes {
+//        background = ${PropTypes.oneOf(['blue-dark', 'blue', 'blue-light', 'purple', 'purple-dark', 'green', 'green-dark', 'yellow', 'yellow-dark', 'orange', 'red', 'black'])}
+        background = ${PropTypes.string}
+        tagName = ${PropTypes.string}
+        style = ${PropTypes.string}
+        href = ${PropTypes.string}
+        class = ${PropTypes.any}
+    }
+
+    tagName = 'div'
+    class = 'flow-root'
+
+    attributes = Neos.Fusion:DataStructure
+
+    // Extension point for pixel backgrounds
+    @private {
+        class = ''
+        attributes = Neos.Fusion:DataStructure
+        backgroundParts = ${Type.isString(props.background) ? String.split(props.background, '-to-') : []}
+        backgroundStart = ${private.backgroundParts[0]}
+        backgroundEnd = ${Array.length(private.backgroundParts) > 1 ? private.backgroundParts[1] : null}
+    }
+
+    renderer = Neos.Fusion:Tag {
+        tagName = ${props.href ? 'a' : props.tagName}
+        content = ${props.content}
+        attributes = afx`
+            <Neos.Fusion:DataStructure
+                {...props.attributes}
+                {...private.attributes}
+                style={props.style}
+                href={props.href}
+                class={Carbon.String.classNames(
+                    'n-background',
+                    private.backgroundStart && 'n-background--' + private.backgroundStart,
+                    private.backgroundStart && private.backgroundEnd && 'bg-linear-to-r from-' + private.backgroundStart + ' to-' + private.backgroundEnd,
+                    private.class,
+                    props.class
+                )}
+            />
+        `
+    }
+}

@@ -13,12 +13,12 @@ prototype(Neos.NeosIo:Content.Column) < prototype(Neos.Neos:ContentComponent) {
     columnWidth.@process.validate = ${Type.isInteger(value) ? value : 6}
     @context.columnWidth = ${this.columnWidth}
 
-    // Limit maximum image size in columns based on the selected layout
-    prototype(Neos.Neos:ImageTag) {
-        maximumWidth = ${2192 / 12 * (columnWidth || 6)}
-    }
-    prototype(Neos.NodeTypes:Image) {
-        maximumWidth = ${2192 / 12 * (columnWidth || 6)}
+    # update the image sizes for all nested image components, so they can adapt their sizes accordingly
+    prototype(Neos.Presentation:Component.PictureTag) {
+        sizes = Neos.Presentation:Component.ImageSizes {
+            # The column width is defined in a 12 column grid, so we calculate the percentage accordingly
+            size = ${columnWidth / 12}
+        }
     }
 
     renderer = afx`

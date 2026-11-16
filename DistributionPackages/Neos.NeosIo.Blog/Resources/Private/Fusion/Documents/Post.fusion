@@ -1,9 +1,18 @@
 prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
+    content.parts.main >
     content.parts.main = Neos.NeosIo:PostRenderer {
         @process.editable = Neos.Neos:ContentElementWrapping {
             @position = 'end 999999999'
         }
     }
+    content.renderer = afx`
+        <div id="mainContent">
+            <main class=" pt-10 pb-16 lg:pt-16 lg:pb-25" role="main">
+                {props.parts}
+            </main>
+        </div>
+    `
+
 
     renderer.head {
         metaDescriptionTag.attributes.content = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : q(node).property('metaDescription'), 152, '...')}
@@ -13,10 +22,6 @@ prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
             description.@process.useSummary = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : value, 197, '...')}
 
             image.asset {
-                keyVisualSmall {
-                    condition = ${q(node).property('keyVisualImageSmall')}
-                    renderer = ${q(node).property('keyVisualImageSmall')}
-                }
                 keyVisual {
                     condition = ${q(node).property('keyVisualImage')}
                     renderer = ${q(node).property('keyVisualImage')}
@@ -29,10 +34,6 @@ prototype(Neos.NeosIo:Post) < prototype(Neos.NeosIo:DefaultPage) {
             title = ${String.crop(String.stripTags(q(node).property('title')), 67, '...')}
             description.@process.useSummary = ${String.crop(String.stripTags(q(node).property('summary')) ? String.stripTags(q(node).property('summary')) : value, 197, '...')}
             image {
-                keyVisualSmall {
-                    condition = ${q(node).property('keyVisualImageSmall')}
-                    renderer = ${q(node).property('keyVisualImageSmall')}
-                }
                 keyVisual {
                     condition = ${q(node).property('keyVisualImage')}
                     renderer = ${q(node).property('keyVisualImage')}

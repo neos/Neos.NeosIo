@@ -1,0 +1,67 @@
+/* clip path for post preview bottom left */
+.post-preview-clip-path-1 {
+  --step: 2rem;
+
+  clip-path: polygon(
+    0% 0%, /* top left */
+    100% 0%, /* top right */
+    100% 100%, /* bottom right */
+    calc(0% + 5 * var(--step)) 100%,
+    calc(0% + 5 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(0% + 4 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(0% + 4 * var(--step)) calc(100% - 2 * var(--step)),
+    calc(0% + 3 * var(--step)) calc(100% - 2 * var(--step)),
+    calc(0% + 3 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(0% + 4 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(0% + 4 * var(--step)) 100%,
+    calc(0% + 3 * var(--step)) 100%,
+    calc(0% + 3 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(0% + 1 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(0% + 1 * var(--step)) calc(100% - 2 * var(--step)),
+    0% calc(100% - 2 * var(--step))
+  );
+}
+
+/* clip path for post preview bottom right */
+.post-preview-clip-path-2 {
+  --step: 2rem;
+
+  clip-path: polygon(
+    100% 0%, /* top right */
+    0% 0%, /* top left */
+    0% 100%, /* bottom left */
+    calc(100% - 5 * var(--step)) 100%,
+    calc(100% - 5 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(100% - 4 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(100% - 4 * var(--step)) calc(100% - 2 * var(--step)),
+    calc(100% - 3 * var(--step)) calc(100% - 2 * var(--step)),
+    calc(100% - 3 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(100% - 4 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(100% - 4 * var(--step)) 100%,
+    calc(100% - 3 * var(--step)) 100%,
+    calc(100% - 3 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(100% - 1 * var(--step)) calc(100% - 1 * var(--step)),
+    calc(100% - 1 * var(--step)) calc(100% - 2 * var(--step)),
+    100% calc(100% - 2 * var(--step))
+  );
+}
+
+/* clip path for post preview top right */
+.post-preview-clip-path-3 {
+  --step: 2rem;
+
+  clip-path: polygon(
+    100% 100%, /* bottom right */
+    0% 100%, /* bottom left */
+    0% 0%, /* top left */
+    calc(100% - 4 * var(--step)) 0%,
+    calc(100% - 4 * var(--step)) calc(1 * var(--step)),
+    calc(100% - 5 * var(--step)) calc(1 * var(--step)),
+    calc(100% - 5 * var(--step)) calc(2 * var(--step)),
+    calc(100% - 4 * var(--step)) calc(2 * var(--step)),
+    calc(100% - 4 * var(--step)) calc(1 * var(--step)),
+    calc(100% - 2 * var(--step)) calc(1 * var(--step)),
+    calc(100% - 2 * var(--step)) calc(2 * var(--step)),
+    100% calc(2 * var(--step))
+  );
+}

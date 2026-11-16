@@ -68,3 +68,12 @@ NeosMarketPlace_PackageSyncCache:
     password: '%env:BEACH_REDIS_PASSWORD%'
     port: '6379'
     database: 9
+# Must be shared by all pods, so that only the first pod of a deployment flushes the content cache
+NeosNeosIo_DeploymentMarker:
+  backend: 'Flownative\RedisBackend\RedisBackend'
+  backendOptions:
+    hostname: '%env:BEACH_REDIS_HOST%'
+    password: '%env:BEACH_REDIS_PASSWORD%'
+    port: '6379'
+    database: 10
+    defaultLifetime: 0

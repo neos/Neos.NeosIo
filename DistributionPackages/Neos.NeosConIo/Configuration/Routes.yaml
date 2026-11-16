@@ -1,0 +1,13 @@
+- name: 'NeosCon Schedule JSON API'
+  uriPattern: '{node}.json'
+  defaults:
+    '@package': 'Neos.Neos'
+    '@controller': 'Frontend\Node'
+    '@action': 'show'
+    '@format': 'json'
+  routeParts:
+    'node':
+      handler: 'Neos\Neos\FrontendRouting\FrontendNodeRoutePartHandlerInterface'
+      options:
+        uriPathSuffix: ''
+        nodeType: 'Neos.NeosConIo:Document.SchedulePage'

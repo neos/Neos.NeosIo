@@ -16,10 +16,10 @@
   properties:
     type:
       type: string
-      options:
-        showInCreationDialog: true
+      scope: nodeAggregate
       ui:
         label: 'Event type to show'
+        showInCreationDialog: true
         reloadIfChanged: true
         inspector:
           group: event
@@ -36,10 +36,10 @@
                 label: Sprint
     mode:
       type: string
-      options:
-        showInCreationDialog: true
+      scope: nodeAggregate
       ui:
         label: 'Mode of the list'
+        showInCreationDialog: true
         reloadIfChanged: true
         inspector:
           group: event
@@ -54,12 +54,14 @@
                 label: 'Only past events (archive)'
     limit:
       type: integer
+      scope: nodeAggregate
       ui:
         label: 'Max number to show (0 = no limit)'
         inspector:
           group: event
     sourceFolder:
       type: reference
+      scope: nodeAggregate
       ui:
         label: 'Folder to show events from'
         reloadIfChanged: true

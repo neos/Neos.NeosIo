@@ -1,0 +1,34 @@
+prototype(Neos.NeosIo.Features:ItemWithVideo) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Neos.NeosIo.Features:FeaturesItemWithImage {
+        background = ${q(node).property('background')}
+        title = Neos.Neos:Editable {
+            property = 'title'
+            block = false
+        }
+        linkLabel = Neos.Neos:Editable {
+            property = 'linkLabel'
+            block = false
+        }
+        link = ${q(node).property('link')}
+        link.@process.convertUris = Neos.Neos:ConvertUris
+
+        image = Neos.Presentation:Component.PictureTag {
+            asset = ${q(node).property('image')}
+            alt = ${q(node).property('alternativeText')}
+            imgClasses = "object-cover w-full h-full"
+        }
+        poster = Sitegeist.Kaleidoscope:AssetImageSource {
+            asset = ${q(node).property('image')}
+        }
+
+        videoSources = Neos.Fusion:DataStructure {
+            1 = Neos.Fusion:DataStructure {
+                type = ${q(node).property('video').resource.fileExtension}
+                src = Neos.Fusion:ResourceUri {
+                    resource = ${q(node).property('video').resource}
+                }
+            }
+        }
+
+    }
+}

@@ -1,0 +1,54 @@
+prototype(Neos.NeosIo:Component.Badge) < prototype(Neos.Fusion:Component) {
+    image = ''
+    highlight = false
+    description = ''
+    link = ''
+    linkText = ''
+    openInNewTab = false
+
+    @propTypes {
+        @strict = true
+        image = ${PropTypes.string}
+        highlight = ${PropTypes.boolean}
+        description = ${PropTypes.string}
+        link = ${PropTypes.string}
+        linkText = ${PropTypes.string}
+        openInNewTab = ${PropTypes.boolean}
+    }
+
+    @private {
+        inBackend = ${renderingMode.isEdit}
+        class = Neos.Fusion:DataStructure {
+            main = 'badge neos-neosio-badge'
+            highlight = ${'badge--highlighted'}
+            highlight.@if.set = ${props.highlight}
+        }
+    }
+
+    renderer = afx`
+        <div class={private.class}>
+            {props.image}
+            <img
+                @if={private.inBackend && !props.image}
+                class="badge__image"
+                src={StaticResource.uri('Neos.Neos', 'Public/Images/dummy-image.svg')}
+                title="Dummy image"
+                alt="Dummy image"
+            />
+
+            <div @if.set={!String.isBlank(props.description)} class="badge__description">
+                {props.description}
+            </div>
+
+            <Neos.Presentation:Button
+                href={props.link}
+                content={props.linkText}
+                openInNewTab={props.openInNewTab}
+                class="whitespace-normal!"
+                variant="transparent"
+                fullWidth
+            />
+        </div>
+
+    `
+}
