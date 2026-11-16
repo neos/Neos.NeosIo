@@ -53,8 +53,8 @@ Flowpack:
       default:
        - host: '%env:BEACH_ELASTICSEARCH_HOSTNAME%'
          scheme: 'https'
-         # should come from env var, but has to be int…
-         #port: '%env:BEACH_ELASTICSEARCH_PORT%'
-         port: 9243
-         username: '%env:BEACH_ELASTICSEARCH_USERNAME%'
+         port: '%env(int):BEACH_ELASTICSEARCH_PORT%'
+         username: '%env:BEACH_ELASTICSEARCH_USER%'
          password: '%env:BEACH_ELASTICSEARCH_PASSWORD%'
+    transfer:
+      sslCaInfo: '%env:BEACH_ELASTICSEARCH_CA_FILE%'
