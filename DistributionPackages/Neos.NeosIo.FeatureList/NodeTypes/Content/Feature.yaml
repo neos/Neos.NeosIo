@@ -45,12 +45,11 @@
         reloadIfChanged: true
         inspector:
           group: feature
-    relatedPackages:
-      type: references
+    link:
+      type: string
       ui:
-        label: Packages
+        label: 'Link to Feature/Documentation'
         reloadIfChanged: true
         inspector:
           group: feature
-          editorOptions:
-            nodeTypes: ['Neos.MarketPlace:Package']
+          editor: Neos.Neos/Inspector/Editors/LinkEditor

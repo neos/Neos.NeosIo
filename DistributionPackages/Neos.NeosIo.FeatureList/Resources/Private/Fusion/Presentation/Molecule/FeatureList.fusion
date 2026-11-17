@@ -9,11 +9,11 @@ prototype(Neos.NeosIo.FeatureList:Molecule.FeatureList) < prototype(Neos.Fusion:
 	featureGroups = ${[]}
 
 	renderer = afx`
-		<div class="featureList">
+		<section class="mb-[var(--n-spacing--y-small)] last:mb-0" data-component="feature-list" @if.hasGroups={props.featureGroups}>
 			<Neos.Fusion:Loop items={props.featureGroups} itemName="featureGroup" @children="itemRenderer" >
 				<Neos.NeosIo.FeatureList:Molecule.FeatureGroup featureGroupData={featureGroup} />
 			</Neos.Fusion:Loop>
-		</div>
+		</section>
 	`
 }
 
