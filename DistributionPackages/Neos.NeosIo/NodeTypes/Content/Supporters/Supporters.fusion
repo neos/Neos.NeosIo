@@ -1,0 +1,61 @@
+prototype(Neos.NeosIo:Supporters) < prototype(Neos.Neos:ContentComponent) {
+    levelFilter = ${q(node).property('level')}
+    badgeLevel = ${q(this.levelFilter).property('level')}
+    badgeDefinitionPage = ${q(site).property('badgeDefinitionPage')}
+
+    @context.allLongTimeSupporterBadges = ${this.badgeDefinitionPage ? q(this.badgeDefinitionPage).find('[instanceof Neos.NeosIo:Badge]').sort('level', 'DESC') : []}
+    itemWidthPerLevel = Neos.Fusion:Map {
+        items = ${allLongTimeSupporterBadges}
+        itemRenderer = ${100 / (iterator.index + 2) + '%'}
+        keyRenderer = Neos.Fusion:Value {
+            value = ${q(item).property('level')}
+        }
+    }
+    @private {
+        serviceProvidersWithBadge = ${props.levelFilter ? q(props.levelFilter).backReferenceNodes().unique().filter('[instanceof Neos.NeosIo.ServiceOfferings:Document.ServiceProvider]') : []}
+    }
+
+    renderer = afx`
+        <div
+            class="supporters [--supporter-spacing:--spacing(4)] lg:[--supporter-spacing:--spacing(5.5)] [--supporters-item-width:25%] [.supporters+&]:mt-7.5"
+            @if.notEmpty={Array.length(private.serviceProvidersWithBadge) > 0}
+            data-component={'Supporters'}
+        >
+            <ul class="flex flex-wrap justify-center -mx-(--supporter-spacing) -mb-(--supporter-spacing) p-0" style={"--supporters-item-width: " + props.itemWidthPerLevel[props.badgeLevel]} style.@if.hasWidthValue={props.itemWidthPerLevel[props.badgeLevel]}>
+                <Neos.Fusion:Loop items={private.serviceProvidersWithBadge} itemName="serviceProvider">
+                    <li class="flex items-center my-(--supporter-spacing) px-(--supporter-spacing) w-1/2 md:w-(--supporters-item-width) min-w-30" @if.notHidden={Neos.Node.isDisabled(serviceProvider) == false}>
+                        <Neos.Fusion:Tag
+                            tagName={q(serviceProvider).property('website') ? 'a' : 'div'}
+                            attributes.class="block w-full hover:*:grayscale"
+                            attributes.title={Neos.Node.label(serviceProvider)}
+                            attributes.href={q(serviceProvider).property('website')}
+                            attributes.target="_blank"
+                            attributes.rel="noopener"
+                            serviceProvider
+                            attributes.@if.hasLink={q(serviceProvider).property('website')}
+                        >
+                            <Neos.Neos:ImageTag
+                                asset={q(serviceProvider).property('logo')}
+                                attributes.class="w-full h-auto aspect-2/1 object-contain object-center"
+                                attributes.alt={"Logo of " + Neos.Node.label(serviceProvider)}
+                            />
+                        </Neos.Fusion:Tag>
+                    </li>
+                </Neos.Fusion:Loop>
+            </ul>
+        </div>
+    `
+
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            name = 'supporters'
+            node = ${Neos.Caching.entryIdentifierForNode(node)}
+        }
+        entryTags {
+            documentNode = ${Neos.Caching.nodeTag(documentNode)}
+            serviceProviders = ${Neos.Caching.nodeTypeTag('Neos.NeosIo.ServiceOfferings:Document.ServiceProvider', node)}
+            longtimeSupporterBadges = ${Neos.Caching.nodeTypeTag('Neos.NeosIo:Badge', node)}
+        }
+    }
+}
