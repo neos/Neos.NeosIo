@@ -91,14 +91,32 @@
           format: date_time_no_millis
     __neosCompatibility:
       search:
-        indexing: '${MarketIndexing.extractCompatibility(q(node).children(''versions'').children(''[stability = true]'').get(), "neos/neos")}'
+        # The compatibility is calculated during the import and stored on the node, so that the
+        # version nodes do not have to be loaded when the search index is built.
+        indexing: '${MarketIndexing.prepareCompatibility(q(node).property(''neosCompatibility'')) ?: MarketIndexing.extractCompatibility(q(node).children(''versions'').children(''[stability = true]'').get(), "neos/neos")}'
         elasticSearchMapping:
           type: version
     __flowCompatibility:
       search:
-        indexing: '${MarketIndexing.extractCompatibility(q(node).children(''versions'').children(''[stability = true]'').get(), "neos/flow")}'
+        indexing: '${MarketIndexing.prepareCompatibility(q(node).property(''flowCompatibility'')) ?: MarketIndexing.extractCompatibility(q(node).children(''versions'').children(''[stability = true]'').get(), "neos/flow")}'
         elasticSearchMapping:
           type: version
+    neosCompatibility:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: document
+          editorOptions:
+            readonly: true
+    flowCompatibility:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: document
+          editorOptions:
+            readonly: true
     lastVersion:
       type: reference
       ui:
@@ -110,7 +128,9 @@
             nodeTypes:
               - 'Neos.MarketPlace:Version'
       search:
-        indexing: '${MarketIndexing.prepareVersion(q(node).property(''lastVersion''))}'
+        # The data of the last version is calculated during the import and stored on the node, so
+        # that the reference does not have to be resolved when the search index is built.
+        indexing: '${MarketIndexing.prepareVersionData(q(node).property(''lastVersionData'')) ?: MarketIndexing.prepareVersion(q(node).property(''lastVersion''))}'
         elasticSearchMapping:
           type: object
           properties:
@@ -142,6 +162,14 @@
               format: date_time_no_millis
             timestamp:
               type: integer
+    lastVersionData:
+      type: string
+      ui:
+        label: i18n
+        inspector:
+          group: document
+          editorOptions:
+            readonly: true
     downloadTotal:
       type: integer
       ui:

@@ -68,6 +68,13 @@ At the end of a sync run a summary is printed:
 
     1217 package(s) checked, 1198 skipped, 19 changed, 19 version sync(s), 1198 version sync(s) skipped
 
+### Search index
+
+The data that is stored in the search index (the last version and the compatibility with Neos and Flow)
+is calculated during the import and stored on the package node (`lastVersionData`, `neosCompatibility` and
+`flowCompatibility`). That way the version nodes do not have to be loaded and the `lastVersion` reference
+does not have to be resolved whenever the search index is built.
+
 ## Development
 
 If you want to test the sync functionality make sure to have ElasticSearch running on your machine or use the localbeach

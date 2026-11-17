@@ -55,19 +55,41 @@ class IndexingHelper extends Eel\IndexingHelper
         if ($versionNode === null) {
             return [];
         }
-        /** @var \DateTime|null $time */
-        $time = $versionNode->getProperty('time');
-        return [
-            'description' => $versionNode->getProperty('description'),
-            'keywords' => $this->trimExplode($versionNode->getProperty('keywords')),
-            'homepage' => $versionNode->getProperty('homepage'),
-            'version' => $versionNode->getProperty('version'),
-            'versionNormalized' => $versionNode->getProperty('versionNormalized'),
-            'stability' => $versionNode->getProperty('stability'),
-            'stabilityLevel' => $versionNode->getProperty('stabilityLevel'),
-            'time' => $time?->format('Y-m-d\TH:i:sP'),
-            'timestamp' => $time ? $time->getTimestamp() : 0,
-        ];
+        return $this->buildVersionData($versionNode);
+    }
+
+    /**
+     * Returns the data of the last version that was calculated during the import.
+     *
+     * @return array<string, mixed>
+     */
+    public function prepareVersionData(?string $versionData = null): array
+    {
+        if (!$versionData) {
+            return [];
+        }
+        $decoded = json_decode($versionData, true);
+        if (!is_array($decoded)) {
+            return [];
+        }
+        return $decoded;
+    }
+
+    /**
+     * Returns the compatibility that was calculated during the import.
+     *
+     * @return string[]
+     */
+    public function prepareCompatibility(?string $compatibility = null): array
+    {
+        if (!$compatibility) {
+            return [];
+        }
+        $decoded = json_decode($compatibility, true);
+        if (!is_array($decoded)) {
+            return [];
+        }
+        return array_values(array_map('strval', $decoded));
     }
 
     /**
@@ -120,6 +142,44 @@ class IndexingHelper extends Eel\IndexingHelper
     public function trimExplode(?string $value): array
     {
         return array_filter(array_map('trim', explode(',', (string)$value)));
+    }
+
+    /**
+     * Builds the data of a version that is stored in the search index.
+     *
+     * @param Node|array<string, mixed>|null $version Either a version node or the properties of a version
+     * @return array<string, mixed>
+     */
+    public function buildVersionData(Node|array|null $version): array
+    {
+        if ($version === null) {
+            return [];
+        }
+        if ($version instanceof Node) {
+            $version = [
+                'description' => $version->getProperty('description'),
+                'keywords' => $version->getProperty('keywords'),
+                'homepage' => $version->getProperty('homepage'),
+                'version' => $version->getProperty('version'),
+                'versionNormalized' => $version->getProperty('versionNormalized'),
+                'stability' => $version->getProperty('stability'),
+                'stabilityLevel' => $version->getProperty('stabilityLevel'),
+                'time' => $version->getProperty('time'),
+            ];
+        }
+
+        $time = $version['time'] ?? null;
+        return [
+            'description' => $version['description'] ?? null,
+            'keywords' => $this->trimExplode(is_string($version['keywords'] ?? null) ? $version['keywords'] : null),
+            'homepage' => $version['homepage'] ?? null,
+            'version' => $version['version'] ?? null,
+            'versionNormalized' => $version['versionNormalized'] ?? null,
+            'stability' => $version['stability'] ?? null,
+            'stabilityLevel' => $version['stabilityLevel'] ?? null,
+            'time' => $time instanceof \DateTimeInterface ? $time->format('Y-m-d\TH:i:sP') : null,
+            'timestamp' => $time instanceof \DateTimeInterface ? $time->getTimestamp() : 0,
+        ];
     }
 
 }

@@ -22,6 +22,7 @@ use Neos\MarketPlace\Domain\Model\NodeUpdateResult;
 use Neos\MarketPlace\Domain\Model\PackageSyncResult;
 use Neos\MarketPlace\Domain\Model\PackageSyncState;
 use Neos\MarketPlace\Domain\Model\Storage;
+use Neos\MarketPlace\Eel\IndexingHelper;
 use Neos\MarketPlace\Service\PackageConverter;
 use Neos\MarketPlace\Tests\Unit\Support\NodeBuilder;
 use Packagist\Api\Result\Package;
@@ -51,6 +52,11 @@ class PackageConverterTest extends TestCase
         $this->packageConverter = new PackageConverter($this->storage, $this->nodeIndexer);
         $this->setInjectedProperty($this->packageConverter, 'logger', new NullLogger());
         $this->setInjectedProperty($this->packageConverter, 'packageSyncCache', $this->packageSyncCache);
+        $this->setInjectedProperty($this->packageConverter, 'compatibilityCheck', [
+            'neos/neos' => ['9.0', '8.3'],
+            'neos/flow' => ['9.0', '8.3'],
+        ]);
+        $this->setInjectedProperty($this->packageConverter, 'indexingHelper', new IndexingHelper());
     }
 
     public function testPackageIsNotTouchedIfItDoesNotRequireAnUpdate(): void
@@ -119,6 +125,76 @@ class PackageConverterTest extends TestCase
             PackageSyncResult::Unchanged,
             $this->packageConverter->convert($this->buildPackage())
         );
+    }
+
+    public function testTheSearchIndexPropertiesAreWrittenToThePackageNode(): void
+    {
+        $this->givenPackageNode($this->buildPackageNode());
+        $this->givenVersionNodes([
+            $this->buildVersionNode('1.0.0'),
+            $this->buildVersionNode('2.0.0', false)
+        ]);
+        $this->givenPackageUpdateResult(NodeUpdateResult::success());
+        $this->givenVersionUpdateResult(NodeUpdateResult::success());
+
+        $writtenProperties = [];
+        $this->storage->method('updateNode')->willReturnCallback(
+            static function (Node $node, $originDimensionSpacePoint, array $properties) use (&$writtenProperties): NodeUpdateResult {
+                $writtenProperties = $properties;
+                return NodeUpdateResult::success(array_keys($properties));
+            }
+        );
+
+        $this->packageConverter->convert($this->buildPackage());
+
+        self::assertArrayHasKey('lastVersionData', $writtenProperties);
+        self::assertArrayHasKey('neosCompatibility', $writtenProperties);
+        self::assertArrayHasKey('flowCompatibility', $writtenProperties);
+
+        $lastVersionData = json_decode((string)$writtenProperties['lastVersionData'], true);
+        self::assertIsArray($lastVersionData);
+        self::assertSame('1.0.0', $lastVersionData['version']);
+        self::assertTrue($lastVersionData['stability']);
+        self::assertSame('2026-04-01T19:42:26+00:00', $lastVersionData['time']);
+    }
+
+    public function testTheSearchIndexPropertiesAreNotWrittenIfTheVersionsDidNotChange(): void
+    {
+        $this->givenPackageNode($this->buildPackageNode());
+        $this->givenVersionNodes([$this->buildVersionNode('1.0.0')]);
+        $this->givenPackageUpdateResult(NodeUpdateResult::success());
+        $this->givenVersionUpdateResult(NodeUpdateResult::success());
+
+        $storedState = null;
+        $this->packageSyncCache->method('set')->willReturnCallback(
+            static function (string $key, string $value) use (&$storedState): void {
+                $storedState = $value;
+            }
+        );
+        $this->packageConverter->convert($this->buildPackage());
+        self::assertIsString($storedState);
+
+        $this->givenPackageState(
+            'neos/neos',
+            new \DateTimeImmutable('2026-04-01T19:42:26+00:00'),
+            time() - 90000,
+            PackageSyncState::fromCacheValue($storedState)?->versionsHash
+        );
+
+        $writtenProperties = [];
+        $this->storage->method('updateNode')->willReturnCallback(
+            static function (Node $node, $originDimensionSpacePoint, array $properties) use (&$writtenProperties): NodeUpdateResult {
+                $writtenProperties = $properties;
+                return NodeUpdateResult::success(array_keys($properties));
+            }
+        );
+
+        $this->packageConverter->convert($this->buildPackage());
+
+        // The stored values are still valid, so they must not be overwritten
+        self::assertArrayNotHasKey('lastVersionData', $writtenProperties);
+        self::assertArrayNotHasKey('neosCompatibility', $writtenProperties);
+        self::assertArrayNotHasKey('flowCompatibility', $writtenProperties);
     }
 
     public function testTheSyncStateIsStoredWithAnExplicitLifetime(): void
@@ -274,7 +350,9 @@ class PackageConverterTest extends TestCase
     public function testPackageIsNotMarkedAsSyncedIfTheImportFailed(): void
     {
         $this->givenPackageNode($this->buildPackageNode());
+        $this->givenVersionNodes([$this->buildVersionNode('1.0.0')]);
         $this->storage->method('updateNode')->willReturn(NodeUpdateResult::failure());
+        $this->storage->method('createOrUpdateVersionNode')->willReturn(NodeUpdateResult::success());
 
         $this->packageSyncCache->expects(self::never())->method('set');
 
@@ -427,12 +505,18 @@ class PackageConverterTest extends TestCase
         );
     }
 
-    private function buildVersionNode(string $version): Node
+    private function buildVersionNode(string $version, bool $stable = true): Node
     {
         return NodeBuilder::createNode([
             'version' => ['type' => 'string', 'value' => $version],
             'time' => ['type' => 'DateTime', 'value' => '2026-04-01T19:42:26+00:00'],
-            'stabilityLevel' => ['type' => 'string', 'value' => 'stable'],
+            'stability' => ['type' => 'boolean', 'value' => $stable],
+            'stabilityLevel' => ['type' => 'string', 'value' => $stable ? 'stable' : 'dev'],
+            'description' => ['type' => 'string', 'value' => 'Version ' . $version],
+            'keywords' => ['type' => 'string', 'value' => 'neos, flow'],
+            'homepage' => ['type' => 'string', 'value' => 'https://example.com'],
+            'versionNormalized' => ['type' => 'integer', 'value' => 1000000],
+            'require' => ['type' => 'string', 'value' => (string)json_encode(['neos/neos' => '^9.0'])],
         ], 'Neos.MarketPlace:Version', NodeAggregateId::fromString('4d4b2b7f-0000-0000-0000-000000000004'), 'version-' . str_replace('.', '-', $version));
     }
 

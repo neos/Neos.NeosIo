@@ -13,6 +13,7 @@ namespace Neos\MarketPlace\Service;
  * source code.
  */
 
+use Composer\Semver\Semver;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Exception;
 use Flowpack\ElasticSearch\ContentRepositoryAdaptor\Indexer\NodeIndexer;
 use Neos\Cache\Frontend\StringFrontend;
@@ -27,6 +28,7 @@ use Neos\MarketPlace\Domain\Model\PackageSyncResult;
 use Neos\MarketPlace\Domain\Model\PackageSyncState;
 use Neos\MarketPlace\Domain\Model\Slug;
 use Neos\MarketPlace\Domain\Model\Storage;
+use Neos\MarketPlace\Eel\IndexingHelper;
 use Neos\MarketPlace\Utility\VersionNumber;
 use Packagist\Api\Result\Package;
 use Psr\Log\LoggerInterface;
@@ -67,6 +69,17 @@ class PackageConverter
      */
     #[Flow\Inject('Neos.MarketPlace:PackageSyncCache')]
     protected $packageSyncCache;
+
+    /**
+     * The versions of Neos and Flow that the packages are checked against.
+     *
+     * @var array<string, string[]>
+     */
+    #[Flow\InjectConfiguration('compatibilityCheck')]
+    protected array $compatibilityCheck;
+
+    #[Flow\Inject]
+    protected IndexingHelper $indexingHelper;
 
     /**
      * @var array<string, array{lastActivity: \DateTimeInterface|null, state: PackageSyncState|null}>
@@ -191,22 +204,47 @@ class PackageConverter
             return $maintainer->getName();
         }, $package->getMaintainers());
 
+        if ($versionsUnchanged) {
+            // The versions did not change since the last sync, so there is no need to load them again.
+            // The search index properties are kept as they are, they cannot have changed either.
+            $this->statistics['versionSyncsSkipped']++;
+            $versionSync = [
+                'versionsNode' => null,
+                'versionNodes' => [],
+                'changed' => false,
+                'successful' => true
+            ];
+            $searchIndexProperties = [];
+            $lastActiveVersion = null;
+        } else {
+            $this->statistics['versionSyncs']++;
+            $versionSync = $this->createOrUpdateVersions($versionPayloads, $packageNode);
+            if (!$versionSync['successful']) {
+                return PackageSyncResult::NotRequired;
+            }
+            $lastActiveVersion = $this->determineLastActiveVersion($versionSync);
+            $searchIndexProperties = $this->buildSearchIndexProperties($versionSync, $lastActiveVersion);
+        }
+
         $packageUpdateResult = $this->storage->updateNode(
             $packageNode,
             $packageNode->originDimensionSpacePoint,
-            [
-                'description' => $package->getDescription(),
-                'time' => \DateTime::createFromFormat(
-                    Storage::DATE_FORMAT,
-                    $package->getTime()
-                ),
-                'type' => $package->getType(),
-                'repository' => $package->getRepository(),
-                'favers' => $package->getFavers(),
-                'maintainers' => implode(',', $upstreamMaintainerNames),
-                'downloadTotal' => $this->getDownloadsCount($package),
-                'abandoned' => (string)$package->isAbandoned(),
-            ]
+            array_merge(
+                [
+                    'description' => $package->getDescription(),
+                    'time' => \DateTime::createFromFormat(
+                        Storage::DATE_FORMAT,
+                        $package->getTime()
+                    ),
+                    'type' => $package->getType(),
+                    'repository' => $package->getRepository(),
+                    'favers' => $package->getFavers(),
+                    'maintainers' => implode(',', $upstreamMaintainerNames),
+                    'downloadTotal' => $this->getDownloadsCount($package),
+                    'abandoned' => (string)$package->isAbandoned(),
+                ],
+                $searchIndexProperties
+            )
         );
 
         if (!$packageUpdateResult->successful) {
@@ -217,28 +255,12 @@ class PackageConverter
             $this->emitPackageAbandoned($packageNode);
         }
 
-        if ($versionsUnchanged) {
-            // The versions did not change since the last sync, so there is no need to load them again
-            $this->statistics['versionSyncsSkipped']++;
-            $versionSync = [
-                'versionsNode' => null,
-                'versionNodes' => [],
-                'changed' => false,
-                'successful' => true
-            ];
-        } else {
-            $this->statistics['versionSyncs']++;
-            $versionSync = $this->createOrUpdateVersions($versionPayloads, $packageNode);
-            if (!$versionSync['successful']) {
-                return PackageSyncResult::NotRequired;
-            }
-        }
-
         $lastActivityChanged = $this->updatePackageLastActivity(
             $packageNode,
             $packageNode->originDimensionSpacePoint,
             $versionSync,
             $versionsUnchanged,
+            $lastActiveVersion,
         );
         $this->markVendorAsTouched($vendorNodeAggregateId);
 
@@ -508,38 +530,19 @@ class PackageConverter
     }
 
     /**
-     * Iterates over all versions of the package and updates the last activity of the package node.
+     * Determines the version node that represents the package in the search index.
+     *
+     * It is the most stable version, only if there are multiple versions with the same stability
+     * the most recent one is used.
      *
      * @param array{versionsNode: Node|null, versionNodes: Node[], changed: bool, successful: bool} $versionSync
-     * @param bool $versionsUnchanged Whether the versions are identical to the ones of the last sync
-     * @return bool True if the last activity of the package node was changed
      */
-    protected function updatePackageLastActivity(
-        Node                      $packageNode,
-        OriginDimensionSpacePoint $originDimensionSpacePoint,
-        array                     $versionSync,
-        bool                      $versionsUnchanged
-    ): bool
+    protected function determineLastActiveVersion(array $versionSync): ?Node
     {
-        if ($versionsUnchanged) {
-            // The versions did not change, so neither did the last activity
-            return false;
-        }
-
-        $versionsNode = $versionSync['versionsNode'];
-        if ($versionsNode === null) {
-            return false;
-        }
-
-        // The version nodes only have to be reloaded if they might have changed
-        $versions = $versionSync['changed']
-            ? iterator_to_array($this->storage->getPackageVersionNodes($versionsNode->aggregateId))
-            : $versionSync['versionNodes'];
-
         /** @var Node|null $lastActiveVersion */
         $lastActiveVersion = null;
         $lastActiveVersionStability = 0;
-        foreach ($versions as $version) {
+        foreach ($this->getCurrentVersionNodes($versionSync) as $version) {
             $lastActivity = $version->getProperty('time');
             if (!$lastActivity instanceof \DateTimeInterface) {
                 continue;
@@ -553,7 +556,124 @@ class PackageConverter
                 $lastActiveVersion = $version;
             }
         }
-        if (!$lastActiveVersion) {
+        return $lastActiveVersion;
+    }
+
+    /**
+     * Returns the version nodes as they are after the version sync.
+     *
+     * @param array{versionsNode: Node|null, versionNodes: Node[], changed: bool, successful: bool} $versionSync
+     * @return Node[]
+     */
+    protected function getCurrentVersionNodes(array $versionSync): array
+    {
+        if (!$versionSync['changed'] || $versionSync['versionsNode'] === null) {
+            return $versionSync['versionNodes'];
+        }
+        // The version nodes have to be reloaded, because they were changed during the sync
+        return iterator_to_array(
+            $this->storage->getPackageVersionNodes($versionSync['versionsNode']->aggregateId)
+        );
+    }
+
+    /**
+     * Builds the properties that are used to build the search index of the package.
+     *
+     * The data is calculated here, while the version nodes are loaded anyway, so that the index
+     * does not have to resolve the last version reference or load all version nodes again.
+     *
+     * @param array{versionsNode: Node|null, versionNodes: Node[], changed: bool, successful: bool} $versionSync
+     * @return array<string, string>
+     */
+    protected function buildSearchIndexProperties(array $versionSync, ?Node $lastActiveVersion): array
+    {
+        if ($lastActiveVersion === null) {
+            return [];
+        }
+
+        $stableVersions = [];
+        foreach ($this->getCurrentVersionNodes($versionSync) as $version) {
+            if ($version->getProperty('stability') === true) {
+                $stableVersions[] = $version;
+            }
+        }
+
+        return [
+            'lastVersionData' => (string)json_encode(
+                $this->indexingHelper->buildVersionData($lastActiveVersion)
+            ),
+            'neosCompatibility' => (string)json_encode(
+                $this->extractCompatibility($stableVersions, 'neos/neos')
+            ),
+            'flowCompatibility' => (string)json_encode(
+                $this->extractCompatibility($stableVersions, 'neos/flow')
+            ),
+        ];
+    }
+
+    /**
+     * Extracts the versions of the given package that are compatible with the configured versions.
+     *
+     * @param Node[] $versionNodes
+     * @return string[]
+     */
+    protected function extractCompatibility(array $versionNodes, string $packageName): array
+    {
+        if (!array_key_exists($packageName, $this->compatibilityCheck)) {
+            return [];
+        }
+
+        $compatibleVersions = [];
+        foreach ($versionNodes as $versionNode) {
+            $requireJson = $versionNode->getProperty('require');
+            if (!$requireJson) {
+                continue;
+            }
+            try {
+                $require = json_decode($requireJson, true, 512, JSON_THROW_ON_ERROR);
+            } catch (\Exception) {
+                continue;
+            }
+            if (!is_array($require) || !array_key_exists($packageName, $require)) {
+                continue;
+            }
+            foreach ($this->compatibilityCheck[$packageName] as $version) {
+                try {
+                    if (Semver::satisfies($version, $require[$packageName])) {
+                        $compatibleVersions[] = $version;
+                    }
+                } catch (\Exception) {
+                    // Exceptions can be thrown on strings like "self.version"
+                    continue;
+                }
+            }
+        }
+
+        return array_values(array_unique($compatibleVersions));
+    }
+
+    /**
+     * Iterates over all versions of the package and updates the last activity of the package node.
+     *
+     * @param array{versionsNode: Node|null, versionNodes: Node[], changed: bool, successful: bool} $versionSync
+     * @param bool $versionsUnchanged Whether the versions are identical to the ones of the last sync
+     * @param Node|null $lastActiveVersion The version node that represents the package
+     * @return bool True if the last activity of the package node was changed
+     */
+    protected function updatePackageLastActivity(
+        Node                      $packageNode,
+        OriginDimensionSpacePoint $originDimensionSpacePoint,
+        array                     $versionSync,
+        bool                      $versionsUnchanged,
+        ?Node                     $lastActiveVersion
+    ): bool
+    {
+        if ($versionsUnchanged) {
+            // The versions did not change, so neither did the last activity
+            return false;
+        }
+
+        if ($lastActiveVersion === null) {
             return false;
         }
 
