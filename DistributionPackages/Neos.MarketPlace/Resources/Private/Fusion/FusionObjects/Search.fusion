@@ -81,7 +81,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
                     <input id="package-search"
                            type="search"
                            name="search"
-                           class="p-4 border-1 border-neutral-50 grow-1 bg-white"
+                           class="p-4 border-1 border-neutral-50 grow-1 bg-white placeholder:text-placeholder"
                            value={props.searchWord}
                            placeholder={I18n.translate('Flowpack.SearchPlugin:Main:search')}
                     />
@@ -92,7 +92,7 @@ prototype(Neos.MarketPlace:Search) < prototype(Flowpack.SearchPlugin:Search) {
                     <div class="absolute left-0 top-0 bg-neutral-10 h-full w-full quote-clip-path"></div>
                     <div class="flex flex-col gap-2 relative w-fit">
                         <label for="package-search-compatability">{I18n.translate('Neos.MarketPlace:Main:versionFilter')}</label>
-                        <select class="" name="version" id="package-search-compatability">
+                        <select class="px-4 py-2 border-1 border-neutral-50 grow-1 bg-white has-[option[value='']:checked]:text-placeholder" name="version" id="package-search-compatability">
                             <option value=''>{I18n.translate('Neos.MarketPlace:Main:versionSelect')}</option>
                             <optgroup label="Neos">
                                 <Neos.Fusion:Loop items={props.neosVersions} itemName="version">
