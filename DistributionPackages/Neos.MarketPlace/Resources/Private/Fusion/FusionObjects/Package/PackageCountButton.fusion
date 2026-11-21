@@ -1,14 +1,25 @@
-prototype(Neos.MarketPlace:PackageCountButton) < prototype(Neos.MarketPlace:Button) {
+prototype(Neos.MarketPlace:PackageCountButton) < prototype(Neos.Fusion:Component) {
     vendor = null
     @context.vendor = ${this.vendor}
 
     packageCount = ${q(this.vendor).children('[instanceof Neos.MarketPlace:Package]').count()}
-
-    content = ${this.packageCount > 1 ? 'The same vendor provides ' + this.packageCount + ' package(s).' : null}
+    content = ${I18n.translate('vendorPackages', '', [this.packageCount - 1], 'Main', 'Neos.MarketPlace')}
 
     url = Neos.Neos:NodeUri {
         node = ${vendor}
     }
+
+    renderer = afx`
+        <section class="mt-12" data-component="Package.CountButton" @if={props.packageCount > 1}>
+            <Neos.Presentation:Button
+                href={props.url}
+                content={props.content}
+                variant={"transparent"}
+                icon={"animatedArrow"}
+                class={''}
+            />
+        </section>
+    `
 
     @cache {
         mode = 'cached'

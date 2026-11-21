@@ -10,32 +10,32 @@
 
 <f:section name="paginator">
     <f:if condition="{pagination.numberOfPages} > 1">
-        <nav class="search-results__navigation">
-            <ul class="paginator">
+        <nav class="clear-both">
+            <ul class="flex items-center justify-center gap-2 p-0 list-none">
                 <f:if condition="{pagination.previousPage}">
-                    <li class="paginator__previous">
+                    <li>
                         <f:if condition="{pagination.previousPage} > 1">
                             <f:then>
-                                <f:widget.link action="index" arguments="{currentPage: pagination.previousPage}">previous</f:widget.link>
+                                <f:widget.link action="index" arguments="{currentPage: pagination.previousPage}" class="p-2 block focus-visible:outline-blue-dark focus-visible:outline-1 ">previous</f:widget.link>
                             </f:then>
                             <f:else>
-                                <f:widget.link action="index">previous</f:widget.link>
+                                <f:widget.link action="index" class="p-2 block focus-visible:outline-blue-dark focus-visible:outline-1 ">previous</f:widget.link>
                             </f:else>
                         </f:if>
                     </li>
                 </f:if>
                 <f:if condition="{pagination.displayRangeStart} > 1">
-                    <li class="paginator__first">
-                        <f:widget.link action="index">1</f:widget.link>
+                    <li>
+                        <f:widget.link action="index" class="p-2 block focus-visible:outline-blue-dark focus-visible:outline-1 ">1</f:widget.link>
                     </li>
                 </f:if>
                 <f:if condition="{pagination.hasLessPages}">
-                    <li>...</li>
+                    <li class="p-2">...</li>
                 </f:if>
                 <f:for each="{pagination.pages}" as="page">
                     <f:if condition="{page.isCurrent}">
                         <f:then>
-                            <li class="paginator__current">
+                            <li class="inline-block border border-neutral-40 p-2 text-center" aria-current="page">
                                 {page.number}
                             </li>
                         </f:then>
@@ -43,10 +43,10 @@
                             <li>
                                 <f:if condition="{page.number} > 1">
                                     <f:then>
-                                        <f:widget.link action="index" arguments="{currentPage: page.number}">{page.number}</f:widget.link>
+                                        <f:widget.link action="index" arguments="{currentPage: page.number}" class="p-2 block focus-visible:outline-blue-dark focus-visible:outline-1 ">{page.number}</f:widget.link>
                                     </f:then>
                                     <f:else>
-                                        <f:widget.link action="index">{page.number}</f:widget.link>
+                                        <f:widget.link action="index" class="p-2 block focus-visible:outline-blue-dark focus-visible:outline-1 ">{page.number}</f:widget.link>
                                     </f:else>
                                 </f:if>
                             </li>
@@ -54,16 +54,16 @@
                     </f:if>
                 </f:for>
                 <f:if condition="{pagination.hasMorePages}">
-                    <li>...</li>
+                    <li class="p-2">...</li>
                 </f:if>
                 <f:if condition="{pagination.displayRangeEnd} < {pagination.numberOfPages}">
-                    <li class="paginator__last">
-                        <f:widget.link action="index" arguments="{currentPage: pagination.numberOfPages}">{pagination.numberOfPages}</f:widget.link>
+                    <li>
+                        <f:widget.link action="index" arguments="{currentPage: pagination.numberOfPages}" class="p-2 block focus-visible:outline-blue-dark focus-visible:outline-1 ">{pagination.numberOfPages}</f:widget.link>
                     </li>
                 </f:if>
                 <f:if condition="{pagination.nextPage}">
-                    <li class="paginator__next">
-                        <f:widget.link action="index" arguments="{currentPage: pagination.nextPage}">next</f:widget.link>
+                    <li>
+                        <f:widget.link action="index" arguments="{currentPage: pagination.nextPage}" class="p-2 block focus-visible:outline-blue-dark focus-visible:outline-1 ">next</f:widget.link>
                     </li>
                 </f:if>
             </ul>
