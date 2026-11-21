@@ -39,8 +39,6 @@ prototype(Neos.MarketPlace:Package.SubMenu) < prototype(Neos.Fusion:Component) {
     h2Classes = "display-title-sm font-bold mb-2"
     h3Classes = "display-title-sm"
 
-    //@ToDoMine - tag infront of version in header for dev, prereleased versions etc? is there a default view?
-
     renderer = afx`
       <section data-component="Package.SubMenu.Source">
         <h2 class={props.h2Classes}>{I18n.translate('repository', 'Repository', [], 'Main', 'Neos.MarketPlace')}</h2>
