@@ -3,9 +3,7 @@ prototype(Neos.MarketPlace:PackageCountButton) < prototype(Neos.Fusion:Component
     @context.vendor = ${this.vendor}
 
     packageCount = ${q(this.vendor).children('[instanceof Neos.MarketPlace:Package]').count()}
-    translation = ${I18n.translate('vendorPackages', '', [], 'Main', 'Neos.MarketPlace')}
-
-    content = ${this.packageCount > 1 ? String.replace(this.translation, '#number#', this.packageCount) : null}
+    content = ${I18n.translate('vendorPackages', '', [this.packageCount], 'Main', 'Neos.MarketPlace')}
 
     url = Neos.Neos:NodeUri {
         node = ${vendor}
