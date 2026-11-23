@@ -23,7 +23,7 @@ prototype(Neos.Presentation:ContentTeaser) < prototype(Neos.Fusion:Component) {
     }
 
     renderer = afx`
-        <div class="content-teaser relative">
+        <div class="content-teaser relative bg-blue-dark" data-component="content-teaser">
             {props.image}
 
             <div class="relative p-8 bg-gradient-to-t from-blue-dark to-transparent min-h-[350px] flex flex-col gap-2 justify-end hover:to-blue-dark/50 transition-colors">
