@@ -37,6 +37,10 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ env.PHP_VERSION }}
+          coverage: none
+          tools: composer
+          # ext-redis is required by flownative/redis-backend; ext-vips is faked via composer.json "config.platform"
+          extensions: redis
 
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -45,10 +49,7 @@ jobs:
           key: dependencies-composer-${{ hashFiles('composer.json') }}
 
       - name: Install dependencies
-        uses: php-actions/composer@v6
-        with:
-          php_version: ${{ env.PHP_VERSION }}
-          version: 2
+        run: composer install --no-interaction --prefer-dist
 
       - name: PHPStan
         run: bin/phpstan analyse DistributionPackages/ --memory-limit=4G
