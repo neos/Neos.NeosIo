@@ -33,7 +33,7 @@ prototype(Neos.Presentation:Button) < prototype(Neos.Fusion:Component) {
 
         buttonClasses = Neos.Fusion:Join {
             global = ${Carbon.String.classNames(
-                'transition cursor-pointer whitespace-nowrap text-center',
+                'transition cursor-pointer text-center',
                 private.isButton ? 'disabled:cursor-not-allowed' : 'aria-disabled:cursor-not-allowed',
                 private.hasIcon ? 'group/icon gap-2 items-center' : null
             )}
