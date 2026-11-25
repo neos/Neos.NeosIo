@@ -1,5 +1,13 @@
 prototype(Neos.NeosIo:BadgeGrid) < prototype(Neos.Neos:ContentComponent) {
+    items = ${q(node).children()}
+
     renderer = afx`
-        <Neos.Neos:ContentCollection attributes.class="badge-grid" />
+        <div class="flex flex-wrap w-full justify-center -mx-4 gap-y-4 md:justify-between lg:-mx-8 gap-y-8" data-component="badge-grid">
+            <Neos.Fusion:Loop items={props.items} itemName="badge" @if.hasItems={props.items}>
+                <Neos.NeosIo:Badge
+                    @context.node={badge}
+                />
+            </Neos.Fusion:Loop>
+        </div>
     `
 }
