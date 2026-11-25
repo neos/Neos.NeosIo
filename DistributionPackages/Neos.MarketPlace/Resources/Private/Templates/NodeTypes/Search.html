@@ -7,9 +7,9 @@
 
 <f:if condition="{showResult}">
     <search:widget.paginate widgetId="browse" query="{searchQuery}" as="results" configuration="{configuration}">
-        <div class="search-results__metrics">
+        <p class="mb-0 mt-12 text-right" data-component="search-results-metrics">
             {f:translate(id: 'searchShowingResults', package: 'Flowpack.SearchPlugin', arguments: '{0: results.accessibleCount, 1: totalSearchResults}')}
-        </div>
+        </p>
         <fusion:render path="searchResultRenderer" context="{searchResults: results}" />
     </search:widget.paginate>
 </f:if>
